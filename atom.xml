@@ -57,11 +57,11 @@
       <category term="开发" scheme="http://ming1016.github.io/categories/%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS" scheme="http://ming1016.github.io/tags/iOS/"/>
-    
       <category term="smck" scheme="http://ming1016.github.io/tags/smck/"/>
     
       <category term="Swift" scheme="http://ming1016.github.io/tags/Swift/"/>
+    
+      <category term="iOS" scheme="http://ming1016.github.io/tags/iOS/"/>
     
   </entry>
   
@@ -537,9 +537,9 @@
       <category term="开发" scheme="http://ming1016.github.io/categories/%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS" scheme="http://ming1016.github.io/tags/iOS/"/>
-    
       <category term="Swift" scheme="http://ming1016.github.io/tags/Swift/"/>
+    
+      <category term="iOS" scheme="http://ming1016.github.io/tags/iOS/"/>
     
       <category term="macOS" scheme="http://ming1016.github.io/tags/macOS/"/>
     
@@ -889,9 +889,9 @@
       <category term="开发" scheme="http://ming1016.github.io/categories/%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="AssembleView" scheme="http://ming1016.github.io/tags/AssembleView/"/>
-    
       <category term="iOS" scheme="http://ming1016.github.io/tags/iOS/"/>
+    
+      <category term="AssembleView" scheme="http://ming1016.github.io/tags/AssembleView/"/>
     
   </entry>
   
