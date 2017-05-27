@@ -1,0 +1,1019 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS,Autolayout," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="星光社 - 戴铭的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="先前写到的一篇Masonry心得文章里已经提到了很多AutoLayout相关的知识，这篇我会更加详细的对其知识要点进行分析和整理。 来历一般大家都会认为Auto Layout这个东西是苹果自己搞出来的，其实不然，早在1997年Alan Borning, Kim Marriott, Peter Stuckey等人就发布了《Solving Linear Arithmetic Constraints f">
+<meta name="keywords" content="iOS,Autolayout">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入剖析Auto Layout，分析iOS各版本新增特性">
+<meta property="og:url" content="http://ming1016.github.io/2015/11/03/deeply-analyse-autolayout/index.html">
+<meta property="og:site_name" content="星光社 - 戴铭的博客">
+<meta property="og:description" content="先前写到的一篇Masonry心得文章里已经提到了很多AutoLayout相关的知识，这篇我会更加详细的对其知识要点进行分析和整理。 来历一般大家都会认为Auto Layout这个东西是苹果自己搞出来的，其实不然，早在1997年Alan Borning, Kim Marriott, Peter Stuckey等人就发布了《Solving Linear Arithmetic Constraints f">
+<meta property="og:updated_time" content="2017-05-27T02:25:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入剖析Auto Layout，分析iOS各版本新增特性">
+<meta name="twitter:description" content="先前写到的一篇Masonry心得文章里已经提到了很多AutoLayout相关的知识，这篇我会更加详细的对其知识要点进行分析和整理。 来历一般大家都会认为Auto Layout这个东西是苹果自己搞出来的，其实不然，早在1997年Alan Borning, Kim Marriott, Peter Stuckey等人就发布了《Solving Linear Arithmetic Constraints f">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ming1016.github.io/2015/11/03/deeply-analyse-autolayout/"/>
+
+
+
+
+
+  <title>深入剖析Auto Layout，分析iOS各版本新增特性 | 星光社 - 戴铭的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">星光社 - 戴铭的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ming1016.github.io/2015/11/03/deeply-analyse-autolayout/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="戴铭">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/251980?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星光社 - 戴铭的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">深入剖析Auto Layout，分析iOS各版本新增特性</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-11-03T21:17:54+08:00">
+                2015-11-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/11/03/deeply-analyse-autolayout/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2015/11/03/deeply-analyse-autolayout/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>先前写到的一篇Masonry心得文章里已经提到了很多AutoLayout相关的知识，这篇我会更加详细的对其知识要点进行分析和整理。</p>
+<h1 id="来历"><a href="#来历" class="headerlink" title="来历"></a>来历</h1><p>一般大家都会认为Auto Layout这个东西是苹果自己搞出来的，其实不然，早在1997年Alan Borning, Kim Marriott, Peter Stuckey等人就发布了《Solving Linear Arithmetic Constraints for User Interface Applications》论文（论文地址：<a href="http://constraints.cs.washington.edu/solvers/uist97.html" target="_blank" rel="external">http://constraints.cs.washington.edu/solvers/uist97.html</a>）提出了在解决布局问题的Cassowary constraint-solving算法实现，并且将代码发布在他们搭建的Cassowary网站上<a href="http://constraints.cs.washington.edu/cassowary/" target="_blank" rel="external">http://constraints.cs.washington.edu/cassowary/</a>。后来更多开发者用各种语言来写Cassowary，比如说pybee用python写的<a href="https://github.com/pybee/cassowary" target="_blank" rel="external">https://github.com/pybee/cassowary</a>。自从它发布以来JavaScript，.NET，JAVA，Smalltall和C++都有相应的库。2011年苹果将这个算法运用到了自家的布局引擎中，美其名曰Auto Layout。</p>
+<h2 id="Cassowary"><a href="#Cassowary" class="headerlink" title="Cassowary"></a>Cassowary</h2><p>Cassowary是个解析工具包，能够有效解析线性等式系统和线性不等式系统，用户的界面中总是会出现不等关系和相等关系，Cassowary开发了一种规则系统可以通过约束来描述视图间关系。约束就是规则，能够表示出一个视图相对于另一个视图的位置。</p>
+<h1 id="Auto-Layout的生命周期"><a href="#Auto-Layout的生命周期" class="headerlink" title="Auto Layout的生命周期"></a>Auto Layout的生命周期</h1><p>进入下面主题前可以先介绍下加入Auto Layout的生命周期。在得到自己的layout之前Layout Engine会将Views，约束，Priorities（优先级），instrinsicContentSize（主要是UILabel,UIImageView等）通过计算转换成最终的效果。在Layout Engine里会有约束变化到Deferred Layout Pass再到应用Run Loop再回到约束变化这样的循环机制。</p>
+<h2 id="约束变化"><a href="#约束变化" class="headerlink" title="约束变化"></a>约束变化</h2><p>触发约束变化包括</p>
+<ul>
+<li>Activating或Deactivating</li>
+<li>设置constant或priority</li>
+<li>添加和删除视图</li>
+</ul>
+<p>这个Engine遇到约束变化会重新计算layout，获取新值后会call它的superview.setNeedsLayout()</p>
+<h2 id="Deferred-Layout-Pass"><a href="#Deferred-Layout-Pass" class="headerlink" title="Deferred Layout Pass"></a>Deferred Layout Pass</h2><p>在这个时候主要是做些容错处理，更新约束有些没有确定或者缺失布局声明的视图会在这里处理。接着从上而下调用layoutSubviews()来确定视图各个子视图的位置，这个过程实际上就是将subview的frame从layout engine里拷贝出来。这里要注意重写layoutSubviews()或者执行类似layoutIfNeeded这样可能会立刻唤起layoutSubviews()的方法，如果要这样做需要注意手动处理的这个地方自己的子视图布局的树状关系是否合理。</p>
+<h2 id="生命周期中需要注意的事项"><a href="#生命周期中需要注意的事项" class="headerlink" title="生命周期中需要注意的事项"></a>生命周期中需要注意的事项</h2><ul>
+<li>不要期望frame会立刻变化。</li>
+<li>在重写layoutSubviews()时需要非常小心。</li>
+</ul>
+<h1 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h1><p>Auto Layout你的视图层级里所有视图通过放置在它们里面的约束来动态计算的它们的大小和位置。一般控件需要四个约束决定位置大小，如果定义了intrinsicContentSize的比如UILabel只需要两个约束即可。</p>
+<h2 id="约束方程式"><a href="#约束方程式" class="headerlink" title="约束方程式"></a>约束方程式</h2><p>view1.attribute1 = mutiplier * view2.attribute2 + constant</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">redButton.left = <span class="number">1.0</span> * yellowLabel.right + <span class="number">10.0</span> <span class="comment">//红色按钮的左侧距离黄色label有10个point</span></div></pre></td></tr></table></figure>
+<h2 id="使用API添加约束"><a href="#使用API添加约束" class="headerlink" title="使用API添加约束"></a>使用API添加约束</h2><p>使用NSLayoutConstraint类（最低支持iOS6）添加约束。NSLayoutConstraint官方参考：<a href="https://developer.apple.com/library/prerelease/ios/documentation/AppKit/Reference/NSLayoutConstraint_Class/index.html" target="_blank" rel="external">https://developer.apple.com/library/prerelease/ios/documentation/AppKit/Reference/NSLayoutConstraint_Class/index.html</a><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[<span class="built_in">NSLayoutContraint</span> constraintWithItem:view1</div><div class="line">                                                 attribute:<span class="built_in">NSLayoutAttributeBottom</span></div><div class="line">                                               relatedBy:<span class="built_in">NSLayoutRelationEqual</span></div><div class="line">                                                    toItem:view2</div><div class="line">                                                 attribute:<span class="built_in">NSLayoutAttributeBottom</span></div><div class="line">                                                multiplier:<span class="number">1.0</span></div><div class="line">                                                 constant:<span class="number">-5</span>]</div></pre></td></tr></table></figure></p>
+<p>把约束用约束中两个view的共同父视图或者两视图中层次高视图的- (void)addConstraint:(NSLayoutConstraint *)constraint方法将约束添加进去。</p>
+<h2 id="使用VFL语言添加约束"><a href="#使用VFL语言添加约束" class="headerlink" title="使用VFL语言添加约束"></a>使用VFL语言添加约束</h2><p>先举个简单的例子并排两个view添加约束<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[NSLayoutConstraint constraintWithVisualFormat:@“[view1]-[view2]"</div><div class="line">                                                                  options:0</div><div class="line">                                                                  metrics:nil</div><div class="line">                                                                     views:viewsDictionary;</div></pre></td></tr></table></figure></p>
+<p>viewDictionary可以通过NSDictionaryOfVariableBindings方法得到</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">UIView</span> *view1 = [[<span class="built_in">UIView</span> alloc] init];</div><div class="line"><span class="built_in">UIView</span> *view2 = [[<span class="built_in">UIView</span> alloc] init];</div><div class="line">viewsDictionary = <span class="built_in">NSDictionaryOfVariableBindings</span>(view1,view2);</div></pre></td></tr></table></figure>
+<h3 id="options"><a href="#options" class="headerlink" title="options"></a>options</h3><p>可以给这个位掩码传入NSLayoutFormatAlignAllTop使它们顶部对齐，这个值的默认值是NSLayoutFormatDirectionLeadingToTrailing从左到右。可以使用NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom 表示两个视图的顶部和底部约束相同。</p>
+<h3 id="metrics"><a href="#metrics" class="headerlink" title="metrics"></a>metrics</h3><p>这个参数作用是替换VFL语句中对应的值<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">CGRect</span> viewFrame = <span class="built_in">CGRectMake</span>(<span class="number">50</span>, <span class="number">50</span>, <span class="number">100</span>, <span class="number">100</span>);</div><div class="line"><span class="built_in">NSDictionary</span> *views = <span class="built_in">NSDictionaryOfVariableBindings</span>(view1, view2);</div><div class="line"><span class="built_in">NSDictionary</span> *metrics = @&#123;<span class="string">@"left"</span>: @(<span class="built_in">CGRectGetMinX</span>(viewFrame)),</div><div class="line">                                           <span class="string">@"top"</span>: @(<span class="built_in">CGRectGetMinY</span>(viewFrame)),</div><div class="line">                                        <span class="string">@"width"</span>: @(<span class="built_in">CGRectGetWidth</span>(viewFrame)),</div><div class="line">                                       <span class="string">@"height"</span>: @(<span class="built_in">CGRectGetHeight</span>(viewFrame))&#125;;</div><div class="line">[view1 addConstraints:[<span class="built_in">NSLayoutConstraint</span> constraintsWithVisualFormat:<span class="string">@"H:|-left-[view(&gt;=width)]"</span> options:<span class="number">0</span> metrics:metrics views:views]];</div></pre></td></tr></table></figure></p>
+<p>使用NSDictionaryOfVariableBindings(…)快速创建<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSNumber</span> *left = @<span class="number">50</span>;</div><div class="line"><span class="built_in">NSNumber</span> *top = @<span class="number">50</span>;</div><div class="line"><span class="built_in">NSNumber</span> *width = @<span class="number">100</span>;</div><div class="line"><span class="built_in">NSNumber</span> *height = @<span class="number">100</span>;</div><div class="line"></div><div class="line"><span class="built_in">NSDictionary</span> *views = <span class="built_in">NSDictionaryOfVariableBindings</span>(view1, view2);</div><div class="line"><span class="built_in">NSDictionary</span> *metrics = <span class="built_in">NSDictionaryOfVariableBindings</span>(left, top, width, height);</div><div class="line"></div><div class="line">[view1 addConstraints:[<span class="built_in">NSLayoutConstraint</span> constraintsWithVisualFormat:<span class="string">@"H:|-left-[view(&gt;=width)]"</span> options:<span class="number">0</span> metrics:metrics views:views]];</div></pre></td></tr></table></figure></p>
+<h3 id="VFL几个基本例子"><a href="#VFL几个基本例子" class="headerlink" title="VFL几个基本例子"></a>VFL几个基本例子</h3><ul>
+<li>[view1(50)]-10-[view2(100)] 表示view1宽50，view2宽100，间隔10</li>
+<li>[view1(&gt;=50@750)] 表示view1宽度大于50，约束条件优先级为750（优先级越大优先执行该约束，最大1000）</li>
+<li>V:[view1][view2(==view1)] 表示按照竖直排，上面是view1下面是一个和它一样大的view2</li>
+<li>H:|-[view1]-[view2]-[view3(&gt;=20)]-| 表示按照水平排列，|表示父视图，各个视图之间按照默认宽度来排列</li>
+</ul>
+<h2 id="VFL介绍"><a href="#VFL介绍" class="headerlink" title="VFL介绍"></a>VFL介绍</h2><p>无论使用哪种方法创建约束都是NSLayoutConstraint类的成员，每个约束都会在一个Objective-C对象中存储y = mx + b规则，然后通过Auto Layout引擎来表达该规则，VFL也不例外。VFL由一个描述布局的文字字符串组成，文本会指出间隔，不等量和优先级。官方对其的介绍：Visual Format Language <a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/VisualFormatLanguage.html" target="_blank" rel="external">https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/VisualFormatLanguage.html</a></p>
+<h2 id="VFL的语法"><a href="#VFL的语法" class="headerlink" title="VFL的语法"></a>VFL的语法</h2><ul>
+<li>标准间隔：[button]-[textField]</li>
+<li>宽约束：[button(&gt;=50)]</li>
+<li>与父视图的关系：|-50-[purpleBox]-50-|</li>
+<li>垂直布局：V:[topField]-10-[bottomField]</li>
+<li>Flush Views：[maroonView][buleView]</li>
+<li>权重：[button(100@20)]</li>
+<li>等宽：[button(==button2)]</li>
+<li>Multiple Predicates：[flexibleButton(&gt;=70,&lt;=100)]</li>
+</ul>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>创建这种字符串时需要注意一下几点：</p>
+<ul>
+<li>H:和V:每次都使用一个。</li>
+<li>视图变量名出现在方括号中，例如[view]。</li>
+<li>字符串中顺序是按照从顶到底，从左到右</li>
+<li>视图间隔以数字常量出现，例如-10-。</li>
+<li>|表示父视图</li>
+</ul>
+<h1 id="使用Auto-Layout时需要注意的点"><a href="#使用Auto-Layout时需要注意的点" class="headerlink" title="使用Auto Layout时需要注意的点"></a>使用Auto Layout时需要注意的点</h1><ul>
+<li>注意禁用Autoresizing Masks。对于每个需要使用Auto Layout的视图需要调用setTranslatesAutoresizingMaskIntoConstraints:NO</li>
+<li>VFL语句里不能包含空格和&gt;，&lt;这样的约束</li>
+<li>布局原理是由外向里布局，最先屏幕尺寸，再一层一层往里决定各个元素大小。</li>
+<li>删除视图时直接使用removeConstraint和removeConstraints时需要注意这样删除是没法删除视图不支持的约束导致view中还包含着那个约束（使用第三方库时需要特别注意下）。解决这个的办法就是添加约束时用一个局部变量保存下，删除时进行比较删掉和先前那个，还有个办法就是设置标记，constraint.identifier = @“What you want to call”。</li>
+</ul>
+<h1 id="布局约束规则"><a href="#布局约束规则" class="headerlink" title="布局约束规则"></a>布局约束规则</h1><p>表达布局约束的规则可以使用一些简单的数学术语，如下表</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">属性</td>
+<td style="text-align:left">视图位置</td>
+<td style="text-align:left">NSLayoutAttributeLeft, NSLayoutAttributeRight, NSLayoutAttributeTop, NSLayoutAttributeBottom</td>
+</tr>
+<tr>
+<td style="text-align:left">属性</td>
+<td style="text-align:left">视图前面后面</td>
+<td style="text-align:left">NSLayoutAttributeLeading, NSLayoutAttributeTrailing</td>
+</tr>
+<tr>
+<td style="text-align:left">属性</td>
+<td style="text-align:left">视图的宽度和高度</td>
+<td style="text-align:left">NSLayoutAttributeWidth, NSLayoutAttributeHeight</td>
+</tr>
+<tr>
+<td style="text-align:left">属性</td>
+<td style="text-align:left">视图中心</td>
+<td style="text-align:left">NSLayoutAttributeCenterX, NSLayoutAttributeCenterY</td>
+</tr>
+<tr>
+<td style="text-align:left">属性</td>
+<td style="text-align:left">视图的基线，在视图底部上方放置文字的地方</td>
+<td style="text-align:left">NSLayoutAttributeBaseline</td>
+</tr>
+<tr>
+<td style="text-align:left">属性</td>
+<td style="text-align:left">占位符，在与另一个约束的关系中没有用到某个属性时可以使用占位符</td>
+<td style="text-align:left">NSLayoutAttributeNotAnAttribute</td>
+</tr>
+<tr>
+<td style="text-align:left">关系</td>
+<td style="text-align:left">允许将属性通过等式和不等式相互关联</td>
+<td style="text-align:left">NSLayoutRelationLessThanOrEqual, NSLayoutRelationEqual, NSLayoutRelationGreaterThanOrEqual</td>
+</tr>
+<tr>
+<td style="text-align:left">数学运算</td>
+<td style="text-align:left">每个约束的乘数和相加性常数</td>
+<td style="text-align:left">CGFloat值</td>
+</tr>
+</tbody>
+</table>
+<h1 id="约束层级"><a href="#约束层级" class="headerlink" title="约束层级"></a>约束层级</h1><p>约束引用两视图时，这两个视图需要属于同一个视图层次结构，对于引用两个视图的约束只有两个情况是允许的。第一种是一个视图是另一个视图的父视图，第二个情况是两个视图在一个窗口下有一个非nil的共同父视图。</p>
+<h1 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h1><p>哪个约束优先级高会先满足其约束，系统内置优先级枚举值UILayoutPriority<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">enum</span> &#123;</div><div class="line">    <span class="built_in">UILayoutPriorityRequired</span> = <span class="number">1000</span>, <span class="comment">//默认的优先级，意味着默认约束一旦冲突就会crash</span></div><div class="line">    <span class="built_in">UILayoutPriorityDefaultHigh</span> = <span class="number">750</span>,</div><div class="line">    <span class="built_in">UILayoutPriorityDefaultLow</span> = <span class="number">250</span>,</div><div class="line">    <span class="built_in">UILayoutPriorityFittingSizeLevel</span> = <span class="number">50</span>,</div><div class="line">&#125;;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">float</span> <span class="built_in">UILayoutPriority</span>;</div></pre></td></tr></table></figure></p>
+<h1 id="IntrinsicContentSize-Compression-Resistance-Priority-Hugging-Priority"><a href="#IntrinsicContentSize-Compression-Resistance-Priority-Hugging-Priority" class="headerlink" title="IntrinsicContentSize / Compression Resistance Priority / Hugging Priority"></a>IntrinsicContentSize / Compression Resistance Priority / Hugging Priority</h1><p>具有instrinsic content size的控件，比如UILabel，UIButton，选择控件，进度条和分段等等，可以自己计算自己的大小，比如label设置text和font后大小是可以计算得到的。这时可以通过设置Hugging priority让这些控件不要大于某个设定的值,默认优先级为250。设置Content Compression Resistance就是让控件不要小于某个设定的值，默认优先级为750。加这些值可以当作是加了个额外的约束值来约束宽。</p>
+<h1 id="布局过程"><a href="#布局过程" class="headerlink" title="布局过程"></a>布局过程</h1><p>updateConstraints -&gt; layoutSubViews -&gt; drawRect</p>
+<h2 id="viewDidLayoutSubviews，-layoutSubviews"><a href="#viewDidLayoutSubviews，-layoutSubviews" class="headerlink" title="viewDidLayoutSubviews，-layoutSubviews"></a>viewDidLayoutSubviews，-layoutSubviews</h2><p>使用Auto Layout的view会在viewDidLayoutSubviews或－layoutSubview调用super转换成具有正确显示的frame值。</p>
+<h2 id="View的改变会调用哪些方法"><a href="#View的改变会调用哪些方法" class="headerlink" title="View的改变会调用哪些方法"></a>View的改变会调用哪些方法</h2><ul>
+<li>改变frame.origin不会掉用layoutSubviews</li>
+<li>改变frame.size会使 superVIew的layoutSubviews调用</li>
+<li>改变bounds.origin和bounds.size都会调用superView和自己view的layoutSubviews方法</li>
+</ul>
+<h1 id="Auto-Layout的Debug"><a href="#Auto-Layout的Debug" class="headerlink" title="Auto Layout的Debug"></a>Auto Layout的Debug</h1><p>Auto Layout以下几种情况会出错</p>
+<ul>
+<li>Unsatisfiable Layouts：约束冲突，同一时刻约束没法同时满足。系统发现时会先检测那些冲突的约束，然后会一直拆掉冲突的约束再检查布局直到找到合适的布局，最后日志会将冲突的约束和拆掉的约束打印在控制台上。</li>
+<li>Ambiguous Layouts：约束有缺失，比如说位置或者大小没有全指定到。还有种情况就是两个冲突的约束的权重是一样的就会崩。</li>
+<li>Logical Errors：布局中的逻辑错误。</li>
+<li>不含视图项的约束不合法，每个约束至少需要引用一个视图，不然会崩。在删除视图时一定要注意。<h2 id="Debugger"><a href="#Debugger" class="headerlink" title="Debugger"></a>Debugger</h2></li>
+<li>po [[UIWindow keyWindow] _autolayoutTrace]<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2>参考官方文档：<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/TypesofErrors.html" target="_blank" rel="external">https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/TypesofErrors.html</a></li>
+</ul>
+<h1 id="容易出问题的Bug-Case"><a href="#容易出问题的Bug-Case" class="headerlink" title="容易出问题的Bug Case"></a>容易出问题的Bug Case</h1><ul>
+<li>无共同父视图的视图之间相互添加约束会有问题。</li>
+<li>调用了setNeedsLayout后不能通过frame改变视图和控件</li>
+<li>为了让在设置了setTranslatesAutoresizingMaskIntoConstraints:NO视图里更改的frame立刻生效而执行了没有标记立刻刷新的layoutIfNeeded的方式是不可取的。</li>
+</ul>
+<h1 id="实践中碰到的非必现低配置机器崩溃bug分析"><a href="#实践中碰到的非必现低配置机器崩溃bug分析" class="headerlink" title="实践中碰到的非必现低配置机器崩溃bug分析"></a>实践中碰到的非必现低配置机器崩溃bug分析</h1><h2 id="案例一"><a href="#案例一" class="headerlink" title="案例一"></a>案例一</h2><p>一个视图缺少高宽约束，在设置完了约束后执行layoutIfNeeded，然后设置宽高，这种情况在低配机器上可能会出现崩问题。原因在于layoutIfNeeded需要有标记才会立刻调用layoutSubview得到宽高，不然是不会马上调用的。页面第一次显示是会自动标记上需要刷新这个标记的，所以第一次看显示都是看不出问题的，但页面再次调用layoutIfNeeded时是不会立刻执行layoutSubview的（但之前加上setNeedsLayout就会立刻执行），这时改变的宽高值会在上文生命周期中提到的Auto Layout Cycle中的Engine里的Deferred Layout Pass里执行layoutSubview，手动设置的layoutIfNeeded也会执行一遍layoutSubview，但是这个如果发生在Deferred Layout Pass之后就会出现崩的问题，因为当视图设置为setTranslatesAutoresizingMaskIntoConstraints:NO时会严格按照约束-&gt;Engine-&gt;显示这种流程，如在Deferred Layout Pass之前设置好是没有问题的，之后强制执行LayoutSubview会产生一个权重和先前一样的约束在类似动画block里更新布局让Engine执行导致Ambiguous Layouts这种权重相同冲突崩溃的情况发生。</p>
+<h2 id="案例二"><a href="#案例二" class="headerlink" title="案例二"></a>案例二</h2><p>将多个有相互约束关系视图removeFromSuperView后更新布局在低配机器上出现崩的问题。这个原因主要是根据不含视图项的约束不合法这个原则来的，同时会抛出野指针的错误。在内存吃紧机器上，当应用占内存较多系统会抓住任何可以释放heap区内存的机会视图被移除后会立刻被清空，这时约束如果还没有被释就满足不含视图项的约束会崩的情况了。</p>
+<h1 id="推荐Auto-Layout第三方库"><a href="#推荐Auto-Layout第三方库" class="headerlink" title="推荐Auto Layout第三方库"></a>推荐Auto Layout第三方库</h1><h2 id="Masonry"><a href="#Masonry" class="headerlink" title="Masonry"></a>Masonry</h2><p>Github地址：<a href="https://github.com/SnapKit/Masonry" target="_blank" rel="external">https://github.com/SnapKit/Masonry</a></p>
+<h2 id="Cartography"><a href="#Cartography" class="headerlink" title="Cartography"></a>Cartography</h2><p>Github地址：<a href="https://github.com/robb/Cartography" target="_blank" rel="external">https://github.com/robb/Cartography</a></p>
+<h1 id="Masonry-1"><a href="#Masonry-1" class="headerlink" title="Masonry"></a>Masonry</h1><p>可以参看我上篇文章《AutoLayout框架Masonry使用心得》:<a href="http://www.starming.com/index.php?v=index&amp;view=81" target="_blank" rel="external">http://www.starming.com/index.php?v=index&amp;view=81</a></p>
+<h1 id="各版本iOS中AutoLayout的区别"><a href="#各版本iOS中AutoLayout的区别" class="headerlink" title="各版本iOS中AutoLayout的区别"></a>各版本iOS中AutoLayout的区别</h1><p>完整记录可以到官方网站进行核对和查找：What’s New in iOS <a href="https://developer.apple.com/library/ios/releasenotes/General/WhatsNewIniOS/Introduction/Introduction.html" target="_blank" rel="external">https://developer.apple.com/library/ios/releasenotes/General/WhatsNewIniOS/Introduction/Introduction.html</a></p>
+<h2 id="iOS6"><a href="#iOS6" class="headerlink" title="iOS6"></a>iOS6</h2><p>苹果在这个版本引入Auto Layout，具备了所有核心功能。</p>
+<h2 id="iOS7"><a href="#iOS7" class="headerlink" title="iOS7"></a>iOS7</h2><ul>
+<li>NavigationBar,TabBar和ToolBar的translucent属性默认为YES，当前ViewController的高度是整个屏幕的高度，为了确保不被这些Bar覆盖可以在布局中使用topLayoutGuide和bottomLayoutGuide属性。</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="built_in">NSLayoutConstraint</span> constraintsWithVisualFormat:<span class="string">@"V:[topLayoutGuide]-[view1]"</span> options:<span class="number">0</span> metrics:<span class="literal">nil</span> views:view2];</div></pre></td></tr></table></figure>
+<h2 id="iOS8"><a href="#iOS8" class="headerlink" title="iOS8"></a>iOS8</h2><ul>
+<li>Self Sizing Cells <a href="http://www.appcoda.com/self-sizing-cells/" target="_blank" rel="external">http://www.appcoda.com/self-sizing-cells/</a></li>
+<li>UIViewController新增两个方法，用来处理UITraitEnvironment协议，UIKit里有UIScreen，UIViewController，UIView和UIPresentationController支持这个协议，当视图traitCollection改变时UIViewController时可以捕获到这个消息进行处理的。</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)setOverrideTraitCollection:(<span class="built_in">UITraitCollection</span> *)collection forChildViewController:(<span class="built_in">UIViewController</span> *)childViewController <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</div><div class="line">- (<span class="built_in">UITraitCollection</span> *)overrideTraitCollectionForChildViewController:(<span class="built_in">UIViewController</span> *)childViewController <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</div></pre></td></tr></table></figure>
+<ul>
+<li>Size Class的出现UIViewController提供了一组新协议来支持UIContentContainer</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)systemLayoutFittingSizeDidChangeForChildContentContainer:(<span class="keyword">id</span> )container <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</div><div class="line">- (<span class="built_in">CGSize</span>)sizeForChildContentContainer:(<span class="keyword">id</span> )container withParentContainerSize:(<span class="built_in">CGSize</span>)parentSize <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</div><div class="line">- (<span class="keyword">void</span>)viewWillTransitionToSize:(<span class="built_in">CGSize</span>)size withTransitionCoordinator:(<span class="keyword">id</span> )coordinator <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</div><div class="line">- (<span class="keyword">void</span>)willTransitionToTraitCollection:(<span class="built_in">UITraitCollection</span> *)newCollection withTransitionCoordinator:(<span class="keyword">id</span> )coordinator <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</div></pre></td></tr></table></figure>
+<ul>
+<li>UIView的Margin新增了3个API，NSLayoutMargins可以定义view之间的距离，这个只对Auto Layout有效，并且默认值为{8,8,8,8}。NSLayoutAttribute的枚举值也有相应的更新</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//UIView的3个Margin相关API</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>) <span class="built_in">UIEdgeInsets</span> layoutMargins <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>) <span class="built_in">BOOL</span> preservesSuperviewLayoutMargins <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</div><div class="line">- (<span class="keyword">void</span>)layoutMarginsDidChange <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</div><div class="line"><span class="comment">//NSLayoutAttribute的枚举值更新</span></div><div class="line"><span class="built_in">NSLayoutAttributeLeftMargin</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">8</span>_0),</div><div class="line"><span class="built_in">NSLayoutAttributeRightMargin</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">8</span>_0),</div><div class="line"><span class="built_in">NSLayoutAttributeTopMargin</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">8</span>_0),</div><div class="line"><span class="built_in">NSLayoutAttributeBottomMargin</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">8</span>_0),</div><div class="line"><span class="built_in">NSLayoutAttributeLeadingMargin</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">8</span>_0),</div><div class="line"><span class="built_in">NSLayoutAttributeTrailingMargin</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">8</span>_0),</div><div class="line"><span class="built_in">NSLayoutAttributeCenterXWithinMargins</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">8</span>_0),</div><div class="line"><span class="built_in">NSLayoutAttributeCenterYWithinMargins</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">8</span>_0),</div></pre></td></tr></table></figure>
+<h2 id="iOS9"><a href="#iOS9" class="headerlink" title="iOS9"></a>iOS9</h2><h3 id="UIStackView"><a href="#UIStackView" class="headerlink" title="UIStackView"></a>UIStackView</h3><p>苹果一直希望能够让更多的人来用Auto Layout，除了弄出一个VFL现在又弄出一个不需要约束的方法，使用Stack view使大家使用Auto Layout时不用触碰到约束，官方口号是“Start with Stack View, use constraints as needed”。 更多细节可以查看官方介绍：UIKit Framework Reference  UIStackView Class Reference<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/AutoLayoutWithoutConstraints.html" target="_blank" rel="external">https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/AutoLayoutWithoutConstraints.html</a></p>
+<p>Stack Views ：<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/LayoutUsingStackViews.html" target="_blank" rel="external">https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/LayoutUsingStackViews.html</a></p>
+<p>Stack View提供了更加简便的自动布局方法比如Alignment的Fill，Leading，Center，Trailing。Distribution的Fill，Fill Equally，Fill Proportionally，Equal Spacing。</p>
+<p>如果希望在iOS9之前的系统也能够使用Stack view可以用sunnyxx的FDStackView<a href="https://github.com/forkingdog/FDStackView" target="_blank" rel="external">https://github.com/forkingdog/FDStackView</a>，利用运行时替换元素的方法来支持iOS6+系统。</p>
+<h3 id="NSLayoutAnchorAPI"><a href="#NSLayoutAnchorAPI" class="headerlink" title="NSLayoutAnchorAPI"></a>NSLayoutAnchorAPI</h3><p>新增这个API能够让约束的声明更加清晰，还能够通过静态类型检查确保约束的正常工作。具体可以查看官方文档<a href="https://developer.apple.com/library/ios/documentation/AppKit/Reference/NSLayoutAnchor_ClassReference/" target="_blank" rel="external">https://developer.apple.com/library/ios/documentation/AppKit/Reference/NSLayoutAnchor_ClassReference/</a><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSLayoutConstraint</span> *constraint = [view1.leadingAnchor constraintEqualToAnchor:view2.topAnchor];</div></pre></td></tr></table></figure></p>
+<h1 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h1><h2 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h2><ul>
+<li>Auto Layout Guide <a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/index.html" target="_blank" rel="external">https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/index.html</a></li>
+<li>UIScrollView And Autolayout <a href="https://developer.apple.com/library/ios/technotes/tn2154/_index.html" target="_blank" rel="external">https://developer.apple.com/library/ios/technotes/tn2154/_index.html</a></li>
+<li>IB中使用Auto Layout：Auto Layout Help <a href="https://developer.apple.com/library/ios/recipes/xcode_help-IB_auto_layout/_index.html" target="_blank" rel="external">https://developer.apple.com/library/ios/recipes/xcode_help-IB_auto_layout/_index.html</a></li>
+<li>What’s New in iOS <a href="https://developer.apple.com/library/ios/releasenotes/General/WhatsNewIniOS/Introduction/Introduction.html" target="_blank" rel="external">https://developer.apple.com/library/ios/releasenotes/General/WhatsNewIniOS/Introduction/Introduction.html</a></li>
+</ul>
+<h2 id="WWDC视频"><a href="#WWDC视频" class="headerlink" title="WWDC视频"></a>WWDC视频</h2><ul>
+<li>WWDC 2012: Introduction to Auto Layout for iOS and OS X <a href="https://developer.apple.com/videos/wwdc/2012/?id=202" target="_blank" rel="external">https://developer.apple.com/videos/wwdc/2012/?id=202</a></li>
+<li>WWDC 2012: Introducing Collection Views <a href="https://developer.apple.com/videos/play/wwdc2012-205/" target="_blank" rel="external">https://developer.apple.com/videos/play/wwdc2012-205/</a></li>
+<li>WWDC 2012: Advanced Collection Views and Building Custom Layouts <a href="https://developer.apple.com/videos/play/wwdc2012-219" target="_blank" rel="external">https://developer.apple.com/videos/play/wwdc2012-219</a></li>
+<li>WWDC 2012: Best Practices for Mastering Auto Layout <a href="https://developer.apple.com/videos/wwdc/2012/?id=228" target="_blank" rel="external">https://developer.apple.com/videos/wwdc/2012/?id=228</a></li>
+<li>WWDC 2012: Auto Layout by Example <a href="https://developer.apple.com/videos/wwdc/2012/?id=232" target="_blank" rel="external">https://developer.apple.com/videos/wwdc/2012/?id=232</a></li>
+<li>WWDC 2013: Interface Builder Core Concepts <a href="https://developer.apple.com/videos/play/wwdc2013-405" target="_blank" rel="external">https://developer.apple.com/videos/play/wwdc2013-405</a></li>
+<li>WWDC 2013: Taking Control of Auto Layout in Xcode 5 <a href="https://developer.apple.com/videos/wwdc/2013/?id=406" target="_blank" rel="external">https://developer.apple.com/videos/wwdc/2013/?id=406</a></li>
+<li>WWDC 2015: Mysteries of Auto Layout, Part 1 内容包含了Auto Layout更高封装stack view的介绍 <a href="https://developer.apple.com/videos/play/wwdc2015-218/" target="_blank" rel="external">https://developer.apple.com/videos/play/wwdc2015-218/</a></li>
+<li>WWDC 2015: Mysteries of Auto Layout, Part 2 包含Auto Layout生命周期和调试Auto Layout的一些方法介绍<a href="https://developer.apple.com/videos/play/wwdc2015-219/" target="_blank" rel="external">https://developer.apple.com/videos/play/wwdc2015-219/</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="戴铭 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫一扫Starming星光社微信公众号starming-weixin，关注最新文章</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      戴铭
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://ming1016.github.io/2015/11/03/deeply-analyse-autolayout/" title="深入剖析Auto Layout，分析iOS各版本新增特性">http://ming1016.github.io/2015/11/03/deeply-analyse-autolayout/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+            <a href="/tags/Autolayout/" rel="tag"># Autolayout</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/04/01/objc-runtime/" rel="next" title="Objc Runtime 总结">
+                <i class="fa fa-chevron-left"></i> Objc Runtime 总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/01/13/how-to-use-gcd/" rel="prev" title="细说 GCD（Grand Central Dispatch）如何用">
+                细说 GCD（Grand Central Dispatch）如何用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars0.githubusercontent.com/u/251980?v=3&s=460"
+               alt="戴铭" />
+          <p class="site-author-name" itemprop="name">戴铭</p>
+           
+              <p class="site-description motion-element" itemprop="description">不积跬步，无以至千里；不积小流，无以成江海</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ming1016" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/allstarming" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/ming1016" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#来历"><span class="nav-number">1.</span> <span class="nav-text">来历</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cassowary"><span class="nav-number">1.1.</span> <span class="nav-text">Cassowary</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Auto-Layout的生命周期"><span class="nav-number">2.</span> <span class="nav-text">Auto Layout的生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#约束变化"><span class="nav-number">2.1.</span> <span class="nav-text">约束变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deferred-Layout-Pass"><span class="nav-number">2.2.</span> <span class="nav-text">Deferred Layout Pass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期中需要注意的事项"><span class="nav-number">2.3.</span> <span class="nav-text">生命周期中需要注意的事项</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#约束"><span class="nav-number">3.</span> <span class="nav-text">约束</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#约束方程式"><span class="nav-number">3.1.</span> <span class="nav-text">约束方程式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用API添加约束"><span class="nav-number">3.2.</span> <span class="nav-text">使用API添加约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用VFL语言添加约束"><span class="nav-number">3.3.</span> <span class="nav-text">使用VFL语言添加约束</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#options"><span class="nav-number">3.3.1.</span> <span class="nav-text">options</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#metrics"><span class="nav-number">3.3.2.</span> <span class="nav-text">metrics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VFL几个基本例子"><span class="nav-number">3.3.3.</span> <span class="nav-text">VFL几个基本例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VFL介绍"><span class="nav-number">3.4.</span> <span class="nav-text">VFL介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VFL的语法"><span class="nav-number">3.5.</span> <span class="nav-text">VFL的语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项"><span class="nav-number">3.5.1.</span> <span class="nav-text">注意事项</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用Auto-Layout时需要注意的点"><span class="nav-number">4.</span> <span class="nav-text">使用Auto Layout时需要注意的点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#布局约束规则"><span class="nav-number">5.</span> <span class="nav-text">布局约束规则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#约束层级"><span class="nav-number">6.</span> <span class="nav-text">约束层级</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优先级"><span class="nav-number">7.</span> <span class="nav-text">优先级</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IntrinsicContentSize-Compression-Resistance-Priority-Hugging-Priority"><span class="nav-number">8.</span> <span class="nav-text">IntrinsicContentSize / Compression Resistance Priority / Hugging Priority</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#布局过程"><span class="nav-number">9.</span> <span class="nav-text">布局过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#viewDidLayoutSubviews，-layoutSubviews"><span class="nav-number">9.1.</span> <span class="nav-text">viewDidLayoutSubviews，-layoutSubviews</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#View的改变会调用哪些方法"><span class="nav-number">9.2.</span> <span class="nav-text">View的改变会调用哪些方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Auto-Layout的Debug"><span class="nav-number">10.</span> <span class="nav-text">Auto Layout的Debug</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Debugger"><span class="nav-number">10.1.</span> <span class="nav-text">Debugger</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">10.2.</span> <span class="nav-text">参考</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容易出问题的Bug-Case"><span class="nav-number">11.</span> <span class="nav-text">容易出问题的Bug Case</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实践中碰到的非必现低配置机器崩溃bug分析"><span class="nav-number">12.</span> <span class="nav-text">实践中碰到的非必现低配置机器崩溃bug分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#案例一"><span class="nav-number">12.1.</span> <span class="nav-text">案例一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#案例二"><span class="nav-number">12.2.</span> <span class="nav-text">案例二</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐Auto-Layout第三方库"><span class="nav-number">13.</span> <span class="nav-text">推荐Auto Layout第三方库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Masonry"><span class="nav-number">13.1.</span> <span class="nav-text">Masonry</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cartography"><span class="nav-number">13.2.</span> <span class="nav-text">Cartography</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Masonry-1"><span class="nav-number">14.</span> <span class="nav-text">Masonry</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#各版本iOS中AutoLayout的区别"><span class="nav-number">15.</span> <span class="nav-text">各版本iOS中AutoLayout的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS6"><span class="nav-number">15.1.</span> <span class="nav-text">iOS6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS7"><span class="nav-number">15.2.</span> <span class="nav-text">iOS7</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS8"><span class="nav-number">15.3.</span> <span class="nav-text">iOS8</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS9"><span class="nav-number">15.4.</span> <span class="nav-text">iOS9</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UIStackView"><span class="nav-number">15.4.1.</span> <span class="nav-text">UIStackView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NSLayoutAnchorAPI"><span class="nav-number">15.4.2.</span> <span class="nav-text">NSLayoutAnchorAPI</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考-1"><span class="nav-number">16.</span> <span class="nav-text">参考</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#官方文档"><span class="nav-number">16.1.</span> <span class="nav-text">官方文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WWDC视频"><span class="nav-number">16.2.</span> <span class="nav-text">WWDC视频</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">戴铭</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://ming1016.github.io/2015/11/03/deeply-analyse-autolayout/';
+          this.page.identifier = '2015/11/03/deeply-analyse-autolayout/';
+          this.page.title = '深入剖析Auto Layout，分析iOS各版本新增特性';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

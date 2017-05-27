@@ -1,0 +1,868 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS,smck,Swift," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="星光社 - 戴铭的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前言最近几周在用 swift 做一个命令行工具 smck 用来对现有 OC 工程的代码做些分析和处理。日后工程切换成 Swift 可以加上对 Swift 工程代码的支持。昨天看到喵神在微博上说他下周要直播 live coding 一个 swift 的命令行工具，传送门： 现场编程 - 用 Swift 创建命令行工具 fengniao-cli Part1 ，其实蛮期待。想想跟喵神挺有缘的，最近下了他">
+<meta name="keywords" content="iOS,smck,Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 Swift 编写的工程代码静态分析命令行工具 smck">
+<meta property="og:url" content="http://ming1016.github.io/2017/04/01/build-static-analysis-program-smck-use-swift/index.html">
+<meta property="og:site_name" content="星光社 - 戴铭的博客">
+<meta property="og:description" content="前言最近几周在用 swift 做一个命令行工具 smck 用来对现有 OC 工程的代码做些分析和处理。日后工程切换成 Swift 可以加上对 Swift 工程代码的支持。昨天看到喵神在微博上说他下周要直播 live coding 一个 swift 的命令行工具，传送门： 现场编程 - 用 Swift 创建命令行工具 fengniao-cli Part1 ，其实蛮期待。想想跟喵神挺有缘的，最近下了他">
+<meta property="og:image" content="https://github.com/ming1016/smck/blob/master/README/5.png?raw=true">
+<meta property="og:image" content="https://github.com/ming1016/smck/blob/master/README/6.png?raw=true">
+<meta property="og:image" content="https://github.com/ming1016/smck/blob/master/README/2.png?raw=true">
+<meta property="og:image" content="https://github.com/ming1016/smck/blob/master/README/3.png?raw=true">
+<meta property="og:image" content="https://github.com/ming1016/smck/blob/master/README/4.png?raw=true">
+<meta property="og:updated_time" content="2017-05-27T02:23:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用 Swift 编写的工程代码静态分析命令行工具 smck">
+<meta name="twitter:description" content="前言最近几周在用 swift 做一个命令行工具 smck 用来对现有 OC 工程的代码做些分析和处理。日后工程切换成 Swift 可以加上对 Swift 工程代码的支持。昨天看到喵神在微博上说他下周要直播 live coding 一个 swift 的命令行工具，传送门： 现场编程 - 用 Swift 创建命令行工具 fengniao-cli Part1 ，其实蛮期待。想想跟喵神挺有缘的，最近下了他">
+<meta name="twitter:image" content="https://github.com/ming1016/smck/blob/master/README/5.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ming1016.github.io/2017/04/01/build-static-analysis-program-smck-use-swift/"/>
+
+
+
+
+
+  <title>用 Swift 编写的工程代码静态分析命令行工具 smck | 星光社 - 戴铭的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">星光社 - 戴铭的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ming1016.github.io/2017/04/01/build-static-analysis-program-smck-use-swift/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="戴铭">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/251980?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星光社 - 戴铭的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">用 Swift 编写的工程代码静态分析命令行工具 smck</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-01T22:00:31+08:00">
+                2017-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/01/build-static-analysis-program-smck-use-swift/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/04/01/build-static-analysis-program-smck-use-swift/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近几周在用 swift 做一个命令行工具 smck 用来对现有 OC 工程的代码做些分析和处理。日后工程切换成 Swift 可以加上对 Swift 工程代码的支持。昨天看到喵神在微博上说他下周要直播 live coding 一个 swift 的命令行工具，传送门： <a href="http://m.quzhiboapp.com/?liveId=391&amp;fromUserId=12049#!/intro/391" target="_blank" rel="external">现场编程 - 用 Swift 创建命令行工具 fengniao-cli Part1</a> ，其实蛮期待。想想跟喵神挺有缘的，最近下了他开发的 iOS 应用 Mail Me，随时能够记录工作和准备讲座时一些灵感，smck 的一些实现还有模块的设计灵感也是通过这个应用随时记录了下来呢，所以也推荐大家使用，真心方便。还有先前 Segmentfault 邀请我这个月31号在他们的直播平台上做个讲座，传送门： <a href="https://segmentfault.com/l/1500000008514518" target="_blank" rel="external">深入剖析 iOS 编译 Clang / LLVM - 戴铭 - SegmentFault 讲堂</a> ，先前写过一篇文章，直播可能更利于演示和详细说明一些细节吧。看来这段时间我要跟喵神做好多类似的事情了。smck 的代码今天已经放到了 Github 上，地址：<a href="https://github.com/ming1016/smck" target="_blank" rel="external">https://github.com/ming1016/smck</a></p>
+<h2 id="smck-可以做哪些事情呢？"><a href="#smck-可以做哪些事情呢？" class="headerlink" title="smck 可以做哪些事情呢？"></a>smck 可以做哪些事情呢？</h2><ul>
+<li>简单的比如命名规则的检查，按照团队标准来，如所有继承 UIViewController 的命名末尾统一成 VC，继承 JSONModel 的命名末尾统一成 Model，还有特定功能基类的子类按照一定的命名规则来。</li>
+<li>再比如查找所有中文字符串列出每个字符串分别使用在哪个控件上。</li>
+<li>根据类是否被初始化或直接调用等规则检查来分析哪些类从来没有调用过来判断是否是没有用的类。</li>
+<li>对工程质量的检查，比如 NSString，block，NSArray 的属性检查否是为 copy，还有 protocol 是否为 weak，Array 的操作是否使用具有安全操作的 Category 来做等等。<br>当然需要检查分析和处理的肯定不止这些，所以在 smck 这个程序设计成了一种非常利于添加各种检查功能模块的结构，通过简单的代码编写每个人或团队都可以方便编写添加各种 checker。</li>
+</ul>
+<h2 id="是怎么做到简单编写就能够添加功能呢？"><a href="#是怎么做到简单编写就能够添加功能呢？" class="headerlink" title="是怎么做到简单编写就能够添加功能呢？"></a>是怎么做到简单编写就能够添加功能呢？</h2><p>因为代码分析的过程会通过一系列已经编写好的 parser 来完成，parser 会完成 token 的分析和上下文还有工程全局分析输出所有节点的数据信息，根据这些完整的信息和已经定义好的一系列具有完整包含关系的结构体就能够进行各种各样功能的定制化了。下面是一些 parser 和功能介绍：</p>
+<p><img src="https://github.com/ming1016/smck/blob/master/README/5.png?raw=true" alt="parser"></p>
+<ul>
+<li>ParsingMethod.swift ：会返回 Method 结构体，包含了方法名，各个参数，方法内使用过的方法，方法内定义的临时变量等信息。</li>
+<li>ParsingMethodContent.swift ：会分析方法内的 token 根据语法形成数组结构进行处理。这里需要处理的东西很多，目前还在根据计划添加更多的数据输出。</li>
+<li>ParsingMacro.swift ：处理宏定义，主要是输出 token 给其它 parser 来处理。</li>
+<li>ParsingImport.swift ：返回 Import 结构体，包含引入的类名，包名</li>
+<li>ParsingProperty.swift ：会分析定义的属性 Property 信息</li>
+<li>ParsingInterface.swift ：会根据这个分析出一个文件中定义了多少各类，类的结构体 Object 里类名，父类名，类别名会在这里解析出。</li>
+<li>ParsingProtocol.swift ：会将分析出的协议设置到 Object 结构体中。</li>
+<li>ParsingObject.swift ： 目前主要是分析出使用过的类的信息。</li>
+</ul>
+<p>生成的 File 结构体里面套装各个子结构体，断点如图：<br><img src="https://github.com/ming1016/smck/blob/master/README/6.png?raw=true" alt="结构体"></p>
+<h2 id="如何调试-smck？"><a href="#如何调试-smck？" class="headerlink" title="如何调试 smck？"></a>如何调试 smck？</h2><p>先填上对应的命令行参数和值，设置参数参考下图。然后运行即可。<br><img src="https://github.com/ming1016/smck/blob/master/README/2.png?raw=true" alt="命令行参数"></p>
+<h2 id="导出成命令行工具"><a href="#导出成命令行工具" class="headerlink" title="导出成命令行工具"></a>导出成命令行工具</h2><p>在 Xcode 里选择 Product - Archive - Export 即可，如图：<br><img src="https://github.com/ming1016/smck/blob/master/README/3.png?raw=true" alt="导出"><br>执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./smck -o /User/your_project_path</div></pre></td></tr></table></figure></p>
+<p>输出如下<br><img src="https://github.com/ming1016/smck/blob/master/README/4.png?raw=true" alt="执行效果"></p>
+<h2 id="如何编写自己的检查功能？"><a href="#如何编写自己的检查功能？" class="headerlink" title="如何编写自己的检查功能？"></a>如何编写自己的检查功能？</h2><p>由于工程检查规则非常多样化，所以需要编写一些 Plugin，后面我会逐渐抽出一些具有共性的放上来，目前在 Plugin 目录下我放了两个例子，在例子里可以看出来怎么通过订阅 Parser 输出的不同节点的不同数据来进行不同的检查。在控制台管理相关的 Checker 类里关联 Parser 和 Plugin 的代码由于使用了 RxSwift 也变得非常简洁明了，如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">doO</span><span class="params">(path:String)</span></span> &#123;</div><div class="line">    <span class="keyword">guard</span> path.characters.<span class="built_in">count</span> &gt; <span class="number">0</span> <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span></div><div class="line">    &#125;</div><div class="line">    <span class="type">UnUseObjectPlugin</span>().plug(ob: <span class="type">ParsingEntire</span>.parsing(path: path))</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="戴铭 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫一扫Starming星光社微信公众号starming-weixin，关注最新文章</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      戴铭
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://ming1016.github.io/2017/04/01/build-static-analysis-program-smck-use-swift/" title="用 Swift 编写的工程代码静态分析命令行工具 smck">http://ming1016.github.io/2017/04/01/build-static-analysis-program-smck-use-swift/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+            <a href="/tags/smck/" rel="tag"># smck</a>
+          
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/01/deeply-analyse-llvm/" rel="next" title="深入剖析 iOS 编译 Clang / LLVM">
+                <i class="fa fa-chevron-left"></i> 深入剖析 iOS 编译 Clang / LLVM
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars0.githubusercontent.com/u/251980?v=3&s=460"
+               alt="戴铭" />
+          <p class="site-author-name" itemprop="name">戴铭</p>
+           
+              <p class="site-description motion-element" itemprop="description">不积跬步，无以至千里；不积小流，无以成江海</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ming1016" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/allstarming" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/ming1016" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#smck-可以做哪些事情呢？"><span class="nav-number">2.</span> <span class="nav-text">smck 可以做哪些事情呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#是怎么做到简单编写就能够添加功能呢？"><span class="nav-number">3.</span> <span class="nav-text">是怎么做到简单编写就能够添加功能呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何调试-smck？"><span class="nav-number">4.</span> <span class="nav-text">如何调试 smck？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导出成命令行工具"><span class="nav-number">5.</span> <span class="nav-text">导出成命令行工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何编写自己的检查功能？"><span class="nav-number">6.</span> <span class="nav-text">如何编写自己的检查功能？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">戴铭</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://ming1016.github.io/2017/04/01/build-static-analysis-program-smck-use-swift/';
+          this.page.identifier = '2017/04/01/build-static-analysis-program-smck-use-swift/';
+          this.page.title = '用 Swift 编写的工程代码静态分析命令行工具 smck';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

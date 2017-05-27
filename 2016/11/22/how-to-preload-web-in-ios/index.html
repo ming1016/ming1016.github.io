@@ -1,0 +1,860 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS,UIWebView,NSURLProtocol," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="星光社 - 戴铭的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="可以先下载Demo看看效果，Github地址：&amp;lt; GitHub - ming1016/STMURLCache: iOS预加载Web页面方案 &amp;gt;可以预加载多个网址，然后在离线状态去显示那几个网址，看看是不是都完全缓存下来了。 使用方法在需要开启预加载的地方创建123self.sCache = [STMURLCache create:^(STMURLCacheMk *mk) &amp;#123;">
+<meta name="keywords" content="iOS,UIWebView,NSURLProtocol">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS预加载Web页面方案">
+<meta property="og:url" content="http://ming1016.github.io/2016/11/22/how-to-preload-web-in-ios/index.html">
+<meta property="og:site_name" content="星光社 - 戴铭的博客">
+<meta property="og:description" content="可以先下载Demo看看效果，Github地址：&amp;lt; GitHub - ming1016/STMURLCache: iOS预加载Web页面方案 &amp;gt;可以预加载多个网址，然后在离线状态去显示那几个网址，看看是不是都完全缓存下来了。 使用方法在需要开启预加载的地方创建123self.sCache = [STMURLCache create:^(STMURLCacheMk *mk) &amp;#123;">
+<meta property="og:updated_time" content="2017-05-27T06:02:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS预加载Web页面方案">
+<meta name="twitter:description" content="可以先下载Demo看看效果，Github地址：&amp;lt; GitHub - ming1016/STMURLCache: iOS预加载Web页面方案 &amp;gt;可以预加载多个网址，然后在离线状态去显示那几个网址，看看是不是都完全缓存下来了。 使用方法在需要开启预加载的地方创建123self.sCache = [STMURLCache create:^(STMURLCacheMk *mk) &amp;#123;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ming1016.github.io/2016/11/22/how-to-preload-web-in-ios/"/>
+
+
+
+
+
+  <title>iOS预加载Web页面方案 | 星光社 - 戴铭的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">星光社 - 戴铭的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ming1016.github.io/2016/11/22/how-to-preload-web-in-ios/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="戴铭">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/251980?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星光社 - 戴铭的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS预加载Web页面方案</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-22T21:55:35+08:00">
+                2016-11-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/22/how-to-preload-web-in-ios/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/11/22/how-to-preload-web-in-ios/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>可以先下载Demo看看效果，Github地址：&lt; <a href="https://github.com/ming1016/STMURLCache" target="_blank" rel="external">GitHub - ming1016/STMURLCache: iOS预加载Web页面方案</a> &gt;<br>可以预加载多个网址，然后在离线状态去显示那几个网址，看看是不是都完全缓存下来了。</p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>在需要开启预加载的地方创建<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">self</span>.sCache = [STMURLCache create:^(STMURLCacheMk *mk) &#123;</div><div class="line">    mk.whiteListsHost(whiteLists).whiteUserAgent(<span class="string">@"starming"</span>);</div><div class="line">&#125;];</div></pre></td></tr></table></figure></p>
+<p>这里是所有可设置项目，默认设置可以查看 model 的 get 方法<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">- (STMURLCacheMk *(^)(<span class="built_in">NSUInteger</span>)) memoryCapacity;   <span class="comment">//内存容量</span></div><div class="line">- (STMURLCacheMk *(^)(<span class="built_in">NSUInteger</span>)) diskCapacity;     <span class="comment">//本地存储容量</span></div><div class="line">- (STMURLCacheMk *(^)(<span class="built_in">NSUInteger</span>)) cacheTime;        <span class="comment">//缓存时间</span></div><div class="line">- (STMURLCacheMk *(^)(<span class="built_in">NSString</span> *)) subDirectory;     <span class="comment">//子目录</span></div><div class="line">- (STMURLCacheMk *(^)(<span class="built_in">BOOL</span>)) isDownloadMode;         <span class="comment">//是否启动下载模式</span></div><div class="line">- (STMURLCacheMk *(^)(<span class="built_in">NSArray</span> *)) whiteListsHost;    <span class="comment">//域名白名单</span></div><div class="line">- (STMURLCacheMk *(^)(<span class="built_in">NSString</span> *)) whiteUserAgent;   <span class="comment">//WebView的user-agent白名单</span></div><div class="line"></div><div class="line">- (STMURLCacheMk *(^)(<span class="built_in">NSString</span> *)) addHostWhiteList;        <span class="comment">//添加一个域名白名单</span></div><div class="line">- (STMURLCacheMk *(^)(<span class="built_in">NSString</span> *)) addRequestUrlWhiteList;  <span class="comment">//添加请求白名单</span></div><div class="line"></div><div class="line"><span class="comment">//NSURLProtocol相关设置</span></div><div class="line">- (STMURLCacheMk *(^)(<span class="built_in">BOOL</span>)) isUsingURLProtocol; <span class="comment">//是否使用NSURLProtocol，默认使用NSURLCache</span></div></pre></td></tr></table></figure></p>
+<p>也可以随时更新这些设置项<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[<span class="keyword">self</span>.sCache update:^(STMURLCacheMk *mk) &#123;</div><div class="line">    mk.isDownloadMode(<span class="literal">YES</span>);</div><div class="line">&#125;];</div></pre></td></tr></table></figure></p>
+<p>预加载名单可以按照整个 web 页面请求进行预加载<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="keyword">self</span>.sCache preLoadByWebViewWithUrls:@[<span class="string">@"http://www.v2ex.com"</span>,<span class="string">@"http://www.github.com"</span>];</div></pre></td></tr></table></figure></p>
+<p>如果需要按照单个资源列表进行预加载可以使用 <em>preLoadByRequestWithUrls</em> 这个方法。</p>
+<h2 id="白名单设置"><a href="#白名单设置" class="headerlink" title="白名单设置"></a>白名单设置</h2><p>对于只希望缓存特定域名或者地址的可以通过白名单进行设置，可以在创建时进行设置或者更新时设置。<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> *whiteListStr = <span class="string">@"www.starming.com|www.github.com|www.v2ex.com|www.baidu.com"</span>;</div><div class="line"><span class="built_in">NSMutableArray</span> *whiteLists = [<span class="built_in">NSMutableArray</span> arrayWithArray:[whiteListStr componentsSeparatedByString:<span class="string">@"|"</span>]];</div><div class="line"><span class="keyword">self</span>.sCache = [STMURLCache create:^(STMURLCacheMk *mk) &#123;</div><div class="line">    mk.whiteListsHost(whiteLists).whiteUserAgent(<span class="string">@"starming"</span>);</div><div class="line">&#125;];</div></pre></td></tr></table></figure></p>
+<p>这里的 <em>whiteUserAgent</em> 的设置会设置 webview 的 UserAgent，这样能够让webview以外的网络请求被过滤掉。</p>
+<h2 id="基本加载缓存实现原理"><a href="#基本加载缓存实现原理" class="headerlink" title="基本加载缓存实现原理"></a>基本加载缓存实现原理</h2><p>创建 <em>STMURLCache</em> 后设置 <em>NSURLCache</em> 的 <em>URLCache</em> ，在 <em>cachedResponseForRequest</em> 方法中获取 <em>NSURLRequest</em> 判断白名单，检验是否有与之对应的 Cache ，有就使用本地数据返回 <em>NSCachedURLResponse</em> ，没有就通过网络获取数据数据缓存。 <em>STMURLCache</em> 对象释放时将 <em>NSURLCache</em> 设置为不缓存，表示这次预加载完成不需要再缓存。当缓存空间超出设置大小会将其清空。</p>
+<p>使用 <em>NSURLProtocol</em> 这种原理基本类似。</p>
+<h2 id="白名单实现原理"><a href="#白名单实现原理" class="headerlink" title="白名单实现原理"></a>白名单实现原理</h2><p>创建域名列表设置项 <em>whiteListsHost</em> 和 <em>userAgent</em> 设置项，在创建和更新时对其进行设置。在网络请求开始通过设置项进行过滤。具体实现如下<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//对于域名白名单的过滤</span></div><div class="line"><span class="keyword">if</span> (<span class="keyword">self</span>.mk.cModel.whiteListsHost.count &gt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="keyword">id</span> isExist = [<span class="keyword">self</span>.mk.cModel.whiteListsHost objectForKey:[<span class="keyword">self</span> hostFromRequest:request]];</div><div class="line">    <span class="keyword">if</span> (!isExist) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//User-Agent来过滤</span></div><div class="line"><span class="keyword">if</span> (<span class="keyword">self</span>.mk.cModel.whiteUserAgent.length &gt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="built_in">NSString</span> *uAgent = [request.allHTTPHeaderFields objectForKey:<span class="string">@"User-Agent"</span>];</div><div class="line">    <span class="keyword">if</span> (uAgent) &#123;</div><div class="line">        <span class="keyword">if</span> (![uAgent hasSuffix:<span class="keyword">self</span>.mk.cModel.whiteUserAgent]) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="具体缓存实现"><a href="#具体缓存实现" class="headerlink" title="具体缓存实现"></a>具体缓存实现</h2><p>缓存的实现有两种，一种是 <em>NSURLCache</em> 另一种是 <em>NSURLProtocol</em> ， <em>STMURLCache</em> 同时支持了这两种，通过 <em>STMURLCacheModel</em> 里的 <em>isUsingURLProtocol</em> 设置项来选择使用哪个。</p>
+<h3 id="NSURLCache的实现"><a href="#NSURLCache的实现" class="headerlink" title="NSURLCache的实现"></a>NSURLCache的实现</h3><p>没有缓存的 request 会对其进行请求将获取数据按照hash地址存两份于本地，一份是数据，一份记录时间和类型，时间记录可以用于判断失效时间。对于判断是否有缓存可以根据请求地址对应的文件进行判断。具体实现如下：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">NSCachedURLResponse</span> *)localCacheResponeWithRequest:(<span class="built_in">NSURLRequest</span> *)request &#123;</div><div class="line">    __block <span class="built_in">NSCachedURLResponse</span> *cachedResponse = <span class="literal">nil</span>;</div><div class="line">    <span class="built_in">NSString</span> *filePath = [<span class="keyword">self</span> filePathFromRequest:request isInfo:<span class="literal">NO</span>];</div><div class="line">    <span class="built_in">NSString</span> *otherInfoPath = [<span class="keyword">self</span> filePathFromRequest:request isInfo:<span class="literal">YES</span>];</div><div class="line">    <span class="built_in">NSDate</span> *date = [<span class="built_in">NSDate</span> date];</div><div class="line">    <span class="built_in">NSFileManager</span> *fm = [<span class="built_in">NSFileManager</span> defaultManager];</div><div class="line">    <span class="keyword">if</span> ([fm fileExistsAtPath:filePath]) &#123;</div><div class="line">        <span class="comment">//有缓存文件的情况</span></div><div class="line">        <span class="built_in">BOOL</span> expire = <span class="literal">false</span>;</div><div class="line">        <span class="built_in">NSDictionary</span> *otherInfo = [<span class="built_in">NSDictionary</span> dictionaryWithContentsOfFile:otherInfoPath];</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">self</span>.cacheTime &gt; <span class="number">0</span>) &#123;</div><div class="line">            <span class="built_in">NSInteger</span> createTime = [[otherInfo objectForKey:<span class="string">@"time"</span>] integerValue];</div><div class="line">            <span class="keyword">if</span> (createTime + <span class="keyword">self</span>.cacheTime &lt; [date timeIntervalSince1970]) &#123;</div><div class="line">                expire = <span class="literal">true</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (expire == <span class="literal">false</span>) &#123;</div><div class="line">            <span class="comment">//从缓存里读取数据</span></div><div class="line">            <span class="built_in">NSData</span> *data = [<span class="built_in">NSData</span> dataWithContentsOfFile:filePath];</div><div class="line">            <span class="built_in">NSURLResponse</span> *response = [[<span class="built_in">NSURLResponse</span> alloc] initWithURL:request.URL MIMEType:[otherInfo objectForKey:<span class="string">@"MIMEType"</span>] expectedContentLength:data.length textEncodingName:[otherInfo objectForKey:<span class="string">@"textEncodingName"</span>]];</div><div class="line">            <span class="built_in">NSCachedURLResponse</span> *cachedResponse = [[<span class="built_in">NSCachedURLResponse</span> alloc] initWithResponse:response data:data];</div><div class="line">            <span class="keyword">return</span> cachedResponse;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="comment">//cache失效了</span></div><div class="line">            [fm removeItemAtPath:filePath error:<span class="literal">nil</span>];      <span class="comment">//清除缓存data</span></div><div class="line">            [fm removeItemAtPath:otherInfoPath error:<span class="literal">nil</span>]; <span class="comment">//清除缓存其它信息</span></div><div class="line">            <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">//从网络读取</span></div><div class="line">        <span class="keyword">self</span>.isSavedOnDisk = <span class="literal">NO</span>;</div><div class="line">        <span class="keyword">id</span> isExist = [<span class="keyword">self</span>.responseDic objectForKey:request.URL.absoluteString];</div><div class="line">        <span class="keyword">if</span> (isExist == <span class="literal">nil</span>) &#123;</div><div class="line">            [<span class="keyword">self</span>.responseDic setValue:[<span class="built_in">NSNumber</span> numberWithBool:<span class="literal">TRUE</span>] forKey:request.URL.absoluteString];</div><div class="line">            <span class="built_in">NSURLSession</span> *session = [<span class="built_in">NSURLSession</span> sharedSession];</div><div class="line">            <span class="built_in">NSURLSessionDataTask</span> *task = [session dataTaskWithRequest:request completionHandler:^(<span class="built_in">NSData</span> * _Nullable data, <span class="built_in">NSURLResponse</span> * _Nullable response, <span class="built_in">NSError</span> * _Nullable error) &#123;</div><div class="line">                <span class="keyword">if</span> (error) &#123;</div><div class="line">                    cachedResponse = <span class="literal">nil</span>;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    <span class="built_in">NSDictionary</span> *dic = [<span class="built_in">NSDictionary</span> dictionaryWithObjectsAndKeys:[<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%f"</span>,[date timeIntervalSince1970]],<span class="string">@"time"</span>,response.MIMEType,<span class="string">@"MIMEType"</span>,response.textEncodingName,<span class="string">@"textEncodingName"</span>, <span class="literal">nil</span>];</div><div class="line">                    <span class="built_in">BOOL</span> resultO = [dic writeToFile:otherInfoPath atomically:<span class="literal">YES</span>];</div><div class="line">                    <span class="built_in">BOOL</span> result = [data writeToFile:filePath atomically:<span class="literal">YES</span>];</div><div class="line">                    <span class="keyword">if</span> (resultO == <span class="literal">NO</span> || result == <span class="literal">NO</span>) &#123;</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    &#125;</div><div class="line">                    cachedResponse = [[<span class="built_in">NSCachedURLResponse</span> alloc] initWithResponse:response data:data];</div><div class="line">                &#125;</div><div class="line">            &#125;];</div><div class="line">            [task resume];</div><div class="line">            <span class="keyword">return</span> cachedResponse;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="NSURLProtocol的实现"><a href="#NSURLProtocol的实现" class="headerlink" title="NSURLProtocol的实现"></a>NSURLProtocol的实现</h3><p>在设置配置项和更新配置项时需要创建一个 <em>STMURLCacheModel</em> 的单例来进行设置和更新配置项给 NSURLProtocol 的实现来使用。通过 isUsingURLProtocol 设置项区分， NSURLProtocol 是通过registerClass方式将protocol实现的进行注册。<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">- (STMURLCache *)configWithMk &#123;</div><div class="line"></div><div class="line">    <span class="keyword">self</span>.mk.cModel.isSavedOnDisk = <span class="literal">YES</span>;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.mk.cModel.isUsingURLProtocol) &#123;</div><div class="line">        STMURLCacheModel *sModel = [STMURLCacheModel shareInstance];</div><div class="line">        sModel.cacheTime = <span class="keyword">self</span>.mk.cModel.cacheTime;</div><div class="line">        sModel.diskCapacity = <span class="keyword">self</span>.mk.cModel.diskCapacity;</div><div class="line">        sModel.diskPath = <span class="keyword">self</span>.mk.cModel.diskPath;</div><div class="line">        sModel.cacheFolder = <span class="keyword">self</span>.mk.cModel.cacheFolder;</div><div class="line">        sModel.subDirectory = <span class="keyword">self</span>.mk.cModel.subDirectory;</div><div class="line">        sModel.whiteUserAgent = <span class="keyword">self</span>.mk.cModel.whiteUserAgent;</div><div class="line">        sModel.whiteListsHost = <span class="keyword">self</span>.mk.cModel.whiteListsHost;</div><div class="line">        [<span class="built_in">NSURLProtocol</span> registerClass:[STMURLProtocol <span class="keyword">class</span>]];</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        [<span class="built_in">NSURLCache</span> setSharedURLCache:<span class="keyword">self</span>];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>关闭时两者也是不同的，通过设置项进行区分<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)stop &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.mk.cModel.isUsingURLProtocol) &#123;</div><div class="line">        [<span class="built_in">NSURLProtocol</span> unregisterClass:[STMURLProtocol <span class="keyword">class</span>]];</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">NSURLCache</span> *c = [[<span class="built_in">NSURLCache</span> alloc] initWithMemoryCapacity:<span class="number">0</span> diskCapacity:<span class="number">0</span> diskPath:<span class="literal">nil</span>];</div><div class="line">        [<span class="built_in">NSURLCache</span> setSharedURLCache:c];</div><div class="line">    &#125;</div><div class="line">    [<span class="keyword">self</span>.mk.cModel checkCapacity];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>白名单处理还有读取缓存和前者都类似，但是在缓存Data时 <em>NSURLCached</em> 的方案里是通过发起一次新的请求来获取数据，而 <em>NSURLProtocol</em> 在 <em>NSURLConnection</em> 的 Delegate 里可以获取到，少了一次网络的请求，这里需要注意的是在 - (void) connection:(NSURLConnection <em>)connection didReceiveData:(NSData </em>)data 每次从这个回调里获取的数据不是完整的，要在 - (void) connectionDidFinishLoading:(NSURLConnection *)connection 这个会调里将分段数据拼接成完整的数据保存下来。具体完整的代码实现可以看 STMURLProtocol 里的代码实现。</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>通过 <em>map</em> 网络请求可以缓存请求，也可以 <em>mock</em> 接口请求进行测试。</p>
+<p>完整代码：&lt; <a href="https://github.com/ming1016/STMURLCache" target="_blank" rel="external">GitHub - ming1016/STMURLCache: iOS预加载Web页面方案</a> &gt;</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="戴铭 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫一扫Starming星光社微信公众号starming-weixin，关注最新文章</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      戴铭
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://ming1016.github.io/2016/11/22/how-to-preload-web-in-ios/" title="iOS预加载Web页面方案">http://ming1016.github.io/2016/11/22/how-to-preload-web-in-ios/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+            <a href="/tags/UIWebView/" rel="tag"># UIWebView</a>
+          
+            <a href="/tags/NSURLProtocol/" rel="tag"># NSURLProtocol</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/17/use-swift3-build-macos-program-to-clear-unuse-method/" rel="next" title="使用Swift3开发了个macOS的程序可以检测出objc项目中无用方法，然后一键全部清理">
+                <i class="fa fa-chevron-left"></i> 使用Swift3开发了个macOS的程序可以检测出objc项目中无用方法，然后一键全部清理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/01/deeply-analyse-llvm/" rel="prev" title="深入剖析 iOS 编译 Clang / LLVM">
+                深入剖析 iOS 编译 Clang / LLVM <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars0.githubusercontent.com/u/251980?v=3&s=460"
+               alt="戴铭" />
+          <p class="site-author-name" itemprop="name">戴铭</p>
+           
+              <p class="site-description motion-element" itemprop="description">不积跬步，无以至千里；不积小流，无以成江海</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ming1016" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/allstarming" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/ming1016" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法"><span class="nav-number">1.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#白名单设置"><span class="nav-number">2.</span> <span class="nav-text">白名单设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本加载缓存实现原理"><span class="nav-number">3.</span> <span class="nav-text">基本加载缓存实现原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#白名单实现原理"><span class="nav-number">4.</span> <span class="nav-text">白名单实现原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体缓存实现"><span class="nav-number">5.</span> <span class="nav-text">具体缓存实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NSURLCache的实现"><span class="nav-number">5.1.</span> <span class="nav-text">NSURLCache的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NSURLProtocol的实现"><span class="nav-number">5.2.</span> <span class="nav-text">NSURLProtocol的实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">6.</span> <span class="nav-text">后记</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">戴铭</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://ming1016.github.io/2016/11/22/how-to-preload-web-in-ios/';
+          this.page.identifier = '2016/11/22/how-to-preload-web-in-ios/';
+          this.page.title = 'iOS预加载Web页面方案';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

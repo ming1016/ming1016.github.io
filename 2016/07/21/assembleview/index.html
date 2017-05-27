@@ -1,0 +1,902 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="AssembleView,iOS," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="星光社 - 戴铭的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="在项目中总是希望页面上各处的文字，颜色，字体大小甚至各个视图控件布局都能够在发版之后能够修改以弥补一些前期考虑不周，或者根据统计数据能够随时进行调整，当然是各个版本都能够统一变化。看到这样的要求后，第一反应是这样的页面只能改成H5，或者尝试使用React Native来应对这种要求。 既然UIStackView已经提供了一种既先进又简洁的布局思路，为何不通过制作一个类似VFL这样的DSL语言来处理">
+<meta name="keywords" content="AssembleView,iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面">
+<meta property="og:url" content="http://ming1016.github.io/2016/07/21/assembleview/index.html">
+<meta property="og:site_name" content="星光社 - 戴铭的博客">
+<meta property="og:description" content="在项目中总是希望页面上各处的文字，颜色，字体大小甚至各个视图控件布局都能够在发版之后能够修改以弥补一些前期考虑不周，或者根据统计数据能够随时进行调整，当然是各个版本都能够统一变化。看到这样的要求后，第一反应是这样的页面只能改成H5，或者尝试使用React Native来应对这种要求。 既然UIStackView已经提供了一种既先进又简洁的布局思路，为何不通过制作一个类似VFL这样的DSL语言来处理">
+<meta property="og:image" content="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/center.png?raw=true">
+<meta property="og:image" content="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/mid.png?raw=true">
+<meta property="og:image" content="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/followBt.png?raw=true">
+<meta property="og:image" content="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/des.png?raw=true">
+<meta property="og:image" content="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/as.png?raw=true">
+<meta property="og:updated_time" content="2017-05-26T13:42:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面">
+<meta name="twitter:description" content="在项目中总是希望页面上各处的文字，颜色，字体大小甚至各个视图控件布局都能够在发版之后能够修改以弥补一些前期考虑不周，或者根据统计数据能够随时进行调整，当然是各个版本都能够统一变化。看到这样的要求后，第一反应是这样的页面只能改成H5，或者尝试使用React Native来应对这种要求。 既然UIStackView已经提供了一种既先进又简洁的布局思路，为何不通过制作一个类似VFL这样的DSL语言来处理">
+<meta name="twitter:image" content="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/center.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ming1016.github.io/2016/07/21/assembleview/"/>
+
+
+
+
+
+  <title>制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面 | 星光社 - 戴铭的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">星光社 - 戴铭的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ming1016.github.io/2016/07/21/assembleview/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="戴铭">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/251980?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星光社 - 戴铭的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-21T21:38:01+08:00">
+                2016-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/07/21/assembleview/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/07/21/assembleview/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在项目中总是希望页面上各处的文字，颜色，字体大小甚至各个视图控件布局都能够在发版之后能够修改以弥补一些前期考虑不周，或者根据统计数据能够随时进行调整，当然是各个版本都能够统一变化。看到这样的要求后，第一反应是这样的页面只能改成H5，或者尝试使用React Native来应对这种要求。</p>
+<p>既然UIStackView已经提供了一种既先进又简洁的布局思路，为何不通过制作一个类似VFL这样的DSL语言来处理布局。这样不就能够通过下发一串DSL字符串的方式来进行内容样式甚至布局的更换，不用跟版，还能使多版本统一。同时在端内直接用这样的DSL语言来写界面不光能够减少代码量易于维护，还能够很直观方便的看出整个界面布局结构。</p>
+<h1 id="AssembleView（组装视图）和PartView（零件视图）"><a href="#AssembleView（组装视图）和PartView（零件视图）" class="headerlink" title="AssembleView（组装视图）和PartView（零件视图）"></a>AssembleView（组装视图）和PartView（零件视图）</h1><p>在设计格式化语言之前需要对布局做个统一思想进行管理，在看了WWDC里关于UIStackView的介绍后感觉任何复杂的布局都能够通过这样一种组合排布再组合排布的思路特别适合用格式化语言来描述。于是我想出两个视图概念。</p>
+<p>一个是AssembleView组合视图，专门用于对其PartView子视图进行排列，比如说是水平排列还是垂直排列，PartView是按照居中对齐还是居左等对齐方式，各个PartView之间间隔是多少。</p>
+<p>PartView决定自己视图类型，内容，无固定大小的可以设置大小，同时AssembleView可以作为PartView被加入另一个AssembleView里进行排列，这样各种设计图都可以在初期通过拆解分成不同的AssembleView和PartView进行组合套组合布局出来。</p>
+<h1 id="格式化语言"><a href="#格式化语言" class="headerlink" title="格式化语言"></a>格式化语言</h1><p>接下来是如何通过格式化语言来描述AssembleView和PartView。“{}”符号里包含的是AssembleView的设置，“[]”符号里是PartView的设置，“()”里是他们的属性设置，“&lt;&gt;”可以将对象带入到设置里。下面举几个例子说明下。完整Demo放到了Github上：<a href="https://github.com/ming1016/STMAssembleView" target="_blank" rel="external">https://github.com/ming1016/STMAssembleView</a></p>
+<h2 id="三个星星水平对齐居中排列"><a href="#三个星星水平对齐居中排列" class="headerlink" title="三个星星水平对齐居中排列"></a>三个星星水平对齐居中排列</h2><p>h表示水平排列horizontal，c表示居中center，“[]”PartView会根据顺序依次添加排列，imageName属性能够指定本地图片<br><img src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/center.png?raw=true" alt="三个星星水平对齐居中排列"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    hc(padding:30)</div><div class="line">    [(imageName:starmingicon)]</div><div class="line">    [(imageName:starmingicon)]</div><div class="line">    [(imageName:starmingicon)]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="AssembleView里套作为PartView的AssembleView的复杂情况"><a href="#AssembleView里套作为PartView的AssembleView的复杂情况" class="headerlink" title="AssembleView里套作为PartView的AssembleView的复杂情况"></a>AssembleView里套作为PartView的AssembleView的复杂情况</h2><p>color可以指定文字颜色，font指定文字大小<br><img src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/mid.png?raw=true" alt="AssembleView里套作为PartView的AssembleView的复杂情况"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    ht(padding:10)</div><div class="line">    [avatarImageView(imageName:avatar)]</div><div class="line">    [</div><div class="line">        &#123;</div><div class="line">            vl(padding:10)</div><div class="line">            [(text:戴铭,color:AAA0A3)]</div><div class="line">            [(text:Starming站长,color:E3DEE0,font:13)]</div><div class="line">            [(text:喜欢画画编程和写小说,color:E3DEE0,font:13)]</div><div class="line">        &#125;</div><div class="line">        (width:210,backColor:FAF8F9,backPaddingHorizontal:10,backPaddingVertical:10,radius:8)</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="给PartView设置背景色和按钮"><a href="#给PartView设置背景色和按钮" class="headerlink" title="给PartView设置背景色和按钮"></a>给PartView设置背景色和按钮</h2><p>设置背景色使用backColor，背景距离设置的PartView的内容间距通过backPaddingHorizontal属性设置水平间距，backPaddingVertical设置垂直间距，“&lt;&gt;”符号带入的button通过button属性设置。<br><img src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/followBt.png?raw=true" alt="给PartView设置背景色和按钮"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">    &#123;</div><div class="line">        hc(padding:4)</div><div class="line">        [(imageName:starmingicon,width:14,height:10)]</div><div class="line">        [(text:关注,font:16,color:FFFFFF)]</div><div class="line">    &#125;</div><div class="line">    (height:36,backColor:AAA0A3,radius:8,backBorderWidth:1,backBorderColor:E3DEE0,backPaddingHorizontal:80,backPaddingVertical:10,button:&lt;clickBt&gt;)</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<h2 id="AssembleView设置忽略约束的方法"><a href="#AssembleView设置忽略约束的方法" class="headerlink" title="AssembleView设置忽略约束的方法"></a>AssembleView设置忽略约束的方法</h2><p>水平排列时，通过ignoreAlignment属性设置忽略left约束，如果是垂直排列设置top忽略。<br><img src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/des.png?raw=true" alt="AssembleView设置忽略约束的方法"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    hc(padding:5)</div><div class="line">    [(text:STMAssembleView演示,color:E3DEE0,font:13)]</div><div class="line">    [(imageName:starmingicon,width:14,height:10,ignoreAlignment:left)]</div><div class="line">    [(text:Starming星光社,color:E3DEE0,font:13)]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="将前面的视图组合成一个AssembleView"><a href="#将前面的视图组合成一个AssembleView" class="headerlink" title="将前面的视图组合成一个AssembleView"></a>将前面的视图组合成一个AssembleView</h2><p><img src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/as.png?raw=true" alt="将前面的视图组合成一个AssembleView"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">ASS(@&quot;&#123;</div><div class="line">    vc(padding:20)</div><div class="line">    [%@(height:90)]</div><div class="line">    [%@(height:36,backColor:AAA0A3,radius:8,backBorderWidth:1,backBorderColor:E3DEE0,backPaddingHorizontal:80,backPaddingVertical:10,button:&lt;clickBt&gt;)]</div><div class="line">    [%@(height:25)]</div><div class="line">    [%@(ignoreAlignment:top,isFill:1,height:16)]</div><div class="line">&#125;&quot;,midStr,followBtStr,centerStr,desStr)</div></pre></td></tr></table></figure></p>
+<h2 id="AssembleView的属性"><a href="#AssembleView的属性" class="headerlink" title="AssembleView的属性"></a>AssembleView的属性</h2><ul>
+<li>当在“{}”里面第一个字母是v表示垂直排列vertical，是h表示水平排列horizontal</li>
+<li>第二个字母是c表示所有PartView居中对齐center，l表示居左对齐left，r表示居右对齐right，t表示居上对齐top，b表示居下对齐bottom。</li>
+<li>padding：默认各个PartView的间距。</li>
+</ul>
+<h2 id="PartView的属性"><a href="#PartView的属性" class="headerlink" title="PartView的属性"></a>PartView的属性</h2><p>如果不希望通过属性生成视图，可以通过在[后直接填入带入对象对应的key，然后再在()里设置属性。</p>
+<h3 id="PartView布局相关属性"><a href="#PartView布局相关属性" class="headerlink" title="PartView布局相关属性"></a>PartView布局相关属性</h3><ul>
+<li>width：UILabel和UIImage这样有固定大小的可以不用设置，会按照固定大小的来。</li>
+<li>height：有固定大小的可以不用设置。</li>
+<li>isFill：垂直排列时会将宽设置为父AssembleView的宽，水平排列时会将高设置为父AssembleView的高。</li>
+<li>padding：设置后会忽略父AssembleView里设置的padding，达到自定义间距的效果。</li>
+<li>partAlignment：可以自定义对齐方向，设置后会忽略父AssembleView里设置的对齐。值可填center，left，right，top，bottom。</li>
+<li>ignoreAlignment：设置忽略的约束方向，在父AssembleView不需要由子PartView决定大小的情况下，可以通过打断某个方向约束来实现拆开排列的效果。值可填center，left，right，top，bottom。</li>
+</ul>
+<h3 id="PartView权重相关属性"><a href="#PartView权重相关属性" class="headerlink" title="PartView权重相关属性"></a>PartView权重相关属性</h3><ul>
+<li>crp：Compression Resistance Priority的设置，根据权重由低到高值可以设置为fit，low，high，required。对应的UILayoutPriority的分别是UILayoutPriorityFittingSizeLevel，UILayoutPriorityDefaultLow，UILayoutPriorityDefaultHigh，UILayoutPriorityRequired。</li>
+<li>minWidth：对应NSLayoutRelationGreaterThanOrEqual，设置一个最小的宽</li>
+<li>maxWidth：对应NSLayoutRelationLessThanOrEqual，设置一个最大的宽</li>
+</ul>
+<h3 id="PartView视图控件相关设置"><a href="#PartView视图控件相关设置" class="headerlink" title="PartView视图控件相关设置"></a>PartView视图控件相关设置</h3><p>通过以下属性即可生成对应的UILabel，UIImageView或者UIButton等控件视图，而不用特别指出需要生成哪种控件视图</p>
+<ul>
+<li>text：设置文字内容</li>
+<li>font：设置字体，可以带入一个UIFont，也可以直接设置一个字体大小，解析时会判断类型。</li>
+<li>color：设置颜色，可以带入一个UIColor，也可以直接设置一个十六进制颜色，解析时会判断类型。</li>
+<li>imageName：设置本地图片，值是本地图片名称。</li>
+<li>image：带入一个UIImage。</li>
+<li>imageUrl：设置一个网络图片的url地址，ps:目前需要通过&lt;&gt;来带入一个字符串。</li>
+</ul>
+<h3 id="PartView的通用设置"><a href="#PartView的通用设置" class="headerlink" title="PartView的通用设置"></a>PartView的通用设置</h3><p>可以为PartView创建一个底部视图，并设置其样式。也可以添加一个UIButton设置UIControlStateHighlighted时的样式。</p>
+<ul>
+<li>backColor：设置底部视图的颜色，可以带入一个UIColor，也可以直接设置一个十六进制颜色，解析时会判断类型。</li>
+<li>backPaddingHorizontal：设置当前PartView视图距离底部视图top和bottom的间距。</li>
+<li>backPaddingVertical：设置当前PartView视图距离底部视图left和right的间距。</li>
+<li>backBorderColor：设置底部视图边框的颜色，可以带入一个UIColor，也可以直接设置一个十六进制颜色，解析时会判断类型。</li>
+<li>backBorderWidth：设置底部视图边框宽。</li>
+<li>radius：设置底部视图的圆角半径。</li>
+<li>button：带入一个button。</li>
+<li>buttonHighlightColor：设置button在UIControlStateHighlighted时的颜色，默认是透明度0.05的黑色。</li>
+</ul>
+<h1 id="解析格式化语言"><a href="#解析格式化语言" class="headerlink" title="解析格式化语言"></a>解析格式化语言</h1><p>解析过程的第一步采用扫描scanner程序将字符串按照分析符号表将字符流序列收集到有意义的单元中。</p>
+<p>第二步将这些单元逐个归类到对应的类别中。比如解析到“()”里内容时就将其归类到对应的AssembleView的属性或者PartView的属性类别中。在归类过程中会出现PartView是AssembleView，这个Assemble里面又有这样作为PartView的AssembleView这样层层套的情况，所以需要采用类似引用计数方式保证在最后一个“}”符号结束时能将整个Assemble递归进行解析。</p>
+<p>第三步将各个类别集合转换成对应原生代码从而生成对应的视图布局。</p>
+<p>具体实现可以查看STMAssembleView.m文件。Github地址：<a href="https://github.com/ming1016/STMAssembleView" target="_blank" rel="external">https://github.com/ming1016/STMAssembleView</a></p>
+<h1 id="如何生成页面"><a href="#如何生成页面" class="headerlink" title="如何生成页面"></a>如何生成页面</h1><p>生成页面需要实现格式化语言对应的原生代码，所有PartView的属性都会存放在STMPartMaker里，包括带入的自定义视图还有用于生成视图控件的属性等。PartView属性设置完成后会在STMPartView这个类中先决定对应的视图控件，并将STMPartMaker里的属性都设置上。实现代码可以查看STMPartView.m里的- (STMPartView *)buildPartView方法。</p>
+<p>接下来STMAssembleView会在buildAssembleView时进行布局，具体实现代码可以查看STMAssembleView.m里的- (STMAssembleView *)buildAssembleView方法。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="戴铭 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫一扫Starming星光社微信公众号starming-weixin，关注最新文章</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      戴铭
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://ming1016.github.io/2016/07/21/assembleview/" title="制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面">http://ming1016.github.io/2016/07/21/assembleview/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AssembleView/" rel="tag"># AssembleView</a>
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/30/what-learn-from-reactivecocoa/" rel="next" title="从 ReactiveCocoa 中能学到什么？不用此库也能学以致用">
+                <i class="fa fa-chevron-left"></i> 从 ReactiveCocoa 中能学到什么？不用此库也能学以致用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/09/how-to-use-reactivecocoa/" rel="prev" title="iOS函数响应式编程以及ReactiveCocoa的使用">
+                iOS函数响应式编程以及ReactiveCocoa的使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars0.githubusercontent.com/u/251980?v=3&s=460"
+               alt="戴铭" />
+          <p class="site-author-name" itemprop="name">戴铭</p>
+           
+              <p class="site-description motion-element" itemprop="description">不积跬步，无以至千里；不积小流，无以成江海</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ming1016" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/allstarming" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/ming1016" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#AssembleView（组装视图）和PartView（零件视图）"><span class="nav-number">1.</span> <span class="nav-text">AssembleView（组装视图）和PartView（零件视图）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#格式化语言"><span class="nav-number">2.</span> <span class="nav-text">格式化语言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#三个星星水平对齐居中排列"><span class="nav-number">2.1.</span> <span class="nav-text">三个星星水平对齐居中排列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AssembleView里套作为PartView的AssembleView的复杂情况"><span class="nav-number">2.2.</span> <span class="nav-text">AssembleView里套作为PartView的AssembleView的复杂情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#给PartView设置背景色和按钮"><span class="nav-number">2.3.</span> <span class="nav-text">给PartView设置背景色和按钮</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AssembleView设置忽略约束的方法"><span class="nav-number">2.4.</span> <span class="nav-text">AssembleView设置忽略约束的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将前面的视图组合成一个AssembleView"><span class="nav-number">2.5.</span> <span class="nav-text">将前面的视图组合成一个AssembleView</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AssembleView的属性"><span class="nav-number">2.6.</span> <span class="nav-text">AssembleView的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PartView的属性"><span class="nav-number">2.7.</span> <span class="nav-text">PartView的属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PartView布局相关属性"><span class="nav-number">2.7.1.</span> <span class="nav-text">PartView布局相关属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PartView权重相关属性"><span class="nav-number">2.7.2.</span> <span class="nav-text">PartView权重相关属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PartView视图控件相关设置"><span class="nav-number">2.7.3.</span> <span class="nav-text">PartView视图控件相关设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PartView的通用设置"><span class="nav-number">2.7.4.</span> <span class="nav-text">PartView的通用设置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解析格式化语言"><span class="nav-number">3.</span> <span class="nav-text">解析格式化语言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何生成页面"><span class="nav-number">4.</span> <span class="nav-text">如何生成页面</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">戴铭</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://ming1016.github.io/2016/07/21/assembleview/';
+          this.page.identifier = '2016/07/21/assembleview/';
+          this.page.title = '制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

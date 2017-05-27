@@ -1,0 +1,836 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS,ReactiveCocoa," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="星光社 - 戴铭的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="从知道ReactiveCocoa开始就发现对这个库有不同的声音，上次参加技术沙龙时唐巧对在项目中已全面使用FRP的代码家提出为什么这种编程模型出现了这么长时间怎么像ReactiveCocoa这种完全按FRP编写的库没能够流行起来这个问题。对这个问题的回答一般都是门槛高，解决方法就是培训和通过熟悉以前的代码来快速入门。其实在我学习的过程中也发现确实会有这个问题，不过就算是有这样那样问题使得React">
+<meta name="keywords" content="iOS,ReactiveCocoa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从 ReactiveCocoa 中能学到什么？不用此库也能学以致用">
+<meta property="og:url" content="http://ming1016.github.io/2016/05/30/what-learn-from-reactivecocoa/index.html">
+<meta property="og:site_name" content="星光社 - 戴铭的博客">
+<meta property="og:description" content="从知道ReactiveCocoa开始就发现对这个库有不同的声音，上次参加技术沙龙时唐巧对在项目中已全面使用FRP的代码家提出为什么这种编程模型出现了这么长时间怎么像ReactiveCocoa这种完全按FRP编写的库没能够流行起来这个问题。对这个问题的回答一般都是门槛高，解决方法就是培训和通过熟悉以前的代码来快速入门。其实在我学习的过程中也发现确实会有这个问题，不过就算是有这样那样问题使得React">
+<meta property="og:updated_time" content="2017-05-27T06:14:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从 ReactiveCocoa 中能学到什么？不用此库也能学以致用">
+<meta name="twitter:description" content="从知道ReactiveCocoa开始就发现对这个库有不同的声音，上次参加技术沙龙时唐巧对在项目中已全面使用FRP的代码家提出为什么这种编程模型出现了这么长时间怎么像ReactiveCocoa这种完全按FRP编写的库没能够流行起来这个问题。对这个问题的回答一般都是门槛高，解决方法就是培训和通过熟悉以前的代码来快速入门。其实在我学习的过程中也发现确实会有这个问题，不过就算是有这样那样问题使得React">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ming1016.github.io/2016/05/30/what-learn-from-reactivecocoa/"/>
+
+
+
+
+
+  <title>从 ReactiveCocoa 中能学到什么？不用此库也能学以致用 | 星光社 - 戴铭的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">星光社 - 戴铭的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ming1016.github.io/2016/05/30/what-learn-from-reactivecocoa/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="戴铭">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/251980?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星光社 - 戴铭的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从 ReactiveCocoa 中能学到什么？不用此库也能学以致用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-30T21:32:02+08:00">
+                2016-05-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/30/what-learn-from-reactivecocoa/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/05/30/what-learn-from-reactivecocoa/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>从知道ReactiveCocoa开始就发现对这个库有不同的声音，上次参加<t>技术沙龙时唐巧对在项目中已全面使用FRP的代码家提出为什么这种编程模型出现了这么长时间怎么像ReactiveCocoa这种完全按FRP编写的库没能够流行起来这个问题。对这个问题的回答一般都是门槛高，解决方法就是培训和通过熟悉以前的代码来快速入门。其实在我学习的过程中也发现确实会有这个问题，不过就算是有这样那样问题使得ReactiveCocoa这样的库没法大面积使用起来，也不能错失学习这种编程思想的机会。</t></p>
+<p>如果不用这样的库，能不能将这种库的编程思想融入项目中，发挥出其优势呢？答案是肯定的。</p>
+<p>FRP全称Function Reactive Programming，从名称就能够看出来这个模型关键就是Function Programming和Reactive Programming的结合。那么就先从函数式编程说起。说函数式编程前先聊聊链式编程，先看看一个开源Alert控件的头文件里定义的接口方法的写法。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> *  自定义样式的alertView</div><div class="line"> *</div><div class="line"> */</div><div class="line">+ (<span class="keyword">instancetype</span>)showAlertWithTitle:(<span class="built_in">NSString</span> *)title</div><div class="line">                           message:(<span class="built_in">NSString</span> *)message</div><div class="line">                        completion:(PXAlertViewCompletionBlock)completion</div><div class="line">                       cancelTitle:(<span class="built_in">NSString</span> *)cancelTitle</div><div class="line">                       otherTitles:(<span class="built_in">NSString</span> *)otherTitles, ... <span class="built_in">NS_REQUIRES_NIL_TERMINATION</span>;</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line"> * @param otherTitles Must be a NSArray containing type NSString, or set to nil for no otherTitles.</div><div class="line"> */</div><div class="line">+ (<span class="keyword">instancetype</span>)showAlertWithTitle:(<span class="built_in">NSString</span> *)title</div><div class="line">                       contentView:(<span class="built_in">UIView</span> *)view</div><div class="line">                       secondTitle:(<span class="built_in">NSString</span> *)secondTitle</div><div class="line">                           message:(<span class="built_in">NSString</span> *)message</div><div class="line">                       cancelTitle:(<span class="built_in">NSString</span> *)cancelTitle</div><div class="line">                       otherTitles:(<span class="built_in">NSArray</span> *)otherTitles</div><div class="line">                          btnStyle:(<span class="built_in">BOOL</span>)btnStyle</div><div class="line">                        completion:(PXAlertViewCompletionBlock)completion;</div></pre></td></tr></table></figure>
+<p>库里还有更多这样的组合，这么写是没有什么问题，无非是为了更方便组合使用而啰嗦了点，但是如果现在要添加一个AttributeString，那么所有组合接口都需要修改，每次调用接口方法如果不需要用Attribuite的地方还要去设置nil，这样会很不易于扩展。下面举个上报日志接口的例子。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SMLogger</span> : <span class="title">NSObject</span></span></div><div class="line"><span class="comment">//初始化</span></div><div class="line">+ (SMLogger *)create;</div><div class="line"><span class="comment">//可选设置</span></div><div class="line">- (SMLogger *)object:(<span class="keyword">id</span>)obj;                        <span class="comment">//object对象记录</span></div><div class="line">- (SMLogger *)message:(<span class="built_in">NSString</span> *)msg;               <span class="comment">//描述</span></div><div class="line">- (SMLogger *)classify:(SMProjectClassify)classify;  <span class="comment">//分类</span></div><div class="line">- (SMLogger *)level:(SMLoggerLevel)level;            <span class="comment">//级别</span></div><div class="line"></div><div class="line"><span class="comment">//最后需要执行这个方法进行保存，什么都不设置也会记录文件名，函数名，行数等信息</span></div><div class="line">- (<span class="keyword">void</span>)save;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="comment">//宏</span></div><div class="line">FOUNDATION_EXPORT <span class="keyword">void</span> SMLoggerDebugFunc(DCProjectClassify classify, DCLoggerLevel level, <span class="built_in">NSString</span> *format, ...) <span class="built_in">NS_FORMAT_FUNCTION</span>(<span class="number">3</span>,<span class="number">4</span>);</div><div class="line"><span class="comment">//debug方式打印日志，不会上报</span></div><div class="line"><span class="meta">#define SMLoggerDebug(frmt, ...) \</span></div><div class="line"><span class="keyword">do</span> &#123; SMLoggerDebugFunc(SMProjectClassifyNormal,DCLoggerLevelDebug,frmt, <span class="meta">##__VA_ARGS__);&#125; while(0)</span></div><div class="line"><span class="comment">//简单的上报日志</span></div><div class="line"><span class="meta">#define SMLoggerSimple(frmt, ...) \</span></div><div class="line"><span class="keyword">do</span> &#123; SMLoggerDebugFunc(SMProjectClassifyNormal,SMLoggerLevelDebug,frmt, <span class="meta">##__VA_ARGS__);&#125; while(0)</span></div><div class="line"><span class="comment">//自定义classify和level的日志，可上报</span></div><div class="line"><span class="meta">#define SMLoggerCustom(classify,level,frmt, ...) \</span></div><div class="line"><span class="keyword">do</span> &#123; SMLoggerDebugFunc(classify,level,frmt, <span class="meta">##__VA_ARGS__);&#125; while(0)</span></div></pre></td></tr></table></figure>
+<p>从这个头文件可以看出，对接口所需的参数不用将各种组合一一定义，只需要按照需要组合即可，而且做这个日志接口时发现后续维护过程中会增加越来越多的功能和需要更多的input数据。比如每条日志添加应用生命周期唯一编号，产品线每次切换唯一编号这样需要在特定场景需要添加的input支持。采用这种方式会更加易于扩展。写的时候会是[[[[DCLogger create] message:@”此处必改”] classify:DCProjectClassifyTradeHome] save]; 这样，对于不是特定场所较通用的场景可以使用宏来定义，内部实现还是按照前者的来实现，看起来是[DCLogger loggerWithMessage:@”此处必改”];，这样就能够同时满足常用场景和特殊场景的调用需求。</p>
+<p>有了链式编程这种易于扩展方式的编程方式再来构造函数式编程，函数编程主要思路就是用有输入输出的函数作为参数将运算过程尽量写成一系列嵌套的函数调用，下面我构造一个需求来看看函数式编程的例子。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSUInteger</span>, SMStudentGender) &#123;</div><div class="line">    SMStudentGenderMale,</div><div class="line">    SMStudentGenderFemale</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="built_in">BOOL</span>(^SatisfyActionBlock)(<span class="built_in">NSUInteger</span> credit);</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SMStudent</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) SMCreditSubject *creditSubject;</div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">BOOL</span> isSatisfyCredit;</div><div class="line"></div><div class="line">+ (SMStudent *)create;</div><div class="line">- (SMStudent *)name:(<span class="built_in">NSString</span> *)name;</div><div class="line">- (SMStudent *)gender:(SMStudentGender)gender;</div><div class="line">- (SMStudent *)studentNumber:(<span class="built_in">NSUInteger</span>)number;</div><div class="line"></div><div class="line"><span class="comment">//积分相关</span></div><div class="line">- (SMStudent *)sendCredit:(<span class="built_in">NSUInteger</span>(^)(<span class="built_in">NSUInteger</span> credit))updateCreditBlock;</div><div class="line">- (SMStudent *)filterIsASatisfyCredit:(SatisfyActionBlock)satisfyBlock;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>这个例子中，sendCredit的block函数参数会处理当前的积分这个数据然后返回给SMStudent记录下来，filterIsASatisfyCredit的block函数参数会处理是否达到合格的积分判断返回是或否的BOOL值给SMStudent记录下来。实现代码如下</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//present</span></div><div class="line"><span class="keyword">self</span>.student = [[[[[SMStudent create]</div><div class="line">                   name:<span class="string">@"ming"</span>]</div><div class="line">                  gender:SMStudentGenderMale]</div><div class="line">                 studentNumber:<span class="number">345</span>]</div><div class="line">                filterIsASatisfyCredit:^<span class="built_in">BOOL</span>(<span class="built_in">NSUInteger</span> credit)&#123;</div><div class="line">                    <span class="keyword">if</span> (credit &gt;= <span class="number">70</span>) &#123;</div><div class="line">                        <span class="keyword">self</span>.isSatisfyLabel.text = <span class="string">@"合格"</span>;</div><div class="line">                        <span class="keyword">self</span>.isSatisfyLabel.textColor = [<span class="built_in">UIColor</span> redColor];</div><div class="line">                        <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        <span class="keyword">self</span>.isSatisfyLabel.text = <span class="string">@"不合格"</span>;</div><div class="line">                        <span class="keyword">return</span> <span class="literal">NO</span>;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                &#125;];</div><div class="line"></div><div class="line">@weakify(<span class="keyword">self</span>);</div><div class="line">[[<span class="keyword">self</span>.testButton rac_signalForControlEvents:<span class="built_in">UIControlEventTouchUpInside</span>] subscribeNext:^(<span class="keyword">id</span> x) &#123;</div><div class="line">    @strongify(<span class="keyword">self</span>);</div><div class="line"></div><div class="line">    [<span class="keyword">self</span>.student sendCredit:^<span class="built_in">NSUInteger</span>(<span class="built_in">NSUInteger</span> credit) &#123;</div><div class="line">        credit += <span class="number">5</span>;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"current credit %lu"</span>,credit);</div><div class="line">        [<span class="keyword">self</span>.student.creditSubject sendNext:credit];</div><div class="line">        <span class="keyword">return</span> credit;</div><div class="line">    &#125;];</div><div class="line">&#125;];</div><div class="line"></div><div class="line">[<span class="keyword">self</span>.student.creditSubject subscribeNext:^(<span class="built_in">NSUInteger</span> credit) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"第一个订阅的credit处理积分%lu"</span>,credit);</div><div class="line">    <span class="keyword">self</span>.currentCreditLabel.text = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%lu"</span>,credit];</div><div class="line">    <span class="keyword">if</span> (credit &lt; <span class="number">30</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.currentCreditLabel.textColor = [<span class="built_in">UIColor</span> lightGrayColor];</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(credit &lt; <span class="number">70</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.currentCreditLabel.textColor = [<span class="built_in">UIColor</span> purpleColor];</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">self</span>.currentCreditLabel.textColor = [<span class="built_in">UIColor</span> redColor];</div><div class="line">    &#125;</div><div class="line">&#125;];</div><div class="line"></div><div class="line">[<span class="keyword">self</span>.student.creditSubject subscribeNext:^(<span class="built_in">NSUInteger</span> credit) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"第二个订阅的credit处理积分%lu"</span>,credit);</div><div class="line">    <span class="keyword">if</span> (!(credit &gt; <span class="number">0</span>)) &#123;</div><div class="line">        <span class="keyword">self</span>.currentCreditLabel.text = <span class="string">@"0"</span>;</div><div class="line">        <span class="keyword">self</span>.isSatisfyLabel.text = <span class="string">@"未设置"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<p>每次按钮点击都会增加5个积分，达到70个积分就算合格了。上面的例子里可以看到一个对每次积分变化有不同的观察者处理的操作代码，这里并没有使用ReactiveCocoa里的信号，而是自己实现了一个特定的积分的类似信号的对象，方法名也用的是一样的。实现这个对象也是用的函数式编程方式。下面我的具体的实现代码</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SMCreditSubject</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">void</span>(^SubscribeNextActionBlock)(<span class="built_in">NSUInteger</span> credit);</div><div class="line"></div><div class="line">+ (SMCreditSubject *)create;</div><div class="line"></div><div class="line">- (SMCreditSubject *)sendNext:(<span class="built_in">NSUInteger</span>)credit;</div><div class="line">- (SMCreditSubject *)subscribeNext:(SubscribeNextActionBlock)block;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SMCreditSubject</span>()</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">NSUInteger</span> credit;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) SubscribeNextActionBlock subscribeNextBlock;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSMutableArray</span> *blockArray;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">SMCreditSubject</span></span></div><div class="line"></div><div class="line">+ (SMCreditSubject *)create &#123;</div><div class="line">    SMCreditSubject *subject = [[<span class="keyword">self</span> alloc] init];</div><div class="line">    <span class="keyword">return</span> subject;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (SMCreditSubject *)sendNext:(<span class="built_in">NSUInteger</span>)credit &#123;</div><div class="line">    <span class="keyword">self</span>.credit = credit;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.blockArray.count &gt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">for</span> (SubscribeNextActionBlock block <span class="keyword">in</span> <span class="keyword">self</span>.blockArray) &#123;</div><div class="line">            block(<span class="keyword">self</span>.credit);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (SMCreditSubject *)subscribeNext:(SubscribeNextActionBlock)block &#123;</div><div class="line">    <span class="keyword">if</span> (block) &#123;</div><div class="line">        block(<span class="keyword">self</span>.credit);</div><div class="line">    &#125;</div><div class="line">    [<span class="keyword">self</span>.blockArray addObject:block];</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#pragma mark - Getter</span></div><div class="line">- (<span class="built_in">NSMutableArray</span> *)blockArray &#123;</div><div class="line">    <span class="keyword">if</span> (!_blockArray) &#123;</div><div class="line">        _blockArray = [<span class="built_in">NSMutableArray</span> array];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> _blockArray;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Demo地址：<a href="https://github.com/ming1016/RACStudy" target="_blank" rel="external">https://github.com/ming1016/RACStudy</a></p>
+<p>主要思路就是subscribeNext时将参数block的实现输入添加到一个数组中，sendNext时记录输入的积分，同时遍历那个记录subscribeNext的block的数组使那些block再按照新积分再实现一次输入，达到更新积分通知多个subscriber来实现新值的效果。</p>
+<p>除了block还可以将每次sendNext的积分放入一个数组记录每次的积分变化，在RAC中的Signal就是这样处理的，如下图，这样新加入的subscirber能够读取到积分变化历史记录。</p>
+<p>所以不用ReactiveCocoa库也能够按照函数式编程方式改造现有项目达到同样的效果。</p>
+<p>上面的例子也能够看出FRP的另一个响应式编程的特性。说响应式编程之前可以先看看我之前关于解耦的那篇文章里的Demo<a href="https://github.com/ming1016/DecoupleDemo" target="_blank" rel="external">https://github.com/ming1016/DecoupleDemo</a>，里面使用了Model作为连接视图，请求存储和控制器之间的纽带，通过KVO使它们能够通过Model的属性来相互监听来避免它们之间的相互依赖达到解耦的效果。</p>
+<p>像上面的例子那样其实也能够达到同样的效果，创建一个Model然后通过各个Subject来贯穿视图层和数据层进行send值和多subscribe值的处理。</p>
+<p>了解了这种编程模型，再去了解下ReactiveCocoa使用的三种设计模式就能够更容易的将它学以致用了，下面配上这三种贯穿ReactiveCocoa的设计模式，看这些图里的方法名是不是很眼熟。</p>
+<p>ReactiveCocoa里面还有很多可以学习的地方，比如宏的运用，可以看看sunnyxx的那篇《Reactive Cocoa Tutorial [1] = 神奇的Macros》<a href="http://blog.sunnyxx.com/2014/03/06/rac_1_macros/" target="_blank" rel="external">http://blog.sunnyxx.com/2014/03/06/rac_1_macros/</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="戴铭 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫一扫Starming星光社微信公众号starming-weixin，关注最新文章</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      戴铭
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://ming1016.github.io/2016/05/30/what-learn-from-reactivecocoa/" title="从 ReactiveCocoa 中能学到什么？不用此库也能学以致用">http://ming1016.github.io/2016/05/30/what-learn-from-reactivecocoa/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+            <a href="/tags/ReactiveCocoa/" rel="tag"># ReactiveCocoa</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/23/try-to-decouple-with-demo/" rel="next" title="竭尽全力的去解耦的一次实践，封装一个TableView和一些功能组合的控件">
+                <i class="fa fa-chevron-left"></i> 竭尽全力的去解耦的一次实践，封装一个TableView和一些功能组合的控件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/21/assembleview/" rel="prev" title="制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面">
+                制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars0.githubusercontent.com/u/251980?v=3&s=460"
+               alt="戴铭" />
+          <p class="site-author-name" itemprop="name">戴铭</p>
+           
+              <p class="site-description motion-element" itemprop="description">不积跬步，无以至千里；不积小流，无以成江海</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ming1016" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/allstarming" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/ming1016" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">戴铭</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://ming1016.github.io/2016/05/30/what-learn-from-reactivecocoa/';
+          this.page.identifier = '2016/05/30/what-learn-from-reactivecocoa/';
+          this.page.title = '从 ReactiveCocoa 中能学到什么？不用此库也能学以致用';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
