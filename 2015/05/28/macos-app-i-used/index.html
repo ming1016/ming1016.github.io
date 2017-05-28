@@ -80,7 +80,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="iOS,smck,Swift," />
+  <meta name="keywords" content="macOS,应用," />
 
 
 
@@ -98,23 +98,17 @@
 
 
 
-<meta name="description" content="前言最近几周在用 swift 做一个命令行工具 smck 用来对现有 OC 工程的代码做些分析和处理。日后工程切换成 Swift 可以加上对 Swift 工程代码的支持。昨天看到喵神在微博上说他下周要直播 live coding 一个 swift 的命令行工具，传送门： 现场编程 - 用 Swift 创建命令行工具 fengniao-cli Part1 ，其实蛮期待。想想跟喵神挺有缘的，最近下了他">
-<meta name="keywords" content="iOS,smck,Swift">
+<meta name="description" content="写作笔记Bear视觉效果最好，没有云存储，没有大纲 MWeb有大纲 Evernote有云存储，云同步，不过订阅才能够多于2台设备同步 有道云笔记字体大小没法自定义 Paperspdf 整理 有道词典翻译 系统邮件配合喵神 iOS 的 Mail Me 收集临时灵感和资料 Reeder博客跟踪 视觉keynote整理演示 Photoshop编辑裁剪图片大小 Pixave管理图片素材 Sip屏幕取色 开">
+<meta name="keywords" content="macOS,应用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="用 Swift 编写的工程代码静态分析命令行工具 smck">
-<meta property="og:url" content="http://ming1016.github.io/2017/04/01/build-static-analysis-program-smck-use-swift/index.html">
+<meta property="og:title" content="我用过的 macOS 应用">
+<meta property="og:url" content="http://ming1016.github.io/2015/05/28/macos-app-i-used/index.html">
 <meta property="og:site_name" content="星光社 - 戴铭的博客">
-<meta property="og:description" content="前言最近几周在用 swift 做一个命令行工具 smck 用来对现有 OC 工程的代码做些分析和处理。日后工程切换成 Swift 可以加上对 Swift 工程代码的支持。昨天看到喵神在微博上说他下周要直播 live coding 一个 swift 的命令行工具，传送门： 现场编程 - 用 Swift 创建命令行工具 fengniao-cli Part1 ，其实蛮期待。想想跟喵神挺有缘的，最近下了他">
-<meta property="og:image" content="https://github.com/ming1016/smck/blob/master/README/5.png?raw=true">
-<meta property="og:image" content="https://github.com/ming1016/smck/blob/master/README/6.png?raw=true">
-<meta property="og:image" content="https://github.com/ming1016/smck/blob/master/README/2.png?raw=true">
-<meta property="og:image" content="https://github.com/ming1016/smck/blob/master/README/3.png?raw=true">
-<meta property="og:image" content="https://github.com/ming1016/smck/blob/master/README/4.png?raw=true">
-<meta property="og:updated_time" content="2017-05-27T02:23:48.000Z">
+<meta property="og:description" content="写作笔记Bear视觉效果最好，没有云存储，没有大纲 MWeb有大纲 Evernote有云存储，云同步，不过订阅才能够多于2台设备同步 有道云笔记字体大小没法自定义 Paperspdf 整理 有道词典翻译 系统邮件配合喵神 iOS 的 Mail Me 收集临时灵感和资料 Reeder博客跟踪 视觉keynote整理演示 Photoshop编辑裁剪图片大小 Pixave管理图片素材 Sip屏幕取色 开">
+<meta property="og:updated_time" content="2017-05-28T03:07:49.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="用 Swift 编写的工程代码静态分析命令行工具 smck">
-<meta name="twitter:description" content="前言最近几周在用 swift 做一个命令行工具 smck 用来对现有 OC 工程的代码做些分析和处理。日后工程切换成 Swift 可以加上对 Swift 工程代码的支持。昨天看到喵神在微博上说他下周要直播 live coding 一个 swift 的命令行工具，传送门： 现场编程 - 用 Swift 创建命令行工具 fengniao-cli Part1 ，其实蛮期待。想想跟喵神挺有缘的，最近下了他">
-<meta name="twitter:image" content="https://github.com/ming1016/smck/blob/master/README/5.png?raw=true">
+<meta name="twitter:title" content="我用过的 macOS 应用">
+<meta name="twitter:description" content="写作笔记Bear视觉效果最好，没有云存储，没有大纲 MWeb有大纲 Evernote有云存储，云同步，不过订阅才能够多于2台设备同步 有道云笔记字体大小没法自定义 Paperspdf 整理 有道词典翻译 系统邮件配合喵神 iOS 的 Mail Me 收集临时灵感和资料 Reeder博客跟踪 视觉keynote整理演示 Photoshop编辑裁剪图片大小 Pixave管理图片素材 Sip屏幕取色 开">
 
 
 
@@ -142,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://ming1016.github.io/2017/04/01/build-static-analysis-program-smck-use-swift/"/>
+  <link rel="canonical" href="http://ming1016.github.io/2015/05/28/macos-app-i-used/"/>
 
 
 
 
 
-  <title>用 Swift 编写的工程代码静态分析命令行工具 smck | 星光社 - 戴铭的博客</title>
+  <title>我用过的 macOS 应用 | 星光社 - 戴铭的博客</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -258,7 +252,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://ming1016.github.io/2017/04/01/build-static-analysis-program-smck-use-swift/">
+    <link itemprop="mainEntityOfPage" href="http://ming1016.github.io/2015/05/28/macos-app-i-used/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="戴铭">
@@ -275,7 +269,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">用 Swift 编写的工程代码静态分析命令行工具 smck</h1>
+          <h1 class="post-title" itemprop="name headline">我用过的 macOS 应用</h1>
         
 
         <div class="post-meta">
@@ -287,8 +281,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-01T22:00:31+08:00">
-                2017-04-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-05-28T09:25:27+08:00">
+                2015-05-28
               </time>
             
 
@@ -310,8 +304,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/" itemprop="url" rel="index">
-                    <span itemprop="name">开发</span>
+                  <a href="/categories/应用/" itemprop="url" rel="index">
+                    <span itemprop="name">应用</span>
                   </a>
                 </span>
 
@@ -362,30 +356,37 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近几周在用 swift 做一个命令行工具 smck 用来对现有 OC 工程的代码做些分析和处理。日后工程切换成 Swift 可以加上对 Swift 工程代码的支持。昨天看到喵神在微博上说他下周要直播 live coding 一个 swift 的命令行工具，传送门： <a href="http://m.quzhiboapp.com/?liveId=391&amp;fromUserId=12049#!/intro/391" target="_blank" rel="external">现场编程 - 用 Swift 创建命令行工具 fengniao-cli Part1</a> ，其实蛮期待。想想跟喵神挺有缘的，最近下了他开发的 iOS 应用 Mail Me，随时能够记录工作和准备讲座时一些灵感，smck 的一些实现还有模块的设计灵感也是通过这个应用随时记录了下来呢，所以也推荐大家使用，真心方便。还有先前 Segmentfault 邀请我这个月31号在他们的直播平台上做个讲座，传送门： <a href="https://segmentfault.com/l/1500000008514518" target="_blank" rel="external">深入剖析 iOS 编译 Clang / LLVM - 戴铭 - SegmentFault 讲堂</a> ，先前写过一篇文章，直播可能更利于演示和详细说明一些细节吧。看来这段时间我要跟喵神做好多类似的事情了。smck 的代码今天已经放到了 Github 上，地址：<a href="https://github.com/ming1016/smck" target="_blank" rel="external">https://github.com/ming1016/smck</a></p>
-<h2 id="smck-可以做哪些事情呢？"><a href="#smck-可以做哪些事情呢？" class="headerlink" title="smck 可以做哪些事情呢？"></a>smck 可以做哪些事情呢？</h2><ul>
-<li>简单的比如命名规则的检查，按照团队标准来，如所有继承 UIViewController 的命名末尾统一成 VC，继承 JSONModel 的命名末尾统一成 Model，还有特定功能基类的子类按照一定的命名规则来。</li>
-<li>再比如查找所有中文字符串列出每个字符串分别使用在哪个控件上。</li>
-<li>根据类是否被初始化或直接调用等规则检查来分析哪些类从来没有调用过来判断是否是没有用的类。</li>
-<li>对工程质量的检查，比如 NSString，block，NSArray 的属性检查否是为 copy，还有 protocol 是否为 weak，Array 的操作是否使用具有安全操作的 Category 来做等等。<br>当然需要检查分析和处理的肯定不止这些，所以在 smck 这个程序设计成了一种非常利于添加各种检查功能模块的结构，通过简单的代码编写每个人或团队都可以方便编写添加各种 checker。</li>
-</ul>
-<h2 id="是怎么做到简单编写就能够添加功能呢？"><a href="#是怎么做到简单编写就能够添加功能呢？" class="headerlink" title="是怎么做到简单编写就能够添加功能呢？"></a>是怎么做到简单编写就能够添加功能呢？</h2><p>因为代码分析的过程会通过一系列已经编写好的 parser 来完成，parser 会完成 token 的分析和上下文还有工程全局分析输出所有节点的数据信息，根据这些完整的信息和已经定义好的一系列具有完整包含关系的结构体就能够进行各种各样功能的定制化了。下面是一些 parser 和功能介绍：</p>
-<p><img src="https://github.com/ming1016/smck/blob/master/README/5.png?raw=true" alt="parser"></p>
-<ul>
-<li>ParsingMethod.swift ：会返回 Method 结构体，包含了方法名，各个参数，方法内使用过的方法，方法内定义的临时变量等信息。</li>
-<li>ParsingMethodContent.swift ：会分析方法内的 token 根据语法形成数组结构进行处理。这里需要处理的东西很多，目前还在根据计划添加更多的数据输出。</li>
-<li>ParsingMacro.swift ：处理宏定义，主要是输出 token 给其它 parser 来处理。</li>
-<li>ParsingImport.swift ：返回 Import 结构体，包含引入的类名，包名</li>
-<li>ParsingProperty.swift ：会分析定义的属性 Property 信息</li>
-<li>ParsingInterface.swift ：会根据这个分析出一个文件中定义了多少各类，类的结构体 Object 里类名，父类名，类别名会在这里解析出。</li>
-<li>ParsingProtocol.swift ：会将分析出的协议设置到 Object 结构体中。</li>
-<li>ParsingObject.swift ： 目前主要是分析出使用过的类的信息。</li>
-</ul>
-<p>生成的 File 结构体里面套装各个子结构体，断点如图：<br><img src="https://github.com/ming1016/smck/blob/master/README/6.png?raw=true" alt="结构体"></p>
-<h2 id="如何调试-smck？"><a href="#如何调试-smck？" class="headerlink" title="如何调试 smck？"></a>如何调试 smck？</h2><p>先填上对应的命令行参数和值，设置参数参考下图。然后运行即可。<br><img src="https://github.com/ming1016/smck/blob/master/README/2.png?raw=true" alt="命令行参数"></p>
-<h2 id="导出成命令行工具"><a href="#导出成命令行工具" class="headerlink" title="导出成命令行工具"></a>导出成命令行工具</h2><p>在 Xcode 里选择 Product - Archive - Export 即可，如图：<br><img src="https://github.com/ming1016/smck/blob/master/README/3.png?raw=true" alt="导出"><br>执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./smck -o /User/your_project_path</div></pre></td></tr></table></figure></p>
-<p>输出如下<br><img src="https://github.com/ming1016/smck/blob/master/README/4.png?raw=true" alt="执行效果"></p>
-<h2 id="如何编写自己的检查功能？"><a href="#如何编写自己的检查功能？" class="headerlink" title="如何编写自己的检查功能？"></a>如何编写自己的检查功能？</h2><p>由于工程检查规则非常多样化，所以需要编写一些 Plugin，后面我会逐渐抽出一些具有共性的放上来，目前在 Plugin 目录下我放了两个例子，在例子里可以看出来怎么通过订阅 Parser 输出的不同节点的不同数据来进行不同的检查。在控制台管理相关的 Checker 类里关联 Parser 和 Plugin 的代码由于使用了 RxSwift 也变得非常简洁明了，如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">doO</span><span class="params">(path:String)</span></span> &#123;</div><div class="line">    <span class="keyword">guard</span> path.characters.<span class="built_in">count</span> &gt; <span class="number">0</span> <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span></div><div class="line">    &#125;</div><div class="line">    <span class="type">UnUseObjectPlugin</span>().plug(ob: <span class="type">ParsingEntire</span>.parsing(path: path))</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+        <h1 id="写作笔记"><a href="#写作笔记" class="headerlink" title="写作笔记"></a>写作笔记</h1><h2 id="Bear"><a href="#Bear" class="headerlink" title="Bear"></a>Bear</h2><p>视觉效果最好，没有云存储，没有大纲</p>
+<h2 id="MWeb"><a href="#MWeb" class="headerlink" title="MWeb"></a>MWeb</h2><p>有大纲</p>
+<h2 id="Evernote"><a href="#Evernote" class="headerlink" title="Evernote"></a>Evernote</h2><p>有云存储，云同步，不过订阅才能够多于2台设备同步</p>
+<h2 id="有道云笔记"><a href="#有道云笔记" class="headerlink" title="有道云笔记"></a>有道云笔记</h2><p>字体大小没法自定义</p>
+<h2 id="Papers"><a href="#Papers" class="headerlink" title="Papers"></a>Papers</h2><p>pdf 整理</p>
+<h2 id="有道词典"><a href="#有道词典" class="headerlink" title="有道词典"></a>有道词典</h2><p>翻译</p>
+<h2 id="系统邮件"><a href="#系统邮件" class="headerlink" title="系统邮件"></a>系统邮件</h2><p>配合喵神 iOS 的 Mail Me 收集临时灵感和资料</p>
+<h2 id="Reeder"><a href="#Reeder" class="headerlink" title="Reeder"></a>Reeder</h2><p>博客跟踪</p>
+<h1 id="视觉"><a href="#视觉" class="headerlink" title="视觉"></a>视觉</h1><h2 id="keynote"><a href="#keynote" class="headerlink" title="keynote"></a>keynote</h2><p>整理演示</p>
+<h2 id="Photoshop"><a href="#Photoshop" class="headerlink" title="Photoshop"></a>Photoshop</h2><p>编辑裁剪图片大小</p>
+<h2 id="Pixave"><a href="#Pixave" class="headerlink" title="Pixave"></a>Pixave</h2><p>管理图片素材</p>
+<h2 id="Sip"><a href="#Sip" class="headerlink" title="Sip"></a>Sip</h2><p>屏幕取色</p>
+<h1 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h1><h2 id="Xcode"><a href="#Xcode" class="headerlink" title="Xcode"></a>Xcode</h2><p>苹果程序</p>
+<h2 id="VSCode"><a href="#VSCode" class="headerlink" title="VSCode"></a>VSCode</h2><p>js</p>
+<h2 id="AppCode"><a href="#AppCode" class="headerlink" title="AppCode"></a>AppCode</h2><p>使用里面的检查功能，不过不够准确</p>
+<h2 id="Sublime-Text"><a href="#Sublime-Text" class="headerlink" title="Sublime Text"></a>Sublime Text</h2><p>干净的编辑器</p>
+<h2 id="Cornerstone"><a href="#Cornerstone" class="headerlink" title="Cornerstone"></a>Cornerstone</h2><p>svn</p>
+<h2 id="Transmit"><a href="#Transmit" class="headerlink" title="Transmit"></a>Transmit</h2><p>ftp 上传</p>
+<h2 id="iTerm"><a href="#iTerm" class="headerlink" title="iTerm"></a>iTerm</h2><p>终端</p>
+<h2 id="Dash"><a href="#Dash" class="headerlink" title="Dash"></a>Dash</h2><p>手册查找</p>
+<h2 id="Reaveal"><a href="#Reaveal" class="headerlink" title="Reaveal"></a>Reaveal</h2><p>调试视图</p>
+<h2 id="SourceTree"><a href="#SourceTree" class="headerlink" title="SourceTree"></a>SourceTree</h2><p>Git 管理</p>
+<h2 id="Graphviz"><a href="#Graphviz" class="headerlink" title="Graphviz"></a>Graphviz</h2><p>查看代码写的流程图 dot 格式</p>
+<h1 id="通讯"><a href="#通讯" class="headerlink" title="通讯"></a>通讯</h1><h2 id="钉钉"><a href="#钉钉" class="headerlink" title="钉钉"></a>钉钉</h2><p>工作聊</p>
+<h2 id="微信"><a href="#微信" class="headerlink" title="微信"></a>微信</h2><p>微信好友聊</p>
+<h1 id="娱乐"><a href="#娱乐" class="headerlink" title="娱乐"></a>娱乐</h1><h2 id="网易云音乐"><a href="#网易云音乐" class="headerlink" title="网易云音乐"></a>网易云音乐</h2><p>听歌</p>
+<h2 id="mpv"><a href="#mpv" class="headerlink" title="mpv"></a>mpv</h2><p>视频</p>
+<h2 id="VLC"><a href="#VLC" class="headerlink" title="VLC"></a>VLC</h2><p>开源</p>
+<h2 id="Thunder"><a href="#Thunder" class="headerlink" title="Thunder"></a>Thunder</h2><p>下载</p>
+<h2 id="The-Unarchiver"><a href="#The-Unarchiver" class="headerlink" title="The Unarchiver"></a>The Unarchiver</h2><p>解压</p>
+<h2 id="百度网盘"><a href="#百度网盘" class="headerlink" title="百度网盘"></a>百度网盘</h2><p>空间大</p>
 
       
     </div>
@@ -419,7 +420,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="http://ming1016.github.io/2017/04/01/build-static-analysis-program-smck-use-swift/" title="用 Swift 编写的工程代码静态分析命令行工具 smck">http://ming1016.github.io/2017/04/01/build-static-analysis-program-smck-use-swift/</a>
+      <a href="http://ming1016.github.io/2015/05/28/macos-app-i-used/" title="我用过的 macOS 应用">http://ming1016.github.io/2015/05/28/macos-app-i-used/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -435,11 +436,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/iOS/" rel="tag"># iOS</a>
+            <a href="/tags/macOS/" rel="tag"># macOS</a>
           
-            <a href="/tags/smck/" rel="tag"># smck</a>
-          
-            <a href="/tags/Swift/" rel="tag"># Swift</a>
+            <a href="/tags/应用/" rel="tag"># 应用</a>
           
         </div>
       
@@ -452,8 +451,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/01/slides-of-deeply-analyse-llvm/" rel="next" title="深入剖析 iOS 编译 Clang / LLVM 直播的 Slides">
-                <i class="fa fa-chevron-left"></i> 深入剖析 iOS 编译 Clang / LLVM 直播的 Slides
+              <a href="/2015/04/02/draw-game-of-thrones-with-pencil-during-14/" rel="next" title="整理了画的权利的游戏里的角色，有龙女，小恶魔等等">
+                <i class="fa fa-chevron-left"></i> 整理了画的权利的游戏里的角色，有龙女，小恶魔等等
               </a>
             
           </div>
@@ -462,8 +461,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/" rel="prev" title="atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides">
-                atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides <i class="fa fa-chevron-right"></i>
+              <a href="/2015/11/02/draw-with-note-in-ipad-during-15/" rel="prev" title="15年用iPad上的备忘录画的">
+                15年用iPad上的备忘录画的 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -629,7 +628,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#smck-可以做哪些事情呢？"><span class="nav-number">2.</span> <span class="nav-text">smck 可以做哪些事情呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#是怎么做到简单编写就能够添加功能呢？"><span class="nav-number">3.</span> <span class="nav-text">是怎么做到简单编写就能够添加功能呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何调试-smck？"><span class="nav-number">4.</span> <span class="nav-text">如何调试 smck？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导出成命令行工具"><span class="nav-number">5.</span> <span class="nav-text">导出成命令行工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何编写自己的检查功能？"><span class="nav-number">6.</span> <span class="nav-text">如何编写自己的检查功能？</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写作笔记"><span class="nav-number">1.</span> <span class="nav-text">写作笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bear"><span class="nav-number">1.1.</span> <span class="nav-text">Bear</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MWeb"><span class="nav-number">1.2.</span> <span class="nav-text">MWeb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Evernote"><span class="nav-number">1.3.</span> <span class="nav-text">Evernote</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有道云笔记"><span class="nav-number">1.4.</span> <span class="nav-text">有道云笔记</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Papers"><span class="nav-number">1.5.</span> <span class="nav-text">Papers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有道词典"><span class="nav-number">1.6.</span> <span class="nav-text">有道词典</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统邮件"><span class="nav-number">1.7.</span> <span class="nav-text">系统邮件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reeder"><span class="nav-number">1.8.</span> <span class="nav-text">Reeder</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视觉"><span class="nav-number">2.</span> <span class="nav-text">视觉</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#keynote"><span class="nav-number">2.1.</span> <span class="nav-text">keynote</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Photoshop"><span class="nav-number">2.2.</span> <span class="nav-text">Photoshop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pixave"><span class="nav-number">2.3.</span> <span class="nav-text">Pixave</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sip"><span class="nav-number">2.4.</span> <span class="nav-text">Sip</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开发"><span class="nav-number">3.</span> <span class="nav-text">开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Xcode"><span class="nav-number">3.1.</span> <span class="nav-text">Xcode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VSCode"><span class="nav-number">3.2.</span> <span class="nav-text">VSCode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AppCode"><span class="nav-number">3.3.</span> <span class="nav-text">AppCode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sublime-Text"><span class="nav-number">3.4.</span> <span class="nav-text">Sublime Text</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cornerstone"><span class="nav-number">3.5.</span> <span class="nav-text">Cornerstone</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transmit"><span class="nav-number">3.6.</span> <span class="nav-text">Transmit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iTerm"><span class="nav-number">3.7.</span> <span class="nav-text">iTerm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dash"><span class="nav-number">3.8.</span> <span class="nav-text">Dash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reaveal"><span class="nav-number">3.9.</span> <span class="nav-text">Reaveal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SourceTree"><span class="nav-number">3.10.</span> <span class="nav-text">SourceTree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Graphviz"><span class="nav-number">3.11.</span> <span class="nav-text">Graphviz</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通讯"><span class="nav-number">4.</span> <span class="nav-text">通讯</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#钉钉"><span class="nav-number">4.1.</span> <span class="nav-text">钉钉</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信"><span class="nav-number">4.2.</span> <span class="nav-text">微信</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#娱乐"><span class="nav-number">5.</span> <span class="nav-text">娱乐</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网易云音乐"><span class="nav-number">5.1.</span> <span class="nav-text">网易云音乐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mpv"><span class="nav-number">5.2.</span> <span class="nav-text">mpv</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VLC"><span class="nav-number">5.3.</span> <span class="nav-text">VLC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thunder"><span class="nav-number">5.4.</span> <span class="nav-text">Thunder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Unarchiver"><span class="nav-number">5.5.</span> <span class="nav-text">The Unarchiver</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#百度网盘"><span class="nav-number">5.6.</span> <span class="nav-text">百度网盘</span></a></li></ol></li></ol></div>
             
 
           </div>

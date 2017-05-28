@@ -1940,6 +1940,61 @@
   </entry>
   
   <entry>
+    <title>我用过的 macOS 应用</title>
+    <link href="http://ming1016.github.io/2015/05/28/macos-app-i-used/"/>
+    <id>http://ming1016.github.io/2015/05/28/macos-app-i-used/</id>
+    <published>2015-05-28T01:25:27.000Z</published>
+    <updated>2017-05-28T03:07:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="写作笔记"><a href="#写作笔记" class="headerlink" title="写作笔记"></a>写作笔记</h1><h2 id="Bear"><a href="#Bear" class="headerlink" title="Bear"></a>Bear</h2><p>视觉效果最好，没有云存储，没有大纲</p>
+<h2 id="MWeb"><a href="#MWeb" class="headerlink" title="MWeb"></a>MWeb</h2><p>有大纲</p>
+<h2 id="Evernote"><a href="#Evernote" class="headerlink" title="Evernote"></a>Evernote</h2><p>有云存储，云同步，不过订阅才能够多于2台设备同步</p>
+<h2 id="有道云笔记"><a href="#有道云笔记" class="headerlink" title="有道云笔记"></a>有道云笔记</h2><p>字体大小没法自定义</p>
+<h2 id="Papers"><a href="#Papers" class="headerlink" title="Papers"></a>Papers</h2><p>pdf 整理</p>
+<h2 id="有道词典"><a href="#有道词典" class="headerlink" title="有道词典"></a>有道词典</h2><p>翻译</p>
+<h2 id="系统邮件"><a href="#系统邮件" class="headerlink" title="系统邮件"></a>系统邮件</h2><p>配合喵神 iOS 的 Mail Me 收集临时灵感和资料</p>
+<h2 id="Reeder"><a href="#Reeder" class="headerlink" title="Reeder"></a>Reeder</h2><p>博客跟踪</p>
+<h1 id="视觉"><a href="#视觉" class="headerlink" title="视觉"></a>视觉</h1><h2 id="keynote"><a href="#keynote" class="headerlink" title="keynote"></a>keynote</h2><p>整理演示</p>
+<h2 id="Photoshop"><a href="#Photoshop" class="headerlink" title="Photoshop"></a>Photoshop</h2><p>编辑裁剪图片大小</p>
+<h2 id="Pixave"><a href="#Pixave" class="headerlink" title="Pixave"></a>Pixave</h2><p>管理图片素材</p>
+<h2 id="Sip"><a href="#Sip" class="headerlink" title="Sip"></a>Sip</h2><p>屏幕取色</p>
+<h1 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h1><h2 id="Xcode"><a href="#Xcode" class="headerlink" title="Xcode"></a>Xcode</h2><p>苹果程序</p>
+<h2 id="VSCode"><a href="#VSCode" class="headerlink" title="VSCode"></a>VSCode</h2><p>js</p>
+<h2 id="AppCode"><a href="#AppCode" class="headerlink" title="AppCode"></a>AppCode</h2><p>使用里面的检查功能，不过不够准确</p>
+<h2 id="Sublime-Text"><a href="#Sublime-Text" class="headerlink" title="Sublime Text"></a>Sublime Text</h2><p>干净的编辑器</p>
+<h2 id="Cornerstone"><a href="#Cornerstone" class="headerlink" title="Cornerstone"></a>Cornerstone</h2><p>svn</p>
+<h2 id="Transmit"><a href="#Transmit" class="headerlink" title="Transmit"></a>Transmit</h2><p>ftp 上传</p>
+<h2 id="iTerm"><a href="#iTerm" class="headerlink" title="iTerm"></a>iTerm</h2><p>终端</p>
+<h2 id="Dash"><a href="#Dash" class="headerlink" title="Dash"></a>Dash</h2><p>手册查找</p>
+<h2 id="Reaveal"><a href="#Reaveal" class="headerlink" title="Reaveal"></a>Reaveal</h2><p>调试视图</p>
+<h2 id="SourceTree"><a href="#SourceTree" class="headerlink" title="SourceTree"></a>SourceTree</h2><p>Git 管理</p>
+<h2 id="Graphviz"><a href="#Graphviz" class="headerlink" title="Graphviz"></a>Graphviz</h2><p>查看代码写的流程图 dot 格式</p>
+<h1 id="通讯"><a href="#通讯" class="headerlink" title="通讯"></a>通讯</h1><h2 id="钉钉"><a href="#钉钉" class="headerlink" title="钉钉"></a>钉钉</h2><p>工作聊</p>
+<h2 id="微信"><a href="#微信" class="headerlink" title="微信"></a>微信</h2><p>微信好友聊</p>
+<h1 id="娱乐"><a href="#娱乐" class="headerlink" title="娱乐"></a>娱乐</h1><h2 id="网易云音乐"><a href="#网易云音乐" class="headerlink" title="网易云音乐"></a>网易云音乐</h2><p>听歌</p>
+<h2 id="mpv"><a href="#mpv" class="headerlink" title="mpv"></a>mpv</h2><p>视频</p>
+<h2 id="VLC"><a href="#VLC" class="headerlink" title="VLC"></a>VLC</h2><p>开源</p>
+<h2 id="Thunder"><a href="#Thunder" class="headerlink" title="Thunder"></a>Thunder</h2><p>下载</p>
+<h2 id="The-Unarchiver"><a href="#The-Unarchiver" class="headerlink" title="The Unarchiver"></a>The Unarchiver</h2><p>解压</p>
+<h2 id="百度网盘"><a href="#百度网盘" class="headerlink" title="百度网盘"></a>百度网盘</h2><p>空间大</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;写作笔记&quot;&gt;&lt;a href=&quot;#写作笔记&quot; class=&quot;headerlink&quot; title=&quot;写作笔记&quot;&gt;&lt;/a&gt;写作笔记&lt;/h1&gt;&lt;h2 id=&quot;Bear&quot;&gt;&lt;a href=&quot;#Bear&quot; class=&quot;headerlink&quot; title=&quot;Bear&quot;&gt;&lt;/a
+    
+    </summary>
+    
+      <category term="应用" scheme="http://ming1016.github.io/categories/%E5%BA%94%E7%94%A8/"/>
+    
+    
+      <category term="macOS" scheme="http://ming1016.github.io/tags/macOS/"/>
+    
+      <category term="应用" scheme="http://ming1016.github.io/tags/%E5%BA%94%E7%94%A8/"/>
+    
+  </entry>
+  
+  <entry>
     <title>整理了画的权利的游戏里的角色，有龙女，小恶魔等等</title>
     <link href="http://ming1016.github.io/2015/04/02/draw-game-of-thrones-with-pencil-during-14/"/>
     <id>http://ming1016.github.io/2015/04/02/draw-game-of-thrones-with-pencil-during-14/</id>
