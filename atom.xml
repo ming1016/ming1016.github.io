@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ming1016.github.io/"/>
-  <updated>2017-05-27T13:41:00.000Z</updated>
+  <updated>2017-06-12T06:30:01.000Z</updated>
   <id>http://ming1016.github.io/</id>
   
   <author>
@@ -16,19 +16,44 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>GMTC 上分享滴滴出行 iOS 端瘦身实践的 Slides</title>
+    <link href="http://ming1016.github.io/2017/06/12/gmtc-ios-slimming-practice/"/>
+    <id>http://ming1016.github.io/2017/06/12/gmtc-ios-slimming-practice/</id>
+    <published>2017-06-12T06:15:06.000Z</published>
+    <updated>2017-06-12T06:30:01.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在这次 GMTC 大会上分享了我们在包大小瘦身实践过程中使用的一些方法和遇到的一些问题，会前也有很多朋友咨询过这方面的问题，相信这些经验对大家会有一些帮助，完整的 Slides 我放到了这里 <a href="http://pan.baidu.com/s/1skPAIID" target="_blank" rel="external">http://pan.baidu.com/s/1skPAIID</a> 这次大会其他讲师的 pdf 在 GMTC 官网已经放出 <a href="http://gmtc.geekbang.org/" target="_blank" rel="external">http://gmtc.geekbang.org/</a></p>
+<p>下面我提出 Slides 的内容</p>
+<p><img src="/uploads/gmtc-ios-slimming-practice/01.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/02.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/03.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/04.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/05.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/06.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/07.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/08.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/09.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/10.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/11.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/12.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/13.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/14.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/15.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/16.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/17.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/18.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/19.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/20.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/21.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/22.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/23.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/24.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/25.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/26.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/27.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/28.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/29.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/30.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/31.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/32.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/33.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/34.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/35.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/36.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/37.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/38.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/39.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/40.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/41.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/42.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/43.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/44.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/45.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/46.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/47.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/48.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/49.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/50.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/51.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/52.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/53.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/54.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/55.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/56.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/57.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/58.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/59.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/60.jpeg" alt=""><br><img src="/uploads/gmtc-ios-slimming-practice/61.jpeg" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在这次 GMTC 大会上分享了我们在包大小瘦身实践过程中使用的一些方法和遇到的一些问题，会前也有很多朋友咨询过这方面的问题，相信这些经验对大家会有一些帮助，完整的 Slides 我放到了这里 &lt;a href=&quot;http://pan.baidu.com/s/1skPAIID&quot;
+    
+    </summary>
+    
+    
+      <category term="iOS" scheme="http://ming1016.github.io/tags/iOS/"/>
+    
+      <category term="Slides" scheme="http://ming1016.github.io/tags/Slides/"/>
+    
+  </entry>
+  
+  <entry>
     <title>atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides</title>
     <link href="http://ming1016.github.io/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/"/>
     <id>http://ming1016.github.io/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/</id>
     <published>2017-05-27T09:54:41.000Z</published>
-    <updated>2017-05-27T13:41:00.000Z</updated>
+    <updated>2017-05-28T16:41:40.000Z</updated>
     
-    <content type="html"><![CDATA[<p>本次 swift 大会上我分享了一个 h5 转 swift 的 demo 还有 llvm backend 相关的知识和应用，分享完后微信，淘宝和 perfect 团队成员都私下表示了对这个主题的兴趣，看来大家对用技术提高效率的决心是一致的。下面是我的 slides 。其他嘉宾的在 <a href="https://github.com/atConf/atswift-2017-resources" target="_blank" rel="external">https://github.com/atConf/atswift-2017-resources</a></p>
+    <content type="html"><![CDATA[<p>本次 swift 大会上我分享了一个 h5 转 swift 的 demo 还有 llvm backend 相关的知识和应用，分享完后微信，淘宝和 perfect 团队成员都私下表示了对这个主题的兴趣，看来大家对用技术提高效率的决心是一致的。下面是我的 slides ，下载地址是 <a href="https://pan.baidu.com/s/1kVPvPiB" target="_blank" rel="external">https://pan.baidu.com/s/1kVPvPiB</a>。其他嘉宾的 pdf 和 源码在 <a href="https://github.com/atConf/atswift-2017-resources" target="_blank" rel="external">https://github.com/atConf/atswift-2017-resources</a></p>
 <p><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/1.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/2.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/3.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/4.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/5.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/6.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/7.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/8.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/9.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/10.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/11.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/12.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/13.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/14.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/15.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/16.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/17.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/18.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/19.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/20.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/21.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/22.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/23.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/24.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/25.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/26.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/27.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/28.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/29.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/30.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/31.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/32.png" alt=""><br><img src="/uploads/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/33.png" alt=""></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;本次 swift 大会上我分享了一个 h5 转 swift 的 demo 还有 llvm backend 相关的知识和应用，分享完后微信，淘宝和 perfect 团队成员都私下表示了对这个主题的兴趣，看来大家对用技术提高效率的决心是一致的。下面是我的 slides 。其他嘉
+      &lt;p&gt;本次 swift 大会上我分享了一个 h5 转 swift 的 demo 还有 llvm backend 相关的知识和应用，分享完后微信，淘宝和 perfect 团队成员都私下表示了对这个主题的兴趣，看来大家对用技术提高效率的决心是一致的。下面是我的 slides ，下载地
     
     </summary>
     
@@ -85,11 +110,11 @@
       <category term="开发" scheme="http://ming1016.github.io/categories/%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS" scheme="http://ming1016.github.io/tags/iOS/"/>
-    
       <category term="smck" scheme="http://ming1016.github.io/tags/smck/"/>
     
       <category term="Swift" scheme="http://ming1016.github.io/tags/Swift/"/>
+    
+      <category term="iOS" scheme="http://ming1016.github.io/tags/iOS/"/>
     
   </entry>
   
@@ -611,9 +636,9 @@
       <category term="开发" scheme="http://ming1016.github.io/categories/%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS" scheme="http://ming1016.github.io/tags/iOS/"/>
-    
       <category term="Swift" scheme="http://ming1016.github.io/tags/Swift/"/>
+    
+      <category term="iOS" scheme="http://ming1016.github.io/tags/iOS/"/>
     
       <category term="macOS" scheme="http://ming1016.github.io/tags/macOS/"/>
     
@@ -992,9 +1017,9 @@
       <category term="开发" scheme="http://ming1016.github.io/categories/%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="AssembleView" scheme="http://ming1016.github.io/tags/AssembleView/"/>
-    
       <category term="iOS" scheme="http://ming1016.github.io/tags/iOS/"/>
+    
+      <category term="AssembleView" scheme="http://ming1016.github.io/tags/AssembleView/"/>
     
   </entry>
   
@@ -2158,31 +2183,6 @@
       <category term="iOS" scheme="http://ming1016.github.io/tags/iOS/"/>
     
       <category term="runtime" scheme="http://ming1016.github.io/tags/runtime/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>14和15年间的铅笔画练习</title>
-    <link href="http://ming1016.github.io/2015/03/12/draw-practice-with-pencil-during-14-to-15/"/>
-    <id>http://ming1016.github.io/2015/03/12/draw-practice-with-pencil-during-14-to-15/</id>
-    <published>2015-03-12T13:55:01.000Z</published>
-    <updated>2017-05-27T14:25:54.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="/uploads/draw-practice-with-pencil-during-14-to-15/1.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/2.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/3.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/4.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/5.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/6.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/7.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/8.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/9.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/10.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/11.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/12.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/13.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/14.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/15.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/16.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/17.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/18.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/19.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/20.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/21.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/22.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/23.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/24.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/25.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/26.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/27.jpg" alt=""><br><img src="/uploads/draw-practice-with-pencil-during-14-to-15/28.jpg" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;/uploads/draw-practice-with-pencil-during-14-to-15/1.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/uploads/draw-practice-with-pencil-during-14-to-
-    
-    </summary>
-    
-      <category term="我的画" scheme="http://ming1016.github.io/categories/%E6%88%91%E7%9A%84%E7%94%BB/"/>
-    
-    
-      <category term="画" scheme="http://ming1016.github.io/tags/%E7%94%BB/"/>
-    
-      <category term="Pencil" scheme="http://ming1016.github.io/tags/Pencil/"/>
     
   </entry>
   
