@@ -79,13 +79,13 @@
 <meta property="og:image" content="http://ming1016.github.io/uploads/deeply-analyse-llvm/06.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/deeply-analyse-llvm/07.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/deeply-analyse-llvm/09.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/deeply-analyse-llvm/09.png">
+<meta property="og:image" content="http://ming1016.github.io/uploads/deeply-analyse-llvm/10.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/deeply-analyse-llvm/11.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/deeply-analyse-llvm/12.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/deeply-analyse-llvm/01.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/deeply-analyse-llvm/02.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/deeply-analyse-llvm/03.png">
-<meta property="og:updated_time" content="2017-07-31T10:12:24.000Z">
+<meta property="og:updated_time" content="2017-07-31T11:03:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入剖析 iOS 编译 Clang &#x2F; LLVM">
 <meta name="twitter:description" content="前言2000年，伊利诺伊大学厄巴纳－香槟分校（University of Illinois at Urbana-Champaign 简称UIUC）这所享有世界声望的一流公立研究型大学的 Chris Lattner（他的 twitter @clattner_llvm ） 开发了一个叫作 Low Level Virtual Machine 的编译器开发工具套件，后来涉及范围越来越大，可以用于常规编译器">
@@ -694,7 +694,7 @@
 </ul>
 <h1 id="LLVM-Backend"><a href="#LLVM-Backend" class="headerlink" title="LLVM Backend"></a>LLVM Backend</h1><p>首先通过下图看看 LLVM Backend 在整个 LLVM 里所处的位置：<br><img src="/uploads/deeply-analyse-llvm/09.png" alt=""></p>
 <p>接下来是整个 LLVM Backend 的流程图，后面会对每个过程详细说明</p>
-<p><img src="/uploads/deeply-analyse-llvm/09.png" alt=""></p>
+<p><img src="/uploads/deeply-analyse-llvm/10.png" alt=""></p>
 <h2 id="CodeGen-阶段"><a href="#CodeGen-阶段" class="headerlink" title="CodeGen 阶段"></a>CodeGen 阶段</h2><ul>
 <li>Instruction Selection 指令选择：将IR转化成目标平台指令组成的定向非循环图 DAG（Directed Acyclic Graph）</li>
 <li>Scheduling and Formation 调度与排序：读取 DAG，将 DAG 的指令排成 MachineInstr 的队列</li>
