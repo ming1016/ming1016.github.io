@@ -327,7 +327,7 @@
     <link href="http://ming1016.github.io/2017/03/01/deeply-analyse-llvm/"/>
     <id>http://ming1016.github.io/2017/03/01/deeply-analyse-llvm/</id>
     <published>2017-03-01T13:58:09.000Z</published>
-    <updated>2017-08-30T10:22:06.000Z</updated>
+    <updated>2017-08-30T10:44:09.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>2000年，伊利诺伊大学厄巴纳－香槟分校（University of Illinois at Urbana-Champaign 简称UIUC）这所享有世界声望的一流公立研究型大学的 Chris Lattner（他的 twitter <a href="https://twitter.com/clattner_llvm" target="_blank" rel="external">@clattner_llvm</a> ） 开发了一个叫作 Low Level Virtual Machine 的编译器开发工具套件，后来涉及范围越来越大，可以用于常规编译器，JIT编译器，汇编器，调试器，静态分析工具等一系列跟编程语言相关的工作，于是就把简称 LLVM 这个简称作为了正式的名字。Chris Lattner 后来又开发了 Clang，使得 LLVM 直接挑战 GCC 的地位。2012年，LLVM 获得美国计算机学会 ACM 的软件系统大奖，和 UNIX，WWW，TCP/IP，Tex，JAVA 等齐名。</p>
 <p>Chris Lattner 生于 1978 年，2005年加入苹果，将苹果使用的 GCC 全面转为 LLVM。2010年开始主导开发 Swift 语言。</p>
@@ -407,7 +407,11 @@
 <li>字面量：值，数字，字符串</li>
 <li>特殊符号：加减乘除等符号</li>
 </ul>
-<p>通过下面的命令可以输出所有 token 和所在文件具体位置，命令如下。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">clang -fmodules -E -Xclang -dump-tokens main.m</div><div class="line">``` </div><div class="line"></div><div class="line">可以获得每个 token 的类型，值还有类似 StartOfLine 的位置类型和 Loc=&lt;main.m:11:1&gt; 这个样的具体位置。</div><div class="line"></div><div class="line">接着进行语法分析（Semantic Analysis）将 token 先按照语法组合成语义生成 VarDecl 节点，然后将这些节点按照层级关系构成抽象语法树 Abstract Syntax Tree (AST)。</div><div class="line"></div><div class="line">打个比方，如果遇到 token 是 = 符号进行赋值的处理，遇到加减乘除就先处理乘除，然后处理加减，这些组合经过嵌套后会生成一个语法数的结构。这个过程完成后会进行赋值操作时类型是不是匹配的处理。</div><div class="line"></div><div class="line">打印语法树的命令</div><div class="line">```bash</div><div class="line">clang -fmodules -fsyntax-only -Xclang -ast-dump main.m</div></pre></td></tr></table></figure></p>
+<p>通过下面的命令可以输出所有 token 和所在文件具体位置，命令如下。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">clang -fmodules -E -Xclang -dump-tokens main.m</div></pre></td></tr></table></figure></p>
+<p>可以获得每个 token 的类型，值还有类似 StartOfLine 的位置类型和 Loc=<main.m:11:1> 这个样的具体位置。</main.m:11:1></p>
+<p>接着进行语法分析（Semantic Analysis）将 token 先按照语法组合成语义生成 VarDecl 节点，然后将这些节点按照层级关系构成抽象语法树 Abstract Syntax Tree (AST)。</p>
+<p>打个比方，如果遇到 token 是 = 符号进行赋值的处理，遇到加减乘除就先处理乘除，然后处理加减，这些组合经过嵌套后会生成一个语法数的结构。这个过程完成后会进行赋值操作时类型是不是匹配的处理。</p>
+<p>打印语法树的命令:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">clang -fmodules -fsyntax-only -Xclang -ast-dump main.m</div></pre></td></tr></table></figure></p>
 <p>TranslationUnitDecl 是根节点，表示一个源文件。Decl 表示一个声明，Expr 表示表达式，Literal 表示字面量是特殊的 Expr，Stmt 表示语句。</p>
 <p>clang 静态分析是通过建立分析引擎和 checkers 所组成的架构，这部分功能可以通过 clang —analyze 命令方式调用。clang static analyzer 分为 analyzer core 分析引擎和 checkers 两部分，所有 checker 都是基于底层分析引擎之上，通过分析引擎提供的功能能够编写新的 checker。</p>
 <p>可以通过 clang —analyze -Xclang -analyzer-checker-help 来列出当前 clang 版本下所有 checker。如果想编写自己的 checker，可以在 clang 项目的 lib / StaticAnalyzer / Checkers 目录下找到实例参考，比如 ObjCUnusedIVarsChecker.cpp 用来检查未使用定义过的变量。这种方式能够方便用户扩展对代码检查规则或者对 bug 类型进行扩展，但是这种架构也有不足，每执行完一条语句后，分析引擎会遍历所有 checker 中的回调函数，所以 checker 越多，速度越慢。通过 clang -cc1 -analyzer-checker-help 可以列出能调用的 checker，下面是常用 checker</p>
