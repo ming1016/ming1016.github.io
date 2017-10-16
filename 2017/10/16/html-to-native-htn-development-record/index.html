@@ -1,0 +1,788 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Swift,Web," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="星光社 - 戴铭的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/uploads/logo.png?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前言本文主要是记录 HTN 项目开发的过程。关于这个项目先前在 Swift 开发者大会上我曾经演示过，不过当时项目结构不完善，不易扩展，也没有按照标准来。所以这段时间，我研究了下 W3C 的标准和 WebKit 的一些实现，对于这段时间的研究也写了篇文章深入剖析 WebKit。重构了下这个项目，我可以先说下已经完成的部分，最后列下后面的规划。项目已经放到了 Github 上：https://git">
+<meta name="keywords" content="Swift,Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML 转原生 HTN 项目开发记录">
+<meta property="og:url" content="http://ming1016.github.io/2017/10/16/html-to-native-htn-development-record/index.html">
+<meta property="og:site_name" content="星光社 - 戴铭的博客">
+<meta property="og:description" content="前言本文主要是记录 HTN 项目开发的过程。关于这个项目先前在 Swift 开发者大会上我曾经演示过，不过当时项目结构不完善，不易扩展，也没有按照标准来。所以这段时间，我研究了下 W3C 的标准和 WebKit 的一些实现，对于这段时间的研究也写了篇文章深入剖析 WebKit。重构了下这个项目，我可以先说下已经完成的部分，最后列下后面的规划。项目已经放到了 Github 上：https://git">
+<meta property="og:image" content="http://ming1016.github.io/uploads/html-to-native-htn-development-record/01.png">
+<meta property="og:image" content="http://ming1016.github.io/uploads/html-to-native-htn-development-record/02.png">
+<meta property="og:image" content="http://ming1016.github.io/uploads/html-to-native-htn-development-record/03.png">
+<meta property="og:updated_time" content="2017-10-16T09:38:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTML 转原生 HTN 项目开发记录">
+<meta name="twitter:description" content="前言本文主要是记录 HTN 项目开发的过程。关于这个项目先前在 Swift 开发者大会上我曾经演示过，不过当时项目结构不完善，不易扩展，也没有按照标准来。所以这段时间，我研究了下 W3C 的标准和 WebKit 的一些实现，对于这段时间的研究也写了篇文章深入剖析 WebKit。重构了下这个项目，我可以先说下已经完成的部分，最后列下后面的规划。项目已经放到了 Github 上：https://git">
+<meta name="twitter:image" content="http://ming1016.github.io/uploads/html-to-native-htn-development-record/01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ming1016.github.io/2017/10/16/html-to-native-htn-development-record/"/>
+
+
+
+
+
+  <title>HTML 转原生 HTN 项目开发记录 | 星光社 - 戴铭的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">星光社 - 戴铭的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ming1016.github.io/2017/10/16/html-to-native-htn-development-record/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="戴铭">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/251980?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星光社 - 戴铭的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HTML 转原生 HTN 项目开发记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-16T15:49:00+08:00">
+                2017-10-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文主要是记录 HTN 项目开发的过程。关于这个项目先前在 Swift 开发者大会上我曾经演示过，不过当时项目结构不完善，不易扩展，也没有按照标准来。所以这段时间，我研究了下 W3C 的标准和 WebKit 的一些实现，对于这段时间的研究也写了篇文章<a href="http://www.starming.com/2017/10/11/deeply-analyse-webkit/" target="_blank" rel="external">深入剖析 WebKit</a>。重构了下这个项目，我可以先说下已经完成的部分，最后列下后面的规划。项目已经放到了 Github 上：<a href="https://github.com/ming1016/HTN" target="_blank" rel="external">https://github.com/ming1016/HTN</a> 后面可以对着代码看。</p>
+<h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><p>这部分最关键的部分是在 HTML/HTMLTokenizer.swift 里。首先会根据 W3C 里的 Tokenization 的标准 <a href="https://dev.w3.org/html5/spec-preview/tokenization.html" target="_blank" rel="external">https://dev.w3.org/html5/spec-preview/tokenization.html</a> 来定义一个状态的枚举，如下，可以目前完成这些状态的情况<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//枚举</span></div><div class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">S</span>: <span class="title">HTNStateType</span> </span>&#123;</div><div class="line">        <span class="keyword">case</span> <span class="type">DataState</span> <span class="comment">//half done</span></div><div class="line">        <span class="keyword">case</span> <span class="type">CharacterReferenceInDataState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">RCDATAState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">CharacterReferenceInRCDATAState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">RAWTEXTState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ScriptDataState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">PLAINTEXTState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">TagOpenState</span> <span class="comment">//half done</span></div><div class="line">        <span class="keyword">case</span> <span class="type">EndTagOpenState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">TagNameState</span> <span class="comment">//half done</span></div><div class="line">        </div><div class="line">        <span class="keyword">case</span> <span class="type">RCDATALessThanSignState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">RCDATAEndTagOpenState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">RCDATAEndTagNameState</span></div><div class="line">        </div><div class="line">        <span class="keyword">case</span> <span class="type">RAWTEXTLessThanSignState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">RAWTEXTEndTagOpenState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">RAWTEXTEndTagNameState</span></div><div class="line">        </div><div class="line">        <span class="comment">//Script</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ScriptDataLessThanSignState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEndTagOpenState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEndTagNameState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEscapeStartState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEscapeStartDashState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEscapedState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEscapedDashState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEscapedDashDashState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEscapedLessThanSignState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEscapedEndTagOpenState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEscapedEndTagNameState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ScriptDataDoubleEscapeStartState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ScriptDataDoubleEscapedState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ScriptDataDoubleEscapedDashState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ScriptDataDoubleEscapedDashDashState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ScriptDataDoubleEscapedLessThanSignState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ScriptDataDoubleEscapeEndState</span></div><div class="line">        </div><div class="line">        <span class="comment">//Tag</span></div><div class="line">        <span class="keyword">case</span> <span class="type">BeforeAttributeNameState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">AttributeNameState</span> <span class="comment">//half done</span></div><div class="line">        <span class="keyword">case</span> <span class="type">AfterAttributeNameState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">BeforeAttributeValueState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">AttributeValueDoubleQuotedState</span> <span class="comment">//half done</span></div><div class="line">        <span class="keyword">case</span> <span class="type">AttributeValueSingleQuotedState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">AttributeValueUnquotedState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">CharacterReferenceInAttributeValueState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">AfterAttributeValueQuotedState</span> <span class="comment">//half done</span></div><div class="line">        <span class="keyword">case</span> <span class="type">SelfClosingStartTagState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">BogusCommentState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">ContinueBogusCommentState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">MarkupDeclarationOpenState</span> <span class="comment">//half done</span></div><div class="line">        </div><div class="line">        <span class="comment">//Comment</span></div><div class="line">        <span class="keyword">case</span> <span class="type">CommentStartState</span> <span class="comment">//half done</span></div><div class="line">        <span class="keyword">case</span> <span class="type">CommentStartDashState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">CommentState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">CommentEndDashState</span> <span class="comment">//half done</span></div><div class="line">        <span class="keyword">case</span> <span class="type">CommentEndState</span> <span class="comment">//half done</span></div><div class="line">        <span class="keyword">case</span> <span class="type">CommentEndBangState</span></div><div class="line">        </div><div class="line">        <span class="comment">//DOCTYPE</span></div><div class="line">        <span class="keyword">case</span> <span class="type">DOCTYPEState</span> <span class="comment">//half done</span></div><div class="line">        <span class="keyword">case</span> <span class="type">BeforeDOCTYPENameState</span> <span class="comment">//half done</span></div><div class="line">        <span class="keyword">case</span> <span class="type">DOCTYPENameState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">AfterDOCTYPENameState</span> <span class="comment">//half done</span></div><div class="line">        <span class="keyword">case</span> <span class="type">AfterDOCTYPEPublicKeywordState</span> <span class="comment">//half done</span></div><div class="line">        <span class="keyword">case</span> <span class="type">BeforeDOCTYPEPublicIdentifierState</span> <span class="comment">//half done</span></div><div class="line">        <span class="keyword">case</span> <span class="type">DOCTYPEPublicIdentifierDoubleQuotedState</span> <span class="comment">//half done</span></div><div class="line">        <span class="keyword">case</span> <span class="type">DOCTYPEPublicIdentifierSingleQuotedState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">AfterDOCTYPEPublicIdentifierState</span> <span class="comment">//half done</span></div><div class="line">        <span class="keyword">case</span> <span class="type">BetweenDOCTYPEPublicAndSystemIdentifiersState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">AfterDOCTYPESystemKeywordState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">BeforeDOCTYPESystemIdentifierState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">DOCTYPESystemIdentifierDoubleQuotedState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">DOCTYPESystemIdentifierSingleQuotedState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">AfterDOCTYPESystemIdentifierState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">BogusDOCTYPEState</span></div><div class="line">        </div><div class="line">        <span class="keyword">case</span> <span class="type">CDATASectionState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">CDATASectionRightSquareBracketState</span></div><div class="line">        <span class="keyword">case</span> <span class="type">CDATASectionDoubleRightSquareBracketState</span></div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>处理这些状态采用的是状态机原理。根据状态机数学模型提取出需要的状态集合，事件集合，事件集合在这里是所遇字符的集合做了一个状态机，具体实现在 HTNFundation/HTNStateMachine.swift。状态转移函数我定义的是 func listen(_ event: E, transit fromState: S, to toState: S, callback: @escaping (HTNTransition<s, e="">) -&gt; Void) ，这里的 block 是在状态转移时需要做的事情定义 。为了能够减少状态转移太多太碎，也多写了几个函数来处理比如一组来源状态到同一个转移状态和针对某些事件状态不变的函数。</s,></p>
+<p>有了状态机后面的处理就会很方便，这里的事件就是一个一个的字符，不同字符在不同的状态下的处理。下面可以举个多状态转同一状态的实现，具体代码如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> anglebracketRightEventFromStatesArray = [<span class="type">S</span>.<span class="type">DOCTYPEState</span>,</div><div class="line">                                             <span class="type">S</span>.<span class="type">CommentEndState</span>,</div><div class="line">                                             <span class="type">S</span>.<span class="type">TagOpenState</span>,</div><div class="line">                                             <span class="type">S</span>.<span class="type">EndTagOpenState</span>,</div><div class="line">                                             <span class="type">S</span>.<span class="type">AfterAttributeValueQuotedState</span>,</div><div class="line">                                             <span class="type">S</span>.<span class="type">BeforeDOCTYPENameState</span>,</div><div class="line">                                             <span class="type">S</span>.<span class="type">AfterDOCTYPEPublicIdentifierState</span>]</div><div class="line">stateMachine.listen(<span class="type">E</span>.<span class="type">AngleBracketRight</span>, transit: anglebracketRightEventFromStatesArray, to: <span class="type">S</span>.<span class="type">DataState</span>) &#123; (t) <span class="keyword">in</span></div><div class="line">    <span class="keyword">if</span> t.fromState == <span class="type">S</span>.<span class="type">TagOpenState</span> || t.fromState == <span class="type">S</span>.<span class="type">EndTagOpenState</span> &#123;</div><div class="line">        <span class="keyword">if</span> <span class="keyword">self</span>._bufferStr.<span class="built_in">count</span> &gt; <span class="number">0</span> &#123;</div><div class="line">            <span class="keyword">self</span>._bufferToken.data = <span class="keyword">self</span>._bufferStr.lowercased()</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">self</span>.addHTMLToken()</div><div class="line">    <span class="keyword">self</span>.advanceIndexAndResetCurrentStr()</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>W3C 也定义每个状态的处理，非常详细完整，WebKit 基本把这些定义都实现了，HTN 目前只实现了能够满足构建 DOM 树的部分。W3C 的定义可以举个 StartTags 的状态如下图<br><img src="/uploads/html-to-native-htn-development-record/01.png" alt="01"></p>
+<p>在进入构建 DOM 树之前我们需要设计一些类和结构来记录我们的内容，这里采用了 WebKit 类似的类结构设计，下图是 WebKit 的 DOM 树相关的类设计图<br><img src="/uploads/html-to-native-htn-development-record/02.png" alt="02"></p>
+<p>完成了这些状态处理，接下来就可以根据这些 HTMLToken 来组装我们的 DOM 树了。这部分的实现在 HTML/HTMLTreeBuilder.swift 里。构建 DOM 树同样使用了先前的写的状态机，只是这里的状态集和事件集不同而已，W3C 也定义一些状态可以用<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">S</span>: <span class="title">HTNStateType</span> </span>&#123;</div><div class="line">    <span class="keyword">case</span> <span class="type">InitialModeState</span></div><div class="line">    <span class="keyword">case</span> <span class="type">BeforeHTMLState</span></div><div class="line">    <span class="keyword">case</span> <span class="type">BeforeHeadState</span></div><div class="line">    <span class="keyword">case</span> <span class="type">InHeadState</span></div><div class="line">    <span class="keyword">case</span> <span class="type">AfterHeadState</span></div><div class="line">    <span class="keyword">case</span> <span class="type">InBodyState</span></div><div class="line">    <span class="keyword">case</span> <span class="type">AfterBodyState</span></div><div class="line">    <span class="keyword">case</span> <span class="type">AfterAfterBodyState</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>从名字就能很方便的看出每个状态的意思。这里的事件集使用的是 HTMLToken 里的类型，根据不同类型来放置到合适的位置。树的父级子级是通过定义的一个堆栈来控制，具体构建实现可以看 func parse() -&gt; [HTMLToken] 这个函数。</p>
+<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><p>解析 CSS 需要先了解下 CSS 的 BNF，它的定义如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">ruleset</div><div class="line">  : selector [ &apos;,&apos; S* selector ]*</div><div class="line">    &apos;&#123;&apos; S* declaration [ &apos;;&apos; S* declaration ]* &apos;&#125;&apos; S*</div><div class="line">  ;</div><div class="line">selector</div><div class="line">  : simple_selector [ combinator selector | S+ [ combinator selector ] ]</div><div class="line">  ;</div><div class="line">simple_selector</div><div class="line">  : element_name [ HASH | class | attrib | pseudo ]*</div><div class="line">  | [ HASH | class | attrib | pseudo ]+</div><div class="line">  ;</div><div class="line">class</div><div class="line">  : &apos;.&apos; IDENT</div><div class="line">  ;</div><div class="line">element_name</div><div class="line">  : IDENT | &apos;*&apos;</div><div class="line">  ;</div><div class="line">attrib</div><div class="line">  : &apos;[&apos; S* IDENT S* [ [ &apos;=&apos; | INCLUDES | DASHMATCH ] S*</div><div class="line">    [ IDENT | STRING ] S* ] &apos;]&apos;</div><div class="line">  ;</div><div class="line">pseudo</div><div class="line">  : &apos;:&apos; [ IDENT | FUNCTION S* [IDENT S*] &apos;)&apos; ]</div><div class="line">  ;</div></pre></td></tr></table></figure></p>
+<p>根据 BNF 来确定状态集和事件集。下面是我定义的状态集和事件集<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">S</span>: <span class="title">HTNStateType</span> </span>&#123;</div><div class="line">    <span class="keyword">case</span> <span class="type">UnknownState</span>     <span class="comment">//</span></div><div class="line">    <span class="keyword">case</span> <span class="type">SelectorState</span>    <span class="comment">// 比如 div p, #id</span></div><div class="line">    <span class="keyword">case</span> <span class="type">PropertyKeyState</span>   <span class="comment">// 属性的 key</span></div><div class="line">    <span class="keyword">case</span> <span class="type">PropertyValueState</span> <span class="comment">// 属性的 value</span></div><div class="line">    </div><div class="line">    <span class="comment">//<span class="doctag">TODO:</span>以下后期支持，优先级2</span></div><div class="line">    <span class="keyword">case</span> <span class="type">PseudoClass</span>      <span class="comment">// :nth-child(2)</span></div><div class="line">    <span class="keyword">case</span> <span class="type">PseudoElement</span>    <span class="comment">// ::first-line</span></div><div class="line">    </div><div class="line">    <span class="comment">//<span class="doctag">TODO:</span>以下后期支持，优先级3</span></div><div class="line">    <span class="keyword">case</span> <span class="type">PagePseudoClass</span></div><div class="line">    <span class="keyword">case</span> <span class="type">AttributeExact</span>   <span class="comment">// E[attr]</span></div><div class="line">    <span class="keyword">case</span> <span class="type">AttributeSet</span>     <span class="comment">// E[attr|="value"]</span></div><div class="line">    <span class="keyword">case</span> <span class="type">AttributeHyphen</span>  <span class="comment">// E[attr~="value"]</span></div><div class="line">    <span class="keyword">case</span> <span class="type">AttributeList</span>    <span class="comment">// E[attr*="value"]</span></div><div class="line">    <span class="keyword">case</span> <span class="type">AttributeContain</span> <span class="comment">// E[attr^="value"]</span></div><div class="line">    <span class="keyword">case</span> <span class="type">AttributeBegin</span>   <span class="comment">// E[attr$="value"]</span></div><div class="line">    <span class="keyword">case</span> <span class="type">AttributeEnd</span></div><div class="line">    <span class="comment">//<span class="doctag">TODO:</span>@media 这类 @规则 ，后期支持，优先级4</span></div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">E</span>: <span class="title">HTNEventType</span> </span>&#123;</div><div class="line">    <span class="keyword">case</span> <span class="type">SpaceEvent</span>   <span class="comment">//空格</span></div><div class="line">    <span class="keyword">case</span> <span class="type">CommaEvent</span>   <span class="comment">// ,</span></div><div class="line">    <span class="keyword">case</span> <span class="type">DotEvent</span>     <span class="comment">// .</span></div><div class="line">    <span class="keyword">case</span> <span class="type">HashTagEvent</span> <span class="comment">// #</span></div><div class="line">    <span class="keyword">case</span> <span class="type">BraceLeftEvent</span>  <span class="comment">// &#123;</span></div><div class="line">    <span class="keyword">case</span> <span class="type">BraceRightEvent</span> <span class="comment">// &#125;</span></div><div class="line">    <span class="keyword">case</span> <span class="type">ColonEvent</span> <span class="comment">// :</span></div><div class="line">    <span class="keyword">case</span> <span class="type">SemicolonEvent</span>  <span class="comment">// ;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>同样在状态的处理过程中也需要一个合理的类结构关系设计来满足，这里也参考了 WebKit 里的设计，如下：<br><img src="/uploads/html-to-native-htn-development-record/03.png" alt="03"></p>
+<h2 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h2><p>布局处理目前 HTN 主要是将样式属性和 DOM 树里的 Element 对应上。具体实现是在 Layout/StyleResolver.swift 里。思路是先将所有 CSSRule 和对应的 CSSSelector 做好映射，接着在递归 DOM 树的过程中与每个 Element 对应上。主要代码实现如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">resolver</span><span class="params">(<span class="number">_</span> doc:Document, styleSheet:CSSStyleSheet)</span></span> -&gt; <span class="type">Document</span>&#123;</div><div class="line">    <span class="comment">//样式映射表</span></div><div class="line">    <span class="comment">//<span class="doctag">TODO:</span> 需要把结构改成 [String:[String:CSSProperty]] 这样能够支持重复 selector 能够合并 Property</span></div><div class="line">    <span class="keyword">var</span> matchMap = [<span class="type">String</span>:[<span class="type">String</span>:<span class="type">CSSRule</span>]]()</div><div class="line">    <span class="keyword">for</span> rule <span class="keyword">in</span> styleSheet.ruleList &#123;</div><div class="line">        <span class="keyword">for</span> selector <span class="keyword">in</span> rule.selectorList &#123;</div><div class="line">            <span class="keyword">guard</span> <span class="keyword">let</span> matchLast = selector.matchList.last <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">continue</span></div><div class="line">            &#125;</div><div class="line">            <span class="keyword">var</span> matchDic = matchMap[matchLast]</div><div class="line">            <span class="keyword">if</span> matchDic == <span class="literal">nil</span> &#123;</div><div class="line">                matchDic = [<span class="type">String</span>:<span class="type">CSSRule</span>]()</div><div class="line">                matchMap[matchLast] = matchDic</div><div class="line">            &#125;</div><div class="line">            matchMap[matchLast]![selector.identifier] = rule</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> elm <span class="keyword">in</span> doc.children &#123;</div><div class="line">        <span class="keyword">self</span>.attach(elm <span class="keyword">as</span>! <span class="type">Element</span>, matchMap: matchMap)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> doc</div><div class="line">&#125;</div><div class="line"><span class="comment">//递归将样式属性都加上</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">attach</span><span class="params">(<span class="number">_</span> element:Element, matchMap:[String:[String:CSSRule]])</span></span> &#123;</div><div class="line">    </div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> token = element.startTagToken <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> matchMap[token.data] != <span class="literal">nil</span> &#123;</div><div class="line">        <span class="comment">//TODO 还不支持 selector 里多个标签名组合，后期加上</span></div><div class="line">        <span class="keyword">if</span> matchMap[token.data]![token.data] != <span class="literal">nil</span> &#123;</div><div class="line">            <span class="keyword">let</span> ruleList = matchMap[token.data]![token.data]!</div><div class="line">            <span class="comment">//将属性加入 element 的属性列表里</span></div><div class="line">            <span class="keyword">for</span> property <span class="keyword">in</span> ruleList.propertyList &#123;</div><div class="line">                element.propertyList.append(property)</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    addProperty(token.data, matchMap: matchMap, element: element)</div><div class="line">    <span class="keyword">for</span> attr <span class="keyword">in</span> token.attributeList &#123;</div><div class="line">        <span class="keyword">if</span> attr.name == <span class="string">"class"</span> &#123;</div><div class="line">            addProperty(<span class="string">"."</span> + attr.value, matchMap: matchMap, element: element)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> attr.name == <span class="string">"id"</span> &#123;</div><div class="line">            addProperty(<span class="string">"#"</span> + attr.value, matchMap: matchMap, element: element)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> element.children.<span class="built_in">count</span> &gt; <span class="number">0</span> &#123;</div><div class="line">        <span class="keyword">for</span> element <span class="keyword">in</span> element.children &#123;</div><div class="line">            <span class="keyword">self</span>.attach(element <span class="keyword">as</span>! <span class="type">Element</span>, matchMap: matchMap)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">addProperty</span><span class="params">(<span class="number">_</span> key:String, matchMap:[String:[String:CSSRule]], element:Element)</span></span> &#123;</div><div class="line">    <span class="keyword">if</span> matchMap[key] != <span class="literal">nil</span> &#123;</div><div class="line">        <span class="comment">//TODO 还不支持 selector 里多个标签名组合，后期加上</span></div><div class="line">        <span class="keyword">if</span> matchMap[key]![key] != <span class="literal">nil</span> &#123;</div><div class="line">            <span class="keyword">let</span> ruleList = matchMap[key]![key]!</div><div class="line">            <span class="comment">//将属性加入 element 的属性列表里</span></div><div class="line">            <span class="keyword">for</span> property <span class="keyword">in</span> ruleList.propertyList &#123;</div><div class="line">                element.propertyList.append(property)</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="转原生"><a href="#转原生" class="headerlink" title="转原生"></a>转原生</h2><p>先前实现了转 Yoga 原生代码，在项目在 <a href="https://github.com/ming1016/smck" target="_blank" rel="external">https://github.com/ming1016/smck</a> 里，具体转原生的代码实现在：<a href="https://github.com/ming1016/smck/blob/master/smck/Plugin/H5ToSwiftByFlexBoxPlugin.swift" target="_blank" rel="external">https://github.com/ming1016/smck/blob/master/smck/Plugin/H5ToSwiftByFlexBoxPlugin.swift</a> 。接下来打算将其转换成 <a href="https://github.com/TextureGroup/Texture" target="_blank" rel="external">Texture</a> 让效率更高。</p>
+<h2 id="规划"><a href="#规划" class="headerlink" title="规划"></a>规划</h2><ul>
+<li>对样式表更多属性的支持，目前仅处理了 flexbox 相关属性的原生映射，基本属性，默认属性设置，包括 block inline 等都还没有支持。</li>
+<li>HTN 的 Objective-C 版。</li>
+<li>支持转 Texture 原生代码。</li>
+<li>支持转 Objective-C 的原生代码。</li>
+<li>CSS Selector 的 Tag 路径支持，Tag 和 class，id 的组合选择。</li>
+<li>解析转换器内嵌在应用程序内部，支持服务器下发 h5 代码转换。</li>
+<li>HTML 内 JS 解析，支持逻辑控制 HTML</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="戴铭 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫一扫Starming星光社微信公众号starming-weixin，关注最新文章</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      戴铭
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://ming1016.github.io/2017/10/16/html-to-native-htn-development-record/" title="HTML 转原生 HTN 项目开发记录">http://ming1016.github.io/2017/10/16/html-to-native-htn-development-record/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+            <a href="/tags/Web/" rel="tag"># Web</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/11/deeply-analyse-webkit/" rel="next" title="深入剖析 WebKit">
+                <i class="fa fa-chevron-left"></i> 深入剖析 WebKit
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars0.githubusercontent.com/u/251980?v=3&s=460"
+               alt="戴铭" />
+          <p class="site-author-name" itemprop="name">戴铭</p>
+           
+              <p class="site-description motion-element" itemprop="description">不积跬步，无以至千里；不积小流，无以成江海</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ming1016" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/allstarming" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/ming1016" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML"><span class="nav-number">2.</span> <span class="nav-text">HTML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS"><span class="nav-number">3.</span> <span class="nav-text">CSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#布局"><span class="nav-number">4.</span> <span class="nav-text">布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转原生"><span class="nav-number">5.</span> <span class="nav-text">转原生</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规划"><span class="nav-number">6.</span> <span class="nav-text">规划</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">戴铭</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

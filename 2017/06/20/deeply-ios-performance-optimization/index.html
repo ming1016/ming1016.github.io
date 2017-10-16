@@ -48,7 +48,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="iOS,性能优化," />
+  <meta name="keywords" content="iOS,Performance optimization," />
 
 
 
@@ -67,7 +67,7 @@
 
 
 <meta name="description" content="问题种类时间复杂度在集合里数据量小的情况下时间复杂度对于性能的影响看起来微乎其微。但如果某个开发的功能是一个公共功能，无法预料调用者传入数据的量时，这个复杂度的优化显得非常重要了。上图列出了各种情况的时间复杂度，比如高效的排序算法一般都是 O(n log n)。接下来看看下图：图中可以看出 O(n) 是个分水岭，大于它对于性能就具有很大的潜在影响，如果是个公共的接口一定要加上说明，自己调用也要做到">
-<meta name="keywords" content="iOS,性能优化">
+<meta name="keywords" content="iOS,Performance optimization">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入剖析 iOS 性能优化">
 <meta property="og:url" content="http://ming1016.github.io/2017/06/20/deeply-ios-performance-optimization/index.html">
@@ -81,7 +81,7 @@
 <meta property="og:image" content="http://ming1016.github.io/uploads/deeply-ios-performance-optimization/06.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/deeply-ios-performance-optimization/07.PNG">
 <meta property="og:image" content="http://ming1016.github.io/uploads/deeply-ios-performance-optimization/08.PNG">
-<meta property="og:updated_time" content="2017-08-17T13:08:41.000Z">
+<meta property="og:updated_time" content="2017-10-11T03:15:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入剖析 iOS 性能优化">
 <meta name="twitter:description" content="问题种类时间复杂度在集合里数据量小的情况下时间复杂度对于性能的影响看起来微乎其微。但如果某个开发的功能是一个公共功能，无法预料调用者传入数据的量时，这个复杂度的优化显得非常重要了。上图列出了各种情况的时间复杂度，比如高效的排序算法一般都是 O(n log n)。接下来看看下图：图中可以看出 O(n) 是个分水岭，大于它对于性能就具有很大的潜在影响，如果是个公共的接口一定要加上说明，自己调用也要做到">
@@ -291,8 +291,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/" itemprop="url" rel="index">
-                    <span itemprop="name">开发</span>
+                  <a href="/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
                   </a>
                 </span>
 
@@ -368,7 +368,7 @@
 <p>举个例子，下面的写法就比较危险，可能会造成线程爆炸和死锁<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">999</span>; i++) &#123;</div><div class="line">    <span class="built_in">dispatch_async</span>(q, ^&#123;...&#125;);</div><div class="line">&#125;</div><div class="line">dispatch_barrier_sync(q, ^&#123;&#125;);</div></pre></td></tr></table></figure></p>
 <p><img src="/uploads/deeply-ios-performance-optimization/05.png" alt=""></p>
 <p>那么怎么能够避免呢？首先可以使用 dispatch_apply<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dispatch_apply(<span class="number">999</span>, q, ^(size_t i)&#123;...&#125;);</div></pre></td></tr></table></figure></p>
-<p>或者使用 dispatch_semaphore<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#define CONCURRENT_TASKS 4</span>sema = dispatch_semaphore_create(CONCURRENT_TASKS);<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">999</span>; i++)&#123;    <span class="built_in">dispatch_async</span>(q, ^&#123;        dispatch_semaphore_signal(sema);    &#125;);    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);&#125;</div></pre></td></tr></table></figure></p>
+<p>或者使用 dispatch_semaphore<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#define CONCURRENT_TASKS 4</span></div><div class="line">sema = dispatch_semaphore_create(CONCURRENT_TASKS);</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">999</span>; i++)&#123;</div><div class="line">    <span class="built_in">dispatch_async</span>(q, ^&#123;</div><div class="line">        dispatch_semaphore_signal(sema);</div><div class="line">    &#125;);</div><div class="line">    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h3 id="GCD-相关-Crash-日志"><a href="#GCD-相关-Crash-日志" class="headerlink" title="GCD 相关 Crash 日志"></a>GCD 相关 Crash 日志</h3><p>管理线程问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Thread 1:: Dispatch queue: com.apple.libdispatch-manager</div><div class="line">0   libsystem_kernel.dylib   0x00007fff8967e08a kevent_qos + 10</div><div class="line">1   libdispatch.dylib        0x00007fff8be05811 _dispatch_mgr_invoke + 251</div><div class="line">2   libdispatch.dylib        0x00007fff8be05465 _dispatch_mgr_thread + 52</div></pre></td></tr></table></figure></p>
 <p>线程闲置时<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Thread 6:</div><div class="line">0   libsystem_kernel.dylib       0x00007fff8967d772 __workq_kernreturn + 10</div><div class="line">1   libsystem_pthread.dylib      0x00007fff8fd317d9 _pthread_wqthread + 1283</div><div class="line">2   libsystem_pthread.dylib      0x00007fff8fd2ed95 start_wqthread + 13</div></pre></td></tr></table></figure></p>
 <p>线程活跃时<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Thread 3 Crashed:: Dispatch queue: &lt;queue name&gt;</div><div class="line">&lt;my code&gt;</div><div class="line">7   libdispatch.dylib        0x07fff8fcfd323 _dispatch_call_block_and_release</div><div class="line">8   libdispatch.dylib        0x07fff8fcf8c13 _dispatch_client_callout + 8</div><div class="line">9   libdispatch.dylib        0x07fff8fcfc365 _dispatch_queue_drain + 1100</div><div class="line">10  libdispatch.dylib        0x07fff8fcfdecc _dispatch_queue_invoke + 202</div><div class="line">11  libdispatch.dylib        0x07fff8fcfb6b7 _dispatch_root_queue_drain + 463</div><div class="line">12  libdispatch.dylib        0x07fff8fd09fe4 _dispatch_worker_thread3 + 91</div><div class="line">13  libsystem_pthread.dylib  0x07fff93c17637 _pthread_wqthread + 729</div><div class="line">14  libsystem_pthread.dylib  0x07fff93c1540d start_wqthread + 13</div></pre></td></tr></table></figure></p>
@@ -408,7 +408,7 @@
 <p>会更节能，对于那些只有在位置有很大变化的才需要回调的应用可以采用这种，比如天气应用。</p>
 <p>区域监测<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[locationManager startMonitoringForRegion:(<span class="built_in">CLRegion</span> *)]</div></pre></td></tr></table></figure></p>
 <p>也是一种节能的定位方式，比如在博物馆里按照不同区域监测展示不同信息之类的应用比较适合这种定位。</p>
-<p>经常访问的地方<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Start monitoring</span>locationManager.startMonitoringVisits()<span class="comment">// Stop monitoring when no longer needed</span>locationManager.stopMonitoringVisits()</div></pre></td></tr></table></figure></p>
+<p>经常访问的地方<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Start monitoring</span></div><div class="line">locationManager.startMonitoringVisits()</div><div class="line"><span class="comment">// Stop monitoring when no longer needed</span></div><div class="line">locationManager.stopMonitoringVisits()</div></pre></td></tr></table></figure></p>
 <p>总的来说，不要轻易使用 startUpdatingLocation() 除非万不得已，尽快的使用 stopUpdatingLocation() 来结束定位还用户一个节能设备。</p>
 <h2 id="内存对于性能的影响"><a href="#内存对于性能的影响" class="headerlink" title="内存对于性能的影响"></a>内存对于性能的影响</h2><p>首先 Reclaiming 内存是需要时间的，突然的大量内存需求是会影响响应的。</p>
 <h1 id="如何预防这些性能问题，需要刻意预防么"><a href="#如何预防这些性能问题，需要刻意预防么" class="headerlink" title="如何预防这些性能问题，需要刻意预防么"></a>如何预防这些性能问题，需要刻意预防么</h1><p>坚持下面几个原则争取在编码阶段避免一些性能问题。</p>
@@ -451,7 +451,8 @@
 <p>第一种： NSDate 微秒<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSDate</span>* tmpStartData = [<span class="built_in">NSDate</span> date];</div><div class="line"><span class="comment">//some code need caculate</span></div><div class="line"><span class="keyword">double</span> deltaTime = [[<span class="built_in">NSDate</span> date] timeIntervalSinceDate:tmpStartData];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"cost time: %f s"</span>, deltaTime);</div></pre></td></tr></table></figure></p>
 <p>第二种：clock_t 微秒clock_t计时所表示的是占用CPU的时钟单元<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">clock_t start = clock();</div><div class="line"><span class="comment">//some code need caculate</span></div><div class="line">clock_t end = clock();</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"cost time: %f s"</span>, (<span class="keyword">double</span>)(end - start)/<span class="built_in">CLOCKS_PER_SEC</span>);</div></pre></td></tr></table></figure></p>
 <p>第三种：CFAbsoluteTime 微秒<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">CFAbsoluteTime</span> start = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</div><div class="line"><span class="comment">//some code need caculate</span></div><div class="line"><span class="built_in">CFAbsoluteTime</span> end = <span class="built_in">CFAbsoluteTimeGetCurrent</span>();</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"cost time = %f s"</span>, end - start); <span class="comment">//s</span></div></pre></td></tr></table></figure></p>
-<p>第四种：CFTimeInterval 纳秒<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">CFTimeInterval</span> start = <span class="built_in">CACurrentMediaTime</span>();</div><div class="line"><span class="comment">//some code need caculate</span></div><div class="line"><span class="built_in">CFTimeInterval</span> end = <span class="built_in">CACurrentMediaTime</span>();</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"cost time: %f s"</span>, end - start);</div><div class="line">```第五种：mach_absolute_time 纳秒</div><div class="line">```objc</div><div class="line">uint64_t start = mach_absolute_time ();</div><div class="line"><span class="comment">//some code need caculate</span></div><div class="line">uint64_t end = mach_absolute_time ();</div><div class="line">uint64_t elapsed = <span class="number">1e-9</span> *(end - start);</div></pre></td></tr></table></figure></p>
+<p>第四种：CFTimeInterval 纳秒<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">CFTimeInterval</span> start = <span class="built_in">CACurrentMediaTime</span>();</div><div class="line"><span class="comment">//some code need caculate</span></div><div class="line"><span class="built_in">CFTimeInterval</span> end = <span class="built_in">CACurrentMediaTime</span>();</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"cost time: %f s"</span>, end - start);</div></pre></td></tr></table></figure></p>
+<p>第五种：mach_absolute_time 纳秒<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">uint64_t start = mach_absolute_time ();</div><div class="line"><span class="comment">//some code need caculate</span></div><div class="line">uint64_t end = mach_absolute_time ();</div><div class="line">uint64_t elapsed = <span class="number">1e-9</span> *(end - start);</div></pre></td></tr></table></figure></p>
 <p>最后两种可用，本质区别<br>NSDate 或 CFAbsoluteTimeGetCurrent() 返回的时钟时间将会会网络时间同步，从时钟 偏移量的角度。mach_absolute_time() 和 CACurrentMediaTime() 是基于内建时钟的。选择一种，加到 pushCallRecord 和 popCallRecord 里，相减就能够获得耗时。</p>
 <h1 id="如何-hook-msgsend-方法"><a href="#如何-hook-msgsend-方法" class="headerlink" title="如何 hook msgsend 方法"></a>如何 hook msgsend 方法</h1><p>那么 objc_msgSend 这个 c 方法是如何 hook 到的呢。首先了解下 dyld 是通过更新 Mach-O 二进制的 __DATA segment 特定的部分中的指针来邦定 lazy 和 non-lazy 符号，通过确认传递给 rebind_symbol 里每个符号名称更新的位置就可以找出对应替换来重新绑定这些符号。下面针对关键代码进行分析：</p>
 <h2 id="遍历-dyld"><a href="#遍历-dyld" class="headerlink" title="遍历 dyld"></a>遍历 dyld</h2><p>首先是遍历 dyld 里的所有的 image，取出 image header 和 slide。注意第一次调用时主要注册 callback。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (!_rebindings_head-&gt;next) &#123;</div><div class="line">    _dyld_register_func_for_add_image(_rebind_symbols_for_image);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">uint32_t</span> c = _dyld_image_count();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">uint32_t</span> i = <span class="number">0</span>; i &lt; c; i++) &#123;</div><div class="line">        _rebind_symbols_for_image(_dyld_get_image_header(i), _dyld_get_image_vmaddr_slide(i));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -543,7 +544,7 @@
           
             <a href="/tags/iOS/" rel="tag"># iOS</a>
           
-            <a href="/tags/性能优化/" rel="tag"># 性能优化</a>
+            <a href="/tags/Performance-optimization/" rel="tag"># Performance optimization</a>
           
         </div>
       
@@ -565,6 +566,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/11/deeply-analyse-webkit/" rel="prev" title="深入剖析 WebKit">
+                深入剖析 WebKit <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -636,7 +641,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -658,7 +663,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

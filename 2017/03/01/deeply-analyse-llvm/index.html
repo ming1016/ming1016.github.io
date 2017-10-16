@@ -85,7 +85,7 @@
 <meta property="og:image" content="http://ming1016.github.io/uploads/deeply-analyse-llvm/01.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/deeply-analyse-llvm/02.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/deeply-analyse-llvm/03.png">
-<meta property="og:updated_time" content="2017-08-30T10:44:09.000Z">
+<meta property="og:updated_time" content="2017-10-11T03:08:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入剖析 iOS 编译 Clang &#x2F; LLVM">
 <meta name="twitter:description" content="前言2000年，伊利诺伊大学厄巴纳－香槟分校（University of Illinois at Urbana-Champaign 简称UIUC）这所享有世界声望的一流公立研究型大学的 Chris Lattner（他的 twitter @clattner_llvm ） 开发了一个叫作 Low Level Virtual Machine 的编译器开发工具套件，后来涉及范围越来越大，可以用于常规编译器">
@@ -295,8 +295,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/" itemprop="url" rel="index">
-                    <span itemprop="name">开发</span>
+                  <a href="/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
                   </a>
                 </span>
 
@@ -429,7 +429,7 @@
 <p>可以获得每个 token 的类型，值还有类似 StartOfLine 的位置类型和 Loc=<main.m:11:1> 这个样的具体位置。</main.m:11:1></p>
 <p>接着进行语法分析（Semantic Analysis）将 token 先按照语法组合成语义生成 VarDecl 节点，然后将这些节点按照层级关系构成抽象语法树 Abstract Syntax Tree (AST)。</p>
 <p>打个比方，如果遇到 token 是 = 符号进行赋值的处理，遇到加减乘除就先处理乘除，然后处理加减，这些组合经过嵌套后会生成一个语法数的结构。这个过程完成后会进行赋值操作时类型是不是匹配的处理。</p>
-<p>打印语法树的命令:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">clang -fmodules -fsyntax-only -Xclang -ast-dump main.m</div></pre></td></tr></table></figure></p>
+<p>打印语法树的命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">clang -fmodules -fsyntax-only -Xclang -ast-dump main.m</div></pre></td></tr></table></figure></p>
 <p>TranslationUnitDecl 是根节点，表示一个源文件。Decl 表示一个声明，Expr 表示表达式，Literal 表示字面量是特殊的 Expr，Stmt 表示语句。</p>
 <p>clang 静态分析是通过建立分析引擎和 checkers 所组成的架构，这部分功能可以通过 clang —analyze 命令方式调用。clang static analyzer 分为 analyzer core 分析引擎和 checkers 两部分，所有 checker 都是基于底层分析引擎之上，通过分析引擎提供的功能能够编写新的 checker。</p>
 <p>可以通过 clang —analyze -Xclang -analyzer-checker-help 来列出当前 clang 版本下所有 checker。如果想编写自己的 checker，可以在 clang 项目的 lib / StaticAnalyzer / Checkers 目录下找到实例参考，比如 ObjCUnusedIVarsChecker.cpp 用来检查未使用定义过的变量。这种方式能够方便用户扩展对代码检查规则或者对 bug 类型进行扩展，但是这种架构也有不足，每执行完一条语句后，分析引擎会遍历所有 checker 中的回调函数，所以 checker 越多，速度越慢。通过 clang -cc1 -analyzer-checker-help 可以列出能调用的 checker，下面是常用 checker</p>
@@ -523,7 +523,7 @@
 </ul>
 <h2 id="libclang"><a href="#libclang" class="headerlink" title="libclang"></a>libclang</h2><p>libclang 会让你觉得 clang 不仅仅只是一个伟大的编译器。下面从解析源码来说下</p>
 <p>先写个 libclang 的程序来解析源码<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</div><div class="line">    CXIndex Index = clang_createIndex(<span class="number">0</span>, <span class="number">0</span>);</div><div class="line">    CXTranslationUnit TU = clang_parseTranslationUnit(Index, <span class="number">0</span>,</div><div class="line">                                                      argv, argc, <span class="number">0</span>, <span class="number">0</span>, CXTranslationUnit_None); <span class="keyword">for</span> (<span class="keyword">unsigned</span> I = <span class="number">0</span>, N = clang_getNumDiagnostics(TU); I != N; ++I) &#123;</div><div class="line">        CXDiagnostic Diag = clang_getDiagnostic(TU, I);</div><div class="line">        CXString String = clang_formatDiagnostic(Diag,clang_defaultDiagnosticDisplayOptions());</div><div class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"%s\n"</span>, clang_getCString(String));</div><div class="line">        clang_disposeString(String);</div><div class="line">    &#125;</div><div class="line">    clang_disposeTranslationUnit(TU);</div><div class="line">    clang_disposeIndex(Index);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>再写个有问题的 c 程序<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">List</span> &#123;</span> <span class="comment">/**/</span> &#125;;<span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">union</span> List *L)</span> </span>&#123; <span class="comment">/* ... */</span> &#125;</div></pre></td></tr></table></figure></p>
+<p>再写个有问题的 c 程序<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">List</span> &#123;</span> <span class="comment">/**/</span> &#125;;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">union</span> List *L)</span> </span>&#123; <span class="comment">/* ... */</span> &#125;</div></pre></td></tr></table></figure></p>
 <p>运行了语法检查后会出现提示信息<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">list.c:2:9: error: use of <span class="string">'List'</span> with tag <span class="built_in">type</span> that does not match</div><div class="line">      previous declaration</div><div class="line">int sum(union List *Node) &#123;</div><div class="line">^~~~~</div><div class="line">struct</div><div class="line">list.c:1:8: note: previous use is here</div><div class="line">struct List &#123;</div><div class="line">^</div></pre></td></tr></table></figure></p>
 <p>下面我们看看诊断过程，显示几个核心诊断方法诊断出问题</p>
 <ul>
@@ -1160,7 +1160,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1182,7 +1182,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
