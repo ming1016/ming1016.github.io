@@ -1,0 +1,777 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Study," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="星光社 - 戴铭的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/uploads/logo.png?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="如何提升开发技术的方法很多，比如专注，刻苦，热情，兴趣等，不过我这里不会提这些，下面想说的是我觉得能够指数级提升的窍门和一些自己在求索路上的一些体会，也算是一个阶段性的总结吧。趁着今天是程序员节，给大家做个分享，希望对需要的同学有用。 窍门一，将代码放到 GitHub 上看到这个标题一般人的反应就是觉得自己的代码和那些高大上的开源库比起来相形见绌，有种拿不出手的感觉。但是要想提高技术，是提高自己的">
+<meta name="keywords" content="Study">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在滴滴，我是如何指数级提升开发技术的？">
+<meta property="og:url" content="http://ming1016.github.io/2017/10/24/how-do-i-improve-the-development/index.html">
+<meta property="og:site_name" content="星光社 - 戴铭的博客">
+<meta property="og:description" content="如何提升开发技术的方法很多，比如专注，刻苦，热情，兴趣等，不过我这里不会提这些，下面想说的是我觉得能够指数级提升的窍门和一些自己在求索路上的一些体会，也算是一个阶段性的总结吧。趁着今天是程序员节，给大家做个分享，希望对需要的同学有用。 窍门一，将代码放到 GitHub 上看到这个标题一般人的反应就是觉得自己的代码和那些高大上的开源库比起来相形见绌，有种拿不出手的感觉。但是要想提高技术，是提高自己的">
+<meta property="og:updated_time" content="2017-10-24T11:19:08.784Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在滴滴，我是如何指数级提升开发技术的？">
+<meta name="twitter:description" content="如何提升开发技术的方法很多，比如专注，刻苦，热情，兴趣等，不过我这里不会提这些，下面想说的是我觉得能够指数级提升的窍门和一些自己在求索路上的一些体会，也算是一个阶段性的总结吧。趁着今天是程序员节，给大家做个分享，希望对需要的同学有用。 窍门一，将代码放到 GitHub 上看到这个标题一般人的反应就是觉得自己的代码和那些高大上的开源库比起来相形见绌，有种拿不出手的感觉。但是要想提高技术，是提高自己的">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ming1016.github.io/2017/10/24/how-do-i-improve-the-development/"/>
+
+
+
+
+
+  <title>在滴滴，我是如何指数级提升开发技术的？ | 星光社 - 戴铭的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">星光社 - 戴铭的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ming1016.github.io/2017/10/24/how-do-i-improve-the-development/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="戴铭">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/251980?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星光社 - 戴铭的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">在滴滴，我是如何指数级提升开发技术的？</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-24T19:16:27+08:00">
+                2017-10-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>如何提升开发技术的方法很多，比如专注，刻苦，热情，兴趣等，不过我这里不会提这些，下面想说的是我觉得能够指数级提升的窍门和一些自己在求索路上的一些体会，也算是一个阶段性的总结吧。趁着今天是程序员节，给大家做个分享，希望对需要的同学有用。</p>
+<h2 id="窍门一，将代码放到-GitHub-上"><a href="#窍门一，将代码放到-GitHub-上" class="headerlink" title="窍门一，将代码放到 GitHub 上"></a>窍门一，将代码放到 GitHub 上</h2><p>看到这个标题一般人的反应就是觉得自己的代码和那些高大上的开源库比起来相形见绌，有种拿不出手的感觉。但是要想提高技术，是提高自己的技术，只要和自己比就好了。将代码发出来不是献丑而是为了交流，交流就会获得信息，都说信息时代科技进步都是指数级，这个道理在这里也同样适用。</p>
+<p>记得以前我特别喜欢 Google 做的 Google Reader，每天打开电脑第一件事器就是浏览下关注的那些 RSS Feeds，自己定制的信息流和 Google Reder 对信息的完整保留，体验上轻松的标记已读和全部已读，当时是再也找不出替代品了。在 Google 关闭这个服务后很长一段时间我都没有看过 RSS，转向使用 Twitter 和后来的微博来关注自己感兴趣的内容，比如国内的一些插画家，漫画家，游戏媒体，Cosplay 当然还有一些感兴趣的相关开发的人。</p>
+<p>后来，我发现关注微博的人多了后，一些好的博客内容很容易被埋没在 timeline 中。这个时候我发现了 Reeder 这个 RSS 阅读器 APP，体验做得非常棒，不光是 UI 设计和交互，还有应用的流畅度，离线浏览等体验都是顶级的。我打算也弄一个学习下，就跟小学时喜欢七龙珠就模仿着画一样。实现基本几个功能后我就发到了 GitHub 上，结果碰到了好几个也喜欢 RSS 的开发者，他们看我在 README.md 里提到了后面计划做的事情，分别提了 PR 完成了那些功能，还有一个把界面翻天覆地的改了一通，还加了 icon 和启动图，最后还加上了两个主题选择，还修改了好几处代码不规范和不合理的地方，我 review 完就知此人设计和代码功底都很深，对这样一个艺术和程序完美结合的人佩服不已。</p>
+<p>后来这个项目让我认识了不少的朋友，在他们提交的代码里我也学习到了很多。</p>
+<h2 id="窍门二，选择优秀同事"><a href="#窍门二，选择优秀同事" class="headerlink" title="窍门二，选择优秀同事"></a>窍门二，选择优秀同事</h2><p>和优秀同事共事利于成长这是个显而易见的道理，但我为什么还要单拎出来说呢。因为这个点我体会非常深，也感觉是我技术提升的一个很大的节点。在这些优秀的同事里有位大家都很熟悉的孙源一直是我学习的榜样。记得在微博上第一次看到他分享的 RunLoop（视频地址：<a href="http://v.youku.com/v_show/id_XODgxODkzODI0.html" target="_blank" rel="external">http://v.youku.com/v_show/id_XODgxODkzODI0.html</a> ） 就很有感触，讲得通俗易懂由浅入深，后面只要他有新的文章和新的技术分享不管是对外的还是公司内部的还有直播平台的我都一个一个看完了，其中有好几篇都看了好多遍。这个过程犹如海绵吸水，停不下来。</p>
+<p>滴滴里还有好多高手，方方面面，除了对各个技术点有深入研究的人外，还有整体架构设计高手。安全，性能，数据，智能都有着很多非常专业和领域影响力的老师们，公司内会有很多技术讲座，涉及到各个领域，滴滴的大数据和人工智能在业界也是很有名的，内部也有着系列的讲座可以去学习，最近的系列课程我都有在追。每期的讲师都是这个领域最有权威的人。当然也少不了孙源的讲座，自热每次我也都听了。</p>
+<h2 id="窍门三，主题分享"><a href="#窍门三，主题分享" class="headerlink" title="窍门三，主题分享"></a>窍门三，主题分享</h2><p>记得第一次技术分享是在组内做的一个白板分享，为了避免分享时跑题和讲不全，我在分享前专门把要分享的内容在 A4 纸上画了一遍。白板讲时拿着那张纸边看边讲，讲完后我发现在 A4 纸上画的这个过程最有价值了，在这个过程里我对整个相关内容会做一个总结，会考虑重点，铺垫等等因数，这个轮回下来在整理过程中我发现其实对知识点有了更深的记忆。</p>
+<p>每次的分享其实都会考虑比较多的事情，首先是内容。谁都不愿意听到处都能够看到的东西，这样为了保证新鲜感，首先要根据自己的主题看看那些到处都能看到的东西是什么（这个过程其实比较痛苦需要查找大量资料），尽量避免那些大家耳熟能详的料，多分享些经过自己思考总结出来的理解，我觉得某个知识点只是搞懂了和实践成功了还是远远不够的，在搞懂的基础上去想为什么这样设计而不那样设计，通过自己的理解想通了那才是有意思的事情。这样就会迫使自己看大量的知识，自然而然也就学习到了大量的知识，是不是有种被推着往前进的感觉。</p>
+<p>再就是要考虑准备的时间，如果时间长那么就可以专门准备一个 Demo 现场来演示，或者美化美化幻灯片之类。时间短的话只要力保内容有用就好了。上次 GMTC 大会前组织方极客帮专门邀请了左耳朵耗子来给我们这些讲师们分享如何做分享。他提到很重要的一点就是内容要有用，就是所谓的干货，为了不让分享枯燥那么使用讲故事的方式来吸引听众是最有效和最容易让人记住的。</p>
+<p>分享当然还有一个很重要的好处就是和其他分享者还有听众交朋友，每次分享都会遇见很多人，新朋友老朋友，还有不同公司的人，能够了解到其它公司正在做什么，他们的成果和他们正在攻克的难题，了解现在流行的方案是什么。开阔了视野也就开阔了思路。</p>
+<h2 id="窍门四，在定的时间节点里将涉及到的问题尽可能问到底"><a href="#窍门四，在定的时间节点里将涉及到的问题尽可能问到底" class="headerlink" title="窍门四，在定的时间节点里将涉及到的问题尽可能问到底"></a>窍门四，在定的时间节点里将涉及到的问题尽可能问到底</h2><p>大多数人都是有惰性的，那么什么样的窍门是能够适合所有人的呢。我觉得时间的节点设定非常关键。先说下什么是时间节点呢？比如某版本需求提测时间点，再比如某次分享的时间点。有了这个时间点，就可以在节点时间到达前将问题考究透，这段时间先不去关注其它东西，运气好的话时间充沛就能够考究的多些。每次节点完成都可以好好犒劳下自己，这样下次进入另一个周期时能够充满战斗力。</p>
+<p>有一个我影响很深刻的工程大小瘦身的任务，这个也是有个时间节点。在这个任务下达之前，我们已经手动做过了一轮对无用资源的清理，剩下的只能依靠工具了。我几乎用遍了所有相关工具，当时有种孙悟空在东海龙宫试兵器的感觉，怎么都不顺手。又没有定海神针，那么只能自己造了。现有工具主要的问题是准确度不高，所以每次都需要手动核对下，这样每个版本来回几次，我们代码又这么多，这种工作量会让人吃不消的。但是任务又不能不完成，想着用户在外面急着打车需要安装滴滴时，程序包太大耽误下载时间又浪费流量该多不好。</p>
+<p>这种检查核对工作重复枯燥又很耗时，工期又很紧，但是为了用户体验，我还是决定挑战下自己。我发现，提高准确度达到不需要人工检查是很有难度的，连 App Code 都没有做到。可人有急智，我发现通过模拟编译的过程，将代码整理成有效的结构进行分析和比对可以很容易自己控制各种检查规则。想完就撸起袖子加油干，几天后就做了出来。不过开始时没注意时间复杂度，导致速度慢得无法接受。于是一点一点地抠，把它们一个个转成空间复杂度后速度得到了质的飞跃。接下来几天，在实际工程代码检查过程中又解决了一些运行时写法的问题。为了提高体验我还做了一键清理，将无用的代码直接注释掉。这样在后面版本里节省了大量的人工检查时间。这次的“瘦身”过程也在今年的 GMTC 大会上做了分享，分享的 Slides 我放到了这里 <a href="https://pan.baidu.com/s/1skPAIID" target="_blank" rel="external">https://pan.baidu.com/s/1skPAIID</a> 。里面涉及的编译相关的技术，我也写了篇博客进行总结，地址：<a href="https://github.com/ming1016/study/wiki/深入剖析-iOS-编译-Clang---LLVM" target="_blank" rel="external">https://github.com/ming1016/study/wiki/深入剖析-iOS-编译-Clang---LLVM</a>。</p>
+<p>再列个经历，当时在研究自动布局的过程中，我发现苹果基于自动布局抽象出一个 Stack View 来做布局，这种布局思路更加规范，更容易提高开发效率，但是却不支持低版本 iOS 系统。那时，我就在想能不能和 VFL 语言结合起来，这样开发起来岂不会效率更高？想了几天，觉得考虑的比较全面了，就差一个落地项目来推着自己完成它了，我就跟老大申请了在一个小版本对一个大需求涉及的页面和功能进行重构。当时就是想着是有了一个时间节点就能够推着自己走了，想做的事情也不会烂尾。</p>
+<p>理想是丰满的，可现实却是骨感的——只有4天开发时间，前3天我才勉强完成库的开发，里面残缺不堪的，所以我只好把周末都搭上去了。周日下午，主要流程都完成后，我买了杯咖啡来到软件园湖边休息了半个小时。现在回想，这半个小时算是版本开发周期里除了睡觉外唯一的休息了。从开发到后面测试的那些天里，我都是每天6点到公司，晚上12点离开公司。最后，掐着点完成了功能版本的上线。</p>
+<p>这个库我也是基于自动布局来包装的一个类似 Stack View 的库，能支持低版本，同时设计了一个简洁的界面描述语言，通过解析这个语言来对应生成界面，这样开发时只需要使用简单的语言描述即可。虽然这个开发的过程比较痛苦，但是完成后的喜悦感和成就感还是蛮大的不是么。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="戴铭 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫一扫Starming星光社微信公众号starming-weixin，关注最新文章</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      戴铭
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://ming1016.github.io/2017/10/24/how-do-i-improve-the-development/" title="在滴滴，我是如何指数级提升开发技术的？">http://ming1016.github.io/2017/10/24/how-do-i-improve-the-development/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Study/" rel="tag"># Study</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/16/html-to-native-htn-development-record/" rel="next" title="HTML 转原生 HTN 项目开发记录">
+                <i class="fa fa-chevron-left"></i> HTML 转原生 HTN 项目开发记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars0.githubusercontent.com/u/251980?v=3&s=460"
+               alt="戴铭" />
+          <p class="site-author-name" itemprop="name">戴铭</p>
+           
+              <p class="site-description motion-element" itemprop="description">不积跬步，无以至千里；不积小流，无以成江海</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ming1016" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/allstarming" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/ming1016" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#窍门一，将代码放到-GitHub-上"><span class="nav-number">1.</span> <span class="nav-text">窍门一，将代码放到 GitHub 上</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#窍门二，选择优秀同事"><span class="nav-number">2.</span> <span class="nav-text">窍门二，选择优秀同事</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#窍门三，主题分享"><span class="nav-number">3.</span> <span class="nav-text">窍门三，主题分享</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#窍门四，在定的时间节点里将涉及到的问题尽可能问到底"><span class="nav-number">4.</span> <span class="nav-text">窍门四，在定的时间节点里将涉及到的问题尽可能问到底</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">戴铭</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
