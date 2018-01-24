@@ -1,0 +1,846 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS,Swift," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="星光社 - 戴铭的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/uploads/logo.png?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前言写这篇文章主要是为了给组内要做的分享准备内容。这段时间几个项目都用到 Swift，在上次 GIAC 大会上就被问到为什么要用 Swift，正好这个主题可以聊聊 Swift 的哪些特性吸引了我。 泛型先来个例子看下泛型是解决什么问题的。123456let nations = [&quot;中国&quot;, &quot;美国&quot;, &quot;日本&quot;]func showNations(arr : [String]) &amp;#123;">
+<meta name="keywords" content="iOS,Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)">
+<meta property="og:url" content="http://ming1016.github.io/2018/01/24/why-swift/index.html">
+<meta property="og:site_name" content="星光社 - 戴铭的博客">
+<meta property="og:description" content="前言写这篇文章主要是为了给组内要做的分享准备内容。这段时间几个项目都用到 Swift，在上次 GIAC 大会上就被问到为什么要用 Swift，正好这个主题可以聊聊 Swift 的哪些特性吸引了我。 泛型先来个例子看下泛型是解决什么问题的。123456let nations = [&quot;中国&quot;, &quot;美国&quot;, &quot;日本&quot;]func showNations(arr : [String]) &amp;#123;">
+<meta property="og:image" content="http://ming1016.github.io/uploads/why-swift/01.png">
+<meta property="og:updated_time" content="2018-01-24T09:23:57.289Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)">
+<meta name="twitter:description" content="前言写这篇文章主要是为了给组内要做的分享准备内容。这段时间几个项目都用到 Swift，在上次 GIAC 大会上就被问到为什么要用 Swift，正好这个主题可以聊聊 Swift 的哪些特性吸引了我。 泛型先来个例子看下泛型是解决什么问题的。123456let nations = [&quot;中国&quot;, &quot;美国&quot;, &quot;日本&quot;]func showNations(arr : [String]) &amp;#123;">
+<meta name="twitter:image" content="http://ming1016.github.io/uploads/why-swift/01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ming1016.github.io/2018/01/24/why-swift/"/>
+
+
+
+
+
+  <title>Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理) | 星光社 - 戴铭的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">星光社 - 戴铭的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ming1016.github.io/2018/01/24/why-swift/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="戴铭">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/251980?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星光社 - 戴铭的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-24T17:14:03+08:00">
+                2018-01-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>写这篇文章主要是为了给组内要做的分享准备内容。这段时间几个项目都用到 Swift，在上次 GIAC 大会上就被问到为什么要用 Swift，正好这个主题可以聊聊 Swift 的哪些特性吸引了我。</p>
+<h1 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h1><p>先来个例子看下泛型是解决什么问题的。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> nations = [<span class="string">"中国"</span>, <span class="string">"美国"</span>, <span class="string">"日本"</span>]</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">showNations</span><span class="params">(arr : [String])</span></span> &#123;</div><div class="line">    arr.<span class="built_in">map</span> &#123; str <span class="keyword">in</span></div><div class="line">        <span class="built_in">print</span>(<span class="string">"<span class="subst">\(str)</span>"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们先定一个字符串数组，然后把里面的字符串打印出来。这里的 map 写法还可以优化下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">arr.<span class="built_in">map</span> &#123; <span class="built_in">print</span>(<span class="string">"<span class="subst">\($<span class="number">0</span>)</span>"</span>) &#125;</div></pre></td></tr></table></figure></p>
+<p>那么还能做什么优化呢。将 showNations 的入参数组泛型以支持多类型，比如 [int]，[double] 等。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">showArray</span>&lt;T&gt;<span class="params">(arr: [T])</span></span> &#123;</div><div class="line">    arr.<span class="built_in">map</span> &#123; <span class="built_in">print</span>(<span class="string">"<span class="subst">\($<span class="number">0</span>)</span>"</span>) &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以看出泛型能够很方便的将不同类型数据进行相同操作的逻辑归并在一起。</p>
+<h2 id="类型约束"><a href="#类型约束" class="headerlink" title="类型约束"></a>类型约束</h2><p>先看下我的 HTN 项目里状态机的 Transition 结构体的定义<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">HTNTransition</span>&lt;<span class="title">S</span>: <span class="title">Hashable</span>, <span class="title">E</span>: <span class="title">Hashable</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">let</span> event: <span class="type">E</span></div><div class="line">    <span class="keyword">let</span> fromState: <span class="type">S</span></div><div class="line">    <span class="keyword">let</span> toState: <span class="type">S</span></div><div class="line">    </div><div class="line">    <span class="keyword">init</span>(event: <span class="type">E</span>, fromState: <span class="type">S</span>, toState: <span class="type">S</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.event = event</div><div class="line">        <span class="keyword">self</span>.fromState = fromState</div><div class="line">        <span class="keyword">self</span>.toState = toState</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里的 fromState，toState 和 event 可以是不同类型的数据，可以是枚举，字符串或者整数等，定义 S 和 E 两个不同的泛型可以让状态和事件类型不相同，这样接口会更加的灵活，更容易适配更多的项目。</p>
+<p>大家会注意到 S 和 E 的冒号后面还有个 Hashable 协议，这就是要求它们符合这个协议的类型约束。使用协议的话可以使得这两个类型更加的规范和易于扩展。</p>
+<p>Swift 的基本类型 String，Int，Double 和 Bool 等都是遵循 Hashable 的，还有无关联值的枚举也是的。Hashable 提供了一个 hashValue 方法用在判断遵循协议对象是否相等时用。</p>
+<p>Hashable 协议同时也是遵守 Equatable 协议，通过实现 == 运算符来确定自定义的类或结构是否相同。</p>
+<h2 id="关联类型"><a href="#关联类型" class="headerlink" title="关联类型"></a>关联类型</h2><p>在协议里定义的关联类型也可以用泛型来处理。比如我们先定义一个协议<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">HTNState</span> </span>&#123;</div><div class="line">    associatedtype <span class="type">StateType</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(<span class="number">_</span> item: StateType)</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>采用非泛型的实现如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">states</span>: <span class="title">HTNState</span> </span>&#123;</div><div class="line">    <span class="keyword">typealias</span> <span class="type">StateType</span> = <span class="type">Int</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(<span class="number">_</span> item: Int)</span></span> &#123;</div><div class="line">        <span class="comment">//...</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>采用泛型遵循协议可以按照下面方式来写：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">states</span>&lt;<span class="title">T</span>&gt;: <span class="title">HTNState</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(<span class="number">_</span> item: T)</span></span> &#123;</div><div class="line">        <span class="comment">//...</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样关联类型也能够享受泛型的好处了。</p>
+<h2 id="类型擦除"><a href="#类型擦除" class="headerlink" title="类型擦除"></a>类型擦除</h2><p>但是在使用关联类型的时候需要注意当声明一个使用了关联属性的协议作为属性时，比如下面的代码：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">stateDelegate</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">var</span> state: <span class="type">T</span></div><div class="line">    <span class="keyword">var</span> delegate: <span class="type">HTNState</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>先会提示 no initializers 的错误，接着会提示 error: protocol ‘HTNState’ can only be used as a generic constraint because it has Self or associated type requirements 。意思是 HTNState 协议只能作为泛型约束来用，因为它里面包含必需的 self 或者关联类型。</p>
+<p>那么该如何处理呢？这里需要通过类型擦除来解决，主要思路就是加个中间层在代码中让这个抽象的类型具体化。实际上在 Swift 的标准库里就有类型擦除很好的运用，比如 AnySequence 的协议。</p>
+<h2 id="Where-语句"><a href="#Where-语句" class="headerlink" title="Where 语句"></a>Where 语句</h2><p>函数，扩展和关联类型都可以使用 where 语句。where 语句是对泛型在应用时的一种约束。比如：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">stateFilter</span>&lt;FromState:HTNState, ToState:HTNState&gt;<span class="params">(<span class="number">_</span> from:FromState, <span class="number">_</span> to:ToState)</span></span> <span class="keyword">where</span> <span class="type">FromState</span>.<span class="type">StateType</span> == <span class="type">ToState</span>.<span class="type">StateType</span> &#123;</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个函数就要求他们的 StateType 具有相同类型。</p>
+<h2 id="泛型和-Any-类型"><a href="#泛型和-Any-类型" class="headerlink" title="泛型和 Any 类型"></a>泛型和 Any 类型</h2><p>这两个类型看起来很相似，但是一定要小心两者的区别。他们区别在于 Any 类型会避开类型的检查，所以尽量少用最好不用。泛型一方面很灵活一方面也很安全，下面举个例子感受下两者的区别：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span>&lt;T&gt;<span class="params">(<span class="number">_</span> input: T)</span></span> -&gt; <span class="type">T</span> &#123;</div><div class="line">    <span class="comment">//...</span></div><div class="line">    <span class="keyword">return</span> input;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">anyAdd</span><span class="params">(<span class="number">_</span> input: Any)</span></span> -&gt; <span class="type">Any</span> &#123;</div><div class="line">    <span class="comment">//...</span></div><div class="line">    <span class="keyword">return</span> input;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这两个函数都是可以允许任意类型的 input 参数，不同在于返回的类型在 anyAdd 函数里是可以和入参不一样的，这样就会失控，在后续的操作中容易出错。</p>
+<h1 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>先来了解下集合的基本概念，首先集合是泛型的比如：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> stateArray: <span class="type">Array</span>&lt;<span class="type">String</span>&gt; = [<span class="string">"工作"</span>,<span class="string">"吃饭"</span>,<span class="string">"玩游戏"</span>,<span class="string">"睡觉"</span>]</div></pre></td></tr></table></figure></p>
+<p>集合它需要先有个遍历的功能，通过 GeneratorType 协议，可以不关注具体元素类型只要不断的用迭代器调 next 就可以得到全部元素。但是使用迭代器没法进行多次的遍历，这时就需要使用 Sequence 来解决这个问题。像集合的 forEach，elementsEqual，contains，minElement，maxElement，map，flatMap，filter，reduce 等功能都是因为有了 Sequence 的多次遍历。</p>
+<p>最后 Collection 概念是因为 Sequence 无法确定集合里的位置而在 Sequence 的基础上实现了 Indexable 协议。有了 Collection 就可以确定元素的位置，包括开始位置和结束位置，这样就能够确定哪些元素是已经访问过的，从而避免多次访问同一个元素。还能够通过一个给定的位置直接找到那个位置的元素。</p>
+<p>以上描述如下图：<br><img src="/uploads/why-swift/01.png" alt=""></p>
+<h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><p>Swift 里有个简单的 AnyIterator<element> 结构体<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">AnyIterator</span>&lt;<span class="title">Element</span>&gt;: <span class="title">IteratorProtocol</span> </span>&#123; </div><div class="line">	<span class="keyword">init</span>(<span class="number">_</span> body: @escaping () -&gt; <span class="type">Element</span>?)</div><div class="line">	<span class="comment">//...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></element></p>
+<p>AnyIterator 实现了 IteratorProtocol 和 Sequence 协议。通过下面的例子我们来看看如何使用 AnyIterator ：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">stateItr</span> : <span class="title">IteratorProtocol</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> num:<span class="type">Int</span> = <span class="number">1</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">next</span><span class="params">()</span></span> -&gt; <span class="type">Int</span>?&#123;</div><div class="line">        num += <span class="number">2</span></div><div class="line">        <span class="keyword">return</span> num</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">findNext</span>&lt;I: IteratorProtocol&gt;<span class="params">( elm: I)</span></span> -&gt; <span class="type">AnyIterator</span>&lt;<span class="type">I</span>.<span class="type">Element</span>&gt; <span class="keyword">where</span> <span class="type">I</span>.<span class="type">Element</span> == <span class="type">Int</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> l = elm</div><div class="line">    <span class="built_in">print</span>(<span class="string">"<span class="subst">\(l.next()</span> ?? 0)"</span>)</div><div class="line">    <span class="keyword">return</span> <span class="type">AnyIterator</span> &#123; l.next() &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">findNext(elm: findNext(elm: findNext(elm: stateItr())))</div></pre></td></tr></table></figure></p>
+<p>首先是定义个遵循了 IteratorProtocol 并实现了 next 函数的类。再实现一个 AnyIterator 的迭代器方法，这样通过这个方法的调用就可以不断的去找符合的元素了。</p>
+<p>这里有个对 where 语句的运用，where I.Element == Int。如果把这句改成 where I.Element == String 会出现下面的错误提示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Playground execution failed:</div><div class="line"></div><div class="line">error: MyPlayground.playground:18:37: error: cannot invoke &apos;findNext(elm:)&apos; with an argument list of type &apos;(elm: stateItr)&apos;</div><div class="line">findNext(elm: findNext(elm: findNext(elm: stateItr())))</div><div class="line">                                    ^</div><div class="line"></div><div class="line">MyPlayground.playground:11:6: note: candidate requires that the types &apos;Int&apos; and &apos;String&apos; be equivalent (requirement specified as &apos;I.Element&apos; == &apos;String&apos; [with I = stateItr])</div><div class="line">func findNext&lt;I: IteratorProtocol&gt;( elm: I) -&gt; AnyIterator&lt;I.Element&gt; where I.Element == String</div><div class="line">     ^</div></pre></td></tr></table></figure></p>
+<p>编译器会在代码检查阶段通过代码跟踪就发现类型不匹配的安全隐患，这里不得不对 Swift 的设计点个赞先</p>
+<h2 id="Sequence"><a href="#Sequence" class="headerlink" title="Sequence"></a>Sequence</h2><p>上面的迭代器只会以单次触发的方式反复计算下个元素，但是对于希望能够重新查找或重新生成已生成的元素，这样还需要有个新的迭代器和一个子 Sequence。在 Sequence 协议里可以看到这样的定义：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">protocol</span> <span class="title">Sequence</span> </span>&#123;</div><div class="line">    <span class="comment">//Element 表示序列元素的类型</span></div><div class="line">    associatedtype <span class="type">Element</span> <span class="keyword">where</span> <span class="type">Self</span>.<span class="type">Element</span> == <span class="type">Self</span>.<span class="type">Iterator</span>.<span class="type">Element</span></div><div class="line">    <span class="comment">//迭代接口类型</span></div><div class="line">    associatedtype <span class="type">Iterator</span> : <span class="type">IteratorProtocol</span></div><div class="line">    <span class="comment">//子 Sequence 类型</span></div><div class="line">    associatedtype <span class="type">SubSequence</span></div><div class="line">    <span class="comment">//返回 Sequence 元素的迭代器</span></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">makeIterator</span><span class="params">()</span></span> -&gt; <span class="type">Self</span>.<span class="type">Iterator</span></div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>重新查找靠的是这个新的迭代器，而对于切片这样的会重新生成新 Sequence 的操作就需要 SubSequence 进行存储和返回。</p>
+<h2 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h2><p>对 Sequence 进行进一步的完善，最重要的就是使其具有下标索引，使得元素能够通过下标索引方式取到。Collection 是个有限的范围，有开始索引和结束索引，所以 Collection 和 Sequence 的无限范围是不一样的。有了有限的范围 Collection 就可以有 count 属性进行计数了。</p>
+<p>除了标准库里的 String，Array，Dictionary 和 Set 外比如 Data 和 IndexSet 也由于遵循了 Collection 协议而获得了标准库了那些集合类型的能力。</p>
+<h2 id="map"><a href="#map" class="headerlink" title="map"></a>map</h2><p>在泛型的第一个例子里我们就看到了 map 的使用，我们看看 map 的定义：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">map</span>&lt;T&gt;<span class="params">(transform: <span class="params">(<span class="keyword">Self</span>.Generator.Element)</span></span></span> -&gt; <span class="type">T</span>) <span class="keyword">rethrows</span> -&gt; [<span class="type">T</span>]</div></pre></td></tr></table></figure></p>
+<p>这里 (Self.Generator.Element) -&gt; T 就是 map 闭包的定义，Self.Generator.Element 就是当前元素的类型。</p>
+<h2 id="flatmap"><a href="#flatmap" class="headerlink" title="flatmap"></a>flatmap</h2><p>二维数组经过 flatmap 会降维到一维，还能过滤掉 nil 值。下面看看 Swift 源码（swift/stdlib/public/core/SequenceAlgorithms.swift.gyb）中 flatmap 的实现：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//===----------------------------------------------------------------------===//</span></div><div class="line"><span class="comment">// flatMap()</span></div><div class="line"><span class="comment">//===----------------------------------------------------------------------===//</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Sequence</span> </span>&#123;</div><div class="line">  <span class="comment">/// Returns an array containing the concatenated results of calling the</span></div><div class="line">  <span class="comment">/// given transformation with each element of this sequence.</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// Use this method to receive a single-level collection when your</span></div><div class="line">  <span class="comment">/// transformation produces a sequence or collection for each element.</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// In this example, note the difference in the result of using `map` and</span></div><div class="line">  <span class="comment">/// `flatMap` with a transformation that returns an array.</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">///     let numbers = [1, 2, 3, 4]</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">///     let mapped = numbers.map &#123; Array(count: $0, repeatedValue: $0) &#125;</span></div><div class="line">  <span class="comment">///     // [[1], [2, 2], [3, 3, 3], [4, 4, 4, 4]]</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">///     let flatMapped = numbers.flatMap &#123; Array(count: $0, repeatedValue: $0) &#125;</span></div><div class="line">  <span class="comment">///     // [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// In fact, `s.flatMap(transform)`  is equivalent to</span></div><div class="line">  <span class="comment">/// `Array(s.map(transform).joined())`.</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// - Parameter transform: A closure that accepts an element of this</span></div><div class="line">  <span class="comment">///   sequence as its argument and returns a sequence or collection.</span></div><div class="line">  <span class="comment">/// - Returns: The resulting flattened array.</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// - Complexity: O(*m* + *n*), where *m* is the length of this sequence</span></div><div class="line">  <span class="comment">///   and *n* is the length of the result.</span></div><div class="line">  <span class="comment">/// - SeeAlso: `joined()`, `map(_:)`</span></div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">flatMap</span>&lt;SegmentOfResult : Sequence&gt;<span class="params">(</span></span></div><div class="line">    <span class="number">_</span> transform: <span class="params">($&#123;GElement&#125;)</span> <span class="keyword">throws</span> -&gt; <span class="type">SegmentOfResult</span></div><div class="line">  ) <span class="keyword">rethrows</span> -&gt; [<span class="type">SegmentOfResult</span>.$&#123;<span class="type">GElement</span>&#125;] &#123;</div><div class="line">    <span class="keyword">var</span> result: [<span class="type">SegmentOfResult</span>.$&#123;<span class="type">GElement</span>&#125;] = []</div><div class="line">    <span class="keyword">for</span> element <span class="keyword">in</span> <span class="keyword">self</span> &#123;</div><div class="line">      result.append(contentsOf: <span class="keyword">try</span> transform(element))</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Sequence</span> </span>&#123;</div><div class="line">  <span class="comment">/// Returns an array containing the non-`nil` results of calling the given</span></div><div class="line">  <span class="comment">/// transformation with each element of this sequence.</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// Use this method to receive an array of nonoptional values when your</span></div><div class="line">  <span class="comment">/// transformation produces an optional value.</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// In this example, note the difference in the result of using `map` and</span></div><div class="line">  <span class="comment">/// `flatMap` with a transformation that returns an optional `Int` value.</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">///     let possibleNumbers = ["1", "2", "three", "///4///", "5"]</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">///     let mapped: [Int?] = possibleNumbers.map &#123; str in Int(str) &#125;</span></div><div class="line">  <span class="comment">///     // [1, 2, nil, nil, 5]</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">///     let flatMapped: [Int] = possibleNumbers.flatMap &#123; str in Int(str) &#125;</span></div><div class="line">  <span class="comment">///     // [1, 2, 5]</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// - Parameter transform: A closure that accepts an element of this</span></div><div class="line">  <span class="comment">///   sequence as its argument and returns an optional value.</span></div><div class="line">  <span class="comment">/// - Returns: An array of the non-`nil` results of calling `transform`</span></div><div class="line">  <span class="comment">///   with each element of the sequence.</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// - Complexity: O(*m* + *n*), where *m* is the length of this sequence</span></div><div class="line">  <span class="comment">///   and *n* is the length of the result.</span></div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">flatMap</span>&lt;ElementOfResult&gt;<span class="params">(</span></span></div><div class="line">    <span class="number">_</span> transform: <span class="params">($&#123;GElement&#125;)</span> <span class="keyword">throws</span> -&gt; <span class="type">ElementOfResult</span>?</div><div class="line">  ) <span class="keyword">rethrows</span> -&gt; [<span class="type">ElementOfResult</span>] &#123;</div><div class="line">    <span class="keyword">var</span> result: [<span class="type">ElementOfResult</span>] = []</div><div class="line">    <span class="keyword">for</span> element <span class="keyword">in</span> <span class="keyword">self</span> &#123;</div><div class="line">      <span class="keyword">if</span> <span class="keyword">let</span> newElement = <span class="keyword">try</span> transform(element) &#123;</div><div class="line">        result.append(newElement)</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>从代码中可以看出打平的原理是将集合中所有元素都添加到另外一个集合里。在第二个 extension 里通过 if let 语句会挡住那些解包不成功的元素。</p>
+<h2 id="Reduce"><a href="#Reduce" class="headerlink" title="Reduce"></a>Reduce</h2><p>Reduce 是编程语言语义学里的归约语义学，也叫累加器。下面同样可以看看 Swift 源码里对其的实现：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//===----------------------------------------------------------------------===//</span></div><div class="line"><span class="comment">// reduce()</span></div><div class="line"><span class="comment">//===----------------------------------------------------------------------===//</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Sequence</span> </span>&#123;</div><div class="line">  <span class="comment">/// Returns the result of combining the elements of the sequence using the</span></div><div class="line">  <span class="comment">/// given closure.</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// Use the `reduce(_:_:)` method to produce a single value from the elements</span></div><div class="line">  <span class="comment">/// of an entire sequence. For example, you can use this method on an array</span></div><div class="line">  <span class="comment">/// of numbers to find their sum or product.</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// The `nextPartialResult` closure is called sequentially with an</span></div><div class="line">  <span class="comment">/// accumulating value initialized to `initialResult` and each element of</span></div><div class="line">  <span class="comment">/// the sequence. This example shows how to find the sum of an array of</span></div><div class="line">  <span class="comment">/// numbers.</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">///     let numbers = [1, 2, 3, 4]</span></div><div class="line">  <span class="comment">///     let numberSum = numbers.reduce(0, &#123; x, y in</span></div><div class="line">  <span class="comment">///         x + y</span></div><div class="line">  <span class="comment">///     &#125;)</span></div><div class="line">  <span class="comment">///     // numberSum == 10</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// When `numbers.reduce(_:_:)` is called, the following steps occur:</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// 1. The `nextPartialResult` closure is called with `initialResult`---`0`</span></div><div class="line">  <span class="comment">///    in this case---and the first element of `numbers`, returning the sum:</span></div><div class="line">  <span class="comment">///    `1`.</span></div><div class="line">  <span class="comment">/// 2. The closure is called again repeatedly with the previous call's return</span></div><div class="line">  <span class="comment">///    value and each element of the sequence.</span></div><div class="line">  <span class="comment">/// 3. When the sequence is exhausted, the last value returned from the</span></div><div class="line">  <span class="comment">///    closure is returned to the caller.</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// If the sequence has no elements, `nextPartialResult` is never executed</span></div><div class="line">  <span class="comment">/// and `initialResult` is the result of the call to `reduce(_:_:)`.</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// - Parameters:</span></div><div class="line">  <span class="comment">///   - initialResult: The value to use as the initial accumulating value.</span></div><div class="line">  <span class="comment">///     `initialResult` is passed to `nextPartialResult` the first time the</span></div><div class="line">  <span class="comment">///     closure is executed.</span></div><div class="line">  <span class="comment">///   - nextPartialResult: A closure that combines an accumulating value and</span></div><div class="line">  <span class="comment">///     an element of the sequence into a new accumulating value, to be used</span></div><div class="line">  <span class="comment">///     in the next call of the `nextPartialResult` closure or returned to</span></div><div class="line">  <span class="comment">///     the caller.</span></div><div class="line">  <span class="comment">/// - Returns: The final accumulated value. If the sequence has no elements,</span></div><div class="line">  <span class="comment">///   the result is `initialResult`.</span></div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">reduce</span>&lt;Result&gt;<span class="params">(</span></span></div><div class="line">    <span class="number">_</span> initialResult: Result,</div><div class="line">    <span class="number">_</span> nextPartialResult:</div><div class="line">      <span class="params">(<span class="number">_</span> partialResult: Result, $&#123;GElement&#125;)</span> <span class="keyword">throws</span> -&gt; <span class="type">Result</span></div><div class="line">  ) <span class="keyword">rethrows</span> -&gt; <span class="type">Result</span> &#123;</div><div class="line">    <span class="keyword">var</span> accumulator = initialResult</div><div class="line">    <span class="keyword">for</span> element <span class="keyword">in</span> <span class="keyword">self</span> &#123;</div><div class="line">      accumulator = <span class="keyword">try</span> nextPartialResult(accumulator, element)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> accumulator</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以看到里面会通过 initialResult 来记录前面的返回结果和当前元素进行在闭包里的操作。</p>
+<h2 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h2><p>看看数组的基本用法<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建数组</span></div><div class="line"><span class="keyword">var</span> nums = [<span class="type">Int</span>]() <span class="comment">//创建空数组</span></div><div class="line"><span class="keyword">var</span> mArray = nums + [<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>] + [<span class="number">5</span>,<span class="number">9</span>]<span class="comment">//合并多个有相同类型元素数组的值</span></div><div class="line"><span class="keyword">var</span> animals: [<span class="type">String</span>] = [<span class="string">"dragon"</span>, <span class="string">"cat"</span>, <span class="string">"mice"</span>, <span class="string">"dog"</span>]</div><div class="line"></div><div class="line"><span class="comment">//添加数组</span></div><div class="line">animals.append(<span class="string">"bird"</span>)</div><div class="line">animals += [<span class="string">"ant"</span>]</div><div class="line"></div><div class="line"><span class="comment">//获取和改变数组</span></div><div class="line"><span class="keyword">var</span> firstItem = mArray[<span class="number">0</span>]</div><div class="line">animals[<span class="number">0</span>] = <span class="string">"red dragon"</span></div><div class="line">animals[<span class="number">2</span>...<span class="number">4</span>] = [<span class="string">"black dragon"</span>, <span class="string">"white dragon"</span>] <span class="comment">//使用下标改变多个元素</span></div><div class="line">animals.insert(<span class="string">"chinese dragon"</span>, at: <span class="number">0</span>) <span class="comment">//在索引值之前添加元素</span></div><div class="line"><span class="keyword">let</span> mapleSyrup = animals.remove(at: <span class="number">0</span>) <span class="comment">//移除数组中的一个元素</span></div><div class="line"><span class="keyword">let</span> apples = animals.removeLast() <span class="comment">//移除最后一个元素</span></div><div class="line"></div><div class="line"><span class="comment">////数组遍历</span></div><div class="line"><span class="keyword">for</span> animal <span class="keyword">in</span> animals &#123;</div><div class="line">    <span class="built_in">print</span>(animal)</div><div class="line">&#125;</div><div class="line"><span class="keyword">for</span> (index, animal) <span class="keyword">in</span> animals.enumerated() &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"animal <span class="subst">\(String(index + <span class="number">1</span>)</span>): <span class="subst">\(animal)</span>"</span>)</div><div class="line">&#125;</div><div class="line"><span class="comment">/*</span></div><div class="line"> animal 1: red dragon</div><div class="line"> animal 2: cat</div><div class="line"> animal 3: black dragon</div><div class="line"> animal 4: white dragon</div><div class="line"> */</div></pre></td></tr></table></figure></p>
+<h2 id="弱引用的-Swift-数组"><a href="#弱引用的-Swift-数组" class="headerlink" title="弱引用的 Swift 数组"></a>弱引用的 Swift 数组</h2><p>Swift 里的数组默认会强引用里面的元素，但是有时候可能希望能够弱引用，那么就可以使用 NSPointerArray。它在初始化的时候可以决定是用弱引用方式还是强引用方式。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> strongArr = <span class="type">NSPointerArray</span>.strongObjects() <span class="comment">// 强引用</span></div><div class="line"><span class="keyword">let</span> weakArr = <span class="type">NSPointerArray</span>.weakObjects() <span class="comment">// Maintains weak references</span></div></pre></td></tr></table></figure></p>
+<p>Dictionary 的要想用弱引用可以使用 NSMapTable，Set 对应的是 NSHashTable。</p>
+<h2 id="Dictionary"><a href="#Dictionary" class="headerlink" title="Dictionary"></a>Dictionary</h2><p>看看基本用法：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建 Dictionary</span></div><div class="line"><span class="keyword">var</span> strs = [<span class="type">Int</span>: <span class="type">String</span>]()</div><div class="line"><span class="keyword">var</span> colors: [<span class="type">String</span>: <span class="type">String</span>] = [<span class="string">"red"</span>: <span class="string">"#e83f45"</span>, <span class="string">"yellow"</span>: <span class="string">"#ffe651"</span>]</div><div class="line">strs[<span class="number">16</span>] = <span class="string">"sixteen"</span></div><div class="line"></div><div class="line"><span class="comment">//updateValue 这个方法会返回更新前的值</span></div><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> oldValue = colors.updateValue(<span class="string">"#e83f47"</span>, forKey: <span class="string">"red"</span>) &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"The old value for DUB was <span class="subst">\(oldValue)</span>."</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//遍历</span></div><div class="line"><span class="keyword">for</span> (color, value) <span class="keyword">in</span> colors &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"<span class="subst">\(color)</span>: <span class="subst">\(value)</span>"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//map</span></div><div class="line"><span class="keyword">let</span> newColorValues = colors.<span class="built_in">map</span> &#123; <span class="string">"hex:<span class="subst">\($<span class="number">0</span>.value)</span>"</span> &#125;</div><div class="line"><span class="built_in">print</span>(<span class="string">"<span class="subst">\(newColorValues)</span>"</span>)</div><div class="line"></div><div class="line"><span class="comment">//mapValues 返回完整的新 Dictionary</span></div><div class="line"><span class="keyword">let</span> newColors = colors.mapValues &#123; <span class="string">"hex:<span class="subst">\($<span class="number">0</span>)</span>"</span> &#125;</div><div class="line"><span class="built_in">print</span>(<span class="string">"<span class="subst">\(newColors)</span>"</span>)</div></pre></td></tr></table></figure></p>
+<h1 id="协议式编程"><a href="#协议式编程" class="headerlink" title="协议式编程"></a>协议式编程</h1><p>Swift 被设计成单继承，如果希望是多继承就需要使用协议。协议还有个比较重要的作用就是通过 associatedtype 要求使用者遵守指定的泛型约束。</p>
+<p>下面先看看传统编程的开发模式：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dragon</span> </span>&#123;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BlackDragon</span>: <span class="title">Dragon</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">fire</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"fire!!!"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">WhiteDragon</span>: <span class="title">Dragon</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">fire</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"fire!!!"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="type">BlackDragon</span>().fire()</div><div class="line"><span class="type">WhiteDragon</span>().fire()</div></pre></td></tr></table></figure></p>
+<p>这个例子可以看出 fire() 就是重复代码，那么首先想到的方法就是通过直接在基类里添加这个方法或者通过 extension 来对他们基类进行扩展：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Dragon</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">fire</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"fire!!!"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这时我们希望加个方法让 Dragon 能够 fly：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Dragon</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">fire</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"fire!!!"</span>)</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">fly</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"fly~~~"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样 BlackDragon 和 WhiteDragon 就都有这两个能力了，如果我们设计出一个新的龙 YellowDragon 或者更多 Dragon 都没有 fly 的能力，这时该如何。因为没法多继承，那么没法拆成两个基类，这样必然就会出现重复代码。但是有了协议这个问题就好解决了。具体实现如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">DragonFire</span> </span>&#123;&#125;</div><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">DragonFly</span> </span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">DragonFire</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">fire</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"fire!!!"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">DragonFly</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">fly</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"fly~~~"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BlackDragon</span>: <span class="title">DragonFire</span>, <span class="title">DragonFly</span> </span>&#123;&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">WhiteDragon</span>: <span class="title">DragonFire</span>, <span class="title">DragonFly</span> </span>&#123;&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">YellowDragon</span>: <span class="title">DragonFire</span> </span>&#123;&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">PurpleDragon</span>: <span class="title">DragonFire</span> </span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="type">BlackDragon</span>().fire()</div><div class="line"><span class="type">WhiteDragon</span>().fire()</div><div class="line"><span class="type">BlackDragon</span>().fly()</div><div class="line"><span class="type">YellowDragon</span>().fire()</div></pre></td></tr></table></figure></p>
+<p>可以看到一来没有了重复代码，二来结构也清晰了很多而且更容易扩展，Dragon 的种类和能力的组合也更加方便和清晰。extension 使得协议有了实现默认方法的能力。</p>
+<p>关于多继承 Swift 是采用 Trait 的方式，其它语言 C++ 是直接支持多继承的，方式是这个类会持有多个父类的实例。Java 的多继承只继承能做什么，怎么做还是要自己来。和 Trait 类似的解决方案是 Mixin，Ruby 就是用的这种元编程思想。</p>
+<p>协议还可以继承，还可以通过 &amp; 来聚合，判断一个类是否遵循了一个协议可以使用 is 关键字。</p>
+<p>当然协议还可以作为类型，比如一个数组泛型元素指定为一个协议，那么这个数组里的元素只要遵循这个协议就可以了。</p>
+<h1 id="Swift-内存管理"><a href="#Swift-内存管理" class="headerlink" title="Swift 内存管理"></a>Swift 内存管理</h1><h2 id="内存分配"><a href="#内存分配" class="headerlink" title="内存分配"></a>内存分配</h2><h3 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h3><p>在 Heap 上内存分配的时候需要锁定 Heap 上能够容纳存放对象的空闲块，主要是为了线程安全，我们需要对这些进行锁定和同步。</p>
+<p>Heap 是完全二叉树，即除最底层节点外都是填满的，最底层节点填充是从左到右。Swift 的 Heap 是通过双向链表实现。由于 Heap 是可以 retain 和 release 所以很容易分配空间就不连续了。采用链表的目的是希望能够将内存块连起来，在 release 时通过调整链表指针来整合空间。</p>
+<p>在 retain 时不可避免需要遍历 Heap，找到合适大小的内存块，能优化的也只是记录以前遍历的情况减少一些遍历。但是 Heap 是很大的，这样每次遍历还是很耗时，而且 release 为了能够整合空间还需要判断当前内存块的前一块和后面那块是否为空闲等，如果空闲还需要遍历链表查询，所以最终的解决方式是双向链表。只把空闲内存块用指针连起来形成链表，这样 retain 时可以减少遍历，效率理论上可以提高一倍，在 release 时将多余空间插入到 Heap 开始的位置和先前移到前面的空间进行整合。</p>
+<p>即使效率高了但是还是比不过 Stack，所以苹果也将以前 OC 里的一些放在 Heap 里的类型改造成了值类型。</p>
+<h3 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h3><p>Stack 的结构很简单，push 和 pop 就完事了，内存上只需要维护 Stack 末端的指针即可。由于它的简单所以处理一些时效性不高，临时的事情是非常合适的，所以可以把 Stack 看成是一个交换临时数据的内存区域。在多线程上，由于 Stack 是线程独有的，所以也不需要考虑线程安全相关问题。</p>
+<h3 id="内存对齐"><a href="#内存对齐" class="headerlink" title="内存对齐"></a>内存对齐</h3><p>Swift 也有内存对齐的概念<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DragonFirePosition</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> x:<span class="type">Int64</span> <span class="comment">//8 Bytes</span></div><div class="line">    <span class="keyword">var</span> y:<span class="type">Int32</span> <span class="comment">//4 Bytes</span></div><div class="line">    <span class="comment">//8 + 4</span></div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DragonHomePosition</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> y:<span class="type">Int32</span> <span class="comment">//4 Bytes + 对齐内存(4 Bytes)</span></div><div class="line">    <span class="keyword">var</span> x:<span class="type">Int64</span> <span class="comment">//8 Bytes</span></div><div class="line">    <span class="comment">//4 + 4 + 8</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> firePositionSize = <span class="type">MemoryLayout</span>&lt;<span class="type">DragonFirePosition</span>&gt;.size <span class="comment">//12</span></div><div class="line"><span class="keyword">let</span> homePositionSize = <span class="type">MemoryLayout</span>&lt;<span class="type">DragonHomePosition</span>&gt;.size <span class="comment">//16</span></div></pre></td></tr></table></figure></p>
+<h2 id="Swift-派发机制"><a href="#Swift-派发机制" class="headerlink" title="Swift 派发机制"></a>Swift 派发机制</h2><p>派发目的是让 CPU 知道被调用的函数在哪里。Swift 语言是支持编译型语言的直接派发，函数表派发和消息机制派发三种派发方式的，下面分别对这三种派发方式说明下。</p>
+<h3 id="直接派发"><a href="#直接派发" class="headerlink" title="直接派发"></a>直接派发</h3><p>C++ 默认使用的是直接派发，加上 virtual 修饰符可以改成函数表派发。直接派发是最快的，原因是调用指令会少，还可以通过编译器进行比如内联等方式的优化。缺点是由于缺少动态性而不支持继承。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DragonFirePosition</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> x:<span class="type">Int64</span></div><div class="line">    <span class="keyword">var</span> y:<span class="type">Int32</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">land</span><span class="params">()</span></span> &#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">DragonWillFire</span><span class="params">(<span class="number">_</span> position:DragonFirePosition)</span></span> &#123;</div><div class="line">    position.land()</div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> position = <span class="type">DragonFirePosition</span>(x: <span class="number">342</span>, y: <span class="number">213</span>)</div><div class="line"><span class="type">DragonWillFire</span>(position)</div></pre></td></tr></table></figure></p>
+<p>编译 inline 后 DragonWillFire(DragonFirePosition(x: 342, y: 213)) 会直接跳到方法实现的地方，结果就变成 position.land()。</p>
+<h3 id="函数表派发"><a href="#函数表派发" class="headerlink" title="函数表派发"></a>函数表派发</h3><p>Java 默认就是使用的函数表派发，通过 final 修饰符改成直接派发。函数表派发是有动态性的，在 Swift 里函数表叫 witness table，大部分语言叫 virtual table。一个类里会用数组来存储里面的函数指针，override 父类的函数会替代以前的函数，子类添加的函数会被加到这个数组里。举个例子：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fish</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">swim</span><span class="params">()</span></span> &#123;&#125;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">eat</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="comment">//normal eat</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">FlyingFish</span>: <span class="title">Fish</span> </span>&#123;</div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">eat</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="comment">//flying fish eat</span></div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">fly</span><span class="params">()</span></span> &#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>编译器会给 Fish 类和 FlyingFish 类分别创建 witness table。在 Fish 的函数表里有 swim 和 eat 函数，在 FlyingFish 函数表里有父类 Fish 的 swim，覆盖了父类的 eat 和新增加的函数 fly。</p>
+<p>一个函数被调用时会先去读取对象的函数表，再根据类的地址加上该的函数的偏移量得到函数地址，然后跳到那个地址上去。从编译后的字节码这方面来看就是两次读取一次跳转，比直接派发还是慢了些。</p>
+<h3 id="消息机制派发"><a href="#消息机制派发" class="headerlink" title="消息机制派发"></a>消息机制派发</h3><p>这种机制是在运行时可以改变函数的行为，KVO 和 CoreData 都是这种机制的运用。OC 默认就是使用的消息机制派发，使用 C 来直接派发获取高性能。Swift 可以通过 dynamic 修饰来支持消息机制派发。</p>
+<p>当一个消息被派发，运行时就会按照继承关系向上查找被调用的函数。但是这样效率不高，所以需要通过缓存来提高效率，这样查找性能就能和函数派发差不多了。</p>
+<h3 id="具体派发"><a href="#具体派发" class="headerlink" title="具体派发"></a>具体派发</h3><h4 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h4><p>值类型都会采用直接派发。无论是 class 还是协议 的 extension 也都是直接派发。class 和协议是函数表派发。</p>
+<h4 id="指定派发方式"><a href="#指定派发方式" class="headerlink" title="指定派发方式"></a>指定派发方式</h4><ul>
+<li>final：让类里的函数使用直接派发，这样该函数将会没有动态性，运行时也没法取到这个函数。</li>
+<li>dynamic：可以让类里的函数使用消息机制派发，可以让 extension 里的函数被 override。</li>
+</ul>
+<h4 id="派发优化"><a href="#派发优化" class="headerlink" title="派发优化"></a>派发优化</h4><p>Swift 会在这上面做优化，比如一个函数没有 override，Swift 就可能会使用直接派发的方式，所以如果属性绑定了 KVO 它的 getter 和 setter 方法可能会被优化成直接派发而导致 KVO 的失效，所以记得加上 dynamic 的修饰来保证有效。后面 Swift 应该会在这个优化上去做更多的处理。</p>
+<h2 id="基本数据类型内存管理"><a href="#基本数据类型内存管理" class="headerlink" title="基本数据类型内存管理"></a>基本数据类型内存管理</h2><p>通过 MemoryLayout 来看看基本数据类型的内存是占用多大<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="type">MemoryLayout</span>&lt;<span class="type">Int</span>&gt;.size      <span class="comment">//8</span></div><div class="line"><span class="type">MemoryLayout</span>&lt;<span class="type">Int16</span>&gt;.size    <span class="comment">//2</span></div><div class="line"><span class="type">MemoryLayout</span>&lt;<span class="type">Bool</span>&gt;.size     <span class="comment">//1</span></div><div class="line"><span class="type">MemoryLayout</span>&lt;<span class="type">Float</span>&gt;.size    <span class="comment">//4</span></div><div class="line"><span class="type">MemoryLayout</span>&lt;<span class="type">Double</span>&gt;.size   <span class="comment">//8</span></div></pre></td></tr></table></figure></p>
+<h2 id="Struct-内存管理"><a href="#Struct-内存管理" class="headerlink" title="Struct 内存管理"></a>Struct 内存管理</h2><p>对于 Struct 在编译中就能够确定空间，也就不需要额外的空间给运行时用，运行过程调用时就是直接传地址。</p>
+<p>下面我们再看看 Struct 的 MemoryLayout<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DragonFirePosition</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> x:<span class="type">Int64</span> <span class="comment">//8 Bytes</span></div><div class="line">    <span class="keyword">var</span> y:<span class="type">Int32</span> <span class="comment">//4 Bytes</span></div><div class="line">    <span class="comment">//8 + 4</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">land</span><span class="params">()</span></span> &#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="type">MemoryLayout</span>&lt;<span class="type">DragonFirePosition</span>&gt;.size       <span class="comment">//12</span></div><div class="line"><span class="type">MemoryLayout</span>&lt;<span class="type">DragonFirePosition</span>&gt;.alignment  <span class="comment">//8</span></div><div class="line"><span class="type">MemoryLayout</span>&lt;<span class="type">DragonFirePosition</span>&gt;.<span class="built_in">stride</span>     <span class="comment">//16</span></div></pre></td></tr></table></figure></p>
+<p>alignment 可以看出是按照 8 Bytes 来对齐的，所以这里 struct 是用到了字节对齐，实际占用大小通过 stride 可以看出就是 8 * 2 为16。</p>
+<p>如果把 var x:Int64 改成可选类型会增加 4个 Bytes，不过就这个 case 来说实际大小还是16，这个也是因为内存对齐的原因。</p>
+<h2 id="Class-内存管理"><a href="#Class-内存管理" class="headerlink" title="Class 内存管理"></a>Class 内存管理</h2><p>Class 本身是在 Stack 上分配的，在 Heap 上还需要保存 Class 的 Type 信息，这个 Type 信息里有函数表，在函数派发时就可以按照这个函数表进行派发了。继承的话子类只要在自己的 Type 信息里记录自己的信息即可。</p>
+<h2 id="协议类型内存管理"><a href="#协议类型内存管理" class="headerlink" title="协议类型内存管理"></a>协议类型内存管理</h2><p>协议类型的内存模型是 Existential Container。先看下面例子<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">DragonFire</span> </span>&#123;&#125;</div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">DragonFire</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">fire</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"fire!!!"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">YellowDragon</span>: <span class="title">DragonFire</span> </span>&#123;</div><div class="line">    <span class="keyword">let</span> eyes = <span class="string">"blue"</span></div><div class="line">    <span class="keyword">let</span> teeth = <span class="number">48</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> classSize = <span class="type">MemoryLayout</span>&lt;<span class="type">YellowDragon</span>&gt;.size  <span class="comment">//32</span></div><div class="line"><span class="keyword">let</span> protocolSize = <span class="type">MemoryLayout</span>&lt;<span class="type">DragonFire</span>&gt;.size <span class="comment">//40</span></div></pre></td></tr></table></figure></p>
+<p>可以看出来协议要比类大。这个是由于 Existential Container 的前三个 word 是叫 Value buffer 用来存储 inline 的值。第四个 word 是 Value Witness Table，存储值的各种操作比如 allocate，copy，destruct 和 deallocate 等。第五个 word 是 Protocol Witness Table 是存储协议的函数。</p>
+<h2 id="泛型的内存管理"><a href="#泛型的内存管理" class="headerlink" title="泛型的内存管理"></a>泛型的内存管理</h2><p>泛型采用的和 Existential Container 原理类似。Value Witness Table 和 Protocol Witness Table 会作为隐形的参数传递到泛型方法里。不过经过编译器的层层 inline 优化，最终类型都会被推导出来也就不再需要 Existential Container 这一套了。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="戴铭 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫一扫Starming星光社微信公众号starming-weixin，关注最新文章</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      戴铭
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://ming1016.github.io/2018/01/24/why-swift/" title="Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)">http://ming1016.github.io/2018/01/24/why-swift/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/10/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/" rel="next" title="GIAC 大会上分享的《Swift 将 Web 代码转成60帧满帧原生应用的方案及实践》的幻灯片">
+                <i class="fa fa-chevron-left"></i> GIAC 大会上分享的《Swift 将 Web 代码转成60帧满帧原生应用的方案及实践》的幻灯片
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars0.githubusercontent.com/u/251980?v=3&s=460"
+               alt="戴铭" />
+          <p class="site-author-name" itemprop="name">戴铭</p>
+           
+              <p class="site-description motion-element" itemprop="description">不积跬步，无以至千里；不积小流，无以成江海</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ming1016" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/allstarming" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/ming1016" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#泛型"><span class="nav-number">2.</span> <span class="nav-text">泛型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#类型约束"><span class="nav-number">2.1.</span> <span class="nav-text">类型约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关联类型"><span class="nav-number">2.2.</span> <span class="nav-text">关联类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类型擦除"><span class="nav-number">2.3.</span> <span class="nav-text">类型擦除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Where-语句"><span class="nav-number">2.4.</span> <span class="nav-text">Where 语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泛型和-Any-类型"><span class="nav-number">2.5.</span> <span class="nav-text">泛型和 Any 类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集合"><span class="nav-number">3.</span> <span class="nav-text">集合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">3.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迭代器"><span class="nav-number">3.2.</span> <span class="nav-text">迭代器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sequence"><span class="nav-number">3.3.</span> <span class="nav-text">Sequence</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Collection"><span class="nav-number">3.4.</span> <span class="nav-text">Collection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map"><span class="nav-number">3.5.</span> <span class="nav-text">map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flatmap"><span class="nav-number">3.6.</span> <span class="nav-text">flatmap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reduce"><span class="nav-number">3.7.</span> <span class="nav-text">Reduce</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array"><span class="nav-number">3.8.</span> <span class="nav-text">Array</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#弱引用的-Swift-数组"><span class="nav-number">3.9.</span> <span class="nav-text">弱引用的 Swift 数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dictionary"><span class="nav-number">3.10.</span> <span class="nav-text">Dictionary</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#协议式编程"><span class="nav-number">4.</span> <span class="nav-text">协议式编程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Swift-内存管理"><span class="nav-number">5.</span> <span class="nav-text">Swift 内存管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内存分配"><span class="nav-number">5.1.</span> <span class="nav-text">内存分配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Heap"><span class="nav-number">5.1.1.</span> <span class="nav-text">Heap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stack"><span class="nav-number">5.1.2.</span> <span class="nav-text">Stack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存对齐"><span class="nav-number">5.1.3.</span> <span class="nav-text">内存对齐</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift-派发机制"><span class="nav-number">5.2.</span> <span class="nav-text">Swift 派发机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#直接派发"><span class="nav-number">5.2.1.</span> <span class="nav-text">直接派发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数表派发"><span class="nav-number">5.2.2.</span> <span class="nav-text">函数表派发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#消息机制派发"><span class="nav-number">5.2.3.</span> <span class="nav-text">消息机制派发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体派发"><span class="nav-number">5.2.4.</span> <span class="nav-text">具体派发</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#声明"><span class="nav-number">5.2.4.1.</span> <span class="nav-text">声明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#指定派发方式"><span class="nav-number">5.2.4.2.</span> <span class="nav-text">指定派发方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#派发优化"><span class="nav-number">5.2.4.3.</span> <span class="nav-text">派发优化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本数据类型内存管理"><span class="nav-number">5.3.</span> <span class="nav-text">基本数据类型内存管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Struct-内存管理"><span class="nav-number">5.4.</span> <span class="nav-text">Struct 内存管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-内存管理"><span class="nav-number">5.5.</span> <span class="nav-text">Class 内存管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#协议类型内存管理"><span class="nav-number">5.6.</span> <span class="nav-text">协议类型内存管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泛型的内存管理"><span class="nav-number">5.7.</span> <span class="nav-text">泛型的内存管理</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">戴铭</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
