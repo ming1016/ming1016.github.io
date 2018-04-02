@@ -1,0 +1,841 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS,Swift," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="星光社 - 戴铭的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/uploads/logo.png?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前言最近项目开发一直在使用 swift，因为 HTN 项目最近会有另外一位同事加入，所以打算对最近涉及到的一些技术和自己的一些想法做个记录，同时也能够方便同事熟悉代码。 JSON 数据的处理做项目只要是涉及到服务器端接口都没法避免和 JSON 数据打交道。对于来自网络的 JSON 结构化数据的处理，可以使用 JSONDecoder 这个苹果自己提供的字符串转模型类，这个类是在 Swift 4 的">
+<meta name="keywords" content="iOS,Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法">
+<meta property="og:url" content="http://ming1016.github.io/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/index.html">
+<meta property="og:site_name" content="星光社 - 戴铭的博客">
+<meta property="og:description" content="前言最近项目开发一直在使用 swift，因为 HTN 项目最近会有另外一位同事加入，所以打算对最近涉及到的一些技术和自己的一些想法做个记录，同时也能够方便同事熟悉代码。 JSON 数据的处理做项目只要是涉及到服务器端接口都没法避免和 JSON 数据打交道。对于来自网络的 JSON 结构化数据的处理，可以使用 JSONDecoder 这个苹果自己提供的字符串转模型类，这个类是在 Swift 4 的">
+<meta property="og:updated_time" content="2018-04-02T11:17:52.790Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法">
+<meta name="twitter:description" content="前言最近项目开发一直在使用 swift，因为 HTN 项目最近会有另外一位同事加入，所以打算对最近涉及到的一些技术和自己的一些想法做个记录，同时也能够方便同事熟悉代码。 JSON 数据的处理做项目只要是涉及到服务器端接口都没法避免和 JSON 数据打交道。对于来自网络的 JSON 结构化数据的处理，可以使用 JSONDecoder 这个苹果自己提供的字符串转模型类，这个类是在 Swift 4 的">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ming1016.github.io/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/"/>
+
+
+
+
+
+  <title>Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法 | 星光社 - 戴铭的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">星光社 - 戴铭的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ming1016.github.io/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="戴铭">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/251980?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星光社 - 戴铭的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-02T19:12:28+08:00">
+                2018-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近项目开发一直在使用 swift，因为 HTN 项目最近会有另外一位同事加入，所以打算对最近涉及到的一些技术和自己的一些想法做个记录，同时也能够方便同事熟悉代码。</p>
+<h1 id="JSON-数据的处理"><a href="#JSON-数据的处理" class="headerlink" title="JSON 数据的处理"></a>JSON 数据的处理</h1><p>做项目只要是涉及到服务器端接口都没法避免和 JSON 数据打交道。对于来自网络的 JSON 结构化数据的处理，可以使用 JSONDecoder 这个苹果自己提供的字符串转模型类，这个类是在 Swift 4 的 Fundation 模块里提供的，可以在Swift 源码目录 swift/stdlib/public/SDK/Fundation/JSONEncoder.swift 看到苹果对这个类实现。</p>
+<p>其它对 JSON 处理的库还有 SwiftyJSON <a href="https://github.com/SwiftyJSON/SwiftyJSON" target="_blank" rel="external">GitHub - SwiftyJSON/SwiftyJSON: The better way to deal with JSON data in Swift</a></p>
+<h2 id="使用-JSONDecoder"><a href="#使用-JSONDecoder" class="headerlink" title="使用 JSONDecoder"></a>使用 JSONDecoder</h2><p>下面苹果使用 JSONDecoder 的一个例子来看看如何使用 JSONDecoder<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">struct GroceryProduct: Codable &#123;</div><div class="line">    var name: String</div><div class="line">    var points: Int</div><div class="line">    var description: String?</div><div class="line">&#125;</div><div class="line"></div><div class="line">let json = """</div><div class="line">&#123;</div><div class="line">    "name": "Durian",</div><div class="line">    "points": 600,</div><div class="line">    "description": "A fruit with a distinctive scent."</div><div class="line">&#125;</div><div class="line">""".data(using: .utf8)!</div><div class="line"></div><div class="line">let decoder = JSONDecoder()</div><div class="line">let product = try decoder.decode(GroceryProduct.self, from: json)</div><div class="line"></div><div class="line">print(product.name) // Prints "Durian"</div></pre></td></tr></table></figure></p>
+<p>这里要注意 GroceryProduct 结构体需要遵循 Codable，因为 JSONDecoder 的实例对象的 decode 方法需要遵循 Decodable 协议的结构体。Codable 是 Encodable 和 Decodable 两个协议的组合，写法如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">typealias</span> <span class="type">Codable</span> = <span class="type">Decodable</span> &amp; <span class="type">Encodable</span></div></pre></td></tr></table></figure></p>
+<p>当然 JSON 数据的结构不会都是这么简单，如果遇到嵌套情况如下：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">let json = """</div><div class="line">&#123;</div><div class="line">    "name": "Durian",</div><div class="line">    "points": 600,</div><div class="line">    "ability": &#123;</div><div class="line">        "mathematics": "excellent",</div><div class="line">        "physics": "bad",</div><div class="line">        "chemistry": "fine"</div><div class="line">    &#125;,</div><div class="line">    "description": "A fruit with a distinctive scent."</div><div class="line">&#125;</div><div class="line">""".data(using: .utf8)!</div></pre></td></tr></table></figure></p>
+<p>这时可以通过在 struct 里再套一个 struct 来做，修改过的 struct 如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">GroceryProduct</span>: <span class="title">Codable</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> name: <span class="type">String</span></div><div class="line">    <span class="keyword">var</span> points: <span class="type">Int</span></div><div class="line">    <span class="keyword">var</span> ability: <span class="type">Ability</span></div><div class="line">    <span class="keyword">var</span> description: <span class="type">String</span>?</div><div class="line">    </div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Ability</span>: <span class="title">Codable</span> </span>&#123;</div><div class="line">        <span class="keyword">var</span> mathematics: <span class="type">String</span></div><div class="line">        <span class="keyword">var</span> physics: <span class="type">String</span></div><div class="line">        <span class="keyword">var</span> chemistry: <span class="type">String</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里可以观察到 ability 里数学物理化学的评价都是那几个，无非是优良差，所以很适合用枚举表示，swift 的枚举对于字符串关联类型枚举也有很好的支持，只要声明关联值类型是 String 就行了，改后的代码如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">GroceryProduct</span>: <span class="title">Codable</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> name: <span class="type">String</span></div><div class="line">    <span class="keyword">var</span> points: <span class="type">Int</span></div><div class="line">    <span class="keyword">var</span> ability: <span class="type">Ability</span></div><div class="line">    <span class="keyword">var</span> description: <span class="type">String</span>?</div><div class="line">    </div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Ability</span>: <span class="title">Codable</span> </span>&#123;</div><div class="line">        <span class="keyword">var</span> mathematics: <span class="type">Appraise</span></div><div class="line">        <span class="keyword">var</span> physics: <span class="type">Appraise</span></div><div class="line">        <span class="keyword">var</span> chemistry: <span class="type">Appraise</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">Appraise</span>: <span class="title">String</span>, <span class="title">Codable</span> </span>&#123;</div><div class="line">        <span class="keyword">case</span> excellent, fine, bad</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>API 返回的结果会有一个不可控的因素，是什么呢？那就是有的键值有时会返回有时不会返回，那么这个 struct 怎么兼容呢？</p>
+<p>好在swift 原生就支持了 optional，只需要在属性后加个问号就行了。比如 points 有时会返回有时不会，那么就可以这么写：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">GroceryProduct</span>: <span class="title">Codable</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> name: <span class="type">String</span></div><div class="line">    <span class="keyword">var</span> points: <span class="type">Int</span>? <span class="comment">//可能会用不到</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="CodingKey-协议"><a href="#CodingKey-协议" class="headerlink" title="CodingKey 协议"></a>CodingKey 协议</h2><p>接口还会有一些其它不可控因素，比如会产生出 snake case 的命名风格，要求风格统一固然是很好，但是现实环境总会有些不可抗拒的因素，比如不同团队，不同公司或者不同风格洁癖的 coder 之间。还好 JSONDecoder 已经做好了。下面我们看看如何用：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">let json = """</div><div class="line">&#123;</div><div class="line">    "nick_name": "Tom",</div><div class="line">    "points": 600,</div><div class="line">&#125;</div><div class="line">""".data(using: .utf8)!</div></pre></td></tr></table></figure></p>
+<p>这里 nick_name 我们希望处理成 swift 的风格，那么我们可以使用一个遵循 CodingKey 协议的枚举来做映射。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">GroceryProduct</span>: <span class="title">Codable</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> nickName: <span class="type">String</span></div><div class="line">    <span class="keyword">var</span> points: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">CodingKeys</span> : <span class="title">String</span>, <span class="title">CodingKey</span></span>&#123;</div><div class="line">        <span class="keyword">case</span> nickName = <span class="string">"nick_name"</span></div><div class="line">        <span class="keyword">case</span> points</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当然这个方法是个通用方法，不光能够处理 snake case 还能够起自己喜欢的命名，比如你喜欢简写，nick name 写成 nName，那么也可以用这个方法。Codable 协议默认的实现实际上已经能够 cover 掉现实环境的大部分问题了，如果有些自定义的东西要处理的话可以通过覆盖默认 Codable 的方式来做。关键点就是 encoder 的 container，通过获取 container 对象进行自定义操作。</p>
+<h2 id="JSONDecoder-的-keyDecodingStrategy-属性"><a href="#JSONDecoder-的-keyDecodingStrategy-属性" class="headerlink" title="JSONDecoder 的 keyDecodingStrategy 属性"></a>JSONDecoder 的 keyDecodingStrategy 属性</h2><p>JSONDecoder 里还有专门的一个属性 keyDecodingStrategy，这个值是个布尔值，有个 case 是 convertFromSnakeCase，这样就会按照这个 strategy 来转换 snake case，这个是核心功能内置的，就不需要我们额外写代码处理了。上面加上的枚举 CodingKeys 也可以去掉了，只需要在 JSONDecoder 这个实例设置这个属性就行。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> decoder = <span class="type">JSONDecoder</span>()</div><div class="line">decoder.keyDecodingStrategy = .convertFromSnakeCase</div></pre></td></tr></table></figure></p>
+<p>keyDecodingStrategy 这个属性是在 swift 4.1 加上的，所以这个版本之前的还是用 CodingKey 这个协议来处理吧。</p>
+<p>那么苹果是如何通过这个 keyDecodingStrategy 属性的设置来做到的呢？</p>
+<p>感谢苹果使用 Swift 写了 Swift 的核心功能，以后想要了解更多功能背后原理可以不用啃 C++ 了，一边学习原理还能一边学习苹果内部是如何使用 Swift 的，所谓一举两得。</p>
+<p>实现这个功能代码就在上文提到的 Swift 源码目录 swift/stdlib/public/SDK/Fundation/ 下的 JSONEncoder.swift  文件，如果不想把源码下下来也可以在 GitHub 上在线看，地址：<a href="https://github.com/apple/swift/blob/master/stdlib/public/SDK/Foundation/JSONEncoder.swift" target="_blank" rel="external">https://github.com/apple/swift/blob/master/stdlib/public/SDK/Foundation/JSONEncoder.swift</a></p>
+<p>先看看这个属性的定义：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/// The strategy to use for decoding keys. Defaults to `.useDefaultKeys`.</span></div><div class="line">open <span class="keyword">var</span> keyDecodingStrategy: <span class="type">KeyDecodingStrategy</span> = .useDefaultKeys</div></pre></td></tr></table></figure></p>
+<p>这个属性是一个 keyDecodingStrategy 枚举，默认是 .userDefaultKeys。这个枚举是这样定义的：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">KeyDecodingStrategy</span> </span>&#123;</div><div class="line">    <span class="comment">/// Use the keys specified by each type. This is the default strategy.</span></div><div class="line">    <span class="keyword">case</span> useDefaultKeys</div><div class="line">    </div><div class="line">    <span class="comment">/// Convert from "snake_case_keys" to "camelCaseKeys" before attempting to match a key with the one specified by each type.</span></div><div class="line">    <span class="comment">///</span></div><div class="line">    <span class="comment">/// The conversion to upper case uses `Locale.system`, also known as the ICU "root" locale. This means the result is consistent regardless of the current user's locale and language preferences.</span></div><div class="line">    <span class="comment">///</span></div><div class="line">    <span class="comment">/// Converting from snake case to camel case:</span></div><div class="line">    <span class="comment">/// 1. Capitalizes the word starting after each `_`</span></div><div class="line">    <span class="comment">/// 2. Removes all `_`</span></div><div class="line">    <span class="comment">/// 3. Preserves starting and ending `_` (as these are often used to indicate private variables or other metadata).</span></div><div class="line">    <span class="comment">/// For example, `one_two_three` becomes `oneTwoThree`. `_one_two_three_` becomes `_oneTwoThree_`.</span></div><div class="line">    <span class="comment">///</span></div><div class="line">    <span class="comment">/// - Note: Using a key decoding strategy has a nominal performance cost, as each string key has to be inspected for the `_` character.</span></div><div class="line">    <span class="keyword">case</span> convertFromSnakeCase</div><div class="line">    </div><div class="line">    <span class="comment">/// Provide a custom conversion from the key in the encoded JSON to the keys specified by the decoded types.</span></div><div class="line">    <span class="comment">/// The full path to the current decoding position is provided for context (in case you need to locate this key within the payload). The returned key is used in place of the last component in the coding path before decoding.</span></div><div class="line">    <span class="comment">/// If the result of the conversion is a duplicate key, then only one value will be present in the container for the type to decode from.</span></div><div class="line">    <span class="keyword">case</span> custom((<span class="number">_</span> codingPath: [<span class="type">CodingKey</span>]) -&gt; <span class="type">CodingKey</span>)</div><div class="line">    </div><div class="line">    fileprivate <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">_convertFromSnakeCase</span><span class="params">(<span class="number">_</span> stringKey: String)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>case convertFromSnakeCase 就是我们使用的，注释部分描述了整个过程，首先会把 ‘<em>’ 符号后面的字母转成大写的，然后移除掉所有的 ‘</em>’ 符号，保留最前面和最后的 ‘_’ 符号。比如 <strong>nick<em>name</em> 就会转换成 </strong>nickName_ 而这些都是在枚举里定义的静态方法 _convertFromSnakeCase 里完成的。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">fileprivate <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">_convertFromSnakeCase</span><span class="params">(<span class="number">_</span> stringKey: String)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">    <span class="keyword">guard</span> !stringKey.isEmpty <span class="keyword">else</span> &#123; <span class="keyword">return</span> stringKey &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// Find the first non-underscore character</span></div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> firstNonUnderscore = stringKey.index(<span class="keyword">where</span>: &#123; $<span class="number">0</span> != <span class="string">"_"</span> &#125;) <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// Reached the end without finding an _</span></div><div class="line">        <span class="keyword">return</span> stringKey</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// Find the last non-underscore character</span></div><div class="line">    <span class="keyword">var</span> lastNonUnderscore = stringKey.index(before: stringKey.endIndex)</div><div class="line">    <span class="keyword">while</span> lastNonUnderscore &gt; firstNonUnderscore &amp;&amp; stringKey[lastNonUnderscore] == <span class="string">"_"</span> &#123;</div><div class="line">        stringKey.formIndex(before: &amp;lastNonUnderscore);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">let</span> keyRange = firstNonUnderscore...lastNonUnderscore</div><div class="line">    <span class="keyword">let</span> leadingUnderscoreRange = stringKey.startIndex..&lt;firstNonUnderscore</div><div class="line">    <span class="keyword">let</span> trailingUnderscoreRange = stringKey.index(after: lastNonUnderscore)..&lt;stringKey.endIndex</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> components = stringKey[keyRange].<span class="built_in">split</span>(separator: <span class="string">"_"</span>)</div><div class="line">    <span class="keyword">let</span> joinedString : <span class="type">String</span></div><div class="line">    <span class="keyword">if</span> components.<span class="built_in">count</span> == <span class="number">1</span> &#123;</div><div class="line">        <span class="comment">// No underscores in key, leave the word as is - maybe already camel cased</span></div><div class="line">        joinedString = <span class="type">String</span>(stringKey[keyRange])</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        joinedString = ([components[<span class="number">0</span>].lowercased()] + components[<span class="number">1</span>...].<span class="built_in">map</span> &#123; $<span class="number">0</span>.capitalized &#125;).joined()</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// Do a cheap isEmpty check before creating and appending potentially empty strings</span></div><div class="line">    <span class="keyword">let</span> result : <span class="type">String</span></div><div class="line">    <span class="keyword">if</span> (leadingUnderscoreRange.isEmpty &amp;&amp; trailingUnderscoreRange.isEmpty) &#123;</div><div class="line">        result = joinedString</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!leadingUnderscoreRange.isEmpty &amp;&amp; !trailingUnderscoreRange.isEmpty) &#123;</div><div class="line">        <span class="comment">// Both leading and trailing underscores</span></div><div class="line">        result = <span class="type">String</span>(stringKey[leadingUnderscoreRange]) + joinedString + <span class="type">String</span>(stringKey[trailingUnderscoreRange])</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!leadingUnderscoreRange.isEmpty) &#123;</div><div class="line">        <span class="comment">// Just leading</span></div><div class="line">        result = <span class="type">String</span>(stringKey[leadingUnderscoreRange]) + joinedString</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// Just trailing</span></div><div class="line">        result = joinedString + <span class="type">String</span>(stringKey[trailingUnderscoreRange])</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这段代码处理的逻辑不算复杂，功能也不多，但是还是有很多值得学习的地方，首先可以看看是如何处理边界条件的。可以看到两个边界条件都是用 guard 语法来处理的。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">guard</span> !stringKey.isEmpty <span class="keyword">else</span> &#123; <span class="keyword">return</span> stringKey &#125;</div><div class="line"></div><div class="line"><span class="comment">// Find the first non-underscore character</span></div><div class="line"><span class="keyword">guard</span> <span class="keyword">let</span> firstNonUnderscore = stringKey.index(<span class="keyword">where</span>: &#123; $<span class="number">0</span> != <span class="string">"_"</span> &#125;) <span class="keyword">else</span> &#123;</div><div class="line">    <span class="comment">// Reached the end without finding an _</span></div><div class="line">    <span class="keyword">return</span> stringKey</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>第一个是判断空，第二个是通过 String 的 public func index(where predicate: (Character) throws -&gt; Bool) rethrows -&gt; String.Index?  这个函数来看字符串里是否包含了 ‘_’ 符号，如果没有包含就直接返回原 String 值。这个函数的参数就是一个自定义返回布尔值的 block，返回 true 即刻返回不再继续遍历了，可见苹果对于性能一点也不浪费。</p>
+<p>然后这个返回的 index 值还有个作用就是可以得到 ‘<em>’ 符号在最前面后第一个非 ‘</em>’ 符号的字符。因为需求如此，不需要把最前面和最后面的 ‘<em>’ 转驼峰，但是前面和后面的 ‘</em>’ 符号个数又不一定，所以需要得到前面 ‘_’ 符号和后面的范围。</p>
+<p>那么得到前面的范围后，后面的苹果是怎么做的呢？<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Find the last non-underscore character</span></div><div class="line"><span class="keyword">var</span> lastNonUnderscore = stringKey.index(before: stringKey.endIndex)</div><div class="line"><span class="keyword">while</span> lastNonUnderscore &gt; firstNonUnderscore &amp;&amp; stringKey[lastNonUnderscore] == <span class="string">"_"</span> &#123;</div><div class="line">    stringKey.formIndex(before: &amp;lastNonUnderscore);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里正好可以看到对 String 的 public func formIndex(before i: inout String.Index) 函数的应用，这里的参数定义为 inout 的作用是能够在函数里对这个参数不用通过返回的方式直接修改生效。这个函数的作用就是移动字符的 index，before 是往前移动，after 是往后移动。</p>
+<p>上面的代码就是先找到整个字符串的最后的 index 然后开始从后往前找，找到不是 ‘_’ 符号时跳出这个 while，同时还要满足不超过 lastNonUnderscore 的范围。</p>
+<p>在接下内容之前可以考虑这样一个问题，为什么在做前面的判断时为什么不用 public func formIndex(after i: inout String.Index) 这个方法，after 不是代表从开始往后移动遍历么，也可以达到找到第一个不是 ‘_’ 的字符就停止的效果。</p>
+<p>苹果真是双枪老太婆，一击两发，既解决了边界问题又能解决一个需求，代码有了优化，代码量还减少了。其实面试过程中通常都会有些算法题的环节，很多人都以为只要有了解决思路或者写出简单的处理代码就可以了，我碰到了一些的面试人甚至用中文一条条写出思路以为就完事了。其实算法题的考察是分为两种的，一种是考智商的，就是解决办法很多或者解决办法很难，能够想到解法或者最优解是比较困难的，这样的题适合那些在面谈过程中能觉得实力和深度不错的人，通过这些题同时还能更多为判断面试人是否更具创造力，属于拔尖的考法。还有种是考严谨和实际项目能力的，这种更多是考察边界条件的处理，逻辑的严谨还有对代码优化的处理，这种题的解法和逻辑会比较简单。</p>
+<p>_convertFromSnakeCase 这个枚举的静态函数会在创建 container 的时候调用，具体使用的函数是 _JSONKeyedDecodingContainer，在它的初始化方法里会判断  decoder.options.keyDecodingStrategy  这个枚举值，满足 convertFromSnakeCase 就会调用那个静态函数了。调用的时候还要注意一个处理就是转换成驼峰后的 key 可能会和已有命名重名，那么就需要选择进行一个选择，苹果的选择是第一个。实现方式如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">self</span>.container = <span class="type">Dictionary</span>(container.<span class="built_in">map</span> &#123;</div><div class="line">    key, value <span class="keyword">in</span> (<span class="type">JSONDecoder</span>.<span class="type">KeyDecodingStrategy</span>._convertFromSnakeCase(key), value)</div><div class="line">&#125;, uniquingKeysWith: &#123; (first, <span class="number">_</span>) <span class="keyword">in</span> first &#125;)</div></pre></td></tr></table></figure></p>
+<p>这里遇到一个 Dictionary 的初始化函数<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">init</span>&lt;<span class="type">S</span>&gt;(<span class="number">_</span> keysAndValues: <span class="type">S</span>, uniquingKeysWith combine: (<span class="type">Dictionary</span>.<span class="type">Value</span>, <span class="type">Dictionary</span>.<span class="type">Value</span>) <span class="keyword">throws</span> -&gt; <span class="type">Dictionary</span>.<span class="type">Value</span>) <span class="keyword">rethrows</span> <span class="keyword">where</span> <span class="type">S</span> : <span class="type">Sequence</span>, <span class="type">S</span>.<span class="type">Element</span> == (<span class="type">Key</span>, <span class="type">Value</span>)</div></pre></td></tr></table></figure></p>
+<p>这个函数就是专门用来处理上面的重复 key 的问题。如果要选择最后一个 key 的值用这个函数也会很容易。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> pairsWithDuplicateKeys = [(<span class="string">"a"</span>, <span class="number">1</span>), (<span class="string">"b"</span>, <span class="number">2</span>), (<span class="string">"a"</span>, <span class="number">3</span>), (<span class="string">"b"</span>, <span class="number">4</span>)]</div><div class="line"></div><div class="line"><span class="keyword">let</span> firstValues = <span class="type">Dictionary</span>(pairsWithDuplicateKeys,</div><div class="line">                             uniquingKeysWith: &#123; (first, <span class="number">_</span>) <span class="keyword">in</span> first &#125;)</div><div class="line"><span class="comment">// ["b": 2, "a": 1]</span></div><div class="line"><span class="keyword">let</span> lastValues = <span class="type">Dictionary</span>(pairsWithDuplicateKeys,</div><div class="line">                            uniquingKeysWith: &#123; (<span class="number">_</span>, last) <span class="keyword">in</span> last &#125;)</div><div class="line"><span class="comment">// ["b": 4, "a": 3]</span></div></pre></td></tr></table></figure></p>
+<h2 id="枚举定义-block"><a href="#枚举定义-block" class="headerlink" title="枚举定义 block"></a>枚举定义 block</h2><p>KeyEncodingStrategy 还可以自定义 codingKey<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">case</span> custom((<span class="number">_</span> codingPath: [<span class="type">CodingKey</span>]) -&gt; <span class="type">CodingKey</span>)</div></pre></td></tr></table></figure></p>
+<p>在 container 初始化时会调用这个 block 来进行 key 的转换，同样如果转换后出现重复 key 也会和 convertFromSnakeCase 一样选择第一个。这里可以看到 Swift 里的枚举还能够定义一个 block 方便自定义处理自己特定规则，这样就可以完全抛弃以前的那种覆盖 Codable 协议默认实现的方式了。</p>
+<h2 id="inout"><a href="#inout" class="headerlink" title="inout"></a>inout</h2><p>上面提到了 public func formIndex(before i: inout Index) 这个函数，那么跟着这个函数在源码里看看它的实现，这个函数是在这个文件里实现的 <a href="https://github.com/apple/swift/blob/master/stdlib/public/SDK/Foundation/IndexSet.swift" target="_blank" rel="external">swift/IndexSet.swift at master · apple/swift · GitHub</a></p>
+<p>找到这个方法时发现没有 inout 定义的同名函数也还在那里<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">index</span><span class="params">(before i: Index)</span></span> -&gt; <span class="type">Index</span> &#123;</div><div class="line">    <span class="keyword">if</span> i.value == i.extent.lowerBound &#123;</div><div class="line">        <span class="comment">// Move to the next range</span></div><div class="line">        <span class="keyword">if</span> i.rangeIndex == <span class="number">0</span> &#123;</div><div class="line">            <span class="comment">// We have no more to go</span></div><div class="line">            <span class="keyword">return</span> <span class="type">Index</span>(value: i.value, extent: i.extent, rangeIndex: i.rangeIndex, rangeCount: i.rangeCount)</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">let</span> rangeIndex = i.rangeIndex - <span class="number">1</span></div><div class="line">            <span class="keyword">let</span> rangeCount = i.rangeCount</div><div class="line">            <span class="keyword">let</span> extent = _range(at: rangeIndex)</div><div class="line">            <span class="keyword">let</span> value = extent.upperBound - <span class="number">1</span></div><div class="line">            <span class="keyword">return</span> <span class="type">Index</span>(value: value, extent: extent, rangeIndex: rangeIndex, rangeCount: rangeCount)</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// Move to the previous value in this range</span></div><div class="line">        <span class="keyword">return</span> <span class="type">Index</span>(value: i.value - <span class="number">1</span>, extent: i.extent, rangeIndex: i.rangeIndex, rangeCount: i.rangeCount)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">formIndex</span><span class="params">(before i: <span class="keyword">inout</span> Index)</span></span> &#123;</div><div class="line">    <span class="keyword">if</span> i.value == i.extent.lowerBound &#123;</div><div class="line">        <span class="comment">// Move to the next range</span></div><div class="line">        <span class="keyword">if</span> i.rangeIndex == <span class="number">0</span> &#123;</div><div class="line">            <span class="comment">// We have no more to go</span></div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            i.rangeIndex -= <span class="number">1</span></div><div class="line">            i.extent = _range(at: i.rangeIndex)</div><div class="line">            i.value = i.extent.upperBound - <span class="number">1</span></div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// Move to the previous value in this range</span></div><div class="line">        i.value -= <span class="number">1</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这两个函数的实现最直观的感受就是 inout 的少了三个 return。还有一个好处就是值类型参数 i 可以以引用方式传递，不需要 var 和 let 来修饰</p>
+<p>当然 inout 还有一个好处在上面的函数里没有体现出来，那就是可以方便对多个值类型数据进行修改而不需要一一指明返回。</p>
+<h1 id="网络请求"><a href="#网络请求" class="headerlink" title="网络请求"></a>网络请求</h1><p>说到网络请求，在 Objective-C 世界里基本都是用的 AFNetworking <a href="https://github.com/AFNetworking/AFNetworking" target="_blank" rel="external">GitHub - AFNetworking/AFNetworking: A delightful networking framework for iOS, macOS, watchOS, and tvOS.</a> 在 Swift 里就是 Alamofire <a href="https://github.com/Alamofire/Alamofire" target="_blank" rel="external">GitHub - Alamofire/Alamofire: Elegant HTTP Networking in Swift</a> 。我在 Swift 1.0 之前 beta 版本时就注意到 Alamofire 库里，那时还是 Mattt Thompson 一个人在写，文件也只有一个。如今功能已经多了很多，但代码量依然不算太大。我在做 HTN 项目时对于网络请求的需求不是那么大，但是也有，于是开始的时候就是简单的使用 URLSession 来实现了一下网路请求，就是想直接拉下接口下发的 JSON 数据。</p>
+<p>开始结合着前面解析 JSON 的方法，我这么写了个网络请求：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">WebJSON</span>:<span class="title">Codable</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> name:<span class="type">String</span></div><div class="line">    <span class="keyword">var</span> node:<span class="type">String</span></div><div class="line">    <span class="keyword">var</span> version: <span class="type">Int</span>?</div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> session = <span class="type">URLSession</span>.shared</div><div class="line"><span class="keyword">let</span> request:<span class="type">URLRequest</span> = <span class="type">NSURLRequest</span>.<span class="keyword">init</span>(url: <span class="type">URL</span>(string: <span class="string">"http://www.starming.com/api.php?get=testjson"</span>)!) <span class="keyword">as</span> <span class="type">URLRequest</span></div><div class="line"><span class="keyword">let</span> task = session.dataTask(with: request) &#123; (data, res, error) <span class="keyword">in</span></div><div class="line">    <span class="keyword">if</span> (error == <span class="literal">nil</span>) &#123;</div><div class="line">        <span class="keyword">let</span> decoder = <span class="type">JSONDecoder</span>()</div><div class="line">        <span class="keyword">do</span> &#123;</div><div class="line">            <span class="built_in">print</span>(<span class="string">"解析 JSON 成功"</span>)</div><div class="line">            <span class="keyword">let</span> jsonModel = <span class="keyword">try</span> decoder.decode(<span class="type">WebJSON</span>.<span class="keyword">self</span>, from: data!)</div><div class="line">            <span class="built_in">print</span>(jsonModel)</div><div class="line">        &#125; <span class="keyword">catch</span> &#123;</div><div class="line">            <span class="built_in">print</span>(<span class="string">"解析 JSON 失败"</span>)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这么写是 ok 的，能够成功请求得到 JSON 数据然后转换成对应的结构数据。不过如果还有另外几处也要进行网络请求，拿这一坨代码不是要到处写了。那么先看看 Alamofire 干这个活是什么样子的？<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="type">Alamofire</span>.request(<span class="string">"https://httpbin.org/get"</span>).responseData &#123; response <span class="keyword">in</span></div><div class="line">    <span class="keyword">if</span> <span class="keyword">let</span> data = response.data &#123;</div><div class="line">        <span class="keyword">let</span> decoder = <span class="type">JSONDecoder</span>()</div><div class="line">        <span class="keyword">do</span> &#123;</div><div class="line">            <span class="built_in">print</span>(<span class="string">"解析 JSON 成功"</span>)</div><div class="line">            <span class="keyword">let</span> jsonModel = <span class="keyword">try</span> decoder.decode(<span class="type">H5Editor</span>.<span class="keyword">self</span>, from: data)</div><div class="line">        &#125; <span class="keyword">catch</span> &#123;</div><div class="line">            <span class="built_in">print</span>(<span class="string">"解析 JSON 失败"</span>)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Alamofire 有 responseJSON 的方法，不过解完是个字典，用的时候需要做很多容错判断很不方便，所以还是要使用 JSONDecoder 或者其它第三方库。不过 Alamofire 的写法已经做了一些简化，当然里面还实现了更多的功能，我待会再说，现在我的主要任务是简化调用。于是动手改改先前的实现，学习 Alamofire 的做法，首先创建一个类，然后简化掉 request 写法，再建个 block 方便请求完成后的数据返回处理，最后使用泛型支持不同 struct 的数据统一返回。写完后，我给这个网络类起个名字叫 SMNetWorking 这个类实现如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">open <span class="class"><span class="keyword">class</span> <span class="title">SMNetWorking</span>&lt;<span class="title">T</span>:<span class="title">Codable</span>&gt; </span>&#123;</div><div class="line">    open <span class="keyword">let</span> session:<span class="type">URLSession</span></div><div class="line">    </div><div class="line">    <span class="keyword">typealias</span> <span class="type">CompletionJSONClosure</span> = (<span class="number">_</span> data:<span class="type">T</span>) -&gt; <span class="type">Void</span></div><div class="line">    <span class="keyword">var</span> completionJSONClosure:<span class="type">CompletionJSONClosure</span> =  &#123;<span class="number">_</span> <span class="keyword">in</span> &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">init</span>() &#123;</div><div class="line">        <span class="keyword">self</span>.session = <span class="type">URLSession</span>.shared</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//JSON的请求</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">requestJSON</span><span class="params">(<span class="number">_</span> url: SMURLNetWorking,</span></span></div><div class="line">                     doneClosure:@escaping CompletionJSONClosure</div><div class="line">                    ) &#123;</div><div class="line">        <span class="keyword">self</span>.completionJSONClosure = doneClosure</div><div class="line">        <span class="keyword">let</span> request:<span class="type">URLRequest</span> = <span class="type">NSURLRequest</span>.<span class="keyword">init</span>(url: url.asURL()) <span class="keyword">as</span> <span class="type">URLRequest</span></div><div class="line">        <span class="keyword">let</span> task = <span class="keyword">self</span>.session.dataTask(with: request) &#123; (data, res, error) <span class="keyword">in</span></div><div class="line">            <span class="keyword">if</span> (error == <span class="literal">nil</span>) &#123;</div><div class="line">                <span class="keyword">let</span> decoder = <span class="type">JSONDecoder</span>()</div><div class="line">                <span class="keyword">do</span> &#123;</div><div class="line">                    <span class="built_in">print</span>(<span class="string">"解析 JSON 成功"</span>)</div><div class="line">                    <span class="keyword">let</span> jsonModel = <span class="keyword">try</span> decoder.decode(<span class="type">T</span>.<span class="keyword">self</span>, from: data!)</div><div class="line">                    <span class="keyword">self</span>.completionJSONClosure(jsonModel)</div><div class="line">                &#125; <span class="keyword">catch</span> &#123;</div><div class="line">                    <span class="built_in">print</span>(<span class="string">"解析 JSON 失败"</span>)</div><div class="line">                &#125;</div><div class="line">                </div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        task.resume()</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/*----------Protocol----------*/</span></div><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">SMURLNetWorking</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">asURL</span><span class="params">()</span></span> -&gt; <span class="type">URL</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/*----------Extension---------*/</span></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">String</span>: <span class="title">SMURLNetWorking</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">asURL</span><span class="params">()</span></span> -&gt; <span class="type">URL</span> &#123;</div><div class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> url = <span class="type">URL</span>(string:<span class="keyword">self</span>) <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> <span class="type">URL</span>(string:<span class="string">"http:www.starming.com"</span>)!</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> url</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样调用起来就简单得多了，看起来如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="type">SMNetWorking</span>&lt;<span class="type">WModel</span>&gt;().requestJSON(<span class="string">"https://httpbin.org/get"</span>) &#123; (jsonModel) <span class="keyword">in</span></div><div class="line">    <span class="built_in">print</span>(jsonModel)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当然这样写起来是简单多了，特别是请求不同的接口返回不同结构时，本地定义了很多的 model 结构体，那么请求时只需要指明不同的 model 类型，block 里就能够直接返回对应的值。</p>
+<p>默认都按照 GET 方法请求，在实际项目中会用到其它比如 POST 等方法，Alamofire 的做法是这样的：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/// HTTP method definitions.</span></div><div class="line"><span class="comment">///</span></div><div class="line"><span class="comment">/// See https://tools.ietf.org/html/rfc7231#section-4.3</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">HTTPMethod</span>: <span class="title">String</span> </span>&#123;</div><div class="line">    <span class="keyword">case</span> options = <span class="string">"OPTIONS"</span></div><div class="line">    <span class="keyword">case</span> <span class="keyword">get</span>     = <span class="string">"GET"</span></div><div class="line">    <span class="keyword">case</span> head    = <span class="string">"HEAD"</span></div><div class="line">    <span class="keyword">case</span> post    = <span class="string">"POST"</span></div><div class="line">    <span class="keyword">case</span> put     = <span class="string">"PUT"</span></div><div class="line">    <span class="keyword">case</span> patch   = <span class="string">"PATCH"</span></div><div class="line">    <span class="keyword">case</span> delete  = <span class="string">"DELETE"</span></div><div class="line">    <span class="keyword">case</span> trace   = <span class="string">"TRACE"</span></div><div class="line">    <span class="keyword">case</span> connect = <span class="string">"CONNECT"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>会先定义一个枚举，依据的标准也列在了注释里。使用起来是这样的：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="type">Alamofire</span>.request(<span class="string">"https://httpbin.org/get"</span>) <span class="comment">// method defaults to `.get`</span></div><div class="line"></div><div class="line"><span class="type">Alamofire</span>.request(<span class="string">"https://httpbin.org/post"</span>, method: .post)</div><div class="line"><span class="type">Alamofire</span>.request(<span class="string">"https://httpbin.org/put"</span>, method: .put)</div><div class="line"><span class="type">Alamofire</span>.request(<span class="string">"https://httpbin.org/delete"</span>, method: .delete)</div></pre></td></tr></table></figure></p>
+<p>可以看出在 request 方法里有个可选参数，设置完会给 NSURLRequest 的 httpMethod 的这个可选属性附上设置的值。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">init</span>(url: <span class="type">URLConvertible</span>, method: <span class="type">HTTPMethod</span>, headers: <span class="type">HTTPHeaders</span>? = <span class="literal">nil</span>) <span class="keyword">throws</span> &#123;</div><div class="line">    <span class="keyword">let</span> url = <span class="keyword">try</span> url.asURL()</div><div class="line">    </div><div class="line">    <span class="keyword">self</span>.<span class="keyword">init</span>(url: url)</div><div class="line">    </div><div class="line">    httpMethod = method.rawValue</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> <span class="keyword">let</span> headers = headers &#123;</div><div class="line">        <span class="keyword">for</span> (headerField, headerValue) <span class="keyword">in</span> headers &#123;</div><div class="line">            setValue(headerValue, forHTTPHeaderField: headerField)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>那么接下来我在 SMNetWorking 类里也加上这个功能，先定义一个枚举：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">HTTPMethod</span>: <span class="title">String</span> </span>&#123;</div><div class="line">    <span class="keyword">case</span> <span class="type">GET</span>,<span class="type">OPTIONS</span>,<span class="type">HEAD</span>,<span class="type">POST</span>,<span class="type">PUT</span>,<span class="type">PATCH</span>,<span class="type">DELETE</span>,<span class="type">TRACE</span>,<span class="type">CONNECT</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>利用枚举的字符串协议特性，可以将枚举名直接转值的字符串，可以通过这种方式简化枚举定义。</p>
+<p>翻下 NSURLRequest 提供的那些可选设置项还不少，如果把这些设置都做成一个个可配参数那么后期维护会非常麻烦。所以我打算使用链式来弄。先 fix HTTPMethod 这个。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//链式方法</span></div><div class="line"><span class="comment">//HTTPMethod 的设置</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">httpMethod</span><span class="params">(<span class="number">_</span> md:HTTPMethod)</span></span> -&gt; <span class="type">SMNetWorking</span> &#123;</div><div class="line">    <span class="keyword">self</span>.op.httpMethod = md</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里的 op 是个结构体，专门用来存放这些可选项的值的。完整的代码可以在这里看到 <a href="https://github.com/ming1016/HTN/blob/master/HTNSwift/HTNSwift/Core/HTNFundation/SMNetWorking.swift" target="_blank" rel="external">HTN/SMNetWorking.swift at master · ming1016/HTN · GitHub</a></p>
+<p>使用起来也很方便：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="type">SMNetWorking</span>&lt;<span class="type">WModel</span>&gt;().method(.<span class="type">POST</span>).requestJSON(<span class="string">"https://httpbin.org/get"</span>)</div></pre></td></tr></table></figure></p>
+<p>有了这样一个结构的设计后面扩展起来会非常方便，不过目前的功能是能够满足基本需求的，所以需要完善的比如对于 POST 请求需要的 HTTTP Body，还有 HTTP Headers 的自定义设置，Authentication 里的 HTTP Basic Authentication，Authentication with URLCredential 等，这些也可以先提供一个接口到外部去设置。所以可以先建个 block 把 URLRequest 提供出去由外围设置。</p>
+<p>弄完后的使用效果如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="type">SMNetWorking</span>&lt;<span class="type">WModel</span>&gt;().method(.<span class="type">POST</span>).configRequest &#123; (request) <span class="keyword">in</span></div><div class="line">    <span class="comment">//设置 request</span></div><div class="line">&#125;.requestJSON(<span class="string">"https://httpbin.org/get"</span>)</div></pre></td></tr></table></figure></p>
+<p>就刚才提到的请求参数来说，Alamofire 是定义了一个 ParameterEncoding 协议，协议里规定一个统一处理的方法 func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -&gt; URLRequest 这样就可以对多种情况做一样的返回处理了。从遵循这个协议的结构体可以看到 URL，JSON 和 PropertyList 都遵循了，那么从实现这个协议的 encode 函数的实现里可以看到他们都是殊途同归到 request 的 httpBody 里。可以拿 URLEncoding 看看具体实现：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">encode</span><span class="params">(<span class="number">_</span> urlRequest: URLRequestConvertible, with parameters: Parameters?)</span></span> <span class="keyword">throws</span> -&gt; <span class="type">URLRequest</span> &#123;</div><div class="line">    <span class="keyword">var</span> urlRequest = <span class="keyword">try</span> urlRequest.asURLRequest()</div><div class="line">    </div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> parameters = parameters <span class="keyword">else</span> &#123; <span class="keyword">return</span> urlRequest &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> <span class="keyword">let</span> method = <span class="type">HTTPMethod</span>(rawValue: urlRequest.httpMethod ?? <span class="string">"GET"</span>), encodesParametersInURL(with: method) &#123;</div><div class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> url = urlRequest.url <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="type">AFError</span>.parameterEncodingFailed(reason: .missingURL)</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> <span class="keyword">var</span> urlComponents = <span class="type">URLComponents</span>(url: url, resolvingAgainstBaseURL: <span class="literal">false</span>), !parameters.isEmpty &#123;</div><div class="line">            <span class="keyword">let</span> percentEncodedQuery = (urlComponents.percentEncodedQuery.<span class="built_in">map</span> &#123; $<span class="number">0</span> + <span class="string">"&amp;"</span> &#125; ?? <span class="string">""</span>) + query(parameters)</div><div class="line">            urlComponents.percentEncodedQuery = percentEncodedQuery</div><div class="line">            urlRequest.url = urlComponents.url</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">if</span> urlRequest.value(forHTTPHeaderField: <span class="string">"Content-Type"</span>) == <span class="literal">nil</span> &#123;</div><div class="line">            urlRequest.setValue(<span class="string">"application/x-www-form-urlencoded; charset=utf-8"</span>, forHTTPHeaderField: <span class="string">"Content-Type"</span>)</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        urlRequest.httpBody = query(parameters).data(using: .utf8, allowLossyConversion: <span class="literal">false</span>)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> urlRequest</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="泛型协议式编程"><a href="#泛型协议式编程" class="headerlink" title="泛型协议式编程"></a>泛型协议式编程</h1><p>对于目前 HTN 项目来说，请求到了数据，将 JSON 解析生成了对应的 Struct，那么下一步就是要把这个结构化的数据生成不同平台的代码，比如首先是 Objective-C 代码，然后是 Swift 代码，再然后会有 Java 代码。为了能够更好的合并多语言里重复的东西，我打算将处理生成不同语言的实现遵循相同的协议，这样就可以更规范更减少重复的实现这样的功能了。最终的效果如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="type">SMNetWorking</span>&lt;<span class="type">H5Editor</span>&gt;().requestJSON(<span class="string">"https://httpbin.org/get"</span>) &#123; (jsonModel) <span class="keyword">in</span></div><div class="line">        <span class="keyword">let</span> reStr = <span class="type">H5EditorToFrame</span>&lt;<span class="type">H5EditorObjc</span>&gt;(<span class="type">H5EditorObjc</span>()).convert(jsonModel)</div><div class="line">        <span class="built_in">print</span>(reStr)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果是转成 Swift 的话就把 H5EditorObjc 改成 H5EditorSwift 就好了，他们遵循的都是 HTNMultilingualismSpecification 协议，其它语言依此类推。如果遇到统一的实现，可以建个协议的扩展，然后用统一函数去实现就好了。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">HTNMultilingualismSpecification</span> </span>&#123;</div><div class="line">    <span class="comment">//统一处理函数放这里</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这种设计很类似类簇，比如我们熟悉的 NSString 就是这么设计的，根据初始化的不同，比如 initWith 什么的实例出来的对象是不同的，不过他们都遵循了相同的协议，所以我们在使用的时候没有感觉到差别。</p>
+<p>HTNMultilingualismSpecification 这个协议里具体的定义在这里：<a href="https://github.com/ming1016/HTN/blob/master/HTNSwift/HTNSwift/Core/HTNFundation/HTNMultilingualism.swift" target="_blank" rel="external">https://github.com/ming1016/HTN/blob/master/HTNSwift/HTNSwift/Core/HTNFundation/HTNMultilingualism.swift</a></p>
+<p>回头看看 JSONDecoder 也是使用协议泛型式编程的一个典范。先看看 decode 函数的定义<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">open <span class="function"><span class="keyword">func</span> <span class="title">decode</span>&lt;T : Decodable&gt;<span class="params">(<span class="number">_</span> type: T.<span class="keyword">Type</span>, from data: Data)</span></span> <span class="keyword">throws</span> -&gt; <span class="type">T</span></div></pre></td></tr></table></figure></p>
+<p>入参 type 是遵循了统一的 Decodable 协议的，那么就可以按照统一的方法去做处理，在内部实现时实际上 JSONDecoder 会代理给 _JSONDecoder 来实现具体逻辑的。所以在 decode 里的具体实现值类型转换的 unbox 函数都是在 _JSONDecoder 的扩展里实现的。unbox 会处理数字，字符串，布尔值这些基础数据类型，如果有其它层级的结构体也会一层层解下去， _JSONDecoder 的 _JSONDecodingStorage 通过保存最终得到完整的结构体。可以通过下面的代码看出支持这个过程的结构是怎么设计的。首先是 _JSONDecoder 的属性<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/// The decoder's storage.</span></div><div class="line">fileprivate <span class="keyword">var</span> storage: _JSONDecodingStorage</div><div class="line"></div><div class="line"><span class="comment">/// Options set on the top-level decoder.</span></div><div class="line">fileprivate <span class="keyword">let</span> options: <span class="type">JSONDecoder</span>._Options</div><div class="line"></div><div class="line"><span class="comment">/// The path to the current point in encoding.</span></div><div class="line">fileprivate(<span class="keyword">set</span>) <span class="keyword">public</span> <span class="keyword">var</span> codingPath: [<span class="type">CodingKey</span>]</div><div class="line"></div><div class="line"><span class="comment">/// Contextual user-provided information for use during encoding.</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">var</span> userInfo: [<span class="type">CodingUserInfoKey</span> : <span class="type">Any</span>] &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>.options.userInfo</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>下面是初始化<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/// Initializes `self` with the given top-level container and options.</span></div><div class="line">fileprivate <span class="keyword">init</span>(referencing container: <span class="type">Any</span>, at codingPath: [<span class="type">CodingKey</span>] = [], options: <span class="type">JSONDecoder</span>._Options) &#123;</div><div class="line">    <span class="keyword">self</span>.storage = _JSONDecodingStorage()</div><div class="line">    <span class="keyword">self</span>.storage.push(container: container)</div><div class="line">    <span class="keyword">self</span>.codingPath = codingPath</div><div class="line">    <span class="keyword">self</span>.options = options</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里可以看到 storage 在初始化时只 push 了顶层，push 的实现是：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">fileprivate <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">push</span><span class="params">(container: Any)</span></span> &#123;</div><div class="line">    <span class="keyword">self</span>.containers.append(container)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>containers 在定义的时候是个 [Any] 数组，这样就允许 container 包含 container 也就是 struct 包含 struct 这样的结构。</p>
+<h1 id="函数式思想编程"><a href="#函数式思想编程" class="headerlink" title="函数式思想编程"></a>函数式思想编程</h1><p>在处理映射成表达式是设置布局属性最复杂的地方，需要考虑兼顾到各种表达式情况的处理，这样救需要设计一个类似 SnapKit 那样可链式调用设置值的结构，我先设计了一个结构体用来存一些可变的信息<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PtEqual</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> leftId = <span class="string">""</span></div><div class="line">    <span class="keyword">var</span> <span class="keyword">left</span> = <span class="type">WgPt</span>.<span class="keyword">none</span></div><div class="line">    <span class="keyword">var</span> leftIdPrefix = <span class="string">""</span> <span class="comment">//左前缀</span></div><div class="line">    <span class="keyword">var</span> rightType = <span class="type">PtEqualRightType</span>.pt</div><div class="line">    <span class="keyword">var</span> rightId = <span class="string">""</span></div><div class="line">    <span class="keyword">var</span> rightIdPrefix = <span class="string">""</span></div><div class="line">    <span class="keyword">var</span> <span class="keyword">right</span> = <span class="type">WgPt</span>.<span class="keyword">none</span></div><div class="line">    <span class="keyword">var</span> rightFloat:<span class="type">Float</span> = <span class="number">0</span></div><div class="line">    <span class="keyword">var</span> rightInt:<span class="type">Int</span> = <span class="number">0</span></div><div class="line">    <span class="keyword">var</span> rightColor = <span class="string">""</span></div><div class="line">    <span class="keyword">var</span> rightText = <span class="string">""</span></div><div class="line">    <span class="keyword">var</span> rightString = <span class="string">""</span></div><div class="line">    <span class="keyword">var</span> rightSuffix = <span class="string">""</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> equalType = <span class="type">EqualType</span>.normal</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>对于这些结构的设置会在 PtEqualC 这个类里去处理，把每个结构体属性的设置做成各个函数返回类本身即可实现。效果如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">p.<span class="keyword">left</span>(.width).leftId(id).leftIdPrefix(<span class="string">"self."</span>).rightType(.float).rightFloat(fl.viewPt.padding.<span class="keyword">left</span> * <span class="number">2</span>).equalType(.decrease)</div></pre></td></tr></table></figure></p>
+<p>不过每次设置完后需要累加到最后返回的字符串里，这样一个过程其实也可以封装一个简单函数，比如 add()。这个怎么做能够更通用呢？比如希望支持不同的累加方法等。</p>
+<p>那么可以先设计一个累加的 block 属性<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typealias</span> <span class="type">MutiClosure</span> = (<span class="number">_</span> pe: <span class="type">PtEqual</span>) -&gt; <span class="type">String</span></div><div class="line"><span class="keyword">var</span> accumulatorLineClosure:<span class="type">MutiClosure</span> = &#123;<span class="number">_</span> <span class="keyword">in</span> <span class="keyword">return</span> <span class="string">""</span>&#125;</div></pre></td></tr></table></figure></p>
+<p>添加累加字符串和换行标示<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mutiEqualStr = <span class="string">""</span>         <span class="comment">//累加的字符串</span></div><div class="line"><span class="keyword">var</span> mutiEqualLineMark = <span class="string">"\n"</span>  <span class="comment">//换行标识</span></div></pre></td></tr></table></figure></p>
+<p>写个函数去设置这个 block 返回是类自己用于链式<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//累计设置的 PtEqual 字符串</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">accumulatorLine</span><span class="params">(<span class="number">_</span> closure:@escaping MutiClosure)</span></span> -&gt; <span class="type">PtEqualC</span> &#123;</div><div class="line">    <span class="keyword">self</span>.accumulatorLineClosure = closure</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>最后添加一个函数专门用来使用的<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//执行累加动作</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="keyword">if</span> filterBl &#123;</div><div class="line">        <span class="keyword">self</span>.mutiEqualStr += accumulatorLineClosure(<span class="keyword">self</span>.pe) + <span class="keyword">self</span>.mutiEqualLineMark</div><div class="line">    &#125;</div><div class="line">    <span class="number">_</span> = resetFilter()</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们看看用起来是什么效果：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> <span class="type">HTNMt</span>.<span class="type">PtEqualC</span>().accumulatorLine(&#123; (pe) -&gt; <span class="type">String</span> <span class="keyword">in</span></div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>.ptEqualToStr(pe: pe)</div><div class="line">&#125;).<span class="built_in">filter</span>(&#123; () -&gt; <span class="type">Bool</span> <span class="keyword">in</span></div><div class="line">    <span class="keyword">return</span> vpt.isNormal</div><div class="line">&#125;).once(&#123; (p) <span class="keyword">in</span></div><div class="line">    p.<span class="keyword">left</span>(.height).rightFloat(fl.viewPt.padding.top * <span class="number">2</span>).add()</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>细心的同学会注意到这里多了两个东西，一个是 filter， 一个是 once，这两个函数里的 block 会把一些通用逻辑进行封装。filter 的设置会根据返回决定是否处理后面的 block 或者结构题属性的设置，实现方式如下<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//过滤条件</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">filter</span><span class="params">(<span class="number">_</span> closure: FilterClosure)</span></span> -&gt; <span class="type">PtEqualC</span> &#123;</div><div class="line">    filterBl = closure()</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里的 filterBl 是类的一个属性，后面会根据这个属性来决定动作是否继续执行。比如属性的设置会去判断<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">left</span><span class="params">(<span class="number">_</span> wp:WgPt)</span></span> -&gt; <span class="type">PtEqualC</span> &#123;</div><div class="line">    filterBl ? <span class="keyword">self</span>.pe.<span class="keyword">left</span> = wp : ()</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>once 这个函数也会判断<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">once</span><span class="params">(<span class="number">_</span> closure:<span class="params">(<span class="number">_</span> pc: PtEqualC)</span></span></span> -&gt; <span class="type">Void</span>) -&gt; <span class="type">PtEqualC</span>&#123;</div><div class="line">    <span class="keyword">if</span> filterBl &#123;</div><div class="line">        closure(<span class="keyword">self</span>)</div><div class="line">    &#125;</div><div class="line">    <span class="number">_</span> = resetPe()</div><div class="line">    <span class="number">_</span> = resetFilter()</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>同时 once 这个函数还会重置 filterBl 和重置设置的结构题，一箭三雕，相当于一个完整的设置周期。</p>
+<p>有了这样一套函数，再复杂的设置过程以及逻辑处理都可以很清晰统一的表达出来，下面可以看一个复杂布局比如映射成原生表达式的代码效果：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//UIView *myViewContainer = [UIView new];</span></div><div class="line">lyStr += newEqualStr(vType: .view, id: cId) + <span class="string">"\n"</span></div><div class="line"></div><div class="line"><span class="comment">//属性拼装</span></div><div class="line">lyStr += <span class="type">HTNMt</span>.<span class="type">PtEqualC</span>().accumulatorLine(&#123; (pe) -&gt; <span class="type">String</span> <span class="keyword">in</span></div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>.ptEqualToStr(pe: pe)</div><div class="line">&#125;).once(&#123; (p) <span class="keyword">in</span></div><div class="line">    p.<span class="keyword">left</span>(.top).leftId(cId).end()</div><div class="line">    <span class="keyword">if</span> fl.isFirst &#123;</div><div class="line">        <span class="comment">//myViewContainer.top = 0.0;</span></div><div class="line">        p.rightType(.float).rightFloat(<span class="number">0</span>).add()</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">//myViewContainer.top = lastView.bottom;</span></div><div class="line">        p.rightId(fl.lastId + <span class="string">"Container"</span>).rightType(.pt).<span class="keyword">right</span>(.bottom).add()</div><div class="line">    &#125;</div><div class="line">&#125;).once(&#123; (p) <span class="keyword">in</span></div><div class="line">    <span class="comment">//myViewContainer.left = 0.0;</span></div><div class="line">    p.leftId(cId).<span class="keyword">left</span>(.<span class="keyword">left</span>).rightType(.float).rightFloat(<span class="number">0</span>).add()</div><div class="line">&#125;).once(&#123; (p) <span class="keyword">in</span></div><div class="line">    <span class="comment">//myViewContainer.width = self.myView.width;</span></div><div class="line">    p.leftId(cId).<span class="keyword">left</span>(.width).rightType(.pt).rightIdPrefix(<span class="string">"self."</span>).rightId(id).<span class="keyword">right</span>(.width).add()</div><div class="line">    </div><div class="line">    <span class="comment">//myViewContainer.height = self.myView.height;</span></div><div class="line">    p.<span class="keyword">left</span>(.height).<span class="keyword">right</span>(.height).add()</div><div class="line">&#125;).once(&#123; (p) <span class="keyword">in</span></div><div class="line">    <span class="comment">//self.myView.width -= 16 * 2;</span></div><div class="line">    p.<span class="keyword">left</span>(.width).leftId(id).leftIdPrefix(<span class="string">"self."</span>).rightType(.float).rightFloat(fl.viewPt.padding.<span class="keyword">left</span> * <span class="number">2</span>).equalType(.decrease).add()</div><div class="line">    </div><div class="line">    <span class="comment">//self.myView.height -= 8 * 2;</span></div><div class="line">    p.<span class="keyword">left</span>(.height).rightFloat(fl.viewPt.padding.top * <span class="number">2</span>).add()</div><div class="line">    </div><div class="line">    <span class="comment">//self.myView.top = 8;</span></div><div class="line">    p.equalType(.normal).<span class="keyword">left</span>(.top).rightType(.float).rightFloat(fl.viewPt.padding.top).add()</div><div class="line">    </div><div class="line">    <span class="comment">//属性 verticalAlign 或 horizontalAlign 是 padding 和其它排列时的区别处理</span></div><div class="line">    <span class="keyword">if</span> fl.viewPt.horizontalAlign == .padding &#123;</div><div class="line">        <span class="comment">//self.myView.left = 16;</span></div><div class="line">        p.<span class="keyword">left</span>(.<span class="keyword">left</span>).rightFloat(fl.viewPt.padding.<span class="keyword">left</span>).add()</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">//[self.myView sizeToFit];</span></div><div class="line">        p.add(sizeToFit(elm: <span class="string">"self.<span class="subst">\(id)</span>"</span>))</div><div class="line">        p.<span class="keyword">left</span>(.height).rightType(.pt).rightId(cId).<span class="keyword">right</span>(.height).add()</div><div class="line">        <span class="keyword">switch</span> fl.viewPt.horizontalAlign &#123;</div><div class="line">        <span class="keyword">case</span> .center:</div><div class="line">            p.<span class="keyword">left</span>(<span class="type">HTNMt</span>.<span class="type">WgPt</span>.center).<span class="keyword">right</span>(.center).add()</div><div class="line">        <span class="keyword">case</span> .<span class="keyword">left</span>:</div><div class="line">            p.<span class="keyword">left</span>(.<span class="keyword">left</span>).<span class="keyword">right</span>(.<span class="keyword">left</span>).add()</div><div class="line">        <span class="keyword">case</span> .<span class="keyword">right</span>:</div><div class="line">            p.<span class="keyword">left</span>(.<span class="keyword">right</span>).<span class="keyword">right</span>(.<span class="keyword">right</span>).add()</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            ()</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;).mutiEqualStr</div></pre></td></tr></table></figure></p>
+<p>完整代码在这里：<a href="https://github.com/ming1016/HTN/blob/master/HTNSwift/HTNSwift/H5Editor/H5EditorObjc.swift" target="_blank" rel="external">https://github.com/ming1016/HTN/blob/master/HTNSwift/HTNSwift/H5Editor/H5EditorObjc.swift</a></p>
+<p>PS：最近在一个公司分享时有人希望推荐下 iOS 相关的博客，当时我推荐了孙源的博客，其实孙源也推荐过一个博客，当时由于地址没记住没有说出来，现在推荐给大家：<a href="https://www.mikeash.com/" target="_blank" rel="external">https://www.mikeash.com/</a> 他的twitter：<a href="https://twitter.com/mikeash?lang=en" target="_blank" rel="external">https://twitter.com/mikeash</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="戴铭 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫一扫Starming星光社微信公众号starming-weixin，关注最新文章</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      戴铭
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://ming1016.github.io/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/" title="Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法">http://ming1016.github.io/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/24/why-swift/" rel="next" title="Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)">
+                <i class="fa fa-chevron-left"></i> Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars0.githubusercontent.com/u/251980?v=3&s=460"
+               alt="戴铭" />
+          <p class="site-author-name" itemprop="name">戴铭</p>
+           
+              <p class="site-description motion-element" itemprop="description">不积跬步，无以至千里；不积小流，无以成江海</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ming1016" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/allstarming" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/ming1016" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JSON-数据的处理"><span class="nav-number">2.</span> <span class="nav-text">JSON 数据的处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-JSONDecoder"><span class="nav-number">2.1.</span> <span class="nav-text">使用 JSONDecoder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CodingKey-协议"><span class="nav-number">2.2.</span> <span class="nav-text">CodingKey 协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSONDecoder-的-keyDecodingStrategy-属性"><span class="nav-number">2.3.</span> <span class="nav-text">JSONDecoder 的 keyDecodingStrategy 属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#枚举定义-block"><span class="nav-number">2.4.</span> <span class="nav-text">枚举定义 block</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#inout"><span class="nav-number">2.5.</span> <span class="nav-text">inout</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络请求"><span class="nav-number">3.</span> <span class="nav-text">网络请求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#泛型协议式编程"><span class="nav-number">4.</span> <span class="nav-text">泛型协议式编程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数式思想编程"><span class="nav-number">5.</span> <span class="nav-text">函数式思想编程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">戴铭</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
