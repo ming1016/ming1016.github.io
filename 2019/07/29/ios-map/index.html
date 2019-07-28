@@ -1,0 +1,930 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS,Swift," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="星光社 - 戴铭的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/uploads/logo.png?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="43篇 《iOS开发高手课》已完成，后面会对内容进行迭代，丰富下内容和配图。最近画了张 iOS 开发全景舆图，还有相关一些资料整理，方便我平时开发 App 时参看。舆图如下：  接下来，我按照 iOS 开发地图的顺序，和你推荐一些相关的学习资料。 实例学习 iOS 开发最好是从学习一个完整的 App 入手，GitHub上的Open-Source iOS Apps项目，收录了大量开源的完整 App">
+<meta name="keywords" content="iOS,Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 开发舆图">
+<meta property="og:url" content="http://ming1016.github.io/2019/07/29/ios-map/index.html">
+<meta property="og:site_name" content="星光社 - 戴铭的博客">
+<meta property="og:description" content="43篇 《iOS开发高手课》已完成，后面会对内容进行迭代，丰富下内容和配图。最近画了张 iOS 开发全景舆图，还有相关一些资料整理，方便我平时开发 App 时参看。舆图如下：  接下来，我按照 iOS 开发地图的顺序，和你推荐一些相关的学习资料。 实例学习 iOS 开发最好是从学习一个完整的 App 入手，GitHub上的Open-Source iOS Apps项目，收录了大量开源的完整 App">
+<meta property="og:image" content="http://ming1016.github.io/uploads/ios-map/1.png">
+<meta property="og:image" content="http://ming1016.github.io/uploads/ios-map/2.png">
+<meta property="og:image" content="http://ming1016.github.io/uploads/ios-map/3.png">
+<meta property="og:image" content="http://ming1016.github.io/uploads/ios-map/4.png">
+<meta property="og:image" content="http://ming1016.github.io/uploads/ios-map/5.png">
+<meta property="og:image" content="http://ming1016.github.io/uploads/ios-map/6.png">
+<meta property="og:updated_time" content="2019-07-28T16:52:44.082Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 开发舆图">
+<meta name="twitter:description" content="43篇 《iOS开发高手课》已完成，后面会对内容进行迭代，丰富下内容和配图。最近画了张 iOS 开发全景舆图，还有相关一些资料整理，方便我平时开发 App 时参看。舆图如下：  接下来，我按照 iOS 开发地图的顺序，和你推荐一些相关的学习资料。 实例学习 iOS 开发最好是从学习一个完整的 App 入手，GitHub上的Open-Source iOS Apps项目，收录了大量开源的完整 App">
+<meta name="twitter:image" content="http://ming1016.github.io/uploads/ios-map/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ming1016.github.io/2019/07/29/ios-map/"/>
+
+
+
+
+
+  <title>iOS 开发舆图 | 星光社 - 戴铭的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">星光社 - 戴铭的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ming1016.github.io/2019/07/29/ios-map/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="戴铭">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/251980?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星光社 - 戴铭的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS 开发舆图</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-29T12:49:06+08:00">
+                2019-07-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>43篇 <a href="https://time.geekbang.org/column/intro/161" target="_blank" rel="external">《iOS开发高手课》</a>已完成，后面会对内容进行迭代，丰富下内容和配图。最近画了张 iOS 开发全景舆图，还有相关一些资料整理，方便我平时开发 App 时参看。舆图如下：</p>
+<p><img src="/uploads/ios-map/1.png" alt=""><br><img src="/uploads/ios-map/2.png" alt=""><br><img src="/uploads/ios-map/3.png" alt=""><br><img src="/uploads/ios-map/4.png" alt=""><br><img src="/uploads/ios-map/5.png" alt=""><br><img src="/uploads/ios-map/6.png" alt=""></p>
+<p>接下来，我按照 iOS 开发地图的顺序，和你推荐一些相关的学习资料。</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>学习 iOS 开发最好是从学习一个完整的 App 入手，GitHub上的<a href="https://github.com/dkhamsing/open-source-ios-apps" target="_blank" rel="external">Open-Source iOS Apps</a><br>项目，收录了大量开源的完整 App 例子，比如 <a href="https://github.com/Dimillian/SwiftHN" target="_blank" rel="external">Hacker News Reader</a> 等已经上架了 App Store 的应用程序，所有例子都会标注是否上架 App Store的、所使用开发语言、推荐等级等信息，有利于进行选择学习。</p>
+<p>开发一个完整的 App 也有最佳实践，这里有份<a href="https://github.com/futurice/ios-good-practices" target="_blank" rel="external">最佳实践</a>可以参考。</p>
+<p>下面两个教程网站都会手把手通过实例教你怎么动手学习 iOS 各个知识点。</p>
+<ol>
+<li><a href="https://www.appcoda.com/" target="_blank" rel="external">AppCoda</a></li>
+<li><a href="https://www.raywenderlich.com/library" target="_blank" rel="external">Raywenderlich</a></li>
+</ol>
+<h2 id="iOS-基础"><a href="#iOS-基础" class="headerlink" title="iOS 基础"></a>iOS 基础</h2><p>完整开发了多个 App 后，为了更好、更快的掌握开发，你就会有需要了解更多 iOS 基础知识的诉求，包括列表的优化、高效界面布局开发、图表图形、图片处理、动画多媒体等等。</p>
+<p>图形渲染 Metal 框架的学习可以参看下面四篇文章</p>
+<ol>
+<li><a href="https://objccn.io/issue-18-2/" target="_blank" rel="external">Metal</a></li>
+<li><a href="https://juejin.im/post/5a225ffcf265da432153daa4" target="_blank" rel="external">基于 Metal 的 ARKit 使用指南（上）</a></li>
+<li><a href="https://juejin.im/post/59bb2a99f265da0650750e56" target="_blank" rel="external">基于 Metal 的 ARKit 使用指南（下）</a></li>
+<li><a href="https://xiaozhuanlan.com/topic/6927418053" target="_blank" rel="external">基于 Metal 的现代渲染技术</a></li>
+</ol>
+<h2 id="iOS-系统"><a href="#iOS-系统" class="headerlink" title="iOS 系统"></a>iOS 系统</h2><p>iOS 基础学习到一定程度就需要了解 App 是如何在系统中工作的，系统提供了什么基础功能，提供了哪些界面控件等等。</p>
+<p>扩展知识可以阅读下面四本书：</p>
+<ol>
+<li>《深入解析Mac OS X &amp; iOS操作系统》</li>
+<li>《现代操作系统》</li>
+<li>《深入理解计算机系统》</li>
+<li>《程序员的自我修养》</li>
+</ol>
+<h2 id="编程语言"><a href="#编程语言" class="headerlink" title="编程语言"></a>编程语言</h2><p>编程语言的学习可以参考官方手册，对于 Runtime 的扩展文章阅读：</p>
+<ol>
+<li><a href="http://yulingtianxia.com/blog/2016/06/15/Objective-C-Message-Sending-and-Forwarding/" target="_blank" rel="external">Objective-C 消息发送与转发机制原理</a></li>
+<li><a href="https://halfrost.com/objc_runtime_isa_class/" target="_blank" rel="external">神经病院Objective-C Runtime入院第一天——isa和Class</a>（ <a href="https://halfrost.com/objc_runtime_isa_class/" target="_blank" rel="external">https://halfrost.com/objc_runtime_isa_class/</a> ）</li>
+<li><a href="https://halfrost.com/objc_runtime_objc_msgsend/" target="_blank" rel="external">神经病院 Objective-C Runtime 住院第二天——消息发送与转发</a></li>
+<li><a href="https://halfrost.com/how_to_use_runtime/" target="_blank" rel="external">神经病院 Objective-C Runtime 出院第三天——如何正确使用</a></li>
+</ol>
+<p>编程语言 Swift 推荐阅读书籍是《Swift 进阶》、《函数式Swift》。大量Swift Playground 可以了解 Swift 编程语言的特性，这里有份整理 <a href="https://github.com/uraimo/Awesome-Swift-Playgrounds" target="_blank" rel="external">GitHub - uraimo/Awesome-Swift-Playgrounds: A List of Awesome Swift Playgrounds</a> 。这份资料汇总了 SwiftUI 的资料  <a href="https://github.com/Juanpe/About-SwiftUI" target="_blank" rel="external">GitHub - Juanpe/About-SwiftUI: Gathering all info published, both by Apple and by others, about new framework SwiftUI.</a> 。这里有本在线书详细讲解了 Combine<br> <a href="https://heckj.github.io/swiftui-notes/" target="_blank" rel="external">《Using Combine》</a> 。</p>
+<p>架构相关扩展阅读可以参看  <a href="https://kangzubin.com/ios-component-articles/" target="_blank" rel="external">iOS 组件化相关讨论文章汇总 | KANGZUBIN</a> 。</p>
+<p>设计模式推荐书籍如下：</p>
+<ul>
+<li>《设计模式 可复用面向对象软件的基础》</li>
+<li>《Objective-C 编程之道：iOS设计模式解析》</li>
+<li>《Head First 设计模式》</li>
+<li>《大话设计模式》</li>
+</ul>
+<h2 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h2><p>开发的代码多了，开发效率和开发质量的提升就越来越离不开开发工具了。</p>
+<p>iOS 开发工具 Xcode、Instrument 的使用学习，推荐看苹果开发者大会 WWDC 的 Session 视频。</p>
+<p>扩展阅读文章推荐：</p>
+<ol>
+<li><a href="http://www.aosabook.org/en/llvm.html" target="_blank" rel="external">The Architecture of Open Source Application</a></li>
+<li><a href="https://manu343726.github.io/2017-02-11-writing-ast-matchers-for-libclang/" target="_blank" rel="external">Writing AST matchers for libclang</a></li>
+<li><a href="http://yulingtianxia.com/blog/2019/01/27/MVVM-Rules-for-OCLint/" target="_blank" rel="external">使用 OCLint 自定义 MVVM 规则</a></li>
+<li><a href="https://mp.weixin.qq.com/s/vCzUNHyLfjQKF23Biq9z-g" target="_blank" rel="external">iOS 增量代码覆盖率检测实践</a></li>
+</ol>
+<p>阅读书籍推荐：</p>
+<ol>
+<li>《Getting Started with LLVM Core Libraries》</li>
+<li>《Modern Compiler Implementation in C》</li>
+<li>《Compiler》</li>
+</ol>
+<h2 id="开发完成"><a href="#开发完成" class="headerlink" title="开发完成"></a>开发完成</h2><p>当开发完成后就需要进行调试、持续化交付、测试。</p>
+<p>LLDB 调试推荐先看<a href="https://developer.apple.com/library/archive/documentation/IDEs/Conceptual/gdb_to_lldb_transition_guide/document/Introduction.html" target="_blank" rel="external">官方指南</a>，再看这篇<a href="https://objccn.io/issue-19-2/" target="_blank" rel="external">“与调试器共舞 - LLDB 的华尔兹”</a>。为了更好的调试体验扩展 LLDB 可以参看这篇文章<a href="https://pspdfkit.com/blog/2018/how-to-extend-lldb-to-provide-a-better-debugging-experience/" target="_blank" rel="external">“How to Extend LLDB to Provide a Better Debugging Experience”</a>。</p>
+<p>另外，这个<a href="https://github.com/MattPD/cpplinks/blob/master/debugging.md" target="_blank" rel="external">网址</a>收录了各种调试资料。</p>
+<p>持续化交付可以参看各大公司的实践，比如：</p>
+<ol>
+<li><a href="https://zhuanlan.zhihu.com/p/69526642" target="_blank" rel="external">知乎 iOS 客户端工程化工具 - Venom</a></li>
+<li><a href="https://mp.weixin.qq.com/s/Oa52PvsHw8wS-OvYb3ArZg" target="_blank" rel="external">百度App iOS工程化实践: EasyBox破冰之旅</a></li>
+<li><a href="https://mp.weixin.qq.com/s/6WAq_fM0znjO5eY12vjxFw" target="_blank" rel="external">如何实现“持续集成”？淘系闲鱼把研发效率翻了个翻</a></li>
+</ol>
+<p>测试扩展阅读推荐文章如下：</p>
+<ol>
+<li><a href="https://onevcat.com/2014/02/ios-test-with-kiwi/" target="_blank" rel="external">TDD的iOS开发初步以及Kiwi使用入门</a></li>
+<li><a href="https://onevcat.com/2014/05/kiwi-mock-stub-test/" target="_blank" rel="external">Kiwi 使用进阶 Mock, Stub, 参数捕获和异步测试</a></li>
+<li><a href="https://nshipster.com/unit-testing/" target="_blank" rel="external">Unit Testing</a></li>
+<li><a href="https://tech.meituan.com/2017/06/23/mobile-app-automation.html" target="_blank" rel="external">客户端自动化测试研究</a></li>
+<li><a href="https://mp.weixin.qq.com/s/5rt-uxApK-MeKYn0eKLVcQ?from_safari=1&amp;scene=40#wechat_redirect" target="_blank" rel="external">PICK一下，iOS自动化测试新方案出道</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzIzMzk2NDQyMw==&amp;mid=2247488757&amp;idx=1&amp;sn=22465225abd30e56181ad68cdcb60e88&amp;chksm=e8fcc21ddf8b4b0bc97126bb41d95ab8df24c9db20eb9b6efd36ba969ce2e1df000b702ef639&amp;mpshare=1&amp;scene=1&amp;srcid=0221Rpn12CYSXPIE0D1ndrNi&amp;pass_ticket=QDFhyHIsSuU8LkeDk3P%2Bsli%2FL%2BwfD5Y55dNIk2PcCwbawmrDVExKHNGlflrh0dhL#rd" target="_blank" rel="external">爱奇艺基于AI的移动端自动化测试框架的设计</a></li>
+</ol>
+<h2 id="上线后"><a href="#上线后" class="headerlink" title="上线后"></a>上线后</h2><p>开发完成后，做完测试，就可以上线了。上线后还需要做大量监控保证用户使用 App 的高可用性和好体验。动态化保证发版灵活和问题的快速修复。</p>
+<p>推荐的扩展阅读如下：</p>
+<ol>
+<li><a href="https://everettjf.github.io/2018/08/06/ios-launch-performance-collection/" target="_blank" rel="external">iOS应用启动性能优化资料</a></li>
+<li><a href="http://www.zoomfeng.com/blog/launch-time.html" target="_blank" rel="external">iOS启动时间优化</a></li>
+<li><a href="https://developer.apple.com/library/archive/technotes/tn2151/_index.html" target="_blank" rel="external">Understanding and Analyzing Application Crash Reports</a></li>
+<li><a href="http://www.zoomfeng.com/blog/plcrashreporter-1.html" target="_blank" rel="external">PLCrashreporter源码分析其一</a></li>
+<li><a href="http://www.zoomfeng.com/blog/plcrashreporter-2.html" target="_blank" rel="external">PLCrashreporter源码分析其二</a></li>
+<li><a href="https://inessential.com/hownottocrash" target="_blank" rel="external">How Not to Crash</a></li>
+<li><a href="https://mp.weixin.qq.com/s/XM4bhncHzRFB7zMJa-g2-Q" target="_blank" rel="external">Logan：美团点评的开源移动端基础日志库</a></li>
+<li><a href="http://yulingtianxia.com/blog/2018/02/28/Hook-Objective-C-Block-with-Libffi/" target="_blank" rel="external">Hook Objective-C Block with Libffi</a></li>
+<li><a href="https://www.fireeye.com/blog/threat-research/2016/01/hot_or_not_the_bene.html" target="_blank" rel="external">Hot or Not? The Benefits and Risks of iOS Remote Hot Patching</a></li>
+</ol>
+<h2 id="计算机基础"><a href="#计算机基础" class="headerlink" title="计算机基础"></a>计算机基础</h2><p>经历多次 App 开发到上线后的过程，碰到问题，解决问题，越发觉得计算机基础的重要性。牢固的基础能有利于碰到问题时快速定位和解决。</p>
+<p>推荐扩展阅读文章和资源如下：</p>
+<ol>
+<li><a href="https://github.com/raywenderlich/swift-algorithm-club" target="_blank" rel="external">Algorithms and data structures in Swift, with explanations!</a></li>
+<li><a href="https://developer.apple.com/videos/play/wwdc2018/416/" target="_blank" rel="external">iOS Memory Deep Dive</a></li>
+<li><a href="https://developer.apple.com/videos/play/wwdc2012/242/" target="_blank" rel="external">iOS App Performance: Memory</a></li>
+<li><a href="http://newosxbook.com/articles/MemoryPressure.html" target="_blank" rel="external">No pressure, Mon! Handling low memory conditions in iOS and Mavericks</a></li>
+<li><a href="https://swift.gg/2017/09/07/friday-qa-2015-09-04-lets-build-dispatch_queue/" target="_blank" rel="external">从零构建 Dispatch Queue</a></li>
+<li><a href="http://yulingtianxia.com/blog/2017/08/28/Threading-Programming-Guide-1/" target="_blank" rel="external">Threading Programming Guide(1)</a></li>
+<li><a href="http://yulingtianxia.com/blog/2017/09/17/Threading-Programming-Guide-2/" target="_blank" rel="external">Threading Programming Guide(2)</a></li>
+<li><a href="http://yulingtianxia.com/blog/2017/10/08/Threading-Programming-Guide-3/" target="_blank" rel="external">Threading Programming Guide(3)</a></li>
+<li><a href="https://swift.gg/2018/06/07/friday-qa-2015-02-06-locks-thread-safety-and-swift/" target="_blank" rel="external">Swift 中的锁和线程安全</a></li>
+<li><a href="http://satanwoo.github.io/2016/10/23/multithread-dangling-pointer/" target="_blank" rel="external">浅谈一种解决多线程野指针的新思路</a></li>
+<li><a href="https://bestswifter.com/deep-gcd/" target="_blank" rel="external">深入理解 GCD</a></li>
+<li><a href="https://xiaozhuanlan.com/Grand-Central-Dispatch" target="_blank" rel="external">深入浅出GCD</a></li>
+<li><a href="http://mrpeak.cn/blog/ios-runloop/" target="_blank" rel="external">解密 Runloop</a></li>
+<li><a href="https://mp.weixin.qq.com/s/gPZnR7sF_22KSsqepohgNg" target="_blank" rel="external">Matrix-iOS 卡顿监控</a></li>
+</ol>
+<h2 id="通用知识"><a href="#通用知识" class="headerlink" title="通用知识"></a>通用知识</h2><p>iOS 开发中还有很多和其他计算机领域相通的知识，比如渲染、数据库、网络等。</p>
+<p>推荐扩展阅读文章有：</p>
+<ol>
+<li><a href="https://lision.me/ios_rendering_process/" target="_blank" rel="external">深入理解 iOS Rendering Process</a></li>
+<li><a href="https://objccn.io/issue-3-1/" target="_blank" rel="external">绘制像素到屏幕上</a></li>
+<li><a href="https://swift.gg/2017/04/25/how-do-I-build-a-network-layer/" target="_blank" rel="external">手把手教你封装网络层</a></li>
+<li><a href="https://github.com/Ikiga/IkigaJSON" target="_blank" rel="external">A high performance JSON library in Swift</a></li>
+</ol>
+<p>网络相关文章推荐如下：</p>
+<ol>
+<li><a href="https://mp.weixin.qq.com/s/BIfya6eVaWZW9ZEVz8RRcg" target="_blank" rel="external">百度App网络深度优化系列《三》弱网优化</a> </li>
+<li><a href="http://zhoulingyu.com/2018/05/30/ios-network-traffic/" target="_blank" rel="external">iOS 流量监控分析 | 周小鱼のCODE_HOME</a> </li>
+<li><a href="https://github.com/bestswifter/blog/blob/master/articles/tcp-ip-1.md" target="_blank" rel="external">TCP/IP（一）：数据链路层</a> </li>
+<li><a href="https://github.com/bestswifter/blog/blob/master/articles/tcp-ip-2.md" target="_blank" rel="external">TCP/IP（二）：IP 协议</a> </li>
+<li><a href="https://github.com/bestswifter/blog/blob/master/articles/tcp-ip-3.md" target="_blank" rel="external">TCP/IP（三）：IP 协议相关技术</a> </li>
+<li><a href="https://github.com/bestswifter/blog/blob/master/articles/tcp-ip-4.md" target="_blank" rel="external">TCP/IP（四）：TCP 与 UDP 协议简介</a> </li>
+<li><a href="https://github.com/bestswifter/blog/blob/master/articles/tcp-ip-5.md" target="_blank" rel="external">TCP/IP（五）：TCP 协议详解</a> </li>
+<li><a href="https://github.com/bestswifter/blog/blob/master/articles/tcp-ip-6.md" target="_blank" rel="external">TCP/IP（六）：HTTP 与 HTTPS 简介</a> </li>
+<li><a href="http://chuansong.me/n/2577464" target="_blank" rel="external">携程App的网络性能优化实践</a> </li>
+<li><a href="http://tech.meituan.com/SharkSDK.html" target="_blank" rel="external">美团点评移动网络优化实践</a> </li>
+<li><a href="http://course.tuicool.com/course/details/58058f15a826b5f9e86678fb" target="_blank" rel="external">万人低头时代，支付宝APP无线网络性能该如何保障</a> </li>
+<li><a href="https://mp.weixin.qq.com/s/qD9-Xj0CEil0Wtwq5eiPTg" target="_blank" rel="external">QQ空间在生产环境使用QUIC协议的经验</a> </li>
+<li><a href="https://mp.weixin.qq.com/s/mRcz8o0usoqm_cEoGg9btg" target="_blank" rel="external">美图HTTPS优化探索与实践</a> </li>
+<li><a href="https://github.com/bestswifter/blog/blob/master/articles/https-9-questions.md" target="_blank" rel="external">九个问题从入门到熟悉 HTTPS</a> </li>
+<li><a href="https://github.com/bestswifter/blog/blob/master/articles/quic.md" target="_blank" rel="external">试图取代 TCP 的 QUIC 协议到底是什么</a> </li>
+<li><a href="https://github.com/bestswifter/blog/blob/master/articles/http-encoding.md" target="_blank" rel="external">小谈 HTTP 中的编码</a> </li>
+<li><a href="https://github.com/bestswifter/blog/blob/master/articles/wireshark.md" target="_blank" rel="external">利用 WireShark 深入调试网络请求</a> </li>
+<li><a href="https://juejin.im/post/59caf86ef265da06484467e5" target="_blank" rel="external">关于 iOS HTTP2.0 的一次学习实践 - 掘金</a> </li>
+<li><a href="http://blog.cnbang.net/tech/3531/" target="_blank" rel="external">移动 APP 网络优化概述 « bang’s blog</a> </li>
+<li><a href="http://wereadteam.github.io/2016/02/25/GYHttpMock/" target="_blank" rel="external">GYHttpMock：iOS HTTP请求模拟工具 | WeRead团队博客</a> </li>
+<li><a href="https://knightsj.github.io/2017/07/18/YTKNetwork%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" target="_blank" rel="external">YTKNetwork源码解析 | J<em>Knight</em></a> </li>
+<li><a href="https://github.com/lefex/LefexWork/blob/master/blog/iOS/iOS%20%E9%9C%80%E8%A6%81%E6%8E%8C%E6%8F%A1%E7%9A%84%20HTTP%20%E7%9F%A5%E8%AF%86.md" target="_blank" rel="external">LefexWork/iOS 需要掌握的 HTTP 知识.md at master · lefex/LefexWork · GitHub</a> </li>
+<li><a href="https://github.com/lefex/LefexWork/blob/master/blog/iOS/%E4%BB%A5%E4%B8%8D%E4%B8%80%E6%A0%B7%E7%9A%84%E6%96%B9%E5%BC%8F%E7%90%86%E8%A7%A3SDWebImage.md" target="_blank" rel="external">LefexWork/以不一样的方式理解SDWebImage.md at master · lefex/LefexWork · GitHub</a> </li>
+<li><a href="https://blog.csdn.net/Hello_Hwc/article/details/72853786" target="_blank" rel="external">Alamofire的设计之道 - Leo的专栏 - CSDN博客</a> </li>
+</ol>
+<h2 id="专有知识"><a href="#专有知识" class="headerlink" title="专有知识"></a>专有知识</h2><p>专有知识我就不展开说了，参考上面舆图中标注的知识点去检索你需要的就可以了。</p>
+<h2 id="视野"><a href="#视野" class="headerlink" title="视野"></a>视野</h2><p>推荐手册：</p>
+<ol>
+<li><a href="https://developer.apple.com/documentation/" target="_blank" rel="external">Apple Developer Documentation</a></li>
+<li><a href="https://swiftgg.gitbook.io/swift/huan-ying-shi-yong-swift" target="_blank" rel="external">Swift 开发手册</a></li>
+</ol>
+<p>开源控件：</p>
+<ol>
+<li><a href="https://iosexample.com" target="_blank" rel="external">iOS Example</a></li>
+<li><a href="https://www.cocoacontrols.com" target="_blank" rel="external">Cocoa Controls</a></li>
+<li><a href="https://github.com/matteocrippa/awesome-swift" target="_blank" rel="external">awesome-swift</a></li>
+<li><a href="https://xiaozhuanlan.com/topic/5796328014" target="_blank" rel="external">Swift 开源项目精选 - 应用架构角度</a></li>
+<li><a href="https://xiaozhuanlan.com/topic/5271086934" target="_blank" rel="external">Swift 开源项目精选导图</a></li>
+<li><a href="https://github.com/ipader/SwiftGuide" target="_blank" rel="external">SwiftGuide</a></li>
+<li><a href="https://xiaozhuanlan.com/topic/7314260859" target="_blank" rel="external">Swift 开源项目团队介绍</a></li>
+<li><a href="https://xiaozhuanlan.com/topic/9687124530" target="_blank" rel="external">Swift 知名开发者介绍</a></li>
+</ol>
+<p>视频推荐  <a href="https://talk.objc.io/" target="_blank" rel="external">Swift Talk - objc.io</a> 。</p>
+<p>这里的 iOS 博客都很值得订阅，<a href="https://github.com/awesome-tips/blogs" target="_blank" rel="external">GitHub - awesome-tips/blogs: 行业优质博客汇总</a>。</p>
+<p>其他资源参看上面的地图。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="戴铭 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫一扫Starming星光社微信公众号starming-weixin，关注最新文章</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      戴铭
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://ming1016.github.io/2019/07/29/ios-map/" title="iOS 开发舆图">http://ming1016.github.io/2019/07/29/ios-map/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/19/white-dragon-class/" rel="next" title="白龙班">
+                <i class="fa fa-chevron-left"></i> 白龙班
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars0.githubusercontent.com/u/251980?v=3&s=460"
+               alt="戴铭" />
+          <p class="site-author-name" itemprop="name">戴铭</p>
+           
+              <p class="site-description motion-element" itemprop="description">不积跬步，无以至千里；不积小流，无以成江海</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ming1016" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/allstarming" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/ming1016" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">1.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS-基础"><span class="nav-number">2.</span> <span class="nav-text">iOS 基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS-系统"><span class="nav-number">3.</span> <span class="nav-text">iOS 系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编程语言"><span class="nav-number">4.</span> <span class="nav-text">编程语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开发工具"><span class="nav-number">5.</span> <span class="nav-text">开发工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开发完成"><span class="nav-number">6.</span> <span class="nav-text">开发完成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上线后"><span class="nav-number">7.</span> <span class="nav-text">上线后</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机基础"><span class="nav-number">8.</span> <span class="nav-text">计算机基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用知识"><span class="nav-number">9.</span> <span class="nav-text">通用知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#专有知识"><span class="nav-number">10.</span> <span class="nav-text">专有知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#视野"><span class="nav-number">11.</span> <span class="nav-text">视野</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">戴铭</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
