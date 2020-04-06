@@ -54,7 +54,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="星光社 - 戴铭的博客" type="application/atom+xml" />
+  <link rel="alternate" href="/atom.xml" title="戴铭的博客 - 星光社" type="application/atom+xml" />
 
 
 
@@ -66,13 +66,13 @@
 
 
 
-<meta name="description" content="前言启动优化一役后，超预期将所负责的 App 双端启动的耗时都降低了65%以上，iOS 在iPhone7上速度达到了400毫秒以内。就像产品们用后说的，快到不习惯。由于 App 日活用户过亿，算一下每天为用户省下的时间，还是蛮有成就感的  启动阶段性能多维度分析要优化，先要做到的是对启动阶段各个性能纬度做分析，包括主线程耗时、CPU、内存、I/O、网络。这样才能够更加全面的掌握启动阶段的开销，找出">
+<meta name="description" content="前言启动优化一役后，超预期将所负责的 App 双端启动的耗时都降低了65%以上，iOS 在iPhone7上速度达到了400毫秒以内。就像产品们用后说的，快到不习惯。由于 App 日活用户过亿，算一下每天为用户省下的时间，还是蛮有成就感的。  启动阶段性能多维度分析要优化，先要做到的是对启动阶段各个性能纬度做分析，包括主线程耗时、CPU、内存、I/O、网络。这样才能够更加全面的掌握启动阶段的开销，找">
 <meta name="keywords" content="Swift,iOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何对 iOS 启动阶段耗时进行分析">
 <meta property="og:url" content="http://ming1016.github.io/2019/12/07/how-to-analyze-startup-time-cost-in-ios/index.html">
-<meta property="og:site_name" content="星光社 - 戴铭的博客">
-<meta property="og:description" content="前言启动优化一役后，超预期将所负责的 App 双端启动的耗时都降低了65%以上，iOS 在iPhone7上速度达到了400毫秒以内。就像产品们用后说的，快到不习惯。由于 App 日活用户过亿，算一下每天为用户省下的时间，还是蛮有成就感的  启动阶段性能多维度分析要优化，先要做到的是对启动阶段各个性能纬度做分析，包括主线程耗时、CPU、内存、I/O、网络。这样才能够更加全面的掌握启动阶段的开销，找出">
+<meta property="og:site_name" content="戴铭的博客 - 星光社">
+<meta property="og:description" content="前言启动优化一役后，超预期将所负责的 App 双端启动的耗时都降低了65%以上，iOS 在iPhone7上速度达到了400毫秒以内。就像产品们用后说的，快到不习惯。由于 App 日活用户过亿，算一下每天为用户省下的时间，还是蛮有成就感的。  启动阶段性能多维度分析要优化，先要做到的是对启动阶段各个性能纬度做分析，包括主线程耗时、CPU、内存、I/O、网络。这样才能够更加全面的掌握启动阶段的开销，找">
 <meta property="og:image" content="http://ming1016.github.io/uploads/how-to-analyze-startup-time-cost-in-ios/01.jpeg">
 <meta property="og:image" content="http://ming1016.github.io/uploads/how-to-analyze-startup-time-cost-in-ios/02.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/how-to-analyze-startup-time-cost-in-ios/03.png">
@@ -84,10 +84,10 @@
 <meta property="og:image" content="http://ming1016.github.io/uploads/how-to-analyze-startup-time-cost-in-ios/09.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/how-to-analyze-startup-time-cost-in-ios/10.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/how-to-analyze-startup-time-cost-in-ios/11.png">
-<meta property="og:updated_time" content="2019-12-07T01:49:25.000Z">
+<meta property="og:updated_time" content="2020-04-06T12:39:42.836Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何对 iOS 启动阶段耗时进行分析">
-<meta name="twitter:description" content="前言启动优化一役后，超预期将所负责的 App 双端启动的耗时都降低了65%以上，iOS 在iPhone7上速度达到了400毫秒以内。就像产品们用后说的，快到不习惯。由于 App 日活用户过亿，算一下每天为用户省下的时间，还是蛮有成就感的  启动阶段性能多维度分析要优化，先要做到的是对启动阶段各个性能纬度做分析，包括主线程耗时、CPU、内存、I/O、网络。这样才能够更加全面的掌握启动阶段的开销，找出">
+<meta name="twitter:description" content="前言启动优化一役后，超预期将所负责的 App 双端启动的耗时都降低了65%以上，iOS 在iPhone7上速度达到了400毫秒以内。就像产品们用后说的，快到不习惯。由于 App 日活用户过亿，算一下每天为用户省下的时间，还是蛮有成就感的。  启动阶段性能多维度分析要优化，先要做到的是对启动阶段各个性能纬度做分析，包括主线程耗时、CPU、内存、I/O、网络。这样才能够更加全面的掌握启动阶段的开销，找">
 <meta name="twitter:image" content="http://ming1016.github.io/uploads/how-to-analyze-startup-time-cost-in-ios/01.jpeg">
 
 
@@ -122,7 +122,7 @@
 
 
 
-  <title>如何对 iOS 启动阶段耗时进行分析 | 星光社 - 戴铭的博客</title>
+  <title>如何对 iOS 启动阶段耗时进行分析 | 戴铭的博客 - 星光社</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -159,7 +159,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">星光社 - 戴铭的博客</span>
+        <span class="site-title">戴铭的博客 - 星光社</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -251,7 +251,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="星光社 - 戴铭的博客">
+      <meta itemprop="name" content="戴铭的博客 - 星光社">
     </span>
 
     
@@ -346,7 +346,7 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>启动优化一役后，超预期将所负责的 App 双端启动的耗时都降低了65%以上，iOS 在iPhone7上速度达到了400毫秒以内。就像产品们用后说的，快到不习惯。由于 App 日活用户过亿，算一下每天为用户省下的时间，还是蛮有成就感的</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>启动优化一役后，超预期将所负责的 App 双端启动的耗时都降低了65%以上，iOS 在iPhone7上速度达到了400毫秒以内。就像产品们用后说的，快到不习惯。由于 App 日活用户过亿，算一下每天为用户省下的时间，还是蛮有成就感的。</p>
 <p><img src="/uploads/how-to-analyze-startup-time-cost-in-ios/01.jpeg" alt=""></p>
 <h2 id="启动阶段性能多维度分析"><a href="#启动阶段性能多维度分析" class="headerlink" title="启动阶段性能多维度分析"></a>启动阶段性能多维度分析</h2><p>要优化，先要做到的是对启动阶段各个性能纬度做分析，包括主线程耗时、CPU、内存、I/O、网络。这样才能够更加全面的掌握启动阶段的开销，找出不合理的方法调用。启动越快，更多的方法调用就应该做成按需执行，将启动压力分摊，只留下那些启动后方法都会依赖的方法和库的初始化，比如网络库、Crash 库等。而剩下那些需要预加载的功能可以放到启动阶段后再执行。</p>
 <p>启动有哪几种类型，启动有哪些阶段呢？</p>
@@ -358,11 +358,22 @@
 </ul>
 <p>分析阶段一般都是针对 Cold 类型进行分析，目的就是要让测试环境稳定。为了稳定测试环境有时还需要找些稳定的机型，对于 iOS 来说iPhone7性能中等，稳定性也不错就很适合，Android 的 Vivo 系列也相对稳定，华为和小米系列数据波动就比较大。除了机型外控制测试机温度也很重要，一旦温度过高系统还会降频执行影响测试数据。有时候还会置飞行模式采用 Mock 网络请求的方式来减少不稳定的网络影响测试数据。最好时重启后退 iCloud 账号，放置一段时间再测，更加准确些。</p>
 <p>了解启动的阶段目的就是聚焦范围，从用户体验上来确定哪个阶段要快，以便能够让用户可视和响应用户操作的时间更快。</p>
-<p>简单来说 iOS 启动过程是：</p>
+<p>简单来说 iOS 启动分为加载 Mach-O 和运行时初始化过程，加载 Mach-O 会先判断加载的文件是不是 Mach-O，通过文件第一个字节，也叫魔数来判断，当是下面四种时可以判定是 Mach-O 文件：</p>
 <ul>
-<li>根据 info.plist 里的设置加载闪屏，建立沙箱，对权限进行检查等</li>
-<li>加载 Mach-O</li>
-<li>执行 attribute 的 constructor 函数</li>
+<li>0xfeedface 对应的 loader.h 里的宏是 MH_MAGIC</li>
+<li>0xfeedfact 宏是 MH_MAGIC_64</li>
+<li>NXSwapInt(MH_MAGIC) 宏 MH_GIGAM</li>
+<li>NXSwapInt(MH_MAGIC_64) 宏 MH_GIGAM_64</li>
+</ul>
+<p>Mach-O 分为主要分为 中间对象文件（MH_OBJECT）、可执行二进制（MH_EXECUTE）、VM 共享库文件（MH_FVMLIB）、Crash 产生的 Core 文件（MH_CORE）、preload（MH_PRELOAD）、动态共享库（MH_DYLIB）、动态链接器（MH_DYLINKER）、静态链接文件（MH_DYLIB_STUB）、符号文件和调试信息（MH_DSYM）这几种。确定是 Mach-O 后，内核会 fork 一个进程，execve 开始加载。检查 Mach-O Header。随后加载 dyld 和程序到 Load Command 地址空间。通过 dyld_stub_binder 开始执行 dyld，dyld 会进行 rebase、binding、lazy binding、导出符号，也可以通过 DYLD_INSERT_LIBRARIES 进行 hook。dyld_stub_binder 给偏移量到 dyld 解释特殊字节码 Segment 中，也就是真实地址，把真实地址写入到 la_symbol_ptr 里，跳转时通过 stub 的 jump 指令跳转到真实地址。 dyld 加载所有依赖库，将动态库导出的 trie 结构符号执行符号绑定，也就是 non lazybinding，绑定解析其他模块功能和数据引用过程，就是导入符号。</p>
+<p>Trie 也叫数字树或前缀树，是一种搜索树。查找复杂度 O(m)，m 是字符串的长度。和散列表相比，散列最差复杂度是 O(N)，一般都是 O(1)，用 O(m)时间评估 hash。散列缺点是会分配一大块内存，内容越多所占内存越大。Trie 不仅查找快，插入和删除都很快，适合存储预测性文本或自动完成词典。为了进一步优化所占空间，可以将 Trie 这种树形的确定性有限自动机压缩成确定性非循环有限状态自动体（DAFSA），其空间小，做法是会压缩相同分支。对于更大内容，还可以做更进一步的优化，比如使用字母缩减的实现技术，把原来的字符串重新解释为较长的字符串；使用单链式列表，节点设计为由符号、子节点、下一个节点来表示；将字母表数组存储为代表 ASCII 字母表的256位的位图。</p>
+<p>尽管 Trie 对于性能会做很多优化，但是符号过多依然会增加性能消耗，对于动态库导出的符号不宜太多，尽量保持公共符号少，私有符号集丰富。这样维护起来也方便，版本兼容性也好，还能优化动态加载程序到进程的时间。</p>
+<p>然后执行 attribute 的 constructor 函数。举个例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line">__attribute__((constructor))</div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">prepare</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>, <span class="string">"prepare"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">__attribute__((destructor))</div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">end</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>, <span class="string">"end"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">showHeader</span><span class="params">()</span> </span>&#123; </div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>, <span class="string">"header"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ming@mingdeMacBook-Pro macho_demo % ./main <span class="string">"hi"</span></div><div class="line">prepare</div><div class="line">hi</div><div class="line">end</div></pre></td></tr></table></figure>
+<p>运行时初始化过程 分为：</p>
+<ul>
 <li>加载类扩展</li>
 <li>加载 C++静态对象</li>
 <li>调用+load 函数</li>
@@ -371,8 +382,12 @@
 <li>初始化帧渲染，到 viewDidAppear 执行完，用户可见可操作。</li>
 </ul>
 <p>也就是说对启动阶段的分析以 viewDidAppear 为截止。这次优化之前已经对 Application 初始化之前做过优化，效果并不明显，没有本质的提高，所以这次主要针对 Application 初始化到 viewDidAppear 这个阶段各个性能多纬度进行分析。</p>
-<p>工具的选择其实目前看来是很多的，Xcode11开始 XCTest 还提供了测量性能的 Api。苹果在2019年 WWDC 启动优化专题 <a href="https://developer.apple.com/videos/play/wwdc2019/423/" target="_blank" rel="external">Optimizing App Launch - WWDC 2019 - Videos - Apple Developer</a> 上也介绍了 Instruments 里的最新模板 App launch 如何分析启动性能。但是要想达到对启动数据进行留存取均值、Diff、过滤、关联分析等自动化操作，App launch 目前还没法做到。</p>
+<p>工具的选择其实目前看来是很多的，Apple 提供的 System Trace 会提供全面系统的行为，可以显示底层系统线程和内存调度情况，分析锁、线程、内存、系统调用等问题。总的来说，通过 System Trace 你能清楚知道每时每刻 App 对系统资源使用情况。</p>
+<p>System Trace 能查看线程的状态，可以了解高优线程使用相对于 CPU 数量是否合理，可以看到线程在执行、挂起、上下文切换、被打断还是被抢占的情况。虚拟内存使用产生的耗时也能看到，比如分配物理内存，内存解压缩，无缓存时进行缓存的耗时等。甚至是发热情况也能看到。</p>
+<p>System Trace 还提供手动打点进行信息显式，在你的代码中 导入 sys/kdebug_signpost.h 后，配对 kdebug_signpost_start 和 kdebug_signpost_end 就可以了。这两个方法有五个参数，第一个是 id，最后一个是颜色，中间都是预留字段。</p>
+<p>Xcode11开始 XCTest 还提供了测量性能的 Api。苹果在2019年 WWDC 启动优化专题 <a href="https://developer.apple.com/videos/play/wwdc2019/423/" target="_blank" rel="external">Optimizing App Launch - WWDC 2019 - Videos - Apple Developer</a> 上也介绍了 Instruments 里的最新模板 App launch 如何分析启动性能。但是要想达到对启动数据进行留存取均值、Diff、过滤、关联分析等自动化操作，App launch 目前还没法做到。</p>
 <h3 id="主线程耗时"><a href="#主线程耗时" class="headerlink" title="主线程耗时"></a>主线程耗时</h3><p>多个维度性能纬度分析中最重要，最终用户体感到的是主线程耗时分析。对主线程方法耗时可以直接使用<a href="https://everettjf.github.io/2019/05/06/messier/" target="_blank" rel="external">Messier - 简单易用的Objective-C方法跟踪工具 - everettjf - 首先很有趣</a><br>生成 trace json 进行分析，或者参看这个代码<a href="https://github.com/ming1016/GCDFetchFeed/blob/master/GCDFetchFeed/GCDFetchFeed/Lib/SMLagMonitor/SMCallTraceCore.c" target="_blank" rel="external">GCDFetchFeed/SMCallTraceCore.c at master · ming1016/GCDFetchFeed · GitHub</a>，自己手动 hook objc_msgSend 生成一份Objective-C 方法耗时数据进行分析。还有种插桩方式，可以解析 IR（加快编译速度），然后在每个方法前后插入耗时统计函数。文章后面我会着重介绍如何开发工具进一步分析这份数据，以达到监控启动阶段方法耗时的目的。</p>
+<p>hook 所有的方法调用，对详细分析时很有用，不过对于整个启动时间影响很大，要想获取启动每个阶段更准确的时间消耗还需要依赖手动埋点。为了更好的分析启动耗时问题，手动埋点也会埋的越来越多，也会影响启动时间精确度，特别是当团队很多，模块很多时，问题会突出。但，每个团队在排查启动耗时往往只会关注自己或相关某几个模块的分析，基于此，可以把不同模块埋点分组，灵活组合，这样就可以照顾到多种需求了。</p>
 <h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><p>为什么分析启动慢除了分析主线程方法耗时外，还要分析其它纬度的性能呢？</p>
 <p>我们先看看启动慢的表现，启动慢意味着界面响应慢、网络慢（数据量大、请求数多）、CPU 超负荷降频（并行任务多、运算多），可以看出影响启动的因素很多，还需要全面考虑。</p>
 <p>对于 CPU 来说，WWDC 的 <a href="https://developer.apple.com/videos/play/wwdc2018/228/" target="_blank" rel="external">What’s New in Energy Debugging - WWDC 2018 - Videos - Apple Developer</a> 里介绍了用 Energy Log 来查 CPU 耗电，当前台三分钟或后台一分钟 CPU 线程连续占用80%以上就判定为耗电，同时记录耗电线程堆栈供分析。还有一个 <a href="https://developer.apple.com/documentation/xcode/improving_your_app_s_performance" target="_blank" rel="external">MetrickKit</a> 专门用来收集电源和性能统计数据，每24小时就会对收集的数据进行汇总上报，Mattt 在 NShipster 网站上也发了篇文章<a href="https://nshipster.com/metrickit/" target="_blank" rel="external">MetricKit - NSHipster</a>专门进行了介绍。那么 CPU 的详细使用情况如何获取呢？也就是说哪个方法用了多少 CPU。</p>
@@ -412,7 +427,7 @@
 <li>闲时主线程串行队列</li>
 <li>闲时异步串行队列</li>
 </ul>
-<p>有依赖关系的任务可以放到异步串行队列中执行。异步并行队列可以分组执行，比如使用 dispatch_group，然后对每组任务数量进行限制，避免 CPU、线程和内存瞬时激增影响主线程用户操作，异步编程可以直接 GCD 接口来写，也可以使用阿里的协程框架 coobjc <a href="https://github.com/alibaba/coobjc" target="_blank" rel="external">GitHub - alibaba/coobjc: coobjc provides coroutine support for Objective-C and Swift. We added await method、generator and actor model like C#、Javascript and Kotlin. For convenience, we added coroutine categories for some Foundation and UIKit API in cokit framework like NSFileManager, JSON, NSData, UIImage etc. We also add tuple support in coobjc.</a>。</p>
+<p>有依赖关系的任务可以放到异步串行队列中执行。异步并行队列可以分组执行，比如使用 dispatch_group，然后对每组任务数量进行限制，避免 CPU、线程和内存瞬时激增影响主线程用户操作，定义有限数量的串行队列，每个串行队列做特定的事情，这样也能够避免性能消耗短时间突然暴涨引起无法响应用户操作。使用 dispatch_semaphore_t 在信号量阻塞主队列时容易出现优先级反转，需要减少使用，确保QoS传播。可以用dispatch group 替代，性能一样，功能不差。异步编程可以直接 GCD 接口来写，也可以使用阿里的协程框架 coobjc <a href="https://github.com/alibaba/coobjc" target="_blank" rel="external">coobjc</a>。</p>
 <p>闲时队列实现方式是监听主线程 runloop 状态，在 kCFRunLoopBeforeWaiting 时开始执行闲时队列里的任务，在 kCFRunLoopAfterWaiting 时停止。</p>
 <h2 id="优化后如何保持？"><a href="#优化后如何保持？" class="headerlink" title="优化后如何保持？"></a>优化后如何保持？</h2><p>攻易守难，就像刚到新团队时将包大小减少了48兆，但是一年多一直能够守住除了决心还需要有手段。对于启动优化来说，将各个性能纬度通过监控的方式盯住是必要的，但是发现问题后快速、便捷的定位到问题还是需要找些突破口。我的思路是将启动阶段方法耗时多的按照时间线一条一条排出来，每条包括方法名、方法层级、所属类、所属模块、维护人。考虑到便捷性，最好还能方便的查看方法代码内容。</p>
 <p>接下来我通过开发一个工具，跟你详细说说怎么实现这样的效果。</p>

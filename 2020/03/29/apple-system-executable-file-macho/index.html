@@ -54,7 +54,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="星光社 - 戴铭的博客" type="application/atom+xml" />
+  <link rel="alternate" href="/atom.xml" title="戴铭的博客 - 星光社" type="application/atom+xml" />
 
 
 
@@ -71,9 +71,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Apple 操作系统可执行文件 Mach-O">
 <meta property="og:url" content="http://ming1016.github.io/2020/03/29/apple-system-executable-file-macho/index.html">
-<meta property="og:site_name" content="星光社 - 戴铭的博客">
+<meta property="og:site_name" content="戴铭的博客 - 星光社">
 <meta property="og:description" content="介绍Mach-O 的全称是 Mach Object File Format。可以是可执行文件，目标代码或共享库，动态库。Mach 内核的操作系统比如 macOS，iPadOS 和 iOS 都是用的 Mach-O。Mach-O 包含程序的核心逻辑，以及入口点主要功能。 通过学习 Mach-O，可以了解应用程序是如何加载到系统的，如何执行的。还能了解符号查找，函数调用堆栈符号化等。更重要的是能够了解如">
-<meta property="og:updated_time" content="2020-03-29T08:15:48.226Z">
+<meta property="og:updated_time" content="2020-04-06T12:38:59.925Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Apple 操作系统可执行文件 Mach-O">
 <meta name="twitter:description" content="介绍Mach-O 的全称是 Mach Object File Format。可以是可执行文件，目标代码或共享库，动态库。Mach 内核的操作系统比如 macOS，iPadOS 和 iOS 都是用的 Mach-O。Mach-O 包含程序的核心逻辑，以及入口点主要功能。 通过学习 Mach-O，可以了解应用程序是如何加载到系统的，如何执行的。还能了解符号查找，函数调用堆栈符号化等。更重要的是能够了解如">
@@ -110,7 +110,7 @@
 
 
 
-  <title>Apple 操作系统可执行文件 Mach-O | 星光社 - 戴铭的博客</title>
+  <title>Apple 操作系统可执行文件 Mach-O | 戴铭的博客 - 星光社</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -147,7 +147,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">星光社 - 戴铭的博客</span>
+        <span class="site-title">戴铭的博客 - 星光社</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -239,7 +239,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="星光社 - 戴铭的博客">
+      <meta itemprop="name" content="戴铭的博客 - 星光社">
     </span>
 
     
@@ -340,7 +340,7 @@
 <p>接下来我们先看看怎么构建一个 Mach-O 文件的吧。</p>
 <h2 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h2><p>构建 Mach-O 文件，主要需要用到编译器和静态链接器，编译器可以将编写的高级语言代码转成中间目标文件，然后用静态链接器把中间目标文件组合成 Mach-O。</p>
 <p>编译器驱动程序使用的是 clang，有编译、组装和链接的能力，调用 Xcode Tools 里的其他工具来实现源码到 Mach-O 文件生成。其他工具包括将汇编代码创建为中间目标文件的 as 汇编程序，组合中间目标文件成 Mach-O 文件的静态链接器 ld，还有创建静态库或共享库的 libtool。</p>
-<p>构建成 Mach-O 包括中间对象文件、动态共享库、框架、静态库、Bundle、内核扩展这几种类型。其中框架会包含共享库和图片、文档、接口等相关资源。</p>
+<p>构建成 Mach-O 包括中间对象文件（MH_OBJECT）、可执行二进制（MH_EXECUTE）、VM 共享库文件（MH_FVMLIB）、Crash 产生的 Core 文件（MH_CORE）、preload（MH_PRELOAD）、动态共享库（MH_DYLIB）、动态链接器（MH_DYLINKER）、静态链接文件（MH_DYLIB_STUB）、符号文件和调试信息（MH_DSYM）这几种类型。其中框架会包含Mach-O和图片、文档、接口等相关资源。</p>
 <p>写个 main.c 文件代码：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123; </div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name = argv[<span class="number">1</span>];</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>, name);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>通过 clang 构建成 Mach-O 文件 a.out。</p>
@@ -484,6 +484,7 @@
 <p>Mach-O 导出符号是 <a href="https://en.wikipedia.org/wiki/Trie" target="_blank" rel="external">trie</a> 的数据结构，trie 节点最多有一个终端字符串信息，如果没有终端信息，就以0x00字节标记。有的化，就用 Leb128 代替该节点的终端字符串信息大小。节点导出信息后，类型信息类型使用0x3对标志进行位掩码获得。0x00表示常规符号，0x01表示线程本地符号，0x02标识绝对符号，0x4表示弱引用符号，0x8表示重新导出，0x10是 stub，具有 Leb128的 stub 偏移量。大部分符号都是常规符号，会将 Mach-O 的偏移量给符号。</p>
 <p>生成 trie 数据结构的代码如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> MachOFileLayout::buildExportTrie() &#123;</div><div class="line">  <span class="keyword">if</span> (_file.exportInfo.empty())</div><div class="line">    <span class="keyword">return</span>;</div><div class="line"></div><div class="line">  <span class="comment">// For all temporary strings and objects used building trie.</span></div><div class="line">  BumpPtrAllocator allocator;</div><div class="line"></div><div class="line">  <span class="comment">// Build trie of all exported symbols.</span></div><div class="line">  <span class="keyword">auto</span> *rootNode = <span class="keyword">new</span> (allocator) TrieNode(StringRef());</div><div class="line">  <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TrieNode*&gt; allNodes;</div><div class="line">  allNodes.reserve(_file.exportInfo.size()*<span class="number">2</span>);</div><div class="line">  allNodes.push_back(rootNode);</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> Export&amp; entry : _file.exportInfo) &#123;</div><div class="line">    rootNode-&gt;addSymbol(entry, allocator, allNodes);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TrieNode*&gt; orderedNodes;</div><div class="line">  orderedNodes.reserve(allNodes.size());</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> Export&amp; entry : _file.exportInfo)</div><div class="line">    rootNode-&gt;addOrderedNodes(entry, orderedNodes);</div><div class="line"></div><div class="line">  <span class="comment">// Assign each node in the vector an offset in the trie stream, iterating</span></div><div class="line">  <span class="comment">// until all uleb128 sizes have stabilized.</span></div><div class="line">  <span class="keyword">bool</span> more;</div><div class="line">  <span class="keyword">do</span> &#123;</div><div class="line">    <span class="keyword">uint32_t</span> offset = <span class="number">0</span>;</div><div class="line">    more = <span class="literal">false</span>;</div><div class="line">    <span class="keyword">for</span> (TrieNode* node : orderedNodes) &#123;</div><div class="line">      <span class="keyword">if</span> (node-&gt;updateOffset(offset))</div><div class="line">        more = <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">  &#125; <span class="keyword">while</span> (more);</div><div class="line"></div><div class="line">  <span class="comment">// Serialize trie to ByteBuffer.</span></div><div class="line">  <span class="keyword">for</span> (TrieNode* node : orderedNodes) &#123;</div><div class="line">    node-&gt;appendToByteBuffer(_exportTrie);</div><div class="line">  &#125;</div><div class="line">  _exportTrie.align(_is64 ? <span class="number">8</span> : <span class="number">4</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Trie 也叫数字树或前缀树，是一种搜索树。查找复杂度 O(m)，m 是字符串的长度。和散列表相比，散列最差复杂度是 O(N)，一般都是 O(1)，用 O(m)时间评估 hash。散列缺点是会分配一大块内存，内容越多所占内存越大。Trie 不仅查找快，插入和删除都很快，适合存储预测性文本或自动完成词典。为了进一步优化所占空间，可以将 Trie 这种树形的确定性有限自动机压缩成确定性非循环有限状态自动体（DAFSA），其空间小，做法是会压缩相同分支。对于更大内容，还可以做更进一步的优化，比如使用字母缩减的实现技术，把原来的字符串重新解释为较长的字符串；使用单链式列表，节点设计为由符号、子节点、下一个节点来表示；将字母表数组存储为代表 ASCII 字母表的256位的位图。</p>
 <p>对于动态库，有几个易于理解的公共符号比导出所有符号更易于使用，让公共符号集少，私有符号集丰富，维护起来更加方便。更新时也不会影响较早版本。导出最少数量的符号，还能够优化动态加载程序到进程的时间，动态库导出符号越少，dyld 加载就越快。</p>
 <p>静态存储类是表明不想导出符号的最简单的方法。将可见性属性放置在实现文件中的符号定义里，设置符号可见性也能够更精确的控制哪些符号是公共符号还是私有符号。在编译选项 -fvisbility 可以指定未指定可见性符号的可见性。使用 -weak_library 选项会告诉编译器将库里所有导出符号都设为弱链接符号。使用 nm 的 -gm 选项可以查看 Mach-O 导出的符号：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nm -gm header.dylib</div></pre></td></tr></table></figure>
