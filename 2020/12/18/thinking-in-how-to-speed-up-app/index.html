@@ -33,6 +33,7 @@
 <meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/4.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/7.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/5.png">
+<meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/12.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/13.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/8.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/9.png">
@@ -40,7 +41,7 @@
 <meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/6.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/15.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/10.png">
-<meta property="og:updated_time" content="2020-12-21T02:49:49.025Z">
+<meta property="og:updated_time" content="2020-12-22T02:47:33.965Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="App 启动提速实践和一些想法">
 <meta name="twitter:description" content="前言启动是门面，好的印象也助于留存率提高。苹果也在系统启动上不断努力，提升用户体验，最新的 M1 宣传中还特别强调了翻盖秒开 macOS，可以看出其对极致启动速度的追求。这篇文章提到，据 Akamai 调查，每多1秒等待，转化率会下降7%，KissMetrics 的一份报告说启动超5秒，会使19%的用户放弃等待卸载 App。 高德 App 启动优化专项完成后已经有一段时间了，一直保持实属不易，我">
@@ -302,7 +303,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">11.2k</span>Reading time: <span class="post-count reading-time">41 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">11.2k</span>阅读时长: <span class="post-count reading-time">41 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -475,7 +476,8 @@ height:50vh;
 <p>接下来看下 hook _objc_msgSend 的函数，这个我在以前博客《<a href="https://ming1016.github.io/2017/06/20/deeply-ios-performance-optimization/">深入剖析 iOS 性能优化</a>》写过，不过多赘述，只做点补充说明。从<a href="https://github.com/ming1016/GCDFetchFeed/blob/master/GCDFetchFeed/GCDFetchFeed/Lib/SMLagMonitor/SMCallTraceCore.c" target="_blank" rel="external">这里的源码</a>可以看实现，其中的attribute((naked)) 表示无参数准备和栈初始化， asm 表示其后面是汇编代码，volatile 是让后面的指令避免被编译优化到缓存寄存器中和改变指令顺序，volatile 使其修饰变量被访问时都会在共享内存里重新读取，变量值变化时也能写到共享内存中，这样不同线程看到的变量都是一个值。如果你发现不加 volatile 也没有问题，你可以把编译优化选项调到更优试试。stp表示操作两个寄存器，中括号部分表示压栈存入sp偏移地址，!符号表合并了压栈指令。</p>
 <p>save() 的作用是把传递参数寄存器入栈保存，call(b, value)用来跳到指定函数地址，call(blr, &amp;before_objc_msgSend) 是调用原 _objc_msgSend 之前指定执行函数，call(blr, orig_objc_msgSend) 是调用 objc_msgSend 函数，call(blr, &amp;after_objc_msgSend) 是调用原 _objc_msgSend 之后指定执行函数。before_objc_msgSend 和 after_objc_msgSend 分别记录时间，差值就是方法调用执行的时长。</p>
 <p>调用之间通过 save() 保存参数，通过 load() 来读取参数。call 的第一个参数是blr，blr 是指跳转到寄存器地址后会返回，由于 blr 会改变 lr 寄存器X30的值，影响 ret 跳到原方法调用方地址，崩溃堆栈找方法调研栈也依赖 lr 在栈上记录的地址，所以需要在 call() 之前对 lr 进行保存，call() 都调用完后再进行恢复。跳转到hook函数，hook函数可以执行我们自定义的事情，完成后恢复CPU状态。</p>
-<h2 id="进入主图后的优化"><a href="#进入主图后的优化" class="headerlink" title="进入主图后的优化"></a>进入主图后的优化</h2><p>进入主图后，用户就可以点击按钮进入不同功能了，是否能够快速响应按钮点击操作也是启动体验感知很重要的事情。按钮点击的两个事件 didTouchUp 和 didTouchDown 之间也会有延时，因此可以在 didTouchDown 时在主线程先 async 初始化下一个 VC，把初始化提前完成，这样做可以提高50ms-100ms的速度，甚至更多，具体收益依赖当前主线程繁忙情况和下一个页面 viewDidLoad 等初始化方法里的耗时，启动阶段主线程一定不会闲，即使点击后主线程阻塞，使用 async 也能保证下一个页面的初始化不会停。</p>
+<h2 id="进入主图后的优化"><a href="#进入主图后的优化" class="headerlink" title="进入主图后的优化"></a>进入主图后的优化</h2><p><img src="/uploads/thinking-in-how-to-speed-up-app/12.png" alt=""></p>
+<p>进入主图后，用户就可以点击按钮进入不同功能了，是否能够快速响应按钮点击操作也是启动体验感知很重要的事情。按钮点击的两个事件 didTouchUp 和 didTouchDown 之间也会有延时，因此可以在 didTouchDown 时在主线程先 async 初始化下一个 VC，把初始化提前完成，这样做可以提高50ms-100ms的速度，甚至更多，具体收益依赖当前主线程繁忙情况和下一个页面 viewDidLoad 等初始化方法里的耗时，启动阶段主线程一定不会闲，即使点击后主线程阻塞，使用 async 也能保证下一个页面的初始化不会停。</p>
 <h2 id="线程调度和任务编排"><a href="#线程调度和任务编排" class="headerlink" title="线程调度和任务编排"></a>线程调度和任务编排</h2><h3 id="整体思路"><a href="#整体思路" class="headerlink" title="整体思路"></a>整体思路</h3><p>对于任务编排有种打法，就是先把所有任务滞后，然后再看哪个是启动开始必须要加载的。效果立竿见影，很快就能看到最好的结果，后面就是反复斟酌，严格把关谁才是必要的启动任务了。</p>
 <p>启动阶段的任务，先理出相关依赖关系，在框架中进行配置，有依赖的任务有序执行，无依赖独立任务可以在非密集任务执行期串行分组，组内并发执行。</p>
 <p>这里需要注意的是Android 的 SharedPreferences 文件加载导致的 ContextImpl 锁竞争，一种解法是合并文件，不过后期维护成本会高，另一种是使用串行任务加载。你可能会疑惑，我没怎么用锁，那是不是就不会有锁等待的问题了。其实不然，比如在 iOS中，dispatch_once 里有 dispatch_atomic_barrier 方法，此方法就有锁的作用，因此锁其实存在各个 API 之下，如不用工具去做检查，有时还真不容易发现这些问题。</p>
@@ -576,10 +578,10 @@ height:50vh;
     <!-- license  -->
     
         <div class="license-wrapper">
-            <p>Author：<a href="http://ming1016.github.io">戴铭</a>
+            <p>原文作者：<a href="http://ming1016.github.io">戴铭</a>
             <p>原文链接：<a href="http://ming1016.github.io/2020/12/18/thinking-in-how-to-speed-up-app/">http://ming1016.github.io/2020/12/18/thinking-in-how-to-speed-up-app/</a>
             <p>发表日期：<a href="http://ming1016.github.io/2020/12/18/thinking-in-how-to-speed-up-app/">December 18th 2020, 4:14:09 pm</a>
-            <p>更新日期：<a href="http://ming1016.github.io/2020/12/18/thinking-in-how-to-speed-up-app/">December 21st 2020, 10:49:49 am</a>
+            <p>更新日期：<a href="http://ming1016.github.io/2020/12/18/thinking-in-how-to-speed-up-app/">December 22nd 2020, 10:47:33 am</a>
             <p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
