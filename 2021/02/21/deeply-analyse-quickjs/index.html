@@ -35,7 +35,7 @@
 <meta property="og:image" content="http://ming1016.github.io/uploads/deeply-analyse-quickjs/5.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/deeply-analyse-quickjs/3.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/deeply-analyse-quickjs/4.png">
-<meta property="og:updated_time" content="2021-02-21T04:16:31.444Z">
+<meta property="og:updated_time" content="2021-02-21T05:16:45.947Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入剖析 JavaScript 编译器&#x2F;解释器引擎 QuickJS - 多了解些 JavaScript 语言">
 <meta name="twitter:description" content="介绍最近在做 JavaScript 和 Native 打交道的工作，虽然6年前服务端和前端包括 JavaScript 经验也有些，不过如今前端标准和前端引擎也发展了很多，这里做个记录吧。本文会着重介绍 QuickJS，其中会针对 js 语言的一些特性来看这些特性在 QuickJS 是如何解释执行和优化的，能够加深对 js 语言的理解。QuickJS 是在 MIT 许可下发的一个轻量 js 引擎包含">
@@ -451,7 +451,7 @@ height:50vh;
 <p>ES2016 增加了 async/await 异步语法特性，纵观 js 的异步历程，从最开始的 Callback方式到 Promise/then，js 解决了回调地狱的问题，但缺少能够暂停函数和恢复执行的方法，因此在 ES2015 加入了生成器，其实现核心思想就是协程，协程可以看作是运行中线程上的可暂停和恢复执行的任务，这些任务都是可通过程序控制的。在 ES2016 加入简洁的 async/await 语法来更好的使用协程。js 异步编程历程如下图：<br><img src="/uploads/deeply-analyse-quickjs/1.png" alt=""></p>
 <p>ECMAScript 2016 开始 js 进入了框架百家争鸣的时代。</p>
 <p>js 框架方面，早期 js 的框架是以兼容和接口优雅为基准比较胜出的 PrototypeJS 和 jQuery。MVC 流行起来的框架是 Backbone，MVVM 时代是 AngularJS 为代表的数据双向绑定只用关注 Model 框架新星崛起。Vue 在 MVVM 基础上增加了用来替代 Options API 的 Composition API 比拟 React 的 Hooks。React（React 的创作者是 <a href="https://twitter.com/jordwalke" target="_blank" rel="external">Jord Walke</a>，在 facebook，不过现在已经离开了 facebook，创立了自己的公司）后来居上，以函数式编程概念拿下头牌，这也是因为 React 核心团队成员喜欢 OCaml 这样的函数式编程语言的原因。。React 的组件有阿里的 <a href="https://ant.design/index-cn" target="_blank" rel="external">Ant Design</a> 和 <a href="https://fusion.design/" target="_blank" rel="external">Fusion Design</a> 可用。React 对于逻辑复用使用的是更优雅的 Hooks，接口少，以声明式方式供使用，很多开发者会将自己开发的逻辑抽出来做成 hooks，出现了很多基于 hooks 状态管理公用代码。对于状态的缓存维护由 React 的内核来维护，这能够解决一个组件树渲染没完成又开始另一个组件树并发渲染状态值管理问题，开发者能够专注写函数组件，和传统 class 组件的区别可以看 Dan Abramov 的这篇文章《<a href="https://overreacted.io/how-are-function-components-different-from-classes/" target="_blank" rel="external">How Are Function Components Different from Classes?</a>》。js 框架的演进如下图：<br><img src="/uploads/deeply-analyse-quickjs/2.png" alt=""></p>
-<p>为了使 js 能够应用于更大的工程化中，出现了静态类型 js 框架。静态类型的 js 框架有微软的 TypeScript 和 Facebook 的 <a href="https://link.zhihu.com/?target=https%3A//flow.org/" target="_blank" rel="external">Flow</a>。TypeScript 的作者是当年我大学时做项目使用的 IDE Delphi 的作者 Anders Hejlsberg，当时的 Delphi 开发体验非常棒，我用它做过不少项目，改善了大学生活品质。</p>
+<p>为了使 js 能够应用于更大的工程化中，出现了静态类型 js 框架。静态类型的 js 框架有微软的 TypeScript 和 Facebook 的 <a href="https://flow.org/" target="_blank" rel="external">Flow</a>。TypeScript 的作者是当年我大学时做项目使用的 IDE Delphi 的作者 Anders Hejlsberg，当时的 Delphi 开发体验非常棒，我用它做过不少项目，改善了大学生活品质。</p>
 <p>对于 React 的开发，现需要了解脚手架 <a href="https://github.com/facebook/create-react-app" target="_blank" rel="external">create-react-app</a>，一行命令能够在 macOS 和 Windows 上不用配置直接创建 React 应用。然后是使用 JSX 模版语法创建组件，组件是独立可重用的代码，组件一般只需要处理单一事情，数据通过参数和上下文共享，上下文共享数据适用场景类似于 UI 主题所需的数据共享。为了确保属性可用，可以使用 defaultProps 来定义默认值，使用 propTypes 在测试时进行属性类型设置和检查。在组件里使用状态用的是 Hooks，最常见的 Hooks 是 setState 和 useEffect，项目复杂后，需要维护的状态就会很复杂，React 本身有个简单使用的状态管理库 React Query 数据请求的库，作用类似 Redux，但没有模版代码，更轻量和易用，还可用 Hooks。React Router 是声明式路由，通过 URL 可以渲染出不同的组件。react 跑在 QuickJS 上的方法可以参看 QuickJS 邮件列表里<a href="https://www.freelists.org/post/quickjs-devel/Running-React-on-QuickJS" target="_blank" rel="external">这封邮件</a>。</p>
 <p>React 框架对应移动端开发的是 React Native。</p>
 <p>React Native 使用了类似客户端和服务器之间通讯的模式，通过 JSON 格式进行桥接数据传递。React Native 中有大量 js 不适合编写的功能和业务逻辑，比如线程性能相应方面要求高的媒体、IO、渲染、动画、大量计算等，还有系统平台相关功能特性的功能业务代码。</p>
@@ -809,7 +809,7 @@ height:50vh;
             <p>原文作者：<a href="http://ming1016.github.io">戴铭</a>
             <p>原文链接：<a href="http://ming1016.github.io/2021/02/21/deeply-analyse-quickjs/">http://ming1016.github.io/2021/02/21/deeply-analyse-quickjs/</a>
             <p>发表日期：<a href="http://ming1016.github.io/2021/02/21/deeply-analyse-quickjs/">February 21st 2021, 12:03:09 pm</a>
-            <p>更新日期：<a href="http://ming1016.github.io/2021/02/21/deeply-analyse-quickjs/">February 21st 2021, 12:16:31 pm</a>
+            <p>更新日期：<a href="http://ming1016.github.io/2021/02/21/deeply-analyse-quickjs/">February 21st 2021, 1:16:45 pm</a>
             <p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -1649,6 +1649,46 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 46
@@ -1784,12 +1824,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span><a class="archive-post-title" href= "/2018/01/04/baimi/" >白芈</a>
+            <span class="archive-post-date">01/04</span><a class="archive-post-title" href= "/2018/01/04/huaye/" >花野</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span><a class="archive-post-title" href= "/2018/01/04/huaye/" >花野</a>
+            <span class="archive-post-date">01/04</span><a class="archive-post-title" href= "/2018/01/04/baimi/" >白芈</a>
         </li>
     
     
@@ -1963,27 +2003,21 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Apple"><span class="iconfont-archer">&#xe606;</span>Apple</span>
+    
+        <span class="sidebar-tag-name" data-tags="Mach-O"><span class="iconfont-archer">&#xe606;</span>Mach-O</span>
+    
+        <span class="sidebar-tag-name" data-tags="AssembleView"><span class="iconfont-archer">&#xe606;</span>AssembleView</span>
+    
         <span class="sidebar-tag-name" data-tags="Novel"><span class="iconfont-archer">&#xe606;</span>Novel</span>
     
         <span class="sidebar-tag-name" data-tags="smck"><span class="iconfont-archer">&#xe606;</span>smck</span>
     
         <span class="sidebar-tag-name" data-tags="Swift"><span class="iconfont-archer">&#xe606;</span>Swift</span>
     
-        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
-    
         <span class="sidebar-tag-name" data-tags="Autolayout"><span class="iconfont-archer">&#xe606;</span>Autolayout</span>
-    
-        <span class="sidebar-tag-name" data-tags="Painting"><span class="iconfont-archer">&#xe606;</span>Painting</span>
-    
-        <span class="sidebar-tag-name" data-tags="iPad"><span class="iconfont-archer">&#xe606;</span>iPad</span>
-    
-        <span class="sidebar-tag-name" data-tags="Procreate"><span class="iconfont-archer">&#xe606;</span>Procreate</span>
-    
-        <span class="sidebar-tag-name" data-tags="AssembleView"><span class="iconfont-archer">&#xe606;</span>AssembleView</span>
-    
-        <span class="sidebar-tag-name" data-tags="RSSReader"><span class="iconfont-archer">&#xe606;</span>RSSReader</span>
-    
-        <span class="sidebar-tag-name" data-tags="Pencil"><span class="iconfont-archer">&#xe606;</span>Pencil</span>
     
         <span class="sidebar-tag-name" data-tags="JavaScript"><span class="iconfont-archer">&#xe606;</span>JavaScript</span>
     
@@ -1991,9 +2025,19 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="编译"><span class="iconfont-archer">&#xe606;</span>编译</span>
     
+        <span class="sidebar-tag-name" data-tags="RSSReader"><span class="iconfont-archer">&#xe606;</span>RSSReader</span>
+    
+        <span class="sidebar-tag-name" data-tags="Painting"><span class="iconfont-archer">&#xe606;</span>Painting</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pencil"><span class="iconfont-archer">&#xe606;</span>Pencil</span>
+    
         <span class="sidebar-tag-name" data-tags="GOT"><span class="iconfont-archer">&#xe606;</span>GOT</span>
     
         <span class="sidebar-tag-name" data-tags="Performance optimization"><span class="iconfont-archer">&#xe606;</span>Performance optimization</span>
+    
+        <span class="sidebar-tag-name" data-tags="iPad"><span class="iconfont-archer">&#xe606;</span>iPad</span>
+    
+        <span class="sidebar-tag-name" data-tags="Procreate"><span class="iconfont-archer">&#xe606;</span>Procreate</span>
     
         <span class="sidebar-tag-name" data-tags="Slides"><span class="iconfont-archer">&#xe606;</span>Slides</span>
     
@@ -2003,17 +2047,15 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="NSURLProtocol"><span class="iconfont-archer">&#xe606;</span>NSURLProtocol</span>
     
-        <span class="sidebar-tag-name" data-tags="macOS"><span class="iconfont-archer">&#xe606;</span>macOS</span>
-    
-        <span class="sidebar-tag-name" data-tags="APP"><span class="iconfont-archer">&#xe606;</span>APP</span>
-    
         <span class="sidebar-tag-name" data-tags="ReactiveCocoa"><span class="iconfont-archer">&#xe606;</span>ReactiveCocoa</span>
-    
-        <span class="sidebar-tag-name" data-tags="GCD"><span class="iconfont-archer">&#xe606;</span>GCD</span>
     
         <span class="sidebar-tag-name" data-tags="SwiftUI"><span class="iconfont-archer">&#xe606;</span>SwiftUI</span>
     
         <span class="sidebar-tag-name" data-tags="Japan"><span class="iconfont-archer">&#xe606;</span>Japan</span>
+    
+        <span class="sidebar-tag-name" data-tags="macOS"><span class="iconfont-archer">&#xe606;</span>macOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="APP"><span class="iconfont-archer">&#xe606;</span>APP</span>
     
         <span class="sidebar-tag-name" data-tags="swift"><span class="iconfont-archer">&#xe606;</span>swift</span>
     
@@ -2023,15 +2065,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="Pattern"><span class="iconfont-archer">&#xe606;</span>Pattern</span>
     
+        <span class="sidebar-tag-name" data-tags="GCD"><span class="iconfont-archer">&#xe606;</span>GCD</span>
+    
+        <span class="sidebar-tag-name" data-tags="book"><span class="iconfont-archer">&#xe606;</span>book</span>
+    
         <span class="sidebar-tag-name" data-tags="Clang"><span class="iconfont-archer">&#xe606;</span>Clang</span>
     
         <span class="sidebar-tag-name" data-tags="WebKit"><span class="iconfont-archer">&#xe606;</span>WebKit</span>
-    
-        <span class="sidebar-tag-name" data-tags="Apple"><span class="iconfont-archer">&#xe606;</span>Apple</span>
-    
-        <span class="sidebar-tag-name" data-tags="Mach-O"><span class="iconfont-archer">&#xe606;</span>Mach-O</span>
-    
-        <span class="sidebar-tag-name" data-tags="book"><span class="iconfont-archer">&#xe606;</span>book</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -2066,15 +2106,15 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="My-novel"><span class="iconfont-archer">&#xe60a;</span>My-novel</span>
-    
         <span class="sidebar-category-name" data-categories="Programming"><span class="iconfont-archer">&#xe60a;</span>Programming</span>
+    
+        <span class="sidebar-category-name" data-categories="My-novel"><span class="iconfont-archer">&#xe60a;</span>My-novel</span>
     
         <span class="sidebar-category-name" data-categories="My-painting"><span class="iconfont-archer">&#xe60a;</span>My-painting</span>
     
-        <span class="sidebar-category-name" data-categories="APP"><span class="iconfont-archer">&#xe60a;</span>APP</span>
-    
         <span class="sidebar-category-name" data-categories="travel"><span class="iconfont-archer">&#xe60a;</span>travel</span>
+    
+        <span class="sidebar-category-name" data-categories="APP"><span class="iconfont-archer">&#xe60a;</span>APP</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

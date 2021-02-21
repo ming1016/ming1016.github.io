@@ -21,7 +21,7 @@
     
     <meta name="description" content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
     <meta name="description" content="前言最近项目开发一直在使用 swift，因为 HTN 项目最近会有另外一位同事加入，所以打算对最近涉及到的一些技术和自己的一些想法做个记录，同时也能够方便同事熟悉代码。 JSON 数据的处理做项目只要是涉及到服务器端接口都没法避免和 JSON 数据打交道。对于来自网络的 JSON 结构化数据的处理，可以使用 JSONDecoder 这个苹果自己提供的字符串转模型类，这个类是在 Swift 4 的">
-<meta name="keywords" content="Swift,iOS">
+<meta name="keywords" content="iOS,Swift">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法">
 <meta property="og:url" content="http://ming1016.github.io/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/index.html">
@@ -280,9 +280,9 @@ height:50vh;
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Swift">Swift</a>
-    
         <a class="post-tag" href="javascript:void(0);" data-tags = "iOS">iOS</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Swift">Swift</a>
     
 </div>
                 
@@ -436,8 +436,8 @@ height:50vh;
 <p>感谢苹果使用 Swift 写了 Swift 的核心功能，以后想要了解更多功能背后原理可以不用啃 C++ 了，一边学习原理还能一边学习苹果内部是如何使用 Swift 的，所谓一举两得。</p>
 <p>实现这个功能代码就在上文提到的 Swift 源码目录 swift/stdlib/public/SDK/Fundation/ 下的 JSONEncoder.swift  文件，如果不想把源码下下来也可以在 GitHub 上在线看，地址：<a href="https://github.com/apple/swift/blob/master/stdlib/public/SDK/Foundation/JSONEncoder.swift" target="_blank" rel="external">https://github.com/apple/swift/blob/master/stdlib/public/SDK/Foundation/JSONEncoder.swift</a></p>
 <p>先看看这个属性的定义：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/// The strategy to use for decoding keys. Defaults to `.useDefaultKeys`.</span></div><div class="line">open <span class="keyword">var</span> keyDecodingStrategy: <span class="type">KeyDecodingStrategy</span> = .useDefaultKeys</div></pre></td></tr></table></figure></p>
-<p>这个属性是一个 keyDecodingStrategy 枚举，默认是 .userDefaultKeys。这个枚举是这样定义的：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">KeyDecodingStrategy</span> </span>&#123;</div><div class="line">    <span class="comment">/// Use the keys specified by each type. This is the default strategy.</span></div><div class="line">    <span class="keyword">case</span> useDefaultKeys</div><div class="line">    </div><div class="line">    <span class="comment">/// Convert from "snake_case_keys" to "camelCaseKeys" before attempting to match a key with the one specified by each type.</span></div><div class="line">    <span class="comment">///</span></div><div class="line">    <span class="comment">/// The conversion to upper case uses `Locale.system`, also known as the ICU "root" locale. This means the result is consistent regardless of the current user's locale and language preferences.</span></div><div class="line">    <span class="comment">///</span></div><div class="line">    <span class="comment">/// Converting from snake case to camel case:</span></div><div class="line">    <span class="comment">/// 1. Capitalizes the word starting after each `_`</span></div><div class="line">    <span class="comment">/// 2. Removes all `_`</span></div><div class="line">    <span class="comment">/// 3. Preserves starting and ending `_` (as these are often used to indicate private variables or other metadata).</span></div><div class="line">    <span class="comment">/// For example, `one_two_three` becomes `oneTwoThree`. `_one_two_three_` becomes `_oneTwoThree_`.</span></div><div class="line">    <span class="comment">///</span></div><div class="line">    <span class="comment">/// - Note: Using a key decoding strategy has a nominal performance cost, as each string key has to be inspected for the `_` character.</span></div><div class="line">    <span class="keyword">case</span> convertFromSnakeCase</div><div class="line">    </div><div class="line">    <span class="comment">/// Provide a custom conversion from the key in the encoded JSON to the keys specified by the decoded types.</span></div><div class="line">    <span class="comment">/// The full path to the current decoding position is provided for context (in case you need to locate this key within the payload). The returned key is used in place of the last component in the coding path before decoding.</span></div><div class="line">    <span class="comment">/// If the result of the conversion is a duplicate key, then only one value will be present in the container for the type to decode from.</span></div><div class="line">    <span class="keyword">case</span> custom((<span class="number">_</span> codingPath: [<span class="type">CodingKey</span>]) -&gt; <span class="type">CodingKey</span>)</div><div class="line">    </div><div class="line">    fileprivate <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">_convertFromSnakeCase</span><span class="params">(<span class="number">_</span> stringKey: String)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>case convertFromSnakeCase 就是我们使用的，注释部分描述了整个过程，首先会把 ‘<em>’ 符号后面的字母转成大写的，然后移除掉所有的 ‘</em>’ 符号，保留最前面和最后的 ‘_’ 符号。比如 <strong>nick<em>name</em> 就会转换成 </strong>nickName_ 而这些都是在枚举里定义的静态方法 _convertFromSnakeCase 里完成的。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">fileprivate <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">_convertFromSnakeCase</span><span class="params">(<span class="number">_</span> stringKey: String)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">    <span class="keyword">guard</span> !stringKey.isEmpty <span class="keyword">else</span> &#123; <span class="keyword">return</span> stringKey &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// Find the first non-underscore character</span></div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> firstNonUnderscore = stringKey.index(<span class="keyword">where</span>: &#123; $<span class="number">0</span> != <span class="string">"_"</span> &#125;) <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// Reached the end without finding an _</span></div><div class="line">        <span class="keyword">return</span> stringKey</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// Find the last non-underscore character</span></div><div class="line">    <span class="keyword">var</span> lastNonUnderscore = stringKey.index(before: stringKey.endIndex)</div><div class="line">    <span class="keyword">while</span> lastNonUnderscore &gt; firstNonUnderscore &amp;&amp; stringKey[lastNonUnderscore] == <span class="string">"_"</span> &#123;</div><div class="line">        stringKey.formIndex(before: &amp;lastNonUnderscore);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">let</span> keyRange = firstNonUnderscore...lastNonUnderscore</div><div class="line">    <span class="keyword">let</span> leadingUnderscoreRange = stringKey.startIndex..&lt;firstNonUnderscore</div><div class="line">    <span class="keyword">let</span> trailingUnderscoreRange = stringKey.index(after: lastNonUnderscore)..&lt;stringKey.endIndex</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> components = stringKey[keyRange].<span class="built_in">split</span>(separator: <span class="string">"_"</span>)</div><div class="line">    <span class="keyword">let</span> joinedString : <span class="type">String</span></div><div class="line">    <span class="keyword">if</span> components.<span class="built_in">count</span> == <span class="number">1</span> &#123;</div><div class="line">        <span class="comment">// No underscores in key, leave the word as is - maybe already camel cased</span></div><div class="line">        joinedString = <span class="type">String</span>(stringKey[keyRange])</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        joinedString = ([components[<span class="number">0</span>].lowercased()] + components[<span class="number">1</span>...].<span class="built_in">map</span> &#123; $<span class="number">0</span>.capitalized &#125;).joined()</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// Do a cheap isEmpty check before creating and appending potentially empty strings</span></div><div class="line">    <span class="keyword">let</span> result : <span class="type">String</span></div><div class="line">    <span class="keyword">if</span> (leadingUnderscoreRange.isEmpty &amp;&amp; trailingUnderscoreRange.isEmpty) &#123;</div><div class="line">        result = joinedString</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!leadingUnderscoreRange.isEmpty &amp;&amp; !trailingUnderscoreRange.isEmpty) &#123;</div><div class="line">        <span class="comment">// Both leading and trailing underscores</span></div><div class="line">        result = <span class="type">String</span>(stringKey[leadingUnderscoreRange]) + joinedString + <span class="type">String</span>(stringKey[trailingUnderscoreRange])</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!leadingUnderscoreRange.isEmpty) &#123;</div><div class="line">        <span class="comment">// Just leading</span></div><div class="line">        result = <span class="type">String</span>(stringKey[leadingUnderscoreRange]) + joinedString</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// Just trailing</span></div><div class="line">        result = joinedString + <span class="type">String</span>(stringKey[trailingUnderscoreRange])</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个属性是一个 keyDecodingStrategy 枚举，默认是 .userDefaultKeys。这个枚举是这样定义的：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">KeyDecodingStrategy</span> </span>&#123;</div><div class="line">    <span class="comment">/// Use the keys specified by each type. This is the default strategy.</span></div><div class="line">    <span class="keyword">case</span> useDefaultKeys</div><div class="line">    </div><div class="line">    <span class="comment">/// Convert from "snake_case_keys" to "camelCaseKeys" before attempting to match a key with the one specified by each type.</span></div><div class="line">    <span class="comment">///</span></div><div class="line">    <span class="comment">/// The conversion to upper case uses `Locale.system`, also known as the ICU "root" locale. This means the result is consistent regardless of the current user's locale and language preferences.</span></div><div class="line">    <span class="comment">///</span></div><div class="line">    <span class="comment">/// Converting from snake case to camel case:</span></div><div class="line">    <span class="comment">/// 1. Capitalizes the word starting after each `_`</span></div><div class="line">    <span class="comment">/// 2. Removes all `_`</span></div><div class="line">    <span class="comment">/// 3. Preserves starting and ending `_` (as these are often used to indicate private variables or other metadata).</span></div><div class="line">    <span class="comment">/// For example, `one_two_three` becomes `oneTwoThree`. `_one_two_three_` becomes `_oneTwoThree_`.</span></div><div class="line">    <span class="comment">///</span></div><div class="line">    <span class="comment">/// - Note: Using a key decoding strategy has a nominal performance cost, as each string key has to be inspected for the `_` character.</span></div><div class="line">    <span class="keyword">case</span> convertFromSnakeCase</div><div class="line">    </div><div class="line">    <span class="comment">/// Provide a custom conversion from the key in the encoded JSON to the keys specified by the decoded types.</span></div><div class="line">    <span class="comment">/// The full path to the current decoding position is provided for context (in case you need to locate this key within the payload). The returned key is used in place of the last component in the coding path before decoding.</span></div><div class="line">    <span class="comment">/// If the result of the conversion is a duplicate key, then only one value will be present in the container for the type to decode from.</span></div><div class="line">    <span class="keyword">case</span> custom((<span class="number">_</span> codingPath: [<span class="type">CodingKey</span>]) -&gt; <span class="type">CodingKey</span>)</div><div class="line">    </div><div class="line">    fileprivate <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> _convertFromSnakeCase<span class="params">(<span class="number">_</span> stringKey: String)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>case convertFromSnakeCase 就是我们使用的，注释部分描述了整个过程，首先会把 ‘<em>’ 符号后面的字母转成大写的，然后移除掉所有的 ‘</em>’ 符号，保留最前面和最后的 ‘_’ 符号。比如 <strong>nick<em>name</em> 就会转换成 </strong>nickName_ 而这些都是在枚举里定义的静态方法 _convertFromSnakeCase 里完成的。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">fileprivate <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> _convertFromSnakeCase<span class="params">(<span class="number">_</span> stringKey: String)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">    <span class="keyword">guard</span> !stringKey.isEmpty <span class="keyword">else</span> &#123; <span class="keyword">return</span> stringKey &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// Find the first non-underscore character</span></div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> firstNonUnderscore = stringKey.index(<span class="keyword">where</span>: &#123; $<span class="number">0</span> != <span class="string">"_"</span> &#125;) <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// Reached the end without finding an _</span></div><div class="line">        <span class="keyword">return</span> stringKey</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// Find the last non-underscore character</span></div><div class="line">    <span class="keyword">var</span> lastNonUnderscore = stringKey.index(before: stringKey.endIndex)</div><div class="line">    <span class="keyword">while</span> lastNonUnderscore &gt; firstNonUnderscore &amp;&amp; stringKey[lastNonUnderscore] == <span class="string">"_"</span> &#123;</div><div class="line">        stringKey.formIndex(before: &amp;lastNonUnderscore);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">let</span> keyRange = firstNonUnderscore...lastNonUnderscore</div><div class="line">    <span class="keyword">let</span> leadingUnderscoreRange = stringKey.startIndex..&lt;firstNonUnderscore</div><div class="line">    <span class="keyword">let</span> trailingUnderscoreRange = stringKey.index(after: lastNonUnderscore)..&lt;stringKey.endIndex</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> components = stringKey[keyRange].<span class="built_in">split</span>(separator: <span class="string">"_"</span>)</div><div class="line">    <span class="keyword">let</span> joinedString : <span class="type">String</span></div><div class="line">    <span class="keyword">if</span> components.<span class="built_in">count</span> == <span class="number">1</span> &#123;</div><div class="line">        <span class="comment">// No underscores in key, leave the word as is - maybe already camel cased</span></div><div class="line">        joinedString = <span class="type">String</span>(stringKey[keyRange])</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        joinedString = ([components[<span class="number">0</span>].lowercased()] + components[<span class="number">1</span>...].<span class="built_in">map</span> &#123; $<span class="number">0</span>.capitalized &#125;).joined()</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// Do a cheap isEmpty check before creating and appending potentially empty strings</span></div><div class="line">    <span class="keyword">let</span> result : <span class="type">String</span></div><div class="line">    <span class="keyword">if</span> (leadingUnderscoreRange.isEmpty &amp;&amp; trailingUnderscoreRange.isEmpty) &#123;</div><div class="line">        result = joinedString</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!leadingUnderscoreRange.isEmpty &amp;&amp; !trailingUnderscoreRange.isEmpty) &#123;</div><div class="line">        <span class="comment">// Both leading and trailing underscores</span></div><div class="line">        result = <span class="type">String</span>(stringKey[leadingUnderscoreRange]) + joinedString + <span class="type">String</span>(stringKey[trailingUnderscoreRange])</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!leadingUnderscoreRange.isEmpty) &#123;</div><div class="line">        <span class="comment">// Just leading</span></div><div class="line">        result = <span class="type">String</span>(stringKey[leadingUnderscoreRange]) + joinedString</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// Just trailing</span></div><div class="line">        result = joinedString + <span class="type">String</span>(stringKey[trailingUnderscoreRange])</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>这段代码处理的逻辑不算复杂，功能也不多，但是还是有很多值得学习的地方，首先可以看看是如何处理边界条件的。可以看到两个边界条件都是用 guard 语法来处理的。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">guard</span> !stringKey.isEmpty <span class="keyword">else</span> &#123; <span class="keyword">return</span> stringKey &#125;</div><div class="line"></div><div class="line"><span class="comment">// Find the first non-underscore character</span></div><div class="line"><span class="keyword">guard</span> <span class="keyword">let</span> firstNonUnderscore = stringKey.index(<span class="keyword">where</span>: &#123; $<span class="number">0</span> != <span class="string">"_"</span> &#125;) <span class="keyword">else</span> &#123;</div><div class="line">    <span class="comment">// Reached the end without finding an _</span></div><div class="line">    <span class="keyword">return</span> stringKey</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>第一个是判断空，第二个是通过 String 的 public func index(where predicate: (Character) throws -&gt; Bool) rethrows -&gt; String.Index?  这个函数来看字符串里是否包含了 ‘_’ 符号，如果没有包含就直接返回原 String 值。这个函数的参数就是一个自定义返回布尔值的 block，返回 true 即刻返回不再继续遍历了，可见苹果对于性能一点也不浪费。</p>
 <p>然后这个返回的 index 值还有个作用就是可以得到 ‘<em>’ 符号在最前面后第一个非 ‘</em>’ 符号的字符。因为需求如此，不需要把最前面和最后面的 ‘<em>’ 转驼峰，但是前面和后面的 ‘</em>’ 符号个数又不一定，所以需要得到前面 ‘_’ 符号和后面的范围。</p>
@@ -1349,6 +1349,46 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 46
@@ -1484,12 +1524,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span><a class="archive-post-title" href= "/2018/01/04/baimi/" >白芈</a>
+            <span class="archive-post-date">01/04</span><a class="archive-post-title" href= "/2018/01/04/huaye/" >花野</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span><a class="archive-post-title" href= "/2018/01/04/huaye/" >花野</a>
+            <span class="archive-post-date">01/04</span><a class="archive-post-title" href= "/2018/01/04/baimi/" >白芈</a>
         </li>
     
     
@@ -1663,27 +1703,21 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Apple"><span class="iconfont-archer">&#xe606;</span>Apple</span>
+    
+        <span class="sidebar-tag-name" data-tags="Mach-O"><span class="iconfont-archer">&#xe606;</span>Mach-O</span>
+    
+        <span class="sidebar-tag-name" data-tags="AssembleView"><span class="iconfont-archer">&#xe606;</span>AssembleView</span>
+    
         <span class="sidebar-tag-name" data-tags="Novel"><span class="iconfont-archer">&#xe606;</span>Novel</span>
     
         <span class="sidebar-tag-name" data-tags="smck"><span class="iconfont-archer">&#xe606;</span>smck</span>
     
         <span class="sidebar-tag-name" data-tags="Swift"><span class="iconfont-archer">&#xe606;</span>Swift</span>
     
-        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
-    
         <span class="sidebar-tag-name" data-tags="Autolayout"><span class="iconfont-archer">&#xe606;</span>Autolayout</span>
-    
-        <span class="sidebar-tag-name" data-tags="Painting"><span class="iconfont-archer">&#xe606;</span>Painting</span>
-    
-        <span class="sidebar-tag-name" data-tags="iPad"><span class="iconfont-archer">&#xe606;</span>iPad</span>
-    
-        <span class="sidebar-tag-name" data-tags="Procreate"><span class="iconfont-archer">&#xe606;</span>Procreate</span>
-    
-        <span class="sidebar-tag-name" data-tags="AssembleView"><span class="iconfont-archer">&#xe606;</span>AssembleView</span>
-    
-        <span class="sidebar-tag-name" data-tags="RSSReader"><span class="iconfont-archer">&#xe606;</span>RSSReader</span>
-    
-        <span class="sidebar-tag-name" data-tags="Pencil"><span class="iconfont-archer">&#xe606;</span>Pencil</span>
     
         <span class="sidebar-tag-name" data-tags="JavaScript"><span class="iconfont-archer">&#xe606;</span>JavaScript</span>
     
@@ -1691,9 +1725,19 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="编译"><span class="iconfont-archer">&#xe606;</span>编译</span>
     
+        <span class="sidebar-tag-name" data-tags="RSSReader"><span class="iconfont-archer">&#xe606;</span>RSSReader</span>
+    
+        <span class="sidebar-tag-name" data-tags="Painting"><span class="iconfont-archer">&#xe606;</span>Painting</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pencil"><span class="iconfont-archer">&#xe606;</span>Pencil</span>
+    
         <span class="sidebar-tag-name" data-tags="GOT"><span class="iconfont-archer">&#xe606;</span>GOT</span>
     
         <span class="sidebar-tag-name" data-tags="Performance optimization"><span class="iconfont-archer">&#xe606;</span>Performance optimization</span>
+    
+        <span class="sidebar-tag-name" data-tags="iPad"><span class="iconfont-archer">&#xe606;</span>iPad</span>
+    
+        <span class="sidebar-tag-name" data-tags="Procreate"><span class="iconfont-archer">&#xe606;</span>Procreate</span>
     
         <span class="sidebar-tag-name" data-tags="Slides"><span class="iconfont-archer">&#xe606;</span>Slides</span>
     
@@ -1703,17 +1747,15 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="NSURLProtocol"><span class="iconfont-archer">&#xe606;</span>NSURLProtocol</span>
     
-        <span class="sidebar-tag-name" data-tags="macOS"><span class="iconfont-archer">&#xe606;</span>macOS</span>
-    
-        <span class="sidebar-tag-name" data-tags="APP"><span class="iconfont-archer">&#xe606;</span>APP</span>
-    
         <span class="sidebar-tag-name" data-tags="ReactiveCocoa"><span class="iconfont-archer">&#xe606;</span>ReactiveCocoa</span>
-    
-        <span class="sidebar-tag-name" data-tags="GCD"><span class="iconfont-archer">&#xe606;</span>GCD</span>
     
         <span class="sidebar-tag-name" data-tags="SwiftUI"><span class="iconfont-archer">&#xe606;</span>SwiftUI</span>
     
         <span class="sidebar-tag-name" data-tags="Japan"><span class="iconfont-archer">&#xe606;</span>Japan</span>
+    
+        <span class="sidebar-tag-name" data-tags="macOS"><span class="iconfont-archer">&#xe606;</span>macOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="APP"><span class="iconfont-archer">&#xe606;</span>APP</span>
     
         <span class="sidebar-tag-name" data-tags="swift"><span class="iconfont-archer">&#xe606;</span>swift</span>
     
@@ -1723,15 +1765,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="Pattern"><span class="iconfont-archer">&#xe606;</span>Pattern</span>
     
+        <span class="sidebar-tag-name" data-tags="GCD"><span class="iconfont-archer">&#xe606;</span>GCD</span>
+    
+        <span class="sidebar-tag-name" data-tags="book"><span class="iconfont-archer">&#xe606;</span>book</span>
+    
         <span class="sidebar-tag-name" data-tags="Clang"><span class="iconfont-archer">&#xe606;</span>Clang</span>
     
         <span class="sidebar-tag-name" data-tags="WebKit"><span class="iconfont-archer">&#xe606;</span>WebKit</span>
-    
-        <span class="sidebar-tag-name" data-tags="Apple"><span class="iconfont-archer">&#xe606;</span>Apple</span>
-    
-        <span class="sidebar-tag-name" data-tags="Mach-O"><span class="iconfont-archer">&#xe606;</span>Mach-O</span>
-    
-        <span class="sidebar-tag-name" data-tags="book"><span class="iconfont-archer">&#xe606;</span>book</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -1766,15 +1806,15 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="My-novel"><span class="iconfont-archer">&#xe60a;</span>My-novel</span>
-    
         <span class="sidebar-category-name" data-categories="Programming"><span class="iconfont-archer">&#xe60a;</span>Programming</span>
+    
+        <span class="sidebar-category-name" data-categories="My-novel"><span class="iconfont-archer">&#xe60a;</span>My-novel</span>
     
         <span class="sidebar-category-name" data-categories="My-painting"><span class="iconfont-archer">&#xe60a;</span>My-painting</span>
     
-        <span class="sidebar-category-name" data-categories="APP"><span class="iconfont-archer">&#xe60a;</span>APP</span>
-    
         <span class="sidebar-category-name" data-categories="travel"><span class="iconfont-archer">&#xe60a;</span>travel</span>
+    
+        <span class="sidebar-category-name" data-categories="APP"><span class="iconfont-archer">&#xe60a;</span>APP</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
