@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="戴铭">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="戴铭">
+    
+    <meta name="keywords" content="戴铭,戴铭的博客,iOS,Swift,移动开发,JavaScript,编译">
+    
+    <meta name="description" content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
+    <meta name="description" content="前言本文主要是记录 HTN 项目开发的过程。关于这个项目先前在 Swift 开发者大会上我曾经演示过，不过当时项目结构不完善，不易扩展，也没有按照标准来。所以这段时间，我研究了下 W3C 的标准和 WebKit 的一些实现，对于这段时间的研究也写了篇文章深入剖析 WebKit。重构了下这个项目，我可以先说下已经完成的部分，最后列下后面的规划。项目已经放到了 Github 上：https:&#x2F;&#x2F;git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML 转原生 HTN 项目开发记录">
+<meta property="og:url" content="http://ming1016.github.io/2017/10/16/html-to-native-htn-development-record/index.html">
+<meta property="og:site_name" content="戴铭的博客 - 星光社">
+<meta property="og:description" content="前言本文主要是记录 HTN 项目开发的过程。关于这个项目先前在 Swift 开发者大会上我曾经演示过，不过当时项目结构不完善，不易扩展，也没有按照标准来。所以这段时间，我研究了下 W3C 的标准和 WebKit 的一些实现，对于这段时间的研究也写了篇文章深入剖析 WebKit。重构了下这个项目，我可以先说下已经完成的部分，最后列下后面的规划。项目已经放到了 Github 上：https:&#x2F;&#x2F;git">
+<meta property="og:locale">
+<meta property="og:image" content="http://ming1016.github.io/uploads/html-to-native-htn-development-record/04.png">
+<meta property="og:image" content="http://ming1016.github.io/uploads/html-to-native-htn-development-record/06.png">
+<meta property="og:image" content="http://ming1016.github.io/uploads/html-to-native-htn-development-record/05.png">
+<meta property="og:image" content="http://ming1016.github.io/uploads/html-to-native-htn-development-record/07.png">
+<meta property="og:image" content="http://ming1016.github.io/uploads/html-to-native-htn-development-record/01.png">
+<meta property="og:image" content="http://ming1016.github.io/uploads/html-to-native-htn-development-record/02.png">
+<meta property="og:image" content="http://ming1016.github.io/uploads/html-to-native-htn-development-record/03.png">
+<meta property="article:published_time" content="2017-10-16T07:49:00.000Z">
+<meta property="article:modified_time" content="2021-04-11T14:42:09.922Z">
+<meta property="article:author" content="戴铭">
+<meta property="article:tag" content="Swift">
+<meta property="article:tag" content="Web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ming1016.github.io/uploads/html-to-native-htn-development-record/04.png">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>HTML 转原生 HTN 项目开发记录 · 戴铭的博客 - 星光社</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20210204" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20210204" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/logo.png" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js?v=20210204" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    <script src="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.3/js/all.min.js"  data-auto-replace-svg="nest" ></script>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >戴铭的博客 - 星光社</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">HTML 转原生 HTN 项目开发记录</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>戴铭的博客 - 星光社</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:55vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            HTML 转原生 HTN 项目开发记录
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Swift">Swift</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Web">Web</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">2.4k</span>阅读时长: <span class="post-count reading-time">11 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2017/10/16</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文主要是记录 HTN 项目开发的过程。关于这个项目先前在 Swift 开发者大会上我曾经演示过，不过当时项目结构不完善，不易扩展，也没有按照标准来。所以这段时间，我研究了下 W3C 的标准和 WebKit 的一些实现，对于这段时间的研究也写了篇文章<a target="_blank" rel="noopener" href="http://www.starming.com/2017/10/11/deeply-analyse-webkit/">深入剖析 WebKit</a>。重构了下这个项目，我可以先说下已经完成的部分，最后列下后面的规划。项目已经放到了 Github 上：<a target="_blank" rel="noopener" href="https://github.com/ming1016/HTN">https://github.com/ming1016/HTN</a> 后面可以对着代码看。</p>
+<h2 id="项目使用介绍"><a href="#项目使用介绍" class="headerlink" title="项目使用介绍"></a>项目使用介绍</h2><p>通过解析 html 生成 DOM 树，解析 CSS，生成渲染树，计算布局，最终生成原生 Textrue 代码。下面代码可以看到完整的过程的各个方法。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> treeBuilder <span class="operator">=</span> <span class="type">HTMLTreeBuilder</span>(htmlStr) <span class="comment">//htmlStr 就是 需要转的 html 代码</span></span><br><span class="line"><span class="keyword">_</span> <span class="operator">=</span> treeBuilder.parse() <span class="comment">//解析 html 生成 DOM 树</span></span><br><span class="line"><span class="keyword">let</span> cssStyle <span class="operator">=</span> <span class="type">CSSParser</span>(treeBuilder.doc.allStyle()).parseSheet() <span class="comment">//解析 CSS</span></span><br><span class="line"><span class="keyword">let</span> document <span class="operator">=</span> <span class="type">StyleResolver</span>().resolver(treeBuilder.doc, styleSheet: cssStyle) <span class="comment">//生成渲染树</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//转 Textrue</span></span><br><span class="line"><span class="keyword">let</span> layoutElement <span class="operator">=</span> <span class="type">LayoutElement</span>().createRenderer(doc: document) <span class="comment">//计算布局</span></span><br><span class="line"><span class="keyword">_</span> <span class="operator">=</span> <span class="type">HTMLToTexture</span>(nodeName:<span class="string">&quot;Flexbox&quot;</span>).converter(layoutElement); <span class="comment">//生成原生 Textrue 代码</span></span><br></pre></td></tr></table></figure></p>
+<p>比如有下面的 html</p>
+<p><img src="/uploads/html-to-native-htn-development-record/04.png" alt="04"></p>
+<p>在浏览器里显示是这样</p>
+<p><img src="/uploads/html-to-native-htn-development-record/06.png" alt="06"></p>
+<p>通过 HTN 生成的原生代码</p>
+<p><img src="/uploads/html-to-native-htn-development-record/05.png" alt="05"></p>
+<p>在 iPhone X 模拟器的效果如下</p>
+<p><img src="/uploads/html-to-native-htn-development-record/07.png" alt="07"></p>
+<p>下面详细介绍下具体的实现关键点</p>
+<h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><p>这部分最关键的部分是在 HTML/HTMLTokenizer.swift 里。首先会根据 W3C 里的 Tokenization 的标准 <a target="_blank" rel="noopener" href="https://dev.w3.org/html5/spec-preview/tokenization.html">https://dev.w3.org/html5/spec-preview/tokenization.html</a> 来定义一个状态的枚举，如下，可以目前完成这些状态的情况<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//枚举</span></span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">S</span>: <span class="title">HTNStateType</span> </span>&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="type">DataState</span> <span class="comment">//half done</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">CharacterReferenceInDataState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">RCDATAState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">CharacterReferenceInRCDATAState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">RAWTEXTState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ScriptDataState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">PLAINTEXTState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">TagOpenState</span> <span class="comment">//half done</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">EndTagOpenState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">TagNameState</span> <span class="comment">//half done</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">case</span> <span class="type">RCDATALessThanSignState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">RCDATAEndTagOpenState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">RCDATAEndTagNameState</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">case</span> <span class="type">RAWTEXTLessThanSignState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">RAWTEXTEndTagOpenState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">RAWTEXTEndTagNameState</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//Script</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ScriptDataLessThanSignState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEndTagOpenState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEndTagNameState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEscapeStartState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEscapeStartDashState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEscapedState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEscapedDashState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEscapedDashDashState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEscapedLessThanSignState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEscapedEndTagOpenState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ScriptDataEscapedEndTagNameState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ScriptDataDoubleEscapeStartState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ScriptDataDoubleEscapedState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ScriptDataDoubleEscapedDashState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ScriptDataDoubleEscapedDashDashState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ScriptDataDoubleEscapedLessThanSignState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ScriptDataDoubleEscapeEndState</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//Tag</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">BeforeAttributeNameState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">AttributeNameState</span> <span class="comment">//half done</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">AfterAttributeNameState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">BeforeAttributeValueState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">AttributeValueDoubleQuotedState</span> <span class="comment">//half done</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">AttributeValueSingleQuotedState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">AttributeValueUnquotedState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">CharacterReferenceInAttributeValueState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">AfterAttributeValueQuotedState</span> <span class="comment">//half done</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">SelfClosingStartTagState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">BogusCommentState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">ContinueBogusCommentState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">MarkupDeclarationOpenState</span> <span class="comment">//half done</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//Comment</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">CommentStartState</span> <span class="comment">//half done</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">CommentStartDashState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">CommentState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">CommentEndDashState</span> <span class="comment">//half done</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">CommentEndState</span> <span class="comment">//half done</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">CommentEndBangState</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//DOCTYPE</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">DOCTYPEState</span> <span class="comment">//half done</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">BeforeDOCTYPENameState</span> <span class="comment">//half done</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">DOCTYPENameState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">AfterDOCTYPENameState</span> <span class="comment">//half done</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">AfterDOCTYPEPublicKeywordState</span> <span class="comment">//half done</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">BeforeDOCTYPEPublicIdentifierState</span> <span class="comment">//half done</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">DOCTYPEPublicIdentifierDoubleQuotedState</span> <span class="comment">//half done</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">DOCTYPEPublicIdentifierSingleQuotedState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">AfterDOCTYPEPublicIdentifierState</span> <span class="comment">//half done</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">BetweenDOCTYPEPublicAndSystemIdentifiersState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">AfterDOCTYPESystemKeywordState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">BeforeDOCTYPESystemIdentifierState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">DOCTYPESystemIdentifierDoubleQuotedState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">DOCTYPESystemIdentifierSingleQuotedState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">AfterDOCTYPESystemIdentifierState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">BogusDOCTYPEState</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">case</span> <span class="type">CDATASectionState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">CDATASectionRightSquareBracketState</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">CDATASectionDoubleRightSquareBracketState</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><br>处理这些状态采用的是状态机原理。根据状态机数学模型提取出需要的状态集合，事件集合，事件集合在这里是所遇字符的集合做了一个状态机，具体实现在 HTNFundation/HTNStateMachine.swift。状态转移函数我定义的是 func listen(_ event: E, transit fromState: S, to toState: S, callback: @escaping (HTNTransition<S, E>) -&gt; Void) ，这里的 block 是在状态转移时需要做的事情定义 。为了能够减少状态转移太多太碎，也多写了几个函数来处理比如一组来源状态到同一个转移状态和针对某些事件状态不变的函数。</p>
+<p>有了状态机后面的处理就会很方便，这里的事件就是一个一个的字符，不同字符在不同的状态下的处理。下面可以举个多状态转同一状态的实现，具体代码如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> anglebracketRightEventFromStatesArray <span class="operator">=</span> [<span class="type">S</span>.<span class="type">DOCTYPEState</span>,</span><br><span class="line">                                             <span class="type">S</span>.<span class="type">CommentEndState</span>,</span><br><span class="line">                                             <span class="type">S</span>.<span class="type">TagOpenState</span>,</span><br><span class="line">                                             <span class="type">S</span>.<span class="type">EndTagOpenState</span>,</span><br><span class="line">                                             <span class="type">S</span>.<span class="type">AfterAttributeValueQuotedState</span>,</span><br><span class="line">                                             <span class="type">S</span>.<span class="type">BeforeDOCTYPENameState</span>,</span><br><span class="line">                                             <span class="type">S</span>.<span class="type">AfterDOCTYPEPublicIdentifierState</span>]</span><br><span class="line">stateMachine.listen(<span class="type">E</span>.<span class="type">AngleBracketRight</span>, transit: anglebracketRightEventFromStatesArray, to: <span class="type">S</span>.<span class="type">DataState</span>) &#123; (t) <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">if</span> t.fromState <span class="operator">==</span> <span class="type">S</span>.<span class="type">TagOpenState</span> <span class="operator">||</span> t.fromState <span class="operator">==</span> <span class="type">S</span>.<span class="type">EndTagOpenState</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">self</span>._bufferStr.count <span class="operator">&gt;</span> <span class="number">0</span> &#123;</span><br><span class="line">            <span class="keyword">self</span>._bufferToken.data <span class="operator">=</span> <span class="keyword">self</span>._bufferStr.lowercased()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">self</span>.addHTMLToken()</span><br><span class="line">    <span class="keyword">self</span>.advanceIndexAndResetCurrentStr()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>W3C 也定义每个状态的处理，非常详细完整，WebKit 基本把这些定义都实现了，HTN 目前只实现了能够满足构建 DOM 树的部分。W3C 的定义可以举个 StartTags 的状态如下图<br><img src="/uploads/html-to-native-htn-development-record/01.png" alt="01"></p>
+<p>在进入构建 DOM 树之前我们需要设计一些类和结构来记录我们的内容，这里采用了 WebKit 类似的类结构设计，下图是 WebKit 的 DOM 树相关的类设计图<br><img src="/uploads/html-to-native-htn-development-record/02.png" alt="02"></p>
+<p>完成了这些状态处理，接下来就可以根据这些 HTMLToken 来组装我们的 DOM 树了。这部分的实现在 HTML/HTMLTreeBuilder.swift 里。构建 DOM 树同样使用了先前的写的状态机，只是这里的状态集和事件集不同而已，W3C 也定义一些状态可以用<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">S</span>: <span class="title">HTNStateType</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="type">InitialModeState</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">BeforeHTMLState</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">BeforeHeadState</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">InHeadState</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">AfterHeadState</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">InBodyState</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">AfterBodyState</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">AfterAfterBodyState</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>从名字就能很方便的看出每个状态的意思。这里的事件集使用的是 HTMLToken 里的类型，根据不同类型来放置到合适的位置。树的父级子级是通过定义的一个堆栈来控制，具体构建实现可以看 func parse() -&gt; [HTMLToken] 这个函数。</p>
+<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><p>解析 CSS 需要先了解下 CSS 的 BNF，它的定义如下：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">ruleset</span><br><span class="line">  : selector [ &#x27;,&#x27; S* selector ]*</span><br><span class="line">    &#x27;&#123;&#x27; S* declaration [ &#x27;;&#x27; S* declaration ]* &#x27;&#125;&#x27; S*</span><br><span class="line">  ;</span><br><span class="line">selector</span><br><span class="line">  : simple_selector [ combinator selector | S+ [ combinator selector ] ]</span><br><span class="line">  ;</span><br><span class="line">simple_selector</span><br><span class="line">  : element_name [ HASH | class | attrib | pseudo ]*</span><br><span class="line">  | [ HASH | class | attrib | pseudo ]+</span><br><span class="line">  ;</span><br><span class="line">class</span><br><span class="line">  : &#x27;.&#x27; IDENT</span><br><span class="line">  ;</span><br><span class="line">element_name</span><br><span class="line">  : IDENT | &#x27;*&#x27;</span><br><span class="line">  ;</span><br><span class="line">attrib</span><br><span class="line">  : &#x27;[&#x27; S* IDENT S* [ [ &#x27;=&#x27; | INCLUDES | DASHMATCH ] S*</span><br><span class="line">    [ IDENT | STRING ] S* ] &#x27;]&#x27;</span><br><span class="line">  ;</span><br><span class="line">pseudo</span><br><span class="line">  : &#x27;:&#x27; [ IDENT | FUNCTION S* [IDENT S*] &#x27;)&#x27; ]</span><br><span class="line">  ;</span><br></pre></td></tr></table></figure></p>
+<p>根据 BNF 来确定状态集和事件集。下面是我定义的状态集和事件集<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">S</span>: <span class="title">HTNStateType</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="type">UnknownState</span>     <span class="comment">//</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">SelectorState</span>    <span class="comment">// 比如 div p, #id</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">PropertyKeyState</span>   <span class="comment">// 属性的 key</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">PropertyValueState</span> <span class="comment">// 属性的 value</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span>以下后期支持，优先级2</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">PseudoClass</span>      <span class="comment">// :nth-child(2)</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">PseudoElement</span>    <span class="comment">// ::first-line</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span>以下后期支持，优先级3</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">PagePseudoClass</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">AttributeExact</span>   <span class="comment">// E[attr]</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">AttributeSet</span>     <span class="comment">// E[attr|=&quot;value&quot;]</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">AttributeHyphen</span>  <span class="comment">// E[attr~=&quot;value&quot;]</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">AttributeList</span>    <span class="comment">// E[attr*=&quot;value&quot;]</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">AttributeContain</span> <span class="comment">// E[attr^=&quot;value&quot;]</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">AttributeBegin</span>   <span class="comment">// E[attr$=&quot;value&quot;]</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">AttributeEnd</span></span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span>@media 这类 @规则 ，后期支持，优先级4</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">E</span>: <span class="title">HTNEventType</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="type">SpaceEvent</span>   <span class="comment">//空格</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">CommaEvent</span>   <span class="comment">// ,</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">DotEvent</span>     <span class="comment">// .</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">HashTagEvent</span> <span class="comment">// #</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">BraceLeftEvent</span>  <span class="comment">// &#123;</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">BraceRightEvent</span> <span class="comment">// &#125;</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">ColonEvent</span> <span class="comment">// :</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">SemicolonEvent</span>  <span class="comment">// ;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>同样在状态的处理过程中也需要一个合理的类结构关系设计来满足，这里也参考了 WebKit 里的设计，如下：<br><img src="/uploads/html-to-native-htn-development-record/03.png" alt="03"></p>
+<h2 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h2><p>布局处理目前 HTN 主要是将样式属性和 DOM 树里的 Element 对应上。具体实现是在 Layout/StyleResolver.swift 里。思路是先将所有 CSSRule 和对应的 CSSSelector 做好映射，接着在递归 DOM 树的过程中与每个 Element 对应上。主要代码实现如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">resolver</span>(<span class="keyword">_</span> <span class="params">doc</span>:<span class="type">Document</span>, <span class="params">styleSheet</span>:<span class="type">CSSStyleSheet</span>)</span> -&gt; <span class="type">Document</span>&#123;</span><br><span class="line">    <span class="comment">//样式映射表</span></span><br><span class="line">    <span class="comment">//这种结构能够支持多级 Selector</span></span><br><span class="line">    <span class="keyword">var</span> matchMap <span class="operator">=</span> [<span class="type">String</span>:[<span class="type">String</span>:[<span class="type">String</span>:<span class="type">String</span>]]]()</span><br><span class="line">    <span class="keyword">for</span> rule <span class="keyword">in</span> styleSheet.ruleList &#123;</span><br><span class="line">        <span class="keyword">for</span> selector <span class="keyword">in</span> rule.selectorList &#123;</span><br><span class="line">            <span class="keyword">guard</span> <span class="keyword">let</span> matchLast <span class="operator">=</span> selector.matchList.last <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">var</span> matchDic <span class="operator">=</span> matchMap[matchLast]</span><br><span class="line">            <span class="keyword">if</span> matchDic <span class="operator">==</span> <span class="literal">nil</span> &#123;</span><br><span class="line">                matchDic <span class="operator">=</span> [<span class="type">String</span>:[<span class="type">String</span>:<span class="type">String</span>]]()</span><br><span class="line">                matchMap[matchLast] <span class="operator">=</span> matchDic</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">//这里可以按照后加入 rulelist 的优先级更高的原则进行覆盖操作</span></span><br><span class="line">            <span class="keyword">if</span> matchMap[matchLast]<span class="operator">!</span>[selector.identifier] <span class="operator">==</span> <span class="literal">nil</span> &#123;</span><br><span class="line">                matchMap[matchLast]<span class="operator">!</span>[selector.identifier] <span class="operator">=</span> [<span class="type">String</span>:<span class="type">String</span>]()</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> a <span class="keyword">in</span> rule.propertyList &#123;</span><br><span class="line">                matchMap[matchLast]<span class="operator">!</span>[selector.identifier]<span class="operator">!</span>[a.key] <span class="operator">=</span> a.value</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> elm <span class="keyword">in</span> doc.children &#123;</span><br><span class="line">        <span class="keyword">self</span>.attach(elm <span class="keyword">as!</span> <span class="type">Element</span>, matchMap: matchMap)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> doc</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//递归将样式属性都加上</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">attach</span>(<span class="keyword">_</span> <span class="params">element</span>:<span class="type">Element</span>, <span class="params">matchMap</span>:[<span class="params">String</span>:[<span class="params">String</span>:[<span class="params">String</span>:<span class="type">String</span>]]])</span> &#123;</span><br><span class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> token <span class="operator">=</span> element.startTagToken <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> matchMap[token.data] <span class="operator">!=</span> <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="comment">//<span class="doctag">TODO:</span> 还不支持 selector 里多个标签名组合，后期加上</span></span><br><span class="line">        addProperty(token.data, matchMap: matchMap, element: element)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//增加 property 通过处理 token 里的属性列表里的 class 和 id 在 matchMap 里找</span></span><br><span class="line">    <span class="keyword">for</span> attr <span class="keyword">in</span> token.attributeList &#123;</span><br><span class="line">        <span class="keyword">if</span> attr.name <span class="operator">==</span> <span class="string">&quot;class&quot;</span> &#123;</span><br><span class="line">            addProperty(<span class="string">&quot;.&quot;</span> <span class="operator">+</span> attr.value.lowercased(), matchMap: matchMap, element: element)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> attr.name <span class="operator">==</span> <span class="string">&quot;id&quot;</span> &#123;</span><br><span class="line">            addProperty(<span class="string">&quot;#&quot;</span> <span class="operator">+</span> attr.value.lowercased(), matchMap: matchMap, element: element)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> element.children.count <span class="operator">&gt;</span> <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> element <span class="keyword">in</span> element.children &#123;</span><br><span class="line">            <span class="keyword">self</span>.attach(element <span class="keyword">as!</span> <span class="type">Element</span>, matchMap: matchMap)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">addProperty</span>(<span class="keyword">_</span> <span class="params">key</span>:<span class="type">String</span>, <span class="params">matchMap</span>:[<span class="params">String</span>:[<span class="params">String</span>:[<span class="params">String</span>:<span class="type">String</span>]]], <span class="params">element</span>:<span class="type">Element</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> dic <span class="operator">=</span> matchMap[key] <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> aDic <span class="keyword">in</span> dic &#123;</span><br><span class="line">        <span class="keyword">var</span> selectorArr <span class="operator">=</span> aDic.key.components(separatedBy: <span class="string">&quot; &quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> selectorArr.count <span class="operator">&gt;</span> <span class="number">1</span> &#123;</span><br><span class="line">            <span class="comment">//带多个 selector 的情况</span></span><br><span class="line">            selectorArr.removeLast()</span><br><span class="line">            <span class="keyword">if</span> <span class="operator">!</span>recursionSelectorMatch(selectorArr, parentElement: element.parent <span class="keyword">as!</span> <span class="type">Element</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> ruleDic <span class="operator">=</span> dic[aDic.key] <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//将属性加入 element 的属性列表里</span></span><br><span class="line">        <span class="keyword">for</span> property <span class="keyword">in</span> ruleDic &#123;</span><br><span class="line">            element.propertyMap[property.key] <span class="operator">=</span> property.value</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里通过 recursionSelectorMatch 来按照 CSS Selector 从右到左的递归出是否匹配路径，具体实现代码如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//递归找出匹配的多路径</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">recursionSelectorMatch</span>(<span class="keyword">_</span> <span class="params">selectors</span>:[<span class="type">String</span>], <span class="params">parentElement</span>:<span class="type">Element</span>)</span> -&gt; <span class="type">Bool</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> selectorArr <span class="operator">=</span> selectors</span><br><span class="line">    <span class="keyword">guard</span> <span class="keyword">var</span> last <span class="operator">=</span> selectorArr.last <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//表示全匹配了</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> parent <span class="operator">=</span> parentElement.parent <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> isMatch <span class="operator">=</span> <span class="literal">false</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> last.hasPrefix(<span class="string">&quot;.&quot;</span>) &#123;</span><br><span class="line">        last.characters.removeFirst()</span><br><span class="line">        <span class="comment">//<span class="doctag">TODO:</span>这里还需要考虑attribute 空格多个 class 名的情况</span></span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> startTagToken <span class="operator">=</span> parentElement.startTagToken <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> startTagToken.attributeDic[<span class="string">&quot;class&quot;</span>] <span class="operator">==</span> last &#123;</span><br><span class="line">            isMatch <span class="operator">=</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> last.hasPrefix(<span class="string">&quot;#&quot;</span>) &#123;</span><br><span class="line">        last.characters.removeFirst()</span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> startTagToken <span class="operator">=</span> parentElement.startTagToken <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> startTagToken.attributeDic[<span class="string">&quot;id&quot;</span>] <span class="operator">==</span> last &#123;</span><br><span class="line">            isMatch <span class="operator">=</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> startTagToken <span class="operator">=</span> parentElement.startTagToken <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> startTagToken.data <span class="operator">==</span> last &#123;</span><br><span class="line">            isMatch <span class="operator">=</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> isMatch &#123;</span><br><span class="line">        <span class="comment">//匹配到会继续往前去匹配</span></span><br><span class="line">        selectorArr.removeLast()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> recursionSelectorMatch(selectorArr, parentElement: parent <span class="keyword">as!</span> <span class="type">Element</span>)</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="转原生"><a href="#转原生" class="headerlink" title="转原生"></a>转原生</h2><p>已完成一部分简单布局属性转换 Texture 原生代码。具体实现部分可以参看 HTMLToTexture.swift 文件。</p>
+<h2 id="已完成"><a href="#已完成" class="headerlink" title="已完成"></a>已完成</h2><ul>
+<li>解析 HTML 构建 DOM 树，解析 CSS 构建渲染树</li>
+<li>CSS Selector 的 Tag 路径支持，Tag 和 class，id 的组合选择。</li>
+<li>flexbox 属性，margin 和 padding 映射 Texture 原生代码</li>
+</ul>
+<h2 id="规划"><a href="#规划" class="headerlink" title="规划"></a>规划</h2><ul>
+<li>支持图片标签，支持 CSS background 背景属性</li>
+<li>html 的 class 属性还不支持空格多个 class 名</li>
+<li>text-transform 属性的支持</li>
+<li>em 转 pt，em 是相对父元素值的乘积值。</li>
+<li><p>支持CSS选择器的 :before 和 :after</p>
+</li>
+<li><p>HTN 的 Objective-C 版。</p>
+</li>
+<li>支持转 Objective-C 的原生代码。</li>
+<li>解析转换器内嵌在应用程序内部，支持服务器下发 h5 代码转换。</li>
+<li><p>应用内转换时的缓存的处理，将render树结构体进行缓存的处理</p>
+</li>
+<li><p>HTML 内 JS 解析，支持逻辑控制 HTML</p>
+</li>
+</ul>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://ming1016.github.io">戴铭</a>
+            <p>原文链接：<a href="http://ming1016.github.io/2017/10/16/html-to-native-htn-development-record/">http://ming1016.github.io/2017/10/16/html-to-native-htn-development-record/</a>
+            <p>发表日期：<a href="http://ming1016.github.io/2017/10/16/html-to-native-htn-development-record/">October 16th 2017, 3:49:00 pm</a>
+            <p>更新日期：<a href="http://ming1016.github.io/2017/10/16/html-to-native-htn-development-record/">April 11th 2021, 10:42:09 pm</a>
+            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2017/10/24/how-do-i-improve-the-development/" title= "在滴滴，我是如何指数级提升开发技术的？">
+                    <div class="nextTitle">在滴滴，我是如何指数级提升开发技术的？</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2017/10/11/deeply-analyse-webkit/" title= "深入剖析 WebKit">
+                    <div class="prevTitle">深入剖析 WebKit</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+
+    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    
+</main>
+
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:ming1016@foxmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/ming1016" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/wechat-qcode.jpeg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="https://weibo.com/allstarming" class="iconfont-archer weibo" target="_blank" title=weibo></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:55vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">项目使用介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML"><span class="toc-number">3.</span> <span class="toc-text">HTML</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS"><span class="toc-number">4.</span> <span class="toc-text">CSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%83%E5%B1%80"><span class="toc-number">5.</span> <span class="toc-text">布局</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AC%E5%8E%9F%E7%94%9F"><span class="toc-number">6.</span> <span class="toc-text">转原生</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%B2%E5%AE%8C%E6%88%90"><span class="toc-number">7.</span> <span class="toc-text">已完成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E5%88%92"><span class="toc-number">8.</span> <span class="toc-text">规划</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 47
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href= "/2021/05/22/acfun-swift-practice/" >A站 的 Swift 实践</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/21</span><a class="archive-post-title" href= "/2021/02/21/deeply-analyse-quickjs/" >深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/18</span><a class="archive-post-title" href= "/2020/12/18/thinking-in-how-to-speed-up-app/" >App 启动提速实践和一些想法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/04</span><a class="archive-post-title" href= "/2020/05/04/draw-in-2020/" >2020年涂图</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2020/04/12/why_write_study_ios_programming_with_daiming_book_and_draw_recently/" >我为什么写了《跟戴铭学iOS编程》这本书</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/29</span><a class="archive-post-title" href= "/2020/03/29/apple-system-executable-file-macho/" >Apple 操作系统可执行文件 Mach-O</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/" >在快手做分享、无用类检查、在广州做 SwiftUI 学习笔记分享、InfoQ二叉树视频</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/28</span><a class="archive-post-title" href= "/2019/12/28/japan-travel/" >日本游玩</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/07</span><a class="archive-post-title" href= "/2019/12/07/how-to-analyze-startup-time-cost-in-ios/" >如何对 iOS 启动阶段耗时进行分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/06</span><a class="archive-post-title" href= "/2019/12/06/draw-in-2019/" >2019年涂图</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/29</span><a class="archive-post-title" href= "/2019/07/29/ios-map/" >iOS 开发舆图</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/19</span><a class="archive-post-title" href= "/2019/06/19/white-dragon-class/" >白龙班</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/2018/09/17/produce-slides-of-third-at-swift-conference/" >这次swift大会分享准备的幻灯片和 demo</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/14</span><a class="archive-post-title" href= "/2018/09/14/draw-with-procreate-in-ipad-during-pre-half-in-20182/" >18年上半年procreate的练习图图</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2018/04/21/deeply-analyse-javascriptcore/" >深入剖析 JavaScriptCore</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/07</span><a class="archive-post-title" href= "/2018/04/07/read-snapkit-and-masonry-source-code/" >读 SnapKit 和 Masonry 自动布局框架源码</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href= "/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/" >Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/24</span><a class="archive-post-title" href= "/2018/01/24/why-swift/" >Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2018/01/10/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/" >GIAC 大会上分享的《Swift 将 Web 代码转成60帧满帧原生应用的方案及实践》的幻灯片</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/04</span><a class="archive-post-title" href= "/2018/01/04/baimi/" >白芈</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/04</span><a class="archive-post-title" href= "/2018/01/04/huaye/" >花野</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/24</span><a class="archive-post-title" href= "/2017/10/24/how-do-i-improve-the-development/" >在滴滴，我是如何指数级提升开发技术的？</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/16</span><a class="archive-post-title" href= "/2017/10/16/html-to-native-htn-development-record/" >HTML 转原生 HTN 项目开发记录</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/11</span><a class="archive-post-title" href= "/2017/10/11/deeply-analyse-webkit/" >深入剖析 WebKit</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2017/06/20/deeply-ios-performance-optimization/" >深入剖析 iOS 性能优化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/12</span><a class="archive-post-title" href= "/2017/06/12/gmtc-ios-slimming-practice/" >GMTC 上分享滴滴出行 iOS 端瘦身实践的 Slides</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/" >atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/build-static-analysis-program-smck-use-swift/" >用 Swift 编写的工程代码静态分析命令行工具 smck</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/slides-of-deeply-analyse-llvm/" >深入剖析 iOS 编译 Clang / LLVM 直播的 Slides</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2017/03/01/deeply-analyse-llvm/" >深入剖析 iOS 编译 Clang / LLVM</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2016 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/22</span><a class="archive-post-title" href= "/2016/11/22/how-to-preload-web-in-ios/" >iOS预加载Web页面方案</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2016/11/17/use-swift3-build-macos-program-to-clear-unuse-method/" >使用Swift3开发了个macOS的程序可以检测出objc项目中无用方法，然后一键全部清理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/20</span><a class="archive-post-title" href= "/2016/09/20/draw-with-procreate-in-ipad-during-15-to-16/" >15，16年iPad上使用Procreate画的</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/02</span><a class="archive-post-title" href= "/2016/09/02/develop-rss-reader/" >使用ReactiveCocoa开发RSS阅读器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/09</span><a class="archive-post-title" href= "/2016/08/09/how-to-use-reactivecocoa/" >iOS函数响应式编程以及ReactiveCocoa的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/21</span><a class="archive-post-title" href= "/2016/07/21/assembleview/" >制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/30</span><a class="archive-post-title" href= "/2016/05/30/what-learn-from-reactivecocoa/" >从 ReactiveCocoa 中能学到什么？不用此库也能学以致用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/23</span><a class="archive-post-title" href= "/2016/05/23/try-to-decouple-with-demo/" >竭尽全力的去解耦的一次实践，封装一个TableView和一些功能组合的控件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2016/04/04/tenth-middle-school/" >十中</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/13</span><a class="archive-post-title" href= "/2016/01/13/how-to-use-gcd/" >细说 GCD（Grand Central Dispatch）如何用</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2015 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/03</span><a class="archive-post-title" href= "/2015/11/03/deeply-analyse-autolayout/" >深入剖析Auto Layout，分析iOS各版本新增特性</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/02</span><a class="archive-post-title" href= "/2015/11/02/draw-with-note-in-ipad-during-15/" >15年用iPad上的备忘录画的</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/28</span><a class="archive-post-title" href= "/2015/05/28/macos-app-i-used/" >我用过的 macOS 应用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href= "/2015/04/02/draw-game-of-thrones-with-pencil-during-14/" >整理了画的权利的游戏里的角色，有龙女，小恶魔等等</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2015/04/01/objc-runtime/" >Objc Runtime 总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2015/03/12/draw-practice-with-pencil-during-14-to-15/" >14和15年间的铅笔画练习</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2014 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2014/03/01/black-star-blue-map/" >黑星蓝图</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="AssembleView"><span class="iconfont-archer">&#xe606;</span>AssembleView</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Novel"><span class="iconfont-archer">&#xe606;</span>Novel</span>
+    
+        <span class="sidebar-tag-name" data-tags="smck"><span class="iconfont-archer">&#xe606;</span>smck</span>
+    
+        <span class="sidebar-tag-name" data-tags="Swift"><span class="iconfont-archer">&#xe606;</span>Swift</span>
+    
+        <span class="sidebar-tag-name" data-tags="RSSReader"><span class="iconfont-archer">&#xe606;</span>RSSReader</span>
+    
+        <span class="sidebar-tag-name" data-tags="Painting"><span class="iconfont-archer">&#xe606;</span>Painting</span>
+    
+        <span class="sidebar-tag-name" data-tags="iPad"><span class="iconfont-archer">&#xe606;</span>iPad</span>
+    
+        <span class="sidebar-tag-name" data-tags="Procreate"><span class="iconfont-archer">&#xe606;</span>Procreate</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pencil"><span class="iconfont-archer">&#xe606;</span>Pencil</span>
+    
+        <span class="sidebar-tag-name" data-tags="GOT"><span class="iconfont-archer">&#xe606;</span>GOT</span>
+    
+        <span class="sidebar-tag-name" data-tags="Slides"><span class="iconfont-archer">&#xe606;</span>Slides</span>
+    
+        <span class="sidebar-tag-name" data-tags="Study"><span class="iconfont-archer">&#xe606;</span>Study</span>
+    
+        <span class="sidebar-tag-name" data-tags="UIWebView"><span class="iconfont-archer">&#xe606;</span>UIWebView</span>
+    
+        <span class="sidebar-tag-name" data-tags="NSURLProtocol"><span class="iconfont-archer">&#xe606;</span>NSURLProtocol</span>
+    
+        <span class="sidebar-tag-name" data-tags="Web"><span class="iconfont-archer">&#xe606;</span>Web</span>
+    
+        <span class="sidebar-tag-name" data-tags="Japan"><span class="iconfont-archer">&#xe606;</span>Japan</span>
+    
+        <span class="sidebar-tag-name" data-tags="macOS"><span class="iconfont-archer">&#xe606;</span>macOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="APP"><span class="iconfont-archer">&#xe606;</span>APP</span>
+    
+        <span class="sidebar-tag-name" data-tags="swift"><span class="iconfont-archer">&#xe606;</span>swift</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译"><span class="iconfont-archer">&#xe606;</span>编译</span>
+    
+        <span class="sidebar-tag-name" data-tags="LLVM"><span class="iconfont-archer">&#xe606;</span>LLVM</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pattern"><span class="iconfont-archer">&#xe606;</span>Pattern</span>
+    
+        <span class="sidebar-tag-name" data-tags="ReactiveCocoa"><span class="iconfont-archer">&#xe606;</span>ReactiveCocoa</span>
+    
+        <span class="sidebar-tag-name" data-tags="book"><span class="iconfont-archer">&#xe606;</span>book</span>
+    
+        <span class="sidebar-tag-name" data-tags="Autolayout"><span class="iconfont-archer">&#xe606;</span>Autolayout</span>
+    
+        <span class="sidebar-tag-name" data-tags="SwiftUI"><span class="iconfont-archer">&#xe606;</span>SwiftUI</span>
+    
+        <span class="sidebar-tag-name" data-tags="Apple"><span class="iconfont-archer">&#xe606;</span>Apple</span>
+    
+        <span class="sidebar-tag-name" data-tags="Mach-O"><span class="iconfont-archer">&#xe606;</span>Mach-O</span>
+    
+        <span class="sidebar-tag-name" data-tags="JavaScript"><span class="iconfont-archer">&#xe606;</span>JavaScript</span>
+    
+        <span class="sidebar-tag-name" data-tags="Performance optimization"><span class="iconfont-archer">&#xe606;</span>Performance optimization</span>
+    
+        <span class="sidebar-tag-name" data-tags="GCD"><span class="iconfont-archer">&#xe606;</span>GCD</span>
+    
+        <span class="sidebar-tag-name" data-tags="runtime"><span class="iconfont-archer">&#xe606;</span>runtime</span>
+    
+        <span class="sidebar-tag-name" data-tags="Clang"><span class="iconfont-archer">&#xe606;</span>Clang</span>
+    
+        <span class="sidebar-tag-name" data-tags="WebKit"><span class="iconfont-archer">&#xe606;</span>WebKit</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Programming"><span class="iconfont-archer">&#xe60a;</span>Programming</span>
+    
+        <span class="sidebar-category-name" data-categories="My-novel"><span class="iconfont-archer">&#xe60a;</span>My-novel</span>
+    
+        <span class="sidebar-category-name" data-categories="My-painting"><span class="iconfont-archer">&#xe60a;</span>My-painting</span>
+    
+        <span class="sidebar-category-name" data-categories="travel"><span class="iconfont-archer">&#xe60a;</span>travel</span>
+    
+        <span class="sidebar-category-name" data-categories="APP"><span class="iconfont-archer">&#xe60a;</span>APP</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "戴铭"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
