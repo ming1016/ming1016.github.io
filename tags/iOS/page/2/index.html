@@ -357,6 +357,39 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/" >
+            
+                <span>Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法</span>
+        </a>
+        <div class="abstract-content">
+            前言最近项目开发一直在使用 swift，因为 HTN 项目最近会有另外一位同事加入，所以打算对最近涉及到的一些技术和自己的一些想法做个记录，同时也能够方便同事熟悉代码。
+JSON 数据的处理做项目只要是涉及到服务器端接口都没法避免和 JSON 数据打交道。对于来自网络的 JSON 结构化数据的处理，可以使用 JSONDecoder 这个苹果自己提供的字符串转模型类，这个类是在 Swift 4 的 Fundation 模块里提供的，可以在Swift 源码目录 swift/stdlib/public/SDK/Fundation/JSONEncoder.swift 看到苹果对这个类实现。
+其它...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/02</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "iOS">iOS</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Swift">Swift</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2018/01/24/why-swift/" >
             
                 <span>Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)</span>
@@ -649,40 +682,6 @@ PPT 下载地址：https://pan.baidu.com/s/1dFkoaIl
         <a class="post-tag" href="javascript:void(0);" data-tags = "UIWebView">UIWebView</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "NSURLProtocol">NSURLProtocol</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2016/11/17/use-swift3-build-macos-program-to-clear-unuse-method/" >
-            
-                <span>使用Swift3开发了个macOS的程序可以检测出objc项目中无用方法，然后一键全部清理</span>
-        </a>
-        <div class="abstract-content">
-            当项目越来越大，引入第三方库越来越多，上架的APP体积也会越来越大，对于用户来说体验必定是不好的。在清理资源，编译选项优化，清理无用类等完成后，能够做而且效果会比较明显的就只有清理无用函数了。现有一种方案是根据Linkmap文件取到objc的所有类方法和实例方法。再用工具逆向可执行文件里引用到的方法名，求个差集列出无用方法。这个方案有些比较麻烦的地方，因为检索出的无用方法没法确定能够直接删除，还需要挨个检索人工判断是否可以删除，这样每次要清理时都需要这样人工排查一遍是非常耗时耗力的。
-这样就只有模拟编译过程对代码进行深入分析才能够找出确定能够删除的方法。具体效果可以先试试看，程序代码在：...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/17</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "iOS">iOS</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Swift">Swift</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "macOS">macOS</a>
     
 </div>
             
@@ -1449,9 +1448,26 @@ PPT 下载地址：https://pan.baidu.com/s/1dFkoaIl
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 47
+        Total : 48
         </div>
         <!-- search  -->
         
@@ -1464,6 +1480,11 @@ PPT 下载地址：https://pan.baidu.com/s/1dFkoaIl
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/08</span><a class="archive-post-title" href= "/2021/06/08/wwdc2021-day1-note/" >WWDC 2021 Day1 笔记</a>
+        </li>
     
     
         <li class="archive-post-item">
