@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ming1016.github.io/"/>
-  <updated>2021-06-08T08:59:47.312Z</updated>
+  <updated>2021-07-13T06:10:00.107Z</updated>
   <id>http://ming1016.github.io/</id>
   
   <author>
@@ -16,11 +16,51 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>深入剖析Auto Layout的幻灯片</title>
+    <link href="http://ming1016.github.io/2021/07/13/deeply-analyse-autolayout-slides/"/>
+    <id>http://ming1016.github.io/2021/07/13/deeply-analyse-autolayout-slides/</id>
+    <published>2021-07-13T06:01:22.000Z</published>
+    <updated>2021-07-13T06:10:00.107Z</updated>
+    
+    <content type="html"><![CDATA[<p>在2015年SegmentFault D-Day活动上分享用的幻灯片，发现以前没有发到博客中，现在补上。</p>
+<p><img src="/uploads/deeply-analyse-autolayout-slides/1.png" alt=""></p>
+<p><img src="/uploads/deeply-analyse-autolayout-slides/2.png" alt=""></p>
+<p><img src="/uploads/deeply-analyse-autolayout-slides/3.png" alt=""></p>
+<p><img src="/uploads/deeply-analyse-autolayout-slides/4.png" alt=""></p>
+<p><img src="/uploads/deeply-analyse-autolayout-slides/5.png" alt=""></p>
+<p><img src="/uploads/deeply-analyse-autolayout-slides/6.png" alt=""></p>
+<p><img src="/uploads/deeply-analyse-autolayout-slides/7.png" alt=""></p>
+<p><img src="/uploads/deeply-analyse-autolayout-slides/8.png" alt=""></p>
+<p><img src="/uploads/deeply-analyse-autolayout-slides/9.png" alt=""></p>
+<p><img src="/uploads/deeply-analyse-autolayout-slides/10.png" alt=""></p>
+<p><img src="/uploads/deeply-analyse-autolayout-slides/11.png" alt=""></p>
+<p><img src="/uploads/deeply-analyse-autolayout-slides/12.png" alt=""></p>
+<p><img src="/uploads/deeply-analyse-autolayout-slides/13.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在2015年SegmentFault D-Day活动上分享用的幻灯片，发现以前没有发到博客中，现在补上。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/uploads/deeply-analyse-autolayout-slides/1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;im
+    
+    </summary>
+    
+      <category term="Programming" scheme="http://ming1016.github.io/categories/Programming/"/>
+    
+    
+      <category term="iOS" scheme="http://ming1016.github.io/tags/iOS/"/>
+    
+      <category term="Autolayout" scheme="http://ming1016.github.io/tags/Autolayout/"/>
+    
+  </entry>
+  
+  <entry>
     <title>WWDC 2021 Day1 笔记</title>
     <link href="http://ming1016.github.io/2021/06/08/wwdc2021-day1-note/"/>
     <id>http://ming1016.github.io/2021/06/08/wwdc2021-day1-note/</id>
     <published>2021-06-08T08:54:01.000Z</published>
-    <updated>2021-06-08T08:59:47.312Z</updated>
+    <updated>2021-06-08T09:59:16.183Z</updated>
     
     <content type="html"><![CDATA[<p>WWDC开始了，一周时间会有大量Session可学习，这个页面<a href="https://github.com/twostraws/wwdc">https://github.com/twostraws/wwdc</a> 收集了来自社区的各种WWDC活动、新闻和教程的链接，随着WWDC的进行，页面内容会不断更新，去年2020年的汇总页在这里<a href="https://github.com/twostraws/wwdc/blob/3d3b093218af06465b6b268b23e13e2ad6e2d9f8/README.md">https://github.com/twostraws/wwdc/blob/3d3b093218af06465b6b268b23e13e2ad6e2d9f8/README.md</a> 。Apple官方收集的开发者组织活动页面是<a href="https://developer.apple.com/wwdc21/beyond-wwdc/">https://developer.apple.com/wwdc21/beyond-wwdc/</a> ，其中有SwiftGG翻译组组织的活动，介绍页<a href="https://swift.gg/wwdc/">https://swift.gg/wwdc/</a> ，会在本周每晚8点线上直播交流WWDC21中关注度高的话题以及live coding展示热点技术，嘉宾有喵神、故胤道长、mmoaay、61、钟颖、周楷雯等。</p>
 <p><a href="https://www.wwdcnotes.com/">https://www.wwdcnotes.com/</a> 这是一些WWDC的笔记（比看视频快）汇总，可以订阅他的RSS，还在更新中</p>
@@ -2689,31 +2729,6 @@
       <category term="iOS" scheme="http://ming1016.github.io/tags/iOS/"/>
     
       <category term="Swift" scheme="http://ming1016.github.io/tags/Swift/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>GIAC 大会上分享的《Swift 将 Web 代码转成60帧满帧原生应用的方案及实践》的幻灯片</title>
-    <link href="http://ming1016.github.io/2018/01/10/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/"/>
-    <id>http://ming1016.github.io/2018/01/10/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/</id>
-    <published>2018-01-10T07:31:54.000Z</published>
-    <updated>2021-04-11T14:42:09.928Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/01.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/02.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/03.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/04.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/05.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/06.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/07.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/08.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/09.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/10.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/11.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/12.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/13.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/14.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/15.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/16.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/17.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/18.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/19.png" alt=""><br><img src="/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/20.png" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;/uploads/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/01.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/uploads/slides-of-g
-    
-    </summary>
-    
-      <category term="Programming" scheme="http://ming1016.github.io/categories/Programming/"/>
-    
-    
-      <category term="iOS" scheme="http://ming1016.github.io/tags/iOS/"/>
-    
-      <category term="Slides" scheme="http://ming1016.github.io/tags/Slides/"/>
     
   </entry>
   
