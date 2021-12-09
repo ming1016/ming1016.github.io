@@ -3,21 +3,20 @@
     <!-- title -->
 
 
-
+    
 
 <!-- keywords -->
 
 
 
-
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="author" content="戴铭">
     <meta name="renderer" content="webkit">
     <meta name="copyright" content="戴铭">
     
-    <meta name="keywords" content="戴铭,戴铭的博客,iOS,Swift,移动开发,JavaScript,编译">
+        <meta name="keywords" content="戴铭,戴铭的博客,iOS,Swift,移动开发,JavaScript,编译">
     
     <meta name="description" content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
     <meta name="description" content="概述Objc Runtime使得C具有了面向对象能力，在程序运行时创建，检查，修改类、对象和它们的方法。Runtime是C和汇编编写的，这里http:&#x2F;&#x2F;www.opensource.apple.com&#x2F;source&#x2F;objc4&#x2F;可以下到苹果维护的开源代码，GNU也有一个开源的runtime版本，他们都努力的保持一致。苹果官方的Runtime编程指南 Runtime函数Runtime系统是由一系列">
@@ -34,9 +33,119 @@
 <meta property="article:tag" content="runtime">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="icon" href="/assets/logo-starming.png">
     
     <title>Objc Runtime 总结 · 戴铭的博客 - 星光社</title>
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+    (function (w) {
+        'use strict'
+        // rel=preload support test
+        if (!w.loadCSS) {
+            w.loadCSS = function () {}
+        }
+        // define on the loadCSS obj
+        var rp = (loadCSS.relpreload = {})
+        // rel=preload feature support test
+        // runs once and returns a function for compat purposes
+        rp.support = (function () {
+            var ret
+            try {
+                ret = w.document.createElement('link').relList.supports('preload')
+            } catch (e) {
+                ret = false
+            }
+            return function () {
+                return ret
+            }
+        })()
+
+        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+        // then change that media back to its intended value on load
+        rp.bindMediaToggle = function (link) {
+            // remember existing media attr for ultimate state, or default to 'all'
+            var finalMedia = link.media || 'all'
+
+            function enableStylesheet() {
+                link.media = finalMedia
+            }
+
+            // bind load handlers to enable media
+            if (link.addEventListener) {
+                link.addEventListener('load', enableStylesheet)
+            } else if (link.attachEvent) {
+                link.attachEvent('onload', enableStylesheet)
+            }
+
+            // Set rel and non-applicable media type to start an async request
+            // note: timeout allows this to happen async to let rendering continue in IE
+            setTimeout(function () {
+                link.rel = 'stylesheet'
+                link.media = 'only x'
+            })
+            // also enable media after 3 seconds,
+            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+            setTimeout(enableStylesheet, 3000)
+        }
+
+        // loop through link elements in DOM
+        rp.poly = function () {
+            // double check this to prevent external calls from running
+            if (rp.support()) {
+                return
+            }
+            var links = w.document.getElementsByTagName('link')
+            for (var i = 0; i < links.length; i++) {
+                var link = links[i]
+                // qualify links to those with rel=preload and as=style attrs
+                if (
+                    link.rel === 'preload' &&
+                    link.getAttribute('as') === 'style' &&
+                    !link.getAttribute('data-loadcss')
+                ) {
+                    // prevent rerunning on link
+                    link.setAttribute('data-loadcss', true)
+                    // bind listeners to toggle media back
+                    rp.bindMediaToggle(link)
+                }
+            }
+        }
+
+        // if unsupported, run the polyfill
+        if (!rp.support()) {
+            // run once at least
+            rp.poly()
+
+            // rerun poly on an interval until onload
+            var run = w.setInterval(rp.poly, 500)
+            if (w.addEventListener) {
+                w.addEventListener('load', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            } else if (w.attachEvent) {
+                w.attachEvent('onload', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            }
+        }
+
+        // commonjs
+        if (typeof exports !== 'undefined') {
+            exports.loadCSS = loadCSS
+        } else {
+            w.loadCSS = loadCSS
+        }
+    })(typeof global !== 'undefined' ? global : this)
+</script>
+
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -86,160 +195,95 @@
             transform: translate3d(0, 0, 0);
         }
     }
-
 </style>
 
-    <link rel="preload" href= "/css/style.css?v=20210204" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-    <link rel="stylesheet" href= "/css/mobile.css?v=20210204" media="(max-width: 980px)">
+    <link rel="preload" href="/css/style.css?v=20210823" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/css/dark.css?v=20210823" as="style">
+    <link rel="stylesheet" href="/css/dark.css" media="(prefers-color-scheme: dark)">
+    <link rel="stylesheet" href="/css/mobile.css?v=20210823" media="(max-width: 960px)">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js?v=20210823" as="script">
+    <link rel="preload" href="/scripts/dark.js?v=20210823" as="script">
+    <link rel="preload" href="/font/Oswald-Regular.ttf" as="font" crossorigin>
+    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
+    <!-- algolia -->
     
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-    
-    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-/* This file is meant as a standalone workflow for
-- testing support for link[rel=preload]
-- enabling async CSS loading in browsers that do not support rel=preload
-- applying rel preload css once loaded, whether supported or not.
-*/ -->
-<script>
-(function( w ){
-	"use strict";
-	// rel=preload support test
-	if( !w.loadCSS ){
-		w.loadCSS = function(){};
-	}
-	// define on the loadCSS obj
-	var rp = loadCSS.relpreload = {};
-	// rel=preload feature support test
-	// runs once and returns a function for compat purposes
-	rp.support = (function(){
-		var ret;
-		try {
-			ret = w.document.createElement( "link" ).relList.supports( "preload" );
-		} catch (e) {
-			ret = false;
-		}
-		return function(){
-			return ret;
-		};
-	})();
-
-	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
-	// then change that media back to its intended value on load
-	rp.bindMediaToggle = function( link ){
-		// remember existing media attr for ultimate state, or default to 'all'
-		var finalMedia = link.media || "all";
-
-		function enableStylesheet(){
-			link.media = finalMedia;
-		}
-
-		// bind load handlers to enable media
-		if( link.addEventListener ){
-			link.addEventListener( "load", enableStylesheet );
-		} else if( link.attachEvent ){
-			link.attachEvent( "onload", enableStylesheet );
-		}
-
-		// Set rel and non-applicable media type to start an async request
-		// note: timeout allows this to happen async to let rendering continue in IE
-		setTimeout(function(){
-			link.rel = "stylesheet";
-			link.media = "only x";
-		});
-		// also enable media after 3 seconds,
-		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
-		setTimeout( enableStylesheet, 3000 );
-	};
-
-	// loop through link elements in DOM
-	rp.poly = function(){
-		// double check this to prevent external calls from running
-		if( rp.support() ){
-			return;
-		}
-		var links = w.document.getElementsByTagName( "link" );
-		for( var i = 0; i < links.length; i++ ){
-			var link = links[ i ];
-			// qualify links to those with rel=preload and as=style attrs
-			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
-				// prevent rerunning on link
-				link.setAttribute( "data-loadcss", true );
-				// bind listeners to toggle media back
-				rp.bindMediaToggle( link );
-			}
-		}
-	};
-
-	// if unsupported, run the polyfill
-	if( !rp.support() ){
-		// run once at least
-		rp.poly();
-
-		// rerun poly on an interval until onload
-		var run = w.setInterval( rp.poly, 500 );
-		if( w.addEventListener ){
-			w.addEventListener( "load", function(){
-				rp.poly();
-				w.clearInterval( run );
-			} );
-		} else if( w.attachEvent ){
-			w.attachEvent( "onload", function(){
-				rp.poly();
-				w.clearInterval( run );
-			} );
-		}
-	}
-
-
-	// commonjs
-	if( typeof exports !== "undefined" ){
-		exports.loadCSS = loadCSS;
-	}
-	else {
-		w.loadCSS = loadCSS;
-	}
-}( typeof global !== "undefined" ? global : this ) );
-</script>
-
-    <link rel="icon" href= "/assets/logo.png" />
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
-    <link rel="preload" href="/scripts/main.js?v=20210204" as="script" />
-    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
-    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
-    <script src="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.3/js/all.min.js"  data-auto-replace-svg="nest" ></script>
-    
-    <!-- fancybox -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
     <!-- 百度统计  -->
     
     <!-- 谷歌统计  -->
     
 <meta name="generator" content="Hexo 5.4.0"></head>
 
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ == undefined) {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js" />')
+        }
+    </script>
     
         <body class="post-body">
     
+        <!-- header -->
+        <header class="header header-mobile">
+    <!-- top read progress line -->
+    <div class="header-element">
+        <div class="read-progress"></div>
+    </div>
+    <!-- sidebar menu button -->
+    <div class="header-element">
+        
+            <div class="header-sidebar-menu">
+        
+            
+                <div style="padding-left: 1px;">&#xe775;</div>
+            
+        </div>
+    </div>
+    <!-- header actions -->
+    <div class="header-actions">
+        <!-- theme mode switch button -->
+        <span class="header-theme-btn header-element">
+            <i class="fas fa-adjust"></i>
+        </span>
+        <!-- back to home page text -->
+        <span class="home-link header-element">
+            <a href=/>戴铭的博客 - 星光社</a>
+        </span>
+    </div>
+    <!-- toggle banner for post layout -->
     
-<header class="header">
-
-    <div class="read-progress"></div>
-    <div class="header-sidebar-menu">&#xe775;</div>
-    <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/" >戴铭的博客 - 星光社</a>
+        
+            <div class="banner">
+        
+            <div class="blog-title header-element">
+                <a href="/">戴铭的博客 - 星光社</a>
             </div>
-            <div class="post-title">
+            <div class="post-title header-element">
                 <a href="#" class="post-name">Objc Runtime 总结</a>
             </div>
-    </div>
+        </div>
     
-    <a class="home-link" href=/>戴铭的博客 - 星光社</a>
 </header>
-    <div class="wrapper">
-        <div class="site-intro" style="
+
+        <!-- fixed footer -->
+        <footer class="footer-fixed">
+    <!-- back to top button -->
+    <div class="footer-fixed-element">
+        
+            <div class="back-top back-top-hidden">
+        
+        
+            <div>&#xe639;</div>
+        
+        </div>
+    </div>
+</footer>
+
+        <!-- wrapper -->
+        <div class="wrapper">
+            <div class="site-intro" style="
 
 
 
@@ -247,22 +291,23 @@
 
 
 
-height:55vh;
+    height:50vh;
+
 ">
     
     <!-- 主页  -->
     
-    
+        
     <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg-starming.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Objc Runtime 总结
+                Objc Runtime 总结
             <!-- 404 -->
             
         </h1>
@@ -270,22 +315,24 @@ height:55vh;
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
-            
+                
             <!-- 404 -->
             
         </p>
-        <!-- 文章页meta -->
+        <!-- 文章页 meta -->
         
             <div class="post-intros">
                 <!-- 文章页标签  -->
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "iOS">iOS</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "runtime">runtime</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="runtime">runtime</a>
     
 </div>
+
                 
                 
                     <div class="post-intro-read">
@@ -293,18 +340,21 @@ height:55vh;
                     </div>
                 
                 <div class="post-intro-meta">
-                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <!-- 撰写日期 -->
+                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
                     <span class="post-intro-time">2015/04/01</span>
+                    <!-- busuanzi -->
                     
-                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                        <span class="iconfont-archer">&#xe602;</span>
-                        <span id="busuanzi_value_page_pv"></span>
-                    </span>
+                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
                     
-                    <span class="shareWrapper">
-                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                        <span class="shareText">Share</span>
-                        <ul class="shareList">
+                    <!-- 文章分享 -->
+                    <span class="share-wrapper">
+                        <span class="iconfont-archer share-icon">&#xe71d;</span>
+                        <span class="share-text">Share</span>
+                        <ul class="share-list">
                             <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
                                 <div class="share-qrcode"></div>
                             </li>
@@ -319,104 +369,133 @@ height:55vh;
         
     </div>
 </div>
-        <script>
- 
+
+            <script>
   // get user agent
-  var browser = {
-    versions: function () {
-      var u = window.navigator.userAgent;
-      return {
-        userAgent: u,
-        trident: u.indexOf('Trident') > -1, //IE内核
-        presto: u.indexOf('Presto') > -1, //opera内核
-        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
-        iPad: u.indexOf('iPad') > -1, //是否为iPad
-        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
-        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
-        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
-      };
-    }()
+  function getBrowserVersions() {
+    var u = window.navigator.userAgent
+    return {
+      userAgent: u,
+      trident: u.indexOf('Trident') > -1, //IE内核
+      presto: u.indexOf('Presto') > -1, //opera内核
+      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+      iPad: u.indexOf('iPad') > -1, //是否为iPad
+      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
+    }
   }
-  console.log("userAgent:" + browser.versions.userAgent);
+  var browser = {
+    versions: getBrowserVersions(),
+  }
+  console.log('userAgent: ' + browser.versions.userAgent)
 
   // callback
   function fontLoaded() {
-    console.log('font loaded');
+    console.log('font loaded')
     if (document.getElementsByClassName('site-intro-meta')) {
-      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
-      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      document
+        .getElementsByClassName('intro-title')[0]
+        .classList.add('intro-fade-in')
+      document
+        .getElementsByClassName('intro-subtitle')[0]
+        .classList.add('intro-fade-in')
       var postIntros = document.getElementsByClassName('post-intros')[0]
       if (postIntros) {
-        postIntros.classList.add('post-fade-in');
+        postIntros.classList.add('post-fade-in')
       }
     }
   }
 
   // UC不支持跨域，所以直接显示
-  function asyncCb(){
+  function asyncCb() {
     if (browser.versions.uc) {
-      console.log("UCBrowser");
-      fontLoaded();
+      console.log('UCBrowser')
+      fontLoaded()
     } else {
       WebFont.load({
         custom: {
-          families: ['Oswald-Regular']
+          families: ['Oswald-Regular'],
         },
-        loading: function () {  //所有字体开始加载
-          // console.log('loading');
+        loading: function () {
+          // 所有字体开始加载
+          // console.log('font loading');
         },
-        active: function () {  //所有字体已渲染
-          fontLoaded();
+        active: function () {
+          // 所有字体已渲染
+          fontLoaded()
         },
-        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
-          console.log('inactive: timeout');
-          fontLoaded();
+        inactive: function () {
+          // 字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout')
+          fontLoaded()
         },
-        timeout: 5000 // Set the timeout to two seconds
-      });
+        timeout: 5000, // Set the timeout to two seconds
+      })
     }
   }
 
-  function asyncErr(){
+  function asyncErr() {
     console.warn('script load from CDN failed, will load local script')
   }
 
   // load webfont-loader async, and add callback function
   function async(u, cb, err) {
-    var d = document, t = 'script',
+    var d = document,
+      t = 'script',
       o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
-    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
-    s.parentNode.insertBefore(o, s);
+      s = d.getElementsByTagName(t)[0]
+    o.src = u
+    if (cb) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          cb(null, e)
+        },
+        false
+      )
+    }
+    if (err) {
+      o.addEventListener(
+        'error',
+        function (e) {
+          err(null, e)
+        },
+        false
+      )
+    }
+    s.parentNode.insertBefore(o, s)
   }
 
-  var asyncLoadWithFallBack = function(arr, success, reject) {
-      var currReject = function(){
-        reject()
-        arr.shift()
-        if(arr.length)
-          async(arr[0], success, currReject)
-        }
+  var asyncLoadWithFallBack = function (arr, success, reject) {
+    var currReject = function () {
+      reject()
+      arr.shift()
+      if (arr.length) async(arr[0], success, currReject)
+    }
 
-      async(arr[0], success, currReject)
+    async(arr[0], success, currReject)
   }
 
-  asyncLoadWithFallBack([
-    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
-    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
-    "/lib/webfontloader.min.js"
-  ], asyncCb, asyncErr)
-</script>        
-        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
-        <div class="container container-unloaded">
-            <main class="main post-page">
+  asyncLoadWithFallBack(
+    [
+      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
+      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
+      "/lib/webfontloader.min.js",
+    ],
+    asyncCb,
+    asyncErr
+  )
+</script>
+
+            <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+            <div class="container container-unloaded">
+                <main class="main post-page">
     <article class="article-entry">
         <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Objc Runtime使得C具有了面向对象能力，在程序运行时创建，检查，修改类、对象和它们的方法。Runtime是C和汇编编写的，这里<a target="_blank" rel="noopener" href="http://www.opensource.apple.com/source/objc4/">http://www.opensource.apple.com/source/objc4/</a>可以下到苹果维护的开源代码，GNU也有一个开源的runtime版本，他们都努力的保持一致。<a target="_blank" rel="noopener" href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008048">苹果官方的Runtime编程指南</a></p>
 <h2 id="Runtime函数"><a href="#Runtime函数" class="headerlink" title="Runtime函数"></a>Runtime函数</h2><p>Runtime系统是由一系列的函数和数据结构组成的公共接口动态共享库，在/usr/include/objc目录下可以看到头文件，可以用其中一些函数通过C语言实现objectivec中一样的功能。苹果官方文档<a target="_blank" rel="noopener" href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ObjCRuntimeRef/index.html">https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ObjCRuntimeRef/index.html</a> 里有详细的Runtime函数文档。</p>
@@ -507,7 +586,7 @@ height:55vh;
 <h2 id="对App的用户行为进行追踪"><a href="#对App的用户行为进行追踪" class="headerlink" title="对App的用户行为进行追踪"></a>对App的用户行为进行追踪</h2><p>就是用户点击时把事件记录下来。一般比较做法就是在viewDidAppear里记录事件，这样会让这样记录事件的代码遍布整个项目中。继承或类别也会有问题。这时利用Method Swizzling把一个方法的实现和另一个方法的实现进行替换。<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//先定义一个类别，添加要Swizzled的方法</span></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">UIViewController</span> (<span class="title">Logging</span>)- (<span class="title">void</span>)<span class="title">swizzled_viewDidAppear</span>:(<span class="title">BOOL</span>)<span class="title">animated</span></span></span><br><span class="line">&#123; <span class="comment">// call original implementation</span></span><br><span class="line">     [<span class="keyword">self</span> swizzled_viewDidAppear:animated]; <span class="comment">// Logging</span></span><br><span class="line">     [Logging logWithEventName:<span class="built_in">NSStringFromClass</span>([<span class="keyword">self</span> <span class="keyword">class</span>])];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//接下来实现swizzle方法</span></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">UIViewController</span> (<span class="title">Logging</span>)<span class="title">void</span> <span class="title">swizzleMethod</span>(<span class="title">Class</span> <span class="title">class</span>, <span class="title">SEL</span> <span class="title">originalSelector</span>, <span class="title">SEL</span> <span class="title">swizzledSelector</span>) </span>&#123; <span class="comment">// the method might not exist in the class, but in its superclass</span></span><br><span class="line">     Method originalMethod = class_getInstanceMethod(<span class="keyword">class</span>, originalSelector);</span><br><span class="line">     Method swizzledMethod = class_getInstanceMethod(<span class="keyword">class</span>, swizzledSelector); <span class="comment">// class_addMethod will fail if original method already exists</span></span><br><span class="line">     <span class="built_in">BOOL</span> didAddMethod = class_addMethod(<span class="keyword">class</span>, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod)); <span class="comment">// the method doesn’t exist and we just added one</span></span><br><span class="line">     <span class="keyword">if</span> (didAddMethod) &#123;</span><br><span class="line">          class_replaceMethod(<span class="keyword">class</span>, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">else</span> &#123;</span><br><span class="line">          method_exchangeImplementations(originalMethod, swizzledMethod);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//最后要确保在程序启动的时候调用swizzleMethod方法在之前的UIViewController的Logging类别里添加+load:方法，然后在+load:里把viewDidAppear替换掉</span></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">UIViewController</span> (<span class="title">Logging</span>)+ (<span class="title">void</span>)<span class="title">load</span></span></span><br><span class="line">&#123;</span><br><span class="line">     swizzleMethod([<span class="keyword">self</span> <span class="keyword">class</span>], <span class="keyword">@selector</span>(viewDidAppear:), <span class="keyword">@selector</span>(swizzled_viewDidAppear:));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//更简化直接用新的IMP取代原IMP，不是替换，只需要有全局的函数指针指向原IMP即可。</span></span><br><span class="line"><span class="keyword">void</span> (gOriginalViewDidAppear)(<span class="keyword">id</span>, SEL, <span class="built_in">BOOL</span>);<span class="keyword">void</span> newViewDidAppear(<span class="built_in">UIViewController</span> *<span class="keyword">self</span>, SEL _cmd, <span class="built_in">BOOL</span> animated)</span><br><span class="line">&#123; <span class="comment">// call original implementation</span></span><br><span class="line">     gOriginalViewDidAppear(<span class="keyword">self</span>, _cmd, animated); <span class="comment">// Logging</span></span><br><span class="line">     [Logging logWithEventName:<span class="built_in">NSStringFromClass</span>([<span class="keyword">self</span> <span class="keyword">class</span>])];</span><br><span class="line">&#125;</span><br><span class="line">+ (<span class="keyword">void</span>)load</span><br><span class="line">&#123;</span><br><span class="line">     Method originalMethod = class_getInstanceMethod(<span class="keyword">self</span>, <span class="keyword">@selector</span>(viewDidAppear:));</span><br><span class="line">     gOriginalViewDidAppear = (<span class="keyword">void</span> *)method_getImplementation(originalMethod); <span class="keyword">if</span>(!class_addMethod(<span class="keyword">self</span>, <span class="keyword">@selector</span>(viewDidAppear:), (IMP) newViewDidAppear, method_getTypeEncoding(originalMethod))) &#123;</span><br><span class="line">          method_setImplementation(originalMethod, (IMP) newViewDidAppear);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>通过Method Swizzling可以把事件代码或Logging，Authentication，Caching等跟主要业务逻辑代码解耦。这种处理方式叫做Cross Cutting Concerns<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Cross-cutting_concern">http://en.wikipedia.org/wiki/Cross-cutting_concern</a> 用Method Swizzling动态给指定的方法添加代码解决Cross Cutting Concerns的编程方式叫Aspect Oriented Programming <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Aspect-oriented_programming">http://en.wikipedia.org/wiki/Aspect-oriented_programming</a> 目前有些第三方库可以很方便的使用AOP，比如Aspects <a target="_blank" rel="noopener" href="https://github.com/steipete/Aspects">https://github.com/steipete/Aspects</a> 这里是使用Aspects的范例<a target="_blank" rel="noopener" href="https://github.com/okcomp/AspectsDemo">https://github.com/okcomp/AspectsDemo</a></p>
 
     </article>
-    <!-- license  -->
+    <!-- license -->
     
         <div class="license-wrapper">
             <p>原文作者：<a href="http://ming1016.github.io">戴铭</a>
@@ -517,12 +596,12 @@ height:55vh;
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
-    <!-- paginator  -->
+    <!-- paginator -->
     <ul class="post-paginator">
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href= "/2015/04/02/draw-game-of-thrones-with-pencil-during-14/" title= "整理了画的权利的游戏里的角色，有龙女，小恶魔等等">
+                <a href="/2015/04/02/draw-game-of-thrones-with-pencil-during-14/" title="整理了画的权利的游戏里的角色，有龙女，小恶魔等等">
                     <div class="nextTitle">整理了画的权利的游戏里的角色，有龙女，小恶魔等等</div>
                 </a>
             
@@ -530,43 +609,51 @@ height:55vh;
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2015/03/12/draw-practice-with-pencil-during-14-to-15/" title= "14和15年间的铅笔画练习">
+                <a href="/2015/03/12/draw-practice-with-pencil-during-14-to-15/" title="14和15年间的铅笔画练习">
                     <div class="prevTitle">14和15年间的铅笔画练习</div>
                 </a>
             
         </li>
     </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
-
-<!-- City版安装代码已完成 -->
+    <!-- comment -->
     
+        <div class="post-comment">
+            <!-- 来必力 City 版安装代码 -->
+
+
+            
+
+            
+
+            
+
+            <!-- utteranc评论 -->
+
+
+            <!-- partial('_partial/comment/changyan') -->
+            <!--PC版-->
+
+
+            
+            
+
+        </div>
     
-    <!-- gitalk评论 -->
-
-    <!-- utteranc评论 -->
-
-    <!-- partial('_partial/comment/changyan') -->
-    <!--PC版-->
-
-
-    
-    
-
-    <!-- 评论 -->
-
+    <!-- timeliness note -->
     <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    
+    <!-- Mathjax -->
     
 </main>
 
-            <!-- profile -->
-            
-        </div>
-        <footer class="footer footer-unloaded">
+                <!-- profile -->
+                
+            </div>
+            <footer class="footer footer-unloaded">
     <!-- social  -->
     
-    <div class="social">
-        
+        <div class="social">
+            
     
         
             
@@ -583,8 +670,8 @@ height:55vh;
         
             
                 <span class="iconfont-archer wechat" title=wechat>
-                  
-                  <img class="profile-qr" src="/assets/wechat-qcode.jpeg" />
+                    
+                    <img class="profile-qr" src="/assets/wechat-qcode.jpeg" />
                 </span>
             
         
@@ -606,794 +693,810 @@ height:55vh;
         
     
         
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
             
-                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+                <a href="https://twitter.com/daiming_cn" class="iconfont-archer twitter" target="_blank" title=twitter></a>
             
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
         
     
 
-    </div>
+
+        </div>
     
     <!-- powered by Hexo  -->
     <div class="copyright">
         <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
-        <div><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">鄂ICP备17011999号</a></div>
     </div>
+    <!-- website approve for Chinese user -->
+    
+        <div class="website-approve">
+            
+                <span id="icp-approve" class="icp-approve">
+                    <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备17011999号</a>
+                </span>
+            
+            
+                
+                <img class="beian-img" src="/assets/beian.png" />
+                <span id="beian-approve" class="beian-approve">
+                    <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999" target="_blank">京公网安备 7011999号</a>
+                </span>
+            
+        </div>
+    
     <!-- 不蒜子  -->
     
-    <div class="busuanzi-container">
-    
-     
-    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
-    
-    </div>
-    
-
-</footer>
-    </div>
-    <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:55vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        <div class="busuanzi-container">
+            
+             
+                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+            
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Runtime%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">Runtime函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Class%E5%92%8CObject%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">Class和Object基础数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Class"><span class="toc-number">2.1.</span> <span class="toc-text">Class</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#objc-object%E4%B8%8Eid"><span class="toc-number">2.2.</span> <span class="toc-text">objc_object与id</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#objc-cache"><span class="toc-number">2.3.</span> <span class="toc-text">objc_cache</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Meta-Class"><span class="toc-number">2.4.</span> <span class="toc-text">Meta Class</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">类与对象操作函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0"><span class="toc-number">3.1.</span> <span class="toc-text">类相关操作函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#name"><span class="toc-number">3.1.1.</span> <span class="toc-text">name</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#super-class%E5%92%8Cmeta-class"><span class="toc-number">3.1.2.</span> <span class="toc-text">super_class和meta-class</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#instance-size"><span class="toc-number">3.1.3.</span> <span class="toc-text">instance_size</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F-ivars-%E5%8F%8A%E5%B1%9E%E6%80%A7"><span class="toc-number">3.1.4.</span> <span class="toc-text">成员变量(ivars)及属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#methodLists"><span class="toc-number">3.1.5.</span> <span class="toc-text">methodLists</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objc-protocol-list"><span class="toc-number">3.1.6.</span> <span class="toc-text">objc_protocol_list</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#version"><span class="toc-number">3.1.7.</span> <span class="toc-text">version</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-number">3.1.8.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%88%9B%E5%BB%BA%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1"><span class="toc-number">3.2.</span> <span class="toc-text">动态创建类和对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%88%9B%E5%BB%BA%E7%B1%BB"><span class="toc-number">3.2.1.</span> <span class="toc-text">动态创建类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1"><span class="toc-number">3.2.2.</span> <span class="toc-text">动态创建对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0"><span class="toc-number">3.3.</span> <span class="toc-text">实例操作函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E4%B8%AA%E5%AF%B9%E8%B1%A1%E6%93%8D%E4%BD%9C%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">3.3.1.</span> <span class="toc-text">整个对象操作的函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F%E8%BF%9B%E8%A1%8C%E6%93%8D%E4%BD%9C%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">3.3.2.</span> <span class="toc-text">对象实例变量进行操作的函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E5%AF%B9%E8%B1%A1%E7%B1%BB%E6%93%8D%E4%BD%9C"><span class="toc-number">3.3.3.</span> <span class="toc-text">对对象类操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E7%B1%BB%E5%AE%9A%E4%B9%89"><span class="toc-number">3.4.</span> <span class="toc-text">获取类定义</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E4%B8%8E%E5%B1%9E%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">成员变量与属性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">4.1.</span> <span class="toc-text">基础数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ivar"><span class="toc-number">4.1.1.</span> <span class="toc-text">Ivar</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objc-property-t"><span class="toc-number">4.1.2.</span> <span class="toc-text">objc_property_t</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objc-property-attribute-t"><span class="toc-number">4.1.3.</span> <span class="toc-text">objc_property_attribute_t</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">4.1.4.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E5%AF%B9%E8%B1%A1"><span class="toc-number">4.2.</span> <span class="toc-text">关联对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E5%92%8C%E5%B1%9E%E6%80%A7%E7%9A%84%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95"><span class="toc-number">4.3.</span> <span class="toc-text">成员变量和属性的操作方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="toc-number">4.3.1.</span> <span class="toc-text">成员变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Associated-Objects"><span class="toc-number">4.3.2.</span> <span class="toc-text">Associated Objects</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7"><span class="toc-number">4.3.3.</span> <span class="toc-text">属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-1"><span class="toc-number">4.4.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Method%E5%92%8C%E6%B6%88%E6%81%AF"><span class="toc-number">5.</span> <span class="toc-text">Method和消息</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Method%E5%92%8C%E6%B6%88%E6%81%AF%E7%9A%84%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">5.1.</span> <span class="toc-text">Method和消息的基础数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SEL"><span class="toc-number">5.1.1.</span> <span class="toc-text">SEL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IMP"><span class="toc-number">5.1.2.</span> <span class="toc-text">IMP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Method"><span class="toc-number">5.1.3.</span> <span class="toc-text">Method</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Method%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0"><span class="toc-number">5.2.</span> <span class="toc-text">Method相关操作函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Method-1"><span class="toc-number">5.2.1.</span> <span class="toc-text">Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Method%E7%9A%84SEL"><span class="toc-number">5.2.2.</span> <span class="toc-text">Method的SEL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Method%E8%B0%83%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="toc-number">5.3.</span> <span class="toc-text">Method调用流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Method%E4%B8%AD%E7%9A%84%E6%8E%A5%E6%94%B6%E6%B6%88%E6%81%AF%E5%AF%B9%E8%B1%A1%E5%8F%82%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95%E9%80%89%E6%8B%A9%E5%99%A8%E5%8F%82%E6%95%B0"><span class="toc-number">5.3.1.</span> <span class="toc-text">Method中的接收消息对象参数和方法选择器参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96Method%E5%9C%B0%E5%9D%80"><span class="toc-number">5.3.2.</span> <span class="toc-text">获取Method地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Method%E8%BD%AC%E5%8F%91"><span class="toc-number">5.4.</span> <span class="toc-text">Method转发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%96%B9%E6%B3%95%E8%A7%A3%E6%9E%90"><span class="toc-number">5.4.1.</span> <span class="toc-text">动态方法解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E6%8E%A5%E6%94%B6%E8%80%85"><span class="toc-number">5.4.2.</span> <span class="toc-text">重定向接收者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E8%BF%9B%E8%A1%8C%E8%BD%AC%E5%8F%91"><span class="toc-number">5.4.3.</span> <span class="toc-text">最后进行转发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E5%8F%91%E5%92%8C%E5%A4%9A%E7%BB%A7%E6%89%BF"><span class="toc-number">5.4.4.</span> <span class="toc-text">转发和多继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Message%E6%B6%88%E6%81%AF%E7%9A%84%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="toc-number">5.4.5.</span> <span class="toc-text">Message消息的参考文章</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Method-Swizzling"><span class="toc-number">5.5.</span> <span class="toc-text">Method Swizzling</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8method-swizzling%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">5.5.1.</span> <span class="toc-text">使用method swizzling需要注意的问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Protocol%E5%92%8CCategory"><span class="toc-number">6.</span> <span class="toc-text">Protocol和Category</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-1"><span class="toc-number">6.1.</span> <span class="toc-text">基础数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Category"><span class="toc-number">6.1.1.</span> <span class="toc-text">Category</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Protocol"><span class="toc-number">6.1.2.</span> <span class="toc-text">Protocol</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0"><span class="toc-number">6.2.</span> <span class="toc-text">操作函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Block"><span class="toc-number">7.</span> <span class="toc-text">Block</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Runtime%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">8.</span> <span class="toc-text">Runtime的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E7%B3%BB%E7%BB%9F%E6%8F%90%E4%BE%9B%E7%9A%84%E5%BA%93%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF"><span class="toc-number">8.1.</span> <span class="toc-text">获取系统提供的库相关信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9App%E7%9A%84%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E8%BF%9B%E8%A1%8C%E8%BF%BD%E8%B8%AA"><span class="toc-number">8.2.</span> <span class="toc-text">对App的用户行为进行追踪</span></a></li></ol></li></ol>
-    </div>
-    
-    <div class="back-top iconfont-archer">&#xe639;</div>
-    <div class="sidebar sidebar-hide">
+    	
+</footer>
+
+        </div>
+        <!-- toc -->
+        
+            <div class="toc-wrapper toc-wrapper-loding" style=
+
+
+
+
+
+
+
+    top:50vh;
+
+>
+                <div class="toc-catalog">
+                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+                </div>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Runtime%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">Runtime函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Class%E5%92%8CObject%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">Class和Object基础数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Class"><span class="toc-number">2.1.</span> <span class="toc-text">Class</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#objc-object%E4%B8%8Eid"><span class="toc-number">2.2.</span> <span class="toc-text">objc_object与id</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#objc-cache"><span class="toc-number">2.3.</span> <span class="toc-text">objc_cache</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Meta-Class"><span class="toc-number">2.4.</span> <span class="toc-text">Meta Class</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">类与对象操作函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0"><span class="toc-number">3.1.</span> <span class="toc-text">类相关操作函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#name"><span class="toc-number">3.1.1.</span> <span class="toc-text">name</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#super-class%E5%92%8Cmeta-class"><span class="toc-number">3.1.2.</span> <span class="toc-text">super_class和meta-class</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#instance-size"><span class="toc-number">3.1.3.</span> <span class="toc-text">instance_size</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F-ivars-%E5%8F%8A%E5%B1%9E%E6%80%A7"><span class="toc-number">3.1.4.</span> <span class="toc-text">成员变量(ivars)及属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#methodLists"><span class="toc-number">3.1.5.</span> <span class="toc-text">methodLists</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objc-protocol-list"><span class="toc-number">3.1.6.</span> <span class="toc-text">objc_protocol_list</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#version"><span class="toc-number">3.1.7.</span> <span class="toc-text">version</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-number">3.1.8.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%88%9B%E5%BB%BA%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1"><span class="toc-number">3.2.</span> <span class="toc-text">动态创建类和对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%88%9B%E5%BB%BA%E7%B1%BB"><span class="toc-number">3.2.1.</span> <span class="toc-text">动态创建类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1"><span class="toc-number">3.2.2.</span> <span class="toc-text">动态创建对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0"><span class="toc-number">3.3.</span> <span class="toc-text">实例操作函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E4%B8%AA%E5%AF%B9%E8%B1%A1%E6%93%8D%E4%BD%9C%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">3.3.1.</span> <span class="toc-text">整个对象操作的函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F%E8%BF%9B%E8%A1%8C%E6%93%8D%E4%BD%9C%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">3.3.2.</span> <span class="toc-text">对象实例变量进行操作的函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E5%AF%B9%E8%B1%A1%E7%B1%BB%E6%93%8D%E4%BD%9C"><span class="toc-number">3.3.3.</span> <span class="toc-text">对对象类操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E7%B1%BB%E5%AE%9A%E4%B9%89"><span class="toc-number">3.4.</span> <span class="toc-text">获取类定义</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E4%B8%8E%E5%B1%9E%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">成员变量与属性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">4.1.</span> <span class="toc-text">基础数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ivar"><span class="toc-number">4.1.1.</span> <span class="toc-text">Ivar</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objc-property-t"><span class="toc-number">4.1.2.</span> <span class="toc-text">objc_property_t</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objc-property-attribute-t"><span class="toc-number">4.1.3.</span> <span class="toc-text">objc_property_attribute_t</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">4.1.4.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E5%AF%B9%E8%B1%A1"><span class="toc-number">4.2.</span> <span class="toc-text">关联对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E5%92%8C%E5%B1%9E%E6%80%A7%E7%9A%84%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95"><span class="toc-number">4.3.</span> <span class="toc-text">成员变量和属性的操作方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="toc-number">4.3.1.</span> <span class="toc-text">成员变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Associated-Objects"><span class="toc-number">4.3.2.</span> <span class="toc-text">Associated Objects</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7"><span class="toc-number">4.3.3.</span> <span class="toc-text">属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-1"><span class="toc-number">4.4.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Method%E5%92%8C%E6%B6%88%E6%81%AF"><span class="toc-number">5.</span> <span class="toc-text">Method和消息</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Method%E5%92%8C%E6%B6%88%E6%81%AF%E7%9A%84%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">5.1.</span> <span class="toc-text">Method和消息的基础数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SEL"><span class="toc-number">5.1.1.</span> <span class="toc-text">SEL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IMP"><span class="toc-number">5.1.2.</span> <span class="toc-text">IMP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Method"><span class="toc-number">5.1.3.</span> <span class="toc-text">Method</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Method%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0"><span class="toc-number">5.2.</span> <span class="toc-text">Method相关操作函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Method-1"><span class="toc-number">5.2.1.</span> <span class="toc-text">Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Method%E7%9A%84SEL"><span class="toc-number">5.2.2.</span> <span class="toc-text">Method的SEL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Method%E8%B0%83%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="toc-number">5.3.</span> <span class="toc-text">Method调用流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Method%E4%B8%AD%E7%9A%84%E6%8E%A5%E6%94%B6%E6%B6%88%E6%81%AF%E5%AF%B9%E8%B1%A1%E5%8F%82%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95%E9%80%89%E6%8B%A9%E5%99%A8%E5%8F%82%E6%95%B0"><span class="toc-number">5.3.1.</span> <span class="toc-text">Method中的接收消息对象参数和方法选择器参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96Method%E5%9C%B0%E5%9D%80"><span class="toc-number">5.3.2.</span> <span class="toc-text">获取Method地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Method%E8%BD%AC%E5%8F%91"><span class="toc-number">5.4.</span> <span class="toc-text">Method转发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%96%B9%E6%B3%95%E8%A7%A3%E6%9E%90"><span class="toc-number">5.4.1.</span> <span class="toc-text">动态方法解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E6%8E%A5%E6%94%B6%E8%80%85"><span class="toc-number">5.4.2.</span> <span class="toc-text">重定向接收者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E8%BF%9B%E8%A1%8C%E8%BD%AC%E5%8F%91"><span class="toc-number">5.4.3.</span> <span class="toc-text">最后进行转发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E5%8F%91%E5%92%8C%E5%A4%9A%E7%BB%A7%E6%89%BF"><span class="toc-number">5.4.4.</span> <span class="toc-text">转发和多继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Message%E6%B6%88%E6%81%AF%E7%9A%84%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="toc-number">5.4.5.</span> <span class="toc-text">Message消息的参考文章</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Method-Swizzling"><span class="toc-number">5.5.</span> <span class="toc-text">Method Swizzling</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8method-swizzling%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">5.5.1.</span> <span class="toc-text">使用method swizzling需要注意的问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Protocol%E5%92%8CCategory"><span class="toc-number">6.</span> <span class="toc-text">Protocol和Category</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-1"><span class="toc-number">6.1.</span> <span class="toc-text">基础数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Category"><span class="toc-number">6.1.1.</span> <span class="toc-text">Category</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Protocol"><span class="toc-number">6.1.2.</span> <span class="toc-text">Protocol</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0"><span class="toc-number">6.2.</span> <span class="toc-text">操作函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Block"><span class="toc-number">7.</span> <span class="toc-text">Block</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Runtime%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">8.</span> <span class="toc-text">Runtime的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E7%B3%BB%E7%BB%9F%E6%8F%90%E4%BE%9B%E7%9A%84%E5%BA%93%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF"><span class="toc-number">8.1.</span> <span class="toc-text">获取系统提供的库相关信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9App%E7%9A%84%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E8%BF%9B%E8%A1%8C%E8%BF%BD%E8%B8%AA"><span class="toc-number">8.2.</span> <span class="toc-text">对App的用户行为进行追踪</span></a></li></ol></li></ol>
+            </div>
+        
+        <!-- sidebar -->
+        <div class="sidebar sidebar-hide">
     <ul class="sidebar-tabs sidebar-tabs-active-0">
         <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
         <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
         <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
     </ul>
     <div class="sidebar-content sidebar-content-show-archive">
-          <div class="sidebar-panel-archives">
-    <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+        <div class="sidebar-panel-archives">
+    <!-- 在 ejs 中将 archive 按照时间排序 -->
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     
     
     
@@ -1408,484 +1511,638 @@ top:55vh;
     
     <div class="post-archive">
     
-    
-    
-    
-    <div class="archive-year"> 2021 </div>
-    <ul class="year-list">
-    
-    
+        
+            
+            
+            <div class="archive-year"> 2021 </div>
+            <ul class="year-list">
+            
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">11/23</span><a class="archive-post-title" href= "/2021/11/23/daiming-swift-pamphlet/" >戴铭的 Swift 小册子</a>
+            <span class="archive-post-date">11/23</span>
+            <a class="archive-post-title" href="/2021/11/23/daiming-swift-pamphlet/">戴铭的 Swift 小册子</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2021/07/24/my-little-idea-about-writing-technical-article/" >我写技术文章的一点心得</a>
+            <span class="archive-post-date">07/24</span>
+            <a class="archive-post-title" href="/2021/07/24/my-little-idea-about-writing-technical-article/">我写技术文章的一点心得</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/2021/07/13/deeply-analyse-autolayout-slides/" >深入剖析Auto Layout的幻灯片</a>
+            <span class="archive-post-date">07/13</span>
+            <a class="archive-post-title" href="/2021/07/13/deeply-analyse-autolayout-slides/">深入剖析Auto Layout的幻灯片</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">06/08</span><a class="archive-post-title" href= "/2021/06/08/wwdc2021-day1-note/" >WWDC 2021 Day1 笔记</a>
+            <span class="archive-post-date">06/08</span>
+            <a class="archive-post-title" href="/2021/06/08/wwdc2021-day1-note/">WWDC 2021 Day1 笔记</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href= "/2021/05/22/acfun-swift-practice/" >A站 的 Swift 实践</a>
+            <span class="archive-post-date">05/22</span>
+            <a class="archive-post-title" href="/2021/05/22/acfun-swift-practice/">A站 的 Swift 实践</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">02/21</span><a class="archive-post-title" href= "/2021/02/21/deeply-analyse-quickjs/" >深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</a>
+            <span class="archive-post-date">02/21</span>
+            <a class="archive-post-title" href="/2021/02/21/deeply-analyse-quickjs/">深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</a>
         </li>
     
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
-    
-    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2020 </div>
+            <ul class="year-list">
+            
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">12/18</span><a class="archive-post-title" href= "/2020/12/18/thinking-in-how-to-speed-up-app/" >App 启动提速实践和一些想法</a>
+            <span class="archive-post-date">12/18</span>
+            <a class="archive-post-title" href="/2020/12/18/thinking-in-how-to-speed-up-app/">App 启动提速实践和一些想法</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">05/04</span><a class="archive-post-title" href= "/2020/05/04/draw-in-2020/" >2020年涂图</a>
+            <span class="archive-post-date">05/04</span>
+            <a class="archive-post-title" href="/2020/05/04/draw-in-2020/">2020年涂图</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2020/04/12/why_write_study_ios_programming_with_daiming_book_and_draw_recently/" >我为什么写了《跟戴铭学iOS编程》这本书</a>
+            <span class="archive-post-date">04/12</span>
+            <a class="archive-post-title" href="/2020/04/12/why_write_study_ios_programming_with_daiming_book_and_draw_recently/">我为什么写了《跟戴铭学iOS编程》这本书</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">03/29</span><a class="archive-post-title" href= "/2020/03/29/apple-system-executable-file-macho/" >Apple 操作系统可执行文件 Mach-O</a>
+            <span class="archive-post-date">03/29</span>
+            <a class="archive-post-title" href="/2020/03/29/apple-system-executable-file-macho/">Apple 操作系统可执行文件 Mach-O</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/" >在快手做分享、无用类检查、在广州做 SwiftUI 学习笔记分享、InfoQ二叉树视频</a>
+            <span class="archive-post-date">01/05</span>
+            <a class="archive-post-title" href="/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/">在快手做分享、无用类检查、在广州做 SwiftUI 学习笔记分享、InfoQ二叉树视频</a>
         </li>
     
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2019 </div>
-    <ul class="year-list">
-    
-    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2019 </div>
+            <ul class="year-list">
+            
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">12/28</span><a class="archive-post-title" href= "/2019/12/28/japan-travel/" >日本游玩</a>
+            <span class="archive-post-date">12/28</span>
+            <a class="archive-post-title" href="/2019/12/28/japan-travel/">日本游玩</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">12/07</span><a class="archive-post-title" href= "/2019/12/07/how-to-analyze-startup-time-cost-in-ios/" >如何对 iOS 启动阶段耗时进行分析</a>
+            <span class="archive-post-date">12/07</span>
+            <a class="archive-post-title" href="/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">如何对 iOS 启动阶段耗时进行分析</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">12/06</span><a class="archive-post-title" href= "/2019/12/06/draw-in-2019/" >2019年涂图</a>
+            <span class="archive-post-date">12/06</span>
+            <a class="archive-post-title" href="/2019/12/06/draw-in-2019/">2019年涂图</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">07/29</span><a class="archive-post-title" href= "/2019/07/29/ios-map/" >iOS 开发舆图</a>
+            <span class="archive-post-date">07/29</span>
+            <a class="archive-post-title" href="/2019/07/29/ios-map/">iOS 开发舆图</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">06/19</span><a class="archive-post-title" href= "/2019/06/19/white-dragon-class/" >白龙班</a>
+            <span class="archive-post-date">06/19</span>
+            <a class="archive-post-title" href="/2019/06/19/white-dragon-class/">白龙班</a>
         </li>
     
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
-    
-    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2018 </div>
+            <ul class="year-list">
+            
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/2018/09/17/produce-slides-of-third-at-swift-conference/" >这次swift大会分享准备的幻灯片和 demo</a>
+            <span class="archive-post-date">09/17</span>
+            <a class="archive-post-title" href="/2018/09/17/produce-slides-of-third-at-swift-conference/">这次swift大会分享准备的幻灯片和 demo</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">09/14</span><a class="archive-post-title" href= "/2018/09/14/draw-with-procreate-in-ipad-during-pre-half-in-20182/" >18年上半年procreate的练习图图</a>
+            <span class="archive-post-date">09/14</span>
+            <a class="archive-post-title" href="/2018/09/14/draw-with-procreate-in-ipad-during-pre-half-in-20182/">18年上半年procreate的练习图图</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2018/04/21/deeply-analyse-javascriptcore/" >深入剖析 JavaScriptCore</a>
+            <span class="archive-post-date">04/21</span>
+            <a class="archive-post-title" href="/2018/04/21/deeply-analyse-javascriptcore/">深入剖析 JavaScriptCore</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">04/07</span><a class="archive-post-title" href= "/2018/04/07/read-snapkit-and-masonry-source-code/" >读 SnapKit 和 Masonry 自动布局框架源码</a>
+            <span class="archive-post-date">04/07</span>
+            <a class="archive-post-title" href="/2018/04/07/read-snapkit-and-masonry-source-code/">读 SnapKit 和 Masonry 自动布局框架源码</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span><a class="archive-post-title" href= "/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/" >Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法</a>
+            <span class="archive-post-date">04/02</span>
+            <a class="archive-post-title" href="/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/">Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">01/24</span><a class="archive-post-title" href= "/2018/01/24/why-swift/" >Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)</a>
+            <span class="archive-post-date">01/24</span>
+            <a class="archive-post-title" href="/2018/01/24/why-swift/">Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2018/01/10/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/" >GIAC 大会上分享的《Swift 将 Web 代码转成60帧满帧原生应用的方案及实践》的幻灯片</a>
+            <span class="archive-post-date">01/10</span>
+            <a class="archive-post-title" href="/2018/01/10/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/">GIAC 大会上分享的《Swift 将 Web 代码转成60帧满帧原生应用的方案及实践》的幻灯片</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span><a class="archive-post-title" href= "/2018/01/04/baimi/" >白芈</a>
+            <span class="archive-post-date">01/04</span>
+            <a class="archive-post-title" href="/2018/01/04/baimi/">白芈</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span><a class="archive-post-title" href= "/2018/01/04/huaye/" >花野</a>
+            <span class="archive-post-date">01/04</span>
+            <a class="archive-post-title" href="/2018/01/04/huaye/">花野</a>
         </li>
     
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2017 </div>
-    <ul class="year-list">
-    
-    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2017 </div>
+            <ul class="year-list">
+            
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">10/24</span><a class="archive-post-title" href= "/2017/10/24/how-do-i-improve-the-development/" >在滴滴，我是如何指数级提升开发技术的？</a>
+            <span class="archive-post-date">10/24</span>
+            <a class="archive-post-title" href="/2017/10/24/how-do-i-improve-the-development/">在滴滴，我是如何指数级提升开发技术的？</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">10/16</span><a class="archive-post-title" href= "/2017/10/16/html-to-native-htn-development-record/" >HTML 转原生 HTN 项目开发记录</a>
+            <span class="archive-post-date">10/16</span>
+            <a class="archive-post-title" href="/2017/10/16/html-to-native-htn-development-record/">HTML 转原生 HTN 项目开发记录</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">10/11</span><a class="archive-post-title" href= "/2017/10/11/deeply-analyse-webkit/" >深入剖析 WebKit</a>
+            <span class="archive-post-date">10/11</span>
+            <a class="archive-post-title" href="/2017/10/11/deeply-analyse-webkit/">深入剖析 WebKit</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2017/06/20/deeply-ios-performance-optimization/" >深入剖析 iOS 性能优化</a>
+            <span class="archive-post-date">06/20</span>
+            <a class="archive-post-title" href="/2017/06/20/deeply-ios-performance-optimization/">深入剖析 iOS 性能优化</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">06/12</span><a class="archive-post-title" href= "/2017/06/12/gmtc-ios-slimming-practice/" >GMTC 上分享滴滴出行 iOS 端瘦身实践的 Slides</a>
+            <span class="archive-post-date">06/12</span>
+            <a class="archive-post-title" href="/2017/06/12/gmtc-ios-slimming-practice/">GMTC 上分享滴滴出行 iOS 端瘦身实践的 Slides</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/" >atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides</a>
+            <span class="archive-post-date">05/27</span>
+            <a class="archive-post-title" href="/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/">atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/build-static-analysis-program-smck-use-swift/" >用 Swift 编写的工程代码静态分析命令行工具 smck</a>
+            <span class="archive-post-date">04/01</span>
+            <a class="archive-post-title" href="/2017/04/01/build-static-analysis-program-smck-use-swift/">用 Swift 编写的工程代码静态分析命令行工具 smck</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/slides-of-deeply-analyse-llvm/" >深入剖析 iOS 编译 Clang / LLVM 直播的 Slides</a>
+            <span class="archive-post-date">04/01</span>
+            <a class="archive-post-title" href="/2017/04/01/slides-of-deeply-analyse-llvm/">深入剖析 iOS 编译 Clang / LLVM 直播的 Slides</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2017/03/01/deeply-analyse-llvm/" >深入剖析 iOS 编译 Clang / LLVM</a>
+            <span class="archive-post-date">03/01</span>
+            <a class="archive-post-title" href="/2017/03/01/deeply-analyse-llvm/">深入剖析 iOS 编译 Clang / LLVM</a>
         </li>
     
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2016 </div>
-    <ul class="year-list">
-    
-    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2016 </div>
+            <ul class="year-list">
+            
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">11/22</span><a class="archive-post-title" href= "/2016/11/22/how-to-preload-web-in-ios/" >iOS预加载Web页面方案</a>
+            <span class="archive-post-date">11/22</span>
+            <a class="archive-post-title" href="/2016/11/22/how-to-preload-web-in-ios/">iOS预加载Web页面方案</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2016/11/17/use-swift3-build-macos-program-to-clear-unuse-method/" >使用Swift3开发了个macOS的程序可以检测出objc项目中无用方法，然后一键全部清理</a>
+            <span class="archive-post-date">11/17</span>
+            <a class="archive-post-title" href="/2016/11/17/use-swift3-build-macos-program-to-clear-unuse-method/">使用Swift3开发了个macOS的程序可以检测出objc项目中无用方法，然后一键全部清理</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">09/20</span><a class="archive-post-title" href= "/2016/09/20/draw-with-procreate-in-ipad-during-15-to-16/" >15，16年iPad上使用Procreate画的</a>
+            <span class="archive-post-date">09/20</span>
+            <a class="archive-post-title" href="/2016/09/20/draw-with-procreate-in-ipad-during-15-to-16/">15，16年iPad上使用Procreate画的</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">09/02</span><a class="archive-post-title" href= "/2016/09/02/develop-rss-reader/" >使用ReactiveCocoa开发RSS阅读器</a>
+            <span class="archive-post-date">09/02</span>
+            <a class="archive-post-title" href="/2016/09/02/develop-rss-reader/">使用ReactiveCocoa开发RSS阅读器</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">08/09</span><a class="archive-post-title" href= "/2016/08/09/how-to-use-reactivecocoa/" >iOS函数响应式编程以及ReactiveCocoa的使用</a>
+            <span class="archive-post-date">08/09</span>
+            <a class="archive-post-title" href="/2016/08/09/how-to-use-reactivecocoa/">iOS函数响应式编程以及ReactiveCocoa的使用</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">07/21</span><a class="archive-post-title" href= "/2016/07/21/assembleview/" >制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</a>
+            <span class="archive-post-date">07/21</span>
+            <a class="archive-post-title" href="/2016/07/21/assembleview/">制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">05/30</span><a class="archive-post-title" href= "/2016/05/30/what-learn-from-reactivecocoa/" >从 ReactiveCocoa 中能学到什么？不用此库也能学以致用</a>
+            <span class="archive-post-date">05/30</span>
+            <a class="archive-post-title" href="/2016/05/30/what-learn-from-reactivecocoa/">从 ReactiveCocoa 中能学到什么？不用此库也能学以致用</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">05/23</span><a class="archive-post-title" href= "/2016/05/23/try-to-decouple-with-demo/" >竭尽全力的去解耦的一次实践，封装一个TableView和一些功能组合的控件</a>
+            <span class="archive-post-date">05/23</span>
+            <a class="archive-post-title" href="/2016/05/23/try-to-decouple-with-demo/">竭尽全力的去解耦的一次实践，封装一个TableView和一些功能组合的控件</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2016/04/04/tenth-middle-school/" >十中</a>
+            <span class="archive-post-date">04/04</span>
+            <a class="archive-post-title" href="/2016/04/04/tenth-middle-school/">十中</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">01/13</span><a class="archive-post-title" href= "/2016/01/13/how-to-use-gcd/" >细说 GCD（Grand Central Dispatch）如何用</a>
+            <span class="archive-post-date">01/13</span>
+            <a class="archive-post-title" href="/2016/01/13/how-to-use-gcd/">细说 GCD（Grand Central Dispatch）如何用</a>
         </li>
     
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2015 </div>
-    <ul class="year-list">
-    
-    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2015 </div>
+            <ul class="year-list">
+            
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">11/03</span><a class="archive-post-title" href= "/2015/11/03/deeply-analyse-autolayout/" >深入剖析Auto Layout，分析iOS各版本新增特性</a>
+            <span class="archive-post-date">11/03</span>
+            <a class="archive-post-title" href="/2015/11/03/deeply-analyse-autolayout/">深入剖析Auto Layout，分析iOS各版本新增特性</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">11/02</span><a class="archive-post-title" href= "/2015/11/02/draw-with-note-in-ipad-during-15/" >15年用iPad上的备忘录画的</a>
+            <span class="archive-post-date">11/02</span>
+            <a class="archive-post-title" href="/2015/11/02/draw-with-note-in-ipad-during-15/">15年用iPad上的备忘录画的</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href= "/2015/05/28/macos-app-i-used/" >我用过的 macOS 应用</a>
+            <span class="archive-post-date">05/28</span>
+            <a class="archive-post-title" href="/2015/05/28/macos-app-i-used/">我用过的 macOS 应用</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span><a class="archive-post-title" href= "/2015/04/02/draw-game-of-thrones-with-pencil-during-14/" >整理了画的权利的游戏里的角色，有龙女，小恶魔等等</a>
+            <span class="archive-post-date">04/02</span>
+            <a class="archive-post-title" href="/2015/04/02/draw-game-of-thrones-with-pencil-during-14/">整理了画的权利的游戏里的角色，有龙女，小恶魔等等</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2015/04/01/objc-runtime/" >Objc Runtime 总结</a>
+            <span class="archive-post-date">04/01</span>
+            <a class="archive-post-title" href="/2015/04/01/objc-runtime/">Objc Runtime 总结</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2015/03/12/draw-practice-with-pencil-during-14-to-15/" >14和15年间的铅笔画练习</a>
+            <span class="archive-post-date">03/12</span>
+            <a class="archive-post-title" href="/2015/03/12/draw-practice-with-pencil-during-14-to-15/">14和15年间的铅笔画练习</a>
         </li>
     
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2014 </div>
-    <ul class="year-list">
-    
-    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2014 </div>
+            <ul class="year-list">
+            
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2014/03/01/black-star-blue-map/" >黑星蓝图</a>
+            <span class="archive-post-date">03/01</span>
+            <a class="archive-post-title" href="/2014/03/01/black-star-blue-map/">黑星蓝图</a>
         </li>
     
     </div>
-  </div>
+</div>
+
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
-    
-        <span class="sidebar-tag-name" data-tags="AssembleView"><span class="iconfont-archer">&#xe606;</span>AssembleView</span>
-    
-        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
-    
-        <span class="sidebar-tag-name" data-tags="Novel"><span class="iconfont-archer">&#xe606;</span>Novel</span>
-    
-        <span class="sidebar-tag-name" data-tags="smck"><span class="iconfont-archer">&#xe606;</span>smck</span>
-    
-        <span class="sidebar-tag-name" data-tags="Swift"><span class="iconfont-archer">&#xe606;</span>Swift</span>
-    
-        <span class="sidebar-tag-name" data-tags="RSSReader"><span class="iconfont-archer">&#xe606;</span>RSSReader</span>
-    
-        <span class="sidebar-tag-name" data-tags="Painting"><span class="iconfont-archer">&#xe606;</span>Painting</span>
-    
-        <span class="sidebar-tag-name" data-tags="iPad"><span class="iconfont-archer">&#xe606;</span>iPad</span>
-    
-        <span class="sidebar-tag-name" data-tags="Procreate"><span class="iconfont-archer">&#xe606;</span>Procreate</span>
-    
-        <span class="sidebar-tag-name" data-tags="Pencil"><span class="iconfont-archer">&#xe606;</span>Pencil</span>
-    
-        <span class="sidebar-tag-name" data-tags="GOT"><span class="iconfont-archer">&#xe606;</span>GOT</span>
-    
-        <span class="sidebar-tag-name" data-tags="Slides"><span class="iconfont-archer">&#xe606;</span>Slides</span>
-    
-        <span class="sidebar-tag-name" data-tags="Study"><span class="iconfont-archer">&#xe606;</span>Study</span>
-    
-        <span class="sidebar-tag-name" data-tags="UIWebView"><span class="iconfont-archer">&#xe606;</span>UIWebView</span>
-    
-        <span class="sidebar-tag-name" data-tags="NSURLProtocol"><span class="iconfont-archer">&#xe606;</span>NSURLProtocol</span>
-    
-        <span class="sidebar-tag-name" data-tags="Web"><span class="iconfont-archer">&#xe606;</span>Web</span>
-    
-        <span class="sidebar-tag-name" data-tags="Japan"><span class="iconfont-archer">&#xe606;</span>Japan</span>
-    
-        <span class="sidebar-tag-name" data-tags="macOS"><span class="iconfont-archer">&#xe606;</span>macOS</span>
-    
-        <span class="sidebar-tag-name" data-tags="APP"><span class="iconfont-archer">&#xe606;</span>APP</span>
-    
-        <span class="sidebar-tag-name" data-tags="swift"><span class="iconfont-archer">&#xe606;</span>swift</span>
-    
-        <span class="sidebar-tag-name" data-tags="编译"><span class="iconfont-archer">&#xe606;</span>编译</span>
-    
-        <span class="sidebar-tag-name" data-tags="LLVM"><span class="iconfont-archer">&#xe606;</span>LLVM</span>
-    
-        <span class="sidebar-tag-name" data-tags="Pattern"><span class="iconfont-archer">&#xe606;</span>Pattern</span>
-    
-        <span class="sidebar-tag-name" data-tags="ReactiveCocoa"><span class="iconfont-archer">&#xe606;</span>ReactiveCocoa</span>
-    
-        <span class="sidebar-tag-name" data-tags="book"><span class="iconfont-archer">&#xe606;</span>book</span>
-    
-        <span class="sidebar-tag-name" data-tags="Autolayout"><span class="iconfont-archer">&#xe606;</span>Autolayout</span>
-    
-        <span class="sidebar-tag-name" data-tags="SwiftUI"><span class="iconfont-archer">&#xe606;</span>SwiftUI</span>
-    
-        <span class="sidebar-tag-name" data-tags="Apple"><span class="iconfont-archer">&#xe606;</span>Apple</span>
-    
-        <span class="sidebar-tag-name" data-tags="Mach-O"><span class="iconfont-archer">&#xe606;</span>Mach-O</span>
-    
-        <span class="sidebar-tag-name" data-tags="JavaScript"><span class="iconfont-archer">&#xe606;</span>JavaScript</span>
-    
-        <span class="sidebar-tag-name" data-tags="Performance optimization"><span class="iconfont-archer">&#xe606;</span>Performance optimization</span>
-    
-        <span class="sidebar-tag-name" data-tags="GCD"><span class="iconfont-archer">&#xe606;</span>GCD</span>
-    
-        <span class="sidebar-tag-name" data-tags="runtime"><span class="iconfont-archer">&#xe606;</span>runtime</span>
-    
-        <span class="sidebar-tag-name" data-tags="Clang"><span class="iconfont-archer">&#xe606;</span>Clang</span>
-    
-        <span class="sidebar-tag-name" data-tags="WebKit"><span class="iconfont-archer">&#xe606;</span>WebKit</span>
-    
+        
+            <span class="sidebar-tag-name" data-tags="AssembleView">
+                <span class="iconfont-archer">&#xe606;</span>
+                AssembleView
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="iOS">
+                <span class="iconfont-archer">&#xe606;</span>
+                iOS
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Novel">
+                <span class="iconfont-archer">&#xe606;</span>
+                Novel
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="smck">
+                <span class="iconfont-archer">&#xe606;</span>
+                smck
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Swift">
+                <span class="iconfont-archer">&#xe606;</span>
+                Swift
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="RSSReader">
+                <span class="iconfont-archer">&#xe606;</span>
+                RSSReader
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Painting">
+                <span class="iconfont-archer">&#xe606;</span>
+                Painting
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="iPad">
+                <span class="iconfont-archer">&#xe606;</span>
+                iPad
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Procreate">
+                <span class="iconfont-archer">&#xe606;</span>
+                Procreate
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Pencil">
+                <span class="iconfont-archer">&#xe606;</span>
+                Pencil
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="GOT">
+                <span class="iconfont-archer">&#xe606;</span>
+                GOT
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Slides">
+                <span class="iconfont-archer">&#xe606;</span>
+                Slides
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Study">
+                <span class="iconfont-archer">&#xe606;</span>
+                Study
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="UIWebView">
+                <span class="iconfont-archer">&#xe606;</span>
+                UIWebView
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="NSURLProtocol">
+                <span class="iconfont-archer">&#xe606;</span>
+                NSURLProtocol
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Web">
+                <span class="iconfont-archer">&#xe606;</span>
+                Web
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Japan">
+                <span class="iconfont-archer">&#xe606;</span>
+                Japan
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="macOS">
+                <span class="iconfont-archer">&#xe606;</span>
+                macOS
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="APP">
+                <span class="iconfont-archer">&#xe606;</span>
+                APP
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="swift">
+                <span class="iconfont-archer">&#xe606;</span>
+                swift
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="编译">
+                <span class="iconfont-archer">&#xe606;</span>
+                编译
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="LLVM">
+                <span class="iconfont-archer">&#xe606;</span>
+                LLVM
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Pattern">
+                <span class="iconfont-archer">&#xe606;</span>
+                Pattern
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="ReactiveCocoa">
+                <span class="iconfont-archer">&#xe606;</span>
+                ReactiveCocoa
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="book">
+                <span class="iconfont-archer">&#xe606;</span>
+                book
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Autolayout">
+                <span class="iconfont-archer">&#xe606;</span>
+                Autolayout
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="SwiftUI">
+                <span class="iconfont-archer">&#xe606;</span>
+                SwiftUI
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Apple">
+                <span class="iconfont-archer">&#xe606;</span>
+                Apple
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Mach-O">
+                <span class="iconfont-archer">&#xe606;</span>
+                Mach-O
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="JavaScript">
+                <span class="iconfont-archer">&#xe606;</span>
+                JavaScript
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Performance optimization">
+                <span class="iconfont-archer">&#xe606;</span>
+                Performance optimization
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="GCD">
+                <span class="iconfont-archer">&#xe606;</span>
+                GCD
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="runtime">
+                <span class="iconfont-archer">&#xe606;</span>
+                runtime
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Clang">
+                <span class="iconfont-archer">&#xe606;</span>
+                Clang
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="WebKit">
+                <span class="iconfont-archer">&#xe606;</span>
+                WebKit
+            </span>
+        
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
     <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
-    缺失模块。<br/>
-    1、请确保node版本大于6.2<br/>
-    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
-    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
-    3、在根目录_config.yml里添加配置：
-    <pre style="color: #787878; font-size: 0.6rem;">
-jsonContent:
-  meta: false
-  pages: false
-  posts:
-    title: true
-    date: true
-    path: true
-    text: false
-    raw: false
-    content: false
-    slug: false
-    updated: false
-    comments: false
-    link: false
-    permalink: false
-    excerpt: false
-    categories: true
-    tags: true</pre>
+        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
     </div> 
     <div class="sidebar-tags-list"></div>
 </div>
+
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="Programming"><span class="iconfont-archer">&#xe60a;</span>Programming</span>
+        <span class="sidebar-category-name" data-categories="Programming">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Programming
+        </span>
     
-        <span class="sidebar-category-name" data-categories="My-novel"><span class="iconfont-archer">&#xe60a;</span>My-novel</span>
+        <span class="sidebar-category-name" data-categories="My-novel">
+            <span class="iconfont-archer">&#xe60a;</span>
+            My-novel
+        </span>
     
-        <span class="sidebar-category-name" data-categories="My-painting"><span class="iconfont-archer">&#xe60a;</span>My-painting</span>
+        <span class="sidebar-category-name" data-categories="My-painting">
+            <span class="iconfont-archer">&#xe60a;</span>
+            My-painting
+        </span>
     
-        <span class="sidebar-category-name" data-categories="travel"><span class="iconfont-archer">&#xe60a;</span>travel</span>
+        <span class="sidebar-category-name" data-categories="travel">
+            <span class="iconfont-archer">&#xe60a;</span>
+            travel
+        </span>
     
-        <span class="sidebar-category-name" data-categories="APP"><span class="iconfont-archer">&#xe60a;</span>APP</span>
+        <span class="sidebar-category-name" data-categories="APP">
+            <span class="iconfont-archer">&#xe60a;</span>
+            APP
+        </span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
     <div class="sidebar-categories-list"></div>
 </div>
+
     </div>
-</div> 
-    <script>
+</div>
+
+        <!-- site-meta -->
+        <script>
     var siteMeta = {
+        url: "http://ming1016.github.io",
         root: "/",
         author: "戴铭"
     }
 </script>
-    <!-- CDN failover -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-    <script type="text/javascript">
-        if (typeof window.$ === 'undefined')
-        {
-            console.warn('jquery load from jsdelivr failed, will load local script')
-            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
-        }
-    </script>
-    <script src="/scripts/main.js"></script>
-    <!-- algolia -->
-    
-    <!-- busuanzi  -->
-    
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
-    <!-- CNZZ  -->
-    
-    </div>
-    <!-- async load share.js -->
-    
-        <script src="/scripts/share.js" async></script>    
-     
+
+        <!-- import experimental options here -->
+        <!-- Custom Font -->
+
+
+        <!-- main func -->
+        <script src="/scripts/main.js?v=20210823"></script>
+        <!-- dark mode -->
+        <script src="/scripts/dark.js?v=20210823"></script>
+        <!-- fancybox -->
+        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
+        <!-- algolia -->
+        
+        <!-- busuanzi -->
+        
+            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+        
+        <!-- CNZZ -->
+        
+        <!-- async load share.js -->
+        
+            <script src="/scripts/share.js?v=20210823" async></script>
+        
+        <!-- mermaid -->
+        
     </body>
 </html>
-
-

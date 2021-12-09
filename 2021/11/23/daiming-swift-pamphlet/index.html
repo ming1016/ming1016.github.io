@@ -3,21 +3,20 @@
     <!-- title -->
 
 
-
+    
 
 <!-- keywords -->
 
 
 
-
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="author" content="戴铭">
     <meta name="renderer" content="webkit">
     <meta name="copyright" content="戴铭">
     
-    <meta name="keywords" content="戴铭,戴铭的博客,iOS,Swift,移动开发,JavaScript,编译">
+        <meta name="keywords" content="戴铭,戴铭的博客,iOS,Swift,移动开发,JavaScript,编译">
     
     <meta name="description" content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
     <meta name="description" content="背景说明越来越多同学打算开始用 Swift 来开发了，可很多人以前都没接触过 Swift。这篇和我以前文章不同的是，本篇只是面向 Swift 零基础的同学，内容主要是一些直接可用的小例子，例子可以直接在工程中用或自己调试着看。 记得以前 PHP 有个 chm 的手册，写的很简单，但很全，每个知识点都有例子，社区版每个知识点下面还有留言互动。因此，我弄了个 Swift 的手册，是个 macOS 程序">
@@ -36,7 +35,7 @@
 <meta property="og:image" content="http://ming1016.github.io/uploads/daiming-swift-pamphlet/07.png">
 <meta property="og:image" content="http://ming1016.github.io/uploads/daiming-swift-pamphlet/08.png">
 <meta property="article:published_time" content="2021-11-23T08:28:18.000Z">
-<meta property="article:modified_time" content="2021-12-03T06:12:28.130Z">
+<meta property="article:modified_time" content="2021-12-08T03:58:01.918Z">
 <meta property="article:author" content="戴铭">
 <meta property="article:tag" content="iOS">
 <meta property="article:tag" content="Swift">
@@ -44,9 +43,119 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://ming1016.github.io/uploads/daiming-swift-pamphlet/01.png">
     <meta http-equiv="Cache-control" content="no-cache">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="icon" href="/assets/logo-starming.png">
     
     <title>戴铭的 Swift 小册子 · 戴铭的博客 - 星光社</title>
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+    (function (w) {
+        'use strict'
+        // rel=preload support test
+        if (!w.loadCSS) {
+            w.loadCSS = function () {}
+        }
+        // define on the loadCSS obj
+        var rp = (loadCSS.relpreload = {})
+        // rel=preload feature support test
+        // runs once and returns a function for compat purposes
+        rp.support = (function () {
+            var ret
+            try {
+                ret = w.document.createElement('link').relList.supports('preload')
+            } catch (e) {
+                ret = false
+            }
+            return function () {
+                return ret
+            }
+        })()
+
+        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+        // then change that media back to its intended value on load
+        rp.bindMediaToggle = function (link) {
+            // remember existing media attr for ultimate state, or default to 'all'
+            var finalMedia = link.media || 'all'
+
+            function enableStylesheet() {
+                link.media = finalMedia
+            }
+
+            // bind load handlers to enable media
+            if (link.addEventListener) {
+                link.addEventListener('load', enableStylesheet)
+            } else if (link.attachEvent) {
+                link.attachEvent('onload', enableStylesheet)
+            }
+
+            // Set rel and non-applicable media type to start an async request
+            // note: timeout allows this to happen async to let rendering continue in IE
+            setTimeout(function () {
+                link.rel = 'stylesheet'
+                link.media = 'only x'
+            })
+            // also enable media after 3 seconds,
+            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+            setTimeout(enableStylesheet, 3000)
+        }
+
+        // loop through link elements in DOM
+        rp.poly = function () {
+            // double check this to prevent external calls from running
+            if (rp.support()) {
+                return
+            }
+            var links = w.document.getElementsByTagName('link')
+            for (var i = 0; i < links.length; i++) {
+                var link = links[i]
+                // qualify links to those with rel=preload and as=style attrs
+                if (
+                    link.rel === 'preload' &&
+                    link.getAttribute('as') === 'style' &&
+                    !link.getAttribute('data-loadcss')
+                ) {
+                    // prevent rerunning on link
+                    link.setAttribute('data-loadcss', true)
+                    // bind listeners to toggle media back
+                    rp.bindMediaToggle(link)
+                }
+            }
+        }
+
+        // if unsupported, run the polyfill
+        if (!rp.support()) {
+            // run once at least
+            rp.poly()
+
+            // rerun poly on an interval until onload
+            var run = w.setInterval(rp.poly, 500)
+            if (w.addEventListener) {
+                w.addEventListener('load', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            } else if (w.attachEvent) {
+                w.attachEvent('onload', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            }
+        }
+
+        // commonjs
+        if (typeof exports !== 'undefined') {
+            exports.loadCSS = loadCSS
+        } else {
+            w.loadCSS = loadCSS
+        }
+    })(typeof global !== 'undefined' ? global : this)
+</script>
+
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -96,160 +205,95 @@
             transform: translate3d(0, 0, 0);
         }
     }
-
 </style>
 
-    <link rel="preload" href= "/css/style.css?v=20210204" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-    <link rel="stylesheet" href= "/css/mobile.css?v=20210204" media="(max-width: 980px)">
+    <link rel="preload" href="/css/style.css?v=20210823" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/css/dark.css?v=20210823" as="style">
+    <link rel="stylesheet" href="/css/dark.css" media="(prefers-color-scheme: dark)">
+    <link rel="stylesheet" href="/css/mobile.css?v=20210823" media="(max-width: 960px)">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js?v=20210823" as="script">
+    <link rel="preload" href="/scripts/dark.js?v=20210823" as="script">
+    <link rel="preload" href="/font/Oswald-Regular.ttf" as="font" crossorigin>
+    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
+    <!-- algolia -->
     
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-    
-    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-/* This file is meant as a standalone workflow for
-- testing support for link[rel=preload]
-- enabling async CSS loading in browsers that do not support rel=preload
-- applying rel preload css once loaded, whether supported or not.
-*/ -->
-<script>
-(function( w ){
-	"use strict";
-	// rel=preload support test
-	if( !w.loadCSS ){
-		w.loadCSS = function(){};
-	}
-	// define on the loadCSS obj
-	var rp = loadCSS.relpreload = {};
-	// rel=preload feature support test
-	// runs once and returns a function for compat purposes
-	rp.support = (function(){
-		var ret;
-		try {
-			ret = w.document.createElement( "link" ).relList.supports( "preload" );
-		} catch (e) {
-			ret = false;
-		}
-		return function(){
-			return ret;
-		};
-	})();
-
-	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
-	// then change that media back to its intended value on load
-	rp.bindMediaToggle = function( link ){
-		// remember existing media attr for ultimate state, or default to 'all'
-		var finalMedia = link.media || "all";
-
-		function enableStylesheet(){
-			link.media = finalMedia;
-		}
-
-		// bind load handlers to enable media
-		if( link.addEventListener ){
-			link.addEventListener( "load", enableStylesheet );
-		} else if( link.attachEvent ){
-			link.attachEvent( "onload", enableStylesheet );
-		}
-
-		// Set rel and non-applicable media type to start an async request
-		// note: timeout allows this to happen async to let rendering continue in IE
-		setTimeout(function(){
-			link.rel = "stylesheet";
-			link.media = "only x";
-		});
-		// also enable media after 3 seconds,
-		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
-		setTimeout( enableStylesheet, 3000 );
-	};
-
-	// loop through link elements in DOM
-	rp.poly = function(){
-		// double check this to prevent external calls from running
-		if( rp.support() ){
-			return;
-		}
-		var links = w.document.getElementsByTagName( "link" );
-		for( var i = 0; i < links.length; i++ ){
-			var link = links[ i ];
-			// qualify links to those with rel=preload and as=style attrs
-			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
-				// prevent rerunning on link
-				link.setAttribute( "data-loadcss", true );
-				// bind listeners to toggle media back
-				rp.bindMediaToggle( link );
-			}
-		}
-	};
-
-	// if unsupported, run the polyfill
-	if( !rp.support() ){
-		// run once at least
-		rp.poly();
-
-		// rerun poly on an interval until onload
-		var run = w.setInterval( rp.poly, 500 );
-		if( w.addEventListener ){
-			w.addEventListener( "load", function(){
-				rp.poly();
-				w.clearInterval( run );
-			} );
-		} else if( w.attachEvent ){
-			w.attachEvent( "onload", function(){
-				rp.poly();
-				w.clearInterval( run );
-			} );
-		}
-	}
-
-
-	// commonjs
-	if( typeof exports !== "undefined" ){
-		exports.loadCSS = loadCSS;
-	}
-	else {
-		w.loadCSS = loadCSS;
-	}
-}( typeof global !== "undefined" ? global : this ) );
-</script>
-
-    <link rel="icon" href= "/assets/logo.png" />
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
-    <link rel="preload" href="/scripts/main.js?v=20210204" as="script" />
-    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
-    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
-    <script src="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.3/js/all.min.js"  data-auto-replace-svg="nest" ></script>
-    
-    <!-- fancybox -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
     <!-- 百度统计  -->
     
     <!-- 谷歌统计  -->
     
 <meta name="generator" content="Hexo 5.4.0"></head>
 
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ == undefined) {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js" />')
+        }
+    </script>
     
         <body class="post-body">
     
+        <!-- header -->
+        <header class="header header-mobile">
+    <!-- top read progress line -->
+    <div class="header-element">
+        <div class="read-progress"></div>
+    </div>
+    <!-- sidebar menu button -->
+    <div class="header-element">
+        
+            <div class="header-sidebar-menu">
+        
+            
+                <div style="padding-left: 1px;">&#xe775;</div>
+            
+        </div>
+    </div>
+    <!-- header actions -->
+    <div class="header-actions">
+        <!-- theme mode switch button -->
+        <span class="header-theme-btn header-element">
+            <i class="fas fa-adjust"></i>
+        </span>
+        <!-- back to home page text -->
+        <span class="home-link header-element">
+            <a href=/>戴铭的博客 - 星光社</a>
+        </span>
+    </div>
+    <!-- toggle banner for post layout -->
     
-<header class="header">
-
-    <div class="read-progress"></div>
-    <div class="header-sidebar-menu">&#xe775;</div>
-    <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/" >戴铭的博客 - 星光社</a>
+        
+            <div class="banner">
+        
+            <div class="blog-title header-element">
+                <a href="/">戴铭的博客 - 星光社</a>
             </div>
-            <div class="post-title">
+            <div class="post-title header-element">
                 <a href="#" class="post-name">戴铭的 Swift 小册子</a>
             </div>
-    </div>
+        </div>
     
-    <a class="home-link" href=/>戴铭的博客 - 星光社</a>
 </header>
-    <div class="wrapper">
-        <div class="site-intro" style="
+
+        <!-- fixed footer -->
+        <footer class="footer-fixed">
+    <!-- back to top button -->
+    <div class="footer-fixed-element">
+        
+            <div class="back-top back-top-hidden">
+        
+        
+            <div>&#xe639;</div>
+        
+        </div>
+    </div>
+</footer>
+
+        <!-- wrapper -->
+        <div class="wrapper">
+            <div class="site-intro" style="
 
 
 
@@ -257,22 +301,23 @@
 
 
 
-height:55vh;
+    height:50vh;
+
 ">
     
     <!-- 主页  -->
     
-    
+        
     <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg-starming.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            戴铭的 Swift 小册子
+                戴铭的 Swift 小册子
             <!-- 404 -->
             
         </h1>
@@ -280,43 +325,48 @@ height:55vh;
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
-            
+                
             <!-- 404 -->
             
         </p>
-        <!-- 文章页meta -->
+        <!-- 文章页 meta -->
         
             <div class="post-intros">
                 <!-- 文章页标签  -->
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "iOS">iOS</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Swift">Swift</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Apple">Apple</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="Swift">Swift</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Apple">Apple</a>
     
 </div>
+
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">7.7k</span>阅读时长: <span class="post-count reading-time">39 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">7.8k</span>阅读时长: <span class="post-count reading-time">39 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
-                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <!-- 撰写日期 -->
+                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
                     <span class="post-intro-time">2021/11/23</span>
+                    <!-- busuanzi -->
                     
-                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                        <span class="iconfont-archer">&#xe602;</span>
-                        <span id="busuanzi_value_page_pv"></span>
-                    </span>
+                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
                     
-                    <span class="shareWrapper">
-                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                        <span class="shareText">Share</span>
-                        <ul class="shareList">
+                    <!-- 文章分享 -->
+                    <span class="share-wrapper">
+                        <span class="iconfont-archer share-icon">&#xe71d;</span>
+                        <span class="share-text">Share</span>
+                        <ul class="share-list">
                             <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
                                 <div class="share-qrcode"></div>
                             </li>
@@ -331,104 +381,133 @@ height:55vh;
         
     </div>
 </div>
-        <script>
- 
+
+            <script>
   // get user agent
-  var browser = {
-    versions: function () {
-      var u = window.navigator.userAgent;
-      return {
-        userAgent: u,
-        trident: u.indexOf('Trident') > -1, //IE内核
-        presto: u.indexOf('Presto') > -1, //opera内核
-        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
-        iPad: u.indexOf('iPad') > -1, //是否为iPad
-        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
-        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
-        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
-      };
-    }()
+  function getBrowserVersions() {
+    var u = window.navigator.userAgent
+    return {
+      userAgent: u,
+      trident: u.indexOf('Trident') > -1, //IE内核
+      presto: u.indexOf('Presto') > -1, //opera内核
+      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+      iPad: u.indexOf('iPad') > -1, //是否为iPad
+      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
+    }
   }
-  console.log("userAgent:" + browser.versions.userAgent);
+  var browser = {
+    versions: getBrowserVersions(),
+  }
+  console.log('userAgent: ' + browser.versions.userAgent)
 
   // callback
   function fontLoaded() {
-    console.log('font loaded');
+    console.log('font loaded')
     if (document.getElementsByClassName('site-intro-meta')) {
-      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
-      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      document
+        .getElementsByClassName('intro-title')[0]
+        .classList.add('intro-fade-in')
+      document
+        .getElementsByClassName('intro-subtitle')[0]
+        .classList.add('intro-fade-in')
       var postIntros = document.getElementsByClassName('post-intros')[0]
       if (postIntros) {
-        postIntros.classList.add('post-fade-in');
+        postIntros.classList.add('post-fade-in')
       }
     }
   }
 
   // UC不支持跨域，所以直接显示
-  function asyncCb(){
+  function asyncCb() {
     if (browser.versions.uc) {
-      console.log("UCBrowser");
-      fontLoaded();
+      console.log('UCBrowser')
+      fontLoaded()
     } else {
       WebFont.load({
         custom: {
-          families: ['Oswald-Regular']
+          families: ['Oswald-Regular'],
         },
-        loading: function () {  //所有字体开始加载
-          // console.log('loading');
+        loading: function () {
+          // 所有字体开始加载
+          // console.log('font loading');
         },
-        active: function () {  //所有字体已渲染
-          fontLoaded();
+        active: function () {
+          // 所有字体已渲染
+          fontLoaded()
         },
-        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
-          console.log('inactive: timeout');
-          fontLoaded();
+        inactive: function () {
+          // 字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout')
+          fontLoaded()
         },
-        timeout: 5000 // Set the timeout to two seconds
-      });
+        timeout: 5000, // Set the timeout to two seconds
+      })
     }
   }
 
-  function asyncErr(){
+  function asyncErr() {
     console.warn('script load from CDN failed, will load local script')
   }
 
   // load webfont-loader async, and add callback function
   function async(u, cb, err) {
-    var d = document, t = 'script',
+    var d = document,
+      t = 'script',
       o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
-    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
-    s.parentNode.insertBefore(o, s);
+      s = d.getElementsByTagName(t)[0]
+    o.src = u
+    if (cb) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          cb(null, e)
+        },
+        false
+      )
+    }
+    if (err) {
+      o.addEventListener(
+        'error',
+        function (e) {
+          err(null, e)
+        },
+        false
+      )
+    }
+    s.parentNode.insertBefore(o, s)
   }
 
-  var asyncLoadWithFallBack = function(arr, success, reject) {
-      var currReject = function(){
-        reject()
-        arr.shift()
-        if(arr.length)
-          async(arr[0], success, currReject)
-        }
+  var asyncLoadWithFallBack = function (arr, success, reject) {
+    var currReject = function () {
+      reject()
+      arr.shift()
+      if (arr.length) async(arr[0], success, currReject)
+    }
 
-      async(arr[0], success, currReject)
+    async(arr[0], success, currReject)
   }
 
-  asyncLoadWithFallBack([
-    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
-    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
-    "/lib/webfontloader.min.js"
-  ], asyncCb, asyncErr)
-</script>        
-        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
-        <div class="container container-unloaded">
-            <main class="main post-page">
+  asyncLoadWithFallBack(
+    [
+      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
+      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
+      "/lib/webfontloader.min.js",
+    ],
+    asyncCb,
+    asyncErr
+  )
+</script>
+
+            <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+            <div class="container container-unloaded">
+                <main class="main post-page">
     <article class="article-entry">
         <h2 id="背景说明"><a href="#背景说明" class="headerlink" title="背景说明"></a>背景说明</h2><p>越来越多同学打算开始用 Swift 来开发了，可很多人以前都没接触过 Swift。这篇和我以前文章不同的是，本篇只是面向 Swift 零基础的同学，内容主要是一些直接可用的小例子，例子可以直接在工程中用或自己调试着看。</p>
 <p>记得以前 PHP 有个 chm 的手册，写的很简单，但很全，每个知识点都有例子，社区版每个知识点下面还有留言互动。因此，我弄了个 Swift 的手册，是个 macOS 程序。建议使用我开发的这个 macOS 程序来浏览，使用方法是：</p>
@@ -460,7 +539,7 @@ height:55vh;
 <h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><h4 id="数字-Int-Float"><a href="#数字-Int-Float" class="headerlink" title="数字 Int, Float"></a>数字 Int, Float</h4><p>数字的类型有Int、Float和Double<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Int</span></span><br><span class="line"><span class="keyword">let</span> i1 <span class="operator">=</span> <span class="number">100</span></span><br><span class="line"><span class="keyword">let</span> i2 <span class="operator">=</span> <span class="number">22</span></span><br><span class="line"><span class="built_in">print</span>(i1 <span class="operator">/</span> i2) <span class="comment">//四舍五入得4</span></span><br><span class="line"><span class="comment">// Float</span></span><br><span class="line"><span class="keyword">let</span> f1: <span class="type">Float</span> <span class="operator">=</span> <span class="number">100.0</span></span><br><span class="line"><span class="keyword">let</span> f2: <span class="type">Float</span> <span class="operator">=</span> <span class="number">22.0</span></span><br><span class="line"><span class="built_in">print</span>(f1 <span class="operator">/</span> f2) <span class="comment">// 4.5454545</span></span><br><span class="line"><span class="comment">// Double</span></span><br><span class="line"><span class="keyword">let</span> d1: <span class="type">Double</span> <span class="operator">=</span> <span class="number">100.0</span></span><br><span class="line"><span class="keyword">let</span> d2: <span class="type">Double</span> <span class="operator">=</span> <span class="number">22.0</span></span><br><span class="line"><span class="built_in">print</span>(d1 <span class="operator">/</span> d2) <span class="comment">// 4.545454545454546</span></span><br><span class="line"><span class="comment">// 字面量</span></span><br><span class="line"><span class="built_in">print</span>(<span class="type">Int</span>(<span class="number">0b10101</span>)) <span class="comment">// 0b开头是二进制 </span></span><br><span class="line"><span class="built_in">print</span>(<span class="type">Int</span>(<span class="number">0x00afff</span>)) <span class="comment">// 0x开头是十六进制</span></span><br><span class="line"><span class="built_in">print</span>(<span class="number">2.5e4</span>) <span class="comment">// 2.5x10^2</span></span><br><span class="line"><span class="built_in">print</span>(<span class="number">2_000_000</span>) <span class="comment">// 2000000</span></span><br></pre></td></tr></table></figure></p>
 <h4 id="布尔数-Bool"><a href="#布尔数-Bool" class="headerlink" title="布尔数 Bool"></a>布尔数 Bool</h4><p>布尔数有 true 和 false 两种值，还有一个能够切换这两个值的 toggle 方法。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> b <span class="operator">=</span> <span class="literal">false</span></span><br><span class="line">b.toggle() <span class="comment">// true</span></span><br><span class="line">b.toggle() <span class="comment">// false</span></span><br></pre></td></tr></table></figure></p>
 <h4 id="元组-a-b-c"><a href="#元组-a-b-c" class="headerlink" title="元组 (a, b, c)"></a>元组 (a, b, c)</h4><p>元组里的值类型可以是不同的。元组可以看成是匿名结构体。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> t1 <span class="operator">=</span> (p1: <span class="number">1</span>, p2: <span class="string">&quot;two&quot;</span>, p3: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line"><span class="built_in">print</span>(t1.p1)</span><br><span class="line"><span class="built_in">print</span>(t1.p3)</span><br><span class="line"><span class="comment">// 类型推导</span></span><br><span class="line"><span class="keyword">let</span> t2 <span class="operator">=</span> (<span class="number">1</span>, <span class="string">&quot;two&quot;</span>, [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line"><span class="comment">// 通过下标访问</span></span><br><span class="line"><span class="built_in">print</span>(t2.<span class="number">1</span>) <span class="comment">// two</span></span><br><span class="line"><span class="comment">// 分解元组</span></span><br><span class="line"><span class="keyword">let</span> (dp1, dp2, <span class="keyword">_</span>) <span class="operator">=</span> t2</span><br><span class="line"><span class="built_in">print</span>(dp1)</span><br><span class="line"><span class="built_in">print</span>(dp2)</span><br></pre></td></tr></table></figure></p>
-<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s1 <span class="operator">=</span> <span class="string">&quot;Hi! This is a string. Cool?&quot;</span></span><br><span class="line"><span class="comment">/// 转义父\n表示换行。</span></span><br><span class="line"><span class="comment">/// 其它转义字符有 \0 空字符)、\t 水平制表符 、\n 换行符、\r 回车符</span></span><br><span class="line"><span class="keyword">let</span> s2 <span class="operator">=</span> <span class="string">&quot;Hi!<span class="subst">\n</span>This is a string. Cool?&quot;</span></span><br><span class="line"><span class="comment">// 多行</span></span><br><span class="line"><span class="keyword">let</span> s3 <span class="operator">=</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Hi!</span></span><br><span class="line"><span class="string">This is a string.</span></span><br><span class="line"><span class="string">Cool?</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment">// 长度</span></span><br><span class="line"><span class="built_in">print</span>(s3.count)</span><br><span class="line"><span class="built_in">print</span>(s3.isEmpty)</span><br><span class="line"><span class="comment">// 拼接</span></span><br><span class="line"><span class="built_in">print</span>(s3 <span class="operator">+</span> <span class="string">&quot;<span class="subst">\n</span>Sure!&quot;</span>)</span><br><span class="line"><span class="comment">// 字符串中插入变量</span></span><br><span class="line"><span class="keyword">let</span> i <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Today is good day, double <span class="subst">\(i)</span><span class="subst">\(i)</span>!&quot;</span>)</span><br><span class="line"><span class="comment">/// 遍历字符串</span></span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// o</span></span><br><span class="line"><span class="comment">/// n</span></span><br><span class="line"><span class="comment">/// e</span></span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> <span class="string">&quot;one&quot;</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(c)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 查找</span></span><br><span class="line"><span class="built_in">print</span>(s3.lowercased().contains(<span class="string">&quot;cool&quot;</span>)) <span class="comment">// true</span></span><br><span class="line"><span class="comment">// 替换</span></span><br><span class="line"><span class="keyword">let</span> s4 <span class="operator">=</span> <span class="string">&quot;one is two&quot;</span></span><br><span class="line"><span class="keyword">let</span> newS4 <span class="operator">=</span> s4.replacingOccurrences(of: <span class="string">&quot;two&quot;</span>, with: <span class="string">&quot;one&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(newS4)</span><br><span class="line"><span class="comment">// 删除空格和换行</span></span><br><span class="line"><span class="keyword">let</span> s5 <span class="operator">=</span> <span class="string">&quot; Simple line. <span class="subst">\n</span><span class="subst">\n</span>  &quot;</span></span><br><span class="line"><span class="built_in">print</span>(s5.trimmingCharacters(in: .whitespacesAndNewlines))</span><br></pre></td></tr></table></figure>
+<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s1 <span class="operator">=</span> <span class="string">&quot;Hi! This is a string. Cool?&quot;</span></span><br><span class="line"><span class="comment">/// 转义父\n表示换行。</span></span><br><span class="line"><span class="comment">/// 其它转义字符有 \0 空字符)、\t 水平制表符 、\n 换行符、\r 回车符</span></span><br><span class="line"><span class="keyword">let</span> s2 <span class="operator">=</span> <span class="string">&quot;Hi!<span class="subst">\n</span>This is a string. Cool?&quot;</span></span><br><span class="line"><span class="comment">// 多行</span></span><br><span class="line"><span class="keyword">let</span> s3 <span class="operator">=</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Hi!</span></span><br><span class="line"><span class="string">This is a string.</span></span><br><span class="line"><span class="string">Cool?</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment">// 长度</span></span><br><span class="line"><span class="built_in">print</span>(s3.count)</span><br><span class="line"><span class="built_in">print</span>(s3.isEmpty)</span><br><span class="line"><span class="comment">// 拼接</span></span><br><span class="line"><span class="built_in">print</span>(s3 <span class="operator">+</span> <span class="string">&quot;<span class="subst">\n</span>Sure!&quot;</span>)</span><br><span class="line"><span class="comment">// 字符串中插入变量</span></span><br><span class="line"><span class="keyword">let</span> i <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Today is good day, double <span class="subst">\(i)</span><span class="subst">\(i)</span>!&quot;</span>)</span><br><span class="line"><span class="comment">/// 遍历字符串</span></span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// o</span></span><br><span class="line"><span class="comment">/// n</span></span><br><span class="line"><span class="comment">/// e</span></span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> <span class="string">&quot;one&quot;</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(c)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 查找</span></span><br><span class="line"><span class="built_in">print</span>(s3.lowercased().contains(<span class="string">&quot;cool&quot;</span>)) <span class="comment">// true</span></span><br><span class="line"><span class="comment">// 替换</span></span><br><span class="line"><span class="keyword">let</span> s4 <span class="operator">=</span> <span class="string">&quot;one is two&quot;</span></span><br><span class="line"><span class="keyword">let</span> newS4 <span class="operator">=</span> s4.replacingOccurrences(of: <span class="string">&quot;two&quot;</span>, with: <span class="string">&quot;one&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(newS4)</span><br><span class="line"><span class="comment">// 删除空格和换行</span></span><br><span class="line"><span class="keyword">let</span> s5 <span class="operator">=</span> <span class="string">&quot; Simple line. <span class="subst">\n</span><span class="subst">\n</span>  &quot;</span></span><br><span class="line"><span class="built_in">print</span>(s5.trimmingCharacters(in: .whitespacesAndNewlines))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 切割成数组</span></span><br><span class="line"><span class="keyword">let</span> s6 <span class="operator">=</span> <span class="string">&quot;one/two/three&quot;</span></span><br><span class="line"><span class="keyword">let</span> a <span class="operator">=</span> s6.components(separatedBy: <span class="string">&quot;/&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(a) <span class="comment">// [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;]</span></span><br></pre></td></tr></table></figure>
 <p>Unicode、Character 和 SubString 等内容参见官方字符串文档： <a target="_blank" rel="noopener" href="https://docs.swift.org/swift-book/LanguageGuide/StringsAndCharacters.html">Strings and Characters — The Swift Programming Language (Swift 5.1)</a> </p>
 <h4 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h4><p>Swift的枚举有类的一些特性，比如计算属性、实例方法、扩展、遵循协议等等。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">E1</span>:<span class="title">String</span>, <span class="title">CaseIterable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> e1, e2</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 关联值</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">E2</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> e1([<span class="type">String</span>])</span><br><span class="line">    <span class="keyword">case</span> e2(<span class="type">Int</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> e1 <span class="operator">=</span> <span class="type">E2</span>.e1([<span class="string">&quot;one&quot;</span>,<span class="string">&quot;two&quot;</span>])</span><br><span class="line"><span class="keyword">let</span> e2 <span class="operator">=</span> <span class="type">E2</span>.e2(<span class="number">3</span>)</span><br><span class="line"><span class="keyword">switch</span> e1 &#123;</span><br><span class="line"><span class="keyword">case</span> .e1(<span class="keyword">let</span> array):</span><br><span class="line">    <span class="built_in">print</span>(array)</span><br><span class="line"><span class="keyword">case</span> .e2(<span class="keyword">let</span> int):</span><br><span class="line">    <span class="built_in">print</span>(int)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">print</span>(e2)</span><br><span class="line"><span class="comment">// 原始值</span></span><br><span class="line"><span class="built_in">print</span>(<span class="type">E1</span>.e1.rawValue)</span><br><span class="line"><span class="comment">// 遵循 CaseIterable 协议可迭代</span></span><br><span class="line"><span class="keyword">for</span> ie <span class="keyword">in</span> <span class="type">E1</span>.allCases &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;show <span class="subst">\(ie)</span>&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 递归枚举</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">RE</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> v(<span class="type">String</span>)</span><br><span class="line">    <span class="keyword">indirect</span> <span class="keyword">case</span> node(l:<span class="type">RE</span>, r:<span class="type">RE</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> lNode <span class="operator">=</span> <span class="type">RE</span>.v(<span class="string">&quot;left&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> rNode <span class="operator">=</span> <span class="type">RE</span>.v(<span class="string">&quot;right&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> pNode <span class="operator">=</span> <span class="type">RE</span>.node(l: lNode, r: rNode)</span><br><span class="line"><span class="keyword">switch</span> pNode &#123;</span><br><span class="line"><span class="keyword">case</span> .v(<span class="keyword">let</span> string):</span><br><span class="line">    <span class="built_in">print</span>(string)</span><br><span class="line"><span class="keyword">case</span> .node(<span class="keyword">let</span> l, <span class="keyword">let</span> r):</span><br><span class="line">    <span class="built_in">print</span>(l,r)</span><br><span class="line">    <span class="keyword">switch</span> l &#123;</span><br><span class="line">    <span class="keyword">case</span> .v(<span class="keyword">let</span> string):</span><br><span class="line">        <span class="built_in">print</span>(string)</span><br><span class="line">    <span class="keyword">case</span> .node(<span class="keyword">let</span> l, <span class="keyword">let</span> r):</span><br><span class="line">        <span class="built_in">print</span>(l, r)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">switch</span> r &#123;</span><br><span class="line">    <span class="keyword">case</span> .v(<span class="keyword">let</span> string):</span><br><span class="line">        <span class="built_in">print</span>(string)</span><br><span class="line">    <span class="keyword">case</span> .node(<span class="keyword">let</span> l, <span class="keyword">let</span> r):</span><br><span class="line">        <span class="built_in">print</span>(l, r)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h4 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h4><p>泛型可以减少重复代码，是一种抽象的表达方式。where 关键字可以对泛型做约束。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fn</span>&lt;<span class="type">T</span>&gt;(<span class="params">p</span>: <span class="type">T</span>)</span> -&gt; [<span class="type">T</span>] &#123;</span><br><span class="line">    <span class="keyword">var</span> r <span class="operator">=</span> [<span class="type">T</span>]()</span><br><span class="line">    r.append(p)</span><br><span class="line">    <span class="keyword">return</span> r</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">print</span>(fn(p: <span class="string">&quot;one&quot;</span>))</span><br><span class="line"><span class="comment">// 结构体</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">S1</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> arr <span class="operator">=</span> [<span class="type">T</span>]()</span><br><span class="line">    <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">add</span>(<span class="keyword">_</span> <span class="params">p</span>: <span class="type">T</span>)</span> &#123;</span><br><span class="line">        arr.append(p)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> s <span class="operator">=</span> <span class="type">S1</span>(arr: [<span class="string">&quot;zero&quot;</span>])</span><br><span class="line">s.add(<span class="string">&quot;one&quot;</span>)</span><br><span class="line">s.add(<span class="string">&quot;two&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s.arr) <span class="comment">// [&quot;zero&quot;, &quot;one&quot;, &quot;two&quot;]</span></span><br></pre></td></tr></table></figure></p>
@@ -565,17 +644,17 @@ height:55vh;
 <p>打开浏览器显示指定网页的代码<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">NSWorkspace</span>.shared.open(<span class="type">URL</span>(string: <span class="string">&quot;https://github.com/ming1016&quot;</span>)<span class="operator">!</span>)</span><br></pre></td></tr></table></figure></p>
 
     </article>
-    <!-- license  -->
+    <!-- license -->
     
         <div class="license-wrapper">
             <p>原文作者：<a href="http://ming1016.github.io">戴铭</a>
             <p>原文链接：<a href="http://ming1016.github.io/2021/11/23/daiming-swift-pamphlet/">http://ming1016.github.io/2021/11/23/daiming-swift-pamphlet/</a>
             <p>发表日期：<a href="http://ming1016.github.io/2021/11/23/daiming-swift-pamphlet/">November 23rd 2021, 4:28:18 pm</a>
-            <p>更新日期：<a href="http://ming1016.github.io/2021/11/23/daiming-swift-pamphlet/">December 3rd 2021, 2:12:28 pm</a>
+            <p>更新日期：<a href="http://ming1016.github.io/2021/11/23/daiming-swift-pamphlet/">December 8th 2021, 11:58:01 am</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
-    <!-- paginator  -->
+    <!-- paginator -->
     <ul class="post-paginator">
         <li class="next">
             
@@ -583,43 +662,51 @@ height:55vh;
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2021/07/24/my-little-idea-about-writing-technical-article/" title= "我写技术文章的一点心得">
+                <a href="/2021/07/24/my-little-idea-about-writing-technical-article/" title="我写技术文章的一点心得">
                     <div class="prevTitle">我写技术文章的一点心得</div>
                 </a>
             
         </li>
     </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
-
-<!-- City版安装代码已完成 -->
+    <!-- comment -->
     
+        <div class="post-comment">
+            <!-- 来必力 City 版安装代码 -->
+
+
+            
+
+            
+
+            
+
+            <!-- utteranc评论 -->
+
+
+            <!-- partial('_partial/comment/changyan') -->
+            <!--PC版-->
+
+
+            
+            
+
+        </div>
     
-    <!-- gitalk评论 -->
-
-    <!-- utteranc评论 -->
-
-    <!-- partial('_partial/comment/changyan') -->
-    <!--PC版-->
-
-
-    
-    
-
-    <!-- 评论 -->
-
+    <!-- timeliness note -->
     <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    
+    <!-- Mathjax -->
     
 </main>
 
-            <!-- profile -->
-            
-        </div>
-        <footer class="footer footer-unloaded">
+                <!-- profile -->
+                
+            </div>
+            <footer class="footer footer-unloaded">
     <!-- social  -->
     
-    <div class="social">
-        
+        <div class="social">
+            
     
         
             
@@ -636,8 +723,8 @@ height:55vh;
         
             
                 <span class="iconfont-archer wechat" title=wechat>
-                  
-                  <img class="profile-qr" src="/assets/wechat-qcode.jpeg" />
+                    
+                    <img class="profile-qr" src="/assets/wechat-qcode.jpeg" />
                 </span>
             
         
@@ -659,794 +746,810 @@ height:55vh;
         
     
         
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
             
-                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+                <a href="https://twitter.com/daiming_cn" class="iconfont-archer twitter" target="_blank" title=twitter></a>
             
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
         
     
 
-    </div>
+
+        </div>
     
     <!-- powered by Hexo  -->
     <div class="copyright">
         <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
-        <div><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">鄂ICP备17011999号</a></div>
     </div>
+    <!-- website approve for Chinese user -->
+    
+        <div class="website-approve">
+            
+                <span id="icp-approve" class="icp-approve">
+                    <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备17011999号</a>
+                </span>
+            
+            
+                
+                <img class="beian-img" src="/assets/beian.png" />
+                <span id="beian-approve" class="beian-approve">
+                    <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999" target="_blank">京公网安备 7011999号</a>
+                </span>
+            
+        </div>
+    
     <!-- 不蒜子  -->
     
-    <div class="busuanzi-container">
-    
-     
-    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
-    
-    </div>
-    
-
-</footer>
-    </div>
-    <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:55vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        <div class="busuanzi-container">
+            
+             
+                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+            
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E8%AF%B4%E6%98%8E"><span class="toc-number">1.</span> <span class="toc-text">背景说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80"><span class="toc-number">2.1.</span> <span class="toc-text">基础</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E9%87%8F-let-var"><span class="toc-number">2.1.1.</span> <span class="toc-text">变量 let, var</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%93%E5%8D%B0-print-%E2%80%9C%E2%80%9D"><span class="toc-number">2.1.2.</span> <span class="toc-text">打印 print(“”)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A"><span class="toc-number">2.1.3.</span> <span class="toc-text">注释 &#x2F;&#x2F;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E9%80%89"><span class="toc-number">2.1.4.</span> <span class="toc-text">可选 ?, !</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AD%E5%8C%85"><span class="toc-number">2.1.5.</span> <span class="toc-text">闭包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0-func"><span class="toc-number">2.1.6.</span> <span class="toc-text">函数 func</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">2.1.7.</span> <span class="toc-text">访问控制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.2.</span> <span class="toc-text">类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E5%AD%97-Int-Float"><span class="toc-number">2.2.1.</span> <span class="toc-text">数字 Int, Float</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E6%95%B0-Bool"><span class="toc-number">2.2.2.</span> <span class="toc-text">布尔数 Bool</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%83%E7%BB%84-a-b-c"><span class="toc-number">2.2.3.</span> <span class="toc-text">元组 (a, b, c)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.2.4.</span> <span class="toc-text">字符串</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE"><span class="toc-number">2.2.5.</span> <span class="toc-text">枚举</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B"><span class="toc-number">2.2.6.</span> <span class="toc-text">泛型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E9%80%8F%E6%98%8E%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.2.7.</span> <span class="toc-text">不透明类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.2.8.</span> <span class="toc-text">类型转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%92%8C%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">2.3.</span> <span class="toc-text">类和结构体</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB"><span class="toc-number">2.3.1.</span> <span class="toc-text">类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">2.3.2.</span> <span class="toc-text">结构体</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7"><span class="toc-number">2.3.3.</span> <span class="toc-text">属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">2.3.4.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF"><span class="toc-number">2.3.5.</span> <span class="toc-text">继承</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F"><span class="toc-number">2.4.</span> <span class="toc-text">函数式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#map"><span class="toc-number">2.4.1.</span> <span class="toc-text">map</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#filter"><span class="toc-number">2.4.2.</span> <span class="toc-text">filter</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#reduce"><span class="toc-number">2.4.3.</span> <span class="toc-text">reduce</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sorted"><span class="toc-number">2.4.4.</span> <span class="toc-text">sorted</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">2.5.</span> <span class="toc-text">控制流</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#If-If-let-If-case-let"><span class="toc-number">2.5.1.</span> <span class="toc-text">If  If let  If case let</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Guard-guard-guard-let"><span class="toc-number">2.5.2.</span> <span class="toc-text">Guard guard, guard let</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#For-in"><span class="toc-number">2.5.3.</span> <span class="toc-text">For-in</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#While-while-repeat-while"><span class="toc-number">2.5.4.</span> <span class="toc-text">While while, repeat-while</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Switch"><span class="toc-number">2.5.5.</span> <span class="toc-text">Switch</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E5%90%88"><span class="toc-number">2.6.</span> <span class="toc-text">集合</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E7%BB%84-1-2-3"><span class="toc-number">2.6.1.</span> <span class="toc-text">数组 [1, 2, 3]</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sets-Set"><span class="toc-number">2.6.2.</span> <span class="toc-text">Sets Set</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E5%85%B8"><span class="toc-number">2.6.3.</span> <span class="toc-text">字典 [:]</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-number">2.7.</span> <span class="toc-text">操作符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%8B%E5%80%BC"><span class="toc-number">2.7.1.</span> <span class="toc-text">赋值 &#x3D;, +&#x3D;. -&#x3D;, *&#x3D;, &#x2F;&#x3D;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E7%AC%A6"><span class="toc-number">2.7.2.</span> <span class="toc-text">计算符 +, -, *, &#x2F;, %</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6-gt"><span class="toc-number">2.7.3.</span> <span class="toc-text">比较运算符 &#x3D;&#x3D;, &gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E5%85%83"><span class="toc-number">2.7.4.</span> <span class="toc-text">三元  ?  : _</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Nil-coalescing"><span class="toc-number">2.7.5.</span> <span class="toc-text">Nil-coalescing ??</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8C%83%E5%9B%B4-a%E2%80%A6b"><span class="toc-number">2.7.6.</span> <span class="toc-text">范围 a…b</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%BB%E8%BE%91-amp-amp"><span class="toc-number">2.7.7.</span> <span class="toc-text">逻辑 !, &amp;&amp;, !!</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%81%92%E7%AD%89"><span class="toc-number">2.7.8.</span> <span class="toc-text">恒等 &#x3D;&#x3D;&#x3D;, !&#x3D;&#x3D;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">2.7.9.</span> <span class="toc-text">运算符</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E6%80%A7"><span class="toc-number">3.</span> <span class="toc-text">特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.1.</span> <span class="toc-text">模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.1.1.</span> <span class="toc-text">单例模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F"><span class="toc-number">3.2.</span> <span class="toc-text">系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E5%85%BC%E5%AE%B9"><span class="toc-number">3.2.1.</span> <span class="toc-text">版本兼容</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Codable"><span class="toc-number">3.3.</span> <span class="toc-text">Codable</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JSON-%E6%B2%A1%E6%9C%89-id-%E5%AD%97%E6%AE%B5"><span class="toc-number">3.3.1.</span> <span class="toc-text">JSON 没有 id 字段</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">编程范式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Combine%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F"><span class="toc-number">4.1.</span> <span class="toc-text">Combine响应式编程范式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">4.1.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">4.1.2.</span> <span class="toc-text">使用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82"><span class="toc-number">4.1.2.1.</span> <span class="toc-text">网络请求</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#KVO"><span class="toc-number">4.1.2.2.</span> <span class="toc-text">KVO</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%9A%E7%9F%A5"><span class="toc-number">4.1.2.3.</span> <span class="toc-text">通知</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Timer"><span class="toc-number">4.1.2.4.</span> <span class="toc-text">Timer</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SwiftUI"><span class="toc-number">4.1.2.5.</span> <span class="toc-text">SwiftUI</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%93%E7%9A%84%E9%80%89%E6%8B%A9%E4%B8%8E%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E"><span class="toc-number">5.</span> <span class="toc-text">库的选择与使用说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">5.1.</span> <span class="toc-text">数据库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83"><span class="toc-number">6.</span> <span class="toc-text">代码规范</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-number">7.</span> <span class="toc-text">最佳实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E6%BA%90%E4%BE%8B%E5%AD%90"><span class="toc-number">7.1.</span> <span class="toc-text">开源例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#macoOS"><span class="toc-number">8.</span> <span class="toc-text">macoOS</span></a></li></ol>
-    </div>
-    
-    <div class="back-top iconfont-archer">&#xe639;</div>
-    <div class="sidebar sidebar-hide">
+    	
+</footer>
+
+        </div>
+        <!-- toc -->
+        
+            <div class="toc-wrapper toc-wrapper-loding" style=
+
+
+
+
+
+
+
+    top:50vh;
+
+>
+                <div class="toc-catalog">
+                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+                </div>
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E8%AF%B4%E6%98%8E"><span class="toc-number">1.</span> <span class="toc-text">背景说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80"><span class="toc-number">2.1.</span> <span class="toc-text">基础</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E9%87%8F-let-var"><span class="toc-number">2.1.1.</span> <span class="toc-text">变量 let, var</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%93%E5%8D%B0-print-%E2%80%9C%E2%80%9D"><span class="toc-number">2.1.2.</span> <span class="toc-text">打印 print(“”)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A"><span class="toc-number">2.1.3.</span> <span class="toc-text">注释 &#x2F;&#x2F;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E9%80%89"><span class="toc-number">2.1.4.</span> <span class="toc-text">可选 ?, !</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AD%E5%8C%85"><span class="toc-number">2.1.5.</span> <span class="toc-text">闭包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0-func"><span class="toc-number">2.1.6.</span> <span class="toc-text">函数 func</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">2.1.7.</span> <span class="toc-text">访问控制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.2.</span> <span class="toc-text">类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E5%AD%97-Int-Float"><span class="toc-number">2.2.1.</span> <span class="toc-text">数字 Int, Float</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E6%95%B0-Bool"><span class="toc-number">2.2.2.</span> <span class="toc-text">布尔数 Bool</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%83%E7%BB%84-a-b-c"><span class="toc-number">2.2.3.</span> <span class="toc-text">元组 (a, b, c)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.2.4.</span> <span class="toc-text">字符串</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE"><span class="toc-number">2.2.5.</span> <span class="toc-text">枚举</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B"><span class="toc-number">2.2.6.</span> <span class="toc-text">泛型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E9%80%8F%E6%98%8E%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.2.7.</span> <span class="toc-text">不透明类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.2.8.</span> <span class="toc-text">类型转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%92%8C%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">2.3.</span> <span class="toc-text">类和结构体</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB"><span class="toc-number">2.3.1.</span> <span class="toc-text">类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">2.3.2.</span> <span class="toc-text">结构体</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7"><span class="toc-number">2.3.3.</span> <span class="toc-text">属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">2.3.4.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF"><span class="toc-number">2.3.5.</span> <span class="toc-text">继承</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F"><span class="toc-number">2.4.</span> <span class="toc-text">函数式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#map"><span class="toc-number">2.4.1.</span> <span class="toc-text">map</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#filter"><span class="toc-number">2.4.2.</span> <span class="toc-text">filter</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#reduce"><span class="toc-number">2.4.3.</span> <span class="toc-text">reduce</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sorted"><span class="toc-number">2.4.4.</span> <span class="toc-text">sorted</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">2.5.</span> <span class="toc-text">控制流</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#If-If-let-If-case-let"><span class="toc-number">2.5.1.</span> <span class="toc-text">If  If let  If case let</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Guard-guard-guard-let"><span class="toc-number">2.5.2.</span> <span class="toc-text">Guard guard, guard let</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#For-in"><span class="toc-number">2.5.3.</span> <span class="toc-text">For-in</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#While-while-repeat-while"><span class="toc-number">2.5.4.</span> <span class="toc-text">While while, repeat-while</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Switch"><span class="toc-number">2.5.5.</span> <span class="toc-text">Switch</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E5%90%88"><span class="toc-number">2.6.</span> <span class="toc-text">集合</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E7%BB%84-1-2-3"><span class="toc-number">2.6.1.</span> <span class="toc-text">数组 [1, 2, 3]</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sets-Set"><span class="toc-number">2.6.2.</span> <span class="toc-text">Sets Set</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E5%85%B8"><span class="toc-number">2.6.3.</span> <span class="toc-text">字典 [:]</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-number">2.7.</span> <span class="toc-text">操作符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%8B%E5%80%BC"><span class="toc-number">2.7.1.</span> <span class="toc-text">赋值 &#x3D;, +&#x3D;. -&#x3D;, *&#x3D;, &#x2F;&#x3D;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E7%AC%A6"><span class="toc-number">2.7.2.</span> <span class="toc-text">计算符 +, -, *, &#x2F;, %</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6-gt"><span class="toc-number">2.7.3.</span> <span class="toc-text">比较运算符 &#x3D;&#x3D;, &gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E5%85%83"><span class="toc-number">2.7.4.</span> <span class="toc-text">三元  ?  : _</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Nil-coalescing"><span class="toc-number">2.7.5.</span> <span class="toc-text">Nil-coalescing ??</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8C%83%E5%9B%B4-a%E2%80%A6b"><span class="toc-number">2.7.6.</span> <span class="toc-text">范围 a…b</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%BB%E8%BE%91-amp-amp"><span class="toc-number">2.7.7.</span> <span class="toc-text">逻辑 !, &amp;&amp;, !!</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%81%92%E7%AD%89"><span class="toc-number">2.7.8.</span> <span class="toc-text">恒等 &#x3D;&#x3D;&#x3D;, !&#x3D;&#x3D;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">2.7.9.</span> <span class="toc-text">运算符</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E6%80%A7"><span class="toc-number">3.</span> <span class="toc-text">特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.1.</span> <span class="toc-text">模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.1.1.</span> <span class="toc-text">单例模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F"><span class="toc-number">3.2.</span> <span class="toc-text">系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E5%85%BC%E5%AE%B9"><span class="toc-number">3.2.1.</span> <span class="toc-text">版本兼容</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Codable"><span class="toc-number">3.3.</span> <span class="toc-text">Codable</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JSON-%E6%B2%A1%E6%9C%89-id-%E5%AD%97%E6%AE%B5"><span class="toc-number">3.3.1.</span> <span class="toc-text">JSON 没有 id 字段</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">编程范式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Combine%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F"><span class="toc-number">4.1.</span> <span class="toc-text">Combine响应式编程范式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">4.1.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">4.1.2.</span> <span class="toc-text">使用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82"><span class="toc-number">4.1.2.1.</span> <span class="toc-text">网络请求</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#KVO"><span class="toc-number">4.1.2.2.</span> <span class="toc-text">KVO</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%9A%E7%9F%A5"><span class="toc-number">4.1.2.3.</span> <span class="toc-text">通知</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Timer"><span class="toc-number">4.1.2.4.</span> <span class="toc-text">Timer</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SwiftUI"><span class="toc-number">4.1.2.5.</span> <span class="toc-text">SwiftUI</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%93%E7%9A%84%E9%80%89%E6%8B%A9%E4%B8%8E%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E"><span class="toc-number">5.</span> <span class="toc-text">库的选择与使用说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">5.1.</span> <span class="toc-text">数据库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83"><span class="toc-number">6.</span> <span class="toc-text">代码规范</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-number">7.</span> <span class="toc-text">最佳实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E6%BA%90%E4%BE%8B%E5%AD%90"><span class="toc-number">7.1.</span> <span class="toc-text">开源例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#macoOS"><span class="toc-number">8.</span> <span class="toc-text">macoOS</span></a></li></ol>
+            </div>
+        
+        <!-- sidebar -->
+        <div class="sidebar sidebar-hide">
     <ul class="sidebar-tabs sidebar-tabs-active-0">
         <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
         <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
         <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
     </ul>
     <div class="sidebar-content sidebar-content-show-archive">
-          <div class="sidebar-panel-archives">
-    <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+        <div class="sidebar-panel-archives">
+    <!-- 在 ejs 中将 archive 按照时间排序 -->
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     
     
     
@@ -1461,484 +1564,638 @@ top:55vh;
     
     <div class="post-archive">
     
-    
-    
-    
-    <div class="archive-year"> 2021 </div>
-    <ul class="year-list">
-    
-    
+        
+            
+            
+            <div class="archive-year"> 2021 </div>
+            <ul class="year-list">
+            
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">11/23</span><a class="archive-post-title" href= "/2021/11/23/daiming-swift-pamphlet/" >戴铭的 Swift 小册子</a>
+            <span class="archive-post-date">11/23</span>
+            <a class="archive-post-title" href="/2021/11/23/daiming-swift-pamphlet/">戴铭的 Swift 小册子</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2021/07/24/my-little-idea-about-writing-technical-article/" >我写技术文章的一点心得</a>
+            <span class="archive-post-date">07/24</span>
+            <a class="archive-post-title" href="/2021/07/24/my-little-idea-about-writing-technical-article/">我写技术文章的一点心得</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/2021/07/13/deeply-analyse-autolayout-slides/" >深入剖析Auto Layout的幻灯片</a>
+            <span class="archive-post-date">07/13</span>
+            <a class="archive-post-title" href="/2021/07/13/deeply-analyse-autolayout-slides/">深入剖析Auto Layout的幻灯片</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">06/08</span><a class="archive-post-title" href= "/2021/06/08/wwdc2021-day1-note/" >WWDC 2021 Day1 笔记</a>
+            <span class="archive-post-date">06/08</span>
+            <a class="archive-post-title" href="/2021/06/08/wwdc2021-day1-note/">WWDC 2021 Day1 笔记</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span><a class="archive-post-title" href= "/2021/05/22/acfun-swift-practice/" >A站 的 Swift 实践</a>
+            <span class="archive-post-date">05/22</span>
+            <a class="archive-post-title" href="/2021/05/22/acfun-swift-practice/">A站 的 Swift 实践</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">02/21</span><a class="archive-post-title" href= "/2021/02/21/deeply-analyse-quickjs/" >深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</a>
+            <span class="archive-post-date">02/21</span>
+            <a class="archive-post-title" href="/2021/02/21/deeply-analyse-quickjs/">深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</a>
         </li>
     
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
-    
-    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2020 </div>
+            <ul class="year-list">
+            
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">12/18</span><a class="archive-post-title" href= "/2020/12/18/thinking-in-how-to-speed-up-app/" >App 启动提速实践和一些想法</a>
+            <span class="archive-post-date">12/18</span>
+            <a class="archive-post-title" href="/2020/12/18/thinking-in-how-to-speed-up-app/">App 启动提速实践和一些想法</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">05/04</span><a class="archive-post-title" href= "/2020/05/04/draw-in-2020/" >2020年涂图</a>
+            <span class="archive-post-date">05/04</span>
+            <a class="archive-post-title" href="/2020/05/04/draw-in-2020/">2020年涂图</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2020/04/12/why_write_study_ios_programming_with_daiming_book_and_draw_recently/" >我为什么写了《跟戴铭学iOS编程》这本书</a>
+            <span class="archive-post-date">04/12</span>
+            <a class="archive-post-title" href="/2020/04/12/why_write_study_ios_programming_with_daiming_book_and_draw_recently/">我为什么写了《跟戴铭学iOS编程》这本书</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">03/29</span><a class="archive-post-title" href= "/2020/03/29/apple-system-executable-file-macho/" >Apple 操作系统可执行文件 Mach-O</a>
+            <span class="archive-post-date">03/29</span>
+            <a class="archive-post-title" href="/2020/03/29/apple-system-executable-file-macho/">Apple 操作系统可执行文件 Mach-O</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/" >在快手做分享、无用类检查、在广州做 SwiftUI 学习笔记分享、InfoQ二叉树视频</a>
+            <span class="archive-post-date">01/05</span>
+            <a class="archive-post-title" href="/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/">在快手做分享、无用类检查、在广州做 SwiftUI 学习笔记分享、InfoQ二叉树视频</a>
         </li>
     
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2019 </div>
-    <ul class="year-list">
-    
-    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2019 </div>
+            <ul class="year-list">
+            
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">12/28</span><a class="archive-post-title" href= "/2019/12/28/japan-travel/" >日本游玩</a>
+            <span class="archive-post-date">12/28</span>
+            <a class="archive-post-title" href="/2019/12/28/japan-travel/">日本游玩</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">12/07</span><a class="archive-post-title" href= "/2019/12/07/how-to-analyze-startup-time-cost-in-ios/" >如何对 iOS 启动阶段耗时进行分析</a>
+            <span class="archive-post-date">12/07</span>
+            <a class="archive-post-title" href="/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">如何对 iOS 启动阶段耗时进行分析</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">12/06</span><a class="archive-post-title" href= "/2019/12/06/draw-in-2019/" >2019年涂图</a>
+            <span class="archive-post-date">12/06</span>
+            <a class="archive-post-title" href="/2019/12/06/draw-in-2019/">2019年涂图</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">07/29</span><a class="archive-post-title" href= "/2019/07/29/ios-map/" >iOS 开发舆图</a>
+            <span class="archive-post-date">07/29</span>
+            <a class="archive-post-title" href="/2019/07/29/ios-map/">iOS 开发舆图</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">06/19</span><a class="archive-post-title" href= "/2019/06/19/white-dragon-class/" >白龙班</a>
+            <span class="archive-post-date">06/19</span>
+            <a class="archive-post-title" href="/2019/06/19/white-dragon-class/">白龙班</a>
         </li>
     
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
-    
-    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2018 </div>
+            <ul class="year-list">
+            
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/2018/09/17/produce-slides-of-third-at-swift-conference/" >这次swift大会分享准备的幻灯片和 demo</a>
+            <span class="archive-post-date">09/17</span>
+            <a class="archive-post-title" href="/2018/09/17/produce-slides-of-third-at-swift-conference/">这次swift大会分享准备的幻灯片和 demo</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">09/14</span><a class="archive-post-title" href= "/2018/09/14/draw-with-procreate-in-ipad-during-pre-half-in-20182/" >18年上半年procreate的练习图图</a>
+            <span class="archive-post-date">09/14</span>
+            <a class="archive-post-title" href="/2018/09/14/draw-with-procreate-in-ipad-during-pre-half-in-20182/">18年上半年procreate的练习图图</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2018/04/21/deeply-analyse-javascriptcore/" >深入剖析 JavaScriptCore</a>
+            <span class="archive-post-date">04/21</span>
+            <a class="archive-post-title" href="/2018/04/21/deeply-analyse-javascriptcore/">深入剖析 JavaScriptCore</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">04/07</span><a class="archive-post-title" href= "/2018/04/07/read-snapkit-and-masonry-source-code/" >读 SnapKit 和 Masonry 自动布局框架源码</a>
+            <span class="archive-post-date">04/07</span>
+            <a class="archive-post-title" href="/2018/04/07/read-snapkit-and-masonry-source-code/">读 SnapKit 和 Masonry 自动布局框架源码</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span><a class="archive-post-title" href= "/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/" >Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法</a>
+            <span class="archive-post-date">04/02</span>
+            <a class="archive-post-title" href="/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/">Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">01/24</span><a class="archive-post-title" href= "/2018/01/24/why-swift/" >Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)</a>
+            <span class="archive-post-date">01/24</span>
+            <a class="archive-post-title" href="/2018/01/24/why-swift/">Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2018/01/10/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/" >GIAC 大会上分享的《Swift 将 Web 代码转成60帧满帧原生应用的方案及实践》的幻灯片</a>
+            <span class="archive-post-date">01/10</span>
+            <a class="archive-post-title" href="/2018/01/10/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/">GIAC 大会上分享的《Swift 将 Web 代码转成60帧满帧原生应用的方案及实践》的幻灯片</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span><a class="archive-post-title" href= "/2018/01/04/baimi/" >白芈</a>
+            <span class="archive-post-date">01/04</span>
+            <a class="archive-post-title" href="/2018/01/04/baimi/">白芈</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span><a class="archive-post-title" href= "/2018/01/04/huaye/" >花野</a>
+            <span class="archive-post-date">01/04</span>
+            <a class="archive-post-title" href="/2018/01/04/huaye/">花野</a>
         </li>
     
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2017 </div>
-    <ul class="year-list">
-    
-    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2017 </div>
+            <ul class="year-list">
+            
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">10/24</span><a class="archive-post-title" href= "/2017/10/24/how-do-i-improve-the-development/" >在滴滴，我是如何指数级提升开发技术的？</a>
+            <span class="archive-post-date">10/24</span>
+            <a class="archive-post-title" href="/2017/10/24/how-do-i-improve-the-development/">在滴滴，我是如何指数级提升开发技术的？</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">10/16</span><a class="archive-post-title" href= "/2017/10/16/html-to-native-htn-development-record/" >HTML 转原生 HTN 项目开发记录</a>
+            <span class="archive-post-date">10/16</span>
+            <a class="archive-post-title" href="/2017/10/16/html-to-native-htn-development-record/">HTML 转原生 HTN 项目开发记录</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">10/11</span><a class="archive-post-title" href= "/2017/10/11/deeply-analyse-webkit/" >深入剖析 WebKit</a>
+            <span class="archive-post-date">10/11</span>
+            <a class="archive-post-title" href="/2017/10/11/deeply-analyse-webkit/">深入剖析 WebKit</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2017/06/20/deeply-ios-performance-optimization/" >深入剖析 iOS 性能优化</a>
+            <span class="archive-post-date">06/20</span>
+            <a class="archive-post-title" href="/2017/06/20/deeply-ios-performance-optimization/">深入剖析 iOS 性能优化</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">06/12</span><a class="archive-post-title" href= "/2017/06/12/gmtc-ios-slimming-practice/" >GMTC 上分享滴滴出行 iOS 端瘦身实践的 Slides</a>
+            <span class="archive-post-date">06/12</span>
+            <a class="archive-post-title" href="/2017/06/12/gmtc-ios-slimming-practice/">GMTC 上分享滴滴出行 iOS 端瘦身实践的 Slides</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/" >atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides</a>
+            <span class="archive-post-date">05/27</span>
+            <a class="archive-post-title" href="/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/">atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/build-static-analysis-program-smck-use-swift/" >用 Swift 编写的工程代码静态分析命令行工具 smck</a>
+            <span class="archive-post-date">04/01</span>
+            <a class="archive-post-title" href="/2017/04/01/build-static-analysis-program-smck-use-swift/">用 Swift 编写的工程代码静态分析命令行工具 smck</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/slides-of-deeply-analyse-llvm/" >深入剖析 iOS 编译 Clang / LLVM 直播的 Slides</a>
+            <span class="archive-post-date">04/01</span>
+            <a class="archive-post-title" href="/2017/04/01/slides-of-deeply-analyse-llvm/">深入剖析 iOS 编译 Clang / LLVM 直播的 Slides</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2017/03/01/deeply-analyse-llvm/" >深入剖析 iOS 编译 Clang / LLVM</a>
+            <span class="archive-post-date">03/01</span>
+            <a class="archive-post-title" href="/2017/03/01/deeply-analyse-llvm/">深入剖析 iOS 编译 Clang / LLVM</a>
         </li>
     
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2016 </div>
-    <ul class="year-list">
-    
-    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2016 </div>
+            <ul class="year-list">
+            
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">11/22</span><a class="archive-post-title" href= "/2016/11/22/how-to-preload-web-in-ios/" >iOS预加载Web页面方案</a>
+            <span class="archive-post-date">11/22</span>
+            <a class="archive-post-title" href="/2016/11/22/how-to-preload-web-in-ios/">iOS预加载Web页面方案</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2016/11/17/use-swift3-build-macos-program-to-clear-unuse-method/" >使用Swift3开发了个macOS的程序可以检测出objc项目中无用方法，然后一键全部清理</a>
+            <span class="archive-post-date">11/17</span>
+            <a class="archive-post-title" href="/2016/11/17/use-swift3-build-macos-program-to-clear-unuse-method/">使用Swift3开发了个macOS的程序可以检测出objc项目中无用方法，然后一键全部清理</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">09/20</span><a class="archive-post-title" href= "/2016/09/20/draw-with-procreate-in-ipad-during-15-to-16/" >15，16年iPad上使用Procreate画的</a>
+            <span class="archive-post-date">09/20</span>
+            <a class="archive-post-title" href="/2016/09/20/draw-with-procreate-in-ipad-during-15-to-16/">15，16年iPad上使用Procreate画的</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">09/02</span><a class="archive-post-title" href= "/2016/09/02/develop-rss-reader/" >使用ReactiveCocoa开发RSS阅读器</a>
+            <span class="archive-post-date">09/02</span>
+            <a class="archive-post-title" href="/2016/09/02/develop-rss-reader/">使用ReactiveCocoa开发RSS阅读器</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">08/09</span><a class="archive-post-title" href= "/2016/08/09/how-to-use-reactivecocoa/" >iOS函数响应式编程以及ReactiveCocoa的使用</a>
+            <span class="archive-post-date">08/09</span>
+            <a class="archive-post-title" href="/2016/08/09/how-to-use-reactivecocoa/">iOS函数响应式编程以及ReactiveCocoa的使用</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">07/21</span><a class="archive-post-title" href= "/2016/07/21/assembleview/" >制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</a>
+            <span class="archive-post-date">07/21</span>
+            <a class="archive-post-title" href="/2016/07/21/assembleview/">制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">05/30</span><a class="archive-post-title" href= "/2016/05/30/what-learn-from-reactivecocoa/" >从 ReactiveCocoa 中能学到什么？不用此库也能学以致用</a>
+            <span class="archive-post-date">05/30</span>
+            <a class="archive-post-title" href="/2016/05/30/what-learn-from-reactivecocoa/">从 ReactiveCocoa 中能学到什么？不用此库也能学以致用</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">05/23</span><a class="archive-post-title" href= "/2016/05/23/try-to-decouple-with-demo/" >竭尽全力的去解耦的一次实践，封装一个TableView和一些功能组合的控件</a>
+            <span class="archive-post-date">05/23</span>
+            <a class="archive-post-title" href="/2016/05/23/try-to-decouple-with-demo/">竭尽全力的去解耦的一次实践，封装一个TableView和一些功能组合的控件</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2016/04/04/tenth-middle-school/" >十中</a>
+            <span class="archive-post-date">04/04</span>
+            <a class="archive-post-title" href="/2016/04/04/tenth-middle-school/">十中</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">01/13</span><a class="archive-post-title" href= "/2016/01/13/how-to-use-gcd/" >细说 GCD（Grand Central Dispatch）如何用</a>
+            <span class="archive-post-date">01/13</span>
+            <a class="archive-post-title" href="/2016/01/13/how-to-use-gcd/">细说 GCD（Grand Central Dispatch）如何用</a>
         </li>
     
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2015 </div>
-    <ul class="year-list">
-    
-    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2015 </div>
+            <ul class="year-list">
+            
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">11/03</span><a class="archive-post-title" href= "/2015/11/03/deeply-analyse-autolayout/" >深入剖析Auto Layout，分析iOS各版本新增特性</a>
+            <span class="archive-post-date">11/03</span>
+            <a class="archive-post-title" href="/2015/11/03/deeply-analyse-autolayout/">深入剖析Auto Layout，分析iOS各版本新增特性</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">11/02</span><a class="archive-post-title" href= "/2015/11/02/draw-with-note-in-ipad-during-15/" >15年用iPad上的备忘录画的</a>
+            <span class="archive-post-date">11/02</span>
+            <a class="archive-post-title" href="/2015/11/02/draw-with-note-in-ipad-during-15/">15年用iPad上的备忘录画的</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href= "/2015/05/28/macos-app-i-used/" >我用过的 macOS 应用</a>
+            <span class="archive-post-date">05/28</span>
+            <a class="archive-post-title" href="/2015/05/28/macos-app-i-used/">我用过的 macOS 应用</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span><a class="archive-post-title" href= "/2015/04/02/draw-game-of-thrones-with-pencil-during-14/" >整理了画的权利的游戏里的角色，有龙女，小恶魔等等</a>
+            <span class="archive-post-date">04/02</span>
+            <a class="archive-post-title" href="/2015/04/02/draw-game-of-thrones-with-pencil-during-14/">整理了画的权利的游戏里的角色，有龙女，小恶魔等等</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2015/04/01/objc-runtime/" >Objc Runtime 总结</a>
+            <span class="archive-post-date">04/01</span>
+            <a class="archive-post-title" href="/2015/04/01/objc-runtime/">Objc Runtime 总结</a>
         </li>
     
-    
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2015/03/12/draw-practice-with-pencil-during-14-to-15/" >14和15年间的铅笔画练习</a>
+            <span class="archive-post-date">03/12</span>
+            <a class="archive-post-title" href="/2015/03/12/draw-practice-with-pencil-during-14-to-15/">14和15年间的铅笔画练习</a>
         </li>
     
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2014 </div>
-    <ul class="year-list">
-    
-    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2014 </div>
+            <ul class="year-list">
+            
+        
         <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2014/03/01/black-star-blue-map/" >黑星蓝图</a>
+            <span class="archive-post-date">03/01</span>
+            <a class="archive-post-title" href="/2014/03/01/black-star-blue-map/">黑星蓝图</a>
         </li>
     
     </div>
-  </div>
+</div>
+
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
-    
-        <span class="sidebar-tag-name" data-tags="AssembleView"><span class="iconfont-archer">&#xe606;</span>AssembleView</span>
-    
-        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
-    
-        <span class="sidebar-tag-name" data-tags="Novel"><span class="iconfont-archer">&#xe606;</span>Novel</span>
-    
-        <span class="sidebar-tag-name" data-tags="smck"><span class="iconfont-archer">&#xe606;</span>smck</span>
-    
-        <span class="sidebar-tag-name" data-tags="Swift"><span class="iconfont-archer">&#xe606;</span>Swift</span>
-    
-        <span class="sidebar-tag-name" data-tags="RSSReader"><span class="iconfont-archer">&#xe606;</span>RSSReader</span>
-    
-        <span class="sidebar-tag-name" data-tags="Painting"><span class="iconfont-archer">&#xe606;</span>Painting</span>
-    
-        <span class="sidebar-tag-name" data-tags="iPad"><span class="iconfont-archer">&#xe606;</span>iPad</span>
-    
-        <span class="sidebar-tag-name" data-tags="Procreate"><span class="iconfont-archer">&#xe606;</span>Procreate</span>
-    
-        <span class="sidebar-tag-name" data-tags="Pencil"><span class="iconfont-archer">&#xe606;</span>Pencil</span>
-    
-        <span class="sidebar-tag-name" data-tags="GOT"><span class="iconfont-archer">&#xe606;</span>GOT</span>
-    
-        <span class="sidebar-tag-name" data-tags="Slides"><span class="iconfont-archer">&#xe606;</span>Slides</span>
-    
-        <span class="sidebar-tag-name" data-tags="Study"><span class="iconfont-archer">&#xe606;</span>Study</span>
-    
-        <span class="sidebar-tag-name" data-tags="UIWebView"><span class="iconfont-archer">&#xe606;</span>UIWebView</span>
-    
-        <span class="sidebar-tag-name" data-tags="NSURLProtocol"><span class="iconfont-archer">&#xe606;</span>NSURLProtocol</span>
-    
-        <span class="sidebar-tag-name" data-tags="Web"><span class="iconfont-archer">&#xe606;</span>Web</span>
-    
-        <span class="sidebar-tag-name" data-tags="Japan"><span class="iconfont-archer">&#xe606;</span>Japan</span>
-    
-        <span class="sidebar-tag-name" data-tags="macOS"><span class="iconfont-archer">&#xe606;</span>macOS</span>
-    
-        <span class="sidebar-tag-name" data-tags="APP"><span class="iconfont-archer">&#xe606;</span>APP</span>
-    
-        <span class="sidebar-tag-name" data-tags="swift"><span class="iconfont-archer">&#xe606;</span>swift</span>
-    
-        <span class="sidebar-tag-name" data-tags="编译"><span class="iconfont-archer">&#xe606;</span>编译</span>
-    
-        <span class="sidebar-tag-name" data-tags="LLVM"><span class="iconfont-archer">&#xe606;</span>LLVM</span>
-    
-        <span class="sidebar-tag-name" data-tags="Pattern"><span class="iconfont-archer">&#xe606;</span>Pattern</span>
-    
-        <span class="sidebar-tag-name" data-tags="ReactiveCocoa"><span class="iconfont-archer">&#xe606;</span>ReactiveCocoa</span>
-    
-        <span class="sidebar-tag-name" data-tags="book"><span class="iconfont-archer">&#xe606;</span>book</span>
-    
-        <span class="sidebar-tag-name" data-tags="Autolayout"><span class="iconfont-archer">&#xe606;</span>Autolayout</span>
-    
-        <span class="sidebar-tag-name" data-tags="SwiftUI"><span class="iconfont-archer">&#xe606;</span>SwiftUI</span>
-    
-        <span class="sidebar-tag-name" data-tags="Apple"><span class="iconfont-archer">&#xe606;</span>Apple</span>
-    
-        <span class="sidebar-tag-name" data-tags="Mach-O"><span class="iconfont-archer">&#xe606;</span>Mach-O</span>
-    
-        <span class="sidebar-tag-name" data-tags="JavaScript"><span class="iconfont-archer">&#xe606;</span>JavaScript</span>
-    
-        <span class="sidebar-tag-name" data-tags="Performance optimization"><span class="iconfont-archer">&#xe606;</span>Performance optimization</span>
-    
-        <span class="sidebar-tag-name" data-tags="GCD"><span class="iconfont-archer">&#xe606;</span>GCD</span>
-    
-        <span class="sidebar-tag-name" data-tags="runtime"><span class="iconfont-archer">&#xe606;</span>runtime</span>
-    
-        <span class="sidebar-tag-name" data-tags="Clang"><span class="iconfont-archer">&#xe606;</span>Clang</span>
-    
-        <span class="sidebar-tag-name" data-tags="WebKit"><span class="iconfont-archer">&#xe606;</span>WebKit</span>
-    
+        
+            <span class="sidebar-tag-name" data-tags="AssembleView">
+                <span class="iconfont-archer">&#xe606;</span>
+                AssembleView
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="iOS">
+                <span class="iconfont-archer">&#xe606;</span>
+                iOS
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Novel">
+                <span class="iconfont-archer">&#xe606;</span>
+                Novel
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="smck">
+                <span class="iconfont-archer">&#xe606;</span>
+                smck
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Swift">
+                <span class="iconfont-archer">&#xe606;</span>
+                Swift
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="RSSReader">
+                <span class="iconfont-archer">&#xe606;</span>
+                RSSReader
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Painting">
+                <span class="iconfont-archer">&#xe606;</span>
+                Painting
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="iPad">
+                <span class="iconfont-archer">&#xe606;</span>
+                iPad
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Procreate">
+                <span class="iconfont-archer">&#xe606;</span>
+                Procreate
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Pencil">
+                <span class="iconfont-archer">&#xe606;</span>
+                Pencil
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="GOT">
+                <span class="iconfont-archer">&#xe606;</span>
+                GOT
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Slides">
+                <span class="iconfont-archer">&#xe606;</span>
+                Slides
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Study">
+                <span class="iconfont-archer">&#xe606;</span>
+                Study
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="UIWebView">
+                <span class="iconfont-archer">&#xe606;</span>
+                UIWebView
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="NSURLProtocol">
+                <span class="iconfont-archer">&#xe606;</span>
+                NSURLProtocol
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Web">
+                <span class="iconfont-archer">&#xe606;</span>
+                Web
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Japan">
+                <span class="iconfont-archer">&#xe606;</span>
+                Japan
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="macOS">
+                <span class="iconfont-archer">&#xe606;</span>
+                macOS
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="APP">
+                <span class="iconfont-archer">&#xe606;</span>
+                APP
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="swift">
+                <span class="iconfont-archer">&#xe606;</span>
+                swift
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="编译">
+                <span class="iconfont-archer">&#xe606;</span>
+                编译
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="LLVM">
+                <span class="iconfont-archer">&#xe606;</span>
+                LLVM
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Pattern">
+                <span class="iconfont-archer">&#xe606;</span>
+                Pattern
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="ReactiveCocoa">
+                <span class="iconfont-archer">&#xe606;</span>
+                ReactiveCocoa
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="book">
+                <span class="iconfont-archer">&#xe606;</span>
+                book
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Autolayout">
+                <span class="iconfont-archer">&#xe606;</span>
+                Autolayout
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="SwiftUI">
+                <span class="iconfont-archer">&#xe606;</span>
+                SwiftUI
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Apple">
+                <span class="iconfont-archer">&#xe606;</span>
+                Apple
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Mach-O">
+                <span class="iconfont-archer">&#xe606;</span>
+                Mach-O
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="JavaScript">
+                <span class="iconfont-archer">&#xe606;</span>
+                JavaScript
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Performance optimization">
+                <span class="iconfont-archer">&#xe606;</span>
+                Performance optimization
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="GCD">
+                <span class="iconfont-archer">&#xe606;</span>
+                GCD
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="runtime">
+                <span class="iconfont-archer">&#xe606;</span>
+                runtime
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Clang">
+                <span class="iconfont-archer">&#xe606;</span>
+                Clang
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="WebKit">
+                <span class="iconfont-archer">&#xe606;</span>
+                WebKit
+            </span>
+        
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
     <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
-    缺失模块。<br/>
-    1、请确保node版本大于6.2<br/>
-    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
-    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
-    3、在根目录_config.yml里添加配置：
-    <pre style="color: #787878; font-size: 0.6rem;">
-jsonContent:
-  meta: false
-  pages: false
-  posts:
-    title: true
-    date: true
-    path: true
-    text: false
-    raw: false
-    content: false
-    slug: false
-    updated: false
-    comments: false
-    link: false
-    permalink: false
-    excerpt: false
-    categories: true
-    tags: true</pre>
+        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
     </div> 
     <div class="sidebar-tags-list"></div>
 </div>
+
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="Programming"><span class="iconfont-archer">&#xe60a;</span>Programming</span>
+        <span class="sidebar-category-name" data-categories="Programming">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Programming
+        </span>
     
-        <span class="sidebar-category-name" data-categories="My-novel"><span class="iconfont-archer">&#xe60a;</span>My-novel</span>
+        <span class="sidebar-category-name" data-categories="My-novel">
+            <span class="iconfont-archer">&#xe60a;</span>
+            My-novel
+        </span>
     
-        <span class="sidebar-category-name" data-categories="My-painting"><span class="iconfont-archer">&#xe60a;</span>My-painting</span>
+        <span class="sidebar-category-name" data-categories="My-painting">
+            <span class="iconfont-archer">&#xe60a;</span>
+            My-painting
+        </span>
     
-        <span class="sidebar-category-name" data-categories="travel"><span class="iconfont-archer">&#xe60a;</span>travel</span>
+        <span class="sidebar-category-name" data-categories="travel">
+            <span class="iconfont-archer">&#xe60a;</span>
+            travel
+        </span>
     
-        <span class="sidebar-category-name" data-categories="APP"><span class="iconfont-archer">&#xe60a;</span>APP</span>
+        <span class="sidebar-category-name" data-categories="APP">
+            <span class="iconfont-archer">&#xe60a;</span>
+            APP
+        </span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
     <div class="sidebar-categories-list"></div>
 </div>
+
     </div>
-</div> 
-    <script>
+</div>
+
+        <!-- site-meta -->
+        <script>
     var siteMeta = {
+        url: "http://ming1016.github.io",
         root: "/",
         author: "戴铭"
     }
 </script>
-    <!-- CDN failover -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-    <script type="text/javascript">
-        if (typeof window.$ === 'undefined')
-        {
-            console.warn('jquery load from jsdelivr failed, will load local script')
-            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
-        }
-    </script>
-    <script src="/scripts/main.js"></script>
-    <!-- algolia -->
-    
-    <!-- busuanzi  -->
-    
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
-    <!-- CNZZ  -->
-    
-    </div>
-    <!-- async load share.js -->
-    
-        <script src="/scripts/share.js" async></script>    
-     
+
+        <!-- import experimental options here -->
+        <!-- Custom Font -->
+
+
+        <!-- main func -->
+        <script src="/scripts/main.js?v=20210823"></script>
+        <!-- dark mode -->
+        <script src="/scripts/dark.js?v=20210823"></script>
+        <!-- fancybox -->
+        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
+        <!-- algolia -->
+        
+        <!-- busuanzi -->
+        
+            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+        
+        <!-- CNZZ -->
+        
+        <!-- async load share.js -->
+        
+            <script src="/scripts/share.js?v=20210823" async></script>
+        
+        <!-- mermaid -->
+        
     </body>
 </html>
-
-
