@@ -430,6 +430,58 @@
             
         
         <article class="index-post">
+            <a class="abstract-title" href="/2016/11/17/use-swift3-build-macos-program-to-clear-unuse-method/">
+                
+                <span class="abstract-title-text">使用Swift3开发了个macOS的程序可以检测出objc项目中无用方法，然后一键全部清理</span>
+            </a>
+            <div class="abstract-content">
+                当项目越来越大，引入第三方库越来越多，上架的APP体积也会越来越大，对于用户来说体验必定是不好的。在清理资源，编译选项优化，清理无用类等完成后，能够做而且效果会比较明显的就只有清理无用函数了。现有一种方案是根据Linkmap文件取到objc的所有类方法和实例方法。再用工具逆向可执行文件里引用到的方法名，求个差集列出无用方法。这个方案有些比较麻烦的地方，因为检索出的无用方法没法确定能够直接删除，还需要挨个检索人工判断是否可以删除，这样每次要清理时都需要这样人工排查一遍是非常耗时耗力的。
+这样就只有模拟编译过程对代码进行深入分析才能够找出确定能够删除的方法。具体效果可以先试试看，程序代码在：...
+            </div>
+            <!-- read more -->
+            
+            <div class="abstract-post-meta">
+                <!-- date -->
+                <div class="abstract-date" title="Last updated: 2021/04/11">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/17</span>
+                </div>
+                <!-- tags -->
+                
+                    <div class= abstract-tags >
+    
+        
+        
+            
+        
+        
+        <span class="post-category" data-categories="Programming"">
+            <i class="fas fa-folder post-category-icon"></i>
+            <span class="post-category-text">
+                Programming
+            </span>
+        </span>
+    
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Swift">Swift</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="macOS">macOS</a>
+    
+</div>
+
+                
+            </div>
+        </article>
+        <div class="index-post-divider"></div>
+    
+        
+        
+        
+        
+            
+        
+        <article class="index-post">
             <a class="abstract-title" href="/2016/09/02/develop-rss-reader/">
                 
                 <span class="abstract-title-text">使用ReactiveCocoa开发RSS阅读器</span>
@@ -1224,7 +1276,24 @@ Runtime函数Runtime系统是由一系列的函数和数据结构组成的公共
         
         
         
+        
+        
+        
+        
+        
     
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
@@ -1699,7 +1768,7 @@ Runtime函数Runtime系统是由一系列的函数和数据结构组成的公共
     
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 52
+        Total : 53
         </div>
         <!-- search  -->
         
@@ -1713,6 +1782,12 @@ Runtime函数Runtime系统是由一系列的函数和数据结构组成的公共
             <div class="archive-year"> 2022 </div>
             <ul class="year-list">
             
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/10</span>
+            <a class="archive-post-title" href="/2022/02/10/swift-evolutionary-path/">Swift 演进之路</a>
+        </li>
+    
         
         <li class="archive-post-item">
             <span class="archive-post-date">01/03</span>
@@ -1731,7 +1806,7 @@ Runtime函数Runtime系统是由一系列的函数和数据结构组成的公共
         
         <li class="archive-post-item">
             <span class="archive-post-date">11/23</span>
-            <a class="archive-post-title" href="/2021/11/23/daiming-swift-pamphlet/">戴铭的 Swift 小册子</a>
+            <a class="archive-post-title" href="/2021/11/23/daiming-swift-pamphlet/">戴铭的 Swift 小册子 4.0</a>
         </li>
     
         
