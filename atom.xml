@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ming1016.github.io/"/>
-  <updated>2022-02-10T10:28:06.045Z</updated>
+  <updated>2022-02-11T22:09:17.750Z</updated>
   <id>http://ming1016.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://ming1016.github.io/2022/02/10/swift-evolutionary-path/"/>
     <id>http://ming1016.github.io/2022/02/10/swift-evolutionary-path/</id>
     <published>2022-02-10T10:28:39.000Z</published>
-    <updated>2022-02-10T10:28:06.045Z</updated>
+    <updated>2022-02-11T22:09:17.750Z</updated>
     
     <content type="html"><![CDATA[<p>本篇主要是对<a href="https://ming1016.github.io/2021/05/22/acfun-swift-practice/">《A站 的 Swift 实践》</a>文章中的一幅配图做了详细的扩展，能够更加全面和详细了解 Swift 语言的发展，文章中提到的 Swift 各版本的语法示例代码，及本文内容都可以在 <a href="https://github.com/KwaiAppTeam/SwiftPamphletApp">Swift 小册子</a>里对应栏目里找到，这个假期我也对 Swift 小册子里栏目内容进行了些更新和补充。《A站 的 Swift 实践》文章的那个演进配图如下：</p>
 <p><img src="/uploads/swift-evolutionary-path/01.png" alt=""></p>
@@ -179,7 +179,7 @@
 <li>CGFloat 和 Double 之间可以隐式转换。提案 <a href="https://github.com/apple/swift-evolution/blob/main/proposals/0307-allow-interchangeable-use-of-double-cgfloat-types.md">SE-0307 Allow interchangeable use of CGFloat and Double types</a></li>
 <li>Codable 支持关联值枚举。提案 <a href="https://github.com/apple/swift-evolution/blob/main/proposals/0295-codable-synthesis-for-enums-with-associated-values.md">SE-0295 Codable synthesis for enums with associated values</a></li>
 </ul>
-<p>上面各个版本的语法更新的内容和更多代码的示例都可以在 Swift 小册子里查看，内容力求更全，描述力求更简洁，more big, more small。不想下载 app 也可以查看<a href="https://ming1016.github.io/2021/11/23/daiming-swift-pamphlet/">《戴铭的 Swift 小册子4.0》</a>这篇，内容也同步做了更新和补充。我对小册子内容查看样式视觉做了更新，排版用了赫蹏（hètí），字体是霞鹜文楷，更新了代码高亮风格，内容看起来更舒服。还有 icon 也进行替换，不用再对着枯燥的 SFSymbol 和我先前临时从以前图里随便挑的那条小狗 App icon 看了。</p>
+<p>上面各个版本的语法更新的内容和更多代码的示例都可以在 Swift 小册子里查看，内容力求更全，描述力求更简洁，more big, more small。不想下载 app 也可以查看<a href="https://ming1016.github.io/2021/11/23/daiming-swift-pamphlet/">《戴铭的 Swift 小册子4.0》</a>这篇，内容也同步做了更新和补充（内容达十五万字，值得你收藏和分享）。我对小册子内容查看样式视觉做了更新，排版用了赫蹏（hètí），字体是霞鹜文楷，更新了代码高亮风格，内容看起来更舒服。还有 icon 也进行替换，不用再对着枯燥的 SFSymbol 和我先前临时从以前图里随便挑的那条小狗 App icon 看了。</p>
 <p><img src="/uploads/swift-evolutionary-path/02.png" alt=""><br><img src="/uploads/swift-evolutionary-path/03.png" alt=""></p>
 <p>另</p>
 <p>小册子现在可以直接下载 dmg 使用了，4.1下载地址：<a href="https://github.com/KwaiAppTeam/SwiftPamphletApp/files/8040117/Swift.4.1.dmg.zip">戴铭的Swift小册子4.1.dmg.zip</a></p>
@@ -593,7 +593,7 @@
     <link href="http://ming1016.github.io/2021/11/23/daiming-swift-pamphlet/"/>
     <id>http://ming1016.github.io/2021/11/23/daiming-swift-pamphlet/</id>
     <published>2021-11-23T08:28:18.000Z</published>
-    <updated>2022-02-11T14:48:36.385Z</updated>
+    <updated>2022-02-11T22:29:20.784Z</updated>
     
     <content type="html"><![CDATA[<p>update：内容已更新到 4.0 版本。十五万字的手册值得你来收藏！和分享，完美。</p>
 <h2 id="背景说明"><a href="#背景说明" class="headerlink" title="背景说明"></a>背景说明</h2><p>越来越多同学打算开始用 Swift 来开发了，可很多人以前都没接触过 Swift。这篇和我以前文章不同的是，本篇只是面向 Swift 零基础的同学，内容主要是一些直接可用的小例子，例子可以直接在工程中用或自己调试着看。</p>
@@ -1459,6 +1459,47 @@
 <h3 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h3><p><em><a href="https://github.com/trimstray/the-book-of-secret-knowledge">trimstray/the-book-of-secret-knowledge</a></em><br>Star：59575 Issue：57 开发语言：<br>A collection of inspiring lists, manuals, cheatsheets, blogs, hacks, one-liners, cli/web tools and more.</p>
 <p><em><a href="https://github.com/rossant/awesome-math">rossant/awesome-math</a></em><br>Star：5624 Issue：7 开发语言：Python<br>A curated list of awesome mathematics resources</p>
 <h3 id="待分类"><a href="#待分类" class="headerlink" title="待分类"></a>待分类</h3><p><em><a href="https://github.com/krzysztofzablocki/KZFileWatchers">krzysztofzablocki/KZFileWatchers</a></em><br>Swift编写的观察本地或者网络上，比如网盘和FTP的文件变化<br>Star：1010 Issue：2 开发语言：Swift<br>A micro-framework for observing file changes, both local and remote. Helpful in building developer tools.</p>
+<h2 id="博客和资讯"><a href="#博客和资讯" class="headerlink" title="博客和资讯"></a>博客和资讯</h2><ul>
+<li><a href="https://www.swift.org/">Swift.org</a>：Swift 官方博客</li>
+<li><a href="https://github.com/SwiftOldDriver/iOS-Weekly/releases">Release notes from iOS-Weekly</a>：老司机 iOS 周报</li>
+<li><a href="https://zhangferry.com/">iOS摸鱼周报</a>：iOS 摸鱼周报</li>
+<li><a href="https://mjtsai.com/blog">Michael Tsai</a>：一名 macOS 开发者的博客</li>
+<li><a href="https://sspai.com/">少数派</a>：少数派致力于更好地运用数字产品或科学方法，帮助用户提升工作效率和生活品质</li>
+<li><a href="https://liuyandong.com">刘延栋的赛博空间</a>：成一家之言，毕竟有言胜于无。</li>
+<li><a href="https://onevcat.com">OneV’s Den</a>：上善若水，人淡如菊。这里是王巍 (onevcat) 的博客，用来记录一些技术和想法，主要专注于 Swift 和 iOS 开发。</li>
+<li><a href="https://www.avanderlee.com">SwiftLee</a>：A weekly blog about Swift, iOS and Xcode Tips and Tricks</li>
+<li><a href="https://swiftwithmajid.com">Swift with Majid</a>：Majid’s blog about Swift development</li>
+<li><a href="https://www.fatbobman.com">肘子的Swift记事本</a></li>
+<li><a href="https://ming1016.github.io">戴铭的博客 - 星光社</a>：一个人走得快，一群人走的远</li>
+<li><a href="https://www.swiftbysundell.com">Swift by Sundell</a>：Weekly Swift articles, podcasts and tips by John Sundell</li>
+<li><a href="https://www.fivestars.blog">FIVE STARS</a>：Exploring iOS, SwiftUI &amp; much more.</li>
+<li><a href="http://weekly.swiftwithmajid.com/">SwiftUI Weekly</a>：The curated collection of links about SwiftUI. Delivered every Monday.</li>
+<li><a href="https://www.getrevue.co/profile/peterfriese">Not Only Swift Weekly</a>：Xcode tips &amp; tricks, Swift, SwiftUI, Combine, Firebase, computing and internet history, and - of course - some fun stuff.</li>
+<li><a href="https://swiftlyrush.curated.co/issues">SwiftlyRush Weekly</a>：SwiftlyRush Weekly is a weekly curated publication full of interesting, relevant links, alongside industry news and updates. Subscribe now and never miss an issue.</li>
+<li><a href="https://iosdevweekly.com/issues">iOS Dev Weekly</a>：Subscribe to a hand-picked round-up of the best iOS development links every week. Curated by Dave Verwer and published every Friday. Free.</li>
+<li><a href="https://www.ruanyifeng.com/blog/">阮一峰的网络日志</a>：Ruan YiFeng’s Blog 科技爱好者周刊</li>
+<li><a href="https://theswiftdev.com">The.Swift.Dev.</a>：Weekly Swift articles</li>
+<li><a href="https://www.ifanr.com">爱范儿</a>：让未来触手可及</li>
+<li><a href="https://www.gcores.com">机核</a>：不止是游戏</li>
+</ul>
+<h2 id="小册子动态"><a href="#小册子动态" class="headerlink" title="小册子动态"></a>小册子动态</h2><p>欢迎你的内容分享和留言，请发到 <a href="https://github.com/KwaiAppTeam/SwiftPamphletApp/issues">议题里</a>，也欢迎你的 PR :) 。</p>
+<ul>
+<li>22.02.10 发布<a href="https://github.com/KwaiAppTeam/SwiftPamphletApp/releases/tag/4.1">4.1</a>：完善内容，补齐基础语法</li>
+<li>22.02.08 发布<a href="https://github.com/KwaiAppTeam/SwiftPamphletApp/releases/tag/4.0">4.0</a>：视觉更新。更新了小册子的icon。排版用了赫蹏（hètí），字体是霞鹜文楷，更新了代码高亮风格。</li>
+<li>22.01.24 发布<a href="https://github.com/KwaiAppTeam/SwiftPamphletApp/releases/tag/3.1">3.1</a>：可不设置 Github access token，生成 dmg</li>
+<li>22.01.03 发布2.0：新动态支持提醒，包括博客RSS、开发者、好库和探索库</li>
+<li>21.11.16 发布1.0：Swift 指南语法速查完成</li>
+</ul>
+<h2 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h2><ul>
+<li>官方：<a href="https://github.com/apple/swift">apple/swift</a>、<a href="https://www.swift.org/">Swift.org</a>、<a href="https://www.swift.org/blog/">Swift.org - Blog</a>、<a href="https://docs.swift.org/swift-book/">The Swift Programming Language</a> <a href="https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese">中文</a>、<a href="https://developer.apple.com/videos/">WWDC Session</a>、<a href="https://developer.apple.com/tutorials/sample-apps">SwiftUI 官方例子</a></li>
+<li>手册：<a href="https://swiftdoc.org/">SwiftDoc.org</a>、<a href="https://www.raywenderlich.com/6362977-swift-5-1-cheat-sheet-and-quick-reference">Swift 5.1 Cheat Sheet and Quick Reference</a>、<a href="https://learnxinyminutes.com/docs/swift/">Learn swift in Y Minutes</a>、</li>
+<li>Swift 入门：<a href="https://cs193p.sites.stanford.edu/">CS193p</a>、<a href="https://www.appcoda.com/learnswift/">从零到上架</a>、<a href="https://www.swiftbysundell.com/discover/standard-library/">探索标准库</a>、<a href="https://www.hackingwithswift.com/100">100 Days of Swift</a></li>
+<li>SwiftUI 入门：<a href="https://www.hackingwithswift.com/quick-start/swiftui">SwiftUI by Example</a></li>
+<li>库整理：<a href="https://www.libhunt.com/l/swift">Open-Source</a></li>
+<li>聚合：<a href="https://github.com/vsouza/awesome-ios">awesome-ios</a>、<a href="https://iosexample.com/">iOS Example</a>、<a href="https://www.cocoacontrols.com/">Cocoa Controls</a></li>
+<li>周报：<a href="https://github.com/SwiftOldDriver/iOS-Weekly">老司机</a> 、<a href="https://ethanhuang13.substack.com/">13週報</a>、<a href="https://zhangferry.com/">摸鱼周报</a>、<a href="https://iosdevweekly.com/">iOS Dev Weekly</a>、<a href="https://www.getrevue.co/profile/peterfriese">Not Only Swift Weekly</a>、<a href="http://weekly.swiftwithmajid.com/">SwiftUI Weekly</a></li>
+<li>播客：<a href="https://weakself.dev/">weak self</a>、<a href="https://talk.swift.gg/">ggtalk</a>、<a href="https://swiftbysundell.com/podcast/">Swift by Sundell</a></li>
+</ul>
 ]]></content>
     
     <summary type="html">
