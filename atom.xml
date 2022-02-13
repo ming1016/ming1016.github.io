@@ -593,11 +593,11 @@
     <link href="http://ming1016.github.io/2021/11/23/daiming-swift-pamphlet/"/>
     <id>http://ming1016.github.io/2021/11/23/daiming-swift-pamphlet/</id>
     <published>2021-11-23T08:28:18.000Z</published>
-    <updated>2022-02-11T22:29:20.784Z</updated>
+    <updated>2022-02-13T14:08:52.825Z</updated>
     
     <content type="html"><![CDATA[<p>update：内容已更新到 4.0 版本。十五万字的手册值得你来收藏！和分享，完美。</p>
 <h2 id="背景说明"><a href="#背景说明" class="headerlink" title="背景说明"></a>背景说明</h2><p>越来越多同学打算开始用 Swift 来开发了，可很多人以前都没接触过 Swift。这篇和我以前文章不同的是，本篇只是面向 Swift 零基础的同学，内容主要是一些直接可用的小例子，例子可以直接在工程中用或自己调试着看。</p>
-<p>记得以前 PHP 有个 chm 的手册，写的很简单，但很全，每个知识点都有例子，社区版每个知识点下面还有留言互动。因此，我弄了个 Swift 的手册，是个 macOS 程序。建议使用我开发的这个 macOS 程序来浏览。源码地址：<a href="https://github.com/KwaiAppTeam/SwiftPamphletApp">KwaiAppTeam/SwiftPamphletApp</a>，直接下载 dmg 地址：<a href="https://github.com/KwaiAppTeam/SwiftPamphletApp/files/8040117/Swift.4.1.dmg.zip">戴铭的Swift小册子4.1.dmg.zip</a></p>
+<p>记得以前 PHP 有个 chm 的手册，写的很简单，但很全，每个知识点都有例子，社区版每个知识点下面还有留言互动。因此，我弄了个 Swift 的手册，是个 macOS 程序。建议使用我开发的这个 macOS 程序来浏览。源码地址：<a href="https://github.com/KwaiAppTeam/SwiftPamphletApp">KwaiAppTeam/SwiftPamphletApp</a>，直接下载 dmg 地址：<a href="https://github.com/KwaiAppTeam/SwiftPamphletApp/files/8055673/4.3.dmg.zip">戴铭的开发小册子4.3.dmg.zip</a></p>
 <p><img src="https://user-images.githubusercontent.com/251980/152918704-9522eb27-9304-4788-b4ed-72ffb170e1bc.png" alt=""></p>
 <p>这个程序是Swift写的，按照声明式UI，响应式编程范式开发的，源码也可以看看。与其讲一堆，不如调着试。</p>
 <p>下面是文本内容。注：代码中简化变量名是为了能更快速关注到语言用法。</p>
