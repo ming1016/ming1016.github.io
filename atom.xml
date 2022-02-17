@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ming1016.github.io/"/>
-  <updated>2022-02-11T22:09:17.750Z</updated>
+  <updated>2022-02-17T02:38:15.918Z</updated>
   <id>http://ming1016.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://ming1016.github.io/2022/02/10/swift-evolutionary-path/"/>
     <id>http://ming1016.github.io/2022/02/10/swift-evolutionary-path/</id>
     <published>2022-02-10T10:28:39.000Z</published>
-    <updated>2022-02-11T22:09:17.750Z</updated>
+    <updated>2022-02-17T02:38:15.918Z</updated>
     
     <content type="html"><![CDATA[<p>本篇主要是对<a href="https://ming1016.github.io/2021/05/22/acfun-swift-practice/">《A站 的 Swift 实践》</a>文章中的一幅配图做了详细的扩展，能够更加全面和详细了解 Swift 语言的发展，文章中提到的 Swift 各版本的语法示例代码，及本文内容都可以在 <a href="https://github.com/KwaiAppTeam/SwiftPamphletApp">Swift 小册子</a>里对应栏目里找到，这个假期我也对 Swift 小册子里栏目内容进行了些更新和补充。《A站 的 Swift 实践》文章的那个演进配图如下：</p>
 <p><img src="/uploads/swift-evolutionary-path/01.png" alt=""></p>
@@ -182,7 +182,7 @@
 <p>上面各个版本的语法更新的内容和更多代码的示例都可以在 Swift 小册子里查看，内容力求更全，描述力求更简洁，more big, more small。不想下载 app 也可以查看<a href="https://ming1016.github.io/2021/11/23/daiming-swift-pamphlet/">《戴铭的 Swift 小册子4.0》</a>这篇，内容也同步做了更新和补充（内容达十五万字，值得你收藏和分享）。我对小册子内容查看样式视觉做了更新，排版用了赫蹏（hètí），字体是霞鹜文楷，更新了代码高亮风格，内容看起来更舒服。还有 icon 也进行替换，不用再对着枯燥的 SFSymbol 和我先前临时从以前图里随便挑的那条小狗 App icon 看了。</p>
 <p><img src="/uploads/swift-evolutionary-path/02.png" alt=""><br><img src="/uploads/swift-evolutionary-path/03.png" alt=""></p>
 <p>另</p>
-<p>小册子现在可以直接下载 dmg 使用了，4.1下载地址：<a href="https://github.com/KwaiAppTeam/SwiftPamphletApp/files/8040117/Swift.4.1.dmg.zip">戴铭的Swift小册子4.1.dmg.zip</a></p>
+<p>小册子现在可以直接下载 dmg 使用了，4.3下载地址：<a href="https://github.com/KwaiAppTeam/SwiftPamphletApp/files/8055673/4.3.dmg.zip">戴铭的开发小册子4.3.dmg.zip</a></p>
 <p><img src="/uploads/swift-evolutionary-path/04.png" alt=""></p>
 ]]></content>
     
@@ -593,11 +593,13 @@
     <link href="http://ming1016.github.io/2021/11/23/daiming-swift-pamphlet/"/>
     <id>http://ming1016.github.io/2021/11/23/daiming-swift-pamphlet/</id>
     <published>2021-11-23T08:28:18.000Z</published>
-    <updated>2022-02-16T08:21:10.422Z</updated>
+    <updated>2022-02-17T03:14:11.725Z</updated>
     
     <content type="html"><![CDATA[<p>update：内容已更新到 4.0 版本。</p>
 <blockquote>
-<p>漫漫长假我完善了Swift手册内容，字数达到十五万字，内容已压缩压缩再压缩，求全存简，more big, so small 。满满诚意，望有用、值得收藏、求转发。<br>come on and learn (੭*ˊᵕˋ)੭<br>– 戴·代码之使徒·画终结者·被光选中的人·铭</p>
+<p>漫漫长假我完善了Swift手册内容，字数达到十五万字，内容已压缩压缩再压缩，求全存简，more big, so small 。满满诚意，望有用、值得收藏、求转发。</p>
+<p>come on and learn (੭*ˊᵕˋ)੭</p>
+<p>– 戴·代码之使徒·画终结者·被光选中的人·铭</p>
 </blockquote>
 <h2 id="背景说明"><a href="#背景说明" class="headerlink" title="背景说明"></a>背景说明</h2><p>越来越多同学打算开始用 Swift 来开发了，可很多人以前都没接触过 Swift。这篇和我以前文章不同的是，本篇只是面向 Swift 零基础的同学，内容主要是一些直接可用的小例子，例子可以直接在工程中用或自己调试着看。</p>
 <p>记得以前 PHP 有个 chm 的手册，写的很简单，但很全，每个知识点都有例子，社区版每个知识点下面还有留言互动。因此，我弄了个 Swift 的手册，是个 macOS 程序。建议使用我开发的这个 macOS 程序来浏览。源码地址：<a href="https://github.com/KwaiAppTeam/SwiftPamphletApp">KwaiAppTeam/SwiftPamphletApp</a>，直接下载 dmg 地址：<a href="https://github.com/KwaiAppTeam/SwiftPamphletApp/files/8055673/4.3.dmg.zip">戴铭的开发小册子4.3.dmg.zip</a></p>
@@ -1509,7 +1511,8 @@
     
       &lt;p&gt;update：内容已更新到 4.0 版本。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;漫漫长假我完善了Swift手册内容，字数达到十五万字，内容已压缩压缩再压缩，求全存简，more big, so small 。满满诚意，望有用、值得收藏、求转发。&lt;br&gt;come on an
+&lt;p&gt;漫漫长假我完善了Swift手册内容，字数达到十五万字，内容已压缩压缩再压缩，求全存简，more big, so small 。满满诚意，望有用、值得收藏、求转发。&lt;/p&gt;
+&lt;p&gt;come o
     
     </summary>
     
