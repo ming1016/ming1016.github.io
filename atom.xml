@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ming1016.github.io/"/>
-  <updated>2022-03-25T05:05:38.912Z</updated>
+  <updated>2022-03-25T05:57:37.415Z</updated>
   <id>http://ming1016.github.io/</id>
   
   <author>
@@ -20,11 +20,11 @@
     <link href="http://ming1016.github.io/2022/03/25/develop-with-swiftui/"/>
     <id>http://ming1016.github.io/2022/03/25/develop-with-swiftui/</id>
     <published>2022-03-25T05:04:49.000Z</published>
-    <updated>2022-03-25T05:05:38.912Z</updated>
+    <updated>2022-03-25T05:57:37.415Z</updated>
     
     <content type="html"><![CDATA[<p>受 Apple 加速器 SwiftUI 活动邀请，做了个分享，还和喵神、61、浙剑、思琪等社区大神参与了圆桌讨论。这次完善了 SwiftUI 做的幻灯片，比去年要好一点，增加了解释执行代码交互功能。</p>
 <p>为这次幻灯画了几张图，在新西兰认识的画家，指导我了些画法，用其完成了幻灯里的图。</p>
-<p><img src="/uploads/develop-with-swiftui/20.png" alt=""><br><img src="/uploads/develop-with-swiftui/21.png" alt=""><br><img src="/uploads/develop-with-swiftui/22.png" alt=""><br><img src="/uploads/develop-with-swiftui/24.png" alt=""><br><img src="/uploads/develop-with-swiftui/25.png" alt=""></p>
+<p><img src="/uploads/develop-with-swiftui/20.PNG" alt=""><br><img src="/uploads/develop-with-swiftui/21.PNG" alt=""><br><img src="/uploads/develop-with-swiftui/22.png" alt=""><br><img src="/uploads/develop-with-swiftui/24.PNG" alt=""><br><img src="/uploads/develop-with-swiftui/25.PNG" alt=""></p>
 <h2 id="macOS-多栏"><a href="#macOS-多栏" class="headerlink" title="macOS 多栏"></a>macOS 多栏</h2><p><img src="/uploads/develop-with-swiftui/06.png" alt=""></p>
 <p>内容有 macOS 多栏、Toolbar、文件夹嵌套、文本和代码编辑器、网格视图和斜45度视觉。</p>
 <p>macOS 的多栏只需要使用 NavigationView 就可以了，闭包里的第一个视图就是 Sidebar，后面的视图可以作为占位视图，显示一些初始信息，通过 Sidebar 的 NavigationLink 来设置第二栏的视图就好了，第三栏通过第二栏来指定。</p>
