@@ -430,6 +430,111 @@
             
         
         <article class="index-post">
+            <a class="abstract-title" href="/2016/11/22/how-to-preload-web-in-ios/">
+                
+                <span class="abstract-title-text">iOS预加载Web页面方案</span>
+            </a>
+            <div class="abstract-content">
+                可以先下载Demo看看效果，Github地址：&lt; GitHub - ming1016/STMURLCache: iOS预加载Web页面方案 &gt;可以预加载多个网址，然后在离线状态去显示那几个网址，看看是不是都完全缓存下来了。
+使用方法在需要开启预加载的地方创建123self.sCache = [STMURLCache create:^(STMURLCacheMk *mk) &#123;    mk.whiteListsHost(whiteLists).whiteUserAgent(@&quot;starming&quot;);&#125;];
+这里是所有可设置项目，默认设置可以...
+            </div>
+            <!-- read more -->
+            
+            <div class="abstract-post-meta">
+                <!-- date -->
+                <div class="abstract-date" title="Last updated: 2021/04/11">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/22</span>
+                </div>
+                <!-- tags -->
+                
+                    <div class= abstract-tags >
+    
+        
+        
+            
+        
+        
+        <span class="post-category" data-categories="Programming"">
+            <i class="fas fa-folder post-category-icon"></i>
+            <span class="post-category-text">
+                Programming
+            </span>
+        </span>
+    
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="UIWebView">UIWebView</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="NSURLProtocol">NSURLProtocol</a>
+    
+</div>
+
+                
+            </div>
+        </article>
+        <div class="index-post-divider"></div>
+    
+        
+        
+        
+        
+            
+        
+        <article class="index-post">
+            <a class="abstract-title" href="/2016/11/17/use-swift3-build-macos-program-to-clear-unuse-method/">
+                
+                <span class="abstract-title-text">使用Swift3开发了个macOS的程序可以检测出objc项目中无用方法，然后一键全部清理</span>
+            </a>
+            <div class="abstract-content">
+                当项目越来越大，引入第三方库越来越多，上架的APP体积也会越来越大，对于用户来说体验必定是不好的。在清理资源，编译选项优化，清理无用类等完成后，能够做而且效果会比较明显的就只有清理无用函数了。现有一种方案是根据Linkmap文件取到objc的所有类方法和实例方法。再用工具逆向可执行文件里引用到的方法名，求个差集列出无用方法。这个方案有些比较麻烦的地方，因为检索出的无用方法没法确定能够直接删除，还需要挨个检索人工判断是否可以删除，这样每次要清理时都需要这样人工排查一遍是非常耗时耗力的。
+这样就只有模拟编译过程对代码进行深入分析才能够找出确定能够删除的方法。具体效果可以先试试看，程序代码在：...
+            </div>
+            <!-- read more -->
+            
+            <div class="abstract-post-meta">
+                <!-- date -->
+                <div class="abstract-date" title="Last updated: 2021/04/11">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/17</span>
+                </div>
+                <!-- tags -->
+                
+                    <div class= abstract-tags >
+    
+        
+        
+            
+        
+        
+        <span class="post-category" data-categories="Programming"">
+            <i class="fas fa-folder post-category-icon"></i>
+            <span class="post-category-text">
+                Programming
+            </span>
+        </span>
+    
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Swift">Swift</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="macOS">macOS</a>
+    
+</div>
+
+                
+            </div>
+        </article>
+        <div class="index-post-divider"></div>
+    
+        
+        
+        
+        
+            
+        
+        <article class="index-post">
             <a class="abstract-title" href="/2016/09/20/draw-with-procreate-in-ipad-during-15-to-16/">
                 
                 <span class="abstract-title-text">15，16年iPad上使用Procreate画的</span>
@@ -825,106 +930,6 @@ GCD（Grand Central Dispatch） 介绍GCD属于系统级的线程管理，在Dis
         <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags="GCD">GCD</a>
-    
-</div>
-
-                
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-    
-        
-        
-        
-        
-            
-        
-        <article class="index-post">
-            <a class="abstract-title" href="/2015/11/03/deeply-analyse-autolayout/">
-                
-                <span class="abstract-title-text">深入剖析Auto Layout，分析iOS各版本新增特性</span>
-            </a>
-            <div class="abstract-content">
-                先前写到的一篇Masonry心得文章里已经提到了很多AutoLayout相关的知识，这篇我会更加详细的对其知识要点进行分析和整理。
-来历一般大家都会认为Auto Layout这个东西是苹果自己搞出来的，其实不然，早在1997年Alan Borning, Kim Marriott, Peter Stuckey等人就发布了《Solving Linear Arithmetic Constraints for User Interface Applications》论文（论文地址：http://constraints.cs.washington.edu/solvers/uist97.html）提...
-            </div>
-            <!-- read more -->
-            
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2021/04/11">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2015/11/03</span>
-                </div>
-                <!-- tags -->
-                
-                    <div class= abstract-tags >
-    
-        
-        
-            
-        
-        
-        <span class="post-category" data-categories="Programming"">
-            <i class="fas fa-folder post-category-icon"></i>
-            <span class="post-category-text">
-                Programming
-            </span>
-        </span>
-    
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Autolayout">Autolayout</a>
-    
-</div>
-
-                
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-    
-        
-        
-        
-        
-            
-        
-        <article class="index-post">
-            <a class="abstract-title" href="/2015/11/02/draw-with-note-in-ipad-during-15/">
-                
-                <span class="abstract-title-text">15年用iPad上的备忘录画的</span>
-            </a>
-            <div class="abstract-content">
-                
-
-            </div>
-            <!-- read more -->
-            
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2021/04/11">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2015/11/02</span>
-                </div>
-                <!-- tags -->
-                
-                    <div class= abstract-tags >
-    
-        
-        
-            
-        
-        
-        <span class="post-category" data-categories="My painting"">
-            <i class="fas fa-folder post-category-icon"></i>
-            <span class="post-category-text">
-                My painting
-            </span>
-        </span>
-    
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Painting">Painting</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="iPad">iPad</a>
     
 </div>
 
@@ -1342,7 +1347,41 @@ GCD（Grand Central Dispatch） 介绍GCD属于系统级的线程管理，在Dis
         
         
         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
@@ -1839,7 +1878,7 @@ GCD（Grand Central Dispatch） 介绍GCD属于系统级的线程管理，在Dis
     
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 55
+        Total : 57
         </div>
         <!-- search  -->
         
@@ -1853,6 +1892,18 @@ GCD（Grand Central Dispatch） 介绍GCD属于系统级的线程管理，在Dis
             <div class="archive-year"> 2022 </div>
             <ul class="year-list">
             
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span>
+            <a class="archive-post-title" href="/2022/06/10/use-llvm/">使用 LLVM</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span>
+            <a class="archive-post-title" href="/2022/06/10/wwdc22-notes/">WWDC22 笔记</a>
+        </li>
+    
         
         <li class="archive-post-item">
             <span class="archive-post-date">03/25</span>

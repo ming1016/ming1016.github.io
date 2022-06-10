@@ -430,6 +430,58 @@
             
         
         <article class="index-post">
+            <a class="abstract-title" href="/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">
+                
+                <span class="abstract-title-text">如何对 iOS 启动阶段耗时进行分析</span>
+            </a>
+            <div class="abstract-content">
+                
+前言启动优化一役后，超预期将所负责的 App 双端启动的耗时都降低了65%以上，iOS 在iPhone7上速度达到了400毫秒以内。就像产品们用后说的，快到不习惯。由于 App 日活用户过亿，算一下每天为用户省下的时间，还是蛮有成就感的。
+
+启动阶段性能多维度分析要优化，先要做到的是对启动阶段各个性能纬度做分析，包括主线程耗时、CPU、内存、I/O、网络。这样才能够更加全面的掌握启动阶段的开销，找出不合理的方法调用。启动越快，更多的方法调用就应该做成按需执行，将启动压力分摊，只留下那些启动后方法都会依赖的方法和库的初始化，比如网络库、Crash 库等。而剩下那些需要预加载的功能可以放到...
+            </div>
+            <!-- read more -->
+            
+            <div class="abstract-post-meta">
+                <!-- date -->
+                <div class="abstract-date" title="Last updated: 2021/04/11">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/12/07</span>
+                </div>
+                <!-- tags -->
+                
+                    <div class= abstract-tags >
+    
+        
+        
+            
+        
+        
+        <span class="post-category" data-categories="Programming"">
+            <i class="fas fa-folder post-category-icon"></i>
+            <span class="post-category-text">
+                Programming
+            </span>
+        </span>
+    
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Swift">Swift</a>
+    
+</div>
+
+                
+            </div>
+        </article>
+        <div class="index-post-divider"></div>
+    
+        
+        
+        
+        
+            
+        
+        <article class="index-post">
             <a class="abstract-title" href="/2019/07/29/ios-map/">
                 
                 <span class="abstract-title-text">iOS 开发舆图</span>
@@ -884,57 +936,6 @@ JSON 数据的处理做项目只要是涉及到服务器端接口都没法避免
         </article>
         <div class="index-post-divider"></div>
     
-        
-        
-        
-        
-            
-        
-        <article class="index-post">
-            <a class="abstract-title" href="/2017/04/01/build-static-analysis-program-smck-use-swift/">
-                
-                <span class="abstract-title-text">用 Swift 编写的工程代码静态分析命令行工具 smck</span>
-            </a>
-            <div class="abstract-content">
-                前言最近几周在用 swift 做一个命令行工具 smck 用来对现有 OC 工程的代码做些分析和处理。日后工程切换成 Swift 可以加上对 Swift 工程代码的支持。昨天看到喵神在微博上说他下周要直播 live coding 一个 swift 的命令行工具，传送门： 现场编程 - 用 Swift 创建命令行工具 fengniao-cli Part1 ，其实蛮期待。想想跟喵神挺有缘的，最近下了他开发的 iOS 应用 Mail Me，随时能够记录工作和准备讲座时一些灵感，smck 的一些实现还有模块的设计灵感也是通过这个应用随时记录了下来呢，所以也推荐大家使用，真心方便。还有先前 Seg...
-            </div>
-            <!-- read more -->
-            
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2021/04/11">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/04/01</span>
-                </div>
-                <!-- tags -->
-                
-                    <div class= abstract-tags >
-    
-        
-        
-            
-        
-        
-        <span class="post-category" data-categories="Programming"">
-            <i class="fas fa-folder post-category-icon"></i>
-            <span class="post-category-text">
-                Programming
-            </span>
-        </span>
-    
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Swift">Swift</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="smck">smck</a>
-    
-</div>
-
-                
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-    
     <!-- paginator  -->
     
         <nav class="page-nav">
@@ -1344,7 +1345,41 @@ JSON 数据的处理做项目只要是涉及到服务器端接口都没法避免
         
         
         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
@@ -1841,7 +1876,7 @@ JSON 数据的处理做项目只要是涉及到服务器端接口都没法避免
     
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 55
+        Total : 57
         </div>
         <!-- search  -->
         
@@ -1855,6 +1890,18 @@ JSON 数据的处理做项目只要是涉及到服务器端接口都没法避免
             <div class="archive-year"> 2022 </div>
             <ul class="year-list">
             
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span>
+            <a class="archive-post-title" href="/2022/06/10/use-llvm/">使用 LLVM</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span>
+            <a class="archive-post-title" href="/2022/06/10/wwdc22-notes/">WWDC22 笔记</a>
+        </li>
+    
         
         <li class="archive-post-item">
             <span class="archive-post-date">03/25</span>
