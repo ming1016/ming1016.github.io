@@ -1,533 +1,195 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
-    <!-- title -->
-
-
-    
-
-<!-- keywords -->
-
-
-
+<html>
+<meta  lang="zh-Hans" >
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="author" content="戴铭">
-    <meta name="renderer" content="webkit">
-    <meta name="copyright" content="戴铭">
-    
-        <meta name="keywords" content="戴铭,戴铭的博客,iOS,Swift,移动开发,JavaScript,编译">
-    
-    <meta name="description" content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-    <meta name="description" content="前言启动是门面，好的印象也助于留存率提高。苹果也在系统启动上不断努力，提升用户体验，最新的 M1 宣传中还特别强调了翻盖秒开 macOS，可以看出其对极致启动速度的追求。这篇文章提到，据 Akamai 调查，每多1秒等待，转化率会下降7%，KissMetrics 的一份报告说启动超5秒，会使19%的用户放弃等待卸载 App。 高德 App 启动优化专项完成后已经有一段时间了，一直保持实属不易，我">
-<meta property="og:type" content="article">
-<meta property="og:title" content="App 启动提速实践和一些想法">
-<meta property="og:url" content="http://ming1016.github.io/2020/12/18/thinking-in-how-to-speed-up-app/index.html">
-<meta property="og:site_name" content="戴铭的博客 - 星光社">
-<meta property="og:description" content="前言启动是门面，好的印象也助于留存率提高。苹果也在系统启动上不断努力，提升用户体验，最新的 M1 宣传中还特别强调了翻盖秒开 macOS，可以看出其对极致启动速度的追求。这篇文章提到，据 Akamai 调查，每多1秒等待，转化率会下降7%，KissMetrics 的一份报告说启动超5秒，会使19%的用户放弃等待卸载 App。 高德 App 启动优化专项完成后已经有一段时间了，一直保持实属不易，我">
-<meta property="og:locale">
-<meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/1.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/2.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/3.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/4.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/7.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/5.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/12.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/13.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/8.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/9.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/14.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/6.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/15.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/10.png">
-<meta property="article:published_time" content="2020-12-18T08:14:09.000Z">
-<meta property="article:modified_time" content="2021-04-11T14:42:09.930Z">
-<meta property="article:author" content="戴铭">
-<meta property="article:tag" content="iOS">
-<meta property="article:tag" content="Swift">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://ming1016.github.io/uploads/thinking-in-how-to-speed-up-app/1.png">
-    <meta http-equiv="Cache-control" content="no-cache">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="icon" href="/assets/logo-starming.png">
-    
-    <title>App 启动提速实践和一些想法 · 戴铭的博客 - 星光社</title>
-    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-/* This file is meant as a standalone workflow for
-- testing support for link[rel=preload]
-- enabling async CSS loading in browsers that do not support rel=preload
-- applying rel preload css once loaded, whether supported or not.
-*/ -->
-<script>
-    (function (w) {
-        'use strict'
-        // rel=preload support test
-        if (!w.loadCSS) {
-            w.loadCSS = function () {}
-        }
-        // define on the loadCSS obj
-        var rp = (loadCSS.relpreload = {})
-        // rel=preload feature support test
-        // runs once and returns a function for compat purposes
-        rp.support = (function () {
-            var ret
-            try {
-                ret = w.document.createElement('link').relList.supports('preload')
-            } catch (e) {
-                ret = false
-            }
-            return function () {
-                return ret
-            }
-        })()
-
-        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
-        // then change that media back to its intended value on load
-        rp.bindMediaToggle = function (link) {
-            // remember existing media attr for ultimate state, or default to 'all'
-            var finalMedia = link.media || 'all'
-
-            function enableStylesheet() {
-                link.media = finalMedia
-            }
-
-            // bind load handlers to enable media
-            if (link.addEventListener) {
-                link.addEventListener('load', enableStylesheet)
-            } else if (link.attachEvent) {
-                link.attachEvent('onload', enableStylesheet)
-            }
-
-            // Set rel and non-applicable media type to start an async request
-            // note: timeout allows this to happen async to let rendering continue in IE
-            setTimeout(function () {
-                link.rel = 'stylesheet'
-                link.media = 'only x'
-            })
-            // also enable media after 3 seconds,
-            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
-            setTimeout(enableStylesheet, 3000)
-        }
-
-        // loop through link elements in DOM
-        rp.poly = function () {
-            // double check this to prevent external calls from running
-            if (rp.support()) {
-                return
-            }
-            var links = w.document.getElementsByTagName('link')
-            for (var i = 0; i < links.length; i++) {
-                var link = links[i]
-                // qualify links to those with rel=preload and as=style attrs
-                if (
-                    link.rel === 'preload' &&
-                    link.getAttribute('as') === 'style' &&
-                    !link.getAttribute('data-loadcss')
-                ) {
-                    // prevent rerunning on link
-                    link.setAttribute('data-loadcss', true)
-                    // bind listeners to toggle media back
-                    rp.bindMediaToggle(link)
-                }
-            }
-        }
-
-        // if unsupported, run the polyfill
-        if (!rp.support()) {
-            // run once at least
-            rp.poly()
-
-            // rerun poly on an interval until onload
-            var run = w.setInterval(rp.poly, 500)
-            if (w.addEventListener) {
-                w.addEventListener('load', function () {
-                    rp.poly()
-                    w.clearInterval(run)
-                })
-            } else if (w.attachEvent) {
-                w.attachEvent('onload', function () {
-                    rp.poly()
-                    w.clearInterval(run)
-                })
-            }
-        }
-
-        // commonjs
-        if (typeof exports !== 'undefined') {
-            exports.loadCSS = loadCSS
-        } else {
-            w.loadCSS = loadCSS
-        }
-    })(typeof global !== 'undefined' ? global : this)
-</script>
-
-    <style type="text/css">
-    @font-face {
-        font-family: 'Oswald-Regular';
-        src: url("/font/Oswald-Regular.ttf");
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
     }
-
-    body {
-        margin: 0;
-    }
-
-    header,
-    footer,
-    .back-top,
-    .sidebar,
-    .container,
-    .site-intro-meta,
-    .toc-wrapper {
-        display: none;
-    }
-
-    .site-intro {
-        position: relative;
-        z-index: 3;
-        width: 100%;
-        /* height: 50vh; */
-        overflow: hidden;
-    }
-
-    .site-intro-placeholder {
-        position: absolute;
-        z-index: -2;
-        top: 0;
-        left: 0;
-        width: calc(100% + 300px);
-        height: 100%;
-        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
-        background-position: center center;
-        transform: translate3d(-226px, 0, 0);
-        animation: gradient-move 2.5s ease-out 0s infinite;
-    }
-
-    @keyframes gradient-move {
-        0% {
-            transform: translate3d(-226px, 0, 0);
-        }
-        100% {
-            transform: translate3d(0, 0, 0);
-        }
-    }
-</style>
-
-    <link rel="preload" href="/css/style.css?v=20210823" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="/css/dark.css?v=20210823" as="style">
-    <link rel="stylesheet" href="/css/dark.css" media="(prefers-color-scheme: dark)">
-    <link rel="stylesheet" href="/css/mobile.css?v=20210823" media="(max-width: 960px)">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
-    <link rel="preload" href="/scripts/main.js?v=20210823" as="script">
-    <link rel="preload" href="/scripts/dark.js?v=20210823" as="script">
-    <link rel="preload" href="/font/Oswald-Regular.ttf" as="font" crossorigin>
-    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
-    <!-- algolia -->
-    
-    <!-- 百度统计  -->
-    
-    <!-- 谷歌统计  -->
-    
-<meta name="generator" content="Hexo 5.4.0"></head>
-
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <script type="text/javascript">
-        if (typeof window.$ == undefined) {
-            console.warn('jquery load from jsdelivr failed, will load local script')
-            document.write('<script src="/lib/jquery.min.js" />')
-        }
-    </script>
-    
-        <body class="post-body">
-    
-        <!-- header -->
-        <header class="header header-mobile">
-    <!-- top read progress line -->
-    <div class="header-element">
-        <div class="read-progress"></div>
-    </div>
-    <!-- sidebar menu button -->
-    <div class="header-element">
-        
-            <div class="header-sidebar-menu">
-        
-            
-                <div style="padding-left: 1px;">&#xe775;</div>
-            
-        </div>
-    </div>
-    <!-- header actions -->
-    <div class="header-actions">
-        <!-- theme mode switch button -->
-        <span class="header-theme-btn header-element">
-            <i class="fas fa-adjust"></i>
-        </span>
-        <!-- back to home page text -->
-        <span class="home-link header-element">
-            <a href=/>戴铭的博客 - 星光社</a>
-        </span>
-    </div>
-    <!-- toggle banner for post layout -->
-    
-        
-            <div class="banner">
-        
-            <div class="blog-title header-element">
-                <a href="/">戴铭的博客 - 星光社</a>
-            </div>
-            <div class="post-title header-element">
-                <a href="#" class="post-name">App 启动提速实践和一些想法</a>
-            </div>
-        </div>
-    
-</header>
-
-        <!-- fixed footer -->
-        <footer class="footer-fixed">
-    <!-- back to top button -->
-    <div class="footer-fixed-element">
-        
-            <div class="back-top back-top-hidden">
-        
-        
-            <div>&#xe639;</div>
-        
-        </div>
-    </div>
-</footer>
-
-        <!-- wrapper -->
-        <div class="wrapper">
-            <div class="site-intro" style="
-
-
-
-
-
-
-
-    height:50vh;
-
-">
-    
-    <!-- 主页  -->
-    
-        
-    <!-- 404页  -->
-            
-    <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/post-bg-starming.jpg)"></div>
-    <div class="site-intro-meta">
-        <!-- 标题  -->
-        <h1 class="intro-title">
-            <!-- 主页  -->
-            
-                App 启动提速实践和一些想法
-            <!-- 404 -->
-            
-        </h1>
-        <!-- 副标题 -->
-        <p class="intro-subtitle">
-            <!-- 主页副标题  -->
-            
-                
-            <!-- 404 -->
-            
-        </p>
-        <!-- 文章页 meta -->
-        
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class= post-intro-tags >
-    
-        
-        
-            
-        
-        
-        <span class="post-category" data-categories="Programming"">
-            <i class="fas fa-folder post-category-icon"></i>
-            <span class="post-category-text">
-                Programming
-            </span>
-        </span>
-    
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Swift">Swift</a>
-    
-</div>
-
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">11.2k</span>阅读时长: <span class="post-count reading-time">41 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <!-- 撰写日期 -->
-                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
-                    <span class="post-intro-time">2020/12/18</span>
-                    <!-- busuanzi -->
-                    
-                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
-                            <span id="busuanzi_value_page_pv"></span>
-                        </span>
-                    
-                    <!-- 文章分享 -->
-                    <span class="share-wrapper">
-                        <span class="iconfont-archer share-icon">&#xe71d;</span>
-                        <span class="share-text">Share</span>
-                        <ul class="share-list">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
-        
-    </div>
-</div>
-
-            <script>
-  // get user agent
-  function getBrowserVersions() {
-    var u = window.navigator.userAgent
-    return {
-      userAgent: u,
-      trident: u.indexOf('Trident') > -1, //IE内核
-      presto: u.indexOf('Presto') > -1, //opera内核
-      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
-      iPad: u.indexOf('iPad') > -1, //是否为iPad
-      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
-      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
-      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
-    }
-  }
-  var browser = {
-    versions: getBrowserVersions(),
-  }
-  console.log('userAgent: ' + browser.versions.userAgent)
-
-  // callback
-  function fontLoaded() {
-    console.log('font loaded')
-    if (document.getElementsByClassName('site-intro-meta')) {
-      document
-        .getElementsByClassName('intro-title')[0]
-        .classList.add('intro-fade-in')
-      document
-        .getElementsByClassName('intro-subtitle')[0]
-        .classList.add('intro-fade-in')
-      var postIntros = document.getElementsByClassName('post-intros')[0]
-      if (postIntros) {
-        postIntros.classList.add('post-fade-in')
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
       }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
     }
-  }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
 
-  // UC不支持跨域，所以直接显示
-  function asyncCb() {
-    if (browser.versions.uc) {
-      console.log('UCBrowser')
-      fontLoaded()
-    } else {
-      WebFont.load({
-        custom: {
-          families: ['Oswald-Regular'],
-        },
-        loading: function () {
-          // 所有字体开始加载
-          // console.log('font loading');
-        },
-        active: function () {
-          // 所有字体已渲染
-          fontLoaded()
-        },
-        inactive: function () {
-          // 字体预加载失败，无效字体或浏览器不支持加载
-          console.log('inactive: timeout')
-          fontLoaded()
-        },
-        timeout: 5000, // Set the timeout to two seconds
-      })
-    }
-  }
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
 
-  function asyncErr() {
-    console.warn('script load from CDN failed, will load local script')
-  }
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
 
-  // load webfont-loader async, and add callback function
-  function async(u, cb, err) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0]
-    o.src = u
-    if (cb) {
-      o.addEventListener(
-        'load',
-        function (e) {
-          cb(null, e)
-        },
-        false
-      )
-    }
-    if (err) {
-      o.addEventListener(
-        'error',
-        function (e) {
-          err(null, e)
-        },
-        false
-      )
-    }
-    s.parentNode.insertBefore(o, s)
-  }
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
 
-  var asyncLoadWithFallBack = function (arr, success, reject) {
-    var currReject = function () {
-      reject()
-      arr.shift()
-      if (arr.length) async(arr[0], success, currReject)
-    }
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
 
-    async(arr[0], success, currReject)
-  }
 
-  asyncLoadWithFallBack(
-    [
-      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
-      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
-      "/lib/webfontloader.min.js",
-    ],
-    asyncCb,
-    asyncErr
-  )
-</script>
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
+      
+      <span class="navbar-logo-dsc">戴铭的博客</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/thinking-in-how-to-speed-up-app/6.png" data-src="/uploads/thinking-in-how-to-speed-up-app/6.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
 
-            <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
-            <div class="container container-unloaded">
-                <main class="main post-page">
-    <article class="article-entry">
-        <p><img src="/uploads/thinking-in-how-to-speed-up-app/1.png" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>启动是门面，好的印象也助于留存率提高。苹果也在系统启动上不断努力，提升用户体验，最新的 M1 宣传中还特别强调了翻盖秒开 macOS，可以看出其对极致启动速度的追求。<a target="_blank" rel="noopener" href="https://farfetchtechblog.com/en/blog/post/mobile-app-launch-performance-ii/">这篇文章</a>提到，据 <a target="_blank" rel="noopener" href="https://wemakewebsites.com/blog/improve-page-load-speed-increase-conversion/">Akamai</a> 调查，每多1秒等待，转化率会下降7%，KissMetrics 的一份报告说启动超5秒，会使19%的用户放弃等待卸载 App。<br><img src="/uploads/thinking-in-how-to-speed-up-app/2.png" alt=""></p>
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      App 启动提速实践和一些想法
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2020-12-18T08:14:09.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2020-12-18</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Programming/" class="post-meta-link">Programming</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>11.2k 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/iOS/" class="post-meta-link">iOS</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Swift/" class="post-meta-link">Swift</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/thinking-in-how-to-speed-up-app/1.png" class="lozad post-image"src="/uploads/thinking-in-how-to-speed-up-app/1.png"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>启动是门面，好的印象也助于留存率提高。苹果也在系统启动上不断努力，提升用户体验，最新的 M1 宣传中还特别强调了翻盖秒开 macOS，可以看出其对极致启动速度的追求。<a target="_blank" rel="noopener" href="https://farfetchtechblog.com/en/blog/post/mobile-app-launch-performance-ii/">这篇文章</a>提到，据 <a target="_blank" rel="noopener" href="https://wemakewebsites.com/blog/improve-page-load-speed-increase-conversion/">Akamai</a> 调查，每多1秒等待，转化率会下降7%，KissMetrics 的一份报告说启动超5秒，会使19%的用户放弃等待卸载 App。<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/thinking-in-how-to-speed-up-app/2.png" class="lozad post-image"src="/uploads/thinking-in-how-to-speed-up-app/2.png"></p>
 <p>高德 App 启动优化专项完成后已经有一段时间了，一直保持实属不易，我一年前在这篇<a href="https://ming1016.github.io/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">文章</a>里也做了些总结。我这里再补充些启动优化用到一些手段和一些想法，希望这些能够对你有帮助。</p>
-<h2 id="通过-Universal-Links-和-App-Links-优化唤端启动体验"><a href="#通过-Universal-Links-和-App-Links-优化唤端启动体验" class="headerlink" title="通过 Universal Links 和 App Links 优化唤端启动体验"></a>通过 Universal Links 和 App Links 优化唤端启动体验</h2><p>App 都会存在拉新和导流的诉求，如何提高这样场景的用户体验呢？这里会用到唤端技术。包含选择什么样的换端协议，我们先看看唤端路径，如下：<br><img src="/uploads/thinking-in-how-to-speed-up-app/3.png" alt=""></p>
+<h2 id="通过-Universal-Links-和-App-Links-优化唤端启动体验"><a href="#通过-Universal-Links-和-App-Links-优化唤端启动体验" class="headerlink" title="通过 Universal Links 和 App Links 优化唤端启动体验"></a>通过 Universal Links 和 App Links 优化唤端启动体验</h2><p>App 都会存在拉新和导流的诉求，如何提高这样场景的用户体验呢？这里会用到唤端技术。包含选择什么样的换端协议，我们先看看唤端路径，如下：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/thinking-in-how-to-speed-up-app/3.png" class="lozad post-image"src="/uploads/thinking-in-how-to-speed-up-app/3.png"></p>
 <p>唤端的协议分为自定义协议和平台标准协议，自定义协议在 iOS 端会有系统提示弹框，在 Android 端 chrome 25 后自定义协议失效，需用 Intent 协议包装才能打开 App。如果希望提高体验最好使用平台标准协议。平台标准协议在 iOS 平台叫 Universal Links，在 iOS 9 开始引入的，所以 iOS 9 及以上系统都支持，如果用户安装了要跳的 App 就会直接跳到 App，不会有系统弹框提示。相对应的 Android 平台标准协议叫 App Links，Android 6 以上都支持。</p>
 <p>这里需要注意的是 iOS 的 Universal Links 不支持自动唤端，也就是页面加载后自动执行唤端是不行的，需要用户主动点击进行唤端。对于自定义协议和平台标准协议在有些 App 里是遇到屏蔽或者那些 App 自定义弹窗提示，这就只能通过沟通加白来解决了。</p>
 <p>另外对于启动时展示 H5 启动页，或唤端跳转特定功能页，可以将拦截判断置前，判断出启动去往功能页，优先加载功能页的任务，主图相关任务项延后再加载，以提升启动到特定页面的速度。</p>
@@ -538,21 +200,56 @@
 <p>iOS 有三套方案，一套是通过 WKBrowsingContextController 注册 scheme，使用 URLProtocol 进行网络拦截。第二套是基于 WKURLSchemeHandler 自定义 scheme 拦截请求。第三套是在本地搭建 local server，拦截网络请求重定向到本地 server。第三套搭建本地 server 成本高，启动 server 比较耗时。第二套 WKURLSchemeHandler 使用自定义 scheme，对于 H5 适配成本很高，而且需要 iOS 11 以上系统支持。</p>
 <p>第一套方案是使用了 WKBrowsingContextController 的 registerSchemeForCustomProtocol: 这个方法，这个方法的参数设置为 http 或 https 然后执行，后面这类 scheme 就能够被 NSURLProtocol 处理了，具体实现可以在<a target="_blank" rel="noopener" href="https://github.com/Yeatse/NSURLProtocol-WebKitSupport">这里</a>看到。</p>
 <p>Android 通过系统提供的资源拦截Api即可实现加载拦截，拦截后根据请求的url识别资源类型，命中后设置对应的mimeType、encoding、fileStream即可。</p>
-<h2 id="下载速度"><a href="#下载速度" class="headerlink" title="下载速度"></a>下载速度</h2><p><img src="/uploads/thinking-in-how-to-speed-up-app/4.png" alt=""><br>App 安装前的下载速度也直接影响到了用户从选择你的 App 到使用的体验，如果下载大小过大，用户没有耐心等待，可能就放弃了你的 App，4G5G 环境下超 200MB 会弹窗提示是否继续下载，严重影响转化率。</p>
-<p>因此还对下载大小做了优化，将 __TEXT 字段迁移到自定义段，使得 iPhone X 以前机器的下载大小减少了1/3的大小，这招之所以对 iPhone X 以前机器管用的原因是因为先前机器是按照先加密再压缩，压缩率低，而之后机器改变了策略因此下载大小就会大幅减少。Michael Eisel 这篇博客<a target="_blank" rel="noopener" href="https://eisel.me/app-size">《One Quick Way to Drastically Reduce your iOS App’s Download Size》</a> 提出了这套方案，你可以立刻应用到自己应用中，提高老机器下载速度，效果立竿见影。</p>
+<h2 id="下载速度"><a href="#下载速度" class="headerlink" title="下载速度"></a>下载速度</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/thinking-in-how-to-speed-up-app/4.png" class="lozad post-image"src="/uploads/thinking-in-how-to-speed-up-app/4.png"><br>App 安装前的下载速度也直接影响到了用户从选择你的 App 到使用的体验，如果下载大小过大，用户没有耐心等待，可能就放弃了你的 App，4G5G 环境下超 200MB 会弹窗提示是否继续下载，严重影响转化率。</p>
+<p>因此还对下载大小做了优化，将 __TEXT 字段迁移到自定义段，使得 iPhone X 以前机器的下载大小减少了1&#x2F;3的大小，这招之所以对 iPhone X 以前机器管用的原因是因为先前机器是按照先加密再压缩，压缩率低，而之后机器改变了策略因此下载大小就会大幅减少。Michael Eisel 这篇博客<a target="_blank" rel="noopener" href="https://eisel.me/app-size">《One Quick Way to Drastically Reduce your iOS App’s Download Size》</a> 提出了这套方案，你可以立刻应用到自己应用中，提高老机器下载速度，效果立竿见影。</p>
 <p>Michael Eisel 还用 Swift 包装了 <a target="_blank" rel="noopener" href="https://github.com/simdjson/simdjson">simdjson</a> 写了个库 <a target="_blank" rel="noopener" href="https://github.com/michaeleisel/ZippyJSON">ZippyJSONDecoder</a> 比系统自带 JSONDecoder 快三倍，很符合本篇“要更快”的主题对吧，人类对速度的追求是没有止境的，最近 YY 大神 ibireme 也在写 JSON 库 <a target="_blank" rel="noopener" href="https://github.com/ibireme/yyjson">YYJSON</a> 速度比 simdjson 还快。Michael 还写个了提速构建的自制链接器 <a target="_blank" rel="noopener" href="https://github.com/michaeleisel/zld">zld</a>，项目说明还描述了如何开发定制自己的链接器。还有主线程阻塞（ANR）检测的 swift 类 <a target="_blank" rel="noopener" href="https://gist.github.com/michaeleisel/77b8efc9bedab1444dbb71a5915dbd15">ANRChecker</a>，还有通过hook 方式记录系统错误日志的<a target="_blank" rel="noopener" href="https://gist.github.com/michaeleisel/8eddd0082b4fd7f2bd118d97e79bf12e">例子</a>展示如何通过截获自动布局错误，函数是 UIViewAlertForUnsatisfiableConstraints ，malloc 问题替换函数为 malloc_error_break 即可。Michael 的这些性能问题处理手段非常实用，真是个宝藏男孩。</p>
 <p>通过每月新增激活量、浏览到新增激活转换率、下载到激活转换率、转换率受体积因素影响占比、每个用户获取成本，使用公式计算能够得到每月成本收益，把你们公司对应具体参数数值套到公式中，算出来后你会发现如果降低了50多MB，每月就会有非常大的收益。</p>
 <p>对于 Android 来说，很多功能是可以放在云端按需下载使用，后面的方向是重云轻端，云端一体，打通云端链路。</p>
 <p>下载和安装完成后，就要分析 App 开始启动时如何做优化了，我接下来跟你说说 Android 启动 so 库加载如何做监控和优化。</p>
 <h2 id="Android-so-库加载优化"><a href="#Android-so-库加载优化" class="headerlink" title="Android so 库加载优化"></a>Android so 库加载优化</h2><h3 id="编译阶段-静态分析优化"><a href="#编译阶段-静态分析优化" class="headerlink" title="编译阶段-静态分析优化"></a>编译阶段-静态分析优化</h3><p>依托自动化构建平台，通过构建配置实现对源码模块的灵活配置，进行定制化编译。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-ffunction-sections -fdata-sections <span class="comment">// 实现按需加载</span></span><br><span class="line">-fvisibility=hidden -fvisibility-inlines-hidden <span class="comment">// 实现符号隐藏</span></span><br></pre></td></tr></table></figure>
-<p>这样可以避免无用模块的引入，效果如下图：<br><img src="/uploads/thinking-in-how-to-speed-up-app/7.png" alt=""></p>
-<h3 id="运行阶段-hook分析优化"><a href="#运行阶段-hook分析优化" class="headerlink" title="运行阶段-hook分析优化"></a>运行阶段-hook分析优化</h3><p>Android Linker 调用流程如下：<br><img src="/uploads/thinking-in-how-to-speed-up-app/5.png" alt=""><br>注意，find_library 加载成功后返回 soinfo 对象指针，然后调用其 call_constructors 来调用 so 的 init_array。call_constructors 调用 call_array，其内部循环调用 call_funtion 来访问 init_array 数组的调用。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token operator">-</span>ffunction<span class="token operator">-</span>sections <span class="token operator">-</span>fdata<span class="token operator">-</span>sections <span class="token comment">// 实现按需加载</span>
+<span class="token operator">-</span>fvisibility<span class="token operator">=</span>hidden <span class="token operator">-</span>fvisibility<span class="token operator">-</span>inlines<span class="token operator">-</span>hidden <span class="token comment">// 实现符号隐藏</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+<p>这样可以避免无用模块的引入，效果如下图：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/thinking-in-how-to-speed-up-app/7.png" class="lozad post-image"src="/uploads/thinking-in-how-to-speed-up-app/7.png"></p>
+<h3 id="运行阶段-hook分析优化"><a href="#运行阶段-hook分析优化" class="headerlink" title="运行阶段-hook分析优化"></a>运行阶段-hook分析优化</h3><p>Android Linker 调用流程如下：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/thinking-in-how-to-speed-up-app/5.png" class="lozad post-image"src="/uploads/thinking-in-how-to-speed-up-app/5.png"><br>注意，find_library 加载成功后返回 soinfo 对象指针，然后调用其 call_constructors 来调用 so 的 init_array。call_constructors 调用 call_array，其内部循环调用 call_funtion 来访问 init_array 数组的调用。</p>
 <p>高德Android小伙伴们基于 <a target="_blank" rel="noopener" href="https://github.com/frida/frida-gum">frida-gum</a> 的 hook 引擎开发了线下性能监控工具，可以 hook c++ 库，支持 macos、android、ios，针对 so 的全局构造时间和链接时间进行 hook，对关键 so 加载的关键节点耗时进行分析。dlopen 相关 hook 监控点如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">target_func_t</span> android_funcs_22[] = &#123;</span><br><span class="line">    &#123;<span class="string">&quot;__dl_dlopen&quot;</span>, <span class="number">0</span>, (<span class="keyword">void</span> *)my_dlopen&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;__dl_ZL12find_libraryPKciPK12android_dlextinfo&quot;</span>, <span class="number">0</span>, (<span class="keyword">void</span> *)my_find_library&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;__dl_ZN6soinfo16CallConstructorsEv&quot;</span>, <span class="number">0</span>, (<span class="keyword">void</span> *)my_soinfo_CallConstructors&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;__dl_ZN6soinfo9CallArrayEPKcPPFvvEjb&quot;</span>, <span class="number">0</span>, (<span class="keyword">void</span> *)my_soinfo_CallArray&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">target_func_t</span> android_funcs_28[] = &#123;</span><br><span class="line">    &#123;<span class="string">&quot;__dl_Z9do_dlopenPKciPK17android_dlextinfoPKv&quot;</span>, <span class="number">0</span>, (<span class="keyword">void</span> *)my_do_dlopen_28&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;__dl_Z14find_librariesP19android_namespace&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;__dl_ZN6soinfo17call_constructorsEv&quot;</span>, <span class="number">0</span>, (<span class="keyword">void</span> *)my_soinfo_CallConstructors&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;__dl_ZL10call_arrayIPFviPPcS1_EEvPKcPT_jbS5_&quot;</span>, <span class="number">0</span>, (<span class="keyword">void</span> *)my_call_array_28&lt;constructor_func&gt;&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;__dl_ZN6soinfo10link_imageERK10LinkListIS&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;__dl_g_argc&quot;</span>, <span class="number">0</span>, <span class="number">0</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;__dl_g_argv&quot;</span>, <span class="number">0</span>, <span class="number">0</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;__dl_g_envp&quot;</span>, <span class="number">0</span>, <span class="number">0</span>&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">static</span> <span class="token class-name">target_func_t</span> android_funcs_22<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">&#123;</span><span class="token string">"__dl_dlopen"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>my_dlopen<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#123;</span><span class="token string">"__dl_ZL12find_libraryPKciPK12android_dlextinfo"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>my_find_library<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#123;</span><span class="token string">"__dl_ZN6soinfo16CallConstructorsEv"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>my_soinfo_CallConstructors<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#123;</span><span class="token string">"__dl_ZN6soinfo9CallArrayEPKcPPFvvEjb"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>my_soinfo_CallArray<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">static</span> <span class="token class-name">target_func_t</span> android_funcs_28<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">&#123;</span><span class="token string">"__dl_Z9do_dlopenPKciPK17android_dlextinfoPKv"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>my_do_dlopen_28<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#123;</span><span class="token string">"__dl_Z14find_librariesP19android_namespace"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#123;</span><span class="token string">"__dl_ZN6soinfo17call_constructorsEv"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>my_soinfo_CallConstructors<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#123;</span><span class="token string">"__dl_ZL10call_arrayIPFviPPcS1_EEvPKcPT_jbS5_"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>my_call_array_28<span class="token operator">&lt;</span>constructor_func<span class="token operator">></span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#123;</span><span class="token string">"__dl_ZN6soinfo10link_imageERK10LinkListIS"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#123;</span><span class="token string">"__dl_g_argc"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#123;</span><span class="token string">"__dl_g_argv"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#123;</span><span class="token string">"__dl_g_envp"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
 <p>android 版本不同对应 hook 方法有所不同，要注意当 so 有其他外部链接依赖时，针对 dlopen 的监控数据，不只包括自身部分，也包括依赖的 so 部分。在这种情况下，so 加载顺序也会产生很大的影响。</p>
 <p>JNI_OnLoad 的 hook 监控代码如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> ABTOR_ANDROID</span></span><br><span class="line"><span class="function">jint <span class="title">my_JNI_ONLoad</span><span class="params">(JavaVM* vm, <span class="keyword">void</span>* reserved)</span> </span>&#123;</span><br><span class="line">    asl::HookEngine::HoolContext *ctx = asl::HookEngine::getHookContext();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">uint64_t</span> start = PerfUtils::getTickTime();</span><br><span class="line">    jint res = asl::CastFuncPtr(my_JNI_OnLoad, ctx-&gt;org_func)(vm, reserved);</span><br><span class="line">    <span class="keyword">int</span> duration = (<span class="keyword">int</span>)(PerfUtils::getTickTime() - start);</span><br><span class="line"></span><br><span class="line">    LibLoaderMonitorImpl *monitor = (LibLoaderMonitorImpl*)LibLoaderMonitor::getInstance();</span><br><span class="line">    monitor-&gt;addOnloadInfo(ctx-&gt;user_data, duration);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">ABTOR_ANDROID</span></span>
+jint <span class="token function">my_JNI_ONLoad</span><span class="token punctuation">(</span>JavaVM<span class="token operator">*</span> vm<span class="token punctuation">,</span> <span class="token keyword">void</span><span class="token operator">*</span> reserved<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    asl<span class="token operator">::</span>HookEngine<span class="token operator">::</span>HoolContext <span class="token operator">*</span>ctx <span class="token operator">=</span> asl<span class="token operator">::</span>HookEngine<span class="token operator">::</span><span class="token function">getHookContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token class-name">uint64_t</span> start <span class="token operator">=</span> PerfUtils<span class="token operator">::</span><span class="token function">getTickTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    jint res <span class="token operator">=</span> asl<span class="token operator">::</span><span class="token function">CastFuncPtr</span><span class="token punctuation">(</span>my_JNI_OnLoad<span class="token punctuation">,</span> ctx<span class="token operator">-></span>org_func<span class="token punctuation">)</span><span class="token punctuation">(</span>vm<span class="token punctuation">,</span> reserved<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> duration <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">(</span>PerfUtils<span class="token operator">::</span><span class="token function">getTickTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    LibLoaderMonitorImpl <span class="token operator">*</span>monitor <span class="token operator">=</span> <span class="token punctuation">(</span>LibLoaderMonitorImpl<span class="token operator">*</span><span class="token punctuation">)</span>LibLoaderMonitor<span class="token operator">::</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    monitor<span class="token operator">-></span><span class="token function">addOnloadInfo</span><span class="token punctuation">(</span>ctx<span class="token operator">-></span>user_data<span class="token punctuation">,</span> duration<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
 <p>如上代码所示，linker 的 dlopen 完成加载，然后调用 dlsym 来调用目标 so 的 JNI_OnLoad，完成 JNI 涉及的初始化操作。</p>
 <p>加载 so 需要注意并行出现 loadLibrary0 锁的问题，这样会让多线程发生等锁现象。可以减少并发加载，但不能简单把整个加载过程放到串行任务里，这样耗时可能会更长，并且没法充分利用资源。比较好的做法是，将耗时少的串行起来同时并行耗时长的 so 加载。</p>
 <p>至此完成了 so 的初始化和链接的监控。</p>
@@ -561,14 +258,22 @@
 <p>_dyld_start 之后要少些动态库，因为链接耗时；少些 +load、C 的 constructor 函数和 C++ 静态对象，因为这些会在启动阶段执行，多了就会影响启动时间。因此，没有用的代码就需要定期清理和线上监控。通过元类中flag的方式进行监控然后定期清理。</p>
 <h2 id="iOS-主线程方法调用时长检测"><a href="#iOS-主线程方法调用时长检测" class="headerlink" title="iOS 主线程方法调用时长检测"></a>iOS 主线程方法调用时长检测</h2><p>+load 方法时间统计，使用运行时 swizzling 的方式，将统计代码放到链接顺序的最前面即可。静态初始化函数在 DATA 的 mod_init_func 区，先把里面原始函数地址保存，前后加上自定义函数记录时间。</p>
 <p>在 Linux上 有 strace 工具，还有库跟踪工具 ltrace，OSX 有包装了 dtrace 的 instruments 和 dtruss 工具，不过在某些场景需求下不好用。objc_msgSend 实际上会通过在类对象中查找选择器到函数的映射来重定向执行到实现函数。一旦它找到了目标函数，它就会简单地跳转到那里，而不必重新调整参数寄存器。这就是为什么我把它称为路由机制，而不是消息传递。Objective-C 的一个方法被调用时，堆栈和寄存器是为 objc_msgSend 调用配置的，objc_msgSend 路由执行。objc_msgSend 会在类对象中查找函数表对应定向到的函数，找到目标函数就跳转，参数寄存器不会重新调整。</p>
-<p>因此可以在这里 hook 住做统一处理。hook objc_msgSend 还可以获取启动方法列表，用于二进制重排方案中所需要的 AppOrderFiles，不过  AppOrderFiles 还可以通过 Clang SanitizerCoverage 获得，具体可以看宝藏男孩 Michael Eisel 这个这篇博客《<a target="_blank" rel="noopener" href="https://eisel.me/order">Improving App Performance with Order Files</a>》 的介绍。</p>
+<p>因此可以在这里 hook 住做统一处理。hook objc_msgSend 还可以获取启动方法列表，用于二进制重排方案中所需要的 AppOrderFiles，不过  AppOrderFiles 还可以通过 Clang SanitizerCoverage 获得，具体可以看宝藏男孩 Michael Eisel 这个这篇博客《<a target="_blank" rel="noopener" href="https://eisel.me/order">Improving App Performance with Order Files</a>》 的介绍。</p>
 <p>objc_msgSend 可以通过 fishhook 指定到你定义的 hook 方法中，也可以使用创建跳转 page 的方式来 hook。做法是先用 mmap 分配一个跳转的 page，这个内存后面会用来执行原函数，使用特殊指令集将CPU重定向到内存的任意位置。创建一个内联汇编函数用来放置跳转的地址，利用 C 编译器自动复制跳转 page 的结构，指向 hook 的函数，之前把指令复制到跳转 page 中。ARM64 是一个 RISC 架构，需要根据<a target="_blank" rel="noopener" href="https://www.element14.com/community/servlet/JiveServlet/previewBody/41836-102-1-229511/ARM.Reference_Manual.pdf">指令种类</a>检查分支指令。可以在 <a target="_blank" rel="noopener" href="https://opensource.apple.com/source/objc4/objc4-647/runtime/Messengers.subproj/objc-msg-arm64.s">_objc_msgSend</a> 里找到 b 指令的检查。相关代码如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ENTRY _objc_msgSend</span><br><span class="line">MESSENGER_START</span><br><span class="line"></span><br><span class="line">cmp x0, #<span class="number">0</span>          <span class="comment">// nil check and tagged pointer check</span></span><br><span class="line">b.le    LNilOrTagged        <span class="comment">//  (MSB tagged pointer looks negative)</span></span><br><span class="line">ldr x13, [x0]       <span class="comment">// x13 = isa</span></span><br><span class="line"><span class="keyword">and</span> x9, x13, #ISA_MASK  <span class="comment">// x9 = class</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">ENTRY _objc_msgSend
+MESSENGER_START
+
+cmp x0<span class="token punctuation">,</span> #<span class="token number">0</span>          <span class="token comment">// nil check and tagged pointer check</span>
+b<span class="token punctuation">.</span>le    LNilOrTagged        <span class="token comment">//  (MSB tagged pointer looks negative)</span>
+ldr x13<span class="token punctuation">,</span> <span class="token punctuation">[</span>x0<span class="token punctuation">]</span>       <span class="token comment">// x13 = isa</span>
+and x9<span class="token punctuation">,</span> x13<span class="token punctuation">,</span> #ISA_MASK  <span class="token comment">// x9 = class</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
 <p>检查通过就可以用这个指针读取偏移量，并修改指向跳转地址，跳转page完成，hook 函数就可以被调用了。</p>
 <p>接下来看下 hook _objc_msgSend 的函数，这个我在以前博客《<a href="https://ming1016.github.io/2017/06/20/deeply-ios-performance-optimization/">深入剖析 iOS 性能优化</a>》写过，不过多赘述，只做点补充说明。从<a target="_blank" rel="noopener" href="https://github.com/ming1016/GCDFetchFeed/blob/master/GCDFetchFeed/GCDFetchFeed/Lib/SMLagMonitor/SMCallTraceCore.c">这里的源码</a>可以看实现，其中的attribute((naked)) 表示无参数准备和栈初始化， asm 表示其后面是汇编代码，volatile 是让后面的指令避免被编译优化到缓存寄存器中和改变指令顺序，volatile 使其修饰变量被访问时都会在共享内存里重新读取，变量值变化时也能写到共享内存中，这样不同线程看到的变量都是一个值。如果你发现不加 volatile 也没有问题，你可以把编译优化选项调到更优试试。stp表示操作两个寄存器，中括号部分表示压栈存入sp偏移地址，!符号表合并了压栈指令。</p>
 <p>save() 的作用是把传递参数寄存器入栈保存，call(b, value)用来跳到指定函数地址，call(blr, &amp;before_objc_msgSend) 是调用原 _objc_msgSend 之前指定执行函数，call(blr, orig_objc_msgSend) 是调用 objc_msgSend 函数，call(blr, &amp;after_objc_msgSend) 是调用原 _objc_msgSend 之后指定执行函数。before_objc_msgSend 和 after_objc_msgSend 分别记录时间，差值就是方法调用执行的时长。</p>
 <p>调用之间通过 save() 保存参数，通过 load() 来读取参数。call 的第一个参数是blr，blr 是指跳转到寄存器地址后会返回，由于 blr 会改变 lr 寄存器X30的值，影响 ret 跳到原方法调用方地址，崩溃堆栈找方法调研栈也依赖 lr 在栈上记录的地址，所以需要在 call() 之前对 lr 进行保存，call() 都调用完后再进行恢复。跳转到hook函数，hook函数可以执行我们自定义的事情，完成后恢复CPU状态。</p>
-<h2 id="进入主图后的优化"><a href="#进入主图后的优化" class="headerlink" title="进入主图后的优化"></a>进入主图后的优化</h2><p><img src="/uploads/thinking-in-how-to-speed-up-app/12.png" alt=""></p>
+<h2 id="进入主图后的优化"><a href="#进入主图后的优化" class="headerlink" title="进入主图后的优化"></a>进入主图后的优化</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/thinking-in-how-to-speed-up-app/12.png" class="lozad post-image"src="/uploads/thinking-in-how-to-speed-up-app/12.png"></p>
 <p>进入主图后，用户就可以点击按钮进入不同功能了，是否能够快速响应按钮点击操作也是启动体验感知很重要的事情。按钮点击的两个事件 didTouchUp 和 didTouchDown 之间也会有延时，因此可以在 didTouchDown 时在主线程先 async 初始化下一个 VC，把初始化提前完成，这样做可以提高50ms-100ms的速度，甚至更多，具体收益依赖当前主线程繁忙情况和下一个页面 viewDidLoad 等初始化方法里的耗时，启动阶段主线程一定不会闲，即使点击后主线程阻塞，使用 async 也能保证下一个页面的初始化不会停。</p>
 <h2 id="线程调度和任务编排"><a href="#线程调度和任务编排" class="headerlink" title="线程调度和任务编排"></a>线程调度和任务编排</h2><h3 id="整体思路"><a href="#整体思路" class="headerlink" title="整体思路"></a>整体思路</h3><p>对于任务编排有种打法，就是先把所有任务滞后，然后再看哪个是启动开始必须要加载的。效果立竿见影，很快就能看到最好的结果，后面就是反复斟酌，严格把关谁才是必要的启动任务了。</p>
 <p>启动阶段的任务，先理出相关依赖关系，在框架中进行配置，有依赖的任务有序执行，无依赖独立任务可以在非密集任务执行期串行分组，组内并发执行。</p>
@@ -585,14 +290,104 @@
 <p>第二阶段的打法是看是否是由性能引起的问题。先在纯净工程中创建大量线程，直到线程打满，然后进行大量浮点运算使 CPU 到100%，但是没法复现，任务通过 libdispatch 到全局并发队列能正常工作。</p>
 <p>怎么在 Demo 里看到出线程已爆满了呢？</p>
 <p>libdispatch 可以使用线程数是有上限的，在 libdispatch 的<a target="_blank" rel="noopener" href="https://opensource.apple.com/tarballs/libdispatch/">源码</a>里可以看到 libdispatch 的队列初始化时使用 pthread 线程池相关代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">if</span> DISPATCH_USE_PTHREAD_POOL</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span></span><br><span class="line">_dispatch_root_queue_init_pthread_pool(<span class="keyword">dispatch_queue_global_t</span> dq,</span><br><span class="line">        <span class="keyword">int</span> pool_size, <span class="keyword">dispatch_priority_t</span> pri)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">dispatch_pthread_root_queue_context_t</span> pqc = dq-&gt;do_ctxt;</span><br><span class="line">    <span class="keyword">int</span> thread_pool_size = DISPATCH_WORKQ_MAX_PTHREAD_COUNT;</span><br><span class="line">    <span class="keyword">if</span> (!(pri &amp; DISPATCH_PRIORITY_FLAG_OVERCOMMIT)) &#123;</span><br><span class="line">        thread_pool_size = (<span class="keyword">int32_t</span>)dispatch_hw_config(active_cpus);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (pool_size &amp;&amp; pool_size &lt; thread_pool_size) thread_pool_size = pool_size;</span><br><span class="line">    ... <span class="comment">// 省略不相关代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">if</span> <span class="token expression">DISPATCH_USE_PTHREAD_POOL</span></span>
+<span class="token keyword">static</span> <span class="token keyword">inline</span> <span class="token keyword">void</span>
+<span class="token function">_dispatch_root_queue_init_pthread_pool</span><span class="token punctuation">(</span><span class="token class-name">dispatch_queue_global_t</span> dq<span class="token punctuation">,</span>
+        <span class="token keyword">int</span> pool_size<span class="token punctuation">,</span> <span class="token class-name">dispatch_priority_t</span> pri<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token class-name">dispatch_pthread_root_queue_context_t</span> pqc <span class="token operator">=</span> dq<span class="token operator">-></span>do_ctxt<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> thread_pool_size <span class="token operator">=</span> DISPATCH_WORKQ_MAX_PTHREAD_COUNT<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>pri <span class="token operator">&amp;</span> DISPATCH_PRIORITY_FLAG_OVERCOMMIT<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        thread_pool_size <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">int32_t</span><span class="token punctuation">)</span><span class="token function">dispatch_hw_config</span><span class="token punctuation">(</span>active_cpus<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>pool_size <span class="token operator">&amp;&amp;</span> pool_size <span class="token operator">&lt;</span> thread_pool_size<span class="token punctuation">)</span> thread_pool_size <span class="token operator">=</span> pool_size<span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token comment">// 省略不相关代码</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
 <p>如上面代码所示，dispatch_hw_config 会用 dispatch_source 来监控逻辑 CPU、物理 CPU、激活 CPU 的情况计算出线程池最大线程数量，如果当前状态是 DISPATCH_PRIORITY_FLAG_OVERCOMMIT，也就是会出现 overcommit 队列时，线程池最大线程数就按照 DISPATCH_WORKQ_MAX_PTHREAD_COUNT 这个宏定义的数量来，这个宏对应的值是255。因此通过查看是否出现 overcommit 队列可以看出线程池是否已满。</p>
 <p>什么时候 libdispatch 会创建一个新线程？</p>
 <p>当 libdispatch 要执行队列里 block 时会去检查是否有可用的线程，发现有可用线程时，在可用线程去执行 block，如果没有，通过 pthread_create 新建一个线程，在上面执行，函数关键代码如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">void</span></span><br><span class="line">_dispatch_root_queue_poke_slow(<span class="keyword">dispatch_queue_global_t</span> dq, <span class="keyword">int</span> n, <span class="keyword">int</span> <span class="built_in">floor</span>)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// 如果状态是overcommit，那么就继续添加到pending</span></span><br><span class="line">    <span class="keyword">bool</span> overcommit = dq-&gt;dq_priority &amp; DISPATCH_PRIORITY_FLAG_OVERCOMMIT;</span><br><span class="line">    <span class="keyword">if</span> (overcommit) &#123;</span><br><span class="line">        os_atomic_add2o(dq, dgq_pending, remaining, relaxed);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!os_atomic_cmpxchg2o(dq, dgq_pending, <span class="number">0</span>, remaining, relaxed)) &#123;</span><br><span class="line">            _dispatch_root_queue_debug(<span class="string">&quot;worker thread request still pending for &quot;</span></span><br><span class="line">                    <span class="string">&quot;global queue: %p&quot;</span>, dq);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    t_count = os_atomic_load2o(dq, dgq_thread_pool_size, ordered);</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        can_request = t_count &lt; <span class="built_in">floor</span> ? <span class="number">0</span> : t_count - <span class="built_in">floor</span>;</span><br><span class="line">        <span class="comment">// 是否有可用</span></span><br><span class="line">        <span class="keyword">if</span> (remaining &gt; can_request) &#123;</span><br><span class="line">            _dispatch_root_queue_debug(<span class="string">&quot;pthread pool reducing request from %d to %d&quot;</span>,</span><br><span class="line">                    remaining, can_request);</span><br><span class="line">            os_atomic_sub2o(dq, dgq_pending, remaining - can_request, relaxed);</span><br><span class="line">            remaining = can_request;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 线程满</span></span><br><span class="line">        <span class="keyword">if</span> (remaining == <span class="number">0</span>) &#123;</span><br><span class="line">            _dispatch_root_queue_debug(<span class="string">&quot;pthread pool is full for root queue: &quot;</span></span><br><span class="line">                    <span class="string">&quot;%p&quot;</span>, dq);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">while</span> (!os_atomic_cmpxchgvw2o(dq, dgq_thread_pool_size, t_count,</span><br><span class="line">            t_count - remaining, &amp;t_count, acquire));</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        _dispatch_retain(dq); <span class="comment">// 在 _dispatch_worker_thread 里取任务并执行</span></span><br><span class="line">        <span class="keyword">while</span> ((r = pthread_create(pthr, attr, _dispatch_worker_thread, dq))) &#123;</span><br><span class="line">            <span class="keyword">if</span> (r != EAGAIN) &#123;</span><br><span class="line">                (<span class="keyword">void</span>)dispatch_assume_zero(r);</span><br><span class="line">            &#125;</span><br><span class="line">            _dispatch_temporary_resource_shortage();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">while</span> (--remaining);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">void</span>
+<span class="token function">_dispatch_root_queue_poke_slow</span><span class="token punctuation">(</span><span class="token class-name">dispatch_queue_global_t</span> dq<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">,</span> <span class="token keyword">int</span> floor<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token comment">// 如果状态是overcommit，那么就继续添加到pending</span>
+    bool overcommit <span class="token operator">=</span> dq<span class="token operator">-></span>dq_priority <span class="token operator">&amp;</span> DISPATCH_PRIORITY_FLAG_OVERCOMMIT<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>overcommit<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">os_atomic_add2o</span><span class="token punctuation">(</span>dq<span class="token punctuation">,</span> dgq_pending<span class="token punctuation">,</span> remaining<span class="token punctuation">,</span> relaxed<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">os_atomic_cmpxchg2o</span><span class="token punctuation">(</span>dq<span class="token punctuation">,</span> dgq_pending<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> remaining<span class="token punctuation">,</span> relaxed<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">_dispatch_root_queue_debug</span><span class="token punctuation">(</span><span class="token string">"worker thread request still pending for "</span>
+                    <span class="token string">"global queue: %p"</span><span class="token punctuation">,</span> dq<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    t_count <span class="token operator">=</span> <span class="token function">os_atomic_load2o</span><span class="token punctuation">(</span>dq<span class="token punctuation">,</span> dgq_thread_pool_size<span class="token punctuation">,</span> ordered<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">do</span> <span class="token punctuation">&#123;</span>
+        can_request <span class="token operator">=</span> t_count <span class="token operator">&lt;</span> floor <span class="token operator">?</span> <span class="token number">0</span> <span class="token operator">:</span> t_count <span class="token operator">-</span> floor<span class="token punctuation">;</span>
+        <span class="token comment">// 是否有可用</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>remaining <span class="token operator">></span> can_request<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">_dispatch_root_queue_debug</span><span class="token punctuation">(</span><span class="token string">"pthread pool reducing request from %d to %d"</span><span class="token punctuation">,</span>
+                    remaining<span class="token punctuation">,</span> can_request<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">os_atomic_sub2o</span><span class="token punctuation">(</span>dq<span class="token punctuation">,</span> dgq_pending<span class="token punctuation">,</span> remaining <span class="token operator">-</span> can_request<span class="token punctuation">,</span> relaxed<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            remaining <span class="token operator">=</span> can_request<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">// 线程满</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>remaining <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">_dispatch_root_queue_debug</span><span class="token punctuation">(</span><span class="token string">"pthread pool is full for root queue: "</span>
+                    <span class="token string">"%p"</span><span class="token punctuation">,</span> dq<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">os_atomic_cmpxchgvw2o</span><span class="token punctuation">(</span>dq<span class="token punctuation">,</span> dgq_thread_pool_size<span class="token punctuation">,</span> t_count<span class="token punctuation">,</span>
+            t_count <span class="token operator">-</span> remaining<span class="token punctuation">,</span> <span class="token operator">&amp;</span>t_count<span class="token punctuation">,</span> acquire<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">do</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">_dispatch_retain</span><span class="token punctuation">(</span>dq<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 在 _dispatch_worker_thread 里取任务并执行</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>r <span class="token operator">=</span> <span class="token function">pthread_create</span><span class="token punctuation">(</span>pthr<span class="token punctuation">,</span> attr<span class="token punctuation">,</span> _dispatch_worker_thread<span class="token punctuation">,</span> dq<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>r <span class="token operator">!=</span> EAGAIN<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token function">dispatch_assume_zero</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token function">_dispatch_temporary_resource_shortage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">--</span>remaining<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
 <p>如上面代码所示，can_request 表示可用线程数，通过当前最大可用线程数减去已用线程数获得，赋给 remaining后，用来判断线程是否满和控制线程创建。dispatch_worker_thread 会取任务并执行。</p>
 <p>当 libdispatch 使用的线程池中线程过多，并且有 pending 标记，当等待超时，也就是 libdispatch 里 DISPATCH_CONTENTION_USLEEP_MAX 宏定义的时间后，也会触发创建一个新的待处理线程。libdispatch 对应函数关键代码如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">bool</span></span><br><span class="line">__DISPATCH_ROOT_QUEUE_CONTENDED_WAIT__(<span class="keyword">dispatch_queue_global_t</span> dq,</span><br><span class="line">        <span class="keyword">int</span> (*predicate)(<span class="keyword">dispatch_queue_global_t</span> dq))</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">bool</span> pending = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">if</span> (!pending) &#123;</span><br><span class="line">            <span class="comment">// 添加pending标记</span></span><br><span class="line">            (<span class="keyword">void</span>)os_atomic_inc2o(dq, dgq_pending, relaxed);</span><br><span class="line">            pending = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        _dispatch_contention_usleep(sleep_time);</span><br><span class="line">        ...</span><br><span class="line">        sleep_time *= <span class="number">2</span>;</span><br><span class="line">    &#125; <span class="keyword">while</span> (sleep_time &lt; DISPATCH_CONTENTION_USLEEP_MAX);</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (pending) &#123;</span><br><span class="line">        (<span class="keyword">void</span>)os_atomic_dec2o(dq, dgq_pending, relaxed);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (status == DISPATCH_ROOT_QUEUE_DRAIN_WAIT) &#123;</span><br><span class="line">        _dispatch_root_queue_poke(dq, <span class="number">1</span>, <span class="number">0</span>); <span class="comment">// 创建新线程</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> status == DISPATCH_ROOT_QUEUE_DRAIN_READY;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">static</span> bool
+<span class="token function">__DISPATCH_ROOT_QUEUE_CONTENDED_WAIT__</span><span class="token punctuation">(</span><span class="token class-name">dispatch_queue_global_t</span> dq<span class="token punctuation">,</span>
+        <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>predicate<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token class-name">dispatch_queue_global_t</span> dq<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    bool pending <span class="token operator">=</span> false<span class="token punctuation">;</span>
+
+    <span class="token keyword">do</span> <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>pending<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 添加pending标记</span>
+            <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token function">os_atomic_inc2o</span><span class="token punctuation">(</span>dq<span class="token punctuation">,</span> dgq_pending<span class="token punctuation">,</span> relaxed<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            pending <span class="token operator">=</span> true<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token function">_dispatch_contention_usleep</span><span class="token punctuation">(</span>sleep_time<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+        sleep_time <span class="token operator">*=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">while</span> <span class="token punctuation">(</span>sleep_time <span class="token operator">&lt;</span> DISPATCH_CONTENTION_USLEEP_MAX<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>pending<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token function">os_atomic_dec2o</span><span class="token punctuation">(</span>dq<span class="token punctuation">,</span> dgq_pending<span class="token punctuation">,</span> relaxed<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>status <span class="token operator">==</span> DISPATCH_ROOT_QUEUE_DRAIN_WAIT<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">_dispatch_root_queue_poke</span><span class="token punctuation">(</span>dq<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 创建新线程</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> status <span class="token operator">==</span> DISPATCH_ROOT_QUEUE_DRAIN_READY<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
 <p>如上所示，在创建新的待处理线程后，会退出当前线程，负载没了就会去用新建的线程。</p>
 <p>接下来使用 Instruments 进行分析 Trace 文件，发现启动阶段立刻开始使用A库的话，CPU 会突然上升，如果使用 A 库稍晚些，CPU 使用率就是稳定正常的。这说明在第一个阶段性能相关结论只是偶现情况才会出现，出问题时，并没有出现系统资源紧张的情况，可以得出并不是性能问题的结论。那么下一个阶段只能从A库的使用和排查我们工程其它功能的问题。</p>
 <p>第三个阶段的思路是使用功能二分排查法，先排出 A 库使用问题，做法是在使用最简单的 A 库初始化一个页面在首屏也会复现问题。</p>
@@ -607,15 +402,56 @@
 <p>第一个不对的结论是经 QA 同学长时间多轮测试，只在14.2及以上系统版本有问题，由于只有这个版本才开始有此问题，推断可能是系统 bug；第二个不对的是只有渲染、引擎、网络库的 Demo 再次检查，可复现问题，因此可以针对这个 Demo 进行进一步二分排查。</p>
 <p>于是，咱们针对两个先前错误结论，再次出发，同步进行验证。对 Demo 排除了网络库依然复现，后排除引擎还是复现，同时使用了自己的示例工程在iOS14.2上复现了问题，和第一阶段纯净Demo的区别是往全局并发队列里方式，官方 Demo 是 Operation，我们的是 libdispatch。</p>
 <p>因此得出结论是苹果系统升级问题，原因可能在 OperationQueue，问题重现后，不再运行其中的 operation。14.3beta 版还没有解决。五个阶段总结如下图所示：</p>
-<p><img src="/uploads/thinking-in-how-to-speed-up-app/13.png" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/thinking-in-how-to-speed-up-app/13.png" class="lozad post-image"src="/uploads/thinking-in-how-to-speed-up-app/13.png"></p>
 <p>那么看下 Operation 实现，分析下系统 bug 原因。</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/apportable/Foundation">ApportableFoundation</a> 里有Operation的开源实现 <a target="_blank" rel="noopener" href="https://github.com/apportable/Foundation/blob/master/System/Foundation/src/NSOperation.m">NSOperation.m</a>，相比较 <a target="_blank" rel="noopener" href="http://www.gnustep.org/">GNUstep</a> 和 <a target="_blank" rel="noopener" href="http://www.cocotron.org/">Cocotron</a> 更完善，可以看到 Operation 如何在 _schedulerRun 函数里通过 libdispatch 的 async 方法将 operation 的任务放到队列执行。</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/apple/swift-corelibs-foundation/">swift源码</a>里的fundation也有实现 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-corelibs-foundation/blob/main/Sources/Foundation/Operation.swift">Operation</a>，我们看看 _schedule 函数的关键代码：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">internal</span> <span class="function"><span class="keyword">func</span> <span class="title">_schedule</span>()</span> &#123;</span><br><span class="line">    <span class="operator">...</span></span><br><span class="line">    <span class="comment">// 按优先级顺序执行</span></span><br><span class="line">    <span class="keyword">for</span> prio <span class="keyword">in</span> <span class="type">Operation</span>.<span class="type">QueuePriority</span>.priorities &#123;</span><br><span class="line">        <span class="operator">...</span></span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">let</span> operation <span class="operator">=</span> op<span class="operator">?</span>.takeUnretainedValue() &#123;</span><br><span class="line">            <span class="operator">...</span></span><br><span class="line">            <span class="keyword">let</span> next <span class="operator">=</span> operation.__nextPriorityOperation</span><br><span class="line">            <span class="operator">...</span></span><br><span class="line">            <span class="keyword">if</span> <span class="type">Operation</span>.__NSOperationState.enqueued <span class="operator">==</span> operation._state <span class="operator">&amp;&amp;</span> operation._fetchCachedIsReady(<span class="operator">&amp;</span>retest) &#123;</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">let</span> previous <span class="operator">=</span> prev<span class="operator">?</span>.takeUnretainedValue() &#123;</span><br><span class="line">                    previous.__nextPriorityOperation <span class="operator">=</span> next</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    _setFirstPriorityOperation(prio, next)</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="operator">...</span></span><br><span class="line">                <span class="keyword">if</span> __mainQ &#123;</span><br><span class="line">                    queue <span class="operator">=</span> <span class="type">DispatchQueue</span>.main</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    queue <span class="operator">=</span> __dispatch_queue <span class="operator">??</span> _synthesizeBackingQueue()</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">let</span> schedule <span class="operator">=</span> operation.__schedule &#123;</span><br><span class="line">                    <span class="keyword">if</span> operation <span class="keyword">is</span> _BarrierOperation &#123;</span><br><span class="line">                        queue.async(flags: .barrier, execute: &#123;</span><br><span class="line">                            schedule.perform()</span><br><span class="line">                        &#125;)</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        queue.async(execute: schedule)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                op <span class="operator">=</span> next</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="operator">...</span> <span class="comment">// 添加</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="operator">...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">internal</span> <span class="token keyword">func</span> <span class="token function-definition function">_schedule</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token operator">...</span>
+    <span class="token comment">// 按优先级顺序执行</span>
+    <span class="token keyword">for</span> prio <span class="token keyword">in</span> <span class="token class-name">Operation</span><span class="token punctuation">.</span><span class="token class-name">QueuePriority</span><span class="token punctuation">.</span>priorities <span class="token punctuation">&#123;</span>
+        <span class="token operator">...</span>
+        <span class="token keyword">while</span> <span class="token keyword">let</span> operation <span class="token operator">=</span> op<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">takeUnretainedValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token operator">...</span>
+            <span class="token keyword">let</span> next <span class="token operator">=</span> operation<span class="token punctuation">.</span>__nextPriorityOperation
+            <span class="token operator">...</span>
+            <span class="token keyword">if</span> <span class="token class-name">Operation</span><span class="token punctuation">.</span>__NSOperationState<span class="token punctuation">.</span>enqueued <span class="token operator">==</span> operation<span class="token punctuation">.</span>_state <span class="token operator">&amp;&amp;</span> operation<span class="token punctuation">.</span><span class="token function">_fetchCachedIsReady</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>retest<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">if</span> <span class="token keyword">let</span> previous <span class="token operator">=</span> prev<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">takeUnretainedValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    previous<span class="token punctuation">.</span>__nextPriorityOperation <span class="token operator">=</span> next
+                <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+                    <span class="token function">_setFirstPriorityOperation</span><span class="token punctuation">(</span>prio<span class="token punctuation">,</span> next<span class="token punctuation">)</span>
+                <span class="token punctuation">&#125;</span>
+                <span class="token operator">...</span>
+                <span class="token keyword">if</span> __mainQ <span class="token punctuation">&#123;</span>
+                    queue <span class="token operator">=</span> <span class="token class-name">DispatchQueue</span><span class="token punctuation">.</span>main
+                <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+                    queue <span class="token operator">=</span> __dispatch_queue <span class="token operator">??</span> <span class="token function">_synthesizeBackingQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">&#125;</span>
+                
+                <span class="token keyword">if</span> <span class="token keyword">let</span> schedule <span class="token operator">=</span> operation<span class="token punctuation">.</span>__schedule <span class="token punctuation">&#123;</span>
+                    <span class="token keyword">if</span> operation <span class="token keyword">is</span> _BarrierOperation <span class="token punctuation">&#123;</span>
+                        queue<span class="token punctuation">.</span><span class="token keyword">async</span><span class="token punctuation">(</span>flags<span class="token punctuation">:</span> <span class="token punctuation">.</span>barrier<span class="token punctuation">,</span> execute<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+                            schedule<span class="token punctuation">.</span><span class="token function">perform</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+                        queue<span class="token punctuation">.</span><span class="token keyword">async</span><span class="token punctuation">(</span>execute<span class="token punctuation">:</span> schedule<span class="token punctuation">)</span>
+                    <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">&#125;</span>
+                
+                op <span class="token operator">=</span> next
+            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+                <span class="token operator">...</span> <span class="token comment">// 添加</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token operator">...</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
 <p>上述代码可见，可以看到 _schedule 函数根据 Operation.QueuePriority.priorities 优先级数组顺序，从最高 barrier 开始到 veryHigh、high、normal、low 到最低的 veryLow，根据 operation 属性设置决定 libdispatch 的 queue 是什么类型的，最后通过 async 函数分配到对应的队列上执行。</p>
-<p>查看 operation 代码更新情况，最新 operation 提交修复了一个问题，commit <a target="_blank" rel="noopener" href="https://github.com/apple/swift-corelibs-foundation/commit/9f44ed353c77a438d6f4ba879b2b388210e2107f">在这</a>，根据修复问题的描述来看，和 A 库引入导致队列不可添加 OperationQueue 的情况非常类似。修复的地方可以看下图：<br><img src="/uploads/thinking-in-how-to-speed-up-app/8.png" alt=""></p>
+<p>查看 operation 代码更新情况，最新 operation 提交修复了一个问题，commit <a target="_blank" rel="noopener" href="https://github.com/apple/swift-corelibs-foundation/commit/9f44ed353c77a438d6f4ba879b2b388210e2107f">在这</a>，根据修复问题的描述来看，和 A 库引入导致队列不可添加 OperationQueue 的情况非常类似。修复的地方可以看下图：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/thinking-in-how-to-speed-up-app/8.png" class="lozad post-image"src="/uploads/thinking-in-how-to-speed-up-app/8.png"></p>
 <p>如图所示，在先前 _schedule 函数里使用 nextOperation 而不用 nextPriorityOperation 会导致主操作列表里的不同优先级操作列表交叉连接，可能会在执行后面操作时被挂起，而 A 库里的 OperationQueue 都是高优的，如果有其它优先级的 OperationQueue 加进来就会出现挂起的问题。</p>
-<p>从提交记录看，19年6月12日的那次提交变更了很多代码逻辑，描述上看是为了更接近 objc 的实现，changePriority 函数就是那个时候加进去的。提交的 commit 如下图所示：<br><img src="/uploads/thinking-in-how-to-speed-up-app/9.png" alt=""></p>
+<p>从提交记录看，19年6月12日的那次提交变更了很多代码逻辑，描述上看是为了更接近 objc 的实现，changePriority 函数就是那个时候加进去的。提交的 commit 如下图所示：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/thinking-in-how-to-speed-up-app/9.png" class="lozad post-image"src="/uploads/thinking-in-how-to-speed-up-app/9.png"></p>
 <p>怀疑（只是怀疑，苹果官方并没有说）可能是在 iOS14 引入 swift 版的 Operation，因此这个 Operation 针对 objc 调用做了适配。之所以14.2之前 Operation 重构后的 bug 没有引起问题，可能是当时 A 库的 Queue 优先级还没调高，14.2版本A库的 Queue 优先级开始调高了，所以出现了优先级交叉挂起的情况。</p>
 <p>从这次排查可以发现，目前对于并发的监测还是非常复杂的。那么并发问题在 iOS 的将来会得到解决吗？</p>
 <h3 id="多线程并行计算模型"><a href="#多线程并行计算模型" class="headerlink" title="多线程并行计算模型"></a>多线程并行计算模型</h3><p>既然共享数据方式问题多，那还有其它选择吗？</p>
@@ -628,1749 +464,407 @@
 <p>任务都按 actor 模型方式来写，还能够做到功能之间的解耦，如果是服务器应用，actor 可以布到不同的进程甚至是不同机器上。</p>
 <p>actor 中消息邮件在同一时间只能处理一个消息，这样等待返回一个值的方式，需要暂停，内部有返回再继续执行，这要怎么实现呢？</p>
 <p>答案是使用 Coroutine</p>
-<p>在 Swift 并发路线提案里还提到了基于 coroutine 的 async/await 语法，这种语法风格已经被广泛采纳，比如Python、Dart、JavaScript 都有实现，这样能够写出简洁好维护的并发代码。</p>
+<p>在 Swift 并发路线提案里还提到了基于 coroutine 的 async&#x2F;await 语法，这种语法风格已经被广泛采纳，比如Python、Dart、JavaScript 都有实现，这样能够写出简洁好维护的并发代码。</p>
 <p>上述只是提案，最快也需要两个版本的等待，那么语言上的支持还没有来，怎么能提前享用 coroutine 呢？</p>
-<p><img src="/uploads/thinking-in-how-to-speed-up-app/14.png" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/thinking-in-how-to-speed-up-app/14.png" class="lozad post-image"src="/uploads/thinking-in-how-to-speed-up-app/14.png"></p>
 <p>处理暂停恢复操作，可以使用 context 处理函数 setjmp 和 longjmp，但 setjmp 和 longjmp 较难实现临时切换到不同的执行路径，然后恢复到停止执行的地方，所以服务器用一般都会使用 ucontext 来实现，gnu 的举的例子 <a target="_blank" rel="noopener" href="https://www.gnu.org/software/libc/manual/html_mono/libc.html#System-V-contexts">GNU C Library: Complete Context Control</a>，这个例子在于创建 context 堆栈，swapcontext 来保存 context，这样可以在其它地方能执行回到原来的地方。创建 context 堆栈代码如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">uc[<span class="number">1</span>].uc_link = &amp;uc[<span class="number">0</span>];</span><br><span class="line">uc[<span class="number">1</span>].uc_stack.ss_sp = st1;</span><br><span class="line">uc[<span class="number">1</span>].uc_stack.ss_size = <span class="keyword">sizeof</span> st1;</span><br><span class="line">makecontext (&amp;uc[<span class="number">1</span>], (<span class="keyword">void</span> (*) (<span class="keyword">void</span>)) f, <span class="number">1</span>, <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">uc<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>uc_link <span class="token operator">=</span> <span class="token operator">&amp;</span>uc<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+uc<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>uc_stack<span class="token punctuation">.</span>ss_sp <span class="token operator">=</span> st1<span class="token punctuation">;</span>
+uc<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>uc_stack<span class="token punctuation">.</span>ss_size <span class="token operator">=</span> <span class="token keyword">sizeof</span> st1<span class="token punctuation">;</span>
+<span class="token function">makecontext</span> <span class="token punctuation">(</span><span class="token operator">&amp;</span>uc<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">)</span> f<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
 <p>上面代码中 uc_link 表示的是主 context。保存 context 的代码如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swapcontext (&amp;uc[n], &amp;uc[<span class="number">3</span> - n]);</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">swapcontext</span> <span class="token punctuation">(</span><span class="token operator">&amp;</span>uc<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>uc<span class="token punctuation">[</span><span class="token number">3</span> <span class="token operator">-</span> n<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
 <p>但是在 Xcode 里一试，出现错误提示如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implicit declaration of function &#x27;swapcontext&#x27; is invalid in c99</span><br></pre></td></tr></table></figure>
-<p>原来最新的 POSXI 标准已经没有这个函数了，IEEE Std 1003.1-2001 / Cor 2-2004，应用了项目XBD/TC2/D6/28，标注 getcontext()、makecontext()、setcontext()和swapcontext() 函数过时了。在 POSIX  2004第743页说明了原因，大概意思就是建议使用 pthread 这种系统编程上，后来的 Rust 和 Swift coroutine 的提案里都是使用的系统编程来实现 coroutine，长期看系统编程实现 coroutine 肯定是趋势。那么在 swift 升级之前还有办法在 iOS 用 ucontext 这种轻量级的 coroutine 吗？</p>
+<pre class="line-numbers language-none"><code class="language-none">implicit declaration of function &#39;swapcontext&#39; is invalid in c99<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>原来最新的 POSXI 标准已经没有这个函数了，IEEE Std 1003.1-2001 &#x2F; Cor 2-2004，应用了项目XBD&#x2F;TC2&#x2F;D6&#x2F;28，标注 getcontext()、makecontext()、setcontext()和swapcontext() 函数过时了。在 POSIX  2004第743页说明了原因，大概意思就是建议使用 pthread 这种系统编程上，后来的 Rust 和 Swift coroutine 的提案里都是使用的系统编程来实现 coroutine，长期看系统编程实现 coroutine 肯定是趋势。那么在 swift 升级之前还有办法在 iOS 用 ucontext 这种轻量级的 coroutine 吗？</p>
 <p>其实也是有的，可以考虑临时过渡一下。具体可以看看 ucontext 的汇编实现，重新在自己工程里实现出来就可以了。<a target="_blank" rel="noopener" href="https://code.woboq.org/userspace/glibc/sysdeps/unix/sysv/linux/x86_64/getcontext.S.html">getcontext</a>、<a target="_blank" rel="noopener" href="https://code.woboq.org/userspace/glibc/sysdeps/unix/sysv/linux/x86_64/setcontext.S.html">setcontext</a>、<a target="_blank" rel="noopener" href="https://code.woboq.org/userspace/glibc/sysdeps/unix/sysv/linux/x86_64/makecontext.c.html">makecontext</a>、<a target="_blank" rel="noopener" href="https://code.woboq.org/userspace/glibc/sysdeps/unix/sysv/linux/x86_64/swapcontext.S.html">swapcontext</a> 的在 linux 系统代码里能看到。ucontext_t 结构体里的 uc_stack 会记录 context 使用的栈。getcontext() 是把各个寄存器保存到内存结构体里，setcontext() 是把来自 makecontext() 和 getcontext() 的各寄存器恢复到当前 context 的寄存器里。switchcontext() 合并了 getcontext() 和 setcontext()。</p>
-<p>ucontext_t 的结构体设计如下：<br><img src="/uploads/thinking-in-how-to-speed-up-app/6.png" alt=""></p>
+<p>ucontext_t 的结构体设计如下：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/thinking-in-how-to-speed-up-app/6.png" class="lozad post-image"src="/uploads/thinking-in-how-to-speed-up-app/6.png"></p>
 <p>如上图所示，ucontext_t 还包含了一个更高层次的 context 封装 uc_mcontext，uc_mcontext 会保存调用线程的寄存器。上图中 eax 是函数入参地址，寄存器值入栈操作代码如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">movl    $<span class="number">0</span>, oEAX(%eax)</span><br><span class="line">movl    %ecx, oECX(%eax)</span><br><span class="line">movl    %edx, oEDX(%eax)</span><br><span class="line">movl    %edi, oEDI(%eax)</span><br><span class="line">movl    %esi, oESI(%eax)</span><br><span class="line">movl    %ebp, oEBP(%eax)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">movl    $<span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">oEAX</span><span class="token punctuation">(</span><span class="token operator">%</span>eax<span class="token punctuation">)</span>
+movl    <span class="token operator">%</span>ecx<span class="token punctuation">,</span> <span class="token function">oECX</span><span class="token punctuation">(</span><span class="token operator">%</span>eax<span class="token punctuation">)</span>
+movl    <span class="token operator">%</span>edx<span class="token punctuation">,</span> <span class="token function">oEDX</span><span class="token punctuation">(</span><span class="token operator">%</span>eax<span class="token punctuation">)</span>
+movl    <span class="token operator">%</span>edi<span class="token punctuation">,</span> <span class="token function">oEDI</span><span class="token punctuation">(</span><span class="token operator">%</span>eax<span class="token punctuation">)</span>
+movl    <span class="token operator">%</span>esi<span class="token punctuation">,</span> <span class="token function">oESI</span><span class="token punctuation">(</span><span class="token operator">%</span>eax<span class="token punctuation">)</span>
+movl    <span class="token operator">%</span>ebp<span class="token punctuation">,</span> <span class="token function">oEBP</span><span class="token punctuation">(</span><span class="token operator">%</span>eax<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
 <p>以上代码中 oECX、oEDX 等表示相应寄存器在内存结构体里的位置。esp 指向返回地址值，由 eip 字段记录，代码如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">movl    (%esp), %ecx</span><br><span class="line">movl    %ecx, oEIP(%eax)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">movl</span>    <span class="token punctuation">(</span><span class="token operator">%</span>esp<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">%</span>ecx
+movl    <span class="token operator">%</span>ecx<span class="token punctuation">,</span> <span class="token function">oEIP</span><span class="token punctuation">(</span><span class="token operator">%</span>eax<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
 <p>edx 是 getcontext() 的栈寄存器会记录 ucontext_t.uc_stack.ss_sp 栈顶的值，oSS_SIZE 是栈大小，通过指令addl 可以找到栈底。makecontext() 会根据 ecx 里的参数去设置栈，setcontext() 是 getcontext 的逆操作，设置当前 context，栈顶在 esp 寄存器。</p>
-<p>轻量级的 coroutine 实现了，下面咱们可以通过 Swift <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0296-async-await.md">async/await提案</a>（已加了编号0296，表示核心团队已经认可，上线可期）看下系统编程的 coroutine 是怎么实现的。Swift async/await 提案中的思路是让开发者编写异步操作逻辑，编译器用来转换和生成所需的隐式操作闭包。可以看作是个语法糖，并像其它实现那样会改变完成处理程序被调用的队列。工作原理类似 try，也不需要捕获 self 的转义闭包。挂起会中断原子性，比如一个串行队列中任务要挂起，让其它任务在一个串行队列中交错运行，因此异步函数最好是不阻塞线程。将异步函数当作一般函数调用，这样的调用会暂时离开线程，等待当前线程任务完成再从它离开的地方恢复执行这个函数，并保证是在先前的actor里执行完成。</p>
+<p>轻量级的 coroutine 实现了，下面咱们可以通过 Swift <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0296-async-await.md">async&#x2F;await提案</a>（已加了编号0296，表示核心团队已经认可，上线可期）看下系统编程的 coroutine 是怎么实现的。Swift async&#x2F;await 提案中的思路是让开发者编写异步操作逻辑，编译器用来转换和生成所需的隐式操作闭包。可以看作是个语法糖，并像其它实现那样会改变完成处理程序被调用的队列。工作原理类似 try，也不需要捕获 self 的转义闭包。挂起会中断原子性，比如一个串行队列中任务要挂起，让其它任务在一个串行队列中交错运行，因此异步函数最好是不阻塞线程。将异步函数当作一般函数调用，这样的调用会暂时离开线程，等待当前线程任务完成再从它离开的地方恢复执行这个函数，并保证是在先前的actor里执行完成。</p>
 <h2 id="启动性能分析工具"><a href="#启动性能分析工具" class="headerlink" title="启动性能分析工具"></a>启动性能分析工具</h2><h3 id="iOS-官方工具"><a href="#iOS-官方工具" class="headerlink" title="iOS 官方工具"></a>iOS 官方工具</h3><p>Instruments 中 Time Profiles 中的 Profile 可以方便的分析模块中每个方法的耗时。Time Profiles 中的 Samples 分析将更加准确的显示出 App 启动后每一个 CPU 核心在一个时间片内所执行的代码。如果在模块开发中有以下的需求，可以考虑使用 Samples 分析：</p>
 <ol>
 <li>希望更精确的分析某个方法具体执行代码的耗时</li>
 <li>想知道一个方法到另一个方法的耗时情况（跨方法耗时分析）</li>
 </ol>
 <p>MetricKit 2.0 开始加强了诊断特性，通过收集调用栈信息能够方便我们来进行问题的诊断，通过 didReceive 回调 MXMetricPayload 性能数据，可包含 MXSignpostMetric 自定义采集数据，甚至是你捕获不到的崩溃信号的系统强杀崩溃信息传到自己服务器进行分析和报警。</p>
-<h3 id="如何在-iOS-真机和模拟器上实现自动化性能分析"><a href="#如何在-iOS-真机和模拟器上实现自动化性能分析" class="headerlink" title="如何在 iOS 真机和模拟器上实现自动化性能分析"></a>如何在 iOS 真机和模拟器上实现自动化性能分析</h3><p>苹果有个 usbmux 协议会给自己 macOS 程序和设备进行通信，场景有备份 iPhone 还有真机调试。macOS 对应的是/System/Library/PrivateFrameworks/MobileDevice.framework/Versions/A/Resources/ 下的 usbmuxd 程序，usbmuxd 是 IPC socket 和 TCP socket 用来进行进程间通信，<a target="_blank" rel="noopener" href="https://github.com/libimobiledevice/usbmuxd">这里</a>有他的一个开源实现。对于在手机端是 lockdown 来起服务。因此利用 usbmuxd 的协议，就可以自建和设备通信的应用比如 lookin，实现方式可以参考这个 <a target="_blank" rel="noopener" href="https://github.com/rsms/peertalk">demo</a>。使用 usbmux 协议的 <a target="_blank" rel="noopener" href="https://github.com/libimobiledevice/libimobiledevice">libimobiledevice</a>（相当于 Android 的 adb）提供了更多能力，可以获取设备的信息、搭载 <a target="_blank" rel="noopener" href="https://github.com/libimobiledevice/ifuse">ifuse</a> 访问设备文件系统（没越狱可访问照片媒体、沙盒、日志）、与调试服务器连接远程调试。无侵入的库还有 <a target="_blank" rel="noopener" href="https://www.gamebench.net/">gamebench</a> 也用到了 libimobiledevice。</p>
+<h3 id="如何在-iOS-真机和模拟器上实现自动化性能分析"><a href="#如何在-iOS-真机和模拟器上实现自动化性能分析" class="headerlink" title="如何在 iOS 真机和模拟器上实现自动化性能分析"></a>如何在 iOS 真机和模拟器上实现自动化性能分析</h3><p>苹果有个 usbmux 协议会给自己 macOS 程序和设备进行通信，场景有备份 iPhone 还有真机调试。macOS 对应的是&#x2F;System&#x2F;Library&#x2F;PrivateFrameworks&#x2F;MobileDevice.framework&#x2F;Versions&#x2F;A&#x2F;Resources&#x2F; 下的 usbmuxd 程序，usbmuxd 是 IPC socket 和 TCP socket 用来进行进程间通信，<a target="_blank" rel="noopener" href="https://github.com/libimobiledevice/usbmuxd">这里</a>有他的一个开源实现。对于在手机端是 lockdown 来起服务。因此利用 usbmuxd 的协议，就可以自建和设备通信的应用比如 lookin，实现方式可以参考这个 <a target="_blank" rel="noopener" href="https://github.com/rsms/peertalk">demo</a>。使用 usbmux 协议的 <a target="_blank" rel="noopener" href="https://github.com/libimobiledevice/libimobiledevice">libimobiledevice</a>（相当于 Android 的 adb）提供了更多能力，可以获取设备的信息、搭载 <a target="_blank" rel="noopener" href="https://github.com/libimobiledevice/ifuse">ifuse</a> 访问设备文件系统（没越狱可访问照片媒体、沙盒、日志）、与调试服务器连接远程调试。无侵入的库还有 <a target="_blank" rel="noopener" href="https://www.gamebench.net/">gamebench</a> 也用到了 libimobiledevice。</p>
 <p>instruments 可以导出 .trace 文件，以前只能用 instruments 打开，Xcode12 提供了 xctrace 命令行工具可以导出可分析的数据。Xcode12 之前的时候是能使用 <a target="_blank" rel="noopener" href="https://github.com/Qusic/TraceUtility">TraceUtility</a> 这个库，TraceUtility 的做法是链上 Xcode 里 instruments 用的那些库，比如 DVTFoundation 和 InstrumentsKit 等，调用对应的方法去获取.trace文件。使用 libimobiledevice 能构造操作 instruments 的应用，将 instruments 的能力自动化。</p>
 <p><a target="_blank" rel="noopener" href="https://perfdog.qq.com/">perfdog</a>就是使用了libimobiledevice调用了instruments的接口（见<a target="_blank" rel="noopener" href="https://recon.cx/2018/montreal/schedule/system/event_attachments/attachments/000/000/043/original/RECON-MTL-2018-Discovering_the_iOS_Instruments_Server.pdf">接口研究</a>，<a target="_blank" rel="noopener" href="https://github.com/troybowman/ios_instruments_client">实现代码</a>）来实现instruments的一些功能，并进行了扩展定制，无侵入的构建本地性能监控并集成到自动测试中出数据，减少人工成本。无侵入的另一个好处就是可以方便用同一套标准看到其他APP的表现情况。</p>
 <p>要到具体场景去跑 case 还需要流程自动化。Appium 使用的是 Facebook 开发的一套基于 W3C 标准交互协议 <a target="_blank" rel="noopener" href="https://w3c.github.io/webdriver/">WebDriver</a> 的库 <a target="_blank" rel="noopener" href="https://github.com/facebookarchive/WebDriverAgent">WebDriverAgent</a>，python 版可以看<a target="_blank" rel="noopener" href="https://github.com/openatx/facebook-wda">这个</a>，不过后来 Facebook 开发了新的一套命令行工具<a target="_blank" rel="noopener" href="https://github.com/facebook/idb/">idb(iOS Development Bridge)</a>，归档了 WebDriverAgent。idb 可以对 iOS 模拟器和设备跑自动化测试，idb 主要有两个基于 macOS 系统库 CoreSimulator.framework、MobileDevice.framework，包装的 FBSimulatorControl 和 FBDeviceControl 库。FBSimulatorControl 包含了 iOS 模拟器的所有功能，Xcode 和 simctl 都是用的 CoreSimulator，自动化中输入事件是逆向了 iOS 模拟器 Indigo 服务的协议，Indigo 是模拟器通过 mach IPC 通道 mach_msg_send 接受触摸等输入事件的协议。破解后就可以模拟输入事件了。MobileDevice.framework 也是 macOS 的私有库，macOS 上的 Finder、Xcode、Photos 这些会使用 iOS 设备的应用都是用了 MobileDevice，文件读写用的是包装了 AMDServiceConnection 协议的 AFC 文件操作 API，idb 的 instruments 相关功能是在<a target="_blank" rel="noopener" href="https://github.com/facebook/idb/blob/master/FBDeviceControl/Management/FBInstrumentsClient.h">这里</a>实现了 DTXConnectionServices 服务协议。libmobiledevice 可以看作是重新实现了 MobileDevice.framework。<a target="_blank" rel="noopener" href="https://github.com/iOSForensics/pymobiledevice">pymobiledevice</a>、<a target="_blank" rel="noopener" href="https://github.com/mountainstorm/MobileDevice">MobileDevice</a>、C 编写的 <a target="_blank" rel="noopener" href="https://github.com/samdmarshall/SDMMobileDevice/">SDMMobileDevice</a>，还有Objective-C 编写的 <a target="_blank" rel="noopener" href="https://github.com/cipi1965/MobileDeviceAccess">MobileDeviceAccess</a>，这些库也是用的 MobileDevice.framework。</p>
 <p>总结如下图所示：</p>
-<p><img src="/uploads/thinking-in-how-to-speed-up-app/15.png" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/thinking-in-how-to-speed-up-app/15.png" class="lozad post-image"src="/uploads/thinking-in-how-to-speed-up-app/15.png"></p>
 <h3 id="Android-Profiler"><a href="#Android-Profiler" class="headerlink" title="Android Profiler"></a>Android Profiler</h3><p>Android Profiler 是 Android 中常用的耗时分析工具，以各种图表的形式展示函数执行时间，帮助开发者分析耗时问题。</p>
 <p>启动优化着实是牵一发动全身的事情，手段既琐碎又复杂。如何能够将监控体系建设起来，并融入到整个研发到上线流程中，是个庞大的工程。下面给你介绍下我们是如何做的吧。</p>
 <h2 id="管控流程体系保障平台建设"><a href="#管控流程体系保障平台建设" class="headerlink" title="管控流程体系保障平台建设"></a>管控流程体系保障平台建设</h2><p>APM自动化管控和流程体系保障平台，目标是通过稳定环境更自动化的测试，采集到的性能数据能够通过分析检测，发现问题能够更低成本定位分发告警，同时大盘能够展示趋势和详情。平台设计如下图：</p>
-<p><img src="/uploads/thinking-in-how-to-speed-up-app/10.png" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/thinking-in-how-to-speed-up-app/10.png" class="lozad post-image"src="/uploads/thinking-in-how-to-speed-up-app/10.png"></p>
 <p>开发过程会 daily 出迭代报告，开发完成后，会有集成卡口，提前卡住迭代性能问题。</p>
 <p>集成后，在集成构建平台能够构建正式包和线下性能包，进行线下测试和线上性能数据采集，线下支持录制回放、Monkey 等自动化测试手段，测试期间会有生成版本报告，发布上线前也会有发布卡口，及时处理版本问题。</p>
 <p>发布后，通过云控进行指标配置、阈值配置还有采集比例等。性能数据上传服务经异常检测发现问题会触发报警，自动在 Bug 平台创建工单进行跟踪，以便及时修复问题减少用户体验损失。服务还会做统计、分级、基线对比、版本关联以及过滤等数据分析操作，这些分析后的性能数据最终会通过版本、迭代趋势等统计报表方式在大盘上展示，还能展示详情，包括对比展示、问题详情、场景分类、条件查询等。</p>
 
-    </article>
-    <!-- license -->
-    
-        <div class="license-wrapper">
-            <p>原文作者：<a href="http://ming1016.github.io">戴铭</a>
-            <p>原文链接：<a href="http://ming1016.github.io/2020/12/18/thinking-in-how-to-speed-up-app/">http://ming1016.github.io/2020/12/18/thinking-in-how-to-speed-up-app/</a>
-            <p>发表日期：<a href="http://ming1016.github.io/2020/12/18/thinking-in-how-to-speed-up-app/">December 18th 2020, 4:14:09 pm</a>
-            <p>更新日期：<a href="http://ming1016.github.io/2020/12/18/thinking-in-how-to-speed-up-app/">April 11th 2021, 10:42:09 pm</a>
-            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
-        </div>
-    
-    <!-- paginator -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2021/02/21/deeply-analyse-quickjs/" title="深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言">
-                    <div class="nextTitle">深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href="/2020/05/04/draw-in-2020/" title="2020年涂图">
-                    <div class="prevTitle">2020年涂图</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- comment -->
-    
-        <div class="post-comment">
-            <!-- 来必力 City 版安装代码 -->
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2020/12/18/thinking-in-how-to-speed-up-app/">http://ming1016.github.io/2020/12/18/thinking-in-how-to-speed-up-app/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2021/02/21/deeply-analyse-quickjs/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2020/05/04/draw-in-2020/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">2020年涂图 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
 
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-Universal-Links-%E5%92%8C-App-Links-%E4%BC%98%E5%8C%96%E5%94%A4%E7%AB%AF%E5%90%AF%E5%8A%A8%E4%BD%93%E9%AA%8C"><span class="toc-number">2.</span> <span class="toc-text">通过 Universal Links 和 App Links 优化唤端启动体验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#H5%E5%90%AF%E5%8A%A8%E9%A1%B5"><span class="toc-number">3.</span> <span class="toc-text">H5启动页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E9%80%9F%E5%BA%A6"><span class="toc-number">4.</span> <span class="toc-text">下载速度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-so-%E5%BA%93%E5%8A%A0%E8%BD%BD%E4%BC%98%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text">Android so 库加载优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E9%98%B6%E6%AE%B5-%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E4%BC%98%E5%8C%96"><span class="toc-number">5.1.</span> <span class="toc-text">编译阶段-静态分析优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E9%98%B6%E6%AE%B5-hook%E5%88%86%E6%9E%90%E4%BC%98%E5%8C%96"><span class="toc-number">5.2.</span> <span class="toc-text">运行阶段-hook分析优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#App-%E5%8A%A0%E8%BD%BD"><span class="toc-number">6.</span> <span class="toc-text">App 加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS-%E4%B8%BB%E7%BA%BF%E7%A8%8B%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E6%97%B6%E9%95%BF%E6%A3%80%E6%B5%8B"><span class="toc-number">7.</span> <span class="toc-text">iOS 主线程方法调用时长检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E4%B8%BB%E5%9B%BE%E5%90%8E%E7%9A%84%E4%BC%98%E5%8C%96"><span class="toc-number">8.</span> <span class="toc-text">进入主图后的优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E5%92%8C%E4%BB%BB%E5%8A%A1%E7%BC%96%E6%8E%92"><span class="toc-number">9.</span> <span class="toc-text">线程调度和任务编排</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%80%9D%E8%B7%AF"><span class="toc-number">9.1.</span> <span class="toc-text">整体思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">9.2.</span> <span class="toc-text">多线程共享数据的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%85%B7%E4%BD%93%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF"><span class="toc-number">9.3.</span> <span class="toc-text">一个具体多线程问题排查思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97%E6%A8%A1%E5%9E%8B"><span class="toc-number">9.4.</span> <span class="toc-text">多线程并行计算模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7"><span class="toc-number">10.</span> <span class="toc-text">启动性能分析工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS-%E5%AE%98%E6%96%B9%E5%B7%A5%E5%85%B7"><span class="toc-number">10.1.</span> <span class="toc-text">iOS 官方工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8-iOS-%E7%9C%9F%E6%9C%BA%E5%92%8C%E6%A8%A1%E6%8B%9F%E5%99%A8%E4%B8%8A%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="toc-number">10.2.</span> <span class="toc-text">如何在 iOS 真机和模拟器上实现自动化性能分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-Profiler"><span class="toc-number">10.3.</span> <span class="toc-text">Android Profiler</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E6%8E%A7%E6%B5%81%E7%A8%8B%E4%BD%93%E7%B3%BB%E4%BF%9D%E9%9A%9C%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE"><span class="toc-number">11.</span> <span class="toc-text">管控流程体系保障平台建设</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
 
-            
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>56</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>37</span>
+    <span>标签</span>
+  </a>
+</div>
 
-            
-
-            
-
-            <!-- utteranc评论 -->
-
-
-            <!-- partial('_partial/comment/changyan') -->
-            <!--PC版-->
-
-
-            
-            
-
-        </div>
-    
-    <!-- timeliness note -->
-    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
-    
-    <!-- Mathjax -->
-    
-</main>
-
-                <!-- profile -->
-                
-            </div>
-            <footer class="footer footer-unloaded">
-    <!-- social  -->
-    
-        <div class="social">
-            
-    
-        
-            
-                <a href="mailto:ming1016@foxmail.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="//github.com/ming1016" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                    
-                    <img class="profile-qr" src="/assets/wechat-qcode.jpeg" />
-                </span>
-            
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="https://weibo.com/allstarming" class="iconfont-archer weibo" target="_blank" title=weibo></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="https://twitter.com/daiming_cn" class="iconfont-archer twitter" target="_blank" title=twitter></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
-            
-        
-    
-
-
-        </div>
-    
-    <!-- powered by Hexo  -->
-    <div class="copyright">
-        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
     </div>
-    <!-- website approve for Chinese user -->
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-Universal-Links-%E5%92%8C-App-Links-%E4%BC%98%E5%8C%96%E5%94%A4%E7%AB%AF%E5%90%AF%E5%8A%A8%E4%BD%93%E9%AA%8C"><span class="toc-number">2.</span> <span class="toc-text">通过 Universal Links 和 App Links 优化唤端启动体验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#H5%E5%90%AF%E5%8A%A8%E9%A1%B5"><span class="toc-number">3.</span> <span class="toc-text">H5启动页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E9%80%9F%E5%BA%A6"><span class="toc-number">4.</span> <span class="toc-text">下载速度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-so-%E5%BA%93%E5%8A%A0%E8%BD%BD%E4%BC%98%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text">Android so 库加载优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E9%98%B6%E6%AE%B5-%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E4%BC%98%E5%8C%96"><span class="toc-number">5.1.</span> <span class="toc-text">编译阶段-静态分析优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E9%98%B6%E6%AE%B5-hook%E5%88%86%E6%9E%90%E4%BC%98%E5%8C%96"><span class="toc-number">5.2.</span> <span class="toc-text">运行阶段-hook分析优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#App-%E5%8A%A0%E8%BD%BD"><span class="toc-number">6.</span> <span class="toc-text">App 加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS-%E4%B8%BB%E7%BA%BF%E7%A8%8B%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E6%97%B6%E9%95%BF%E6%A3%80%E6%B5%8B"><span class="toc-number">7.</span> <span class="toc-text">iOS 主线程方法调用时长检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E4%B8%BB%E5%9B%BE%E5%90%8E%E7%9A%84%E4%BC%98%E5%8C%96"><span class="toc-number">8.</span> <span class="toc-text">进入主图后的优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E5%92%8C%E4%BB%BB%E5%8A%A1%E7%BC%96%E6%8E%92"><span class="toc-number">9.</span> <span class="toc-text">线程调度和任务编排</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%80%9D%E8%B7%AF"><span class="toc-number">9.1.</span> <span class="toc-text">整体思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">9.2.</span> <span class="toc-text">多线程共享数据的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%85%B7%E4%BD%93%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF"><span class="toc-number">9.3.</span> <span class="toc-text">一个具体多线程问题排查思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97%E6%A8%A1%E5%9E%8B"><span class="toc-number">9.4.</span> <span class="toc-text">多线程并行计算模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7"><span class="toc-number">10.</span> <span class="toc-text">启动性能分析工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS-%E5%AE%98%E6%96%B9%E5%B7%A5%E5%85%B7"><span class="toc-number">10.1.</span> <span class="toc-text">iOS 官方工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8-iOS-%E7%9C%9F%E6%9C%BA%E5%92%8C%E6%A8%A1%E6%8B%9F%E5%99%A8%E4%B8%8A%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="toc-number">10.2.</span> <span class="toc-text">如何在 iOS 真机和模拟器上实现自动化性能分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-Profiler"><span class="toc-number">10.3.</span> <span class="toc-text">Android Profiler</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E6%8E%A7%E6%B5%81%E7%A8%8B%E4%BD%93%E7%B3%BB%E4%BF%9D%E9%9A%9C%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE"><span class="toc-number">11.</span> <span class="toc-text">管控流程体系保障平台建设</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
     
-        <div class="website-approve">
-            
-                <span id="icp-approve" class="icp-approve">
-                    <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备17011999号</a>
-                </span>
-            
-            
-                
-                <img class="beian-img" src="/assets/beian.png" />
-                <span id="beian-approve" class="beian-approve">
-                    <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999" target="_blank">京公网安备 7011999号</a>
-                </span>
-            
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">42</span>
         </div>
+      </a>
     
-    <!-- 不蒜子  -->
-    
-        <div class="busuanzi-container">
-            
-             
-                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
-            
+      <a href="/categories/My novel">
+        <div class="categories-list-item">
+          My novel
+          <span class="categories-list-item-badge">4</span>
         </div>
-    	
+      </a>
+    
+      <a href="/categories/My painting">
+        <div class="categories-list-item">
+          My painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+    <a href="\tags\Pencil" title="Pencil"><div class="tags-list-item">Pencil</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-Universal-Links-%E5%92%8C-App-Links-%E4%BC%98%E5%8C%96%E5%94%A4%E7%AB%AF%E5%90%AF%E5%8A%A8%E4%BD%93%E9%AA%8C"><span class="toc-number">2.</span> <span class="toc-text">通过 Universal Links 和 App Links 优化唤端启动体验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#H5%E5%90%AF%E5%8A%A8%E9%A1%B5"><span class="toc-number">3.</span> <span class="toc-text">H5启动页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E9%80%9F%E5%BA%A6"><span class="toc-number">4.</span> <span class="toc-text">下载速度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-so-%E5%BA%93%E5%8A%A0%E8%BD%BD%E4%BC%98%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text">Android so 库加载优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E9%98%B6%E6%AE%B5-%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E4%BC%98%E5%8C%96"><span class="toc-number">5.1.</span> <span class="toc-text">编译阶段-静态分析优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E9%98%B6%E6%AE%B5-hook%E5%88%86%E6%9E%90%E4%BC%98%E5%8C%96"><span class="toc-number">5.2.</span> <span class="toc-text">运行阶段-hook分析优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#App-%E5%8A%A0%E8%BD%BD"><span class="toc-number">6.</span> <span class="toc-text">App 加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS-%E4%B8%BB%E7%BA%BF%E7%A8%8B%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E6%97%B6%E9%95%BF%E6%A3%80%E6%B5%8B"><span class="toc-number">7.</span> <span class="toc-text">iOS 主线程方法调用时长检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E4%B8%BB%E5%9B%BE%E5%90%8E%E7%9A%84%E4%BC%98%E5%8C%96"><span class="toc-number">8.</span> <span class="toc-text">进入主图后的优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E5%92%8C%E4%BB%BB%E5%8A%A1%E7%BC%96%E6%8E%92"><span class="toc-number">9.</span> <span class="toc-text">线程调度和任务编排</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%80%9D%E8%B7%AF"><span class="toc-number">9.1.</span> <span class="toc-text">整体思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">9.2.</span> <span class="toc-text">多线程共享数据的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%85%B7%E4%BD%93%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF"><span class="toc-number">9.3.</span> <span class="toc-text">一个具体多线程问题排查思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97%E6%A8%A1%E5%9E%8B"><span class="toc-number">9.4.</span> <span class="toc-text">多线程并行计算模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7"><span class="toc-number">10.</span> <span class="toc-text">启动性能分析工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS-%E5%AE%98%E6%96%B9%E5%B7%A5%E5%85%B7"><span class="toc-number">10.1.</span> <span class="toc-text">iOS 官方工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8-iOS-%E7%9C%9F%E6%9C%BA%E5%92%8C%E6%A8%A1%E6%8B%9F%E5%99%A8%E4%B8%8A%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="toc-number">10.2.</span> <span class="toc-text">如何在 iOS 真机和模拟器上实现自动化性能分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-Profiler"><span class="toc-number">10.3.</span> <span class="toc-text">Android Profiler</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E6%8E%A7%E6%B5%81%E7%A8%8B%E4%BD%93%E7%B3%BB%E4%BF%9D%E9%9A%9C%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE"><span class="toc-number">11.</span> <span class="toc-text">管控流程体系保障平台建设</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-03-25</div>
+        <a href="/2022/03/25/develop-with-swiftui/"><div class="recent-posts-item-content">在苹果加速器活动做的 SwiftUI 开发分享</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-02-26</div>
+        <a href="/2022/02/26/draw-in-2021/"><div class="recent-posts-item-content">2021年画的</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2014 -
+          
+          2022
+        </span>
+        <a href="/" class="footer-link">戴铭的博客 </a>
+      </div>
+    </div>
+
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
+      </a>
+      <br />
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
 </footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
 
-        </div>
-        <!-- toc -->
-        
-            <div class="toc-wrapper toc-wrapper-loding" style=
-
-
-
-
-
-
-
-    top:50vh;
-
->
-                <div class="toc-catalog">
-                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-                </div>
-                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-Universal-Links-%E5%92%8C-App-Links-%E4%BC%98%E5%8C%96%E5%94%A4%E7%AB%AF%E5%90%AF%E5%8A%A8%E4%BD%93%E9%AA%8C"><span class="toc-number">2.</span> <span class="toc-text">通过 Universal Links 和 App Links 优化唤端启动体验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#H5%E5%90%AF%E5%8A%A8%E9%A1%B5"><span class="toc-number">3.</span> <span class="toc-text">H5启动页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E9%80%9F%E5%BA%A6"><span class="toc-number">4.</span> <span class="toc-text">下载速度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-so-%E5%BA%93%E5%8A%A0%E8%BD%BD%E4%BC%98%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text">Android so 库加载优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E9%98%B6%E6%AE%B5-%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E4%BC%98%E5%8C%96"><span class="toc-number">5.1.</span> <span class="toc-text">编译阶段-静态分析优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E9%98%B6%E6%AE%B5-hook%E5%88%86%E6%9E%90%E4%BC%98%E5%8C%96"><span class="toc-number">5.2.</span> <span class="toc-text">运行阶段-hook分析优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#App-%E5%8A%A0%E8%BD%BD"><span class="toc-number">6.</span> <span class="toc-text">App 加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS-%E4%B8%BB%E7%BA%BF%E7%A8%8B%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E6%97%B6%E9%95%BF%E6%A3%80%E6%B5%8B"><span class="toc-number">7.</span> <span class="toc-text">iOS 主线程方法调用时长检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E4%B8%BB%E5%9B%BE%E5%90%8E%E7%9A%84%E4%BC%98%E5%8C%96"><span class="toc-number">8.</span> <span class="toc-text">进入主图后的优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E5%92%8C%E4%BB%BB%E5%8A%A1%E7%BC%96%E6%8E%92"><span class="toc-number">9.</span> <span class="toc-text">线程调度和任务编排</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%80%9D%E8%B7%AF"><span class="toc-number">9.1.</span> <span class="toc-text">整体思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">9.2.</span> <span class="toc-text">多线程共享数据的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%85%B7%E4%BD%93%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF"><span class="toc-number">9.3.</span> <span class="toc-text">一个具体多线程问题排查思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97%E6%A8%A1%E5%9E%8B"><span class="toc-number">9.4.</span> <span class="toc-text">多线程并行计算模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7"><span class="toc-number">10.</span> <span class="toc-text">启动性能分析工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS-%E5%AE%98%E6%96%B9%E5%B7%A5%E5%85%B7"><span class="toc-number">10.1.</span> <span class="toc-text">iOS 官方工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8-iOS-%E7%9C%9F%E6%9C%BA%E5%92%8C%E6%A8%A1%E6%8B%9F%E5%99%A8%E4%B8%8A%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="toc-number">10.2.</span> <span class="toc-text">如何在 iOS 真机和模拟器上实现自动化性能分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-Profiler"><span class="toc-number">10.3.</span> <span class="toc-text">Android Profiler</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E6%8E%A7%E6%B5%81%E7%A8%8B%E4%BD%93%E7%B3%BB%E4%BF%9D%E9%9A%9C%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE"><span class="toc-number">11.</span> <span class="toc-text">管控流程体系保障平台建设</span></a></li></ol>
-            </div>
-        
-        <!-- sidebar -->
-        <div class="sidebar sidebar-hide">
-    <ul class="sidebar-tabs sidebar-tabs-active-0">
-        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
-        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
-        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
-    </ul>
-    <div class="sidebar-content sidebar-content-show-archive">
-        <div class="sidebar-panel-archives">
-    <!-- 在 ejs 中将 archive 按照时间排序 -->
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-    
-    
-    
-    <div class="total-and-search">
-        <div class="total-archive">
-        Total : 57
-        </div>
-        <!-- search  -->
-        
-    </div>
-    
-    <div class="post-archive">
-    
-        
-            
-            
-            <div class="archive-year"> 2022 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/10</span>
-            <a class="archive-post-title" href="/2022/06/10/use-llvm/">使用 LLVM</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/10</span>
-            <a class="archive-post-title" href="/2022/06/10/wwdc22-notes/">WWDC22 笔记</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/25</span>
-            <a class="archive-post-title" href="/2022/03/25/develop-with-swiftui/">在苹果加速器活动做的 SwiftUI 开发分享</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/26</span>
-            <a class="archive-post-title" href="/2022/02/26/draw-in-2021/">2021年画的</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/10</span>
-            <a class="archive-post-title" href="/2022/02/10/swift-evolutionary-path/">Swift 演进之路</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/03</span>
-            <a class="archive-post-title" href="/2022/01/03/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/">如何用 SwiftUI + Combine + Swift Concurrency Aysnc/Await Actor 欢畅开发</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2021 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/23</span>
-            <a class="archive-post-title" href="/2021/11/23/daiming-swift-pamphlet/">戴铭的 Swift 小册子 4.0</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/24</span>
-            <a class="archive-post-title" href="/2021/07/24/my-little-idea-about-writing-technical-article/">我写技术文章的一点心得</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/13</span>
-            <a class="archive-post-title" href="/2021/07/13/deeply-analyse-autolayout-slides/">深入剖析Auto Layout的幻灯片</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/08</span>
-            <a class="archive-post-title" href="/2021/06/08/wwdc2021-day1-note/">WWDC 2021 Day1 笔记</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span>
-            <a class="archive-post-title" href="/2021/05/22/acfun-swift-practice/">A站 的 Swift 实践</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/21</span>
-            <a class="archive-post-title" href="/2021/02/21/deeply-analyse-quickjs/">深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2020 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/18</span>
-            <a class="archive-post-title" href="/2020/12/18/thinking-in-how-to-speed-up-app/">App 启动提速实践和一些想法</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/04</span>
-            <a class="archive-post-title" href="/2020/05/04/draw-in-2020/">2020年涂图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span>
-            <a class="archive-post-title" href="/2020/04/12/why_write_study_ios_programming_with_daiming_book_and_draw_recently/">我为什么写了《跟戴铭学iOS编程》这本书</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/29</span>
-            <a class="archive-post-title" href="/2020/03/29/apple-system-executable-file-macho/">Apple 操作系统可执行文件 Mach-O</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/05</span>
-            <a class="archive-post-title" href="/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/">在快手做分享、无用类检查、在广州做 SwiftUI 学习笔记分享、InfoQ二叉树视频</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2019 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/28</span>
-            <a class="archive-post-title" href="/2019/12/28/japan-travel/">日本游玩</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/07</span>
-            <a class="archive-post-title" href="/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">如何对 iOS 启动阶段耗时进行分析</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/06</span>
-            <a class="archive-post-title" href="/2019/12/06/draw-in-2019/">2019年涂图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/29</span>
-            <a class="archive-post-title" href="/2019/07/29/ios-map/">iOS 开发舆图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/19</span>
-            <a class="archive-post-title" href="/2019/06/19/white-dragon-class/">白龙班</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2018 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/17</span>
-            <a class="archive-post-title" href="/2018/09/17/produce-slides-of-third-at-swift-conference/">这次swift大会分享准备的幻灯片和 demo</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/14</span>
-            <a class="archive-post-title" href="/2018/09/14/draw-with-procreate-in-ipad-during-pre-half-in-20182/">18年上半年procreate的练习图图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/21</span>
-            <a class="archive-post-title" href="/2018/04/21/deeply-analyse-javascriptcore/">深入剖析 JavaScriptCore</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/07</span>
-            <a class="archive-post-title" href="/2018/04/07/read-snapkit-and-masonry-source-code/">读 SnapKit 和 Masonry 自动布局框架源码</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span>
-            <a class="archive-post-title" href="/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/">Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/24</span>
-            <a class="archive-post-title" href="/2018/01/24/why-swift/">Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/10</span>
-            <a class="archive-post-title" href="/2018/01/10/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/">GIAC 大会上分享的《Swift 将 Web 代码转成60帧满帧原生应用的方案及实践》的幻灯片</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span>
-            <a class="archive-post-title" href="/2018/01/04/baimi/">白芈</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span>
-            <a class="archive-post-title" href="/2018/01/04/huaye/">花野</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2017 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/24</span>
-            <a class="archive-post-title" href="/2017/10/24/how-do-i-improve-the-development/">在滴滴，我是如何指数级提升开发技术的？</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/16</span>
-            <a class="archive-post-title" href="/2017/10/16/html-to-native-htn-development-record/">HTML 转原生 HTN 项目开发记录</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/11</span>
-            <a class="archive-post-title" href="/2017/10/11/deeply-analyse-webkit/">深入剖析 WebKit</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span>
-            <a class="archive-post-title" href="/2017/06/20/deeply-ios-performance-optimization/">深入剖析 iOS 性能优化</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/12</span>
-            <a class="archive-post-title" href="/2017/06/12/gmtc-ios-slimming-practice/">GMTC 上分享滴滴出行 iOS 端瘦身实践的 Slides</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/27</span>
-            <a class="archive-post-title" href="/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/">atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span>
-            <a class="archive-post-title" href="/2017/04/01/build-static-analysis-program-smck-use-swift/">用 Swift 编写的工程代码静态分析命令行工具 smck</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span>
-            <a class="archive-post-title" href="/2017/04/01/slides-of-deeply-analyse-llvm/">深入剖析 iOS 编译 Clang / LLVM 直播的 Slides</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span>
-            <a class="archive-post-title" href="/2017/03/01/deeply-analyse-llvm/">深入剖析 iOS 编译 Clang / LLVM</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2016 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/22</span>
-            <a class="archive-post-title" href="/2016/11/22/how-to-preload-web-in-ios/">iOS预加载Web页面方案</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/17</span>
-            <a class="archive-post-title" href="/2016/11/17/use-swift3-build-macos-program-to-clear-unuse-method/">使用Swift3开发了个macOS的程序可以检测出objc项目中无用方法，然后一键全部清理</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/20</span>
-            <a class="archive-post-title" href="/2016/09/20/draw-with-procreate-in-ipad-during-15-to-16/">15，16年iPad上使用Procreate画的</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/02</span>
-            <a class="archive-post-title" href="/2016/09/02/develop-rss-reader/">使用ReactiveCocoa开发RSS阅读器</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/09</span>
-            <a class="archive-post-title" href="/2016/08/09/how-to-use-reactivecocoa/">iOS函数响应式编程以及ReactiveCocoa的使用</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/21</span>
-            <a class="archive-post-title" href="/2016/07/21/assembleview/">制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/30</span>
-            <a class="archive-post-title" href="/2016/05/30/what-learn-from-reactivecocoa/">从 ReactiveCocoa 中能学到什么？不用此库也能学以致用</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/23</span>
-            <a class="archive-post-title" href="/2016/05/23/try-to-decouple-with-demo/">竭尽全力的去解耦的一次实践，封装一个TableView和一些功能组合的控件</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/04</span>
-            <a class="archive-post-title" href="/2016/04/04/tenth-middle-school/">十中</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/13</span>
-            <a class="archive-post-title" href="/2016/01/13/how-to-use-gcd/">细说 GCD（Grand Central Dispatch）如何用</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2015 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/03</span>
-            <a class="archive-post-title" href="/2015/11/03/deeply-analyse-autolayout/">深入剖析Auto Layout，分析iOS各版本新增特性</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/02</span>
-            <a class="archive-post-title" href="/2015/11/02/draw-with-note-in-ipad-during-15/">15年用iPad上的备忘录画的</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span>
-            <a class="archive-post-title" href="/2015/05/28/macos-app-i-used/">我用过的 macOS 应用</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span>
-            <a class="archive-post-title" href="/2015/04/02/draw-game-of-thrones-with-pencil-during-14/">整理了画的权利的游戏里的角色，有龙女，小恶魔等等</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span>
-            <a class="archive-post-title" href="/2015/04/01/objc-runtime/">Objc Runtime 总结</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span>
-            <a class="archive-post-title" href="/2015/03/12/draw-practice-with-pencil-during-14-to-15/">14和15年间的铅笔画练习</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2014 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span>
-            <a class="archive-post-title" href="/2014/03/01/black-star-blue-map/">黑星蓝图</a>
-        </li>
-    
-    </div>
-</div>
-
-        <div class="sidebar-panel-tags">
-    <div class="sidebar-tags-name">
-        
-            <span class="sidebar-tag-name" data-tags="iOS">
-                <span class="iconfont-archer">&#xe606;</span>
-                iOS
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Apple">
-                <span class="iconfont-archer">&#xe606;</span>
-                Apple
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Swift">
-                <span class="iconfont-archer">&#xe606;</span>
-                Swift
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="AssembleView">
-                <span class="iconfont-archer">&#xe606;</span>
-                AssembleView
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Novel">
-                <span class="iconfont-archer">&#xe606;</span>
-                Novel
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Mach-O">
-                <span class="iconfont-archer">&#xe606;</span>
-                Mach-O
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="smck">
-                <span class="iconfont-archer">&#xe606;</span>
-                smck
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Autolayout">
-                <span class="iconfont-archer">&#xe606;</span>
-                Autolayout
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="JavaScript">
-                <span class="iconfont-archer">&#xe606;</span>
-                JavaScript
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Web">
-                <span class="iconfont-archer">&#xe606;</span>
-                Web
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="编译">
-                <span class="iconfont-archer">&#xe606;</span>
-                编译
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="RSSReader">
-                <span class="iconfont-archer">&#xe606;</span>
-                RSSReader
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="macOS">
-                <span class="iconfont-archer">&#xe606;</span>
-                macOS
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Combine">
-                <span class="iconfont-archer">&#xe606;</span>
-                Combine
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="SwiftUI">
-                <span class="iconfont-archer">&#xe606;</span>
-                SwiftUI
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Concurrency">
-                <span class="iconfont-archer">&#xe606;</span>
-                Concurrency
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="LLVM">
-                <span class="iconfont-archer">&#xe606;</span>
-                LLVM
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Clang">
-                <span class="iconfont-archer">&#xe606;</span>
-                Clang
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Performance optimization">
-                <span class="iconfont-archer">&#xe606;</span>
-                Performance optimization
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Painting">
-                <span class="iconfont-archer">&#xe606;</span>
-                Painting
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Pencil">
-                <span class="iconfont-archer">&#xe606;</span>
-                Pencil
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="GOT">
-                <span class="iconfont-archer">&#xe606;</span>
-                GOT
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="iPad">
-                <span class="iconfont-archer">&#xe606;</span>
-                iPad
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Procreate">
-                <span class="iconfont-archer">&#xe606;</span>
-                Procreate
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="WebKit">
-                <span class="iconfont-archer">&#xe606;</span>
-                WebKit
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Slides">
-                <span class="iconfont-archer">&#xe606;</span>
-                Slides
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Study">
-                <span class="iconfont-archer">&#xe606;</span>
-                Study
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="GCD">
-                <span class="iconfont-archer">&#xe606;</span>
-                GCD
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="UIWebView">
-                <span class="iconfont-archer">&#xe606;</span>
-                UIWebView
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="NSURLProtocol">
-                <span class="iconfont-archer">&#xe606;</span>
-                NSURLProtocol
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="ReactiveCocoa">
-                <span class="iconfont-archer">&#xe606;</span>
-                ReactiveCocoa
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Japan">
-                <span class="iconfont-archer">&#xe606;</span>
-                Japan
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="APP">
-                <span class="iconfont-archer">&#xe606;</span>
-                APP
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="runtime">
-                <span class="iconfont-archer">&#xe606;</span>
-                runtime
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="swift">
-                <span class="iconfont-archer">&#xe606;</span>
-                swift
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Pattern">
-                <span class="iconfont-archer">&#xe606;</span>
-                Pattern
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="book">
-                <span class="iconfont-archer">&#xe606;</span>
-                book
-            </span>
-        
-    </div>
-    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
-    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
-        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
-    </div> 
-    <div class="sidebar-tags-list"></div>
-</div>
-
-        <div class="sidebar-panel-categories">
-    <div class="sidebar-categories-name">
-    
-        <span class="sidebar-category-name" data-categories="Programming">
-            <span class="iconfont-archer">&#xe60a;</span>
-            Programming
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="My-novel">
-            <span class="iconfont-archer">&#xe60a;</span>
-            My-novel
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="My-painting">
-            <span class="iconfont-archer">&#xe60a;</span>
-            My-painting
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="travel">
-            <span class="iconfont-archer">&#xe60a;</span>
-            travel
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="APP">
-            <span class="iconfont-archer">&#xe60a;</span>
-            APP
-        </span>
-    
-    </div>
-    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
-    <div class="sidebar-categories-list"></div>
-</div>
-
-    </div>
-</div>
-
-        <!-- site-meta -->
-        <script>
-    var siteMeta = {
-        url: "http://ming1016.github.io",
-        root: "/",
-        author: "戴铭"
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
     }
+    refreshFsLightbox();
+  }
 </script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
 
-        <!-- import experimental options here -->
-        <!-- Custom Font -->
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
 
-
-        <!-- main func -->
-        <script src="/scripts/main.js?v=20210823"></script>
-        <!-- dark mode -->
-        <script src="/scripts/dark.js?v=20210823"></script>
-        <!-- fancybox -->
-        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
-        <!-- algolia -->
-        
-        <!-- busuanzi -->
-        
-            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-        
-        <!-- CNZZ -->
-        
-        <!-- async load share.js -->
-        
-            <script src="/scripts/share.js?v=20210823" async></script>
-        
-        <!-- mermaid -->
-        
-    </body>
 </html>

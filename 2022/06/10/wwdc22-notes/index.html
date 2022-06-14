@@ -1,524 +1,197 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
-    <!-- title -->
-
-
-    
-
-<!-- keywords -->
-
-
-
+<html>
+<meta  lang="zh-Hans" >
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="author" content="戴铭">
-    <meta name="renderer" content="webkit">
-    <meta name="copyright" content="戴铭">
-    
-        <meta name="keywords" content="戴铭,戴铭的博客,iOS,Swift,移动开发,JavaScript,编译">
-    
-    <meta name="description" content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-    <meta name="description" content="第一天今年是 WWDC 的第39个年头了。今年的 WWDC.playground 活动()是 SwiftGG、T 沙龙和老司机技术一起会和社区开发者们一起聊聊这次 WWDC。WWDC.playground 活动在节日期间每天都会有直播，我会和 61、13 他们参加 6月11日晚上8点那场直播。 下面我整理了一份今年 WWDC 的指南，也算提供个方便的入口吧。  WWDC22 直播地址、微博直播、W">
-<meta property="og:type" content="article">
-<meta property="og:title" content="WWDC22 笔记">
-<meta property="og:url" content="http://ming1016.github.io/2022/06/10/wwdc22-notes/index.html">
-<meta property="og:site_name" content="戴铭的博客 - 星光社">
-<meta property="og:description" content="第一天今年是 WWDC 的第39个年头了。今年的 WWDC.playground 活动()是 SwiftGG、T 沙龙和老司机技术一起会和社区开发者们一起聊聊这次 WWDC。WWDC.playground 活动在节日期间每天都会有直播，我会和 61、13 他们参加 6月11日晚上8点那场直播。 下面我整理了一份今年 WWDC 的指南，也算提供个方便的入口吧。  WWDC22 直播地址、微博直播、W">
-<meta property="og:locale">
-<meta property="og:image" content="http://ming1016.github.io/uploads/wwdc22-notes/01.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/wwdc22-notes/02.jpg">
-<meta property="og:image" content="http://ming1016.github.io/uploads/wwdc22-notes/03.jpg">
-<meta property="og:image" content="http://ming1016.github.io/uploads/wwdc22-notes/04.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/wwdc22-notes/05.png">
-<meta property="article:published_time" content="2022-06-10T04:13:57.000Z">
-<meta property="article:modified_time" content="2022-06-10T09:24:49.429Z">
-<meta property="article:author" content="戴铭">
-<meta property="article:tag" content="iOS">
-<meta property="article:tag" content="Apple">
-<meta property="article:tag" content="Swift">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://ming1016.github.io/uploads/wwdc22-notes/01.png">
-    <meta http-equiv="Cache-control" content="no-cache">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="icon" href="/assets/logo-starming.png">
-    
-    <title>WWDC22 笔记 · 戴铭的博客 - 星光社</title>
-    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-/* This file is meant as a standalone workflow for
-- testing support for link[rel=preload]
-- enabling async CSS loading in browsers that do not support rel=preload
-- applying rel preload css once loaded, whether supported or not.
-*/ -->
-<script>
-    (function (w) {
-        'use strict'
-        // rel=preload support test
-        if (!w.loadCSS) {
-            w.loadCSS = function () {}
-        }
-        // define on the loadCSS obj
-        var rp = (loadCSS.relpreload = {})
-        // rel=preload feature support test
-        // runs once and returns a function for compat purposes
-        rp.support = (function () {
-            var ret
-            try {
-                ret = w.document.createElement('link').relList.supports('preload')
-            } catch (e) {
-                ret = false
-            }
-            return function () {
-                return ret
-            }
-        })()
-
-        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
-        // then change that media back to its intended value on load
-        rp.bindMediaToggle = function (link) {
-            // remember existing media attr for ultimate state, or default to 'all'
-            var finalMedia = link.media || 'all'
-
-            function enableStylesheet() {
-                link.media = finalMedia
-            }
-
-            // bind load handlers to enable media
-            if (link.addEventListener) {
-                link.addEventListener('load', enableStylesheet)
-            } else if (link.attachEvent) {
-                link.attachEvent('onload', enableStylesheet)
-            }
-
-            // Set rel and non-applicable media type to start an async request
-            // note: timeout allows this to happen async to let rendering continue in IE
-            setTimeout(function () {
-                link.rel = 'stylesheet'
-                link.media = 'only x'
-            })
-            // also enable media after 3 seconds,
-            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
-            setTimeout(enableStylesheet, 3000)
-        }
-
-        // loop through link elements in DOM
-        rp.poly = function () {
-            // double check this to prevent external calls from running
-            if (rp.support()) {
-                return
-            }
-            var links = w.document.getElementsByTagName('link')
-            for (var i = 0; i < links.length; i++) {
-                var link = links[i]
-                // qualify links to those with rel=preload and as=style attrs
-                if (
-                    link.rel === 'preload' &&
-                    link.getAttribute('as') === 'style' &&
-                    !link.getAttribute('data-loadcss')
-                ) {
-                    // prevent rerunning on link
-                    link.setAttribute('data-loadcss', true)
-                    // bind listeners to toggle media back
-                    rp.bindMediaToggle(link)
-                }
-            }
-        }
-
-        // if unsupported, run the polyfill
-        if (!rp.support()) {
-            // run once at least
-            rp.poly()
-
-            // rerun poly on an interval until onload
-            var run = w.setInterval(rp.poly, 500)
-            if (w.addEventListener) {
-                w.addEventListener('load', function () {
-                    rp.poly()
-                    w.clearInterval(run)
-                })
-            } else if (w.attachEvent) {
-                w.attachEvent('onload', function () {
-                    rp.poly()
-                    w.clearInterval(run)
-                })
-            }
-        }
-
-        // commonjs
-        if (typeof exports !== 'undefined') {
-            exports.loadCSS = loadCSS
-        } else {
-            w.loadCSS = loadCSS
-        }
-    })(typeof global !== 'undefined' ? global : this)
-</script>
-
-    <style type="text/css">
-    @font-face {
-        font-family: 'Oswald-Regular';
-        src: url("/font/Oswald-Regular.ttf");
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
     }
-
-    body {
-        margin: 0;
-    }
-
-    header,
-    footer,
-    .back-top,
-    .sidebar,
-    .container,
-    .site-intro-meta,
-    .toc-wrapper {
-        display: none;
-    }
-
-    .site-intro {
-        position: relative;
-        z-index: 3;
-        width: 100%;
-        /* height: 50vh; */
-        overflow: hidden;
-    }
-
-    .site-intro-placeholder {
-        position: absolute;
-        z-index: -2;
-        top: 0;
-        left: 0;
-        width: calc(100% + 300px);
-        height: 100%;
-        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
-        background-position: center center;
-        transform: translate3d(-226px, 0, 0);
-        animation: gradient-move 2.5s ease-out 0s infinite;
-    }
-
-    @keyframes gradient-move {
-        0% {
-            transform: translate3d(-226px, 0, 0);
-        }
-        100% {
-            transform: translate3d(0, 0, 0);
-        }
-    }
-</style>
-
-    <link rel="preload" href="/css/style.css?v=20210823" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="/css/dark.css?v=20210823" as="style">
-    <link rel="stylesheet" href="/css/dark.css" media="(prefers-color-scheme: dark)">
-    <link rel="stylesheet" href="/css/mobile.css?v=20210823" media="(max-width: 960px)">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
-    <link rel="preload" href="/scripts/main.js?v=20210823" as="script">
-    <link rel="preload" href="/scripts/dark.js?v=20210823" as="script">
-    <link rel="preload" href="/font/Oswald-Regular.ttf" as="font" crossorigin>
-    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
-    <!-- algolia -->
-    
-    <!-- 百度统计  -->
-    
-    <!-- 谷歌统计  -->
-    
-<meta name="generator" content="Hexo 5.4.0"></head>
-
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <script type="text/javascript">
-        if (typeof window.$ == undefined) {
-            console.warn('jquery load from jsdelivr failed, will load local script')
-            document.write('<script src="/lib/jquery.min.js" />')
-        }
-    </script>
-    
-        <body class="post-body">
-    
-        <!-- header -->
-        <header class="header header-mobile">
-    <!-- top read progress line -->
-    <div class="header-element">
-        <div class="read-progress"></div>
-    </div>
-    <!-- sidebar menu button -->
-    <div class="header-element">
-        
-            <div class="header-sidebar-menu">
-        
-            
-                <div style="padding-left: 1px;">&#xe775;</div>
-            
-        </div>
-    </div>
-    <!-- header actions -->
-    <div class="header-actions">
-        <!-- theme mode switch button -->
-        <span class="header-theme-btn header-element">
-            <i class="fas fa-adjust"></i>
-        </span>
-        <!-- back to home page text -->
-        <span class="home-link header-element">
-            <a href=/>戴铭的博客 - 星光社</a>
-        </span>
-    </div>
-    <!-- toggle banner for post layout -->
-    
-        
-            <div class="banner">
-        
-            <div class="blog-title header-element">
-                <a href="/">戴铭的博客 - 星光社</a>
-            </div>
-            <div class="post-title header-element">
-                <a href="#" class="post-name">WWDC22 笔记</a>
-            </div>
-        </div>
-    
-</header>
-
-        <!-- fixed footer -->
-        <footer class="footer-fixed">
-    <!-- back to top button -->
-    <div class="footer-fixed-element">
-        
-            <div class="back-top back-top-hidden">
-        
-        
-            <div>&#xe639;</div>
-        
-        </div>
-    </div>
-</footer>
-
-        <!-- wrapper -->
-        <div class="wrapper">
-            <div class="site-intro" style="
-
-
-
-
-
-
-
-    height:50vh;
-
-">
-    
-    <!-- 主页  -->
-    
-        
-    <!-- 404页  -->
-            
-    <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/post-bg-starming.jpg)"></div>
-    <div class="site-intro-meta">
-        <!-- 标题  -->
-        <h1 class="intro-title">
-            <!-- 主页  -->
-            
-                WWDC22 笔记
-            <!-- 404 -->
-            
-        </h1>
-        <!-- 副标题 -->
-        <p class="intro-subtitle">
-            <!-- 主页副标题  -->
-            
-                
-            <!-- 404 -->
-            
-        </p>
-        <!-- 文章页 meta -->
-        
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class= post-intro-tags >
-    
-        
-        
-            
-        
-        
-        <span class="post-category" data-categories="Programming"">
-            <i class="fas fa-folder post-category-icon"></i>
-            <span class="post-category-text">
-                Programming
-            </span>
-        </span>
-    
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Apple">Apple</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Swift">Swift</a>
-    
-</div>
-
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">5.3k</span>阅读时长: <span class="post-count reading-time">20 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <!-- 撰写日期 -->
-                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
-                    <span class="post-intro-time">2022/06/10</span>
-                    <!-- busuanzi -->
-                    
-                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
-                            <span id="busuanzi_value_page_pv"></span>
-                        </span>
-                    
-                    <!-- 文章分享 -->
-                    <span class="share-wrapper">
-                        <span class="iconfont-archer share-icon">&#xe71d;</span>
-                        <span class="share-text">Share</span>
-                        <ul class="share-list">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
-        
-    </div>
-</div>
-
-            <script>
-  // get user agent
-  function getBrowserVersions() {
-    var u = window.navigator.userAgent
-    return {
-      userAgent: u,
-      trident: u.indexOf('Trident') > -1, //IE内核
-      presto: u.indexOf('Presto') > -1, //opera内核
-      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
-      iPad: u.indexOf('iPad') > -1, //是否为iPad
-      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
-      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
-      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
-    }
-  }
-  var browser = {
-    versions: getBrowserVersions(),
-  }
-  console.log('userAgent: ' + browser.versions.userAgent)
-
-  // callback
-  function fontLoaded() {
-    console.log('font loaded')
-    if (document.getElementsByClassName('site-intro-meta')) {
-      document
-        .getElementsByClassName('intro-title')[0]
-        .classList.add('intro-fade-in')
-      document
-        .getElementsByClassName('intro-subtitle')[0]
-        .classList.add('intro-fade-in')
-      var postIntros = document.getElementsByClassName('post-intros')[0]
-      if (postIntros) {
-        postIntros.classList.add('post-fade-in')
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
       }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
     }
-  }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
 
-  // UC不支持跨域，所以直接显示
-  function asyncCb() {
-    if (browser.versions.uc) {
-      console.log('UCBrowser')
-      fontLoaded()
-    } else {
-      WebFont.load({
-        custom: {
-          families: ['Oswald-Regular'],
-        },
-        loading: function () {
-          // 所有字体开始加载
-          // console.log('font loading');
-        },
-        active: function () {
-          // 所有字体已渲染
-          fontLoaded()
-        },
-        inactive: function () {
-          // 字体预加载失败，无效字体或浏览器不支持加载
-          console.log('inactive: timeout')
-          fontLoaded()
-        },
-        timeout: 5000, // Set the timeout to two seconds
-      })
-    }
-  }
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
 
-  function asyncErr() {
-    console.warn('script load from CDN failed, will load local script')
-  }
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
 
-  // load webfont-loader async, and add callback function
-  function async(u, cb, err) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0]
-    o.src = u
-    if (cb) {
-      o.addEventListener(
-        'load',
-        function (e) {
-          cb(null, e)
-        },
-        false
-      )
-    }
-    if (err) {
-      o.addEventListener(
-        'error',
-        function (e) {
-          err(null, e)
-        },
-        false
-      )
-    }
-    s.parentNode.insertBefore(o, s)
-  }
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
 
-  var asyncLoadWithFallBack = function (arr, success, reject) {
-    var currReject = function () {
-      reject()
-      arr.shift()
-      if (arr.length) async(arr[0], success, currReject)
-    }
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
 
-    async(arr[0], success, currReject)
-  }
 
-  asyncLoadWithFallBack(
-    [
-      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
-      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
-      "/lib/webfontloader.min.js",
-    ],
-    asyncCb,
-    asyncErr
-  )
-</script>
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
+      
+      <span class="navbar-logo-dsc">戴铭的博客</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/wwdc22-notes/05.png" data-src="/uploads/wwdc22-notes/05.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
 
-            <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
-            <div class="container container-unloaded">
-                <main class="main post-page">
-    <article class="article-entry">
-        <h2 id="第一天"><a href="#第一天" class="headerlink" title="第一天"></a>第一天</h2><p>今年是 WWDC 的第39个年头了。今年的 WWDC.playground 活动()是 SwiftGG、T 沙龙和老司机技术一起会和社区开发者们一起聊聊这次 WWDC。WWDC.playground 活动在节日期间每天都会有直播，我会和 61、13 他们参加 6月11日晚上8点那场直播。</p>
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      WWDC22 笔记
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2022-06-10T04:13:57.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2022-06-10</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Programming/" class="post-meta-link">Programming</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>5.3k 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/iOS/" class="post-meta-link">iOS</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Apple/" class="post-meta-link">Apple</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Swift/" class="post-meta-link">Swift</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <h2 id="第一天"><a href="#第一天" class="headerlink" title="第一天"></a>第一天</h2><p>今年是 WWDC 的第39个年头了。今年的 WWDC.playground 活动()是 SwiftGG、T 沙龙和老司机技术一起会和社区开发者们一起聊聊这次 WWDC。WWDC.playground 活动在节日期间每天都会有直播，我会和 61、13 他们参加 6月11日晚上8点那场直播。</p>
 <p>下面我整理了一份今年 WWDC 的指南，也算提供个方便的入口吧。</p>
 <ol>
 <li><a target="_blank" rel="noopener" href="https://www.apple.com/apple-events/">WWDC22 直播地址</a>、<a target="_blank" rel="noopener" href="https://m.weibo.cn/p/2318180003_4873_423">微博直播</a>、<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=q5D55G7Ejs8">WWDC22 YouTube 地址</a></li>
@@ -551,7 +224,7 @@
 <li>专注面条</li>
 <li>Townscaper</li>
 </ol>
-<h2 id="第二天"><a href="#第二天" class="headerlink" title="第二天"></a>第二天</h2><p><img src="/uploads/wwdc22-notes/01.png" alt=""></p>
+<h2 id="第二天"><a href="#第二天" class="headerlink" title="第二天"></a>第二天</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/wwdc22-notes/01.png" class="lozad post-image"src="/uploads/wwdc22-notes/01.png"></p>
 <p>今天最让我印象深刻是 M2、Lock screen widgets、Stage manager、Swift Charts、WeatherKit、SwiftUI Navigation API、只要一个 1024x1024 App Icon、Sticky headers on Xcode scrolling、Xcode View Debugger 可以用于 SwiftUI 了，还有 iOS 16 原生的支持 Nintendo Switch Pro 手柄了。</p>
 <p>后面我将更多内容使用点对点的分发，可以用 <a target="_blank" rel="noopener" href="https://www.planetable.xyz/">Planet</a> 关注，我的 IPNS 是：k51qzi5uqu5dlorvgrleqaphsd1suegn8w40xwhxl0bgsyxw3zerivt59xbk74</p>
 <p>Keynote 要点：</p>
@@ -672,7 +345,7 @@
 <ul>
 <li><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/uikit/uicalendarview">UICalendarView</a> 日历视图</li>
 <li><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/backgroundassets/badownloadmanager">BADownloadManager</a> 下载队列管理器。</li>
-<li><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/swiftui/scene/backgroundtask(_:action:">backgroundTask(_:action:)</a>?changes=latest_minor) </li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/swiftui/scene/backgroundtask(_:action:)?changes=latest_minor">backgroundTask(_:action:)</a> </li>
 <li>ImageRenderer 将 View 生成图片。</li>
 <li>presentationDetents 优秀。示例 <a target="_blank" rel="noopener" href="https://www.swiftlyrush.com/using-presentation-detents-in-swiftui/">Using Presentation Detents in SwiftUI</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0180-string-index-overhaul.md">String Index 升级</a></li>
@@ -692,9 +365,9 @@
 <li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2022/110364/">Demystify parallelization in Xcode builds</a></li>
 <li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2022/10002/">Create macOS or Linux virtual machines</a></li>
 </ul>
-<h2 id="第三天"><a href="#第三天" class="headerlink" title="第三天"></a>第三天</h2><p><img src="/uploads/wwdc22-notes/02.jpg" alt=""><br><img src="/uploads/wwdc22-notes/03.jpg" alt=""></p>
+<h2 id="第三天"><a href="#第三天" class="headerlink" title="第三天"></a>第三天</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/wwdc22-notes/02.jpg" class="lozad post-image"src="/uploads/wwdc22-notes/02.jpg"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/wwdc22-notes/03.jpg" class="lozad post-image"src="/uploads/wwdc22-notes/03.jpg"></p>
 <p>WWDC.playground 很精彩，怎么感觉昨天的 WWDC.playground 像是听了一期枫言枫语呢。预感 11 号可能会变成为一期 weak self 呢。</p>
-<p>昨天老司机还整理了份 WWDC22 Session 观看介绍的<a target="_blank" rel="noopener" href="https://wwdc-reference.feishu.cn/wiki/wikcnXl4ioToZuW4yvfAqUoNQFS?sheet=Lqblfd&amp;table=tblGVOzKgFhVpBWg&amp;view=vewysxfUqf">列表</a></p>
+<p>昨天老司机还整理了份 WWDC22 Session 观看介绍的<a target="_blank" rel="noopener" href="https://wwdc-reference.feishu.cn/wiki/wikcnXl4ioToZuW4yvfAqUoNQFS?sheet=Lqblfd&table=tblGVOzKgFhVpBWg&view=vewysxfUqf">列表</a></p>
 <p>Apple 出的内容看不够的话，可使用 <a target="_blank" rel="noopener" href="https://iosfeeds.com/wwdc22">Follow WWDC 2022 News!</a> 来看最新的 WWDC 相关的社区文章。</p>
 <p>下面是我今天的一些记录。</p>
 <h3 id="Xcode"><a href="#Xcode" class="headerlink" title="Xcode"></a>Xcode</h3><p>代码补全的更新。以前多个可选参数的体验很差，这次输入参数比如 frame 里的 maxWidth，会只显示当前要补全的参数。而且速度快了很多。</p>
@@ -719,7 +392,7 @@
 <p>Apple 出虚机可运行 Linux 系统这点可以看得出 Apple 对开源的拥抱，原因还有一点是 Swift 也可以用在 Linux 服务器上了，Apple 用心良苦，也是想让开发者用本打算买其它硬件的钱来买 Apple 的硬件吧，更好的榨干 Apple 硬件过于优秀的性能，如同新出 Stage Manager 通过投到大屏来榨干 M1 的 iPad 性能。 不光是这样，还有文件，也就是存储设备也只需要一份了，更方便，还有苹果特有的 Trackpad 和 Magic mouse 也能够用于 Linux 系统中。</p>
 <p>虚机运行 Linux 和 macOS 的区别是，启动 Linux 使用的是 EFI Boot Loader 来加载 Linux 文件，VirtioGraphicDevice 进行 Linux 系统图形界面的设置和渲染。使用Rosetta 运行 Linux 系统，运行 Linux 就是比其它虚机要快。</p>
 <p>介绍的 session <a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc22/10002">Create macOS or Linux virtual machines</a> ，代码说明 <a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/virtualization/running_gui_linux_in_a_virtual_machine_on_a_mac">Running GUI Linux in a virtual machine on a Mac</a>，相关主题 <a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/virtualization">Virtualization</a></p>
-<h2 id="第四天"><a href="#第四天" class="headerlink" title="第四天"></a>第四天</h2><p><img src="/uploads/wwdc22-notes/04.png" alt=""></p>
+<h2 id="第四天"><a href="#第四天" class="headerlink" title="第四天"></a>第四天</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/wwdc22-notes/04.png" class="lozad post-image"src="/uploads/wwdc22-notes/04.png"></p>
 <p>今晚五神会现身 WWDC.playground 。内容涉及 SwiftUI 和 AR，不要错过。</p>
 <h3 id="今日零散记录"><a href="#今日零散记录" class="headerlink" title="今日零散记录"></a>今日零散记录</h3><p>从 Apple 推出 WeatherKit 可以看出，Apple 喜欢把关键和有想象空间盈利价值的技术掌握在自己手上，WeatherKit 提供大量数据，包括分钟、小时、每日预报，还有提前警报，这些信息的商业价值本就很大。</p>
 <p>今天看了 WeatherKit、Swift Chart 还有 SwiftUI 的 Layout，感觉 Apple 的接口设计能力很值得学习，可能具备了这些能力才能更好地沟通。</p>
@@ -747,7 +420,7 @@
 <p>今年 Apple 做了更多的优化，这个优化叫 page-in linking，就是 dyld 在启动时做的 DATA 页面修改放到 page-in 时，也可以理解为懒修改。以前，在 mmap() 区域的某些页面中第一次使用某些地址会触发内核读入该页面。现在如果它是一个数据页，内核会应用改页需要的修改。这种机制减少了 dirty 内存和启动时间。意味着 DATA_CONST 也是干净的，可以像 TEXT 页一样被 evicted 和重新创建，以减少内存压力。需要注意的是 page-in linking 只用于启动，dlopen() 不支持。你看，Apple 优化启动的思路也是按需加载。</p>
 <p>Apple 还提供了追踪 dyld 运行情况的 dyld_usage 工具。检查磁盘和 dyld 缓存中的二进制文件的 dyld_info 工具。</p>
 <h3 id="今日推荐-Session"><a href="#今日推荐-Session" class="headerlink" title="今日推荐 Session"></a>今日推荐 Session</h3><p>除了 link 外，还有 <a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2022/110356/">Meet distributed actors in Swift</a> 也是比看的，Mike Ash 和 Doug Gregor 一年的心血就在这了。</p>
-<h2 id="第五天"><a href="#第五天" class="headerlink" title="第五天"></a>第五天</h2><p><img src="/uploads/wwdc22-notes/05.png" alt=""></p>
+<h2 id="第五天"><a href="#第五天" class="headerlink" title="第五天"></a>第五天</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/wwdc22-notes/05.png" class="lozad post-image"src="/uploads/wwdc22-notes/05.png"></p>
 <h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><p>性能的 <a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2022/110363">Improve app size and runtime performance</a> Session 值得一看。</p>
 <p>今年苹果通过更有效的检查 Swift 协议，使 OC 消息发送调用更小，使 autorelease elision 更快更小这几个个方面来让 App 体积更小，性能更高。</p>
 <p>Swift 协议检查。</p>
@@ -756,1721 +429,360 @@
 <p>消息发送。</p>
 <p>Xcode 14 中新的编译器和链接器已经将 ARM64 的消息发送调用从 12 字节减少到 8 字节。因此如果你的 App 都是 OC 代码的话，使用 Xcode 14 编出来的二进制文件可以少 2%。老系统也有效。</p>
 <p>使用 objc_stubs_small 选项可以只优化大小，获得最大的大小优化。objc_msgSend 调动有 8 个字节指令，也就是2个指令是专门用来准备 selector 的，对于任何特定的 selector，总是相同的代码，由于始终是相同的代码，那么就可以对其共享，每个 selector 只 emit 一次，而不是每次发送消息时都 emit。共享这段代码地方是一个叫 selector stub 的函数。</p>
-<p>ARC 会在编译器插入大量的 c 的 retain/release 函数调用。这些调用遵守平台应用二进制接口（ABI）所定义的 c 语言 call convention。也就意味着我们要更多代码来完成这些调用，用来传递正确寄存器的指针。Apple 今年推出了自定义的 call convention 根据指针位置，适时使用正确变量而不用移动它，从而摆脱了调用里的多余代码。Apple 果然是坚持用户体验优先，为了更好体验不惜修改 c 的 ABI。</p>
+<p>ARC 会在编译器插入大量的 c 的 retain&#x2F;release 函数调用。这些调用遵守平台应用二进制接口（ABI）所定义的 c 语言 call convention。也就意味着我们要更多代码来完成这些调用，用来传递正确寄存器的指针。Apple 今年推出了自定义的 call convention 根据指针位置，适时使用正确变量而不用移动它，从而摆脱了调用里的多余代码。Apple 果然是坚持用户体验优先，为了更好体验不惜修改 c 的 ABI。</p>
 <p>autorelease elision 。</p>
 <p>App 今年对 objc 运行时进行了修改，使 autorelease elision 更小更快。deployment target 为 iOS 16 今年新系统时才可享用哦。</p>
 <p>Apple 怎么做的呢？</p>
-<p>ARC 在调用方插入一个 retain，在被调用的函数中插入一个 release。当我们返回我们的临时对象时，我们需要在函数中先释放它，因为它要离开 scope。在它还没有任何其它引用时还不能这么做，不然返回前他就会被销毁。Apple 现在使用一个新的 convention ，让其可以返回临时对象。做法是当返回一个自动释放值，编译器会发出一个特殊标记，这个标记会告诉运行时这是符合自动释放条件的。它的后面是 retain，我们会在后面执行。获取返回地址，也就是一个指针，将它先保存起来，然后离开运行时的自动释放调用。在运行时，可以将保留时得到的指正和先前做自动释放时保存的指针进行比较，这样标记指令不再是数据之间的比较，比较指针内存访问少。比较成功就可以省去 autorelease/retain。</p>
+<p>ARC 在调用方插入一个 retain，在被调用的函数中插入一个 release。当我们返回我们的临时对象时，我们需要在函数中先释放它，因为它要离开 scope。在它还没有任何其它引用时还不能这么做，不然返回前他就会被销毁。Apple 现在使用一个新的 convention ，让其可以返回临时对象。做法是当返回一个自动释放值，编译器会发出一个特殊标记，这个标记会告诉运行时这是符合自动释放条件的。它的后面是 retain，我们会在后面执行。获取返回地址，也就是一个指针，将它先保存起来，然后离开运行时的自动释放调用。在运行时，可以将保留时得到的指正和先前做自动释放时保存的指针进行比较，这样标记指令不再是数据之间的比较，比较指针内存访问少。比较成功就可以省去 autorelease&#x2F;retain。</p>
 <p>autorelease elision 的优化同样也可以减少 2% 大小。感谢 Apple 为了用户和开发者 OKR 的付出。</p>
 <h3 id="SwiftUI-1"><a href="#SwiftUI-1" class="headerlink" title="SwiftUI"></a>SwiftUI</h3><p>new navigation api，看完感觉我做的小册子还有幻灯应用要花些时间好好改改了。</p>
 <p>接下来，有活干了。</p>
 <h3 id="WWDC-playground"><a href="#WWDC-playground" class="headerlink" title="WWDC.playground"></a>WWDC.playground</h3><p>明天的 WWDC.playground 嘉宾有谜底科技和 weak self，欢迎来捧场。</p>
 
-    </article>
-    <!-- license -->
-    
-        <div class="license-wrapper">
-            <p>原文作者：<a href="http://ming1016.github.io">戴铭</a>
-            <p>原文链接：<a href="http://ming1016.github.io/2022/06/10/wwdc22-notes/">http://ming1016.github.io/2022/06/10/wwdc22-notes/</a>
-            <p>发表日期：<a href="http://ming1016.github.io/2022/06/10/wwdc22-notes/">June 10th 2022, 12:13:57 pm</a>
-            <p>更新日期：<a href="http://ming1016.github.io/2022/06/10/wwdc22-notes/">June 10th 2022, 5:24:49 pm</a>
-            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
-        </div>
-    
-    <!-- paginator -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2022/06/10/use-llvm/" title="使用 LLVM">
-                    <div class="nextTitle">使用 LLVM</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href="/2022/03/25/develop-with-swiftui/" title="在苹果加速器活动做的 SwiftUI 开发分享">
-                    <div class="prevTitle">在苹果加速器活动做的 SwiftUI 开发分享</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- comment -->
-    
-        <div class="post-comment">
-            <!-- 来必力 City 版安装代码 -->
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2022/06/10/wwdc22-notes/">http://ming1016.github.io/2022/06/10/wwdc22-notes/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2022/06/10/use-llvm/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">使用 LLVM </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2022/03/25/develop-with-swiftui/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">在苹果加速器活动做的 SwiftUI 开发分享 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
 
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%A4%A9"><span class="toc-number">1.</span> <span class="toc-text">第一天</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%A4%A9"><span class="toc-number">2.</span> <span class="toc-text">第二天</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%A4%A9"><span class="toc-number">3.</span> <span class="toc-text">第三天</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode"><span class="toc-number">3.1.</span> <span class="toc-text">Xcode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WidgetKit"><span class="toc-number">3.2.</span> <span class="toc-text">WidgetKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WeatherKit"><span class="toc-number">3.3.</span> <span class="toc-text">WeatherKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VisionKit"><span class="toc-number">3.4.</span> <span class="toc-text">VisionKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#macOS"><span class="toc-number">3.5.</span> <span class="toc-text">macOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift"><span class="toc-number">3.6.</span> <span class="toc-text">Swift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SwiftUI"><span class="toc-number">3.7.</span> <span class="toc-text">SwiftUI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPM"><span class="toc-number">3.8.</span> <span class="toc-text">SPM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%9C%BA"><span class="toc-number">3.9.</span> <span class="toc-text">虚机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E5%A4%A9"><span class="toc-number">4.</span> <span class="toc-text">第四天</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8A%E6%97%A5%E9%9B%B6%E6%95%A3%E8%AE%B0%E5%BD%95"><span class="toc-number">4.1.</span> <span class="toc-text">今日零散记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Layout"><span class="toc-number">4.2.</span> <span class="toc-text">Layout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Link"><span class="toc-number">4.3.</span> <span class="toc-text">Link</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8A%E6%97%A5%E6%8E%A8%E8%8D%90-Session"><span class="toc-number">4.4.</span> <span class="toc-text">今日推荐 Session</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E5%A4%A9"><span class="toc-number">5.</span> <span class="toc-text">第五天</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD"><span class="toc-number">5.1.</span> <span class="toc-text">性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SwiftUI-1"><span class="toc-number">5.2.</span> <span class="toc-text">SwiftUI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC-playground"><span class="toc-number">5.3.</span> <span class="toc-text">WWDC.playground</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
 
-            
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>56</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>37</span>
+    <span>标签</span>
+  </a>
+</div>
 
-            
-
-            
-
-            <!-- utteranc评论 -->
-
-
-            <!-- partial('_partial/comment/changyan') -->
-            <!--PC版-->
-
-
-            
-            
-
-        </div>
-    
-    <!-- timeliness note -->
-    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
-    
-    <!-- Mathjax -->
-    
-</main>
-
-                <!-- profile -->
-                
-            </div>
-            <footer class="footer footer-unloaded">
-    <!-- social  -->
-    
-        <div class="social">
-            
-    
-        
-            
-                <a href="mailto:ming1016@foxmail.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="//github.com/ming1016" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                    
-                    <img class="profile-qr" src="/assets/wechat-qcode.jpeg" />
-                </span>
-            
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="https://weibo.com/allstarming" class="iconfont-archer weibo" target="_blank" title=weibo></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="https://twitter.com/daiming_cn" class="iconfont-archer twitter" target="_blank" title=twitter></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
-            
-        
-    
-
-
-        </div>
-    
-    <!-- powered by Hexo  -->
-    <div class="copyright">
-        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
     </div>
-    <!-- website approve for Chinese user -->
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%A4%A9"><span class="toc-number">1.</span> <span class="toc-text">第一天</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%A4%A9"><span class="toc-number">2.</span> <span class="toc-text">第二天</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%A4%A9"><span class="toc-number">3.</span> <span class="toc-text">第三天</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode"><span class="toc-number">3.1.</span> <span class="toc-text">Xcode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WidgetKit"><span class="toc-number">3.2.</span> <span class="toc-text">WidgetKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WeatherKit"><span class="toc-number">3.3.</span> <span class="toc-text">WeatherKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VisionKit"><span class="toc-number">3.4.</span> <span class="toc-text">VisionKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#macOS"><span class="toc-number">3.5.</span> <span class="toc-text">macOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift"><span class="toc-number">3.6.</span> <span class="toc-text">Swift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SwiftUI"><span class="toc-number">3.7.</span> <span class="toc-text">SwiftUI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPM"><span class="toc-number">3.8.</span> <span class="toc-text">SPM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%9C%BA"><span class="toc-number">3.9.</span> <span class="toc-text">虚机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E5%A4%A9"><span class="toc-number">4.</span> <span class="toc-text">第四天</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8A%E6%97%A5%E9%9B%B6%E6%95%A3%E8%AE%B0%E5%BD%95"><span class="toc-number">4.1.</span> <span class="toc-text">今日零散记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Layout"><span class="toc-number">4.2.</span> <span class="toc-text">Layout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Link"><span class="toc-number">4.3.</span> <span class="toc-text">Link</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8A%E6%97%A5%E6%8E%A8%E8%8D%90-Session"><span class="toc-number">4.4.</span> <span class="toc-text">今日推荐 Session</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E5%A4%A9"><span class="toc-number">5.</span> <span class="toc-text">第五天</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD"><span class="toc-number">5.1.</span> <span class="toc-text">性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SwiftUI-1"><span class="toc-number">5.2.</span> <span class="toc-text">SwiftUI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC-playground"><span class="toc-number">5.3.</span> <span class="toc-text">WWDC.playground</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
     
-        <div class="website-approve">
-            
-                <span id="icp-approve" class="icp-approve">
-                    <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备17011999号</a>
-                </span>
-            
-            
-                
-                <img class="beian-img" src="/assets/beian.png" />
-                <span id="beian-approve" class="beian-approve">
-                    <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999" target="_blank">京公网安备 7011999号</a>
-                </span>
-            
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">42</span>
         </div>
+      </a>
     
-    <!-- 不蒜子  -->
-    
-        <div class="busuanzi-container">
-            
-             
-                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
-            
+      <a href="/categories/My novel">
+        <div class="categories-list-item">
+          My novel
+          <span class="categories-list-item-badge">4</span>
         </div>
-    	
+      </a>
+    
+      <a href="/categories/My painting">
+        <div class="categories-list-item">
+          My painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+    <a href="\tags\Pencil" title="Pencil"><div class="tags-list-item">Pencil</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%A4%A9"><span class="toc-number">1.</span> <span class="toc-text">第一天</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%A4%A9"><span class="toc-number">2.</span> <span class="toc-text">第二天</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%A4%A9"><span class="toc-number">3.</span> <span class="toc-text">第三天</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode"><span class="toc-number">3.1.</span> <span class="toc-text">Xcode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WidgetKit"><span class="toc-number">3.2.</span> <span class="toc-text">WidgetKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WeatherKit"><span class="toc-number">3.3.</span> <span class="toc-text">WeatherKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VisionKit"><span class="toc-number">3.4.</span> <span class="toc-text">VisionKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#macOS"><span class="toc-number">3.5.</span> <span class="toc-text">macOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift"><span class="toc-number">3.6.</span> <span class="toc-text">Swift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SwiftUI"><span class="toc-number">3.7.</span> <span class="toc-text">SwiftUI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPM"><span class="toc-number">3.8.</span> <span class="toc-text">SPM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%9C%BA"><span class="toc-number">3.9.</span> <span class="toc-text">虚机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E5%A4%A9"><span class="toc-number">4.</span> <span class="toc-text">第四天</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8A%E6%97%A5%E9%9B%B6%E6%95%A3%E8%AE%B0%E5%BD%95"><span class="toc-number">4.1.</span> <span class="toc-text">今日零散记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Layout"><span class="toc-number">4.2.</span> <span class="toc-text">Layout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Link"><span class="toc-number">4.3.</span> <span class="toc-text">Link</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8A%E6%97%A5%E6%8E%A8%E8%8D%90-Session"><span class="toc-number">4.4.</span> <span class="toc-text">今日推荐 Session</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E5%A4%A9"><span class="toc-number">5.</span> <span class="toc-text">第五天</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD"><span class="toc-number">5.1.</span> <span class="toc-text">性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SwiftUI-1"><span class="toc-number">5.2.</span> <span class="toc-text">SwiftUI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC-playground"><span class="toc-number">5.3.</span> <span class="toc-text">WWDC.playground</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-03-25</div>
+        <a href="/2022/03/25/develop-with-swiftui/"><div class="recent-posts-item-content">在苹果加速器活动做的 SwiftUI 开发分享</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-02-26</div>
+        <a href="/2022/02/26/draw-in-2021/"><div class="recent-posts-item-content">2021年画的</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2014 -
+          
+          2022
+        </span>
+        <a href="/" class="footer-link">戴铭的博客 </a>
+      </div>
+    </div>
+
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
+      </a>
+      <br />
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
 </footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
 
-        </div>
-        <!-- toc -->
-        
-            <div class="toc-wrapper toc-wrapper-loding" style=
-
-
-
-
-
-
-
-    top:50vh;
-
->
-                <div class="toc-catalog">
-                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-                </div>
-                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%A4%A9"><span class="toc-number">1.</span> <span class="toc-text">第一天</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%A4%A9"><span class="toc-number">2.</span> <span class="toc-text">第二天</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%A4%A9"><span class="toc-number">3.</span> <span class="toc-text">第三天</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode"><span class="toc-number">3.1.</span> <span class="toc-text">Xcode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WidgetKit"><span class="toc-number">3.2.</span> <span class="toc-text">WidgetKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WeatherKit"><span class="toc-number">3.3.</span> <span class="toc-text">WeatherKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VisionKit"><span class="toc-number">3.4.</span> <span class="toc-text">VisionKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#macOS"><span class="toc-number">3.5.</span> <span class="toc-text">macOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift"><span class="toc-number">3.6.</span> <span class="toc-text">Swift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SwiftUI"><span class="toc-number">3.7.</span> <span class="toc-text">SwiftUI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPM"><span class="toc-number">3.8.</span> <span class="toc-text">SPM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%9C%BA"><span class="toc-number">3.9.</span> <span class="toc-text">虚机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E5%A4%A9"><span class="toc-number">4.</span> <span class="toc-text">第四天</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8A%E6%97%A5%E9%9B%B6%E6%95%A3%E8%AE%B0%E5%BD%95"><span class="toc-number">4.1.</span> <span class="toc-text">今日零散记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Layout"><span class="toc-number">4.2.</span> <span class="toc-text">Layout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Link"><span class="toc-number">4.3.</span> <span class="toc-text">Link</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8A%E6%97%A5%E6%8E%A8%E8%8D%90-Session"><span class="toc-number">4.4.</span> <span class="toc-text">今日推荐 Session</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E5%A4%A9"><span class="toc-number">5.</span> <span class="toc-text">第五天</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD"><span class="toc-number">5.1.</span> <span class="toc-text">性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SwiftUI-1"><span class="toc-number">5.2.</span> <span class="toc-text">SwiftUI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC-playground"><span class="toc-number">5.3.</span> <span class="toc-text">WWDC.playground</span></a></li></ol></li></ol>
-            </div>
-        
-        <!-- sidebar -->
-        <div class="sidebar sidebar-hide">
-    <ul class="sidebar-tabs sidebar-tabs-active-0">
-        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
-        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
-        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
-    </ul>
-    <div class="sidebar-content sidebar-content-show-archive">
-        <div class="sidebar-panel-archives">
-    <!-- 在 ejs 中将 archive 按照时间排序 -->
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-    
-    
-    
-    <div class="total-and-search">
-        <div class="total-archive">
-        Total : 57
-        </div>
-        <!-- search  -->
-        
-    </div>
-    
-    <div class="post-archive">
-    
-        
-            
-            
-            <div class="archive-year"> 2022 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/10</span>
-            <a class="archive-post-title" href="/2022/06/10/use-llvm/">使用 LLVM</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/10</span>
-            <a class="archive-post-title" href="/2022/06/10/wwdc22-notes/">WWDC22 笔记</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/25</span>
-            <a class="archive-post-title" href="/2022/03/25/develop-with-swiftui/">在苹果加速器活动做的 SwiftUI 开发分享</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/26</span>
-            <a class="archive-post-title" href="/2022/02/26/draw-in-2021/">2021年画的</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/10</span>
-            <a class="archive-post-title" href="/2022/02/10/swift-evolutionary-path/">Swift 演进之路</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/03</span>
-            <a class="archive-post-title" href="/2022/01/03/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/">如何用 SwiftUI + Combine + Swift Concurrency Aysnc/Await Actor 欢畅开发</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2021 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/23</span>
-            <a class="archive-post-title" href="/2021/11/23/daiming-swift-pamphlet/">戴铭的 Swift 小册子 4.0</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/24</span>
-            <a class="archive-post-title" href="/2021/07/24/my-little-idea-about-writing-technical-article/">我写技术文章的一点心得</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/13</span>
-            <a class="archive-post-title" href="/2021/07/13/deeply-analyse-autolayout-slides/">深入剖析Auto Layout的幻灯片</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/08</span>
-            <a class="archive-post-title" href="/2021/06/08/wwdc2021-day1-note/">WWDC 2021 Day1 笔记</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span>
-            <a class="archive-post-title" href="/2021/05/22/acfun-swift-practice/">A站 的 Swift 实践</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/21</span>
-            <a class="archive-post-title" href="/2021/02/21/deeply-analyse-quickjs/">深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2020 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/18</span>
-            <a class="archive-post-title" href="/2020/12/18/thinking-in-how-to-speed-up-app/">App 启动提速实践和一些想法</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/04</span>
-            <a class="archive-post-title" href="/2020/05/04/draw-in-2020/">2020年涂图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span>
-            <a class="archive-post-title" href="/2020/04/12/why_write_study_ios_programming_with_daiming_book_and_draw_recently/">我为什么写了《跟戴铭学iOS编程》这本书</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/29</span>
-            <a class="archive-post-title" href="/2020/03/29/apple-system-executable-file-macho/">Apple 操作系统可执行文件 Mach-O</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/05</span>
-            <a class="archive-post-title" href="/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/">在快手做分享、无用类检查、在广州做 SwiftUI 学习笔记分享、InfoQ二叉树视频</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2019 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/28</span>
-            <a class="archive-post-title" href="/2019/12/28/japan-travel/">日本游玩</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/07</span>
-            <a class="archive-post-title" href="/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">如何对 iOS 启动阶段耗时进行分析</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/06</span>
-            <a class="archive-post-title" href="/2019/12/06/draw-in-2019/">2019年涂图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/29</span>
-            <a class="archive-post-title" href="/2019/07/29/ios-map/">iOS 开发舆图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/19</span>
-            <a class="archive-post-title" href="/2019/06/19/white-dragon-class/">白龙班</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2018 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/17</span>
-            <a class="archive-post-title" href="/2018/09/17/produce-slides-of-third-at-swift-conference/">这次swift大会分享准备的幻灯片和 demo</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/14</span>
-            <a class="archive-post-title" href="/2018/09/14/draw-with-procreate-in-ipad-during-pre-half-in-20182/">18年上半年procreate的练习图图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/21</span>
-            <a class="archive-post-title" href="/2018/04/21/deeply-analyse-javascriptcore/">深入剖析 JavaScriptCore</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/07</span>
-            <a class="archive-post-title" href="/2018/04/07/read-snapkit-and-masonry-source-code/">读 SnapKit 和 Masonry 自动布局框架源码</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span>
-            <a class="archive-post-title" href="/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/">Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/24</span>
-            <a class="archive-post-title" href="/2018/01/24/why-swift/">Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/10</span>
-            <a class="archive-post-title" href="/2018/01/10/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/">GIAC 大会上分享的《Swift 将 Web 代码转成60帧满帧原生应用的方案及实践》的幻灯片</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span>
-            <a class="archive-post-title" href="/2018/01/04/baimi/">白芈</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span>
-            <a class="archive-post-title" href="/2018/01/04/huaye/">花野</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2017 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/24</span>
-            <a class="archive-post-title" href="/2017/10/24/how-do-i-improve-the-development/">在滴滴，我是如何指数级提升开发技术的？</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/16</span>
-            <a class="archive-post-title" href="/2017/10/16/html-to-native-htn-development-record/">HTML 转原生 HTN 项目开发记录</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/11</span>
-            <a class="archive-post-title" href="/2017/10/11/deeply-analyse-webkit/">深入剖析 WebKit</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span>
-            <a class="archive-post-title" href="/2017/06/20/deeply-ios-performance-optimization/">深入剖析 iOS 性能优化</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/12</span>
-            <a class="archive-post-title" href="/2017/06/12/gmtc-ios-slimming-practice/">GMTC 上分享滴滴出行 iOS 端瘦身实践的 Slides</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/27</span>
-            <a class="archive-post-title" href="/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/">atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span>
-            <a class="archive-post-title" href="/2017/04/01/build-static-analysis-program-smck-use-swift/">用 Swift 编写的工程代码静态分析命令行工具 smck</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span>
-            <a class="archive-post-title" href="/2017/04/01/slides-of-deeply-analyse-llvm/">深入剖析 iOS 编译 Clang / LLVM 直播的 Slides</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span>
-            <a class="archive-post-title" href="/2017/03/01/deeply-analyse-llvm/">深入剖析 iOS 编译 Clang / LLVM</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2016 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/22</span>
-            <a class="archive-post-title" href="/2016/11/22/how-to-preload-web-in-ios/">iOS预加载Web页面方案</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/17</span>
-            <a class="archive-post-title" href="/2016/11/17/use-swift3-build-macos-program-to-clear-unuse-method/">使用Swift3开发了个macOS的程序可以检测出objc项目中无用方法，然后一键全部清理</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/20</span>
-            <a class="archive-post-title" href="/2016/09/20/draw-with-procreate-in-ipad-during-15-to-16/">15，16年iPad上使用Procreate画的</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/02</span>
-            <a class="archive-post-title" href="/2016/09/02/develop-rss-reader/">使用ReactiveCocoa开发RSS阅读器</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/09</span>
-            <a class="archive-post-title" href="/2016/08/09/how-to-use-reactivecocoa/">iOS函数响应式编程以及ReactiveCocoa的使用</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/21</span>
-            <a class="archive-post-title" href="/2016/07/21/assembleview/">制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/30</span>
-            <a class="archive-post-title" href="/2016/05/30/what-learn-from-reactivecocoa/">从 ReactiveCocoa 中能学到什么？不用此库也能学以致用</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/23</span>
-            <a class="archive-post-title" href="/2016/05/23/try-to-decouple-with-demo/">竭尽全力的去解耦的一次实践，封装一个TableView和一些功能组合的控件</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/04</span>
-            <a class="archive-post-title" href="/2016/04/04/tenth-middle-school/">十中</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/13</span>
-            <a class="archive-post-title" href="/2016/01/13/how-to-use-gcd/">细说 GCD（Grand Central Dispatch）如何用</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2015 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/03</span>
-            <a class="archive-post-title" href="/2015/11/03/deeply-analyse-autolayout/">深入剖析Auto Layout，分析iOS各版本新增特性</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/02</span>
-            <a class="archive-post-title" href="/2015/11/02/draw-with-note-in-ipad-during-15/">15年用iPad上的备忘录画的</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span>
-            <a class="archive-post-title" href="/2015/05/28/macos-app-i-used/">我用过的 macOS 应用</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span>
-            <a class="archive-post-title" href="/2015/04/02/draw-game-of-thrones-with-pencil-during-14/">整理了画的权利的游戏里的角色，有龙女，小恶魔等等</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span>
-            <a class="archive-post-title" href="/2015/04/01/objc-runtime/">Objc Runtime 总结</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span>
-            <a class="archive-post-title" href="/2015/03/12/draw-practice-with-pencil-during-14-to-15/">14和15年间的铅笔画练习</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2014 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span>
-            <a class="archive-post-title" href="/2014/03/01/black-star-blue-map/">黑星蓝图</a>
-        </li>
-    
-    </div>
-</div>
-
-        <div class="sidebar-panel-tags">
-    <div class="sidebar-tags-name">
-        
-            <span class="sidebar-tag-name" data-tags="iOS">
-                <span class="iconfont-archer">&#xe606;</span>
-                iOS
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Apple">
-                <span class="iconfont-archer">&#xe606;</span>
-                Apple
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Swift">
-                <span class="iconfont-archer">&#xe606;</span>
-                Swift
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="AssembleView">
-                <span class="iconfont-archer">&#xe606;</span>
-                AssembleView
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Novel">
-                <span class="iconfont-archer">&#xe606;</span>
-                Novel
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Mach-O">
-                <span class="iconfont-archer">&#xe606;</span>
-                Mach-O
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="smck">
-                <span class="iconfont-archer">&#xe606;</span>
-                smck
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Autolayout">
-                <span class="iconfont-archer">&#xe606;</span>
-                Autolayout
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="JavaScript">
-                <span class="iconfont-archer">&#xe606;</span>
-                JavaScript
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Web">
-                <span class="iconfont-archer">&#xe606;</span>
-                Web
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="编译">
-                <span class="iconfont-archer">&#xe606;</span>
-                编译
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="RSSReader">
-                <span class="iconfont-archer">&#xe606;</span>
-                RSSReader
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="macOS">
-                <span class="iconfont-archer">&#xe606;</span>
-                macOS
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Combine">
-                <span class="iconfont-archer">&#xe606;</span>
-                Combine
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="SwiftUI">
-                <span class="iconfont-archer">&#xe606;</span>
-                SwiftUI
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Concurrency">
-                <span class="iconfont-archer">&#xe606;</span>
-                Concurrency
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="LLVM">
-                <span class="iconfont-archer">&#xe606;</span>
-                LLVM
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Clang">
-                <span class="iconfont-archer">&#xe606;</span>
-                Clang
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Performance optimization">
-                <span class="iconfont-archer">&#xe606;</span>
-                Performance optimization
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Painting">
-                <span class="iconfont-archer">&#xe606;</span>
-                Painting
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Pencil">
-                <span class="iconfont-archer">&#xe606;</span>
-                Pencil
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="GOT">
-                <span class="iconfont-archer">&#xe606;</span>
-                GOT
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="iPad">
-                <span class="iconfont-archer">&#xe606;</span>
-                iPad
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Procreate">
-                <span class="iconfont-archer">&#xe606;</span>
-                Procreate
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="WebKit">
-                <span class="iconfont-archer">&#xe606;</span>
-                WebKit
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Slides">
-                <span class="iconfont-archer">&#xe606;</span>
-                Slides
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Study">
-                <span class="iconfont-archer">&#xe606;</span>
-                Study
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="GCD">
-                <span class="iconfont-archer">&#xe606;</span>
-                GCD
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="UIWebView">
-                <span class="iconfont-archer">&#xe606;</span>
-                UIWebView
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="NSURLProtocol">
-                <span class="iconfont-archer">&#xe606;</span>
-                NSURLProtocol
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="ReactiveCocoa">
-                <span class="iconfont-archer">&#xe606;</span>
-                ReactiveCocoa
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Japan">
-                <span class="iconfont-archer">&#xe606;</span>
-                Japan
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="APP">
-                <span class="iconfont-archer">&#xe606;</span>
-                APP
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="runtime">
-                <span class="iconfont-archer">&#xe606;</span>
-                runtime
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="swift">
-                <span class="iconfont-archer">&#xe606;</span>
-                swift
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Pattern">
-                <span class="iconfont-archer">&#xe606;</span>
-                Pattern
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="book">
-                <span class="iconfont-archer">&#xe606;</span>
-                book
-            </span>
-        
-    </div>
-    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
-    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
-        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
-    </div> 
-    <div class="sidebar-tags-list"></div>
-</div>
-
-        <div class="sidebar-panel-categories">
-    <div class="sidebar-categories-name">
-    
-        <span class="sidebar-category-name" data-categories="Programming">
-            <span class="iconfont-archer">&#xe60a;</span>
-            Programming
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="My-novel">
-            <span class="iconfont-archer">&#xe60a;</span>
-            My-novel
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="My-painting">
-            <span class="iconfont-archer">&#xe60a;</span>
-            My-painting
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="travel">
-            <span class="iconfont-archer">&#xe60a;</span>
-            travel
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="APP">
-            <span class="iconfont-archer">&#xe60a;</span>
-            APP
-        </span>
-    
-    </div>
-    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
-    <div class="sidebar-categories-list"></div>
-</div>
-
-    </div>
-</div>
-
-        <!-- site-meta -->
-        <script>
-    var siteMeta = {
-        url: "http://ming1016.github.io",
-        root: "/",
-        author: "戴铭"
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
     }
+    refreshFsLightbox();
+  }
 </script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
 
-        <!-- import experimental options here -->
-        <!-- Custom Font -->
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
 
-
-        <!-- main func -->
-        <script src="/scripts/main.js?v=20210823"></script>
-        <!-- dark mode -->
-        <script src="/scripts/dark.js?v=20210823"></script>
-        <!-- fancybox -->
-        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
-        <!-- algolia -->
-        
-        <!-- busuanzi -->
-        
-            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-        
-        <!-- CNZZ -->
-        
-        <!-- async load share.js -->
-        
-            <script src="/scripts/share.js?v=20210823" async></script>
-        
-        <!-- mermaid -->
-        
-    </body>
 </html>

@@ -1,537 +1,197 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
-    <!-- title -->
-
-
-    
-
-<!-- keywords -->
-
-
-
+<html>
+<meta  lang="zh-Hans" >
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="author" content="戴铭">
-    <meta name="renderer" content="webkit">
-    <meta name="copyright" content="戴铭">
-    
-        <meta name="keywords" content="戴铭,戴铭的博客,iOS,Swift,移动开发,JavaScript,编译">
-    
-    <meta name="description" content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-    <meta name="description" content="前言非常感谢大家抽出生命中宝贵的一段时间来听我接下来的一大段关于写文章那些事的唠叨。写文章的好处看看《觉醒年代》就知道了。 这篇文章我不会写一些常说的技巧，比如文章的内容前后要有逻辑关系，内容之间有关联。所讲知识前后的层次要平，不要在某个部分挖掘过深。写作过程中牢牢抓住要表达的内容，不要过于偏离主题。类似这样的技巧不会说。都说一流的人讨论思想、普通人讨论事情、三流的人讨论人，那么为了提高文章高度，">
-<meta property="og:type" content="article">
-<meta property="og:title" content="我写技术文章的一点心得">
-<meta property="og:url" content="http://ming1016.github.io/2021/07/24/my-little-idea-about-writing-technical-article/index.html">
-<meta property="og:site_name" content="戴铭的博客 - 星光社">
-<meta property="og:description" content="前言非常感谢大家抽出生命中宝贵的一段时间来听我接下来的一大段关于写文章那些事的唠叨。写文章的好处看看《觉醒年代》就知道了。 这篇文章我不会写一些常说的技巧，比如文章的内容前后要有逻辑关系，内容之间有关联。所讲知识前后的层次要平，不要在某个部分挖掘过深。写作过程中牢牢抓住要表达的内容，不要过于偏离主题。类似这样的技巧不会说。都说一流的人讨论思想、普通人讨论事情、三流的人讨论人，那么为了提高文章高度，">
-<meta property="og:locale">
-<meta property="og:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/1.PNG">
-<meta property="og:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/2.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/3.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/4.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/5.jpeg">
-<meta property="og:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/6.JPG">
-<meta property="og:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/7.jpeg">
-<meta property="og:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/8.PNG">
-<meta property="og:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/9.PNG">
-<meta property="og:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/10.PNG">
-<meta property="og:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/11.PNG">
-<meta property="og:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/12.PNG">
-<meta property="og:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/13.PNG">
-<meta property="og:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/14.PNG">
-<meta property="og:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/15.PNG">
-<meta property="og:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/16.PNG">
-<meta property="og:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/17.PNG">
-<meta property="og:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/18.PNG">
-<meta property="article:published_time" content="2021-07-23T21:52:45.000Z">
-<meta property="article:modified_time" content="2021-07-23T22:32:51.582Z">
-<meta property="article:author" content="戴铭">
-<meta property="article:tag" content="iOS">
-<meta property="article:tag" content="Apple">
-<meta property="article:tag" content="Swift">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://ming1016.github.io/uploads/my-little-idea-about-writing-technical-article/1.PNG">
-    <meta http-equiv="Cache-control" content="no-cache">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="icon" href="/assets/logo-starming.png">
-    
-    <title>我写技术文章的一点心得 · 戴铭的博客 - 星光社</title>
-    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-/* This file is meant as a standalone workflow for
-- testing support for link[rel=preload]
-- enabling async CSS loading in browsers that do not support rel=preload
-- applying rel preload css once loaded, whether supported or not.
-*/ -->
-<script>
-    (function (w) {
-        'use strict'
-        // rel=preload support test
-        if (!w.loadCSS) {
-            w.loadCSS = function () {}
-        }
-        // define on the loadCSS obj
-        var rp = (loadCSS.relpreload = {})
-        // rel=preload feature support test
-        // runs once and returns a function for compat purposes
-        rp.support = (function () {
-            var ret
-            try {
-                ret = w.document.createElement('link').relList.supports('preload')
-            } catch (e) {
-                ret = false
-            }
-            return function () {
-                return ret
-            }
-        })()
-
-        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
-        // then change that media back to its intended value on load
-        rp.bindMediaToggle = function (link) {
-            // remember existing media attr for ultimate state, or default to 'all'
-            var finalMedia = link.media || 'all'
-
-            function enableStylesheet() {
-                link.media = finalMedia
-            }
-
-            // bind load handlers to enable media
-            if (link.addEventListener) {
-                link.addEventListener('load', enableStylesheet)
-            } else if (link.attachEvent) {
-                link.attachEvent('onload', enableStylesheet)
-            }
-
-            // Set rel and non-applicable media type to start an async request
-            // note: timeout allows this to happen async to let rendering continue in IE
-            setTimeout(function () {
-                link.rel = 'stylesheet'
-                link.media = 'only x'
-            })
-            // also enable media after 3 seconds,
-            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
-            setTimeout(enableStylesheet, 3000)
-        }
-
-        // loop through link elements in DOM
-        rp.poly = function () {
-            // double check this to prevent external calls from running
-            if (rp.support()) {
-                return
-            }
-            var links = w.document.getElementsByTagName('link')
-            for (var i = 0; i < links.length; i++) {
-                var link = links[i]
-                // qualify links to those with rel=preload and as=style attrs
-                if (
-                    link.rel === 'preload' &&
-                    link.getAttribute('as') === 'style' &&
-                    !link.getAttribute('data-loadcss')
-                ) {
-                    // prevent rerunning on link
-                    link.setAttribute('data-loadcss', true)
-                    // bind listeners to toggle media back
-                    rp.bindMediaToggle(link)
-                }
-            }
-        }
-
-        // if unsupported, run the polyfill
-        if (!rp.support()) {
-            // run once at least
-            rp.poly()
-
-            // rerun poly on an interval until onload
-            var run = w.setInterval(rp.poly, 500)
-            if (w.addEventListener) {
-                w.addEventListener('load', function () {
-                    rp.poly()
-                    w.clearInterval(run)
-                })
-            } else if (w.attachEvent) {
-                w.attachEvent('onload', function () {
-                    rp.poly()
-                    w.clearInterval(run)
-                })
-            }
-        }
-
-        // commonjs
-        if (typeof exports !== 'undefined') {
-            exports.loadCSS = loadCSS
-        } else {
-            w.loadCSS = loadCSS
-        }
-    })(typeof global !== 'undefined' ? global : this)
-</script>
-
-    <style type="text/css">
-    @font-face {
-        font-family: 'Oswald-Regular';
-        src: url("/font/Oswald-Regular.ttf");
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
     }
-
-    body {
-        margin: 0;
-    }
-
-    header,
-    footer,
-    .back-top,
-    .sidebar,
-    .container,
-    .site-intro-meta,
-    .toc-wrapper {
-        display: none;
-    }
-
-    .site-intro {
-        position: relative;
-        z-index: 3;
-        width: 100%;
-        /* height: 50vh; */
-        overflow: hidden;
-    }
-
-    .site-intro-placeholder {
-        position: absolute;
-        z-index: -2;
-        top: 0;
-        left: 0;
-        width: calc(100% + 300px);
-        height: 100%;
-        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
-        background-position: center center;
-        transform: translate3d(-226px, 0, 0);
-        animation: gradient-move 2.5s ease-out 0s infinite;
-    }
-
-    @keyframes gradient-move {
-        0% {
-            transform: translate3d(-226px, 0, 0);
-        }
-        100% {
-            transform: translate3d(0, 0, 0);
-        }
-    }
-</style>
-
-    <link rel="preload" href="/css/style.css?v=20210823" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="/css/dark.css?v=20210823" as="style">
-    <link rel="stylesheet" href="/css/dark.css" media="(prefers-color-scheme: dark)">
-    <link rel="stylesheet" href="/css/mobile.css?v=20210823" media="(max-width: 960px)">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
-    <link rel="preload" href="/scripts/main.js?v=20210823" as="script">
-    <link rel="preload" href="/scripts/dark.js?v=20210823" as="script">
-    <link rel="preload" href="/font/Oswald-Regular.ttf" as="font" crossorigin>
-    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
-    <!-- algolia -->
-    
-    <!-- 百度统计  -->
-    
-    <!-- 谷歌统计  -->
-    
-<meta name="generator" content="Hexo 5.4.0"></head>
-
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <script type="text/javascript">
-        if (typeof window.$ == undefined) {
-            console.warn('jquery load from jsdelivr failed, will load local script')
-            document.write('<script src="/lib/jquery.min.js" />')
-        }
-    </script>
-    
-        <body class="post-body">
-    
-        <!-- header -->
-        <header class="header header-mobile">
-    <!-- top read progress line -->
-    <div class="header-element">
-        <div class="read-progress"></div>
-    </div>
-    <!-- sidebar menu button -->
-    <div class="header-element">
-        
-            <div class="header-sidebar-menu">
-        
-            
-                <div style="padding-left: 1px;">&#xe775;</div>
-            
-        </div>
-    </div>
-    <!-- header actions -->
-    <div class="header-actions">
-        <!-- theme mode switch button -->
-        <span class="header-theme-btn header-element">
-            <i class="fas fa-adjust"></i>
-        </span>
-        <!-- back to home page text -->
-        <span class="home-link header-element">
-            <a href=/>戴铭的博客 - 星光社</a>
-        </span>
-    </div>
-    <!-- toggle banner for post layout -->
-    
-        
-            <div class="banner">
-        
-            <div class="blog-title header-element">
-                <a href="/">戴铭的博客 - 星光社</a>
-            </div>
-            <div class="post-title header-element">
-                <a href="#" class="post-name">我写技术文章的一点心得</a>
-            </div>
-        </div>
-    
-</header>
-
-        <!-- fixed footer -->
-        <footer class="footer-fixed">
-    <!-- back to top button -->
-    <div class="footer-fixed-element">
-        
-            <div class="back-top back-top-hidden">
-        
-        
-            <div>&#xe639;</div>
-        
-        </div>
-    </div>
-</footer>
-
-        <!-- wrapper -->
-        <div class="wrapper">
-            <div class="site-intro" style="
-
-
-
-
-
-
-
-    height:50vh;
-
-">
-    
-    <!-- 主页  -->
-    
-        
-    <!-- 404页  -->
-            
-    <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/post-bg-starming.jpg)"></div>
-    <div class="site-intro-meta">
-        <!-- 标题  -->
-        <h1 class="intro-title">
-            <!-- 主页  -->
-            
-                我写技术文章的一点心得
-            <!-- 404 -->
-            
-        </h1>
-        <!-- 副标题 -->
-        <p class="intro-subtitle">
-            <!-- 主页副标题  -->
-            
-                
-            <!-- 404 -->
-            
-        </p>
-        <!-- 文章页 meta -->
-        
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class= post-intro-tags >
-    
-        
-        
-            
-        
-        
-        <span class="post-category" data-categories="Programming"">
-            <i class="fas fa-folder post-category-icon"></i>
-            <span class="post-category-text">
-                Programming
-            </span>
-        </span>
-    
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Apple">Apple</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Swift">Swift</a>
-    
-</div>
-
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">19.6k</span>阅读时长: <span class="post-count reading-time">68 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <!-- 撰写日期 -->
-                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
-                    <span class="post-intro-time">2021/07/24</span>
-                    <!-- busuanzi -->
-                    
-                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
-                            <span id="busuanzi_value_page_pv"></span>
-                        </span>
-                    
-                    <!-- 文章分享 -->
-                    <span class="share-wrapper">
-                        <span class="iconfont-archer share-icon">&#xe71d;</span>
-                        <span class="share-text">Share</span>
-                        <ul class="share-list">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
-        
-    </div>
-</div>
-
-            <script>
-  // get user agent
-  function getBrowserVersions() {
-    var u = window.navigator.userAgent
-    return {
-      userAgent: u,
-      trident: u.indexOf('Trident') > -1, //IE内核
-      presto: u.indexOf('Presto') > -1, //opera内核
-      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
-      iPad: u.indexOf('iPad') > -1, //是否为iPad
-      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
-      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
-      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
-    }
-  }
-  var browser = {
-    versions: getBrowserVersions(),
-  }
-  console.log('userAgent: ' + browser.versions.userAgent)
-
-  // callback
-  function fontLoaded() {
-    console.log('font loaded')
-    if (document.getElementsByClassName('site-intro-meta')) {
-      document
-        .getElementsByClassName('intro-title')[0]
-        .classList.add('intro-fade-in')
-      document
-        .getElementsByClassName('intro-subtitle')[0]
-        .classList.add('intro-fade-in')
-      var postIntros = document.getElementsByClassName('post-intros')[0]
-      if (postIntros) {
-        postIntros.classList.add('post-fade-in')
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
       }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
     }
-  }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
 
-  // UC不支持跨域，所以直接显示
-  function asyncCb() {
-    if (browser.versions.uc) {
-      console.log('UCBrowser')
-      fontLoaded()
-    } else {
-      WebFont.load({
-        custom: {
-          families: ['Oswald-Regular'],
-        },
-        loading: function () {
-          // 所有字体开始加载
-          // console.log('font loading');
-        },
-        active: function () {
-          // 所有字体已渲染
-          fontLoaded()
-        },
-        inactive: function () {
-          // 字体预加载失败，无效字体或浏览器不支持加载
-          console.log('inactive: timeout')
-          fontLoaded()
-        },
-        timeout: 5000, // Set the timeout to two seconds
-      })
-    }
-  }
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
 
-  function asyncErr() {
-    console.warn('script load from CDN failed, will load local script')
-  }
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
 
-  // load webfont-loader async, and add callback function
-  function async(u, cb, err) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0]
-    o.src = u
-    if (cb) {
-      o.addEventListener(
-        'load',
-        function (e) {
-          cb(null, e)
-        },
-        false
-      )
-    }
-    if (err) {
-      o.addEventListener(
-        'error',
-        function (e) {
-          err(null, e)
-        },
-        false
-      )
-    }
-    s.parentNode.insertBefore(o, s)
-  }
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
 
-  var asyncLoadWithFallBack = function (arr, success, reject) {
-    var currReject = function () {
-      reject()
-      arr.shift()
-      if (arr.length) async(arr[0], success, currReject)
-    }
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
 
-    async(arr[0], success, currReject)
-  }
 
-  asyncLoadWithFallBack(
-    [
-      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
-      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
-      "/lib/webfontloader.min.js",
-    ],
-    asyncCb,
-    asyncErr
-  )
-</script>
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
+      
+      <span class="navbar-logo-dsc">戴铭的博客</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/my-little-idea-about-writing-technical-article/12.PNG" data-src="/uploads/my-little-idea-about-writing-technical-article/12.PNG"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
 
-            <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
-            <div class="container container-unloaded">
-                <main class="main post-page">
-    <article class="article-entry">
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>非常感谢大家抽出生命中宝贵的一段时间来听我接下来的一大段关于写文章那些事的唠叨。写文章的好处看看<a target="_blank" rel="noopener" href="https://movie.douban.com/subject/30228394/">《觉醒年代》</a>就知道了。</p>
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      我写技术文章的一点心得
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-07-23T21:52:45.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021-07-24</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Programming/" class="post-meta-link">Programming</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>19.7k 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/iOS/" class="post-meta-link">iOS</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Apple/" class="post-meta-link">Apple</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Swift/" class="post-meta-link">Swift</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>非常感谢大家抽出生命中宝贵的一段时间来听我接下来的一大段关于写文章那些事的唠叨。写文章的好处看看<a target="_blank" rel="noopener" href="https://movie.douban.com/subject/30228394/">《觉醒年代》</a>就知道了。</p>
 <p>这篇文章我不会写一些常说的技巧，比如文章的内容前后要有逻辑关系，内容之间有关联。所讲知识前后的层次要平，不要在某个部分挖掘过深。写作过程中牢牢抓住要表达的内容，不要过于偏离主题。类似这样的技巧不会说。都说一流的人讨论思想、普通人讨论事情、三流的人讨论人，那么为了提高文章高度，除了说些事情，我还打算加些思想的内容。</p>
 <p>大家都习惯去阅读他人人生体验来体验不一样的人生，这样的方式和评头论足一样简单舒服，轻松爽快。而主动去对自己思想进行研究和开发，通过写作输出自己独特的经历和思考却是困难且难受的，但这样从0到1和从0到10的创造过程获得的乐趣却是前者的百倍甚至更多，这背后所遵循的原则是怎样的呢？</p>
 <p>每个心得都会基于某些原则，以至于思路不会散架，而所有的原则都无法违背物热力学第二定律，也就是熵增定律(强烈建议先看知乎<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/72896309">这篇</a>介绍)。就连进化论都是遵循熵增定律。</p>
@@ -555,7 +215,7 @@
 <p>关于故事性，故事性往往是用来引入读进去的一种办法，A 站的 Swift 实践这篇文章的开头通过讲述使用 Swift 的必要性、A 站为之付出的努力和收获、Swift 语言的演进的过程的方式尽量避开具体技术描述，而是使用通俗易懂的描述让读的人可以被轻松带入到文章中来。</p>
 <h3 id="深入剖析Auto-Layout，分析iOS各版本新增特性"><a href="#深入剖析Auto-Layout，分析iOS各版本新增特性" class="headerlink" title="深入剖析Auto Layout，分析iOS各版本新增特性"></a>深入剖析Auto Layout，分析iOS各版本新增特性</h3><p><a href="https://ming1016.github.io/2015/11/03/deeply-analyse-autolayout/">《深入剖析Auto Layout，分析iOS各版本新增特性》</a>。写这个文章也是有着一段不同寻常的经历。那时刚到公司，所有布局都还是使用的 frame 方式，而 Auto Layout 苹果公司才推出不久，在另一位跟我一样新进公司熟悉 Auto Layout 同事的怂恿下，我打算在改版需求中使用 Auto Layout 来替换原有布局方式。但在需求开发刚开始时，那位熟悉 Auto Layout 的新同事突然离职了，我感觉失去了援手，但是我认可了这个技术，还是坚持使用它。期间碰到的苦难无数，布局思路带来了很多开发方式的改变，还有动画的结合会出现的各种效果不一致，其间公司老员工还不断劝我还是走老路比较稳妥。改版完后大部分主流程，包括首页发单、等待页、接单进行页都被改造成 Auto Layout。</p>
 <p>更困难的事情还在后面呢，测试期间发现在 iOS6 上会出现各种崩溃、页面布局混乱、动画效果不一致等问题，我的 Bug 始终保持在 Bug 列表前十页。改 Bug 那些天，晚上调的眼发疼，深夜想的难入眠。线下 Bug 改完，上线后才是噩梦的开始，当时我们 App 的 iOS6 用户依旧很多，于是很多偶现崩溃被放大了，我的崩溃问题一直排在 Top1，虽然我很快找到了改好的办法，但是对于这几个偶现的问题还需要一个可靠可信服的解释，这样后面才能够让大家放心使用 Auto Layout。还记得当时周末坐在得实大厦窗户边的工位上，在查完和试完所有资料后依然无果时的无力感。本想着改回以前的 frame 布局算了，后又觉不甘。下几个周末跑到各大图书馆查看所有涉有 Auto Layout 的书，也是那个时候了解到了 VFL 语言。皇天不负有心人，WWDC 开始了，其中有个 Session 叫 Mysteries of Auto Layout，分为<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2015-218/">上</a>、<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2015-219/">下</a>两个部分，把 Auto Layout 的原理讲得非常透彻了，至此，透过原理我也找到了问题的根因，并把他们记录在了文章中。这部分内容我还在一个沙龙做了分享，下面是当时分享的 Auto Layout 的原理部分的内容：</p>
-<p><img src="/uploads/my-little-idea-about-writing-technical-article/1.PNG" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/1.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/1.PNG"></p>
 <p>完整幻灯片参看<a href="https://ming1016.github.io/2021/07/13/deeply-analyse-autolayout-slides/">这里</a>。</p>
 <p>这些经验的总结在当时是非常新的，因为官方也是刚公布出其内部的原理，没有人能够更早的知道这些信息，估计也很少有人会考究这么多。有了这些由于一直坚持下来去找根因的经历才使得文章有了独特性。</p>
 <p>当然，深入剖析 Auto Layout 这篇文章也加了 Auto Layout 的历史、生命周期、VFL 语言的介绍用来丰富内容的广度，以提升真实感，但你会发现独特性在这里显得尤为重要。</p>
@@ -568,13 +228,13 @@
 <p>当时写这个库也是为了能够提高完成需求和维护需求的时间，有了精力才能够做更有趣有意义的事情嘛。五年后，苹果终于将 VFL 这种 DSL 语言运用 Swift 强大的 ResultBuilder 和不透明类型等特性进行了更好地完善，配合 Property Wrapper 和 Combine 还无缝衔接了先进的数据流架构，推出了 SwiftUI。</p>
 <h3 id="深入剖析-JavaScriptCore"><a href="#深入剖析-JavaScriptCore" class="headerlink" title="深入剖析 JavaScriptCore"></a>深入剖析 JavaScriptCore</h3><p><a href="https://ming1016.github.io/2018/04/21/deeply-analyse-javascriptcore/">《深入剖析 JavaScriptCore》</a> 这篇文章要说独特性，那就是对 JavaScript 语言的好奇心。我很早就开始使用 JavaScript 来开发网站，工作和个人网站的前端都是依赖于这门语言，其实知情人都知道，选择 JavaScript 也是没有选择的选择。年轻时只顾着使用技术去做东西，也做了自己觉得非常有趣的程序，满足感十足，现在转向对其背后的机制技术好奇和感兴趣了。还有一个迫使自己去了解 JavaScript 引擎的原因是工作中做动态页面时需要用到对业务逻辑的解释执行处理。为了避免使用中出了问题会一脸懵，深入了解它显得很有必要。</p>
 <p>光有想法是没有一点用的，JavaScriptCore 其实非常的庞大且复杂，当时能找到的大部分资料都是 Bridge 和 RN 的运用，好在开源了，了解内部的话还可以拉代码来看。但是直接埋进去看代码，代码量比较大，很容易 miss 掉其精妙之处。好在发现了 JavaScriptCore 项目核心开发者 Filip Pizlo，通过他的<a target="_blank" rel="noopener" href="http://www.filpizlo.com/">个人网站</a>找到了大量 JavaScriptCore 的一手资料，没日没夜的啃内容，同时还试着动手去实现一些技术细节，最终了解和学习了很多解释器、虚机相关知识。获取一样东西带来的满足感是没有获取经验带来的满足感更深刻。我把学到的这些经验都记录在了这篇文章中，这使得文章的独特性更加深刻，真实感达到了满棚。</p>
-<h3 id="深入剖析-JavaScript-编译器-解释器引擎-QuickJS-多了解些-JavaScript-语言"><a href="#深入剖析-JavaScript-编译器-解释器引擎-QuickJS-多了解些-JavaScript-语言" class="headerlink" title="深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言"></a>深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</h3><p>对于 JavaScript 引擎，我先前就看了 JavaScriptCore，为啥还要再去看 QuickJS 这个轻量的 JavaScript 引擎呢。写<a href="https://ming1016.github.io/2021/02/21/deeply-analyse-quickjs/">这篇文章</a>动力主要还是对QuickJS如何使用精简高效的代码实现了那么复杂功能，还有极高的性能。QuickJS 基本是从头看到尾，一点一点的分析，整个过程也都记录了下来。但是我觉得记录源码的分析还不够，虽然这些分析使得文章的真实感很高，前提是读的人也会埋进代码里。为了提高文章的独特性和故事性，我在文章开头加入了一些 JavaScript 的一些背景内容，还有些当年使用前端技术的体会和经验。</p>
+<h3 id="深入剖析-JavaScript-编译器-x2F-解释器引擎-QuickJS-多了解些-JavaScript-语言"><a href="#深入剖析-JavaScript-编译器-x2F-解释器引擎-QuickJS-多了解些-JavaScript-语言" class="headerlink" title="深入剖析 JavaScript 编译器&#x2F;解释器引擎 QuickJS - 多了解些 JavaScript 语言"></a>深入剖析 JavaScript 编译器&#x2F;解释器引擎 QuickJS - 多了解些 JavaScript 语言</h3><p>对于 JavaScript 引擎，我先前就看了 JavaScriptCore，为啥还要再去看 QuickJS 这个轻量的 JavaScript 引擎呢。写<a href="https://ming1016.github.io/2021/02/21/deeply-analyse-quickjs/">这篇文章</a>动力主要还是对QuickJS如何使用精简高效的代码实现了那么复杂功能，还有极高的性能。QuickJS 基本是从头看到尾，一点一点的分析，整个过程也都记录了下来。但是我觉得记录源码的分析还不够，虽然这些分析使得文章的真实感很高，前提是读的人也会埋进代码里。为了提高文章的独特性和故事性，我在文章开头加入了一些 JavaScript 的一些背景内容，还有些当年使用前端技术的体会和经验。</p>
 <p>只看代码不去修改和调试，往往会很枯燥，我在分析代码前，也写了些和 QuickJS 工程配置 makefile 相关的内容，并以 QuickJS 本身的 makefile 的用法进行举例说明。另外还手把手说明了怎么用 Xcode 来编译安装调试 QuickJS 代码，这些都是比较独特的内容。QuickJS 的核心代码基本都写在一个文件里，阅读分析时需要非常的专注，如果不专注，可能这篇文章也就没法写完。如果你花大量时间在家玩游戏、看电视剧和刷短视频，而不工作，那么就会有危机感和负罪感。但是如果会去工作，但是期间总会找着间隙去做其他事情，刷刷微博，看看朋友圈，瞅瞅新闻什么的，那就不会有负罪感，因为你会觉得你还是在工作着呢。没全力去工作，而在假装工作着，可比完全不工作的危害更大。一心一意的长时间去做工作外的事情，反而能够开眼界扩视野，从而反哺工作，工作的更好更开心。新时代就会有新机会，同时也会有新的要求，比如知识的获取从单一感官方式变成了动态的，多感官的方式。以前只是文字和图片的书和博客，新时代就是视频、直播和播客，新时代你有更多方式出现在大家面前，出现的更多就代表了成功。未来会有更多感官方式，而且更加的智能。获取知识的门槛低了，人群也就更广了，也可以理解为新的机会更大了，保持专注不设限去感受新时代，对自己不断做出新的要求，就会有新的机会。</p>
-<h3 id="深入剖析-iOS-编译-Clang-LLVM"><a href="#深入剖析-iOS-编译-Clang-LLVM" class="headerlink" title="深入剖析 iOS 编译 Clang / LLVM"></a>深入剖析 iOS 编译 Clang / LLVM</h3><p>写<a href="https://ming1016.github.io/2017/03/01/deeply-analyse-llvm/">这篇文章</a>的原因主要来自在公司做的 App 安装包体积瘦身的事情，经过各种工具使用和分析后，总是找不到突破口。需求还在不断叠加，也没有好的思路。当你遇到困难时，做不成的人才会告诉你你也做不成，如果你真的想做成，有这个理想就要自己去守护他。遇到困难离成功才会更接近。那些困难来自于有限的资源，比如没人、没钱等，但是正是由于这些资源的限制，才会迫使你去创新，你会通过自己的热情还有毅力来寻找独特更有效的方法，所以由于有限资源带来的困难才会让你去突破、思变和进取。</p>
+<h3 id="深入剖析-iOS-编译-Clang-x2F-LLVM"><a href="#深入剖析-iOS-编译-Clang-x2F-LLVM" class="headerlink" title="深入剖析 iOS 编译 Clang &#x2F; LLVM"></a>深入剖析 iOS 编译 Clang &#x2F; LLVM</h3><p>写<a href="https://ming1016.github.io/2017/03/01/deeply-analyse-llvm/">这篇文章</a>的原因主要来自在公司做的 App 安装包体积瘦身的事情，经过各种工具使用和分析后，总是找不到突破口。需求还在不断叠加，也没有好的思路。当你遇到困难时，做不成的人才会告诉你你也做不成，如果你真的想做成，有这个理想就要自己去守护他。遇到困难离成功才会更接近。那些困难来自于有限的资源，比如没人、没钱等，但是正是由于这些资源的限制，才会迫使你去创新，你会通过自己的热情还有毅力来寻找独特更有效的方法，所以由于有限资源带来的困难才会让你去突破、思变和进取。</p>
 <p>就在百般无奈，各种资源条件受限的情况下。我想着看能不能把需要繁琐手动检查的动作试着写成程序自动完成。于是我用一个周末开发了查找无用方法工具，能够自动查找出工程中没有用到的方法，也兼顾了我们工程的一些运行时调用的方法检查。这样重复繁重的检查工作就变得轻松了很多。</p>
 <p>工具开发完后，我发现这工具的实现并无相关成熟理论来进行支持，以后怎么完善和优化这个工具也没有一点思路。为此我还苦恼了蛮久的。</p>
 <p>经过一位同事提醒，说大学有门编译原理的课里面就有讲怎么分析代码的，于是我就开始针对性的翻阅相关资料。于是乎，我发现了一片蓝海，这里面涉及到的技术不光是分析代码，还有很多以前不了解的程序怎么跑起来的细节，这里的知识就像可以无限递归的树，能够将你所有时间都吞没。这篇文章我更新添加内容的次数不下十次，每当get到了新的东西都忍不住记录下来。这期间动手去实践一些知识点，也遇到很多问题，解决这些问题的过程，对相关知识理解就更深入了。后来在17年的@Swift 大会上还做了 LLVM 相关内容的分享，下图是其中一张 Slide。</p>
-<p><img src="/uploads/my-little-idea-about-writing-technical-article/2.png" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/2.png" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/2.png"></p>
 <p>完整幻灯片参看<a href="https://ming1016.github.io/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/">这里</a></p>
 <h3 id="深入剖析-WebKit"><a href="#深入剖析-WebKit" class="headerlink" title="深入剖析 WebKit"></a>深入剖析 WebKit</h3><p>为了完成网页到原生代码的转换，我开始学习 Web 的标准，而 WebKit 是苹果公司对 Web 标准实现，V8和 Flutter 渲染技术的源头，WebKit 的学习能够让我更完整的了解网页从请求到布局再到渲染的流程和使用的相关技术。<a href="https://ming1016.github.io/2017/10/11/deeply-analyse-webkit/">WebKit的这篇文章</a>我罗列了大量的 Web 规范资料，由于 WebKit 非常的庞大，架构也很复杂，文章里对架构也进行了详细的说明，对源码的结构做了详细的说明。全文按照一个页面从请求到最终渲染的流程顺序，依次对其关键环节里对应源代码和原理进行了详细的说明。完成这篇花费时间巨大，代码基本读了个遍。之后我对于前端技术有了更深的理解，特别是页面异步加载的流程和布局原理。</p>
 <p>感觉这篇完全靠的是对前端技术的热情完成的。手冢治虫说过，那些投稿的人，都是热爱着漫画，把画出一部作品作为自己生命意义的人。所以他们才能获得成功，成为马拉松里跑到最后的人。热情可以增加25个 IQ 值。如果一个人仿佛开悟了的高僧，失去任何欲求、愿望、不甘、烦恨与伤痛，那么即使他去画漫画，即使基因再好，天赋再高，也只会画成佛教的禅画罢了。在比尔.布莱森在《人体简史》这本书中提到一个镜子相关的实验，实验来自一名防碎眼镜商人，在1980年创办了胚种精选择库（Repository for Germinal Choice），这个精子库只有诺贝尔获奖者和其他杰出知识权威的镜子。他想的是能够提供最好的精子生出天才婴儿，结果是在出生的200名儿童里，没有一个杰出天才，甚至连一个眼镜工程师都没能造出来，可见对做的事情有热情更加重要，而不仅仅只要基因好就行。</p>
@@ -650,7 +310,55 @@
 <li>可以把在纸上的草图配上颜色</li>
 </ul>
 <p>软件使用上，我会通过备忘录或熊掌记快速记录一些素材和想法，定期挪到 Notion 里，我是把 Notion 当做一个大仓库，写作的第二阶段整理分类我就是在 Notion 中完成的，充分利用 Notion 的自定义字段能力，对所有资料进行各种维度划分和归档。开始写文章时，初期会用 VS Code 来写，如果文章写长了就会打开 Obsidian 来继续写，主要是 Obsidian 的大纲效果比较好些。最后文章的配图我会使用 Procreate 来画，里面有辅助线，打开后可以很方便做参照，写图中文字就不容易偏了。</p>
-<p>工具只是工具，记录的内容和自己的思想才是核心。我现在读书还是喜欢在纸上写笔记，特别有感触的才会提炼一些观点敲到备忘录中，比如我看了网飞（Nexflix）的<a target="_blank" rel="noopener" href="https://book.douban.com/subject/35102294/">《不拘一格》</a>后提炼了一些观点做了记录，笔记如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">制度都是围绕着怎么不阻碍所要的人发挥。比如假期自由安排、无审批、决策权非自上而下，而是在认识一致情况下松散耦合。</span><br><span class="line"></span><br><span class="line">要和不要什么样的人呢？</span><br><span class="line"></span><br><span class="line">不要的人：</span><br><span class="line"></span><br><span class="line">与人相处好，但能力平平</span><br><span class="line">工作狂，缺少判断力</span><br><span class="line">天资好，行动力强，但悲观、牢骚</span><br><span class="line">有才华的混蛋：</span><br><span class="line">特征</span><br><span class="line">听到赞美就自觉优秀</span><br><span class="line">对想法不明智的人，会进行嘲笑</span><br><span class="line">会侮辱天赋不如自己的人</span><br><span class="line">表现</span><br><span class="line">喜欢会上慷慨陈词，重复表达自己观点</span><br><span class="line">如没抓住他的要点，会打断别人的话</span><br><span class="line">别人发言，不赞同时会不听，做自己的事情</span><br><span class="line">别人啰嗦，没抓住要点，立刻打断</span><br><span class="line">总想着怎么做才能表现好，得奖金，缺少开放的认知空间</span><br><span class="line"></span><br><span class="line">为什么：管理花费精力多，讨论质量低，会排挤卓越员工。</span><br><span class="line"></span><br><span class="line">要的人：</span><br><span class="line"></span><br><span class="line">非凡创造力、工作出色（完成繁重任务）、合作好</span><br><span class="line">在放松状态下，会灵光乍现</span><br><span class="line">公司利益至上</span><br><span class="line">自觉追求成功，无论是否有奖金（已给予能力匹配市场最高价）</span><br><span class="line">当某一固定思维遇到瓶颈时，他总有办法摆脱瓶颈，或尝试不同角度看待问题</span><br><span class="line">在有才能，受爱戴的前提下，自己犯错大声说，成功小声说，让人感觉亲近、真诚和体贴。</span><br><span class="line">有良好的判断力</span><br><span class="line"></span><br><span class="line">为什么：优秀的人激励其他优秀的人，出色成果感染更多人才。</span><br><span class="line"></span><br><span class="line">只有公司里的员工都是上面提到的要的人时，公司的密度才高。这样的公司不是家庭而是专业运动队，运动队追求卓越，每个位置都是最佳人选；训练就是为了胜利，大家都能给予和接受反馈；成绩要好，不能只用努力就够了。</span><br><span class="line"></span><br><span class="line">书中详细介绍了网飞的制度由来，大量员工的实际案例，碰到了问题如何完善了制度。非常全面进行了制度介绍，甚至包含了进行创新的几个步骤的详细说明，还有网飞创始人里德是如何做到让大家认识一致的。</span><br><span class="line"></span><br><span class="line">最后是书中引用的小王子那段：</span><br><span class="line">如果你想造艘船，</span><br><span class="line">不要老催人去采木，</span><br><span class="line">忙着分配工作</span><br><span class="line">和发号施令。</span><br><span class="line">而是要激起他们</span><br><span class="line">对浩瀚无垠的</span><br><span class="line">大海的向往。</span><br></pre></td></tr></table></figure></p>
+<p>工具只是工具，记录的内容和自己的思想才是核心。我现在读书还是喜欢在纸上写笔记，特别有感触的才会提炼一些观点敲到备忘录中，比如我看了网飞（Nexflix）的<a target="_blank" rel="noopener" href="https://book.douban.com/subject/35102294/">《不拘一格》</a>后提炼了一些观点做了记录，笔记如下：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">制度都是围绕着怎么不阻碍所要的人发挥。比如假期自由安排、无审批、决策权非自上而下，而是在认识一致情况下松散耦合。
+
+要和不要什么样的人呢？
+
+不要的人：
+
+与人相处好，但能力平平
+工作狂，缺少判断力
+天资好，行动力强，但悲观、牢骚
+有才华的混蛋：
+特征
+听到赞美就自觉优秀
+对想法不明智的人，会进行嘲笑
+会侮辱天赋不如自己的人
+表现
+喜欢会上慷慨陈词，重复表达自己观点
+如没抓住他的要点，会打断别人的话
+别人发言，不赞同时会不听，做自己的事情
+别人啰嗦，没抓住要点，立刻打断
+总想着怎么做才能表现好，得奖金，缺少开放的认知空间
+
+为什么：管理花费精力多，讨论质量低，会排挤卓越员工。
+
+要的人：
+
+非凡创造力、工作出色（完成繁重任务）、合作好
+在放松状态下，会灵光乍现
+公司利益至上
+自觉追求成功，无论是否有奖金（已给予能力匹配市场最高价）
+当某一固定思维遇到瓶颈时，他总有办法摆脱瓶颈，或尝试不同角度看待问题
+在有才能，受爱戴的前提下，自己犯错大声说，成功小声说，让人感觉亲近、真诚和体贴。
+有良好的判断力
+
+为什么：优秀的人激励其他优秀的人，出色成果感染更多人才。
+
+只有公司里的员工都是上面提到的要的人时，公司的密度才高。这样的公司不是家庭而是专业运动队，运动队追求卓越，每个位置都是最佳人选；训练就是为了胜利，大家都能给予和接受反馈；成绩要好，不能只用努力就够了。
+
+书中详细介绍了网飞的制度由来，大量员工的实际案例，碰到了问题如何完善了制度。非常全面进行了制度介绍，甚至包含了进行创新的几个步骤的详细说明，还有网飞创始人里德是如何做到让大家认识一致的。
+
+最后是书中引用的小王子那段：
+如果你想造艘船，
+不要老催人去采木，
+忙着分配工作
+和发号施令。
+而是要激起他们
+对浩瀚无垠的
+大海的向往。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="举个例子，怎么写这次WWDC21的见闻文章"><a href="#举个例子，怎么写这次WWDC21的见闻文章" class="headerlink" title="举个例子，怎么写这次WWDC21的见闻文章"></a>举个例子，怎么写这次WWDC21的见闻文章</h2><p>光说不练，这样不好吧，那就现举个例子，看看怎么按照上面的四个步骤一步一步写一篇技术文章。那就以现在刚开完的 WWDC21 为主题，写个《WWDC21我的见闻》吧。</p>
 <p>首先我们先做第一步，从 WWDC21 开始，我就将我看到的信息、还有看感兴趣 Session 中有用的点都记录了下来，只考虑是否要记，二不考虑其它任何事情。你可以看我<a href="https://ming1016.github.io/2021/06/08/wwdc2021-day1-note/">WWDC21第一天的记录</a>，我将其发到了我的博客和公众号上。后面几天我也不断的收集记录着零碎的信息。然后对这些记录进行分类。接下来再开始内容的撰写。</p>
 <p>写 WWDC21 见闻录，你可以先想想着你想要什么内容，有没人提供，有的话可以直接链过来，没有的话可以自己去体会，去想，去经历，然后分享出来。</p>
@@ -673,13 +381,13 @@
 </ul>
 <p>Swift Concurrency 相关 Session：</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10132/">Meet async/await in Swift</a>：了解 async/await 开发模式。</li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10132/">Meet async&#x2F;await in Swift</a>：了解 async&#x2F;await 开发模式。</li>
 <li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10134/">Explore structured concurrency in Swift</a>：内容包括创建不同类型并发任务，如何创建任务组，如何取消正在进行的任务。</li>
 <li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10133/">Protect mutable state with Swift actors</a>：内容有如何使用Swift actors组织资源竞争，actors如何工作等。</li>
 <li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10254/">Swift concurrency: Behind the scenes</a>：了解更多Swift并发的细节，更安全的数据竞争和处理线程爆炸，和GCD的不同，线程模型怎么工作等。值得看多遍。</li>
-<li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10194/">Swift concurrency: Update a sample app</a>：介绍async/await、actors和continuation在现实工作中的经验</li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10194/">Swift concurrency: Update a sample app</a>：介绍async&#x2F;await、actors和continuation在现实工作中的经验</li>
 <li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10058/">Meet AsyncSequence</a>：流式传输数据。</li>
-<li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10095/">Use async/await with URLSession</a>：URLSession中怎么使用async/await和AsyncSequence。</li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10095/">Use async&#x2F;await with URLSession</a>：URLSession中怎么使用async&#x2F;await和AsyncSequence。</li>
 </ul>
 <p>DocC：</p>
 <ul>
@@ -702,25 +410,25 @@
 <h3 id="Swift-的一些更新"><a href="#Swift-的一些更新" class="headerlink" title="Swift 的一些更新"></a>Swift 的一些更新</h3><p>Paul Hudson 的这篇<a target="_blank" rel="noopener" href="https://www.hackingwithswift.com/articles/233/whats-new-in-swift-5-5">What’s new in Swift 5.5?</a> 已经把这些更新说的非常详细了，每个更新点都有对应的例子可以试。今年苹果公司推出 AttributedString 用来替代 OC 时代的 NSAttributedString。AttributedString 是值类型，可以直接在 SwiftUI 的 Text 里使用。AttributedString 还支持简单的 Markdown 语法，Markdown 单行没问题，多行功能受限。</p>
 <p>DocC 是通过 Xcode 编译后生成的文档，使用 Product -&gt; Build Documentation 就会生成DocC。在函数接口代码上使用 Shift+Cmd+A 快捷键就会创建文档模板，有参数和返回值的话也会将其提取出来，包括参数类型等，并生成标准文档格式，方便你进行内容编写。基本 Markdown 语法是支持的。详细的介绍可以看前面列出的官方 Session，或者看这篇文章<a target="_blank" rel="noopener" href="https://www.hackingwithswift.com/articles/238/how-to-document-your-project-with-docc">How to document your project with DocC</a>。</p>
 <h3 id="今年重头戏-Swift-Concurrency"><a href="#今年重头戏-Swift-Concurrency" class="headerlink" title="今年重头戏 Swift Concurrency"></a>今年重头戏 Swift Concurrency</h3><p>ABI 稳定后，Swift 的核心团队可以开始关注 Swift 语言一直缺失的原生并发能力了。最初是由<a target="_blank" rel="noopener" href="https://twitter.com/clattner_llvm">Chris Lattner</a>在17年发的<a target="_blank" rel="noopener" href="https://gist.github.com/lattner/31ed37682ef1576b16bca1432ea9f782">Swift并发宣言</a>，从此开阔了大家的眼界。后来 Swift Evolution 社区讨论了十几个提案，几十个方案，以及几百页的设计文件，做了大量的改进，社区中用户积极的参与反馈，Chris 也一直在 Evolution 中积极的参与设计。</p>
-<p>Swift Concurrency 的实现用了<a target="_blank" rel="noopener" href="https://llvm.org/docs/Coroutines.html">LLVM的协程</a>把 async/await 函数转换为基于回调的代码，这个过程发生在编译后期，这个阶段你的代码都没法辨识了。异步的函数被实现为 coroutines，在每次异步调用时，函数被分割成可调用的函数部分和后面恢复的部分。coroutine 拆分的过程发生在生成LLVM IR阶段。Swift使用了哪些带有自定义调用约定的函数保证尾部调用，并专门为Swift进行了调整。</p>
+<p>Swift Concurrency 的实现用了<a target="_blank" rel="noopener" href="https://llvm.org/docs/Coroutines.html">LLVM的协程</a>把 async&#x2F;await 函数转换为基于回调的代码，这个过程发生在编译后期，这个阶段你的代码都没法辨识了。异步的函数被实现为 coroutines，在每次异步调用时，函数被分割成可调用的函数部分和后面恢复的部分。coroutine 拆分的过程发生在生成LLVM IR阶段。Swift使用了哪些带有自定义调用约定的函数保证尾部调用，并专门为Swift进行了调整。</p>
 <p>Swift Concurrency 不是建立在 GCD 上，而是使用的一个全新的线程池。GCD 中启动队列工作会很快在提起线程，一个队列阻塞了线程，就会生成一个新线程。基于这种机制 GCD 线程数很容易比 CPU 核心数量多，线程多了，线程就会有大量的调度开销，大量的上下文切换，会使 CPU 运行效率降低。而 Swift Concurrency 的线程数量不会超过 CPU 内核，将上下文切换放到同一个线程中去做。为了实现线程不被阻塞，需要通过语言特性来做。做法是，每个线程都有一个堆栈记录函数调用情况，一个函数占一个帧。函数返回后，这个函数所占的帧就会从堆栈弹出。await 的 async 函数被作为异步帧保存在堆上等待恢复，而不阻碍其它函数入栈执行。在 await 后运行的代码叫 continuation，continuation 会在要恢复时放回到线程的堆栈里。异步帧会根据需要放回栈上。在一个异步函数中调用同步代码将添加帧到线程的堆栈中。这样线程就能够一直向前跑，而不用创建更多线程减少调度。</p>
 <p>Douglas 在 Swift 论坛里发的 Swift Concurrency 下个版本的规划贴 <a target="_blank" rel="noopener" href="https://forums.swift.org/t/concurrency-in-swift-5-and-6/49337">Concurrency in Swift 5 and 6</a>，论坛里还有一个帖子是专门用来<a target="_blank" rel="noopener" href="https://forums.swift.org/t/swift-concurrency-feedback-wanted/49336">征集Swift Concurrency意见</a>的，帖子本身列出了 Swift Concurrency 相关的所有提案，也提出欢迎有新提案发出来，除了这些提案可以看外，帖子回复目前已经过百，非常热闹，可以看出大家对 Swift Concurrency 的关注度相当的高。</p>
 <p>非常多的人参与了 Swift Concurrency 才使其看起来和用起来那么简单。Doug Gregor 在参与 John Sundell 的播客后，发了很多条推聊 Swift Concurrency，可以看到参与的人非常多，可见背后付出的努力有多大。下面我汇总了 Doug Gregor 在推上发的一些信息，你通过这些信息也可以了解 Swift Concurrency 幕后信息，所做的事和负责的人。</p>
 <p><a target="_blank" rel="noopener" href="https://twitter.com/pathofshrines">@pathofshrines</a>是 Swift Concurrency 整体架构师，包括低级别运行时和编译器相关细节。<a target="_blank" rel="noopener" href="https://twitter.com/illian">@illian</a>是 async sequences、stream 和 Fundation 的负责人。<a target="_blank" rel="noopener" href="https://twitter.com/optshiftk">@optshiftk</a>对 UI 和并发交互的极好的洞察力带来了很棒的 async 接口，<a target="_blank" rel="noopener" href="https://twitter.com/phausler">@phausler</a>带来了 async sequences。Arnold Schwaighofer、<a target="_blank" rel="noopener" href="https://twitter.com/neightchan">@neightchan</a>、<a target="_blank" rel="noopener" href="https://twitter.com/typesanitizer">@typesanitizer</a>还有 Tim Northover 实现了 async calling convention。</p>
 <p><a target="_blank" rel="noopener" href="https://twitter.com/ktosopl">@ktosopl</a>有很深厚的 actor、分布式计算和 Swift-on-Server 经验，带来了 actor 系统。Erik Eckstein 为 async 函数和actors建立了关键的优化和功能。</p>
-<p>SwiftUI是<a target="_blank" rel="noopener" href="https://twitter.com/ricketson_">@ricketson_</a>和<a target="_blank" rel="noopener" href="https://twitter.com/luka_bernardi">@luka_bernardi</a>完成的async接口。async I/O的接口是<a target="_blank" rel="noopener" href="https://twitter.com/Catfish_Man">@Catfish_Man</a>完成的。<a target="_blank" rel="noopener" href="https://twitter.com/slava_pestov">@slava_pestov</a>处理了 Swift 泛型问题，还指导其他人编译器实现的细节。async 重构工具是Ben Barham 做的。大量代码移植到 async 是由<a target="_blank" rel="noopener" href="https://twitter.com/AirspeedSwift">@AirspeedSwift</a>领导，由 Angela Laar，Clack Cole，Nicole Jacques 和<a target="_blank" rel="noopener" href="https://twitter.com/mishaldshah">@mishaldshah</a>共同完成的。</p>
+<p>SwiftUI是<a target="_blank" rel="noopener" href="https://twitter.com/ricketson_">@ricketson_</a>和<a target="_blank" rel="noopener" href="https://twitter.com/luka_bernardi">@luka_bernardi</a>完成的async接口。async I&#x2F;O的接口是<a target="_blank" rel="noopener" href="https://twitter.com/Catfish_Man">@Catfish_Man</a>完成的。<a target="_blank" rel="noopener" href="https://twitter.com/slava_pestov">@slava_pestov</a>处理了 Swift 泛型问题，还指导其他人编译器实现的细节。async 重构工具是Ben Barham 做的。大量代码移植到 async 是由<a target="_blank" rel="noopener" href="https://twitter.com/AirspeedSwift">@AirspeedSwift</a>领导，由 Angela Laar，Clack Cole，Nicole Jacques 和<a target="_blank" rel="noopener" href="https://twitter.com/mishaldshah">@mishaldshah</a>共同完成的。</p>
 <p><a target="_blank" rel="noopener" href="https://twitter.com/lorentey">@lorentey</a>负责 Swift 接口的改进。<a target="_blank" rel="noopener" href="https://twitter.com/jckarter">@jckarter</a>有着敏锐的语言设计洞察力，带来了语言设计经验和编译器及运行时实现技能。<a target="_blank" rel="noopener" href="https://twitter.com/mikeash">@mikeash</a> 也参与了运行时开发中。操作系统的集成是<a target="_blank" rel="noopener" href="https://twitter.com/rokhinip">@rokhinip</a>完成的，<a target="_blank" rel="noopener" href="https://twitter.com/chimz">@chimz</a>提供了关于 Dispatch 和 OS 很好的建议，Pavel Yaskevich 和<br><a href="">@hollyborla</a>进行了并发所需要关键类型检查器的改进。<a target="_blank" rel="noopener" href="https://twitter.com/kastiglione">@kastiglione</a>、Adrian Prantl和<a target="_blank" rel="noopener" href="https://twitter.com/fred_riss">@fred_riss</a>实现了调试。<a target="_blank" rel="noopener" href="https://twitter.com/etcwilde">@etcwilde</a>和<a target="_blank" rel="noopener" href="https://twitter.com/call1cc">@call1cc</a>实现了语义模型中的重要部分。</p>
 <p><a target="_blank" rel="noopener" href="https://twitter.com/evonox">@evonox</a>负责了服务器Linux 的支持。<a target="_blank" rel="noopener" href="https://twitter.com/compnerd">@compnerd</a>将 Swift Concurrency 移植到了 Windows。</p>
-<p>Swift Concurrency 模型简单，细节都被隐藏了，比 Kotlin 和 C++的 Coroutine 接口要简洁很多。比如 Task 接口形式就很简洁。Swift Concurrency 大体可分为 async/await、Async Sequences、结构化并发和  Actors。下面展开说下。</p>
-<h4 id="async-await"><a href="#async-await" class="headerlink" title="async/await"></a>async/await</h4><p>通过类似 throws 语法的 async 来指定函数为异步函数，异步函数才能够使用 await，使用异步函数要用 await。await 修饰在 suspension point 时当前线程可以让给其它任务执行，而不用阻塞当前线程，等 await 后面的函数执行完成再回来继续执行，这里需要注意的是回来执行不一定是在离开时的线程上。async/await 提案是<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0296-async-await.md">SE-0296</a>。如果想把现有的异步开发带到 async/await 世界，请使用 withCheckedThrowingContinuation。</p>
-<p>async/await 还有一个非常明显的好处，就是不会再有[weak self] dance 了。</p>
+<p>Swift Concurrency 模型简单，细节都被隐藏了，比 Kotlin 和 C++的 Coroutine 接口要简洁很多。比如 Task 接口形式就很简洁。Swift Concurrency 大体可分为 async&#x2F;await、Async Sequences、结构化并发和  Actors。下面展开说下。</p>
+<h4 id="async-x2F-await"><a href="#async-x2F-await" class="headerlink" title="async&#x2F;await"></a>async&#x2F;await</h4><p>通过类似 throws 语法的 async 来指定函数为异步函数，异步函数才能够使用 await，使用异步函数要用 await。await 修饰在 suspension point 时当前线程可以让给其它任务执行，而不用阻塞当前线程，等 await 后面的函数执行完成再回来继续执行，这里需要注意的是回来执行不一定是在离开时的线程上。async&#x2F;await 提案是<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0296-async-await.md">SE-0296</a>。如果想把现有的异步开发带到 async&#x2F;await 世界，请使用 withCheckedThrowingContinuation。</p>
+<p>async&#x2F;await 还有一个非常明显的好处，就是不会再有[weak self] dance 了。</p>
 <h4 id="Async-Sequences"><a href="#Async-Sequences" class="headerlink" title="Async Sequences"></a>Async Sequences</h4><p>AsyncSequence 的使用方式是 for-await-in 和 for-try-await-in，系统提供了一些接口，如下：</p>
 <ul>
 <li>FileHandle.standardInput.bytes.lines</li>
 <li>URL.lines </li>
 <li>URLSession.shared.data(from: URL)</li>
-<li>let (localURL, _ ) = try await session.download(from: url) 下载和get请求数据区别是需要边请求边存储数据以减少内存占用</li>
-<li>let (responseData, response) = try await session.upload(for: request, from: data)</li>
+<li>let (localURL, _ ) &#x3D; try await session.download(from: url) 下载和get请求数据区别是需要边请求边存储数据以减少内存占用</li>
+<li>let (responseData, response) &#x3D; try await session.upload(for: request, from: data)</li>
 <li>URLSession.shared.bytes(from: URL)</li>
 <li>NotificationCenter.default.notifications</li>
 </ul>
@@ -729,15 +437,15 @@
 <h4 id="Actors"><a href="#Actors" class="headerlink" title="Actors"></a>Actors</h4><p>我们写的程序会在进程中被拆成一个一个小指令，这些指令会在某刻会一个接一个同步的或者并发的执行。系统会用多个线程执行并行的任务，执行顺序是调度器来管理的，现代多核可以同时处理多个线程，当一个资源在多个线程上同时被更改时就会出问题。并发任务对数据资源操作容易造成数据竞争，以前需要手动放到串行队列、使用锁、调度屏障或 Atomics 的方式来避免。以前处理容易导致昂贵的上下文切换，过多线程容易导致线程爆炸，容易意外阻断线程导致后面代码没法执行，多任务相互的等待造成了死锁，block 和内存引用容易出错等等问题。</p>
 <p>现在 Swift Concurrency 可以通过 actor 来创建一个区域，在这个区域会自动进行数据安全保护，保证一定时间只有一个线程访问里面数据，防止数据竞争。actor 内部对成员访问是同步的，成员默认是隔离的，actor 外部对 actor 内成员的访问只能是异步的，隐式同步以防止数据竞争。MainActor 继承自能确保全局唯一实例的 GlobalActor，保证任务在主线程执行，这样你就可以抛弃掉在你的 ViewModel 里写 DispatchQueue.main.async 了。</p>
 <p>Actors 的概念通常被用于分布式计算，Actor 模型参看<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Actor_model">Wikipedia</a>里的详细解释，Swift 中的实现效果也非常的理想。Actors 的提案<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0306-actors.md">SE-0306</a>已在 Swift 5.5落实。</p>
-<p>很多语言都支持 actors 还有 async/await，实现的方式也类似，actor 使用的不是锁，而是用的 async/await 这样能够在一个线程中切换上下文来避免线程空闲的线程模型。actor 还利用编译器，提前做会引起并发问题的检查。</p>
+<p>很多语言都支持 actors 还有 async&#x2F;await，实现的方式也类似，actor 使用的不是锁，而是用的 async&#x2F;await 这样能够在一个线程中切换上下文来避免线程空闲的线程模型。actor 还利用编译器，提前做会引起并发问题的检查。</p>
 <p>actor 是遵循 Sendable 协议的，只有结构体和 final 类才能够遵循 Sendable，继承于 Sendable 协议的 Excutor 协议表示方法本身，SerialExecutor 表示以串行方式执行。actor 使用 C++写的，源码在<a target="_blank" rel="noopener" href="https://github.com/apple/swift/blob/main/stdlib/public/Concurrency/Actor.cpp">这里</a>，可以看到 actor 主要是通过控制各个 job 执行的状态的管理器。job 执行优先级来自 Task 对象，排队时需要确保高优 job 先被执行。全局 Executor 用来为 job 排队，通知 actor 拥有或者放弃线程，实现在<a target="_blank" rel="noopener" href="https://github.com/apple/swift/blob/main/stdlib/public/Concurrency/GlobalExecutor.cpp">这里</a>。由于等待而放弃当前线程让其他 actor 执行的 actor，在收到全局 Executor 创建一个新的 job 的通知，使其可以进入一个可能不同线程，这个过程就是并发模型中描述的 Actor Reentrancy。</p>
 <h4 id="Swift-Concurrency相关提案集合"><a href="#Swift-Concurrency相关提案集合" class="headerlink" title="Swift Concurrency相关提案集合"></a>Swift Concurrency相关提案集合</h4><p>所有相关提案清单如下：</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0296-async-await.md">SE-0296: Async/await</a> <a target="_blank" rel="noopener" href="https://kemchenj.github.io/2021-03-06/">【译】SE-0296 Async/await</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0296-async-await.md">SE-0296: Async&#x2F;await</a> <a target="_blank" rel="noopener" href="https://kemchenj.github.io/2021-03-06/">【译】SE-0296 Async&#x2F;await</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0317-async-let.md">SE-0317: async let</a> </li>
 <li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0300-continuation.md">SE-0300: Continuations for interfacing async tasks with synchronous code</a> <a target="_blank" rel="noopener" href="https://kemchenj.github.io/2021-03-31/">【译】SE-0300 Continuation – 执行同步代码的异步任务接口</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0302-concurrent-value-and-concurrent-closures.md">SE-0302: Sendable and @Sendable closures</a> </li>
-<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0298-asyncsequence.md">SE-0298: Async/Await: Sequences</a> <a target="_blank" rel="noopener" href="https://kemchenj.github.io/2021-03-10/">【译】SE-0298 Async/Await 序列</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0298-asyncsequence.md">SE-0298: Async&#x2F;Await: Sequences</a> <a target="_blank" rel="noopener" href="https://kemchenj.github.io/2021-03-10/">【译】SE-0298 Async&#x2F;Await 序列</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0304-structured-concurrency.md">SE-0304: Structured concurrency</a> </li>
 <li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0306-actors.md">SE-0306: Actors</a> <a target="_blank" rel="noopener" href="https://kemchenj.github.io/2021-04-25/">【译】SE-0306 Actors</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0313-actor-isolation-control.md">SE-0313: Improved control over actor isolation</a> </li>
@@ -746,13 +454,13 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0316-global-actors.md">SE-0316: Global actors</a> </li>
 <li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0310-effectful-readonly-properties.md">SE-0310: Effectful read-only properties</a> </li>
 <li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0311-task-locals.md">SE-0311: Task Local Values</a> </li>
-<li><a target="_blank" rel="noopener" href="https://forums.swift.org/t/support-custom-executors-in-swift-concurrency/44425">Custom Executors</a> </li>
+<li><a target="_blank" rel="noopener" href="https://forums.swift.org/t/support-custom-executors-in-swift-concurrency/44425">Custom Executors</a></li>
 </ul>
-<h4 id="学习路径"><a href="#学习路径" class="headerlink" title="学习路径"></a>学习路径</h4><p>如果打算尝试 Swift Concurrency 的话，按照先后顺序，可以先看官方手册介绍文章<a target="_blank" rel="noopener" href="https://docs.swift.org/swift-book/LanguageGuide/Concurrency.html">Concurrency</a>。再看<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10132/">Meet async/await in Swift</a>这个Session，了解背后原理看<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10134">Explore structured concurrency in Swift</a>。动手照着试示例代码，看Paul的<a target="_blank" rel="noopener" href="https://www.hackingwithswift.com/quick-start/concurrency">Swift Concurrency by Example</a>这个系列。接着看<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10133">Protect mutable state with Swift actors</a>来了解 actors 怎么防止数据竞争。通过<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10019">Discover concurrency in SwiftUI</a>看 concurrency 如何在 SwiftUI 中使用，<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10095">Use async/await with URLSession</a>来看怎么在 URLSession 中使用 async/await。最后听听负责 Swift Concurrency 的 Doug Gregor 参加的一个<a target="_blank" rel="noopener" href="https://www.swiftbysundell.com/podcast/99/">播客的访谈</a>，了解下 Swift Concurrency 背后的故事。</p>
+<h4 id="学习路径"><a href="#学习路径" class="headerlink" title="学习路径"></a>学习路径</h4><p>如果打算尝试 Swift Concurrency 的话，按照先后顺序，可以先看官方手册介绍文章<a target="_blank" rel="noopener" href="https://docs.swift.org/swift-book/LanguageGuide/Concurrency.html">Concurrency</a>。再看<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10132/">Meet async&#x2F;await in Swift</a>这个Session，了解背后原理看<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10134">Explore structured concurrency in Swift</a>。动手照着试示例代码，看Paul的<a target="_blank" rel="noopener" href="https://www.hackingwithswift.com/quick-start/concurrency">Swift Concurrency by Example</a>这个系列。接着看<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10133">Protect mutable state with Swift actors</a>来了解 actors 怎么防止数据竞争。通过<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10019">Discover concurrency in SwiftUI</a>看 concurrency 如何在 SwiftUI 中使用，<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10095">Use async&#x2F;await with URLSession</a>来看怎么在 URLSession 中使用 async&#x2F;await。最后听听负责 Swift Concurrency 的 Doug Gregor 参加的一个<a target="_blank" rel="noopener" href="https://www.swiftbysundell.com/podcast/99/">播客的访谈</a>，了解下 Swift Concurrency 背后的故事。</p>
 <h4 id="Swift-Concurrency-和-Combine"><a href="#Swift-Concurrency-和-Combine" class="headerlink" title="Swift Concurrency 和 Combine"></a>Swift Concurrency 和 Combine</h4><p>由于 Swift Concurrency 的推出和大量的 Session 发布，特别是<a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/swift/asyncsequence/">AsyncSequence</a>的出现，以及正在路上的<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0314-async-stream.md">AsyncStream、AsyncThrowingStream</a>和<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0300-continuation.md">continuation</a>提案（在Xcode 13.0 beta 3 AsyncStream 正式<a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/swift/asyncstream?changes=latest_beta">release</a>），这些越来越多和 Combine 功能重叠的特性出现在 Swift Concurrency 蓝图里时，大家开始猜测是否 Combine 会被 Swift Concurrency 替代。关于未来是 Swift Concurrency 还是 Combine，我的感觉是，Combine 更侧重在响应式编程上，而响应式编程并不是所有开发人员都会接受的，而 Swift Concurrency 是所有人都愿意接受的开发方式，从 Swift Concurrency 推出后开发者使用的数量和社区反应火热程度来看都比 Combine 要大。在苹果对 Combine 有下一步动作之前，我还是更偏向 Swift Concurrency。</p>
 <p>见闻写到这里，把独特性比作骨架，真实感比作血肉，故事性和新意比作皮肤，你会发现没有写出自己的经历的话，就像进击巨人里的那些小巨人，即使有了完整的皮肤，但骨头架子不大是不会有开头踢破大门的只有骨架和血肉的巨型大巨人那么强大且震撼有力。</p>
 <p>那么接下来我就描写一些我在 WWDC21 期间独特的一些经历。</p>
-<h3 id="WWDC-playground直播活动"><a href="#WWDC-playground直播活动" class="headerlink" title="WWDC.playground直播活动"></a>WWDC.playground直播活动</h3><p>想想 WWDC21 过程中我还是有些经历，比如参加了苹果官方推荐的外围活动<a target="_blank" rel="noopener" href="https://swift.gg/wwdc/">WWDC.playgournd by SwiftGG</a>。<br><img src="/uploads/my-little-idea-about-writing-technical-article/3.png" alt=""><br><img src="/uploads/my-little-idea-about-writing-technical-article/4.png" alt=""></p>
+<h3 id="WWDC-playground直播活动"><a href="#WWDC-playground直播活动" class="headerlink" title="WWDC.playground直播活动"></a>WWDC.playground直播活动</h3><p>想想 WWDC21 过程中我还是有些经历，比如参加了苹果官方推荐的外围活动<a target="_blank" rel="noopener" href="https://swift.gg/wwdc/">WWDC.playgournd by SwiftGG</a>。<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/3.png" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/3.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/4.png" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/4.png"></p>
 <p>连续看了5天活动直播，还参加了一天的 Live Coding 介绍 SwiftUI 的新特性。直播 Live Coding 准备的时间很少，而且以前我还没有现场当着几千人面写代码的经历，直播前一天晚上赶着通宵达旦看完了相关 Session，写了些代码样例测试，当天白天还开了一个很长的会，回家前和同事讨论一个技术问题时，我发现我嗓子还哑了。到家坐在桌前脚还抽筋了，你可想象到我当时内心有多崩溃。</p>
 <p>在直播前，我还专门的给思琦先演练了一遍，其中在介绍 AsyncImage 处理失败、空白、成功还有默认情况时，编译器报错提示无法找到原因，还提示让我提交 bug 的错误信息。直播开始前一直没有找到原因，重新敲了一遍才解决，所以心里没底，直播开始时还一直担心这个问题会重现。直播时在写到这段时果然编译器错误又出现了，当时我脑袋一片空白，心中大呼救我。好在没多一会我突然发现先前一段演示的 placeholder 接口没有删掉，原因真的就是这个，删掉后就正常了，别提有多开心了。后面就轻松了很多。由于只有一天时间准备，很多内容准备了，当时一边敲代码一边说也漏说了很多，比如 AsyncImage 使用的是 URLSession，用的是 URLCache，还不能自定义缓存。Refreshable 只能用在 List 里。SwiftUI 和数组绑定的代码是可以兼容前一个版本的。</p>
 <p>另外还有个 WWDC 期间很火的老系统UI挑战赛让我印象深刻，其中有个18岁小伙用 SwiftUI 开发了经典 iPhone4可用版本最火爆，Github 地址<a target="_blank" rel="noopener" href="https://github.com/zzanehip/The-OldOS-Project">在这里</a>。</p>
@@ -760,7 +468,7 @@
 <p>WWDC.playgournd 最后一天直播有场 WWDC21 学生挑战赛获奖者张紫怡的分享，她分享了怎样准备挑战赛的过程，通过详细的过程介绍，心得体会，还有思考，让大家了解到了她的热情和才华，而且分享的形式和效果非常有新意。最后一场的回放<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Fq4y1L7od">看这里</a>。看完这场后，我打算在19号 SwiftGG 和快手中学合办的 WWDC<T> 沙龙活动中使用一种不同的方式进行分享。原先打算的是使用先前写好的一个示例展示使用 SwiftUI 开发复杂应用如何快捷，同时介绍背后的技术。几天想来想去，反复推敲推翻，一直没有新思路。最后到了前一天，我有了个主意，可以使用 SwiftUI 来编写一个幻灯片程序来分享 SwiftUI 的内容啊，同时还能够分享这个幻灯片开发过程心得，这样才有独特性和真实感嘛。于是把准备了一年的内容都删了，就像当时启动那篇删得只剩一万字的文章一样，那篇文章发布前共删掉了四万个字。</p>
 <h3 id="WWDC沙龙活动"><a href="#WWDC沙龙活动" class="headerlink" title="WWDC沙龙活动"></a>WWDC<T>沙龙活动</h3><p>可想法总是很容易，实践起来却又是另一种情况。我对自制幻灯片的初步设想是第一能够前后翻页展示内容，第二能够支持和 Keynote 不一样的动画效果和页面美化，第三能够直接在幻灯片上进行一些 SwiftUI 功能的交互演示。</p>
 <p>接下来就要开始实际去做了，我先拿出上周用铅笔在 A4 纸画的人草图加工来丰富展示，发现加工的时间来不及了，虽然现在加工速度比以前快了，但是时间太紧，还要写幻灯片程序呢。SwiftUI 开发确实快，每个页面我都写成一个 View，标题、大纲和示意图的组合我做成了通用 View，通过传入不同标题、大纲数组和图片数组来展示不同页面的内容，定义一个 ObservableObject 的类 GlobalStateInfo 作为 View Model 来存储需要的状态数据，比如当前在哪页，当前文字颜色，当前页背景颜色等，每个 View 里使用 @EnvironmentObject 就可以去获取和设置 GlobalStateInfo 了。</p>
-<p>关于为了传递数据，是直接调用 EnvironmentObject，还是通过子视图传递 ObservedObject，两种方式哪个更好，在 WWDC21 的 Digital Lounges 里，苹果工程师的回答是两者用途不同。当大部分 View 都需要用到一些通用数据时，推荐使用 EnvironmentObject，因为没有实际使用 ObservableObject 的 View 不会被与之相关的代码搞乱。如果模型不是基于 View 层次结构的对象图，使用 ObservedObject。另外还有个 Digital Lounges 的问题，是问怎么从旧的 AppDelegate/SceneDelegate 生命周期转换到新的 SwiftUI 2 生命周期。苹果工程师说可以使用 UIApplicationDelegateAdaptor 属性包装器，SwiftUI 将实例化你的 UIApplicationDelegate 的一个实例，并以正常方式调用它。更详细的解答和其他的话题可以参看这篇<a target="_blank" rel="noopener" href="https://roblack.github.io/WWDC21Lounges/">SwiftUI Lounge QAs</a>，内容都是 roblack 从 Digital Lounges 里摘出来的，WWDC21 那几天我也在 Digital Lounges（报名早）看大家和苹果工程师的互动，后来看别人说 Digital Lounges 的 SwiftUI 那场爆满，已经超负荷运转了，感觉苹果最近变得更开放了，很多苹果工程师都开通了 Twitter 账号在 WWDC 期间积极和大家互动。</p>
+<p>关于为了传递数据，是直接调用 EnvironmentObject，还是通过子视图传递 ObservedObject，两种方式哪个更好，在 WWDC21 的 Digital Lounges 里，苹果工程师的回答是两者用途不同。当大部分 View 都需要用到一些通用数据时，推荐使用 EnvironmentObject，因为没有实际使用 ObservableObject 的 View 不会被与之相关的代码搞乱。如果模型不是基于 View 层次结构的对象图，使用 ObservedObject。另外还有个 Digital Lounges 的问题，是问怎么从旧的 AppDelegate&#x2F;SceneDelegate 生命周期转换到新的 SwiftUI 2 生命周期。苹果工程师说可以使用 UIApplicationDelegateAdaptor 属性包装器，SwiftUI 将实例化你的 UIApplicationDelegate 的一个实例，并以正常方式调用它。更详细的解答和其他的话题可以参看这篇<a target="_blank" rel="noopener" href="https://roblack.github.io/WWDC21Lounges/">SwiftUI Lounge QAs</a>，内容都是 roblack 从 Digital Lounges 里摘出来的，WWDC21 那几天我也在 Digital Lounges（报名早）看大家和苹果工程师的互动，后来看别人说 Digital Lounges 的 SwiftUI 那场爆满，已经超负荷运转了，感觉苹果最近变得更开放了，很多苹果工程师都开通了 Twitter 账号在 WWDC 期间积极和大家互动。</p>
 <p>为了使页面不单调，我打算每页大纲的颜色做些区分，发现11页每个都配一遍看效果时间太紧，于是我选择了一些背景色通过随机读取，每次看到的颜色都是不同的，由于都是一个一个手动选出来的，所以不同组合效果也不会太差。</p>
 <p>现在前后翻页展示内容这个想法是完成了，这也是 SwiftUI 开发的优势，能够快速构建页面架子和简单的数据页面同步设置。但是第二个想法，完成起来就非常费时费力且不那么顺利了。</p>
 <p>首先说下字体，系统默认字体很正式，以往我都是直接用 iPad 手写，但是这次时间紧没法一个字一个字的写了，所以我打算选择其它字体，View 的 .font 修改器可以选择其它字体，方法是 .font(Font.custom(“font-name”, size: 110))。如果直接在Finder里查看字体没法得到可用的字体名，需要使用 NSFontManager.shared.availableMembers 来获取可用字体名。</p>
@@ -793,1721 +501,360 @@
 <p>Swift 视图返回的类型是不固定的，因此使用了 Swift 的不透明类型语法特性来进行支持，支持其返回带有大量泛型参数的庞大类型，这个类型中还包括了 Result Builder 中的 if 条件类型值，支持多分支类型。Opaque Types的提案在这里<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0244-opaque-result-types.md">SE-0244</a>。</p>
 <p>跟着视图后面的点语法是 modifier，每个 modifier 都会在视图树中新建一个层，因此 modifier 的写的先后顺序不同，效果是不一样的。</p>
 <p>对于数据的监听和响应使用的是 swift 里的属性包装语法特性，属性包装的提案是<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0258-property-wrappers.md">SE-0258</a>。包装后数据的使用就方便了很多，对于不同属性包装类别的选择可以按照数据类型和应用场景来，对于值类型，如果是只读的数据可以什么都不加，如果数据是可读写的，使用@State，如果数据是需要在其他视图进行读写并自己也同步响应的，使用@Binding进行声明。对于对象类型的数据，指向对象的引用能发生变化要用@ObservedObject来声明，引用不可改变，那么就用@StateObject，使用环境传递对象用@EnvironmentObject。</p>
-<p>完整的 WWDC<T>沙龙活动回放可以扫下图中的二维码：<br><img src="/uploads/my-little-idea-about-writing-technical-article/5.jpeg" alt=""></p>
-<p><img src="/uploads/my-little-idea-about-writing-technical-article/6.JPG" alt=""><br><img src="/uploads/my-little-idea-about-writing-technical-article/7.jpeg" alt=""></p>
+<p>完整的 WWDC<T>沙龙活动回放可以扫下图中的二维码：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/5.jpeg" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/5.jpeg"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/6.JPG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/6.JPG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/7.jpeg" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/7.jpeg"></p>
 <p>下面是当时现场演示的部分幻灯片，动画的效果可以看上面的视频回放：</p>
-<p><img src="/uploads/my-little-idea-about-writing-technical-article/8.PNG" alt=""><br><img src="/uploads/my-little-idea-about-writing-technical-article/9.PNG" alt=""><br><img src="/uploads/my-little-idea-about-writing-technical-article/10.PNG" alt=""><br><img src="/uploads/my-little-idea-about-writing-technical-article/11.PNG" alt=""><br><img src="/uploads/my-little-idea-about-writing-technical-article/12.PNG" alt=""><br><img src="/uploads/my-little-idea-about-writing-technical-article/13.PNG" alt=""><br><img src="/uploads/my-little-idea-about-writing-technical-article/14.PNG" alt=""><br><img src="/uploads/my-little-idea-about-writing-technical-article/15.PNG" alt=""><br><img src="/uploads/my-little-idea-about-writing-technical-article/16.PNG" alt=""><br><img src="/uploads/my-little-idea-about-writing-technical-article/17.PNG" alt=""><br><img src="/uploads/my-little-idea-about-writing-technical-article/18.PNG" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/8.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/8.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/9.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/9.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/10.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/10.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/11.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/11.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/12.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/12.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/13.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/13.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/14.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/14.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/15.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/15.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/16.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/16.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/17.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/17.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/18.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/18.PNG"></p>
 <p>至此，这篇WWDC21见闻就写完了，详细描写自己WWDC21期间的一些独特经历和其中涉及相关技术，这样会让文章的独特性和真实感有很大的提升。</p>
 <h2 id="对独特性和新意的思考"><a href="#对独特性和新意的思考" class="headerlink" title="对独特性和新意的思考"></a>对独特性和新意的思考</h2><p>通篇看下来，你是不是感觉到故事性和真实性其实是非常容易做到的。可以理解为只要努力些，时间再长些，这两点就能够完成，且能线性得到提高。只埋头做事情比较容易和舒适，但一直这么干，熵就会越来越多，不可逆的无用能量无法排除。而独特性意味着你会去体验适应新的环境，去获取实践新的认知，去结识新的朋友碰撞新的思路，使得自己体验到不同以往的经验。新意成功几率很低，非线性的，类似于基因突变产生的进化，这和努力无关。新意和独特性一样属于逆熵过程，不能忽视，大跨步的进步需要对传统的颠覆。新意会带来新的独特经历形成一个新的循环，不去尝试就不会有新的机会。</p>
 <p>如果把本文当成一篇笔记，其间又融入了写作心得；如果把本文当做一篇写作心得，其间又穿插了大量笔记内容。你说这是不是也是一种新意呢。</p>
 <p>对于新意，我印象最深的还是权力的游戏的血色婚礼，神来之笔，当Joffrey正最可气，少狼主正得势时，剧情完全打破传统，效果非常震撼。凡人皆有一死，凡事皆有可能，于是乎对后面剧情的推进更加期待了。而这个新意是建立在整个剧对真实感上的毫不含糊，包括了扎实的世界观构建，服饰道具高度的还原，完全把观众带入了故事中。另外作者对古历史的专研和记者经历的结合产生出的鲜明的人物刻画和独特的剧情设计也是本剧的骨架支撑，独特性的体现。</p>
 <h2 id="Finally"><a href="#Finally" class="headerlink" title="Finally"></a>Finally</h2><p>今天我说的这些心得可以作为下笔“记录和分享”技术的一个契机，但是对于自己技术的成长，写文章并不是最终的目的，写作是你对自己思想的研究和开发。文章的上限是你的技术能力，文章只是让人了解你技术一种手段。因此更重要的是你做的技术是否有突破有演进，获得应用，并在产品中取得了好的效果。还有那些孤独着研究技术的时光，经历着一直努力着奋斗着却一直不被看见，得不到认同，也没有结果的岁月，还能够一直被自己的热情感动而不放弃去取得一点点进步带来的满足感。</p>
 
-    </article>
-    <!-- license -->
-    
-        <div class="license-wrapper">
-            <p>原文作者：<a href="http://ming1016.github.io">戴铭</a>
-            <p>原文链接：<a href="http://ming1016.github.io/2021/07/24/my-little-idea-about-writing-technical-article/">http://ming1016.github.io/2021/07/24/my-little-idea-about-writing-technical-article/</a>
-            <p>发表日期：<a href="http://ming1016.github.io/2021/07/24/my-little-idea-about-writing-technical-article/">July 24th 2021, 5:52:45 am</a>
-            <p>更新日期：<a href="http://ming1016.github.io/2021/07/24/my-little-idea-about-writing-technical-article/">July 24th 2021, 6:32:51 am</a>
-            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
-        </div>
-    
-    <!-- paginator -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2021/11/23/daiming-swift-pamphlet/" title="戴铭的 Swift 小册子 4.0">
-                    <div class="nextTitle">戴铭的 Swift 小册子 4.0</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href="/2021/07/13/deeply-analyse-autolayout-slides/" title="深入剖析Auto Layout的幻灯片">
-                    <div class="prevTitle">深入剖析Auto Layout的幻灯片</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- comment -->
-    
-        <div class="post-comment">
-            <!-- 来必力 City 版安装代码 -->
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2021/07/24/my-little-idea-about-writing-technical-article/">http://ming1016.github.io/2021/07/24/my-little-idea-about-writing-technical-article/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2021/11/23/daiming-swift-pamphlet/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">戴铭的 Swift 小册子 4.0 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2021/07/13/deeply-analyse-autolayout-slides/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">深入剖析Auto Layout的幻灯片 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
 
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">四个点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8B%AC%E7%89%B9%E6%80%A7"><span class="toc-number">2.1.</span> <span class="toc-text">独特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%84%9F"><span class="toc-number">2.2.</span> <span class="toc-text">真实感</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%85%E4%BA%8B%E6%80%A7"><span class="toc-number">2.3.</span> <span class="toc-text">故事性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E6%84%8F"><span class="toc-number">2.4.</span> <span class="toc-text">新意</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E4%BB%A5%E5%89%8D%E7%9A%84%E6%96%87%E7%AB%A0"><span class="toc-number">3.</span> <span class="toc-text">我以前的文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A%E7%AB%99-%E7%9A%84-Swift-%E5%AE%9E%E8%B7%B5"><span class="toc-number">3.1.</span> <span class="toc-text">A站 的 Swift 实践</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90Auto-Layout%EF%BC%8C%E5%88%86%E6%9E%90iOS%E5%90%84%E7%89%88%E6%9C%AC%E6%96%B0%E5%A2%9E%E7%89%B9%E6%80%A7"><span class="toc-number">3.2.</span> <span class="toc-text">深入剖析Auto Layout，分析iOS各版本新增特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%BC%BC%E8%8B%B9%E6%9E%9CVFL-Visual-Format-Language-%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%AF%AD%E8%A8%80%E6%9D%A5%E6%8F%8F%E8%BF%B0%E7%B1%BB%E4%BC%BCUIStackView%E9%82%A3%E7%A7%8D%E5%B8%83%E5%B1%80%E6%80%9D%E8%B7%AF%EF%BC%8C%E5%B9%B6%E8%A7%A3%E6%9E%90%E7%94%9F%E6%88%90%E9%A1%B5%E9%9D%A2"><span class="toc-number">3.3.</span> <span class="toc-text">制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-JavaScriptCore"><span class="toc-number">3.4.</span> <span class="toc-text">深入剖析 JavaScriptCore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-JavaScript-%E7%BC%96%E8%AF%91%E5%99%A8-x2F-%E8%A7%A3%E9%87%8A%E5%99%A8%E5%BC%95%E6%93%8E-QuickJS-%E5%A4%9A%E4%BA%86%E8%A7%A3%E4%BA%9B-JavaScript-%E8%AF%AD%E8%A8%80"><span class="toc-number">3.5.</span> <span class="toc-text">深入剖析 JavaScript 编译器&#x2F;解释器引擎 QuickJS - 多了解些 JavaScript 语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E7%BC%96%E8%AF%91-Clang-x2F-LLVM"><span class="toc-number">3.6.</span> <span class="toc-text">深入剖析 iOS 编译 Clang &#x2F; LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-WebKit"><span class="toc-number">3.7.</span> <span class="toc-text">深入剖析 WebKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">3.8.</span> <span class="toc-text">深入剖析 iOS 性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-number">3.9.</span> <span class="toc-text">启动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%A1%E6%80%8E%E4%B9%88%E5%86%99%E8%BF%87%EF%BC%8C%E9%82%A3%E4%B8%8B%E4%B8%80%E6%AD%A5%E6%80%8E%E4%B9%88%E8%A1%8C%E5%8A%A8"><span class="toc-number">4.</span> <span class="toc-text">没怎么写过，那下一步怎么行动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.1.</span> <span class="toc-text">四个步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%80%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="toc-number">4.2.</span> <span class="toc-text">所用软件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%8C%E6%80%8E%E4%B9%88%E5%86%99%E8%BF%99%E6%AC%A1WWDC21%E7%9A%84%E8%A7%81%E9%97%BB%E6%96%87%E7%AB%A0"><span class="toc-number">5.</span> <span class="toc-text">举个例子，怎么写这次WWDC21的见闻文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E8%A7%88"><span class="toc-number">5.1.</span> <span class="toc-text">总览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Session%E6%8E%A8%E8%8D%90"><span class="toc-number">5.2.</span> <span class="toc-text">Session推荐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift-%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9B%B4%E6%96%B0"><span class="toc-number">5.3.</span> <span class="toc-text">Swift 的一些更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8A%E5%B9%B4%E9%87%8D%E5%A4%B4%E6%88%8F-Swift-Concurrency"><span class="toc-number">5.4.</span> <span class="toc-text">今年重头戏 Swift Concurrency</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#async-x2F-await"><span class="toc-number">5.4.1.</span> <span class="toc-text">async&#x2F;await</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Async-Sequences"><span class="toc-number">5.4.2.</span> <span class="toc-text">Async Sequences</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E5%B9%B6%E5%8F%91"><span class="toc-number">5.4.3.</span> <span class="toc-text">结构化并发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Actors"><span class="toc-number">5.4.4.</span> <span class="toc-text">Actors</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Concurrency%E7%9B%B8%E5%85%B3%E6%8F%90%E6%A1%88%E9%9B%86%E5%90%88"><span class="toc-number">5.4.5.</span> <span class="toc-text">Swift Concurrency相关提案集合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84"><span class="toc-number">5.4.6.</span> <span class="toc-text">学习路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Concurrency-%E5%92%8C-Combine"><span class="toc-number">5.4.7.</span> <span class="toc-text">Swift Concurrency 和 Combine</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC-playground%E7%9B%B4%E6%92%AD%E6%B4%BB%E5%8A%A8"><span class="toc-number">5.5.</span> <span class="toc-text">WWDC.playground直播活动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC%E6%B2%99%E9%BE%99%E6%B4%BB%E5%8A%A8"><span class="toc-number">5.6.</span> <span class="toc-text">WWDC沙龙活动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E7%8B%AC%E7%89%B9%E6%80%A7%E5%92%8C%E6%96%B0%E6%84%8F%E7%9A%84%E6%80%9D%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">对独特性和新意的思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Finally"><span class="toc-number">7.</span> <span class="toc-text">Finally</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
 
-            
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>56</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>37</span>
+    <span>标签</span>
+  </a>
+</div>
 
-            
-
-            
-
-            <!-- utteranc评论 -->
-
-
-            <!-- partial('_partial/comment/changyan') -->
-            <!--PC版-->
-
-
-            
-            
-
-        </div>
-    
-    <!-- timeliness note -->
-    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
-    
-    <!-- Mathjax -->
-    
-</main>
-
-                <!-- profile -->
-                
-            </div>
-            <footer class="footer footer-unloaded">
-    <!-- social  -->
-    
-        <div class="social">
-            
-    
-        
-            
-                <a href="mailto:ming1016@foxmail.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="//github.com/ming1016" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                    
-                    <img class="profile-qr" src="/assets/wechat-qcode.jpeg" />
-                </span>
-            
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="https://weibo.com/allstarming" class="iconfont-archer weibo" target="_blank" title=weibo></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="https://twitter.com/daiming_cn" class="iconfont-archer twitter" target="_blank" title=twitter></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
-            
-        
-    
-
-
-        </div>
-    
-    <!-- powered by Hexo  -->
-    <div class="copyright">
-        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
     </div>
-    <!-- website approve for Chinese user -->
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">四个点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8B%AC%E7%89%B9%E6%80%A7"><span class="toc-number">2.1.</span> <span class="toc-text">独特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%84%9F"><span class="toc-number">2.2.</span> <span class="toc-text">真实感</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%85%E4%BA%8B%E6%80%A7"><span class="toc-number">2.3.</span> <span class="toc-text">故事性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E6%84%8F"><span class="toc-number">2.4.</span> <span class="toc-text">新意</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E4%BB%A5%E5%89%8D%E7%9A%84%E6%96%87%E7%AB%A0"><span class="toc-number">3.</span> <span class="toc-text">我以前的文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A%E7%AB%99-%E7%9A%84-Swift-%E5%AE%9E%E8%B7%B5"><span class="toc-number">3.1.</span> <span class="toc-text">A站 的 Swift 实践</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90Auto-Layout%EF%BC%8C%E5%88%86%E6%9E%90iOS%E5%90%84%E7%89%88%E6%9C%AC%E6%96%B0%E5%A2%9E%E7%89%B9%E6%80%A7"><span class="toc-number">3.2.</span> <span class="toc-text">深入剖析Auto Layout，分析iOS各版本新增特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%BC%BC%E8%8B%B9%E6%9E%9CVFL-Visual-Format-Language-%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%AF%AD%E8%A8%80%E6%9D%A5%E6%8F%8F%E8%BF%B0%E7%B1%BB%E4%BC%BCUIStackView%E9%82%A3%E7%A7%8D%E5%B8%83%E5%B1%80%E6%80%9D%E8%B7%AF%EF%BC%8C%E5%B9%B6%E8%A7%A3%E6%9E%90%E7%94%9F%E6%88%90%E9%A1%B5%E9%9D%A2"><span class="toc-number">3.3.</span> <span class="toc-text">制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-JavaScriptCore"><span class="toc-number">3.4.</span> <span class="toc-text">深入剖析 JavaScriptCore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-JavaScript-%E7%BC%96%E8%AF%91%E5%99%A8-x2F-%E8%A7%A3%E9%87%8A%E5%99%A8%E5%BC%95%E6%93%8E-QuickJS-%E5%A4%9A%E4%BA%86%E8%A7%A3%E4%BA%9B-JavaScript-%E8%AF%AD%E8%A8%80"><span class="toc-number">3.5.</span> <span class="toc-text">深入剖析 JavaScript 编译器&#x2F;解释器引擎 QuickJS - 多了解些 JavaScript 语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E7%BC%96%E8%AF%91-Clang-x2F-LLVM"><span class="toc-number">3.6.</span> <span class="toc-text">深入剖析 iOS 编译 Clang &#x2F; LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-WebKit"><span class="toc-number">3.7.</span> <span class="toc-text">深入剖析 WebKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">3.8.</span> <span class="toc-text">深入剖析 iOS 性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-number">3.9.</span> <span class="toc-text">启动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%A1%E6%80%8E%E4%B9%88%E5%86%99%E8%BF%87%EF%BC%8C%E9%82%A3%E4%B8%8B%E4%B8%80%E6%AD%A5%E6%80%8E%E4%B9%88%E8%A1%8C%E5%8A%A8"><span class="toc-number">4.</span> <span class="toc-text">没怎么写过，那下一步怎么行动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.1.</span> <span class="toc-text">四个步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%80%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="toc-number">4.2.</span> <span class="toc-text">所用软件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%8C%E6%80%8E%E4%B9%88%E5%86%99%E8%BF%99%E6%AC%A1WWDC21%E7%9A%84%E8%A7%81%E9%97%BB%E6%96%87%E7%AB%A0"><span class="toc-number">5.</span> <span class="toc-text">举个例子，怎么写这次WWDC21的见闻文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E8%A7%88"><span class="toc-number">5.1.</span> <span class="toc-text">总览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Session%E6%8E%A8%E8%8D%90"><span class="toc-number">5.2.</span> <span class="toc-text">Session推荐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift-%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9B%B4%E6%96%B0"><span class="toc-number">5.3.</span> <span class="toc-text">Swift 的一些更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8A%E5%B9%B4%E9%87%8D%E5%A4%B4%E6%88%8F-Swift-Concurrency"><span class="toc-number">5.4.</span> <span class="toc-text">今年重头戏 Swift Concurrency</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#async-x2F-await"><span class="toc-number">5.4.1.</span> <span class="toc-text">async&#x2F;await</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Async-Sequences"><span class="toc-number">5.4.2.</span> <span class="toc-text">Async Sequences</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E5%B9%B6%E5%8F%91"><span class="toc-number">5.4.3.</span> <span class="toc-text">结构化并发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Actors"><span class="toc-number">5.4.4.</span> <span class="toc-text">Actors</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Concurrency%E7%9B%B8%E5%85%B3%E6%8F%90%E6%A1%88%E9%9B%86%E5%90%88"><span class="toc-number">5.4.5.</span> <span class="toc-text">Swift Concurrency相关提案集合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84"><span class="toc-number">5.4.6.</span> <span class="toc-text">学习路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Concurrency-%E5%92%8C-Combine"><span class="toc-number">5.4.7.</span> <span class="toc-text">Swift Concurrency 和 Combine</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC-playground%E7%9B%B4%E6%92%AD%E6%B4%BB%E5%8A%A8"><span class="toc-number">5.5.</span> <span class="toc-text">WWDC.playground直播活动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC%E6%B2%99%E9%BE%99%E6%B4%BB%E5%8A%A8"><span class="toc-number">5.6.</span> <span class="toc-text">WWDC沙龙活动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E7%8B%AC%E7%89%B9%E6%80%A7%E5%92%8C%E6%96%B0%E6%84%8F%E7%9A%84%E6%80%9D%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">对独特性和新意的思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Finally"><span class="toc-number">7.</span> <span class="toc-text">Finally</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
     
-        <div class="website-approve">
-            
-                <span id="icp-approve" class="icp-approve">
-                    <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备17011999号</a>
-                </span>
-            
-            
-                
-                <img class="beian-img" src="/assets/beian.png" />
-                <span id="beian-approve" class="beian-approve">
-                    <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999" target="_blank">京公网安备 7011999号</a>
-                </span>
-            
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">42</span>
         </div>
+      </a>
     
-    <!-- 不蒜子  -->
-    
-        <div class="busuanzi-container">
-            
-             
-                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
-            
+      <a href="/categories/My novel">
+        <div class="categories-list-item">
+          My novel
+          <span class="categories-list-item-badge">4</span>
         </div>
-    	
+      </a>
+    
+      <a href="/categories/My painting">
+        <div class="categories-list-item">
+          My painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+    <a href="\tags\Pencil" title="Pencil"><div class="tags-list-item">Pencil</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">四个点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8B%AC%E7%89%B9%E6%80%A7"><span class="toc-number">2.1.</span> <span class="toc-text">独特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%84%9F"><span class="toc-number">2.2.</span> <span class="toc-text">真实感</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%85%E4%BA%8B%E6%80%A7"><span class="toc-number">2.3.</span> <span class="toc-text">故事性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E6%84%8F"><span class="toc-number">2.4.</span> <span class="toc-text">新意</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E4%BB%A5%E5%89%8D%E7%9A%84%E6%96%87%E7%AB%A0"><span class="toc-number">3.</span> <span class="toc-text">我以前的文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A%E7%AB%99-%E7%9A%84-Swift-%E5%AE%9E%E8%B7%B5"><span class="toc-number">3.1.</span> <span class="toc-text">A站 的 Swift 实践</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90Auto-Layout%EF%BC%8C%E5%88%86%E6%9E%90iOS%E5%90%84%E7%89%88%E6%9C%AC%E6%96%B0%E5%A2%9E%E7%89%B9%E6%80%A7"><span class="toc-number">3.2.</span> <span class="toc-text">深入剖析Auto Layout，分析iOS各版本新增特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%BC%BC%E8%8B%B9%E6%9E%9CVFL-Visual-Format-Language-%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%AF%AD%E8%A8%80%E6%9D%A5%E6%8F%8F%E8%BF%B0%E7%B1%BB%E4%BC%BCUIStackView%E9%82%A3%E7%A7%8D%E5%B8%83%E5%B1%80%E6%80%9D%E8%B7%AF%EF%BC%8C%E5%B9%B6%E8%A7%A3%E6%9E%90%E7%94%9F%E6%88%90%E9%A1%B5%E9%9D%A2"><span class="toc-number">3.3.</span> <span class="toc-text">制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-JavaScriptCore"><span class="toc-number">3.4.</span> <span class="toc-text">深入剖析 JavaScriptCore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-JavaScript-%E7%BC%96%E8%AF%91%E5%99%A8-x2F-%E8%A7%A3%E9%87%8A%E5%99%A8%E5%BC%95%E6%93%8E-QuickJS-%E5%A4%9A%E4%BA%86%E8%A7%A3%E4%BA%9B-JavaScript-%E8%AF%AD%E8%A8%80"><span class="toc-number">3.5.</span> <span class="toc-text">深入剖析 JavaScript 编译器&#x2F;解释器引擎 QuickJS - 多了解些 JavaScript 语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E7%BC%96%E8%AF%91-Clang-x2F-LLVM"><span class="toc-number">3.6.</span> <span class="toc-text">深入剖析 iOS 编译 Clang &#x2F; LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-WebKit"><span class="toc-number">3.7.</span> <span class="toc-text">深入剖析 WebKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">3.8.</span> <span class="toc-text">深入剖析 iOS 性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-number">3.9.</span> <span class="toc-text">启动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%A1%E6%80%8E%E4%B9%88%E5%86%99%E8%BF%87%EF%BC%8C%E9%82%A3%E4%B8%8B%E4%B8%80%E6%AD%A5%E6%80%8E%E4%B9%88%E8%A1%8C%E5%8A%A8"><span class="toc-number">4.</span> <span class="toc-text">没怎么写过，那下一步怎么行动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.1.</span> <span class="toc-text">四个步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%80%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="toc-number">4.2.</span> <span class="toc-text">所用软件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%8C%E6%80%8E%E4%B9%88%E5%86%99%E8%BF%99%E6%AC%A1WWDC21%E7%9A%84%E8%A7%81%E9%97%BB%E6%96%87%E7%AB%A0"><span class="toc-number">5.</span> <span class="toc-text">举个例子，怎么写这次WWDC21的见闻文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E8%A7%88"><span class="toc-number">5.1.</span> <span class="toc-text">总览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Session%E6%8E%A8%E8%8D%90"><span class="toc-number">5.2.</span> <span class="toc-text">Session推荐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift-%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9B%B4%E6%96%B0"><span class="toc-number">5.3.</span> <span class="toc-text">Swift 的一些更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8A%E5%B9%B4%E9%87%8D%E5%A4%B4%E6%88%8F-Swift-Concurrency"><span class="toc-number">5.4.</span> <span class="toc-text">今年重头戏 Swift Concurrency</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#async-x2F-await"><span class="toc-number">5.4.1.</span> <span class="toc-text">async&#x2F;await</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Async-Sequences"><span class="toc-number">5.4.2.</span> <span class="toc-text">Async Sequences</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E5%B9%B6%E5%8F%91"><span class="toc-number">5.4.3.</span> <span class="toc-text">结构化并发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Actors"><span class="toc-number">5.4.4.</span> <span class="toc-text">Actors</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Concurrency%E7%9B%B8%E5%85%B3%E6%8F%90%E6%A1%88%E9%9B%86%E5%90%88"><span class="toc-number">5.4.5.</span> <span class="toc-text">Swift Concurrency相关提案集合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84"><span class="toc-number">5.4.6.</span> <span class="toc-text">学习路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Concurrency-%E5%92%8C-Combine"><span class="toc-number">5.4.7.</span> <span class="toc-text">Swift Concurrency 和 Combine</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC-playground%E7%9B%B4%E6%92%AD%E6%B4%BB%E5%8A%A8"><span class="toc-number">5.5.</span> <span class="toc-text">WWDC.playground直播活动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC%E6%B2%99%E9%BE%99%E6%B4%BB%E5%8A%A8"><span class="toc-number">5.6.</span> <span class="toc-text">WWDC沙龙活动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E7%8B%AC%E7%89%B9%E6%80%A7%E5%92%8C%E6%96%B0%E6%84%8F%E7%9A%84%E6%80%9D%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">对独特性和新意的思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Finally"><span class="toc-number">7.</span> <span class="toc-text">Finally</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-03-25</div>
+        <a href="/2022/03/25/develop-with-swiftui/"><div class="recent-posts-item-content">在苹果加速器活动做的 SwiftUI 开发分享</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-02-26</div>
+        <a href="/2022/02/26/draw-in-2021/"><div class="recent-posts-item-content">2021年画的</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2014 -
+          
+          2022
+        </span>
+        <a href="/" class="footer-link">戴铭的博客 </a>
+      </div>
+    </div>
+
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
+      </a>
+      <br />
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
 </footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
 
-        </div>
-        <!-- toc -->
-        
-            <div class="toc-wrapper toc-wrapper-loding" style=
-
-
-
-
-
-
-
-    top:50vh;
-
->
-                <div class="toc-catalog">
-                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-                </div>
-                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">四个点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8B%AC%E7%89%B9%E6%80%A7"><span class="toc-number">2.1.</span> <span class="toc-text">独特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%84%9F"><span class="toc-number">2.2.</span> <span class="toc-text">真实感</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%85%E4%BA%8B%E6%80%A7"><span class="toc-number">2.3.</span> <span class="toc-text">故事性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E6%84%8F"><span class="toc-number">2.4.</span> <span class="toc-text">新意</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E4%BB%A5%E5%89%8D%E7%9A%84%E6%96%87%E7%AB%A0"><span class="toc-number">3.</span> <span class="toc-text">我以前的文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A%E7%AB%99-%E7%9A%84-Swift-%E5%AE%9E%E8%B7%B5"><span class="toc-number">3.1.</span> <span class="toc-text">A站 的 Swift 实践</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90Auto-Layout%EF%BC%8C%E5%88%86%E6%9E%90iOS%E5%90%84%E7%89%88%E6%9C%AC%E6%96%B0%E5%A2%9E%E7%89%B9%E6%80%A7"><span class="toc-number">3.2.</span> <span class="toc-text">深入剖析Auto Layout，分析iOS各版本新增特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%BC%BC%E8%8B%B9%E6%9E%9CVFL-Visual-Format-Language-%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%AF%AD%E8%A8%80%E6%9D%A5%E6%8F%8F%E8%BF%B0%E7%B1%BB%E4%BC%BCUIStackView%E9%82%A3%E7%A7%8D%E5%B8%83%E5%B1%80%E6%80%9D%E8%B7%AF%EF%BC%8C%E5%B9%B6%E8%A7%A3%E6%9E%90%E7%94%9F%E6%88%90%E9%A1%B5%E9%9D%A2"><span class="toc-number">3.3.</span> <span class="toc-text">制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-JavaScriptCore"><span class="toc-number">3.4.</span> <span class="toc-text">深入剖析 JavaScriptCore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-JavaScript-%E7%BC%96%E8%AF%91%E5%99%A8-%E8%A7%A3%E9%87%8A%E5%99%A8%E5%BC%95%E6%93%8E-QuickJS-%E5%A4%9A%E4%BA%86%E8%A7%A3%E4%BA%9B-JavaScript-%E8%AF%AD%E8%A8%80"><span class="toc-number">3.5.</span> <span class="toc-text">深入剖析 JavaScript 编译器&#x2F;解释器引擎 QuickJS - 多了解些 JavaScript 语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E7%BC%96%E8%AF%91-Clang-LLVM"><span class="toc-number">3.6.</span> <span class="toc-text">深入剖析 iOS 编译 Clang &#x2F; LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-WebKit"><span class="toc-number">3.7.</span> <span class="toc-text">深入剖析 WebKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">3.8.</span> <span class="toc-text">深入剖析 iOS 性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-number">3.9.</span> <span class="toc-text">启动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%A1%E6%80%8E%E4%B9%88%E5%86%99%E8%BF%87%EF%BC%8C%E9%82%A3%E4%B8%8B%E4%B8%80%E6%AD%A5%E6%80%8E%E4%B9%88%E8%A1%8C%E5%8A%A8"><span class="toc-number">4.</span> <span class="toc-text">没怎么写过，那下一步怎么行动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.1.</span> <span class="toc-text">四个步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%80%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="toc-number">4.2.</span> <span class="toc-text">所用软件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%8C%E6%80%8E%E4%B9%88%E5%86%99%E8%BF%99%E6%AC%A1WWDC21%E7%9A%84%E8%A7%81%E9%97%BB%E6%96%87%E7%AB%A0"><span class="toc-number">5.</span> <span class="toc-text">举个例子，怎么写这次WWDC21的见闻文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E8%A7%88"><span class="toc-number">5.1.</span> <span class="toc-text">总览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Session%E6%8E%A8%E8%8D%90"><span class="toc-number">5.2.</span> <span class="toc-text">Session推荐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift-%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9B%B4%E6%96%B0"><span class="toc-number">5.3.</span> <span class="toc-text">Swift 的一些更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8A%E5%B9%B4%E9%87%8D%E5%A4%B4%E6%88%8F-Swift-Concurrency"><span class="toc-number">5.4.</span> <span class="toc-text">今年重头戏 Swift Concurrency</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#async-await"><span class="toc-number">5.4.1.</span> <span class="toc-text">async&#x2F;await</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Async-Sequences"><span class="toc-number">5.4.2.</span> <span class="toc-text">Async Sequences</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E5%B9%B6%E5%8F%91"><span class="toc-number">5.4.3.</span> <span class="toc-text">结构化并发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Actors"><span class="toc-number">5.4.4.</span> <span class="toc-text">Actors</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Concurrency%E7%9B%B8%E5%85%B3%E6%8F%90%E6%A1%88%E9%9B%86%E5%90%88"><span class="toc-number">5.4.5.</span> <span class="toc-text">Swift Concurrency相关提案集合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84"><span class="toc-number">5.4.6.</span> <span class="toc-text">学习路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Concurrency-%E5%92%8C-Combine"><span class="toc-number">5.4.7.</span> <span class="toc-text">Swift Concurrency 和 Combine</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC-playground%E7%9B%B4%E6%92%AD%E6%B4%BB%E5%8A%A8"><span class="toc-number">5.5.</span> <span class="toc-text">WWDC.playground直播活动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC%E6%B2%99%E9%BE%99%E6%B4%BB%E5%8A%A8"><span class="toc-number">5.6.</span> <span class="toc-text">WWDC沙龙活动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E7%8B%AC%E7%89%B9%E6%80%A7%E5%92%8C%E6%96%B0%E6%84%8F%E7%9A%84%E6%80%9D%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">对独特性和新意的思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Finally"><span class="toc-number">7.</span> <span class="toc-text">Finally</span></a></li></ol>
-            </div>
-        
-        <!-- sidebar -->
-        <div class="sidebar sidebar-hide">
-    <ul class="sidebar-tabs sidebar-tabs-active-0">
-        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
-        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
-        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
-    </ul>
-    <div class="sidebar-content sidebar-content-show-archive">
-        <div class="sidebar-panel-archives">
-    <!-- 在 ejs 中将 archive 按照时间排序 -->
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-    
-    
-    
-    <div class="total-and-search">
-        <div class="total-archive">
-        Total : 57
-        </div>
-        <!-- search  -->
-        
-    </div>
-    
-    <div class="post-archive">
-    
-        
-            
-            
-            <div class="archive-year"> 2022 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/10</span>
-            <a class="archive-post-title" href="/2022/06/10/use-llvm/">使用 LLVM</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/10</span>
-            <a class="archive-post-title" href="/2022/06/10/wwdc22-notes/">WWDC22 笔记</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/25</span>
-            <a class="archive-post-title" href="/2022/03/25/develop-with-swiftui/">在苹果加速器活动做的 SwiftUI 开发分享</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/26</span>
-            <a class="archive-post-title" href="/2022/02/26/draw-in-2021/">2021年画的</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/10</span>
-            <a class="archive-post-title" href="/2022/02/10/swift-evolutionary-path/">Swift 演进之路</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/03</span>
-            <a class="archive-post-title" href="/2022/01/03/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/">如何用 SwiftUI + Combine + Swift Concurrency Aysnc/Await Actor 欢畅开发</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2021 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/23</span>
-            <a class="archive-post-title" href="/2021/11/23/daiming-swift-pamphlet/">戴铭的 Swift 小册子 4.0</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/24</span>
-            <a class="archive-post-title" href="/2021/07/24/my-little-idea-about-writing-technical-article/">我写技术文章的一点心得</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/13</span>
-            <a class="archive-post-title" href="/2021/07/13/deeply-analyse-autolayout-slides/">深入剖析Auto Layout的幻灯片</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/08</span>
-            <a class="archive-post-title" href="/2021/06/08/wwdc2021-day1-note/">WWDC 2021 Day1 笔记</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span>
-            <a class="archive-post-title" href="/2021/05/22/acfun-swift-practice/">A站 的 Swift 实践</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/21</span>
-            <a class="archive-post-title" href="/2021/02/21/deeply-analyse-quickjs/">深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2020 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/18</span>
-            <a class="archive-post-title" href="/2020/12/18/thinking-in-how-to-speed-up-app/">App 启动提速实践和一些想法</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/04</span>
-            <a class="archive-post-title" href="/2020/05/04/draw-in-2020/">2020年涂图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span>
-            <a class="archive-post-title" href="/2020/04/12/why_write_study_ios_programming_with_daiming_book_and_draw_recently/">我为什么写了《跟戴铭学iOS编程》这本书</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/29</span>
-            <a class="archive-post-title" href="/2020/03/29/apple-system-executable-file-macho/">Apple 操作系统可执行文件 Mach-O</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/05</span>
-            <a class="archive-post-title" href="/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/">在快手做分享、无用类检查、在广州做 SwiftUI 学习笔记分享、InfoQ二叉树视频</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2019 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/28</span>
-            <a class="archive-post-title" href="/2019/12/28/japan-travel/">日本游玩</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/07</span>
-            <a class="archive-post-title" href="/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">如何对 iOS 启动阶段耗时进行分析</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/06</span>
-            <a class="archive-post-title" href="/2019/12/06/draw-in-2019/">2019年涂图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/29</span>
-            <a class="archive-post-title" href="/2019/07/29/ios-map/">iOS 开发舆图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/19</span>
-            <a class="archive-post-title" href="/2019/06/19/white-dragon-class/">白龙班</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2018 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/17</span>
-            <a class="archive-post-title" href="/2018/09/17/produce-slides-of-third-at-swift-conference/">这次swift大会分享准备的幻灯片和 demo</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/14</span>
-            <a class="archive-post-title" href="/2018/09/14/draw-with-procreate-in-ipad-during-pre-half-in-20182/">18年上半年procreate的练习图图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/21</span>
-            <a class="archive-post-title" href="/2018/04/21/deeply-analyse-javascriptcore/">深入剖析 JavaScriptCore</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/07</span>
-            <a class="archive-post-title" href="/2018/04/07/read-snapkit-and-masonry-source-code/">读 SnapKit 和 Masonry 自动布局框架源码</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span>
-            <a class="archive-post-title" href="/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/">Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/24</span>
-            <a class="archive-post-title" href="/2018/01/24/why-swift/">Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/10</span>
-            <a class="archive-post-title" href="/2018/01/10/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/">GIAC 大会上分享的《Swift 将 Web 代码转成60帧满帧原生应用的方案及实践》的幻灯片</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span>
-            <a class="archive-post-title" href="/2018/01/04/baimi/">白芈</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span>
-            <a class="archive-post-title" href="/2018/01/04/huaye/">花野</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2017 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/24</span>
-            <a class="archive-post-title" href="/2017/10/24/how-do-i-improve-the-development/">在滴滴，我是如何指数级提升开发技术的？</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/16</span>
-            <a class="archive-post-title" href="/2017/10/16/html-to-native-htn-development-record/">HTML 转原生 HTN 项目开发记录</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/11</span>
-            <a class="archive-post-title" href="/2017/10/11/deeply-analyse-webkit/">深入剖析 WebKit</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span>
-            <a class="archive-post-title" href="/2017/06/20/deeply-ios-performance-optimization/">深入剖析 iOS 性能优化</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/12</span>
-            <a class="archive-post-title" href="/2017/06/12/gmtc-ios-slimming-practice/">GMTC 上分享滴滴出行 iOS 端瘦身实践的 Slides</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/27</span>
-            <a class="archive-post-title" href="/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/">atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span>
-            <a class="archive-post-title" href="/2017/04/01/build-static-analysis-program-smck-use-swift/">用 Swift 编写的工程代码静态分析命令行工具 smck</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span>
-            <a class="archive-post-title" href="/2017/04/01/slides-of-deeply-analyse-llvm/">深入剖析 iOS 编译 Clang / LLVM 直播的 Slides</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span>
-            <a class="archive-post-title" href="/2017/03/01/deeply-analyse-llvm/">深入剖析 iOS 编译 Clang / LLVM</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2016 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/22</span>
-            <a class="archive-post-title" href="/2016/11/22/how-to-preload-web-in-ios/">iOS预加载Web页面方案</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/17</span>
-            <a class="archive-post-title" href="/2016/11/17/use-swift3-build-macos-program-to-clear-unuse-method/">使用Swift3开发了个macOS的程序可以检测出objc项目中无用方法，然后一键全部清理</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/20</span>
-            <a class="archive-post-title" href="/2016/09/20/draw-with-procreate-in-ipad-during-15-to-16/">15，16年iPad上使用Procreate画的</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/02</span>
-            <a class="archive-post-title" href="/2016/09/02/develop-rss-reader/">使用ReactiveCocoa开发RSS阅读器</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/09</span>
-            <a class="archive-post-title" href="/2016/08/09/how-to-use-reactivecocoa/">iOS函数响应式编程以及ReactiveCocoa的使用</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/21</span>
-            <a class="archive-post-title" href="/2016/07/21/assembleview/">制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/30</span>
-            <a class="archive-post-title" href="/2016/05/30/what-learn-from-reactivecocoa/">从 ReactiveCocoa 中能学到什么？不用此库也能学以致用</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/23</span>
-            <a class="archive-post-title" href="/2016/05/23/try-to-decouple-with-demo/">竭尽全力的去解耦的一次实践，封装一个TableView和一些功能组合的控件</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/04</span>
-            <a class="archive-post-title" href="/2016/04/04/tenth-middle-school/">十中</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/13</span>
-            <a class="archive-post-title" href="/2016/01/13/how-to-use-gcd/">细说 GCD（Grand Central Dispatch）如何用</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2015 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/03</span>
-            <a class="archive-post-title" href="/2015/11/03/deeply-analyse-autolayout/">深入剖析Auto Layout，分析iOS各版本新增特性</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/02</span>
-            <a class="archive-post-title" href="/2015/11/02/draw-with-note-in-ipad-during-15/">15年用iPad上的备忘录画的</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span>
-            <a class="archive-post-title" href="/2015/05/28/macos-app-i-used/">我用过的 macOS 应用</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span>
-            <a class="archive-post-title" href="/2015/04/02/draw-game-of-thrones-with-pencil-during-14/">整理了画的权利的游戏里的角色，有龙女，小恶魔等等</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span>
-            <a class="archive-post-title" href="/2015/04/01/objc-runtime/">Objc Runtime 总结</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span>
-            <a class="archive-post-title" href="/2015/03/12/draw-practice-with-pencil-during-14-to-15/">14和15年间的铅笔画练习</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2014 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span>
-            <a class="archive-post-title" href="/2014/03/01/black-star-blue-map/">黑星蓝图</a>
-        </li>
-    
-    </div>
-</div>
-
-        <div class="sidebar-panel-tags">
-    <div class="sidebar-tags-name">
-        
-            <span class="sidebar-tag-name" data-tags="iOS">
-                <span class="iconfont-archer">&#xe606;</span>
-                iOS
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Apple">
-                <span class="iconfont-archer">&#xe606;</span>
-                Apple
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Swift">
-                <span class="iconfont-archer">&#xe606;</span>
-                Swift
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="AssembleView">
-                <span class="iconfont-archer">&#xe606;</span>
-                AssembleView
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Novel">
-                <span class="iconfont-archer">&#xe606;</span>
-                Novel
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Mach-O">
-                <span class="iconfont-archer">&#xe606;</span>
-                Mach-O
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="smck">
-                <span class="iconfont-archer">&#xe606;</span>
-                smck
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Autolayout">
-                <span class="iconfont-archer">&#xe606;</span>
-                Autolayout
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="JavaScript">
-                <span class="iconfont-archer">&#xe606;</span>
-                JavaScript
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Web">
-                <span class="iconfont-archer">&#xe606;</span>
-                Web
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="编译">
-                <span class="iconfont-archer">&#xe606;</span>
-                编译
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="RSSReader">
-                <span class="iconfont-archer">&#xe606;</span>
-                RSSReader
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="macOS">
-                <span class="iconfont-archer">&#xe606;</span>
-                macOS
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Combine">
-                <span class="iconfont-archer">&#xe606;</span>
-                Combine
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="SwiftUI">
-                <span class="iconfont-archer">&#xe606;</span>
-                SwiftUI
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Concurrency">
-                <span class="iconfont-archer">&#xe606;</span>
-                Concurrency
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="LLVM">
-                <span class="iconfont-archer">&#xe606;</span>
-                LLVM
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Clang">
-                <span class="iconfont-archer">&#xe606;</span>
-                Clang
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Performance optimization">
-                <span class="iconfont-archer">&#xe606;</span>
-                Performance optimization
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Painting">
-                <span class="iconfont-archer">&#xe606;</span>
-                Painting
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Pencil">
-                <span class="iconfont-archer">&#xe606;</span>
-                Pencil
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="GOT">
-                <span class="iconfont-archer">&#xe606;</span>
-                GOT
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="iPad">
-                <span class="iconfont-archer">&#xe606;</span>
-                iPad
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Procreate">
-                <span class="iconfont-archer">&#xe606;</span>
-                Procreate
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="WebKit">
-                <span class="iconfont-archer">&#xe606;</span>
-                WebKit
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Slides">
-                <span class="iconfont-archer">&#xe606;</span>
-                Slides
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Study">
-                <span class="iconfont-archer">&#xe606;</span>
-                Study
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="GCD">
-                <span class="iconfont-archer">&#xe606;</span>
-                GCD
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="UIWebView">
-                <span class="iconfont-archer">&#xe606;</span>
-                UIWebView
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="NSURLProtocol">
-                <span class="iconfont-archer">&#xe606;</span>
-                NSURLProtocol
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="ReactiveCocoa">
-                <span class="iconfont-archer">&#xe606;</span>
-                ReactiveCocoa
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Japan">
-                <span class="iconfont-archer">&#xe606;</span>
-                Japan
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="APP">
-                <span class="iconfont-archer">&#xe606;</span>
-                APP
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="runtime">
-                <span class="iconfont-archer">&#xe606;</span>
-                runtime
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="swift">
-                <span class="iconfont-archer">&#xe606;</span>
-                swift
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Pattern">
-                <span class="iconfont-archer">&#xe606;</span>
-                Pattern
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="book">
-                <span class="iconfont-archer">&#xe606;</span>
-                book
-            </span>
-        
-    </div>
-    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
-    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
-        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
-    </div> 
-    <div class="sidebar-tags-list"></div>
-</div>
-
-        <div class="sidebar-panel-categories">
-    <div class="sidebar-categories-name">
-    
-        <span class="sidebar-category-name" data-categories="Programming">
-            <span class="iconfont-archer">&#xe60a;</span>
-            Programming
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="My-novel">
-            <span class="iconfont-archer">&#xe60a;</span>
-            My-novel
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="My-painting">
-            <span class="iconfont-archer">&#xe60a;</span>
-            My-painting
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="travel">
-            <span class="iconfont-archer">&#xe60a;</span>
-            travel
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="APP">
-            <span class="iconfont-archer">&#xe60a;</span>
-            APP
-        </span>
-    
-    </div>
-    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
-    <div class="sidebar-categories-list"></div>
-</div>
-
-    </div>
-</div>
-
-        <!-- site-meta -->
-        <script>
-    var siteMeta = {
-        url: "http://ming1016.github.io",
-        root: "/",
-        author: "戴铭"
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
     }
+    refreshFsLightbox();
+  }
 </script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
 
-        <!-- import experimental options here -->
-        <!-- Custom Font -->
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
 
-
-        <!-- main func -->
-        <script src="/scripts/main.js?v=20210823"></script>
-        <!-- dark mode -->
-        <script src="/scripts/dark.js?v=20210823"></script>
-        <!-- fancybox -->
-        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
-        <!-- algolia -->
-        
-        <!-- busuanzi -->
-        
-            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-        
-        <!-- CNZZ -->
-        
-        <!-- async load share.js -->
-        
-            <script src="/scripts/share.js?v=20210823" async></script>
-        
-        <!-- mermaid -->
-        
-    </body>
 </html>

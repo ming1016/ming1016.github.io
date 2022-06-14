@@ -1,2391 +1,1093 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
-    <!-- title -->
-
-
-    
-
-<!-- keywords -->
-
-
-
+<html>
+<meta  lang="zh-Hans" >
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="author" content="戴铭">
-    <meta name="renderer" content="webkit">
-    <meta name="copyright" content="戴铭">
-    
-        <meta name="keywords" content="戴铭,戴铭的博客,iOS,Swift,移动开发,JavaScript,编译">
-    
-    <meta name="description" content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-    <meta name="description" content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-<meta property="og:type" content="website">
-<meta property="og:title" content="戴铭的博客 - 星光社">
-<meta property="og:url" content="http://ming1016.github.io/archives/2021/index.html">
-<meta property="og:site_name" content="戴铭的博客 - 星光社">
-<meta property="og:description" content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-<meta property="og:locale">
-<meta property="article:author" content="戴铭">
-<meta name="twitter:card" content="summary">
-    <meta http-equiv="Cache-control" content="no-cache">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="icon" href="/assets/logo-starming.png">
-    
-    <title>戴铭的博客 - 星光社</title>
-    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-/* This file is meant as a standalone workflow for
-- testing support for link[rel=preload]
-- enabling async CSS loading in browsers that do not support rel=preload
-- applying rel preload css once loaded, whether supported or not.
-*/ -->
-<script>
-    (function (w) {
-        'use strict'
-        // rel=preload support test
-        if (!w.loadCSS) {
-            w.loadCSS = function () {}
-        }
-        // define on the loadCSS obj
-        var rp = (loadCSS.relpreload = {})
-        // rel=preload feature support test
-        // runs once and returns a function for compat purposes
-        rp.support = (function () {
-            var ret
-            try {
-                ret = w.document.createElement('link').relList.supports('preload')
-            } catch (e) {
-                ret = false
-            }
-            return function () {
-                return ret
-            }
-        })()
-
-        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
-        // then change that media back to its intended value on load
-        rp.bindMediaToggle = function (link) {
-            // remember existing media attr for ultimate state, or default to 'all'
-            var finalMedia = link.media || 'all'
-
-            function enableStylesheet() {
-                link.media = finalMedia
-            }
-
-            // bind load handlers to enable media
-            if (link.addEventListener) {
-                link.addEventListener('load', enableStylesheet)
-            } else if (link.attachEvent) {
-                link.attachEvent('onload', enableStylesheet)
-            }
-
-            // Set rel and non-applicable media type to start an async request
-            // note: timeout allows this to happen async to let rendering continue in IE
-            setTimeout(function () {
-                link.rel = 'stylesheet'
-                link.media = 'only x'
-            })
-            // also enable media after 3 seconds,
-            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
-            setTimeout(enableStylesheet, 3000)
-        }
-
-        // loop through link elements in DOM
-        rp.poly = function () {
-            // double check this to prevent external calls from running
-            if (rp.support()) {
-                return
-            }
-            var links = w.document.getElementsByTagName('link')
-            for (var i = 0; i < links.length; i++) {
-                var link = links[i]
-                // qualify links to those with rel=preload and as=style attrs
-                if (
-                    link.rel === 'preload' &&
-                    link.getAttribute('as') === 'style' &&
-                    !link.getAttribute('data-loadcss')
-                ) {
-                    // prevent rerunning on link
-                    link.setAttribute('data-loadcss', true)
-                    // bind listeners to toggle media back
-                    rp.bindMediaToggle(link)
-                }
-            }
-        }
-
-        // if unsupported, run the polyfill
-        if (!rp.support()) {
-            // run once at least
-            rp.poly()
-
-            // rerun poly on an interval until onload
-            var run = w.setInterval(rp.poly, 500)
-            if (w.addEventListener) {
-                w.addEventListener('load', function () {
-                    rp.poly()
-                    w.clearInterval(run)
-                })
-            } else if (w.attachEvent) {
-                w.attachEvent('onload', function () {
-                    rp.poly()
-                    w.clearInterval(run)
-                })
-            }
-        }
-
-        // commonjs
-        if (typeof exports !== 'undefined') {
-            exports.loadCSS = loadCSS
-        } else {
-            w.loadCSS = loadCSS
-        }
-    })(typeof global !== 'undefined' ? global : this)
-</script>
-
-    <style type="text/css">
-    @font-face {
-        font-family: 'Oswald-Regular';
-        src: url("/font/Oswald-Regular.ttf");
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
     }
-
-    body {
-        margin: 0;
-    }
-
-    header,
-    footer,
-    .back-top,
-    .sidebar,
-    .container,
-    .site-intro-meta,
-    .toc-wrapper {
-        display: none;
-    }
-
-    .site-intro {
-        position: relative;
-        z-index: 3;
-        width: 100%;
-        /* height: 50vh; */
-        overflow: hidden;
-    }
-
-    .site-intro-placeholder {
-        position: absolute;
-        z-index: -2;
-        top: 0;
-        left: 0;
-        width: calc(100% + 300px);
-        height: 100%;
-        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
-        background-position: center center;
-        transform: translate3d(-226px, 0, 0);
-        animation: gradient-move 2.5s ease-out 0s infinite;
-    }
-
-    @keyframes gradient-move {
-        0% {
-            transform: translate3d(-226px, 0, 0);
-        }
-        100% {
-            transform: translate3d(0, 0, 0);
-        }
-    }
-</style>
-
-    <link rel="preload" href="/css/style.css?v=20210823" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="/css/dark.css?v=20210823" as="style">
-    <link rel="stylesheet" href="/css/dark.css" media="(prefers-color-scheme: dark)">
-    <link rel="stylesheet" href="/css/mobile.css?v=20210823" media="(max-width: 960px)">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
-    <link rel="preload" href="/scripts/main.js?v=20210823" as="script">
-    <link rel="preload" href="/scripts/dark.js?v=20210823" as="script">
-    <link rel="preload" href="/font/Oswald-Regular.ttf" as="font" crossorigin>
-    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
-    <!-- algolia -->
-    
-    <!-- 百度统计  -->
-    
-    <!-- 谷歌统计  -->
-    
-<meta name="generator" content="Hexo 5.4.0"></head>
-
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <script type="text/javascript">
-        if (typeof window.$ == undefined) {
-            console.warn('jquery load from jsdelivr failed, will load local script')
-            document.write('<script src="/lib/jquery.min.js" />')
-        }
-    </script>
-    
-        <!-- header -->
-        <header class="header header-mobile">
-    <!-- top read progress line -->
-    <div class="header-element">
-        <div class="read-progress"></div>
-    </div>
-    <!-- sidebar menu button -->
-    <div class="header-element">
-        
-            <div class="header-sidebar-menu">
-        
-            
-                <div style="padding-left: 1px;">&#xe775;</div>
-            
-        </div>
-    </div>
-    <!-- header actions -->
-    <div class="header-actions">
-        <!-- theme mode switch button -->
-        <span class="header-theme-btn header-element">
-            <i class="fas fa-adjust"></i>
-        </span>
-        <!-- back to home page text -->
-        <span class="home-link header-element">
-            <a href=/>戴铭的博客 - 星光社</a>
-        </span>
-    </div>
-    <!-- toggle banner for post layout -->
-    
-</header>
-
-        <!-- fixed footer -->
-        <footer class="footer-fixed">
-    <!-- back to top button -->
-    <div class="footer-fixed-element">
-        
-            <div class="back-top back-top-hidden">
-        
-        
-            <div>&#xe639;</div>
-        
-        </div>
-    </div>
-</footer>
-
-        <!-- wrapper -->
-        <div class="wrapper">
-            <div class="site-intro" style="
-
-
-
-
-
-
-
-">
-    
-    <!-- 主页  -->
-            
-    <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
-    <div class="site-intro-meta">
-        <!-- 标题  -->
-        <h1 class="intro-title">
-            <!-- 主页  -->
-            
-        </h1>
-        <!-- 副标题 -->
-        <p class="intro-subtitle">
-            <!-- 主页副标题  -->
-            
-        </p>
-        <!-- 文章页 meta -->
-        
-    </div>
-</div>
-
-            <script>
-  // get user agent
-  function getBrowserVersions() {
-    var u = window.navigator.userAgent
-    return {
-      userAgent: u,
-      trident: u.indexOf('Trident') > -1, //IE内核
-      presto: u.indexOf('Presto') > -1, //opera内核
-      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
-      iPad: u.indexOf('iPad') > -1, //是否为iPad
-      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
-      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
-      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
-    }
-  }
-  var browser = {
-    versions: getBrowserVersions(),
-  }
-  console.log('userAgent: ' + browser.versions.userAgent)
-
-  // callback
-  function fontLoaded() {
-    console.log('font loaded')
-    if (document.getElementsByClassName('site-intro-meta')) {
-      document
-        .getElementsByClassName('intro-title')[0]
-        .classList.add('intro-fade-in')
-      document
-        .getElementsByClassName('intro-subtitle')[0]
-        .classList.add('intro-fade-in')
-      var postIntros = document.getElementsByClassName('post-intros')[0]
-      if (postIntros) {
-        postIntros.classList.add('post-fade-in')
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
       }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
     }
-  }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
 
-  // UC不支持跨域，所以直接显示
-  function asyncCb() {
-    if (browser.versions.uc) {
-      console.log('UCBrowser')
-      fontLoaded()
-    } else {
-      WebFont.load({
-        custom: {
-          families: ['Oswald-Regular'],
-        },
-        loading: function () {
-          // 所有字体开始加载
-          // console.log('font loading');
-        },
-        active: function () {
-          // 所有字体已渲染
-          fontLoaded()
-        },
-        inactive: function () {
-          // 字体预加载失败，无效字体或浏览器不支持加载
-          console.log('inactive: timeout')
-          fontLoaded()
-        },
-        timeout: 5000, // Set the timeout to two seconds
-      })
-    }
-  }
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
 
-  function asyncErr() {
-    console.warn('script load from CDN failed, will load local script')
-  }
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
 
-  // load webfont-loader async, and add callback function
-  function async(u, cb, err) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0]
-    o.src = u
-    if (cb) {
-      o.addEventListener(
-        'load',
-        function (e) {
-          cb(null, e)
-        },
-        false
-      )
-    }
-    if (err) {
-      o.addEventListener(
-        'error',
-        function (e) {
-          err(null, e)
-        },
-        false
-      )
-    }
-    s.parentNode.insertBefore(o, s)
-  }
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
 
-  var asyncLoadWithFallBack = function (arr, success, reject) {
-    var currReject = function () {
-      reject()
-      arr.shift()
-      if (arr.length) async(arr[0], success, currReject)
-    }
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
 
-    async(arr[0], success, currReject)
-  }
 
-  asyncLoadWithFallBack(
-    [
-      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
-      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
-      "/lib/webfontloader.min.js",
-    ],
-    asyncCb,
-    asyncErr
-  )
-</script>
-
-            <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
-            <div class="container container-unloaded">
-                <main class="main index-page">
+<body>
+  <div class="wrapper">
     
-        
-        
-        
-        
-            
-        
-        <article class="index-post">
-            <a class="abstract-title" href="/2021/11/23/daiming-swift-pamphlet/">
-                
-                <span class="abstract-title-text">戴铭的 Swift 小册子 4.0</span>
-            </a>
-            <div class="abstract-content">
-                update：内容已更新到 4.0 版本。
-
-新dyld源码透出近期苹果出新系统必然，依苹果 taste，势必要用好技术抛落后技术。漫漫长假我完善了Swift手册内容，字数达到十五万字，内容已压缩压缩再压缩，求全存简，more big, so small 。满满诚意，望有用、值得收藏、求转发。
-come on and learn (੭*ˊᵕˋ)੭
-– 戴·代码之使徒·画终结者·被光选中的人·铭
-
-背景说明越来越多同学打算开始用 Swift 来开发了，可很多人以前都没接触过 Swift。这篇和我以前文章不同的是，本篇只是面向 Swift 零基础的同学，内容主要是一些直接可用的小例子，例子可...
-            </div>
-            <!-- read more -->
-            
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2022/03/24">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/11/23</span>
-                </div>
-                <!-- tags -->
-                
-                    <div class= abstract-tags >
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
+      
+      <span class="navbar-logo-dsc">戴铭的博客</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
     
-        
-        
-            
-        
-        
-        <span class="post-category" data-categories="Programming"">
-            <i class="fas fa-folder post-category-icon"></i>
-            <span class="post-category-text">
-                Programming
-            </span>
-        </span>
+    <a href="/" class="navbar-menu-item">首页 </a>
     
+    <a href="/archives" class="navbar-menu-item">归档 </a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
+    <a href="/tags" class="navbar-menu-item">标签 </a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="Apple">Apple</a>
+    <a href="/categories" class="navbar-menu-item">分类 </a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="Swift">Swift</a>
+    <a href="/about" class="navbar-menu-item">关于 </a>
     
+    <a href="" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column"><div class="card card-content">
+  <h1 class="widget-title">归档</h1>
 </div>
-
-                
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-    
-        
-        
-        
-        
-            
-        
-        <article class="index-post">
-            <a class="abstract-title" href="/2021/07/24/my-little-idea-about-writing-technical-article/">
-                
-                <span class="abstract-title-text">我写技术文章的一点心得</span>
-            </a>
-            <div class="abstract-content">
-                前言非常感谢大家抽出生命中宝贵的一段时间来听我接下来的一大段关于写文章那些事的唠叨。写文章的好处看看《觉醒年代》就知道了。
-这篇文章我不会写一些常说的技巧，比如文章的内容前后要有逻辑关系，内容之间有关联。所讲知识前后的层次要平，不要在某个部分挖掘过深。写作过程中牢牢抓住要表达的内容，不要过于偏离主题。类似这样的技巧不会说。都说一流的人讨论思想、普通人讨论事情、三流的人讨论人，那么为了提高文章高度，除了说些事情，我还打算加些思想的内容。
-大家都习惯去阅读他人人生体验来体验不一样的人生，这样的方式和评头论足一样简单舒服，轻松爽快。而主动去对自己思想进行研究和开发，通过写作输出自己独特的经历和...
-            </div>
-            <!-- read more -->
-            
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2021/07/24">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/07/24</span>
-                </div>
-                <!-- tags -->
-                
-                    <div class= abstract-tags >
-    
-        
-        
-            
-        
-        
-        <span class="post-category" data-categories="Programming"">
-            <i class="fas fa-folder post-category-icon"></i>
-            <span class="post-category-text">
-                Programming
-            </span>
-        </span>
-    
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Apple">Apple</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Swift">Swift</a>
-    
+<div class="archive-timeline">
+  
+  
+  
+  <div class="archive-timeline-tag"><span>2021</span></div>
+  
+  
+  <div class="archive-timeline-item">
+    <div class="archive-timeline-post">
+      <div class="card card-content">
+        <div class="archive-timeline-post-date">2021-11-23</div>
+        <div class="archive-timeline-post-content"><a href="/2021/11/23/daiming-swift-pamphlet/"
+            class="archive-timeline-post-item">戴铭的 Swift 小册子 4.0</a></div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="archive-timeline-item">
+    <div class="archive-timeline-post">
+      <div class="card card-content">
+        <div class="archive-timeline-post-date">2021-07-24</div>
+        <div class="archive-timeline-post-content"><a href="/2021/07/24/my-little-idea-about-writing-technical-article/"
+            class="archive-timeline-post-item">我写技术文章的一点心得</a></div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="archive-timeline-item">
+    <div class="archive-timeline-post">
+      <div class="card card-content">
+        <div class="archive-timeline-post-date">2021-07-13</div>
+        <div class="archive-timeline-post-content"><a href="/2021/07/13/deeply-analyse-autolayout-slides/"
+            class="archive-timeline-post-item">深入剖析Auto Layout的幻灯片</a></div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="archive-timeline-item">
+    <div class="archive-timeline-post">
+      <div class="card card-content">
+        <div class="archive-timeline-post-date">2021-06-08</div>
+        <div class="archive-timeline-post-content"><a href="/2021/06/08/wwdc2021-day1-note/"
+            class="archive-timeline-post-item">WWDC 2021 Day1 笔记</a></div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="archive-timeline-item">
+    <div class="archive-timeline-post">
+      <div class="card card-content">
+        <div class="archive-timeline-post-date">2021-05-22</div>
+        <div class="archive-timeline-post-content"><a href="/2021/05/22/acfun-swift-practice/"
+            class="archive-timeline-post-item">A站 的 Swift 实践</a></div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="archive-timeline-item">
+    <div class="archive-timeline-post">
+      <div class="card card-content">
+        <div class="archive-timeline-post-date">2021-02-21</div>
+        <div class="archive-timeline-post-content"><a href="/2021/02/21/deeply-analyse-quickjs/"
+            class="archive-timeline-post-item">深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</a></div>
+      </div>
+    </div>
+  </div>
+  
 </div>
-
-                
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-    
-        
-        
-        
-        
-            
-        
-        <article class="index-post">
-            <a class="abstract-title" href="/2021/07/13/deeply-analyse-autolayout-slides/">
-                
-                <span class="abstract-title-text">深入剖析Auto Layout的幻灯片</span>
-            </a>
-            <div class="abstract-content">
-                在2015年SegmentFault D-Day活动上分享用的幻灯片，发现以前没有发到博客中，现在补上。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            </div>
-            <!-- read more -->
-            
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2021/07/13">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/07/13</span>
-                </div>
-                <!-- tags -->
-                
-                    <div class= abstract-tags >
-    
-        
-        
-            
-        
-        
-        <span class="post-category" data-categories="Programming"">
-            <i class="fas fa-folder post-category-icon"></i>
-            <span class="post-category-text">
-                Programming
-            </span>
-        </span>
-    
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Autolayout">Autolayout</a>
-    
-</div>
-
-                
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-    
-        
-        
-        
-        
-            
-        
-        <article class="index-post">
-            <a class="abstract-title" href="/2021/06/08/wwdc2021-day1-note/">
-                
-                <span class="abstract-title-text">WWDC 2021 Day1 笔记</span>
-            </a>
-            <div class="abstract-content">
-                WWDC开始了，一周时间会有大量Session可学习，这个页面https://github.com/twostraws/wwdc 收集了来自社区的各种WWDC活动、新闻和教程的链接，随着WWDC的进行，页面内容会不断更新，去年2020年的汇总页在这里https://github.com/twostraws/wwdc/blob/3d3b093218af06465b6b268b23e13e2ad6e2d9f8/README.md 。Apple官方收集的开发者组织活动页面是https://developer.apple.com/wwdc21/beyond-wwdc/ ，其中有SwiftGG翻译...
-            </div>
-            <!-- read more -->
-            
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2021/06/08">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/08</span>
-                </div>
-                <!-- tags -->
-                
-                    <div class= abstract-tags >
-    
-        
-        
-            
-        
-        
-        <span class="post-category" data-categories="Programming"">
-            <i class="fas fa-folder post-category-icon"></i>
-            <span class="post-category-text">
-                Programming
-            </span>
-        </span>
-    
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Apple">Apple</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Swift">Swift</a>
-    
-</div>
-
-                
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-    
-        
-        
-        
-        
-            
-        
-        <article class="index-post">
-            <a class="abstract-title" href="/2021/05/22/acfun-swift-practice/">
-                
-                <span class="abstract-title-text">A站 的 Swift 实践</span>
-            </a>
-            <div class="abstract-content">
-                文章已发在快手大前端公众号，欢迎关注，文章地址如下：
-
-A站 的 Swift 实践 —— 上篇
-A站 的 Swift 实践 —— 下篇
-
-新文章写得贼累。完美错过了一览祖国大好人海的机会，TIANROAST🦔咖啡也没喝成，新买Switch怪物猎人崛起也仅限于炎火村。如果喜欢的话，求转发、“在看”和一个大大的赞。
-下面是正文内容，我转到博客里来。
-背景介绍
-AcFun俗称为“A站”，作为一款二次元内容社区产品，以“认真你就输了”为文化导向，倡导轻松欢快的亚文化。AcFun涵盖了中长视频，小视频，番剧，文章等众多内容，支撑这些内容的大部分功能都选择了用Swift开发，早在2019年，AcF...
-            </div>
-            <!-- read more -->
-            
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2021/06/05">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/05/22</span>
-                </div>
-                <!-- tags -->
-                
-                    <div class= abstract-tags >
-    
-        
-        
-            
-        
-        
-        <span class="post-category" data-categories="Programming"">
-            <i class="fas fa-folder post-category-icon"></i>
-            <span class="post-category-text">
-                Programming
-            </span>
-        </span>
-    
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Apple">Apple</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Swift">Swift</a>
-    
-</div>
-
-                
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-    
-        
-        
-        
-        
-            
-        
-        <article class="index-post">
-            <a class="abstract-title" href="/2021/02/21/deeply-analyse-quickjs/">
-                
-                <span class="abstract-title-text">深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</span>
-            </a>
-            <div class="abstract-content">
-                介绍最近在做 JavaScript 和 Native 打交道的工作，虽然6年前服务端和前端包括 JavaScript 经验也有些，不过如今前端标准和前端引擎也发展了很多，这里做个记录吧。本文会着重介绍 QuickJS，其中会针对 js 语言的一些特性来看这些特性在 QuickJS 是如何解释执行和优化的，能够加深对 js 语言的理解。QuickJS 是在 MIT 许可下发的一个轻量 js 引擎包含 js 的编译器和解释器，支持最新 TC39 的 ECMA-262 标准。QuickJS 和其它 js 引擎的性能对比，可以参看 QuickJS 的 benchmark 对比结果页，从结果看，J...
-            </div>
-            <!-- read more -->
-            
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2021/04/11">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/02/21</span>
-                </div>
-                <!-- tags -->
-                
-                    <div class= abstract-tags >
-    
-        
-        
-            
-        
-        
-        <span class="post-category" data-categories="Programming"">
-            <i class="fas fa-folder post-category-icon"></i>
-            <span class="post-category-text">
-                Programming
-            </span>
-        </span>
-    
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="JavaScript">JavaScript</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Web">Web</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="编译">编译</a>
-    
-</div>
-
-                
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-    
-    <!-- paginator  -->
-    
 </main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
 
-                <!-- profile -->
-                
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>56</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>37</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
             </div>
-            <footer class="footer footer-unloaded">
-    <!-- social  -->
-    
-        <div class="social">
             
+            <div class="sticky-tablet">
+  
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
     
-        
-            
-                <a href="mailto:ming1016@foxmail.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="//github.com/ming1016" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                    
-                    <img class="profile-qr" src="/assets/wechat-qcode.jpeg" />
-                </span>
-            
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="https://weibo.com/allstarming" class="iconfont-archer weibo" target="_blank" title=weibo></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="https://twitter.com/daiming_cn" class="iconfont-archer twitter" target="_blank" title=twitter></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
-            
-        
-    
-
-
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">42</span>
         </div>
+      </a>
     
-    <!-- powered by Hexo  -->
-    <div class="copyright">
-        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+      <a href="/categories/My novel">
+        <div class="categories-list-item">
+          My novel
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My painting">
+        <div class="categories-list-item">
+          My painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+    <a href="\tags\Pencil" title="Pencil"><div class="tags-list-item">Pencil</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+  <article class="card card-content widescreen-archive">
+    <div class="archive-card">
+  <div class="archive-card-header"><i class="iconfont icon-wodebaobiao" style="padding-right: 2px;"></i>归档</div>
+  <div class="archive-card-list">
+    
+    
+    
+      
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2022" class="archive-card-list-item">
+              2022
+              <span class="archive-card-list-item-badge">6</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2021" class="archive-card-list-item">
+              2021
+              <span class="archive-card-list-item-badge">6</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2020" class="archive-card-list-item">
+              2020
+              <span class="archive-card-list-item-badge">5</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2019" class="archive-card-list-item">
+              2019
+              <span class="archive-card-list-item-badge">5</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2018" class="archive-card-list-item">
+              2018
+              <span class="archive-card-list-item-badge">9</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2017" class="archive-card-list-item">
+              2017
+              <span class="archive-card-list-item-badge">9</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2016" class="archive-card-list-item">
+              2016
+              <span class="archive-card-list-item-badge">10</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+      <a href="/archives/2015" class="archive-card-list-item">
+          2015
+          <span class="archive-card-list-item-badge">6</span>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-03-25</div>
+        <a href="/2022/03/25/develop-with-swiftui/"><div class="recent-posts-item-content">在苹果加速器活动做的 SwiftUI 开发分享</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-02-26</div>
+        <a href="/2022/02/26/draw-in-2021/"><div class="recent-posts-item-content">2021年画的</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="archive-card">
+  <div class="archive-card-header"><i class="iconfont icon-wodebaobiao" style="padding-right: 2px;"></i>归档</div>
+  <div class="archive-card-list">
+    
+    
+    
+      
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2022" class="archive-card-list-item">
+              2022
+              <span class="archive-card-list-item-badge">6</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2021" class="archive-card-list-item">
+              2021
+              <span class="archive-card-list-item-badge">6</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2020" class="archive-card-list-item">
+              2020
+              <span class="archive-card-list-item-badge">5</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2019" class="archive-card-list-item">
+              2019
+              <span class="archive-card-list-item-badge">5</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2018" class="archive-card-list-item">
+              2018
+              <span class="archive-card-list-item-badge">9</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2017" class="archive-card-list-item">
+              2017
+              <span class="archive-card-list-item-badge">9</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2016" class="archive-card-list-item">
+              2016
+              <span class="archive-card-list-item-badge">10</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+      <a href="/archives/2015" class="archive-card-list-item">
+          2015
+          <span class="archive-card-list-item-badge">6</span>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+</div>
+          </aside>
+        </div>
+      </div>
     </div>
-    <!-- website approve for Chinese user -->
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2014 -
+          
+          2022
+        </span>
+        <a href="/" class="footer-link">戴铭的博客 </a>
+      </div>
+    </div>
+
     
-        <div class="website-approve">
-            
-                <span id="icp-approve" class="icp-approve">
-                    <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备17011999号</a>
-                </span>
-            
-            
-                
-                <img class="beian-img" src="/assets/beian.png" />
-                <span id="beian-approve" class="beian-approve">
-                    <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999" target="_blank">京公网安备 7011999号</a>
-                </span>
-            
-        </div>
     
-    <!-- 不蒜子  -->
     
-        <div class="busuanzi-container">
-            
-             
-                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
-            
-        </div>
-    	
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
+      </a>
+      <br />
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
 </footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
 
-        </div>
-        <!-- toc -->
-        
-        <!-- sidebar -->
-        <div class="sidebar sidebar-hide">
-    <ul class="sidebar-tabs sidebar-tabs-active-0">
-        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
-        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
-        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
-    </ul>
-    <div class="sidebar-content sidebar-content-show-archive">
-        <div class="sidebar-panel-archives">
-    <!-- 在 ejs 中将 archive 按照时间排序 -->
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-    
-    
-    
-    <div class="total-and-search">
-        <div class="total-archive">
-        Total : 57
-        </div>
-        <!-- search  -->
-        
-    </div>
-    
-    <div class="post-archive">
-    
-        
-            
-            
-            <div class="archive-year"> 2022 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/10</span>
-            <a class="archive-post-title" href="/2022/06/10/use-llvm/">使用 LLVM</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/10</span>
-            <a class="archive-post-title" href="/2022/06/10/wwdc22-notes/">WWDC22 笔记</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/25</span>
-            <a class="archive-post-title" href="/2022/03/25/develop-with-swiftui/">在苹果加速器活动做的 SwiftUI 开发分享</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/26</span>
-            <a class="archive-post-title" href="/2022/02/26/draw-in-2021/">2021年画的</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/10</span>
-            <a class="archive-post-title" href="/2022/02/10/swift-evolutionary-path/">Swift 演进之路</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/03</span>
-            <a class="archive-post-title" href="/2022/01/03/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/">如何用 SwiftUI + Combine + Swift Concurrency Aysnc/Await Actor 欢畅开发</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2021 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/23</span>
-            <a class="archive-post-title" href="/2021/11/23/daiming-swift-pamphlet/">戴铭的 Swift 小册子 4.0</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/24</span>
-            <a class="archive-post-title" href="/2021/07/24/my-little-idea-about-writing-technical-article/">我写技术文章的一点心得</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/13</span>
-            <a class="archive-post-title" href="/2021/07/13/deeply-analyse-autolayout-slides/">深入剖析Auto Layout的幻灯片</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/08</span>
-            <a class="archive-post-title" href="/2021/06/08/wwdc2021-day1-note/">WWDC 2021 Day1 笔记</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span>
-            <a class="archive-post-title" href="/2021/05/22/acfun-swift-practice/">A站 的 Swift 实践</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/21</span>
-            <a class="archive-post-title" href="/2021/02/21/deeply-analyse-quickjs/">深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2020 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/18</span>
-            <a class="archive-post-title" href="/2020/12/18/thinking-in-how-to-speed-up-app/">App 启动提速实践和一些想法</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/04</span>
-            <a class="archive-post-title" href="/2020/05/04/draw-in-2020/">2020年涂图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span>
-            <a class="archive-post-title" href="/2020/04/12/why_write_study_ios_programming_with_daiming_book_and_draw_recently/">我为什么写了《跟戴铭学iOS编程》这本书</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/29</span>
-            <a class="archive-post-title" href="/2020/03/29/apple-system-executable-file-macho/">Apple 操作系统可执行文件 Mach-O</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/05</span>
-            <a class="archive-post-title" href="/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/">在快手做分享、无用类检查、在广州做 SwiftUI 学习笔记分享、InfoQ二叉树视频</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2019 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/28</span>
-            <a class="archive-post-title" href="/2019/12/28/japan-travel/">日本游玩</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/07</span>
-            <a class="archive-post-title" href="/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">如何对 iOS 启动阶段耗时进行分析</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/06</span>
-            <a class="archive-post-title" href="/2019/12/06/draw-in-2019/">2019年涂图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/29</span>
-            <a class="archive-post-title" href="/2019/07/29/ios-map/">iOS 开发舆图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/19</span>
-            <a class="archive-post-title" href="/2019/06/19/white-dragon-class/">白龙班</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2018 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/17</span>
-            <a class="archive-post-title" href="/2018/09/17/produce-slides-of-third-at-swift-conference/">这次swift大会分享准备的幻灯片和 demo</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/14</span>
-            <a class="archive-post-title" href="/2018/09/14/draw-with-procreate-in-ipad-during-pre-half-in-20182/">18年上半年procreate的练习图图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/21</span>
-            <a class="archive-post-title" href="/2018/04/21/deeply-analyse-javascriptcore/">深入剖析 JavaScriptCore</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/07</span>
-            <a class="archive-post-title" href="/2018/04/07/read-snapkit-and-masonry-source-code/">读 SnapKit 和 Masonry 自动布局框架源码</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span>
-            <a class="archive-post-title" href="/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/">Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/24</span>
-            <a class="archive-post-title" href="/2018/01/24/why-swift/">Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/10</span>
-            <a class="archive-post-title" href="/2018/01/10/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/">GIAC 大会上分享的《Swift 将 Web 代码转成60帧满帧原生应用的方案及实践》的幻灯片</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span>
-            <a class="archive-post-title" href="/2018/01/04/baimi/">白芈</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span>
-            <a class="archive-post-title" href="/2018/01/04/huaye/">花野</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2017 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/24</span>
-            <a class="archive-post-title" href="/2017/10/24/how-do-i-improve-the-development/">在滴滴，我是如何指数级提升开发技术的？</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/16</span>
-            <a class="archive-post-title" href="/2017/10/16/html-to-native-htn-development-record/">HTML 转原生 HTN 项目开发记录</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/11</span>
-            <a class="archive-post-title" href="/2017/10/11/deeply-analyse-webkit/">深入剖析 WebKit</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span>
-            <a class="archive-post-title" href="/2017/06/20/deeply-ios-performance-optimization/">深入剖析 iOS 性能优化</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/12</span>
-            <a class="archive-post-title" href="/2017/06/12/gmtc-ios-slimming-practice/">GMTC 上分享滴滴出行 iOS 端瘦身实践的 Slides</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/27</span>
-            <a class="archive-post-title" href="/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/">atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span>
-            <a class="archive-post-title" href="/2017/04/01/build-static-analysis-program-smck-use-swift/">用 Swift 编写的工程代码静态分析命令行工具 smck</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span>
-            <a class="archive-post-title" href="/2017/04/01/slides-of-deeply-analyse-llvm/">深入剖析 iOS 编译 Clang / LLVM 直播的 Slides</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span>
-            <a class="archive-post-title" href="/2017/03/01/deeply-analyse-llvm/">深入剖析 iOS 编译 Clang / LLVM</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2016 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/22</span>
-            <a class="archive-post-title" href="/2016/11/22/how-to-preload-web-in-ios/">iOS预加载Web页面方案</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/17</span>
-            <a class="archive-post-title" href="/2016/11/17/use-swift3-build-macos-program-to-clear-unuse-method/">使用Swift3开发了个macOS的程序可以检测出objc项目中无用方法，然后一键全部清理</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/20</span>
-            <a class="archive-post-title" href="/2016/09/20/draw-with-procreate-in-ipad-during-15-to-16/">15，16年iPad上使用Procreate画的</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/02</span>
-            <a class="archive-post-title" href="/2016/09/02/develop-rss-reader/">使用ReactiveCocoa开发RSS阅读器</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/09</span>
-            <a class="archive-post-title" href="/2016/08/09/how-to-use-reactivecocoa/">iOS函数响应式编程以及ReactiveCocoa的使用</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/21</span>
-            <a class="archive-post-title" href="/2016/07/21/assembleview/">制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/30</span>
-            <a class="archive-post-title" href="/2016/05/30/what-learn-from-reactivecocoa/">从 ReactiveCocoa 中能学到什么？不用此库也能学以致用</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/23</span>
-            <a class="archive-post-title" href="/2016/05/23/try-to-decouple-with-demo/">竭尽全力的去解耦的一次实践，封装一个TableView和一些功能组合的控件</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/04</span>
-            <a class="archive-post-title" href="/2016/04/04/tenth-middle-school/">十中</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/13</span>
-            <a class="archive-post-title" href="/2016/01/13/how-to-use-gcd/">细说 GCD（Grand Central Dispatch）如何用</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2015 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/03</span>
-            <a class="archive-post-title" href="/2015/11/03/deeply-analyse-autolayout/">深入剖析Auto Layout，分析iOS各版本新增特性</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/02</span>
-            <a class="archive-post-title" href="/2015/11/02/draw-with-note-in-ipad-during-15/">15年用iPad上的备忘录画的</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span>
-            <a class="archive-post-title" href="/2015/05/28/macos-app-i-used/">我用过的 macOS 应用</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span>
-            <a class="archive-post-title" href="/2015/04/02/draw-game-of-thrones-with-pencil-during-14/">整理了画的权利的游戏里的角色，有龙女，小恶魔等等</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span>
-            <a class="archive-post-title" href="/2015/04/01/objc-runtime/">Objc Runtime 总结</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span>
-            <a class="archive-post-title" href="/2015/03/12/draw-practice-with-pencil-during-14-to-15/">14和15年间的铅笔画练习</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2014 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span>
-            <a class="archive-post-title" href="/2014/03/01/black-star-blue-map/">黑星蓝图</a>
-        </li>
-    
-    </div>
-</div>
-
-        <div class="sidebar-panel-tags">
-    <div class="sidebar-tags-name">
-        
-            <span class="sidebar-tag-name" data-tags="iOS">
-                <span class="iconfont-archer">&#xe606;</span>
-                iOS
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Apple">
-                <span class="iconfont-archer">&#xe606;</span>
-                Apple
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Swift">
-                <span class="iconfont-archer">&#xe606;</span>
-                Swift
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="AssembleView">
-                <span class="iconfont-archer">&#xe606;</span>
-                AssembleView
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Novel">
-                <span class="iconfont-archer">&#xe606;</span>
-                Novel
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Mach-O">
-                <span class="iconfont-archer">&#xe606;</span>
-                Mach-O
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="smck">
-                <span class="iconfont-archer">&#xe606;</span>
-                smck
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Autolayout">
-                <span class="iconfont-archer">&#xe606;</span>
-                Autolayout
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="JavaScript">
-                <span class="iconfont-archer">&#xe606;</span>
-                JavaScript
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Web">
-                <span class="iconfont-archer">&#xe606;</span>
-                Web
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="编译">
-                <span class="iconfont-archer">&#xe606;</span>
-                编译
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="RSSReader">
-                <span class="iconfont-archer">&#xe606;</span>
-                RSSReader
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="macOS">
-                <span class="iconfont-archer">&#xe606;</span>
-                macOS
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Combine">
-                <span class="iconfont-archer">&#xe606;</span>
-                Combine
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="SwiftUI">
-                <span class="iconfont-archer">&#xe606;</span>
-                SwiftUI
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Concurrency">
-                <span class="iconfont-archer">&#xe606;</span>
-                Concurrency
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="LLVM">
-                <span class="iconfont-archer">&#xe606;</span>
-                LLVM
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Clang">
-                <span class="iconfont-archer">&#xe606;</span>
-                Clang
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Performance optimization">
-                <span class="iconfont-archer">&#xe606;</span>
-                Performance optimization
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Painting">
-                <span class="iconfont-archer">&#xe606;</span>
-                Painting
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Pencil">
-                <span class="iconfont-archer">&#xe606;</span>
-                Pencil
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="GOT">
-                <span class="iconfont-archer">&#xe606;</span>
-                GOT
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="iPad">
-                <span class="iconfont-archer">&#xe606;</span>
-                iPad
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Procreate">
-                <span class="iconfont-archer">&#xe606;</span>
-                Procreate
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="WebKit">
-                <span class="iconfont-archer">&#xe606;</span>
-                WebKit
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Slides">
-                <span class="iconfont-archer">&#xe606;</span>
-                Slides
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Study">
-                <span class="iconfont-archer">&#xe606;</span>
-                Study
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="GCD">
-                <span class="iconfont-archer">&#xe606;</span>
-                GCD
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="UIWebView">
-                <span class="iconfont-archer">&#xe606;</span>
-                UIWebView
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="NSURLProtocol">
-                <span class="iconfont-archer">&#xe606;</span>
-                NSURLProtocol
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="ReactiveCocoa">
-                <span class="iconfont-archer">&#xe606;</span>
-                ReactiveCocoa
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Japan">
-                <span class="iconfont-archer">&#xe606;</span>
-                Japan
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="APP">
-                <span class="iconfont-archer">&#xe606;</span>
-                APP
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="runtime">
-                <span class="iconfont-archer">&#xe606;</span>
-                runtime
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="swift">
-                <span class="iconfont-archer">&#xe606;</span>
-                swift
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Pattern">
-                <span class="iconfont-archer">&#xe606;</span>
-                Pattern
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="book">
-                <span class="iconfont-archer">&#xe606;</span>
-                book
-            </span>
-        
-    </div>
-    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
-    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
-        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
-    </div> 
-    <div class="sidebar-tags-list"></div>
-</div>
-
-        <div class="sidebar-panel-categories">
-    <div class="sidebar-categories-name">
-    
-        <span class="sidebar-category-name" data-categories="Programming">
-            <span class="iconfont-archer">&#xe60a;</span>
-            Programming
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="My-novel">
-            <span class="iconfont-archer">&#xe60a;</span>
-            My-novel
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="My-painting">
-            <span class="iconfont-archer">&#xe60a;</span>
-            My-painting
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="travel">
-            <span class="iconfont-archer">&#xe60a;</span>
-            travel
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="APP">
-            <span class="iconfont-archer">&#xe60a;</span>
-            APP
-        </span>
-    
-    </div>
-    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
-    <div class="sidebar-categories-list"></div>
-</div>
-
-    </div>
-</div>
-
-        <!-- site-meta -->
-        <script>
-    var siteMeta = {
-        url: "http://ming1016.github.io",
-        root: "/",
-        author: "戴铭"
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
     }
+    refreshFsLightbox();
+  }
 </script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
 
-        <!-- import experimental options here -->
-        <!-- Custom Font -->
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
 
-
-        <!-- main func -->
-        <script src="/scripts/main.js?v=20210823"></script>
-        <!-- dark mode -->
-        <script src="/scripts/dark.js?v=20210823"></script>
-        <!-- fancybox -->
-        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
-        <!-- algolia -->
-        
-        <!-- busuanzi -->
-        
-            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-        
-        <!-- CNZZ -->
-        
-        <!-- async load share.js -->
-        
-        <!-- mermaid -->
-        
-    </body>
 </html>

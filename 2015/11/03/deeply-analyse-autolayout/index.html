@@ -1,515 +1,186 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
-    <!-- title -->
-
-
-    
-
-<!-- keywords -->
-
-
-
+<html>
+<meta  lang="zh-Hans" >
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="author" content="戴铭">
-    <meta name="renderer" content="webkit">
-    <meta name="copyright" content="戴铭">
-    
-        <meta name="keywords" content="戴铭,戴铭的博客,iOS,Swift,移动开发,JavaScript,编译">
-    
-    <meta name="description" content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-    <meta name="description" content="先前写到的一篇Masonry心得文章里已经提到了很多AutoLayout相关的知识，这篇我会更加详细的对其知识要点进行分析和整理。 来历一般大家都会认为Auto Layout这个东西是苹果自己搞出来的，其实不然，早在1997年Alan Borning, Kim Marriott, Peter Stuckey等人就发布了《Solving Linear Arithmetic Constraints f">
-<meta property="og:type" content="article">
-<meta property="og:title" content="深入剖析Auto Layout，分析iOS各版本新增特性">
-<meta property="og:url" content="http://ming1016.github.io/2015/11/03/deeply-analyse-autolayout/index.html">
-<meta property="og:site_name" content="戴铭的博客 - 星光社">
-<meta property="og:description" content="先前写到的一篇Masonry心得文章里已经提到了很多AutoLayout相关的知识，这篇我会更加详细的对其知识要点进行分析和整理。 来历一般大家都会认为Auto Layout这个东西是苹果自己搞出来的，其实不然，早在1997年Alan Borning, Kim Marriott, Peter Stuckey等人就发布了《Solving Linear Arithmetic Constraints f">
-<meta property="og:locale">
-<meta property="article:published_time" content="2015-11-03T13:17:54.000Z">
-<meta property="article:modified_time" content="2021-04-11T14:42:09.905Z">
-<meta property="article:author" content="戴铭">
-<meta property="article:tag" content="iOS">
-<meta property="article:tag" content="Autolayout">
-<meta name="twitter:card" content="summary">
-    <meta http-equiv="Cache-control" content="no-cache">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="icon" href="/assets/logo-starming.png">
-    
-    <title>深入剖析Auto Layout，分析iOS各版本新增特性 · 戴铭的博客 - 星光社</title>
-    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-/* This file is meant as a standalone workflow for
-- testing support for link[rel=preload]
-- enabling async CSS loading in browsers that do not support rel=preload
-- applying rel preload css once loaded, whether supported or not.
-*/ -->
-<script>
-    (function (w) {
-        'use strict'
-        // rel=preload support test
-        if (!w.loadCSS) {
-            w.loadCSS = function () {}
-        }
-        // define on the loadCSS obj
-        var rp = (loadCSS.relpreload = {})
-        // rel=preload feature support test
-        // runs once and returns a function for compat purposes
-        rp.support = (function () {
-            var ret
-            try {
-                ret = w.document.createElement('link').relList.supports('preload')
-            } catch (e) {
-                ret = false
-            }
-            return function () {
-                return ret
-            }
-        })()
-
-        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
-        // then change that media back to its intended value on load
-        rp.bindMediaToggle = function (link) {
-            // remember existing media attr for ultimate state, or default to 'all'
-            var finalMedia = link.media || 'all'
-
-            function enableStylesheet() {
-                link.media = finalMedia
-            }
-
-            // bind load handlers to enable media
-            if (link.addEventListener) {
-                link.addEventListener('load', enableStylesheet)
-            } else if (link.attachEvent) {
-                link.attachEvent('onload', enableStylesheet)
-            }
-
-            // Set rel and non-applicable media type to start an async request
-            // note: timeout allows this to happen async to let rendering continue in IE
-            setTimeout(function () {
-                link.rel = 'stylesheet'
-                link.media = 'only x'
-            })
-            // also enable media after 3 seconds,
-            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
-            setTimeout(enableStylesheet, 3000)
-        }
-
-        // loop through link elements in DOM
-        rp.poly = function () {
-            // double check this to prevent external calls from running
-            if (rp.support()) {
-                return
-            }
-            var links = w.document.getElementsByTagName('link')
-            for (var i = 0; i < links.length; i++) {
-                var link = links[i]
-                // qualify links to those with rel=preload and as=style attrs
-                if (
-                    link.rel === 'preload' &&
-                    link.getAttribute('as') === 'style' &&
-                    !link.getAttribute('data-loadcss')
-                ) {
-                    // prevent rerunning on link
-                    link.setAttribute('data-loadcss', true)
-                    // bind listeners to toggle media back
-                    rp.bindMediaToggle(link)
-                }
-            }
-        }
-
-        // if unsupported, run the polyfill
-        if (!rp.support()) {
-            // run once at least
-            rp.poly()
-
-            // rerun poly on an interval until onload
-            var run = w.setInterval(rp.poly, 500)
-            if (w.addEventListener) {
-                w.addEventListener('load', function () {
-                    rp.poly()
-                    w.clearInterval(run)
-                })
-            } else if (w.attachEvent) {
-                w.attachEvent('onload', function () {
-                    rp.poly()
-                    w.clearInterval(run)
-                })
-            }
-        }
-
-        // commonjs
-        if (typeof exports !== 'undefined') {
-            exports.loadCSS = loadCSS
-        } else {
-            w.loadCSS = loadCSS
-        }
-    })(typeof global !== 'undefined' ? global : this)
-</script>
-
-    <style type="text/css">
-    @font-face {
-        font-family: 'Oswald-Regular';
-        src: url("/font/Oswald-Regular.ttf");
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
     }
-
-    body {
-        margin: 0;
-    }
-
-    header,
-    footer,
-    .back-top,
-    .sidebar,
-    .container,
-    .site-intro-meta,
-    .toc-wrapper {
-        display: none;
-    }
-
-    .site-intro {
-        position: relative;
-        z-index: 3;
-        width: 100%;
-        /* height: 50vh; */
-        overflow: hidden;
-    }
-
-    .site-intro-placeholder {
-        position: absolute;
-        z-index: -2;
-        top: 0;
-        left: 0;
-        width: calc(100% + 300px);
-        height: 100%;
-        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
-        background-position: center center;
-        transform: translate3d(-226px, 0, 0);
-        animation: gradient-move 2.5s ease-out 0s infinite;
-    }
-
-    @keyframes gradient-move {
-        0% {
-            transform: translate3d(-226px, 0, 0);
-        }
-        100% {
-            transform: translate3d(0, 0, 0);
-        }
-    }
-</style>
-
-    <link rel="preload" href="/css/style.css?v=20210823" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="/css/dark.css?v=20210823" as="style">
-    <link rel="stylesheet" href="/css/dark.css" media="(prefers-color-scheme: dark)">
-    <link rel="stylesheet" href="/css/mobile.css?v=20210823" media="(max-width: 960px)">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
-    <link rel="preload" href="/scripts/main.js?v=20210823" as="script">
-    <link rel="preload" href="/scripts/dark.js?v=20210823" as="script">
-    <link rel="preload" href="/font/Oswald-Regular.ttf" as="font" crossorigin>
-    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
-    <!-- algolia -->
-    
-    <!-- 百度统计  -->
-    
-    <!-- 谷歌统计  -->
-    
-<meta name="generator" content="Hexo 5.4.0"></head>
-
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <script type="text/javascript">
-        if (typeof window.$ == undefined) {
-            console.warn('jquery load from jsdelivr failed, will load local script')
-            document.write('<script src="/lib/jquery.min.js" />')
-        }
-    </script>
-    
-        <body class="post-body">
-    
-        <!-- header -->
-        <header class="header header-mobile">
-    <!-- top read progress line -->
-    <div class="header-element">
-        <div class="read-progress"></div>
-    </div>
-    <!-- sidebar menu button -->
-    <div class="header-element">
-        
-            <div class="header-sidebar-menu">
-        
-            
-                <div style="padding-left: 1px;">&#xe775;</div>
-            
-        </div>
-    </div>
-    <!-- header actions -->
-    <div class="header-actions">
-        <!-- theme mode switch button -->
-        <span class="header-theme-btn header-element">
-            <i class="fas fa-adjust"></i>
-        </span>
-        <!-- back to home page text -->
-        <span class="home-link header-element">
-            <a href=/>戴铭的博客 - 星光社</a>
-        </span>
-    </div>
-    <!-- toggle banner for post layout -->
-    
-        
-            <div class="banner">
-        
-            <div class="blog-title header-element">
-                <a href="/">戴铭的博客 - 星光社</a>
-            </div>
-            <div class="post-title header-element">
-                <a href="#" class="post-name">深入剖析Auto Layout，分析iOS各版本新增特性</a>
-            </div>
-        </div>
-    
-</header>
-
-        <!-- fixed footer -->
-        <footer class="footer-fixed">
-    <!-- back to top button -->
-    <div class="footer-fixed-element">
-        
-            <div class="back-top back-top-hidden">
-        
-        
-            <div>&#xe639;</div>
-        
-        </div>
-    </div>
-</footer>
-
-        <!-- wrapper -->
-        <div class="wrapper">
-            <div class="site-intro" style="
-
-
-
-
-
-
-
-    height:50vh;
-
-">
-    
-    <!-- 主页  -->
-    
-        
-    <!-- 404页  -->
-            
-    <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/post-bg-starming.jpg)"></div>
-    <div class="site-intro-meta">
-        <!-- 标题  -->
-        <h1 class="intro-title">
-            <!-- 主页  -->
-            
-                深入剖析Auto Layout，分析iOS各版本新增特性
-            <!-- 404 -->
-            
-        </h1>
-        <!-- 副标题 -->
-        <p class="intro-subtitle">
-            <!-- 主页副标题  -->
-            
-                
-            <!-- 404 -->
-            
-        </p>
-        <!-- 文章页 meta -->
-        
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class= post-intro-tags >
-    
-        
-        
-            
-        
-        
-        <span class="post-category" data-categories="Programming"">
-            <i class="fas fa-folder post-category-icon"></i>
-            <span class="post-category-text">
-                Programming
-            </span>
-        </span>
-    
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Autolayout">Autolayout</a>
-    
-</div>
-
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">3.9k</span>阅读时长: <span class="post-count reading-time">15 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <!-- 撰写日期 -->
-                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
-                    <span class="post-intro-time">2015/11/03</span>
-                    <!-- busuanzi -->
-                    
-                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
-                            <span id="busuanzi_value_page_pv"></span>
-                        </span>
-                    
-                    <!-- 文章分享 -->
-                    <span class="share-wrapper">
-                        <span class="iconfont-archer share-icon">&#xe71d;</span>
-                        <span class="share-text">Share</span>
-                        <ul class="share-list">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
-        
-    </div>
-</div>
-
-            <script>
-  // get user agent
-  function getBrowserVersions() {
-    var u = window.navigator.userAgent
-    return {
-      userAgent: u,
-      trident: u.indexOf('Trident') > -1, //IE内核
-      presto: u.indexOf('Presto') > -1, //opera内核
-      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
-      iPad: u.indexOf('iPad') > -1, //是否为iPad
-      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
-      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
-      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
-    }
-  }
-  var browser = {
-    versions: getBrowserVersions(),
-  }
-  console.log('userAgent: ' + browser.versions.userAgent)
-
-  // callback
-  function fontLoaded() {
-    console.log('font loaded')
-    if (document.getElementsByClassName('site-intro-meta')) {
-      document
-        .getElementsByClassName('intro-title')[0]
-        .classList.add('intro-fade-in')
-      document
-        .getElementsByClassName('intro-subtitle')[0]
-        .classList.add('intro-fade-in')
-      var postIntros = document.getElementsByClassName('post-intros')[0]
-      if (postIntros) {
-        postIntros.classList.add('post-fade-in')
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
       }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
     }
-  }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
 
-  // UC不支持跨域，所以直接显示
-  function asyncCb() {
-    if (browser.versions.uc) {
-      console.log('UCBrowser')
-      fontLoaded()
-    } else {
-      WebFont.load({
-        custom: {
-          families: ['Oswald-Regular'],
-        },
-        loading: function () {
-          // 所有字体开始加载
-          // console.log('font loading');
-        },
-        active: function () {
-          // 所有字体已渲染
-          fontLoaded()
-        },
-        inactive: function () {
-          // 字体预加载失败，无效字体或浏览器不支持加载
-          console.log('inactive: timeout')
-          fontLoaded()
-        },
-        timeout: 5000, // Set the timeout to two seconds
-      })
-    }
-  }
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
 
-  function asyncErr() {
-    console.warn('script load from CDN failed, will load local script')
-  }
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
 
-  // load webfont-loader async, and add callback function
-  function async(u, cb, err) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0]
-    o.src = u
-    if (cb) {
-      o.addEventListener(
-        'load',
-        function (e) {
-          cb(null, e)
-        },
-        false
-      )
-    }
-    if (err) {
-      o.addEventListener(
-        'error',
-        function (e) {
-          err(null, e)
-        },
-        false
-      )
-    }
-    s.parentNode.insertBefore(o, s)
-  }
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
 
-  var asyncLoadWithFallBack = function (arr, success, reject) {
-    var currReject = function () {
-      reject()
-      arr.shift()
-      if (arr.length) async(arr[0], success, currReject)
-    }
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
 
-    async(arr[0], success, currReject)
-  }
 
-  asyncLoadWithFallBack(
-    [
-      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
-      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
-      "/lib/webfontloader.min.js",
-    ],
-    asyncCb,
-    asyncErr
-  )
-</script>
-
-            <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
-            <div class="container container-unloaded">
-                <main class="main post-page">
-    <article class="article-entry">
-        <p>先前写到的一篇Masonry心得文章里已经提到了很多AutoLayout相关的知识，这篇我会更加详细的对其知识要点进行分析和整理。</p>
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
+      
+      <span class="navbar-logo-dsc">戴铭的博客</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      深入剖析Auto Layout，分析iOS各版本新增特性
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2015-11-03T13:17:54.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2015-11-03</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Programming/" class="post-meta-link">Programming</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.9k 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/iOS/" class="post-meta-link">iOS</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Autolayout/" class="post-meta-link">Autolayout</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p>先前写到的一篇Masonry心得文章里已经提到了很多AutoLayout相关的知识，这篇我会更加详细的对其知识要点进行分析和整理。</p>
 <h1 id="来历"><a href="#来历" class="headerlink" title="来历"></a>来历</h1><p>一般大家都会认为Auto Layout这个东西是苹果自己搞出来的，其实不然，早在1997年Alan Borning, Kim Marriott, Peter Stuckey等人就发布了《Solving Linear Arithmetic Constraints for User Interface Applications》论文（论文地址：<a target="_blank" rel="noopener" href="http://constraints.cs.washington.edu/solvers/uist97.html">http://constraints.cs.washington.edu/solvers/uist97.html</a>）提出了在解决布局问题的Cassowary constraint-solving算法实现，并且将代码发布在他们搭建的Cassowary网站上<a target="_blank" rel="noopener" href="http://constraints.cs.washington.edu/cassowary/">http://constraints.cs.washington.edu/cassowary/</a>。后来更多开发者用各种语言来写Cassowary，比如说pybee用python写的<a target="_blank" rel="noopener" href="https://github.com/pybee/cassowary">https://github.com/pybee/cassowary</a>。自从它发布以来JavaScript，.NET，JAVA，Smalltall和C++都有相应的库。2011年苹果将这个算法运用到了自家的布局引擎中，美其名曰Auto Layout。</p>
 <h2 id="Cassowary"><a href="#Cassowary" class="headerlink" title="Cassowary"></a>Cassowary</h2><p>Cassowary是个解析工具包，能够有效解析线性等式系统和线性不等式系统，用户的界面中总是会出现不等关系和相等关系，Cassowary开发了一种规则系统可以通过约束来描述视图间关系。约束就是规则，能够表示出一个视图相对于另一个视图的位置。</p>
 <h1 id="Auto-Layout的生命周期"><a href="#Auto-Layout的生命周期" class="headerlink" title="Auto Layout的生命周期"></a>Auto Layout的生命周期</h1><p>进入下面主题前可以先介绍下加入Auto Layout的生命周期。在得到自己的layout之前Layout Engine会将Views，约束，Priorities（优先级），instrinsicContentSize（主要是UILabel,UIImageView等）通过计算转换成最终的效果。在Layout Engine里会有约束变化到Deferred Layout Pass再到应用Run Loop再回到约束变化这样的循环机制。</p>
@@ -526,30 +197,65 @@
 <li>在重写layoutSubviews()时需要非常小心。</li>
 </ul>
 <h1 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h1><p>Auto Layout你的视图层级里所有视图通过放置在它们里面的约束来动态计算的它们的大小和位置。一般控件需要四个约束决定位置大小，如果定义了intrinsicContentSize的比如UILabel只需要两个约束即可。</p>
-<h2 id="约束方程式"><a href="#约束方程式" class="headerlink" title="约束方程式"></a>约束方程式</h2><p>view1.attribute1 = mutiplier * view2.attribute2 + constant</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redButton.left = <span class="number">1.0</span> * yellowLabel.right + <span class="number">10.0</span> <span class="comment">//红色按钮的左侧距离黄色label有10个point</span></span><br></pre></td></tr></table></figure>
-<h2 id="使用API添加约束"><a href="#使用API添加约束" class="headerlink" title="使用API添加约束"></a>使用API添加约束</h2><p>使用NSLayoutConstraint类（最低支持iOS6）添加约束。NSLayoutConstraint官方参考：<a target="_blank" rel="noopener" href="https://developer.apple.com/library/prerelease/ios/documentation/AppKit/Reference/NSLayoutConstraint_Class/index.html">https://developer.apple.com/library/prerelease/ios/documentation/AppKit/Reference/NSLayoutConstraint_Class/index.html</a><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[<span class="built_in">NSLayoutContraint</span> constraintWithItem:view1</span><br><span class="line">                                                 attribute:<span class="built_in">NSLayoutAttributeBottom</span></span><br><span class="line">                                               relatedBy:<span class="built_in">NSLayoutRelationEqual</span></span><br><span class="line">                                                    toItem:view2</span><br><span class="line">                                                 attribute:<span class="built_in">NSLayoutAttributeBottom</span></span><br><span class="line">                                                multiplier:<span class="number">1.0</span></span><br><span class="line">                                                 constant:<span class="number">-5</span>]</span><br></pre></td></tr></table></figure><br>把约束用约束中两个view的共同父视图或者两视图中层次高视图的- (void)addConstraint:(NSLayoutConstraint *)constraint方法将约束添加进去。</p>
-<h2 id="使用VFL语言添加约束"><a href="#使用VFL语言添加约束" class="headerlink" title="使用VFL语言添加约束"></a>使用VFL语言添加约束</h2><p>先举个简单的例子并排两个view添加约束<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="built_in">NSLayoutConstraint</span> constraintWithVisualFormat:@“[view1]-[view2]<span class="string">&quot;</span></span><br><span class="line"><span class="string">                                                                  options:0</span></span><br><span class="line"><span class="string">                                                                  metrics:nil</span></span><br><span class="line"><span class="string">                                                                     views:viewsDictionary;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="约束方程式"><a href="#约束方程式" class="headerlink" title="约束方程式"></a>约束方程式</h2><p>view1.attribute1 &#x3D; mutiplier * view2.attribute2 + constant</p>
+<pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec">redButton<span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token number">1.0</span> <span class="token operator">*</span> yellowLabel<span class="token punctuation">.</span>right <span class="token operator">+</span> <span class="token number">10.0</span> <span class="token comment">//红色按钮的左侧距离黄色label有10个point</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="使用API添加约束"><a href="#使用API添加约束" class="headerlink" title="使用API添加约束"></a>使用API添加约束</h2><p>使用NSLayoutConstraint类（最低支持iOS6）添加约束。NSLayoutConstraint官方参考：<a target="_blank" rel="noopener" href="https://developer.apple.com/library/prerelease/ios/documentation/AppKit/Reference/NSLayoutConstraint_Class/index.html">https://developer.apple.com/library/prerelease/ios/documentation/AppKit/Reference/NSLayoutConstraint_Class/index.html</a></p>
+<pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token punctuation">[</span>NSLayoutContraint constraintWithItem<span class="token punctuation">:</span>view1
+                                                 attribute<span class="token punctuation">:</span>NSLayoutAttributeBottom
+                                               relatedBy<span class="token punctuation">:</span>NSLayoutRelationEqual
+                                                    toItem<span class="token punctuation">:</span>view2
+                                                 attribute<span class="token punctuation">:</span>NSLayoutAttributeBottom
+                                                multiplier<span class="token punctuation">:</span><span class="token number">1.0</span>
+                                                 constant<span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>把约束用约束中两个view的共同父视图或者两视图中层次高视图的- (void)addConstraint:(NSLayoutConstraint *)constraint方法将约束添加进去。</p>
+<h2 id="使用VFL语言添加约束"><a href="#使用VFL语言添加约束" class="headerlink" title="使用VFL语言添加约束"></a>使用VFL语言添加约束</h2><p>先举个简单的例子并排两个view添加约束</p>
+<pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token punctuation">[</span>NSLayoutConstraint constraintWithVisualFormat<span class="token punctuation">:</span><span class="token operator">@</span>“<span class="token punctuation">[</span>view1<span class="token punctuation">]</span><span class="token operator">-</span><span class="token punctuation">[</span>view2<span class="token punctuation">]</span>"
+                                                                  options<span class="token punctuation">:</span><span class="token number">0</span>
+                                                                  metrics<span class="token punctuation">:</span>nil
+                                                                     views<span class="token punctuation">:</span>viewsDictionary<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>viewDictionary可以通过NSDictionaryOfVariableBindings方法得到</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIView</span> *view1 = [[<span class="built_in">UIView</span> alloc] init];</span><br><span class="line"><span class="built_in">UIView</span> *view2 = [[<span class="built_in">UIView</span> alloc] init];</span><br><span class="line">viewsDictionary = <span class="built_in">NSDictionaryOfVariableBindings</span>(view1,view2);</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec">UIView <span class="token operator">*</span>view1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>UIView alloc<span class="token punctuation">]</span> init<span class="token punctuation">]</span><span class="token punctuation">;</span>
+UIView <span class="token operator">*</span>view2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>UIView alloc<span class="token punctuation">]</span> init<span class="token punctuation">]</span><span class="token punctuation">;</span>
+viewsDictionary <span class="token operator">=</span> <span class="token function">NSDictionaryOfVariableBindings</span><span class="token punctuation">(</span>view1<span class="token punctuation">,</span>view2<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="options"><a href="#options" class="headerlink" title="options"></a>options</h3><p>可以给这个位掩码传入NSLayoutFormatAlignAllTop使它们顶部对齐，这个值的默认值是NSLayoutFormatDirectionLeadingToTrailing从左到右。可以使用NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom 表示两个视图的顶部和底部约束相同。</p>
-<h3 id="metrics"><a href="#metrics" class="headerlink" title="metrics"></a>metrics</h3><p>这个参数作用是替换VFL语句中对应的值<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CGRect</span> viewFrame = <span class="built_in">CGRectMake</span>(<span class="number">50</span>, <span class="number">50</span>, <span class="number">100</span>, <span class="number">100</span>);</span><br><span class="line"><span class="built_in">NSDictionary</span> *views = <span class="built_in">NSDictionaryOfVariableBindings</span>(view1, view2);</span><br><span class="line"><span class="built_in">NSDictionary</span> *metrics = @&#123;<span class="string">@&quot;left&quot;</span>: @(<span class="built_in">CGRectGetMinX</span>(viewFrame)),</span><br><span class="line">                                           <span class="string">@&quot;top&quot;</span>: @(<span class="built_in">CGRectGetMinY</span>(viewFrame)),</span><br><span class="line">                                        <span class="string">@&quot;width&quot;</span>: @(<span class="built_in">CGRectGetWidth</span>(viewFrame)),</span><br><span class="line">                                       <span class="string">@&quot;height&quot;</span>: @(<span class="built_in">CGRectGetHeight</span>(viewFrame))&#125;;</span><br><span class="line">[view1 addConstraints:[<span class="built_in">NSLayoutConstraint</span> constraintsWithVisualFormat:<span class="string">@&quot;H:|-left-[view(&gt;=width)]&quot;</span> options:<span class="number">0</span> metrics:metrics views:views]];</span><br></pre></td></tr></table></figure><br>使用NSDictionaryOfVariableBindings(…)快速创建<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSNumber</span> *left = @<span class="number">50</span>;</span><br><span class="line"><span class="built_in">NSNumber</span> *top = @<span class="number">50</span>;</span><br><span class="line"><span class="built_in">NSNumber</span> *width = @<span class="number">100</span>;</span><br><span class="line"><span class="built_in">NSNumber</span> *height = @<span class="number">100</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSDictionary</span> *views = <span class="built_in">NSDictionaryOfVariableBindings</span>(view1, view2);</span><br><span class="line"><span class="built_in">NSDictionary</span> *metrics = <span class="built_in">NSDictionaryOfVariableBindings</span>(left, top, width, height);</span><br><span class="line"></span><br><span class="line">[view1 addConstraints:[<span class="built_in">NSLayoutConstraint</span> constraintsWithVisualFormat:<span class="string">@&quot;H:|-left-[view(&gt;=width)]&quot;</span> options:<span class="number">0</span> metrics:metrics views:views]];</span><br></pre></td></tr></table></figure></p>
+<h3 id="metrics"><a href="#metrics" class="headerlink" title="metrics"></a>metrics</h3><p>这个参数作用是替换VFL语句中对应的值</p>
+<pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec">CGRect viewFrame <span class="token operator">=</span> <span class="token function">CGRectMake</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+NSDictionary <span class="token operator">*</span>views <span class="token operator">=</span> <span class="token function">NSDictionaryOfVariableBindings</span><span class="token punctuation">(</span>view1<span class="token punctuation">,</span> view2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+NSDictionary <span class="token operator">*</span>metrics <span class="token operator">=</span> <span class="token operator">@</span><span class="token punctuation">&#123;</span><span class="token string">@"left"</span><span class="token punctuation">:</span> <span class="token operator">@</span><span class="token punctuation">(</span><span class="token function">CGRectGetMinX</span><span class="token punctuation">(</span>viewFrame<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                                           <span class="token string">@"top"</span><span class="token punctuation">:</span> <span class="token operator">@</span><span class="token punctuation">(</span><span class="token function">CGRectGetMinY</span><span class="token punctuation">(</span>viewFrame<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                                        <span class="token string">@"width"</span><span class="token punctuation">:</span> <span class="token operator">@</span><span class="token punctuation">(</span><span class="token function">CGRectGetWidth</span><span class="token punctuation">(</span>viewFrame<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                                       <span class="token string">@"height"</span><span class="token punctuation">:</span> <span class="token operator">@</span><span class="token punctuation">(</span><span class="token function">CGRectGetHeight</span><span class="token punctuation">(</span>viewFrame<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">[</span>view1 addConstraints<span class="token punctuation">:</span><span class="token punctuation">[</span>NSLayoutConstraint constraintsWithVisualFormat<span class="token punctuation">:</span><span class="token string">@"H:|-left-[view(>=width)]"</span> options<span class="token punctuation">:</span><span class="token number">0</span> metrics<span class="token punctuation">:</span>metrics views<span class="token punctuation">:</span>views<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>使用NSDictionaryOfVariableBindings(…)快速创建</p>
+<pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec">NSNumber <span class="token operator">*</span>left <span class="token operator">=</span> <span class="token operator">@</span><span class="token number">50</span><span class="token punctuation">;</span>
+NSNumber <span class="token operator">*</span>top <span class="token operator">=</span> <span class="token operator">@</span><span class="token number">50</span><span class="token punctuation">;</span>
+NSNumber <span class="token operator">*</span>width <span class="token operator">=</span> <span class="token operator">@</span><span class="token number">100</span><span class="token punctuation">;</span>
+NSNumber <span class="token operator">*</span>height <span class="token operator">=</span> <span class="token operator">@</span><span class="token number">100</span><span class="token punctuation">;</span>
+
+NSDictionary <span class="token operator">*</span>views <span class="token operator">=</span> <span class="token function">NSDictionaryOfVariableBindings</span><span class="token punctuation">(</span>view1<span class="token punctuation">,</span> view2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+NSDictionary <span class="token operator">*</span>metrics <span class="token operator">=</span> <span class="token function">NSDictionaryOfVariableBindings</span><span class="token punctuation">(</span>left<span class="token punctuation">,</span> top<span class="token punctuation">,</span> width<span class="token punctuation">,</span> height<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">[</span>view1 addConstraints<span class="token punctuation">:</span><span class="token punctuation">[</span>NSLayoutConstraint constraintsWithVisualFormat<span class="token punctuation">:</span><span class="token string">@"H:|-left-[view(>=width)]"</span> options<span class="token punctuation">:</span><span class="token number">0</span> metrics<span class="token punctuation">:</span>metrics views<span class="token punctuation">:</span>views<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="VFL几个基本例子"><a href="#VFL几个基本例子" class="headerlink" title="VFL几个基本例子"></a>VFL几个基本例子</h3><ul>
 <li>[view1(50)]-10-[view2(100)] 表示view1宽50，view2宽100，间隔10</li>
-<li>[view1(&gt;=50@750)] 表示view1宽度大于50，约束条件优先级为750（优先级越大优先执行该约束，最大1000）</li>
-<li>V:[view1][view2(==view1)] 表示按照竖直排，上面是view1下面是一个和它一样大的view2</li>
-<li>H:|-[view1]-[view2]-[view3(&gt;=20)]-| 表示按照水平排列，|表示父视图，各个视图之间按照默认宽度来排列</li>
+<li>[view1(&gt;&#x3D;50@750)] 表示view1宽度大于50，约束条件优先级为750（优先级越大优先执行该约束，最大1000）</li>
+<li>V:[view1][view2(&#x3D;&#x3D;view1)] 表示按照竖直排，上面是view1下面是一个和它一样大的view2</li>
+<li>H:|-[view1]-[view2]-[view3(&gt;&#x3D;20)]-| 表示按照水平排列，|表示父视图，各个视图之间按照默认宽度来排列</li>
 </ul>
-<h2 id="VFL介绍"><a href="#VFL介绍" class="headerlink" title="VFL介绍"></a>VFL介绍</h2><p>无论使用哪种方法创建约束都是NSLayoutConstraint类的成员，每个约束都会在一个Objective-C对象中存储y = mx + b规则，然后通过Auto Layout引擎来表达该规则，VFL也不例外。VFL由一个描述布局的文字字符串组成，文本会指出间隔，不等量和优先级。官方对其的介绍：Visual Format Language <a target="_blank" rel="noopener" href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/VisualFormatLanguage.html">https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/VisualFormatLanguage.html</a></p>
+<h2 id="VFL介绍"><a href="#VFL介绍" class="headerlink" title="VFL介绍"></a>VFL介绍</h2><p>无论使用哪种方法创建约束都是NSLayoutConstraint类的成员，每个约束都会在一个Objective-C对象中存储y &#x3D; mx + b规则，然后通过Auto Layout引擎来表达该规则，VFL也不例外。VFL由一个描述布局的文字字符串组成，文本会指出间隔，不等量和优先级。官方对其的介绍：Visual Format Language <a target="_blank" rel="noopener" href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/VisualFormatLanguage.html">https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/VisualFormatLanguage.html</a></p>
 <h2 id="VFL的语法"><a href="#VFL的语法" class="headerlink" title="VFL的语法"></a>VFL的语法</h2><ul>
 <li>标准间隔：[button]-[textField]</li>
-<li>宽约束：[button(&gt;=50)]</li>
+<li>宽约束：[button(&gt;&#x3D;50)]</li>
 <li>与父视图的关系：|-50-[purpleBox]-50-|</li>
 <li>垂直布局：V:[topField]-10-[bottomField]</li>
 <li>Flush Views：[maroonView][buleView]</li>
 <li>权重：[button(100@20)]</li>
-<li>等宽：[button(==button2)]</li>
-<li>Multiple Predicates：[flexibleButton(&gt;=70,&lt;=100)]</li>
+<li>等宽：[button(&#x3D;&#x3D;button2)]</li>
+<li>Multiple Predicates：[flexibleButton(&gt;&#x3D;70,&lt;&#x3D;100)]</li>
 </ul>
 <h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>创建这种字符串时需要注意一下几点：</p>
 <ul>
@@ -563,63 +269,69 @@
 <li>注意禁用Autoresizing Masks。对于每个需要使用Auto Layout的视图需要调用setTranslatesAutoresizingMaskIntoConstraints:NO</li>
 <li>VFL语句里不能包含空格和&gt;，&lt;这样的约束</li>
 <li>布局原理是由外向里布局，最先屏幕尺寸，再一层一层往里决定各个元素大小。</li>
-<li>删除视图时直接使用removeConstraint和removeConstraints时需要注意这样删除是没法删除视图不支持的约束导致view中还包含着那个约束（使用第三方库时需要特别注意下）。解决这个的办法就是添加约束时用一个局部变量保存下，删除时进行比较删掉和先前那个，还有个办法就是设置标记，constraint.identifier = @“What you want to call”。</li>
+<li>删除视图时直接使用removeConstraint和removeConstraints时需要注意这样删除是没法删除视图不支持的约束导致view中还包含着那个约束（使用第三方库时需要特别注意下）。解决这个的办法就是添加约束时用一个局部变量保存下，删除时进行比较删掉和先前那个，还有个办法就是设置标记，constraint.identifier &#x3D; @“What you want to call”。</li>
 </ul>
 <h1 id="布局约束规则"><a href="#布局约束规则" class="headerlink" title="布局约束规则"></a>布局约束规则</h1><p>表达布局约束的规则可以使用一些简单的数学术语，如下表</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">类型</th>
-<th style="text-align:left">描述</th>
-<th style="text-align:left">值</th>
+<th align="left">类型</th>
+<th align="left">描述</th>
+<th align="left">值</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:left">属性</td>
-<td style="text-align:left">视图位置</td>
-<td style="text-align:left">NSLayoutAttributeLeft, NSLayoutAttributeRight, NSLayoutAttributeTop, NSLayoutAttributeBottom</td>
+<tbody><tr>
+<td align="left">属性</td>
+<td align="left">视图位置</td>
+<td align="left">NSLayoutAttributeLeft, NSLayoutAttributeRight, NSLayoutAttributeTop, NSLayoutAttributeBottom</td>
 </tr>
 <tr>
-<td style="text-align:left">属性</td>
-<td style="text-align:left">视图前面后面</td>
-<td style="text-align:left">NSLayoutAttributeLeading, NSLayoutAttributeTrailing</td>
+<td align="left">属性</td>
+<td align="left">视图前面后面</td>
+<td align="left">NSLayoutAttributeLeading, NSLayoutAttributeTrailing</td>
 </tr>
 <tr>
-<td style="text-align:left">属性</td>
-<td style="text-align:left">视图的宽度和高度</td>
-<td style="text-align:left">NSLayoutAttributeWidth, NSLayoutAttributeHeight</td>
+<td align="left">属性</td>
+<td align="left">视图的宽度和高度</td>
+<td align="left">NSLayoutAttributeWidth, NSLayoutAttributeHeight</td>
 </tr>
 <tr>
-<td style="text-align:left">属性</td>
-<td style="text-align:left">视图中心</td>
-<td style="text-align:left">NSLayoutAttributeCenterX, NSLayoutAttributeCenterY</td>
+<td align="left">属性</td>
+<td align="left">视图中心</td>
+<td align="left">NSLayoutAttributeCenterX, NSLayoutAttributeCenterY</td>
 </tr>
 <tr>
-<td style="text-align:left">属性</td>
-<td style="text-align:left">视图的基线，在视图底部上方放置文字的地方</td>
-<td style="text-align:left">NSLayoutAttributeBaseline</td>
+<td align="left">属性</td>
+<td align="left">视图的基线，在视图底部上方放置文字的地方</td>
+<td align="left">NSLayoutAttributeBaseline</td>
 </tr>
 <tr>
-<td style="text-align:left">属性</td>
-<td style="text-align:left">占位符，在与另一个约束的关系中没有用到某个属性时可以使用占位符</td>
-<td style="text-align:left">NSLayoutAttributeNotAnAttribute</td>
+<td align="left">属性</td>
+<td align="left">占位符，在与另一个约束的关系中没有用到某个属性时可以使用占位符</td>
+<td align="left">NSLayoutAttributeNotAnAttribute</td>
 </tr>
 <tr>
-<td style="text-align:left">关系</td>
-<td style="text-align:left">允许将属性通过等式和不等式相互关联</td>
-<td style="text-align:left">NSLayoutRelationLessThanOrEqual, NSLayoutRelationEqual, NSLayoutRelationGreaterThanOrEqual</td>
+<td align="left">关系</td>
+<td align="left">允许将属性通过等式和不等式相互关联</td>
+<td align="left">NSLayoutRelationLessThanOrEqual, NSLayoutRelationEqual, NSLayoutRelationGreaterThanOrEqual</td>
 </tr>
 <tr>
-<td style="text-align:left">数学运算</td>
-<td style="text-align:left">每个约束的乘数和相加性常数</td>
-<td style="text-align:left">CGFloat值</td>
+<td align="left">数学运算</td>
+<td align="left">每个约束的乘数和相加性常数</td>
+<td align="left">CGFloat值</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <h1 id="约束层级"><a href="#约束层级" class="headerlink" title="约束层级"></a>约束层级</h1><p>约束引用两视图时，这两个视图需要属于同一个视图层次结构，对于引用两个视图的约束只有两个情况是允许的。第一种是一个视图是另一个视图的父视图，第二个情况是两个视图在一个窗口下有一个非nil的共同父视图。</p>
-<h1 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h1><p>哪个约束优先级高会先满足其约束，系统内置优先级枚举值UILayoutPriority<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> &#123;</span><br><span class="line">    <span class="built_in">UILayoutPriorityRequired</span> = <span class="number">1000</span>, <span class="comment">//默认的优先级，意味着默认约束一旦冲突就会crash</span></span><br><span class="line">    <span class="built_in">UILayoutPriorityDefaultHigh</span> = <span class="number">750</span>,</span><br><span class="line">    <span class="built_in">UILayoutPriorityDefaultLow</span> = <span class="number">250</span>,</span><br><span class="line">    <span class="built_in">UILayoutPriorityFittingSizeLevel</span> = <span class="number">50</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">float</span> <span class="built_in">UILayoutPriority</span>;</span><br></pre></td></tr></table></figure></p>
-<h1 id="IntrinsicContentSize-Compression-Resistance-Priority-Hugging-Priority"><a href="#IntrinsicContentSize-Compression-Resistance-Priority-Hugging-Priority" class="headerlink" title="IntrinsicContentSize / Compression Resistance Priority / Hugging Priority"></a>IntrinsicContentSize / Compression Resistance Priority / Hugging Priority</h1><p>具有instrinsic content size的控件，比如UILabel，UIButton，选择控件，进度条和分段等等，可以自己计算自己的大小，比如label设置text和font后大小是可以计算得到的。这时可以通过设置Hugging priority让这些控件不要大于某个设定的值,默认优先级为250。设置Content Compression Resistance就是让控件不要小于某个设定的值，默认优先级为750。加这些值可以当作是加了个额外的约束值来约束宽。</p>
+<h1 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h1><p>哪个约束优先级高会先满足其约束，系统内置优先级枚举值UILayoutPriority</p>
+<pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token keyword">enum</span> <span class="token punctuation">&#123;</span>
+    UILayoutPriorityRequired <span class="token operator">=</span> <span class="token number">1000</span><span class="token punctuation">,</span> <span class="token comment">//默认的优先级，意味着默认约束一旦冲突就会crash</span>
+    UILayoutPriorityDefaultHigh <span class="token operator">=</span> <span class="token number">750</span><span class="token punctuation">,</span>
+    UILayoutPriorityDefaultLow <span class="token operator">=</span> <span class="token number">250</span><span class="token punctuation">,</span>
+    UILayoutPriorityFittingSizeLevel <span class="token operator">=</span> <span class="token number">50</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">typedef</span> <span class="token keyword">float</span> UILayoutPriority<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="IntrinsicContentSize-x2F-Compression-Resistance-Priority-x2F-Hugging-Priority"><a href="#IntrinsicContentSize-x2F-Compression-Resistance-Priority-x2F-Hugging-Priority" class="headerlink" title="IntrinsicContentSize &#x2F; Compression Resistance Priority &#x2F; Hugging Priority"></a>IntrinsicContentSize &#x2F; Compression Resistance Priority &#x2F; Hugging Priority</h1><p>具有instrinsic content size的控件，比如UILabel，UIButton，选择控件，进度条和分段等等，可以自己计算自己的大小，比如label设置text和font后大小是可以计算得到的。这时可以通过设置Hugging priority让这些控件不要大于某个设定的值,默认优先级为250。设置Content Compression Resistance就是让控件不要小于某个设定的值，默认优先级为750。加这些值可以当作是加了个额外的约束值来约束宽。</p>
 <h1 id="布局过程"><a href="#布局过程" class="headerlink" title="布局过程"></a>布局过程</h1><p>updateConstraints -&gt; layoutSubViews -&gt; drawRect</p>
 <h2 id="viewDidLayoutSubviews，-layoutSubviews"><a href="#viewDidLayoutSubviews，-layoutSubviews" class="headerlink" title="viewDidLayoutSubviews，-layoutSubviews"></a>viewDidLayoutSubviews，-layoutSubviews</h2><p>使用Auto Layout的view会在viewDidLayoutSubviews或－layoutSubview调用super转换成具有正确显示的frame值。</p>
 <h2 id="View的改变会调用哪些方法"><a href="#View的改变会调用哪些方法" class="headerlink" title="View的改变会调用哪些方法"></a>View的改变会调用哪些方法</h2><ul>
@@ -632,9 +344,12 @@
 <li>Unsatisfiable Layouts：约束冲突，同一时刻约束没法同时满足。系统发现时会先检测那些冲突的约束，然后会一直拆掉冲突的约束再检查布局直到找到合适的布局，最后日志会将冲突的约束和拆掉的约束打印在控制台上。</li>
 <li>Ambiguous Layouts：约束有缺失，比如说位置或者大小没有全指定到。还有种情况就是两个冲突的约束的权重是一样的就会崩。</li>
 <li>Logical Errors：布局中的逻辑错误。</li>
-<li>不含视图项的约束不合法，每个约束至少需要引用一个视图，不然会崩。在删除视图时一定要注意。<h2 id="Debugger"><a href="#Debugger" class="headerlink" title="Debugger"></a>Debugger</h2></li>
-<li>po [[UIWindow keyWindow] _autolayoutTrace]<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2>参考官方文档：<a target="_blank" rel="noopener" href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/TypesofErrors.html">https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/TypesofErrors.html</a></li>
+<li>不含视图项的约束不合法，每个约束至少需要引用一个视图，不然会崩。在删除视图时一定要注意。</li>
 </ul>
+<h2 id="Debugger"><a href="#Debugger" class="headerlink" title="Debugger"></a>Debugger</h2><ul>
+<li>po [[UIWindow keyWindow] _autolayoutTrace]</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>参考官方文档：<a target="_blank" rel="noopener" href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/TypesofErrors.html">https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/TypesofErrors.html</a></p>
 <h1 id="容易出问题的Bug-Case"><a href="#容易出问题的Bug-Case" class="headerlink" title="容易出问题的Bug Case"></a>容易出问题的Bug Case</h1><ul>
 <li>无共同父视图的视图之间相互添加约束会有问题。</li>
 <li>调用了setNeedsLayout后不能通过frame改变视图和控件</li>
@@ -650,25 +365,47 @@
 <h2 id="iOS7"><a href="#iOS7" class="headerlink" title="iOS7"></a>iOS7</h2><ul>
 <li>NavigationBar,TabBar和ToolBar的translucent属性默认为YES，当前ViewController的高度是整个屏幕的高度，为了确保不被这些Bar覆盖可以在布局中使用topLayoutGuide和bottomLayoutGuide属性。</li>
 </ul>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="built_in">NSLayoutConstraint</span> constraintsWithVisualFormat:<span class="string">@&quot;V:[topLayoutGuide]-[view1]&quot;</span> options:<span class="number">0</span> metrics:<span class="literal">nil</span> views:view2];</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token punctuation">[</span>NSLayoutConstraint constraintsWithVisualFormat<span class="token punctuation">:</span><span class="token string">@"V:[topLayoutGuide]-[view1]"</span> options<span class="token punctuation">:</span><span class="token number">0</span> metrics<span class="token punctuation">:</span>nil views<span class="token punctuation">:</span>view2<span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h2 id="iOS8"><a href="#iOS8" class="headerlink" title="iOS8"></a>iOS8</h2><ul>
 <li>Self Sizing Cells <a target="_blank" rel="noopener" href="http://www.appcoda.com/self-sizing-cells/">http://www.appcoda.com/self-sizing-cells/</a></li>
 <li>UIViewController新增两个方法，用来处理UITraitEnvironment协议，UIKit里有UIScreen，UIViewController，UIView和UIPresentationController支持这个协议，当视图traitCollection改变时UIViewController时可以捕获到这个消息进行处理的。</li>
 </ul>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)setOverrideTraitCollection:(<span class="built_in">UITraitCollection</span> *)collection forChildViewController:(<span class="built_in">UIViewController</span> *)childViewController <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</span><br><span class="line">- (<span class="built_in">UITraitCollection</span> *)overrideTraitCollectionForChildViewController:(<span class="built_in">UIViewController</span> *)childViewController <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token operator">-</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>setOverrideTraitCollection<span class="token punctuation">:</span><span class="token punctuation">(</span>UITraitCollection <span class="token operator">*</span><span class="token punctuation">)</span>collection forChildViewController<span class="token punctuation">:</span><span class="token punctuation">(</span>UIViewController <span class="token operator">*</span><span class="token punctuation">)</span>childViewController <span class="token function">NS_AVAILABLE_IOS</span><span class="token punctuation">(</span><span class="token number">8</span>_0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">-</span> <span class="token punctuation">(</span>UITraitCollection <span class="token operator">*</span><span class="token punctuation">)</span>overrideTraitCollectionForChildViewController<span class="token punctuation">:</span><span class="token punctuation">(</span>UIViewController <span class="token operator">*</span><span class="token punctuation">)</span>childViewController <span class="token function">NS_AVAILABLE_IOS</span><span class="token punctuation">(</span><span class="token number">8</span>_0<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <ul>
 <li>Size Class的出现UIViewController提供了一组新协议来支持UIContentContainer</li>
 </ul>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)systemLayoutFittingSizeDidChangeForChildContentContainer:(<span class="keyword">id</span> )container <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</span><br><span class="line">- (<span class="built_in">CGSize</span>)sizeForChildContentContainer:(<span class="keyword">id</span> )container withParentContainerSize:(<span class="built_in">CGSize</span>)parentSize <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</span><br><span class="line">- (<span class="keyword">void</span>)viewWillTransitionToSize:(<span class="built_in">CGSize</span>)size withTransitionCoordinator:(<span class="keyword">id</span> )coordinator <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</span><br><span class="line">- (<span class="keyword">void</span>)willTransitionToTraitCollection:(<span class="built_in">UITraitCollection</span> *)newCollection withTransitionCoordinator:(<span class="keyword">id</span> )coordinator <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token operator">-</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>systemLayoutFittingSizeDidChangeForChildContentContainer<span class="token punctuation">:</span><span class="token punctuation">(</span>id <span class="token punctuation">)</span>container <span class="token function">NS_AVAILABLE_IOS</span><span class="token punctuation">(</span><span class="token number">8</span>_0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">-</span> <span class="token punctuation">(</span>CGSize<span class="token punctuation">)</span>sizeForChildContentContainer<span class="token punctuation">:</span><span class="token punctuation">(</span>id <span class="token punctuation">)</span>container withParentContainerSize<span class="token punctuation">:</span><span class="token punctuation">(</span>CGSize<span class="token punctuation">)</span>parentSize <span class="token function">NS_AVAILABLE_IOS</span><span class="token punctuation">(</span><span class="token number">8</span>_0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">-</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>viewWillTransitionToSize<span class="token punctuation">:</span><span class="token punctuation">(</span>CGSize<span class="token punctuation">)</span>size withTransitionCoordinator<span class="token punctuation">:</span><span class="token punctuation">(</span>id <span class="token punctuation">)</span>coordinator <span class="token function">NS_AVAILABLE_IOS</span><span class="token punctuation">(</span><span class="token number">8</span>_0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">-</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>willTransitionToTraitCollection<span class="token punctuation">:</span><span class="token punctuation">(</span>UITraitCollection <span class="token operator">*</span><span class="token punctuation">)</span>newCollection withTransitionCoordinator<span class="token punctuation">:</span><span class="token punctuation">(</span>id <span class="token punctuation">)</span>coordinator <span class="token function">NS_AVAILABLE_IOS</span><span class="token punctuation">(</span><span class="token number">8</span>_0<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <ul>
 <li>UIView的Margin新增了3个API，NSLayoutMargins可以定义view之间的距离，这个只对Auto Layout有效，并且默认值为{8,8,8,8}。NSLayoutAttribute的枚举值也有相应的更新</li>
 </ul>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//UIView的3个Margin相关API</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>) <span class="built_in">UIEdgeInsets</span> layoutMargins <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>) <span class="built_in">BOOL</span> preservesSuperviewLayoutMargins <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</span><br><span class="line">- (<span class="keyword">void</span>)layoutMarginsDidChange <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</span><br><span class="line"><span class="comment">//NSLayoutAttribute的枚举值更新</span></span><br><span class="line"><span class="built_in">NSLayoutAttributeLeftMargin</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">8</span>_0),</span><br><span class="line"><span class="built_in">NSLayoutAttributeRightMargin</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">8</span>_0),</span><br><span class="line"><span class="built_in">NSLayoutAttributeTopMargin</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">8</span>_0),</span><br><span class="line"><span class="built_in">NSLayoutAttributeBottomMargin</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">8</span>_0),</span><br><span class="line"><span class="built_in">NSLayoutAttributeLeadingMargin</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">8</span>_0),</span><br><span class="line"><span class="built_in">NSLayoutAttributeTrailingMargin</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">8</span>_0),</span><br><span class="line"><span class="built_in">NSLayoutAttributeCenterXWithinMargins</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">8</span>_0),</span><br><span class="line"><span class="built_in">NSLayoutAttributeCenterYWithinMargins</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">8</span>_0),</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token comment">//UIView的3个Margin相关API</span>
+<span class="token keyword">@property</span> <span class="token punctuation">(</span>nonatomic<span class="token punctuation">)</span> UIEdgeInsets layoutMargins <span class="token function">NS_AVAILABLE_IOS</span><span class="token punctuation">(</span><span class="token number">8</span>_0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">@property</span> <span class="token punctuation">(</span>nonatomic<span class="token punctuation">)</span> BOOL preservesSuperviewLayoutMargins <span class="token function">NS_AVAILABLE_IOS</span><span class="token punctuation">(</span><span class="token number">8</span>_0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">-</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>layoutMarginsDidChange <span class="token function">NS_AVAILABLE_IOS</span><span class="token punctuation">(</span><span class="token number">8</span>_0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//NSLayoutAttribute的枚举值更新</span>
+NSLayoutAttributeLeftMargin <span class="token function">NS_ENUM_AVAILABLE_IOS</span><span class="token punctuation">(</span><span class="token number">8</span>_0<span class="token punctuation">)</span><span class="token punctuation">,</span>
+NSLayoutAttributeRightMargin <span class="token function">NS_ENUM_AVAILABLE_IOS</span><span class="token punctuation">(</span><span class="token number">8</span>_0<span class="token punctuation">)</span><span class="token punctuation">,</span>
+NSLayoutAttributeTopMargin <span class="token function">NS_ENUM_AVAILABLE_IOS</span><span class="token punctuation">(</span><span class="token number">8</span>_0<span class="token punctuation">)</span><span class="token punctuation">,</span>
+NSLayoutAttributeBottomMargin <span class="token function">NS_ENUM_AVAILABLE_IOS</span><span class="token punctuation">(</span><span class="token number">8</span>_0<span class="token punctuation">)</span><span class="token punctuation">,</span>
+NSLayoutAttributeLeadingMargin <span class="token function">NS_ENUM_AVAILABLE_IOS</span><span class="token punctuation">(</span><span class="token number">8</span>_0<span class="token punctuation">)</span><span class="token punctuation">,</span>
+NSLayoutAttributeTrailingMargin <span class="token function">NS_ENUM_AVAILABLE_IOS</span><span class="token punctuation">(</span><span class="token number">8</span>_0<span class="token punctuation">)</span><span class="token punctuation">,</span>
+NSLayoutAttributeCenterXWithinMargins <span class="token function">NS_ENUM_AVAILABLE_IOS</span><span class="token punctuation">(</span><span class="token number">8</span>_0<span class="token punctuation">)</span><span class="token punctuation">,</span>
+NSLayoutAttributeCenterYWithinMargins <span class="token function">NS_ENUM_AVAILABLE_IOS</span><span class="token punctuation">(</span><span class="token number">8</span>_0<span class="token punctuation">)</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="iOS9"><a href="#iOS9" class="headerlink" title="iOS9"></a>iOS9</h2><h3 id="UIStackView"><a href="#UIStackView" class="headerlink" title="UIStackView"></a>UIStackView</h3><p>苹果一直希望能够让更多的人来用Auto Layout，除了弄出一个VFL现在又弄出一个不需要约束的方法，使用Stack view使大家使用Auto Layout时不用触碰到约束，官方口号是“Start with Stack View, use constraints as needed”。 更多细节可以查看官方介绍：UIKit Framework Reference  UIStackView Class Reference<a target="_blank" rel="noopener" href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/AutoLayoutWithoutConstraints.html">https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/AutoLayoutWithoutConstraints.html</a></p>
 <p>Stack Views ：<a target="_blank" rel="noopener" href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/LayoutUsingStackViews.html">https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/LayoutUsingStackViews.html</a></p>
 <p>Stack View提供了更加简便的自动布局方法比如Alignment的Fill，Leading，Center，Trailing。Distribution的Fill，Fill Equally，Fill Proportionally，Equal Spacing。</p>
 <p>如果希望在iOS9之前的系统也能够使用Stack view可以用sunnyxx的FDStackView<a target="_blank" rel="noopener" href="https://github.com/forkingdog/FDStackView">https://github.com/forkingdog/FDStackView</a>，利用运行时替换元素的方法来支持iOS6+系统。</p>
-<h3 id="NSLayoutAnchorAPI"><a href="#NSLayoutAnchorAPI" class="headerlink" title="NSLayoutAnchorAPI"></a>NSLayoutAnchorAPI</h3><p>新增这个API能够让约束的声明更加清晰，还能够通过静态类型检查确保约束的正常工作。具体可以查看官方文档<a target="_blank" rel="noopener" href="https://developer.apple.com/library/ios/documentation/AppKit/Reference/NSLayoutAnchor_ClassReference/">https://developer.apple.com/library/ios/documentation/AppKit/Reference/NSLayoutAnchor_ClassReference/</a><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSLayoutConstraint</span> *constraint = [view1.leadingAnchor constraintEqualToAnchor:view2.topAnchor];</span><br></pre></td></tr></table></figure></p>
+<h3 id="NSLayoutAnchorAPI"><a href="#NSLayoutAnchorAPI" class="headerlink" title="NSLayoutAnchorAPI"></a>NSLayoutAnchorAPI</h3><p>新增这个API能够让约束的声明更加清晰，还能够通过静态类型检查确保约束的正常工作。具体可以查看官方文档<a target="_blank" rel="noopener" href="https://developer.apple.com/library/ios/documentation/AppKit/Reference/NSLayoutAnchor_ClassReference/">https://developer.apple.com/library/ios/documentation/AppKit/Reference/NSLayoutAnchor_ClassReference/</a></p>
+<pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec">NSLayoutConstraint <span class="token operator">*</span>constraint <span class="token operator">=</span> <span class="token punctuation">[</span>view1<span class="token punctuation">.</span>leadingAnchor constraintEqualToAnchor<span class="token punctuation">:</span>view2<span class="token punctuation">.</span>topAnchor<span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h1 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h1><h2 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h2><ul>
 <li>Auto Layout Guide <a target="_blank" rel="noopener" href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/index.html">https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/index.html</a></li>
 <li>UIScrollView And Autolayout <a target="_blank" rel="noopener" href="https://developer.apple.com/library/ios/technotes/tn2154/_index.html">https://developer.apple.com/library/ios/technotes/tn2154/_index.html</a></li>
@@ -687,1711 +424,350 @@
 <li>WWDC 2015: Mysteries of Auto Layout, Part 2 包含Auto Layout生命周期和调试Auto Layout的一些方法介绍<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2015-219/">https://developer.apple.com/videos/play/wwdc2015-219/</a></li>
 </ul>
 
-    </article>
-    <!-- license -->
-    
-        <div class="license-wrapper">
-            <p>原文作者：<a href="http://ming1016.github.io">戴铭</a>
-            <p>原文链接：<a href="http://ming1016.github.io/2015/11/03/deeply-analyse-autolayout/">http://ming1016.github.io/2015/11/03/deeply-analyse-autolayout/</a>
-            <p>发表日期：<a href="http://ming1016.github.io/2015/11/03/deeply-analyse-autolayout/">November 3rd 2015, 9:17:54 pm</a>
-            <p>更新日期：<a href="http://ming1016.github.io/2015/11/03/deeply-analyse-autolayout/">April 11th 2021, 10:42:09 pm</a>
-            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
-        </div>
-    
-    <!-- paginator -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2016/01/13/how-to-use-gcd/" title="细说 GCD（Grand Central Dispatch）如何用">
-                    <div class="nextTitle">细说 GCD（Grand Central Dispatch）如何用</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href="/2015/11/02/draw-with-note-in-ipad-during-15/" title="15年用iPad上的备忘录画的">
-                    <div class="prevTitle">15年用iPad上的备忘录画的</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- comment -->
-    
-        <div class="post-comment">
-            <!-- 来必力 City 版安装代码 -->
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2015/11/03/deeply-analyse-autolayout/">http://ming1016.github.io/2015/11/03/deeply-analyse-autolayout/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2016/01/13/how-to-use-gcd/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">细说 GCD（Grand Central Dispatch）如何用 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2015/11/02/draw-with-note-in-ipad-during-15/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">15年用iPad上的备忘录画的 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
 
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%A5%E5%8E%86"><span class="toc-number">1.</span> <span class="toc-text">来历</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cassowary"><span class="toc-number">1.1.</span> <span class="toc-text">Cassowary</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Auto-Layout%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">2.</span> <span class="toc-text">Auto Layout的生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E5%8F%98%E5%8C%96"><span class="toc-number">2.1.</span> <span class="toc-text">约束变化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deferred-Layout-Pass"><span class="toc-number">2.2.</span> <span class="toc-text">Deferred Layout Pass</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%AD%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E9%A1%B9"><span class="toc-number">2.3.</span> <span class="toc-text">生命周期中需要注意的事项</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F"><span class="toc-number">3.</span> <span class="toc-text">约束</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E6%96%B9%E7%A8%8B%E5%BC%8F"><span class="toc-number">3.1.</span> <span class="toc-text">约束方程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8API%E6%B7%BB%E5%8A%A0%E7%BA%A6%E6%9D%9F"><span class="toc-number">3.2.</span> <span class="toc-text">使用API添加约束</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8VFL%E8%AF%AD%E8%A8%80%E6%B7%BB%E5%8A%A0%E7%BA%A6%E6%9D%9F"><span class="toc-number">3.3.</span> <span class="toc-text">使用VFL语言添加约束</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#options"><span class="toc-number">3.3.1.</span> <span class="toc-text">options</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#metrics"><span class="toc-number">3.3.2.</span> <span class="toc-text">metrics</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VFL%E5%87%A0%E4%B8%AA%E5%9F%BA%E6%9C%AC%E4%BE%8B%E5%AD%90"><span class="toc-number">3.3.3.</span> <span class="toc-text">VFL几个基本例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VFL%E4%BB%8B%E7%BB%8D"><span class="toc-number">3.4.</span> <span class="toc-text">VFL介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VFL%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="toc-number">3.5.</span> <span class="toc-text">VFL的语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">3.5.1.</span> <span class="toc-text">注意事项</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Auto-Layout%E6%97%B6%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E7%82%B9"><span class="toc-number">4.</span> <span class="toc-text">使用Auto Layout时需要注意的点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%83%E5%B1%80%E7%BA%A6%E6%9D%9F%E8%A7%84%E5%88%99"><span class="toc-number">5.</span> <span class="toc-text">布局约束规则</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E5%B1%82%E7%BA%A7"><span class="toc-number">6.</span> <span class="toc-text">约束层级</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">7.</span> <span class="toc-text">优先级</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#IntrinsicContentSize-x2F-Compression-Resistance-Priority-x2F-Hugging-Priority"><span class="toc-number">8.</span> <span class="toc-text">IntrinsicContentSize &#x2F; Compression Resistance Priority &#x2F; Hugging Priority</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%83%E5%B1%80%E8%BF%87%E7%A8%8B"><span class="toc-number">9.</span> <span class="toc-text">布局过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#viewDidLayoutSubviews%EF%BC%8C-layoutSubviews"><span class="toc-number">9.1.</span> <span class="toc-text">viewDidLayoutSubviews，-layoutSubviews</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#View%E7%9A%84%E6%94%B9%E5%8F%98%E4%BC%9A%E8%B0%83%E7%94%A8%E5%93%AA%E4%BA%9B%E6%96%B9%E6%B3%95"><span class="toc-number">9.2.</span> <span class="toc-text">View的改变会调用哪些方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Auto-Layout%E7%9A%84Debug"><span class="toc-number">10.</span> <span class="toc-text">Auto Layout的Debug</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Debugger"><span class="toc-number">10.1.</span> <span class="toc-text">Debugger</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">10.2.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%B9%E6%98%93%E5%87%BA%E9%97%AE%E9%A2%98%E7%9A%84Bug-Case"><span class="toc-number">11.</span> <span class="toc-text">容易出问题的Bug Case</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5%E4%B8%AD%E7%A2%B0%E5%88%B0%E7%9A%84%E9%9D%9E%E5%BF%85%E7%8E%B0%E4%BD%8E%E9%85%8D%E7%BD%AE%E6%9C%BA%E5%99%A8%E5%B4%A9%E6%BA%83bug%E5%88%86%E6%9E%90"><span class="toc-number">12.</span> <span class="toc-text">实践中碰到的非必现低配置机器崩溃bug分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80"><span class="toc-number">12.1.</span> <span class="toc-text">案例一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C"><span class="toc-number">12.2.</span> <span class="toc-text">案例二</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90Auto-Layout%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93"><span class="toc-number">13.</span> <span class="toc-text">推荐Auto Layout第三方库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Masonry"><span class="toc-number">13.1.</span> <span class="toc-text">Masonry</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cartography"><span class="toc-number">13.2.</span> <span class="toc-text">Cartography</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Masonry-1"><span class="toc-number">14.</span> <span class="toc-text">Masonry</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%84%E7%89%88%E6%9C%ACiOS%E4%B8%ADAutoLayout%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">15.</span> <span class="toc-text">各版本iOS中AutoLayout的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS6"><span class="toc-number">15.1.</span> <span class="toc-text">iOS6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS7"><span class="toc-number">15.2.</span> <span class="toc-text">iOS7</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS8"><span class="toc-number">15.3.</span> <span class="toc-text">iOS8</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS9"><span class="toc-number">15.4.</span> <span class="toc-text">iOS9</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#UIStackView"><span class="toc-number">15.4.1.</span> <span class="toc-text">UIStackView</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NSLayoutAnchorAPI"><span class="toc-number">15.4.2.</span> <span class="toc-text">NSLayoutAnchorAPI</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83-1"><span class="toc-number">16.</span> <span class="toc-text">参考</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3"><span class="toc-number">16.1.</span> <span class="toc-text">官方文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WWDC%E8%A7%86%E9%A2%91"><span class="toc-number">16.2.</span> <span class="toc-text">WWDC视频</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
 
-            
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>56</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>37</span>
+    <span>标签</span>
+  </a>
+</div>
 
-            
-
-            
-
-            <!-- utteranc评论 -->
-
-
-            <!-- partial('_partial/comment/changyan') -->
-            <!--PC版-->
-
-
-            
-            
-
-        </div>
-    
-    <!-- timeliness note -->
-    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
-    
-    <!-- Mathjax -->
-    
-</main>
-
-                <!-- profile -->
-                
-            </div>
-            <footer class="footer footer-unloaded">
-    <!-- social  -->
-    
-        <div class="social">
-            
-    
-        
-            
-                <a href="mailto:ming1016@foxmail.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="//github.com/ming1016" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                    
-                    <img class="profile-qr" src="/assets/wechat-qcode.jpeg" />
-                </span>
-            
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="https://weibo.com/allstarming" class="iconfont-archer weibo" target="_blank" title=weibo></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="https://twitter.com/daiming_cn" class="iconfont-archer twitter" target="_blank" title=twitter></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
-            
-        
-    
-
-
-        </div>
-    
-    <!-- powered by Hexo  -->
-    <div class="copyright">
-        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
     </div>
-    <!-- website approve for Chinese user -->
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%A5%E5%8E%86"><span class="toc-number">1.</span> <span class="toc-text">来历</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cassowary"><span class="toc-number">1.1.</span> <span class="toc-text">Cassowary</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Auto-Layout%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">2.</span> <span class="toc-text">Auto Layout的生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E5%8F%98%E5%8C%96"><span class="toc-number">2.1.</span> <span class="toc-text">约束变化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deferred-Layout-Pass"><span class="toc-number">2.2.</span> <span class="toc-text">Deferred Layout Pass</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%AD%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E9%A1%B9"><span class="toc-number">2.3.</span> <span class="toc-text">生命周期中需要注意的事项</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F"><span class="toc-number">3.</span> <span class="toc-text">约束</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E6%96%B9%E7%A8%8B%E5%BC%8F"><span class="toc-number">3.1.</span> <span class="toc-text">约束方程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8API%E6%B7%BB%E5%8A%A0%E7%BA%A6%E6%9D%9F"><span class="toc-number">3.2.</span> <span class="toc-text">使用API添加约束</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8VFL%E8%AF%AD%E8%A8%80%E6%B7%BB%E5%8A%A0%E7%BA%A6%E6%9D%9F"><span class="toc-number">3.3.</span> <span class="toc-text">使用VFL语言添加约束</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#options"><span class="toc-number">3.3.1.</span> <span class="toc-text">options</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#metrics"><span class="toc-number">3.3.2.</span> <span class="toc-text">metrics</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VFL%E5%87%A0%E4%B8%AA%E5%9F%BA%E6%9C%AC%E4%BE%8B%E5%AD%90"><span class="toc-number">3.3.3.</span> <span class="toc-text">VFL几个基本例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VFL%E4%BB%8B%E7%BB%8D"><span class="toc-number">3.4.</span> <span class="toc-text">VFL介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VFL%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="toc-number">3.5.</span> <span class="toc-text">VFL的语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">3.5.1.</span> <span class="toc-text">注意事项</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Auto-Layout%E6%97%B6%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E7%82%B9"><span class="toc-number">4.</span> <span class="toc-text">使用Auto Layout时需要注意的点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%83%E5%B1%80%E7%BA%A6%E6%9D%9F%E8%A7%84%E5%88%99"><span class="toc-number">5.</span> <span class="toc-text">布局约束规则</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E5%B1%82%E7%BA%A7"><span class="toc-number">6.</span> <span class="toc-text">约束层级</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">7.</span> <span class="toc-text">优先级</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#IntrinsicContentSize-x2F-Compression-Resistance-Priority-x2F-Hugging-Priority"><span class="toc-number">8.</span> <span class="toc-text">IntrinsicContentSize &#x2F; Compression Resistance Priority &#x2F; Hugging Priority</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%83%E5%B1%80%E8%BF%87%E7%A8%8B"><span class="toc-number">9.</span> <span class="toc-text">布局过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#viewDidLayoutSubviews%EF%BC%8C-layoutSubviews"><span class="toc-number">9.1.</span> <span class="toc-text">viewDidLayoutSubviews，-layoutSubviews</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#View%E7%9A%84%E6%94%B9%E5%8F%98%E4%BC%9A%E8%B0%83%E7%94%A8%E5%93%AA%E4%BA%9B%E6%96%B9%E6%B3%95"><span class="toc-number">9.2.</span> <span class="toc-text">View的改变会调用哪些方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Auto-Layout%E7%9A%84Debug"><span class="toc-number">10.</span> <span class="toc-text">Auto Layout的Debug</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Debugger"><span class="toc-number">10.1.</span> <span class="toc-text">Debugger</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">10.2.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%B9%E6%98%93%E5%87%BA%E9%97%AE%E9%A2%98%E7%9A%84Bug-Case"><span class="toc-number">11.</span> <span class="toc-text">容易出问题的Bug Case</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5%E4%B8%AD%E7%A2%B0%E5%88%B0%E7%9A%84%E9%9D%9E%E5%BF%85%E7%8E%B0%E4%BD%8E%E9%85%8D%E7%BD%AE%E6%9C%BA%E5%99%A8%E5%B4%A9%E6%BA%83bug%E5%88%86%E6%9E%90"><span class="toc-number">12.</span> <span class="toc-text">实践中碰到的非必现低配置机器崩溃bug分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80"><span class="toc-number">12.1.</span> <span class="toc-text">案例一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C"><span class="toc-number">12.2.</span> <span class="toc-text">案例二</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90Auto-Layout%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93"><span class="toc-number">13.</span> <span class="toc-text">推荐Auto Layout第三方库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Masonry"><span class="toc-number">13.1.</span> <span class="toc-text">Masonry</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cartography"><span class="toc-number">13.2.</span> <span class="toc-text">Cartography</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Masonry-1"><span class="toc-number">14.</span> <span class="toc-text">Masonry</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%84%E7%89%88%E6%9C%ACiOS%E4%B8%ADAutoLayout%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">15.</span> <span class="toc-text">各版本iOS中AutoLayout的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS6"><span class="toc-number">15.1.</span> <span class="toc-text">iOS6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS7"><span class="toc-number">15.2.</span> <span class="toc-text">iOS7</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS8"><span class="toc-number">15.3.</span> <span class="toc-text">iOS8</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS9"><span class="toc-number">15.4.</span> <span class="toc-text">iOS9</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#UIStackView"><span class="toc-number">15.4.1.</span> <span class="toc-text">UIStackView</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NSLayoutAnchorAPI"><span class="toc-number">15.4.2.</span> <span class="toc-text">NSLayoutAnchorAPI</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83-1"><span class="toc-number">16.</span> <span class="toc-text">参考</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3"><span class="toc-number">16.1.</span> <span class="toc-text">官方文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WWDC%E8%A7%86%E9%A2%91"><span class="toc-number">16.2.</span> <span class="toc-text">WWDC视频</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
     
-        <div class="website-approve">
-            
-                <span id="icp-approve" class="icp-approve">
-                    <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备17011999号</a>
-                </span>
-            
-            
-                
-                <img class="beian-img" src="/assets/beian.png" />
-                <span id="beian-approve" class="beian-approve">
-                    <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999" target="_blank">京公网安备 7011999号</a>
-                </span>
-            
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">42</span>
         </div>
+      </a>
     
-    <!-- 不蒜子  -->
-    
-        <div class="busuanzi-container">
-            
-             
-                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
-            
+      <a href="/categories/My novel">
+        <div class="categories-list-item">
+          My novel
+          <span class="categories-list-item-badge">4</span>
         </div>
-    	
+      </a>
+    
+      <a href="/categories/My painting">
+        <div class="categories-list-item">
+          My painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+    <a href="\tags\Pencil" title="Pencil"><div class="tags-list-item">Pencil</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%A5%E5%8E%86"><span class="toc-number">1.</span> <span class="toc-text">来历</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cassowary"><span class="toc-number">1.1.</span> <span class="toc-text">Cassowary</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Auto-Layout%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">2.</span> <span class="toc-text">Auto Layout的生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E5%8F%98%E5%8C%96"><span class="toc-number">2.1.</span> <span class="toc-text">约束变化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deferred-Layout-Pass"><span class="toc-number">2.2.</span> <span class="toc-text">Deferred Layout Pass</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%AD%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E9%A1%B9"><span class="toc-number">2.3.</span> <span class="toc-text">生命周期中需要注意的事项</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F"><span class="toc-number">3.</span> <span class="toc-text">约束</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E6%96%B9%E7%A8%8B%E5%BC%8F"><span class="toc-number">3.1.</span> <span class="toc-text">约束方程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8API%E6%B7%BB%E5%8A%A0%E7%BA%A6%E6%9D%9F"><span class="toc-number">3.2.</span> <span class="toc-text">使用API添加约束</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8VFL%E8%AF%AD%E8%A8%80%E6%B7%BB%E5%8A%A0%E7%BA%A6%E6%9D%9F"><span class="toc-number">3.3.</span> <span class="toc-text">使用VFL语言添加约束</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#options"><span class="toc-number">3.3.1.</span> <span class="toc-text">options</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#metrics"><span class="toc-number">3.3.2.</span> <span class="toc-text">metrics</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VFL%E5%87%A0%E4%B8%AA%E5%9F%BA%E6%9C%AC%E4%BE%8B%E5%AD%90"><span class="toc-number">3.3.3.</span> <span class="toc-text">VFL几个基本例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VFL%E4%BB%8B%E7%BB%8D"><span class="toc-number">3.4.</span> <span class="toc-text">VFL介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VFL%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="toc-number">3.5.</span> <span class="toc-text">VFL的语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">3.5.1.</span> <span class="toc-text">注意事项</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Auto-Layout%E6%97%B6%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E7%82%B9"><span class="toc-number">4.</span> <span class="toc-text">使用Auto Layout时需要注意的点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%83%E5%B1%80%E7%BA%A6%E6%9D%9F%E8%A7%84%E5%88%99"><span class="toc-number">5.</span> <span class="toc-text">布局约束规则</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E5%B1%82%E7%BA%A7"><span class="toc-number">6.</span> <span class="toc-text">约束层级</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">7.</span> <span class="toc-text">优先级</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#IntrinsicContentSize-x2F-Compression-Resistance-Priority-x2F-Hugging-Priority"><span class="toc-number">8.</span> <span class="toc-text">IntrinsicContentSize &#x2F; Compression Resistance Priority &#x2F; Hugging Priority</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%83%E5%B1%80%E8%BF%87%E7%A8%8B"><span class="toc-number">9.</span> <span class="toc-text">布局过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#viewDidLayoutSubviews%EF%BC%8C-layoutSubviews"><span class="toc-number">9.1.</span> <span class="toc-text">viewDidLayoutSubviews，-layoutSubviews</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#View%E7%9A%84%E6%94%B9%E5%8F%98%E4%BC%9A%E8%B0%83%E7%94%A8%E5%93%AA%E4%BA%9B%E6%96%B9%E6%B3%95"><span class="toc-number">9.2.</span> <span class="toc-text">View的改变会调用哪些方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Auto-Layout%E7%9A%84Debug"><span class="toc-number">10.</span> <span class="toc-text">Auto Layout的Debug</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Debugger"><span class="toc-number">10.1.</span> <span class="toc-text">Debugger</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">10.2.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%B9%E6%98%93%E5%87%BA%E9%97%AE%E9%A2%98%E7%9A%84Bug-Case"><span class="toc-number">11.</span> <span class="toc-text">容易出问题的Bug Case</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5%E4%B8%AD%E7%A2%B0%E5%88%B0%E7%9A%84%E9%9D%9E%E5%BF%85%E7%8E%B0%E4%BD%8E%E9%85%8D%E7%BD%AE%E6%9C%BA%E5%99%A8%E5%B4%A9%E6%BA%83bug%E5%88%86%E6%9E%90"><span class="toc-number">12.</span> <span class="toc-text">实践中碰到的非必现低配置机器崩溃bug分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80"><span class="toc-number">12.1.</span> <span class="toc-text">案例一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C"><span class="toc-number">12.2.</span> <span class="toc-text">案例二</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90Auto-Layout%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93"><span class="toc-number">13.</span> <span class="toc-text">推荐Auto Layout第三方库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Masonry"><span class="toc-number">13.1.</span> <span class="toc-text">Masonry</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cartography"><span class="toc-number">13.2.</span> <span class="toc-text">Cartography</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Masonry-1"><span class="toc-number">14.</span> <span class="toc-text">Masonry</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%84%E7%89%88%E6%9C%ACiOS%E4%B8%ADAutoLayout%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">15.</span> <span class="toc-text">各版本iOS中AutoLayout的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS6"><span class="toc-number">15.1.</span> <span class="toc-text">iOS6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS7"><span class="toc-number">15.2.</span> <span class="toc-text">iOS7</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS8"><span class="toc-number">15.3.</span> <span class="toc-text">iOS8</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS9"><span class="toc-number">15.4.</span> <span class="toc-text">iOS9</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#UIStackView"><span class="toc-number">15.4.1.</span> <span class="toc-text">UIStackView</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NSLayoutAnchorAPI"><span class="toc-number">15.4.2.</span> <span class="toc-text">NSLayoutAnchorAPI</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83-1"><span class="toc-number">16.</span> <span class="toc-text">参考</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3"><span class="toc-number">16.1.</span> <span class="toc-text">官方文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WWDC%E8%A7%86%E9%A2%91"><span class="toc-number">16.2.</span> <span class="toc-text">WWDC视频</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-03-25</div>
+        <a href="/2022/03/25/develop-with-swiftui/"><div class="recent-posts-item-content">在苹果加速器活动做的 SwiftUI 开发分享</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-02-26</div>
+        <a href="/2022/02/26/draw-in-2021/"><div class="recent-posts-item-content">2021年画的</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2014 -
+          
+          2022
+        </span>
+        <a href="/" class="footer-link">戴铭的博客 </a>
+      </div>
+    </div>
+
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
+      </a>
+      <br />
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
 </footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
 
-        </div>
-        <!-- toc -->
-        
-            <div class="toc-wrapper toc-wrapper-loding" style=
-
-
-
-
-
-
-
-    top:50vh;
-
->
-                <div class="toc-catalog">
-                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-                </div>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%A5%E5%8E%86"><span class="toc-number">1.</span> <span class="toc-text">来历</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cassowary"><span class="toc-number">1.1.</span> <span class="toc-text">Cassowary</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Auto-Layout%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">2.</span> <span class="toc-text">Auto Layout的生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E5%8F%98%E5%8C%96"><span class="toc-number">2.1.</span> <span class="toc-text">约束变化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deferred-Layout-Pass"><span class="toc-number">2.2.</span> <span class="toc-text">Deferred Layout Pass</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%AD%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E9%A1%B9"><span class="toc-number">2.3.</span> <span class="toc-text">生命周期中需要注意的事项</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F"><span class="toc-number">3.</span> <span class="toc-text">约束</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E6%96%B9%E7%A8%8B%E5%BC%8F"><span class="toc-number">3.1.</span> <span class="toc-text">约束方程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8API%E6%B7%BB%E5%8A%A0%E7%BA%A6%E6%9D%9F"><span class="toc-number">3.2.</span> <span class="toc-text">使用API添加约束</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8VFL%E8%AF%AD%E8%A8%80%E6%B7%BB%E5%8A%A0%E7%BA%A6%E6%9D%9F"><span class="toc-number">3.3.</span> <span class="toc-text">使用VFL语言添加约束</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#options"><span class="toc-number">3.3.1.</span> <span class="toc-text">options</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#metrics"><span class="toc-number">3.3.2.</span> <span class="toc-text">metrics</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VFL%E5%87%A0%E4%B8%AA%E5%9F%BA%E6%9C%AC%E4%BE%8B%E5%AD%90"><span class="toc-number">3.3.3.</span> <span class="toc-text">VFL几个基本例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VFL%E4%BB%8B%E7%BB%8D"><span class="toc-number">3.4.</span> <span class="toc-text">VFL介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VFL%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="toc-number">3.5.</span> <span class="toc-text">VFL的语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">3.5.1.</span> <span class="toc-text">注意事项</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Auto-Layout%E6%97%B6%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E7%82%B9"><span class="toc-number">4.</span> <span class="toc-text">使用Auto Layout时需要注意的点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%83%E5%B1%80%E7%BA%A6%E6%9D%9F%E8%A7%84%E5%88%99"><span class="toc-number">5.</span> <span class="toc-text">布局约束规则</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E5%B1%82%E7%BA%A7"><span class="toc-number">6.</span> <span class="toc-text">约束层级</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">7.</span> <span class="toc-text">优先级</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#IntrinsicContentSize-Compression-Resistance-Priority-Hugging-Priority"><span class="toc-number">8.</span> <span class="toc-text">IntrinsicContentSize &#x2F; Compression Resistance Priority &#x2F; Hugging Priority</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%83%E5%B1%80%E8%BF%87%E7%A8%8B"><span class="toc-number">9.</span> <span class="toc-text">布局过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#viewDidLayoutSubviews%EF%BC%8C-layoutSubviews"><span class="toc-number">9.1.</span> <span class="toc-text">viewDidLayoutSubviews，-layoutSubviews</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#View%E7%9A%84%E6%94%B9%E5%8F%98%E4%BC%9A%E8%B0%83%E7%94%A8%E5%93%AA%E4%BA%9B%E6%96%B9%E6%B3%95"><span class="toc-number">9.2.</span> <span class="toc-text">View的改变会调用哪些方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Auto-Layout%E7%9A%84Debug"><span class="toc-number">10.</span> <span class="toc-text">Auto Layout的Debug</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Debugger"><span class="toc-number">10.1.</span> <span class="toc-text">Debugger</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">10.2.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%B9%E6%98%93%E5%87%BA%E9%97%AE%E9%A2%98%E7%9A%84Bug-Case"><span class="toc-number">11.</span> <span class="toc-text">容易出问题的Bug Case</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5%E4%B8%AD%E7%A2%B0%E5%88%B0%E7%9A%84%E9%9D%9E%E5%BF%85%E7%8E%B0%E4%BD%8E%E9%85%8D%E7%BD%AE%E6%9C%BA%E5%99%A8%E5%B4%A9%E6%BA%83bug%E5%88%86%E6%9E%90"><span class="toc-number">12.</span> <span class="toc-text">实践中碰到的非必现低配置机器崩溃bug分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80"><span class="toc-number">12.1.</span> <span class="toc-text">案例一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C"><span class="toc-number">12.2.</span> <span class="toc-text">案例二</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90Auto-Layout%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93"><span class="toc-number">13.</span> <span class="toc-text">推荐Auto Layout第三方库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Masonry"><span class="toc-number">13.1.</span> <span class="toc-text">Masonry</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cartography"><span class="toc-number">13.2.</span> <span class="toc-text">Cartography</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Masonry-1"><span class="toc-number">14.</span> <span class="toc-text">Masonry</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%84%E7%89%88%E6%9C%ACiOS%E4%B8%ADAutoLayout%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">15.</span> <span class="toc-text">各版本iOS中AutoLayout的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS6"><span class="toc-number">15.1.</span> <span class="toc-text">iOS6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS7"><span class="toc-number">15.2.</span> <span class="toc-text">iOS7</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS8"><span class="toc-number">15.3.</span> <span class="toc-text">iOS8</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS9"><span class="toc-number">15.4.</span> <span class="toc-text">iOS9</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#UIStackView"><span class="toc-number">15.4.1.</span> <span class="toc-text">UIStackView</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NSLayoutAnchorAPI"><span class="toc-number">15.4.2.</span> <span class="toc-text">NSLayoutAnchorAPI</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83-1"><span class="toc-number">16.</span> <span class="toc-text">参考</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3"><span class="toc-number">16.1.</span> <span class="toc-text">官方文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WWDC%E8%A7%86%E9%A2%91"><span class="toc-number">16.2.</span> <span class="toc-text">WWDC视频</span></a></li></ol></li></ol>
-            </div>
-        
-        <!-- sidebar -->
-        <div class="sidebar sidebar-hide">
-    <ul class="sidebar-tabs sidebar-tabs-active-0">
-        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
-        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
-        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
-    </ul>
-    <div class="sidebar-content sidebar-content-show-archive">
-        <div class="sidebar-panel-archives">
-    <!-- 在 ejs 中将 archive 按照时间排序 -->
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-    
-    
-    
-    <div class="total-and-search">
-        <div class="total-archive">
-        Total : 57
-        </div>
-        <!-- search  -->
-        
-    </div>
-    
-    <div class="post-archive">
-    
-        
-            
-            
-            <div class="archive-year"> 2022 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/10</span>
-            <a class="archive-post-title" href="/2022/06/10/use-llvm/">使用 LLVM</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/10</span>
-            <a class="archive-post-title" href="/2022/06/10/wwdc22-notes/">WWDC22 笔记</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/25</span>
-            <a class="archive-post-title" href="/2022/03/25/develop-with-swiftui/">在苹果加速器活动做的 SwiftUI 开发分享</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/26</span>
-            <a class="archive-post-title" href="/2022/02/26/draw-in-2021/">2021年画的</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/10</span>
-            <a class="archive-post-title" href="/2022/02/10/swift-evolutionary-path/">Swift 演进之路</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/03</span>
-            <a class="archive-post-title" href="/2022/01/03/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/">如何用 SwiftUI + Combine + Swift Concurrency Aysnc/Await Actor 欢畅开发</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2021 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/23</span>
-            <a class="archive-post-title" href="/2021/11/23/daiming-swift-pamphlet/">戴铭的 Swift 小册子 4.0</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/24</span>
-            <a class="archive-post-title" href="/2021/07/24/my-little-idea-about-writing-technical-article/">我写技术文章的一点心得</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/13</span>
-            <a class="archive-post-title" href="/2021/07/13/deeply-analyse-autolayout-slides/">深入剖析Auto Layout的幻灯片</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/08</span>
-            <a class="archive-post-title" href="/2021/06/08/wwdc2021-day1-note/">WWDC 2021 Day1 笔记</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span>
-            <a class="archive-post-title" href="/2021/05/22/acfun-swift-practice/">A站 的 Swift 实践</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/21</span>
-            <a class="archive-post-title" href="/2021/02/21/deeply-analyse-quickjs/">深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2020 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/18</span>
-            <a class="archive-post-title" href="/2020/12/18/thinking-in-how-to-speed-up-app/">App 启动提速实践和一些想法</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/04</span>
-            <a class="archive-post-title" href="/2020/05/04/draw-in-2020/">2020年涂图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span>
-            <a class="archive-post-title" href="/2020/04/12/why_write_study_ios_programming_with_daiming_book_and_draw_recently/">我为什么写了《跟戴铭学iOS编程》这本书</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/29</span>
-            <a class="archive-post-title" href="/2020/03/29/apple-system-executable-file-macho/">Apple 操作系统可执行文件 Mach-O</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/05</span>
-            <a class="archive-post-title" href="/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/">在快手做分享、无用类检查、在广州做 SwiftUI 学习笔记分享、InfoQ二叉树视频</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2019 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/28</span>
-            <a class="archive-post-title" href="/2019/12/28/japan-travel/">日本游玩</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/07</span>
-            <a class="archive-post-title" href="/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">如何对 iOS 启动阶段耗时进行分析</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/06</span>
-            <a class="archive-post-title" href="/2019/12/06/draw-in-2019/">2019年涂图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/29</span>
-            <a class="archive-post-title" href="/2019/07/29/ios-map/">iOS 开发舆图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/19</span>
-            <a class="archive-post-title" href="/2019/06/19/white-dragon-class/">白龙班</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2018 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/17</span>
-            <a class="archive-post-title" href="/2018/09/17/produce-slides-of-third-at-swift-conference/">这次swift大会分享准备的幻灯片和 demo</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/14</span>
-            <a class="archive-post-title" href="/2018/09/14/draw-with-procreate-in-ipad-during-pre-half-in-20182/">18年上半年procreate的练习图图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/21</span>
-            <a class="archive-post-title" href="/2018/04/21/deeply-analyse-javascriptcore/">深入剖析 JavaScriptCore</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/07</span>
-            <a class="archive-post-title" href="/2018/04/07/read-snapkit-and-masonry-source-code/">读 SnapKit 和 Masonry 自动布局框架源码</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span>
-            <a class="archive-post-title" href="/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/">Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/24</span>
-            <a class="archive-post-title" href="/2018/01/24/why-swift/">Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/10</span>
-            <a class="archive-post-title" href="/2018/01/10/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/">GIAC 大会上分享的《Swift 将 Web 代码转成60帧满帧原生应用的方案及实践》的幻灯片</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span>
-            <a class="archive-post-title" href="/2018/01/04/baimi/">白芈</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span>
-            <a class="archive-post-title" href="/2018/01/04/huaye/">花野</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2017 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/24</span>
-            <a class="archive-post-title" href="/2017/10/24/how-do-i-improve-the-development/">在滴滴，我是如何指数级提升开发技术的？</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/16</span>
-            <a class="archive-post-title" href="/2017/10/16/html-to-native-htn-development-record/">HTML 转原生 HTN 项目开发记录</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/11</span>
-            <a class="archive-post-title" href="/2017/10/11/deeply-analyse-webkit/">深入剖析 WebKit</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span>
-            <a class="archive-post-title" href="/2017/06/20/deeply-ios-performance-optimization/">深入剖析 iOS 性能优化</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/12</span>
-            <a class="archive-post-title" href="/2017/06/12/gmtc-ios-slimming-practice/">GMTC 上分享滴滴出行 iOS 端瘦身实践的 Slides</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/27</span>
-            <a class="archive-post-title" href="/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/">atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span>
-            <a class="archive-post-title" href="/2017/04/01/build-static-analysis-program-smck-use-swift/">用 Swift 编写的工程代码静态分析命令行工具 smck</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span>
-            <a class="archive-post-title" href="/2017/04/01/slides-of-deeply-analyse-llvm/">深入剖析 iOS 编译 Clang / LLVM 直播的 Slides</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span>
-            <a class="archive-post-title" href="/2017/03/01/deeply-analyse-llvm/">深入剖析 iOS 编译 Clang / LLVM</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2016 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/22</span>
-            <a class="archive-post-title" href="/2016/11/22/how-to-preload-web-in-ios/">iOS预加载Web页面方案</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/17</span>
-            <a class="archive-post-title" href="/2016/11/17/use-swift3-build-macos-program-to-clear-unuse-method/">使用Swift3开发了个macOS的程序可以检测出objc项目中无用方法，然后一键全部清理</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/20</span>
-            <a class="archive-post-title" href="/2016/09/20/draw-with-procreate-in-ipad-during-15-to-16/">15，16年iPad上使用Procreate画的</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/02</span>
-            <a class="archive-post-title" href="/2016/09/02/develop-rss-reader/">使用ReactiveCocoa开发RSS阅读器</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/09</span>
-            <a class="archive-post-title" href="/2016/08/09/how-to-use-reactivecocoa/">iOS函数响应式编程以及ReactiveCocoa的使用</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/21</span>
-            <a class="archive-post-title" href="/2016/07/21/assembleview/">制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/30</span>
-            <a class="archive-post-title" href="/2016/05/30/what-learn-from-reactivecocoa/">从 ReactiveCocoa 中能学到什么？不用此库也能学以致用</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/23</span>
-            <a class="archive-post-title" href="/2016/05/23/try-to-decouple-with-demo/">竭尽全力的去解耦的一次实践，封装一个TableView和一些功能组合的控件</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/04</span>
-            <a class="archive-post-title" href="/2016/04/04/tenth-middle-school/">十中</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/13</span>
-            <a class="archive-post-title" href="/2016/01/13/how-to-use-gcd/">细说 GCD（Grand Central Dispatch）如何用</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2015 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/03</span>
-            <a class="archive-post-title" href="/2015/11/03/deeply-analyse-autolayout/">深入剖析Auto Layout，分析iOS各版本新增特性</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/02</span>
-            <a class="archive-post-title" href="/2015/11/02/draw-with-note-in-ipad-during-15/">15年用iPad上的备忘录画的</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span>
-            <a class="archive-post-title" href="/2015/05/28/macos-app-i-used/">我用过的 macOS 应用</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span>
-            <a class="archive-post-title" href="/2015/04/02/draw-game-of-thrones-with-pencil-during-14/">整理了画的权利的游戏里的角色，有龙女，小恶魔等等</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span>
-            <a class="archive-post-title" href="/2015/04/01/objc-runtime/">Objc Runtime 总结</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span>
-            <a class="archive-post-title" href="/2015/03/12/draw-practice-with-pencil-during-14-to-15/">14和15年间的铅笔画练习</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2014 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span>
-            <a class="archive-post-title" href="/2014/03/01/black-star-blue-map/">黑星蓝图</a>
-        </li>
-    
-    </div>
-</div>
-
-        <div class="sidebar-panel-tags">
-    <div class="sidebar-tags-name">
-        
-            <span class="sidebar-tag-name" data-tags="iOS">
-                <span class="iconfont-archer">&#xe606;</span>
-                iOS
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Apple">
-                <span class="iconfont-archer">&#xe606;</span>
-                Apple
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Swift">
-                <span class="iconfont-archer">&#xe606;</span>
-                Swift
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="AssembleView">
-                <span class="iconfont-archer">&#xe606;</span>
-                AssembleView
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Novel">
-                <span class="iconfont-archer">&#xe606;</span>
-                Novel
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Mach-O">
-                <span class="iconfont-archer">&#xe606;</span>
-                Mach-O
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="smck">
-                <span class="iconfont-archer">&#xe606;</span>
-                smck
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Autolayout">
-                <span class="iconfont-archer">&#xe606;</span>
-                Autolayout
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="JavaScript">
-                <span class="iconfont-archer">&#xe606;</span>
-                JavaScript
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Web">
-                <span class="iconfont-archer">&#xe606;</span>
-                Web
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="编译">
-                <span class="iconfont-archer">&#xe606;</span>
-                编译
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="RSSReader">
-                <span class="iconfont-archer">&#xe606;</span>
-                RSSReader
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="macOS">
-                <span class="iconfont-archer">&#xe606;</span>
-                macOS
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Combine">
-                <span class="iconfont-archer">&#xe606;</span>
-                Combine
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="SwiftUI">
-                <span class="iconfont-archer">&#xe606;</span>
-                SwiftUI
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Concurrency">
-                <span class="iconfont-archer">&#xe606;</span>
-                Concurrency
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="LLVM">
-                <span class="iconfont-archer">&#xe606;</span>
-                LLVM
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Clang">
-                <span class="iconfont-archer">&#xe606;</span>
-                Clang
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Performance optimization">
-                <span class="iconfont-archer">&#xe606;</span>
-                Performance optimization
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Painting">
-                <span class="iconfont-archer">&#xe606;</span>
-                Painting
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Pencil">
-                <span class="iconfont-archer">&#xe606;</span>
-                Pencil
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="GOT">
-                <span class="iconfont-archer">&#xe606;</span>
-                GOT
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="iPad">
-                <span class="iconfont-archer">&#xe606;</span>
-                iPad
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Procreate">
-                <span class="iconfont-archer">&#xe606;</span>
-                Procreate
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="WebKit">
-                <span class="iconfont-archer">&#xe606;</span>
-                WebKit
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Slides">
-                <span class="iconfont-archer">&#xe606;</span>
-                Slides
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Study">
-                <span class="iconfont-archer">&#xe606;</span>
-                Study
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="GCD">
-                <span class="iconfont-archer">&#xe606;</span>
-                GCD
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="UIWebView">
-                <span class="iconfont-archer">&#xe606;</span>
-                UIWebView
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="NSURLProtocol">
-                <span class="iconfont-archer">&#xe606;</span>
-                NSURLProtocol
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="ReactiveCocoa">
-                <span class="iconfont-archer">&#xe606;</span>
-                ReactiveCocoa
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Japan">
-                <span class="iconfont-archer">&#xe606;</span>
-                Japan
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="APP">
-                <span class="iconfont-archer">&#xe606;</span>
-                APP
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="runtime">
-                <span class="iconfont-archer">&#xe606;</span>
-                runtime
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="swift">
-                <span class="iconfont-archer">&#xe606;</span>
-                swift
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Pattern">
-                <span class="iconfont-archer">&#xe606;</span>
-                Pattern
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="book">
-                <span class="iconfont-archer">&#xe606;</span>
-                book
-            </span>
-        
-    </div>
-    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
-    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
-        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
-    </div> 
-    <div class="sidebar-tags-list"></div>
-</div>
-
-        <div class="sidebar-panel-categories">
-    <div class="sidebar-categories-name">
-    
-        <span class="sidebar-category-name" data-categories="Programming">
-            <span class="iconfont-archer">&#xe60a;</span>
-            Programming
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="My-novel">
-            <span class="iconfont-archer">&#xe60a;</span>
-            My-novel
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="My-painting">
-            <span class="iconfont-archer">&#xe60a;</span>
-            My-painting
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="travel">
-            <span class="iconfont-archer">&#xe60a;</span>
-            travel
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="APP">
-            <span class="iconfont-archer">&#xe60a;</span>
-            APP
-        </span>
-    
-    </div>
-    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
-    <div class="sidebar-categories-list"></div>
-</div>
-
-    </div>
-</div>
-
-        <!-- site-meta -->
-        <script>
-    var siteMeta = {
-        url: "http://ming1016.github.io",
-        root: "/",
-        author: "戴铭"
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
     }
+    refreshFsLightbox();
+  }
 </script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
 
-        <!-- import experimental options here -->
-        <!-- Custom Font -->
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
 
-
-        <!-- main func -->
-        <script src="/scripts/main.js?v=20210823"></script>
-        <!-- dark mode -->
-        <script src="/scripts/dark.js?v=20210823"></script>
-        <!-- fancybox -->
-        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
-        <!-- algolia -->
-        
-        <!-- busuanzi -->
-        
-            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-        
-        <!-- CNZZ -->
-        
-        <!-- async load share.js -->
-        
-            <script src="/scripts/share.js?v=20210823" async></script>
-        
-        <!-- mermaid -->
-        
-    </body>
 </html>

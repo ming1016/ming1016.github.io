@@ -1,547 +1,208 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
-    <!-- title -->
-
-
-    
-
-<!-- keywords -->
-
-
-
+<html>
+<meta  lang="zh-Hans" >
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="author" content="戴铭">
-    <meta name="renderer" content="webkit">
-    <meta name="copyright" content="戴铭">
-    
-        <meta name="keywords" content="戴铭,戴铭的博客,iOS,Swift,移动开发,JavaScript,编译">
-    
-    <meta name="description" content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-    <meta name="description" content="文章已发在快手大前端公众号，欢迎关注，文章地址如下：  A站 的 Swift 实践 —— 上篇 A站 的 Swift 实践 —— 下篇  新文章写得贼累。完美错过了一览祖国大好人海的机会，TIANROAST🦔咖啡也没喝成，新买Switch怪物猎人崛起也仅限于炎火村。如果喜欢的话，求转发、“在看”和一个大大的赞。 下面是正文内容，我转到博客里来。 背景介绍 AcFun俗称为“A站”，作为一款二次元">
-<meta property="og:type" content="article">
-<meta property="og:title" content="A站 的 Swift 实践">
-<meta property="og:url" content="http://ming1016.github.io/2021/05/22/acfun-swift-practice/index.html">
-<meta property="og:site_name" content="戴铭的博客 - 星光社">
-<meta property="og:description" content="文章已发在快手大前端公众号，欢迎关注，文章地址如下：  A站 的 Swift 实践 —— 上篇 A站 的 Swift 实践 —— 下篇  新文章写得贼累。完美错过了一览祖国大好人海的机会，TIANROAST🦔咖啡也没喝成，新买Switch怪物猎人崛起也仅限于炎火村。如果喜欢的话，求转发、“在看”和一个大大的赞。 下面是正文内容，我转到博客里来。 背景介绍 AcFun俗称为“A站”，作为一款二次元">
-<meta property="og:locale">
-<meta property="og:image" content="http://ming1016.github.io/uploads/acfun-swift-practice/01.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/acfun-swift-practice/02.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/acfun-swift-practice/03.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/acfun-swift-practice/04.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/acfun-swift-practice/05.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/acfun-swift-practice/06.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/acfun-swift-practice/07.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/acfun-swift-practice/10.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/acfun-swift-practice/08.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/acfun-swift-practice/09.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/acfun-swift-practice/11.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/acfun-swift-practice/12.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/acfun-swift-practice/13.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/acfun-swift-practice/14.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/acfun-swift-practice/15.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/acfun-swift-practice/16.png">
-<meta property="og:image" content="http://ming1016.github.io/uploads/acfun-swift-practice/17.png">
-<meta property="article:published_time" content="2021-05-22T10:16:12.000Z">
-<meta property="article:modified_time" content="2021-06-05T12:38:59.371Z">
-<meta property="article:author" content="戴铭">
-<meta property="article:tag" content="iOS">
-<meta property="article:tag" content="Apple">
-<meta property="article:tag" content="Swift">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://ming1016.github.io/uploads/acfun-swift-practice/01.png">
-    <meta http-equiv="Cache-control" content="no-cache">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="icon" href="/assets/logo-starming.png">
-    
-    <title>A站 的 Swift 实践 · 戴铭的博客 - 星光社</title>
-    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-/* This file is meant as a standalone workflow for
-- testing support for link[rel=preload]
-- enabling async CSS loading in browsers that do not support rel=preload
-- applying rel preload css once loaded, whether supported or not.
-*/ -->
-<script>
-    (function (w) {
-        'use strict'
-        // rel=preload support test
-        if (!w.loadCSS) {
-            w.loadCSS = function () {}
-        }
-        // define on the loadCSS obj
-        var rp = (loadCSS.relpreload = {})
-        // rel=preload feature support test
-        // runs once and returns a function for compat purposes
-        rp.support = (function () {
-            var ret
-            try {
-                ret = w.document.createElement('link').relList.supports('preload')
-            } catch (e) {
-                ret = false
-            }
-            return function () {
-                return ret
-            }
-        })()
-
-        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
-        // then change that media back to its intended value on load
-        rp.bindMediaToggle = function (link) {
-            // remember existing media attr for ultimate state, or default to 'all'
-            var finalMedia = link.media || 'all'
-
-            function enableStylesheet() {
-                link.media = finalMedia
-            }
-
-            // bind load handlers to enable media
-            if (link.addEventListener) {
-                link.addEventListener('load', enableStylesheet)
-            } else if (link.attachEvent) {
-                link.attachEvent('onload', enableStylesheet)
-            }
-
-            // Set rel and non-applicable media type to start an async request
-            // note: timeout allows this to happen async to let rendering continue in IE
-            setTimeout(function () {
-                link.rel = 'stylesheet'
-                link.media = 'only x'
-            })
-            // also enable media after 3 seconds,
-            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
-            setTimeout(enableStylesheet, 3000)
-        }
-
-        // loop through link elements in DOM
-        rp.poly = function () {
-            // double check this to prevent external calls from running
-            if (rp.support()) {
-                return
-            }
-            var links = w.document.getElementsByTagName('link')
-            for (var i = 0; i < links.length; i++) {
-                var link = links[i]
-                // qualify links to those with rel=preload and as=style attrs
-                if (
-                    link.rel === 'preload' &&
-                    link.getAttribute('as') === 'style' &&
-                    !link.getAttribute('data-loadcss')
-                ) {
-                    // prevent rerunning on link
-                    link.setAttribute('data-loadcss', true)
-                    // bind listeners to toggle media back
-                    rp.bindMediaToggle(link)
-                }
-            }
-        }
-
-        // if unsupported, run the polyfill
-        if (!rp.support()) {
-            // run once at least
-            rp.poly()
-
-            // rerun poly on an interval until onload
-            var run = w.setInterval(rp.poly, 500)
-            if (w.addEventListener) {
-                w.addEventListener('load', function () {
-                    rp.poly()
-                    w.clearInterval(run)
-                })
-            } else if (w.attachEvent) {
-                w.attachEvent('onload', function () {
-                    rp.poly()
-                    w.clearInterval(run)
-                })
-            }
-        }
-
-        // commonjs
-        if (typeof exports !== 'undefined') {
-            exports.loadCSS = loadCSS
-        } else {
-            w.loadCSS = loadCSS
-        }
-    })(typeof global !== 'undefined' ? global : this)
-</script>
-
-    <style type="text/css">
-    @font-face {
-        font-family: 'Oswald-Regular';
-        src: url("/font/Oswald-Regular.ttf");
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
     }
-
-    body {
-        margin: 0;
-    }
-
-    header,
-    footer,
-    .back-top,
-    .sidebar,
-    .container,
-    .site-intro-meta,
-    .toc-wrapper {
-        display: none;
-    }
-
-    .site-intro {
-        position: relative;
-        z-index: 3;
-        width: 100%;
-        /* height: 50vh; */
-        overflow: hidden;
-    }
-
-    .site-intro-placeholder {
-        position: absolute;
-        z-index: -2;
-        top: 0;
-        left: 0;
-        width: calc(100% + 300px);
-        height: 100%;
-        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
-        background-position: center center;
-        transform: translate3d(-226px, 0, 0);
-        animation: gradient-move 2.5s ease-out 0s infinite;
-    }
-
-    @keyframes gradient-move {
-        0% {
-            transform: translate3d(-226px, 0, 0);
-        }
-        100% {
-            transform: translate3d(0, 0, 0);
-        }
-    }
-</style>
-
-    <link rel="preload" href="/css/style.css?v=20210823" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="/css/dark.css?v=20210823" as="style">
-    <link rel="stylesheet" href="/css/dark.css" media="(prefers-color-scheme: dark)">
-    <link rel="stylesheet" href="/css/mobile.css?v=20210823" media="(max-width: 960px)">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
-    <link rel="preload" href="/scripts/main.js?v=20210823" as="script">
-    <link rel="preload" href="/scripts/dark.js?v=20210823" as="script">
-    <link rel="preload" href="/font/Oswald-Regular.ttf" as="font" crossorigin>
-    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
-    <!-- algolia -->
-    
-    <!-- 百度统计  -->
-    
-    <!-- 谷歌统计  -->
-    
-<meta name="generator" content="Hexo 5.4.0"></head>
-
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <script type="text/javascript">
-        if (typeof window.$ == undefined) {
-            console.warn('jquery load from jsdelivr failed, will load local script')
-            document.write('<script src="/lib/jquery.min.js" />')
-        }
-    </script>
-    
-        <body class="post-body">
-    
-        <!-- header -->
-        <header class="header header-mobile">
-    <!-- top read progress line -->
-    <div class="header-element">
-        <div class="read-progress"></div>
-    </div>
-    <!-- sidebar menu button -->
-    <div class="header-element">
-        
-            <div class="header-sidebar-menu">
-        
-            
-                <div style="padding-left: 1px;">&#xe775;</div>
-            
-        </div>
-    </div>
-    <!-- header actions -->
-    <div class="header-actions">
-        <!-- theme mode switch button -->
-        <span class="header-theme-btn header-element">
-            <i class="fas fa-adjust"></i>
-        </span>
-        <!-- back to home page text -->
-        <span class="home-link header-element">
-            <a href=/>戴铭的博客 - 星光社</a>
-        </span>
-    </div>
-    <!-- toggle banner for post layout -->
-    
-        
-            <div class="banner">
-        
-            <div class="blog-title header-element">
-                <a href="/">戴铭的博客 - 星光社</a>
-            </div>
-            <div class="post-title header-element">
-                <a href="#" class="post-name">A站 的 Swift 实践</a>
-            </div>
-        </div>
-    
-</header>
-
-        <!-- fixed footer -->
-        <footer class="footer-fixed">
-    <!-- back to top button -->
-    <div class="footer-fixed-element">
-        
-            <div class="back-top back-top-hidden">
-        
-        
-            <div>&#xe639;</div>
-        
-        </div>
-    </div>
-</footer>
-
-        <!-- wrapper -->
-        <div class="wrapper">
-            <div class="site-intro" style="
-
-
-
-
-
-
-
-    height:50vh;
-
-">
-    
-    <!-- 主页  -->
-    
-        
-    <!-- 404页  -->
-            
-    <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/post-bg-starming.jpg)"></div>
-    <div class="site-intro-meta">
-        <!-- 标题  -->
-        <h1 class="intro-title">
-            <!-- 主页  -->
-            
-                A站 的 Swift 实践
-            <!-- 404 -->
-            
-        </h1>
-        <!-- 副标题 -->
-        <p class="intro-subtitle">
-            <!-- 主页副标题  -->
-            
-                
-            <!-- 404 -->
-            
-        </p>
-        <!-- 文章页 meta -->
-        
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class= post-intro-tags >
-    
-        
-        
-            
-        
-        
-        <span class="post-category" data-categories="Programming"">
-            <i class="fas fa-folder post-category-icon"></i>
-            <span class="post-category-text">
-                Programming
-            </span>
-        </span>
-    
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Apple">Apple</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Swift">Swift</a>
-    
-</div>
-
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">11.2k</span>阅读时长: <span class="post-count reading-time">41 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <!-- 撰写日期 -->
-                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
-                    <span class="post-intro-time">2021/05/22</span>
-                    <!-- busuanzi -->
-                    
-                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
-                            <span id="busuanzi_value_page_pv"></span>
-                        </span>
-                    
-                    <!-- 文章分享 -->
-                    <span class="share-wrapper">
-                        <span class="iconfont-archer share-icon">&#xe71d;</span>
-                        <span class="share-text">Share</span>
-                        <ul class="share-list">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
-        
-    </div>
-</div>
-
-            <script>
-  // get user agent
-  function getBrowserVersions() {
-    var u = window.navigator.userAgent
-    return {
-      userAgent: u,
-      trident: u.indexOf('Trident') > -1, //IE内核
-      presto: u.indexOf('Presto') > -1, //opera内核
-      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
-      iPad: u.indexOf('iPad') > -1, //是否为iPad
-      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
-      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
-      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
-    }
-  }
-  var browser = {
-    versions: getBrowserVersions(),
-  }
-  console.log('userAgent: ' + browser.versions.userAgent)
-
-  // callback
-  function fontLoaded() {
-    console.log('font loaded')
-    if (document.getElementsByClassName('site-intro-meta')) {
-      document
-        .getElementsByClassName('intro-title')[0]
-        .classList.add('intro-fade-in')
-      document
-        .getElementsByClassName('intro-subtitle')[0]
-        .classList.add('intro-fade-in')
-      var postIntros = document.getElementsByClassName('post-intros')[0]
-      if (postIntros) {
-        postIntros.classList.add('post-fade-in')
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
       }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
     }
-  }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
 
-  // UC不支持跨域，所以直接显示
-  function asyncCb() {
-    if (browser.versions.uc) {
-      console.log('UCBrowser')
-      fontLoaded()
-    } else {
-      WebFont.load({
-        custom: {
-          families: ['Oswald-Regular'],
-        },
-        loading: function () {
-          // 所有字体开始加载
-          // console.log('font loading');
-        },
-        active: function () {
-          // 所有字体已渲染
-          fontLoaded()
-        },
-        inactive: function () {
-          // 字体预加载失败，无效字体或浏览器不支持加载
-          console.log('inactive: timeout')
-          fontLoaded()
-        },
-        timeout: 5000, // Set the timeout to two seconds
-      })
-    }
-  }
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
 
-  function asyncErr() {
-    console.warn('script load from CDN failed, will load local script')
-  }
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
 
-  // load webfont-loader async, and add callback function
-  function async(u, cb, err) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0]
-    o.src = u
-    if (cb) {
-      o.addEventListener(
-        'load',
-        function (e) {
-          cb(null, e)
-        },
-        false
-      )
-    }
-    if (err) {
-      o.addEventListener(
-        'error',
-        function (e) {
-          err(null, e)
-        },
-        false
-      )
-    }
-    s.parentNode.insertBefore(o, s)
-  }
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
 
-  var asyncLoadWithFallBack = function (arr, success, reject) {
-    var currReject = function () {
-      reject()
-      arr.shift()
-      if (arr.length) async(arr[0], success, currReject)
-    }
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
 
-    async(arr[0], success, currReject)
-  }
 
-  asyncLoadWithFallBack(
-    [
-      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
-      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
-      "/lib/webfontloader.min.js",
-    ],
-    asyncCb,
-    asyncErr
-  )
-</script>
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
+      
+      <span class="navbar-logo-dsc">戴铭的博客</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/acfun-swift-practice/01.png" data-src="/uploads/acfun-swift-practice/01.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
 
-            <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
-            <div class="container container-unloaded">
-                <main class="main post-page">
-    <article class="article-entry">
-        <p>文章已发在快手大前端公众号，欢迎关注，文章地址如下：</p>
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      A站 的 Swift 实践
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-05-22T10:16:12.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021-05-22</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Programming/" class="post-meta-link">Programming</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>11.2k 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/iOS/" class="post-meta-link">iOS</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Apple/" class="post-meta-link">Apple</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Swift/" class="post-meta-link">Swift</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p>文章已发在快手大前端公众号，欢迎关注，文章地址如下：</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rUZ8RwhWf4DWAa5YHHynsQ">A站 的 Swift 实践 —— 上篇</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/EIPHLdxBMb5MiRDDfxzJtA">A站 的 Swift 实践 —— 下篇</a></li>
 </ul>
 <p>新文章写得贼累。完美错过了一览祖国大好人海的机会，TIANROAST🦔咖啡也没喝成，新买Switch怪物猎人崛起也仅限于炎火村。如果喜欢的话，求转发、“在看”和一个大大的赞。</p>
 <p>下面是正文内容，我转到博客里来。</p>
-<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p><img src="/uploads/acfun-swift-practice/01.png" alt=""></p>
+<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/acfun-swift-practice/01.png" class="lozad post-image"src="/uploads/acfun-swift-practice/01.png"></p>
 <p>AcFun俗称为“A站”，作为一款二次元内容社区产品，以“认真你就输了”为文化导向，倡导轻松欢快的亚文化。AcFun涵盖了中长视频，小视频，番剧，文章等众多内容，支撑这些内容的大部分功能都选择了用Swift开发，早在2019年，AcFun的iOS技术团队就已将Swift作为AcFun app和水母app的开发首选语言。Swift的出现为用户提供了更稳定的使用体验和更快的产品更新节奏，同时也为研发工程师创造了更高效舒适的开发体验。Objective-C已成过去时，AcFun正全面拥抱Swift，驶入iOS开发快车道。</p>
-<h3 id="苹果推出Swift的原因"><a href="#苹果推出Swift的原因" class="headerlink" title="苹果推出Swift的原因"></a>苹果推出Swift的原因</h3><p>谷歌作为苹果最大的竞争对手，除了Android上的Kotlin，还推出了Flutter和Fuchsia里在用的Dart语言，这些语言的口碑和易用性远高于苹果的Objective-C（后面简称OC）。OC历史久远，是C语言的超集，因此其发展受C语言限制。在这样的背景下，大家都以为苹果会忽视其它新语言，但其实苹果对于那些新语言特性垂涎已久，将想法施于行动的是当时还在苹果的<em> Chris Lattner</em>。<em>Chris</em>是狂热的编译器和编程语言爱好者，C、C++、OC语言编译器LLVM的创造者，在LLVM开发过程中，Chris对类C语言有着很多不满意的地方，比如预处理器、Trigraphs还有多年积累的奇怪东西。</p>
+<h3 id="苹果推出Swift的原因"><a href="#苹果推出Swift的原因" class="headerlink" title="苹果推出Swift的原因"></a>苹果推出Swift的原因</h3><p>谷歌作为苹果最大的竞争对手，除了Android上的Kotlin，还推出了Flutter和Fuchsia里在用的Dart语言，这些语言的口碑和易用性远高于苹果的Objective-C（后面简称OC）。OC历史久远，是C语言的超集，因此其发展受C语言限制。在这样的背景下，大家都以为苹果会忽视其它新语言，但其实苹果对于那些新语言特性垂涎已久，将想法施于行动的是当时还在苹果的_ Chris Lattner_。_Chris_是狂热的编译器和编程语言爱好者，C、C++、OC语言编译器LLVM的创造者，在LLVM开发过程中，Chris对类C语言有着很多不满意的地方，比如预处理器、Trigraphs还有多年积累的奇怪东西。</p>
 <p>为了能够兼顾类似React一样的编程范式和具备Java等正流行的语言的优秀特性，Swift经历了长期的ABI稳定和语言特性迭代增加的过程，最终推出了能和JSX声明式UI匹敌的Result Builders，并且通过SwiftUI和Combine这种能极大提升开发效率的框架让开发者收获了惊喜。</p>
-<p>可能是Swift的ABI稳定得太晚，不止各大APP里已经积累了大量的OC库和业务代码，苹果系统里的OC占比也依然很高，<a target="_blank" rel="noopener" href="https://blog.timac.org/2020/1019-evolution-of-the-programming-languages-from-iphone-os-to-ios-14/"><em>博客《Evolution of the programming languages from iPhone OS 1.0 to iOS 14》 </em></a>统计了 iOS 历史版本 OC 占比，从文章中可以看到最近的iOS 14版本里OC占比高达88%，C和C++主要用于音视频、电话、网络等比较基础的模块，其占比相对稳定，特别是C并没有明显增加。不过在最近几个版本中，Swift占比持续增高，iOS 14达到了8%，可以看出苹果正在使用Swift重构以前的库。</p>
+<p>可能是Swift的ABI稳定得太晚，不止各大APP里已经积累了大量的OC库和业务代码，苹果系统里的OC占比也依然很高，<a target="_blank" rel="noopener" href="https://blog.timac.org/2020/1019-evolution-of-the-programming-languages-from-iphone-os-to-ios-14/">_博客《Evolution of the programming languages from iPhone OS 1.0 to iOS 14》 _</a>统计了 iOS 历史版本 OC 占比，从文章中可以看到最近的iOS 14版本里OC占比高达88%，C和C++主要用于音视频、电话、网络等比较基础的模块，其占比相对稳定，特别是C并没有明显增加。不过在最近几个版本中，Swift占比持续增高，iOS 14达到了8%，可以看出苹果正在使用Swift重构以前的库。</p>
 <h3 id="苹果实际采取的行动"><a href="#苹果实际采取的行动" class="headerlink" title="苹果实际采取的行动"></a>苹果实际采取的行动</h3><p>为了让广大开发者能够用上更方便安全的Swift，苹果采取了一系列实际行动。比如不再给OC新加接口，而是用Swift替换SDK，WWDC17之后就已经看不到OC的例子了，苹果主推的一些前沿技术，比如AR、AI、Health等，在新版里也都只有Swift版本。所以，在未来的发展中，企业不考虑Swift或是缺少Swift人才，都将会影响到新技术的引入。</p>
 <p>另外，苹果的RealityKit、CareKit、Create ML、System、WidgetKit、CryptoKit、Combine、SwiftUI等框架在与OC混编时都非常困难，从这些方面可以看出，苹果所有新开发的框架都在避免和OC产生关系，甚至自WWDC2020起新增加的App Widget只能用SwiftUI开发。</p>
 <p>对于苹果一系列的行动，社区与之对应的反应是没有热情去回答OC的Bug了，因为有了更好的追求。OC三方库作者也没有维护的意愿，更新周期比Swift长很多，比如大家都知道的OC网络库AFNetworking，最新版本更新用了2年多时间，而该作者用Swift开发的对应的网络库Alamofire，更新频率接近半个月，作者对Swift的热情可见一斑。</p>
@@ -549,55 +210,55 @@
 <p>按照目前这个趋势，使用Swift势在必行。</p>
 <h3 id="Swift在AcFun的演进"><a href="#Swift在AcFun的演进" class="headerlink" title="Swift在AcFun的演进"></a>Swift在AcFun的演进</h3><p>2019年AcFun完成了Swift的调研和初期基础设施建设，团队Swift培训以及业务的试点。在Swift调研探索过程中，AcFun开发同学体验到了Swift的优雅、精简以及安全，也经历混编构建时间长和代码补全慢等问题。其中构建问题只要遵循官方Module的最佳实践就可以规避，代码补全问题在Xcode12中得到了很好的改善。2020年上半年AcFun开始了混编工程优化、组件化以及二进制化建设，借LLVM Module抹平模块API在语言上的差异，基础库进行了Module化问题修复，并基于主站二进制化方案，完善了对Swift混编的支持。目前二进制化率为80%，约50%的组件完成了LLVM Module化，构建速度提升了60%以上。</p>
 <p>AcFun 当前的 Swift &amp; OC 混编架构如下图所示。Infra层包含自研基础库、快手系中台SDK以及第三方库。Business Support层为各业务Feature提供通用业务支撑。Business Modules层包含当前已完成解耦和Module化的业务模块，模块之间通过依赖注入容器和路由进行通信。当前Main Target中仍然存在尚未解耦的混编代码，OC 和 Swift 之间通过桥接进行交互，另外有一些尚未Module化的OC基础库仍然需要通过Bridging Header桥接给Swift使用。这些桥接是影响编译时间以及代码补全速度的主要因素。</p>
-<p><img src="/uploads/acfun-swift-practice/02.png" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/acfun-swift-practice/02.png" class="lozad post-image"src="/uploads/acfun-swift-practice/02.png"></p>
 <p>随着架构的演进和组件化的推进，未来理想目标架构愿景如下图所示。Infra 和 Business Support 层为业务提供更完整的基础和通用业务支撑，业务模块全面解耦、Module化和二进制化，组件均以Module的形式组织和聚合，Main Target 实现壳工程化。</p>
-<p><img src="/uploads/acfun-swift-practice/03.png" alt=""></p>
-<p>目前AcFun的Swift文件数占工程总数40%之多，崩溃率减少了52%。AcFun采用混编后，性能方面，比如启动时间、页面流畅度、内存、CPU/GPU负载等方面差别不大。AcFun的QA负责人邵国强不禁感叹：“AcFun的移动端研发同学开始探索Swift时，QA团队起初没有明显感知，但随着研发团队Swift建设的推进，发版频率也提速到单周以后，研发同学能持续高质量交付，真是太棒了。”</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/acfun-swift-practice/03.png" class="lozad post-image"src="/uploads/acfun-swift-practice/03.png"></p>
+<p>目前AcFun的Swift文件数占工程总数40%之多，崩溃率减少了52%。AcFun采用混编后，性能方面，比如启动时间、页面流畅度、内存、CPU&#x2F;GPU负载等方面差别不大。AcFun的QA负责人邵国强不禁感叹：“AcFun的移动端研发同学开始探索Swift时，QA团队起初没有明显感知，但随着研发团队Swift建设的推进，发版频率也提速到单周以后，研发同学能持续高质量交付，真是太棒了。”</p>
 <p>Swift的内存管理是通过严格的、确定性的引用计数来自动管理的，可以将内存的使用量降到最低，还可以避免垃圾收集在错误线程使用Finalizer，执行多次不能管理数据库句柄之类资源的问题。ARC的Retain和Release开销在垃圾收集里也会有，比如在存储一个对象属性时用Write Barrier。ARC的算法类似Go的Tricolor算法。垃圾回收还会移动和压缩对象，如果调用C代码，可能还会得到一个Dangling Pointer，比如JNI，就明确需要引入和维护对象，无形中增加了复杂度，还很容易出问题。</p>
 <p>在atp播客205期节目中 <a target="_blank" rel="noopener" href="https://atp.fm/205-chris-lattner-interview-transcript"><em>Episode 205: Chris Lattner Interview Transcript</em></a>，Chris Lattner 指出OC之所以不安全的原因是因为OC是基于C语言，有指针，有不完全初始化的变量，会数组越界，即使对工具链和编译器有完全的控制权，也无法很好地解决以上的问题，解决Dangling Pointer就需要解决生命周期问题，而C没有一个框架能解决，改成兼容方式进入系统也是行不通的。因此苹果团队经过思考，决定创建一门“安全”的编程语言，这种安全不止是指没有Bug，而是在保持安全的同时还能够保证高性能，进而推动整个编程模型前进。</p>
 <p>Swift消除了整个类别的不安全代码。变量在使用前总是被初始化，数组和整数会被检查是否有溢出，内存会被自动管理，对内存的独占访问可以防止许多编程错误。</p>
 <p>Swift有静态调度安全的特性，比C语言更安全，很多问题能在编译时提前发现。代码中发生内存溢出，编译器会发出诊断信息，比如常量中的内存溢出很难查。数组越界检查，还有函数返回可达性检测，确保返回值和函数定义的类型一致。</p>
 <p>编译器中的类型安全性可以让问题更早暴露。例如Swift Optional的设计在编译期阻断了空值访问，又如利用范型类型推导在编译期提供约束，从而避免Unsafe Type Casting。水母的研发工程师赵赫在使用Swift过程中，发现代码中的很多问题和隐患都可以在编译期暴露出来，在大部分情况下代码只要能编译通过，运行效果就不会离预期有很大的偏差，这让他对其代码交付质量更加充满信心。</p>
 <h3 id="Swift语言的演进"><a href="#Swift语言的演进" class="headerlink" title="Swift语言的演进"></a>Swift语言的演进</h3><p>Swift的演进比较稳定，并没有在初期版本一股脑把特性都加上，而是每个版本迭代增加特性。演进之路如下图所示：</p>
-<p><img src="/uploads/acfun-swift-practice/04.png" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/acfun-swift-practice/04.png" class="lozad post-image"src="/uploads/acfun-swift-practice/04.png"></p>
 <p>Swift第一个版本推出了基本语法，Swift2.0主要是将泛型和协议能力做了提升，并对Linux进行了支持，后端框架Vapor和Perfect也是在Swift2.0时出现的，Swift也是在这个版本开源的。Swift3.0出了Swift Package Manager，对标准库API进行了重新的设计。4.0 推出Codable协议和Key path。5.0终于ABI稳定，Swift运行时内置到了iOS12系统里。5.1版本推出了让大家感到苹果活力的SwiftUI和Combine，新增了一大堆围绕提升开发舒适度的Property Wrapper、Opaque Type等语言特性，随之，社区开始异常活跃起来，与之对应的技术文章大量输出。AcFun就使用了5.1版本的Property Wrapper包装了UserDefaults，Codable，RxSwift Relay等，业务开发过程中避免雷同代码的编写。</p>
-<p>Swift 6的 <a target="_blank" rel="noopener" href="https://forums.swift.org/t/on-the-road-to-swift-6/32862"><em>Roadmap</em></a><em> </em>表明了Swift下一步发展方向是优化Swift部署安装，比如LSP和包管理等；丰富开源生态，包括完善标准库，开发类似科学计算这样的新库；围绕开发体验的构建和代码补全提速、丰富诊断信息、稳定调试体验等；DSL能力提升；完善低级别系统编程和机器学习等重要领域的拓展；提供内存所有权和并发等主要语言特性的方案，要做到出色为止。</p>
+<p>Swift 6的 <a target="_blank" rel="noopener" href="https://forums.swift.org/t/on-the-road-to-swift-6/32862"><em>Roadmap</em></a>_ _表明了Swift下一步发展方向是优化Swift部署安装，比如LSP和包管理等；丰富开源生态，包括完善标准库，开发类似科学计算这样的新库；围绕开发体验的构建和代码补全提速、丰富诊断信息、稳定调试体验等；DSL能力提升；完善低级别系统编程和机器学习等重要领域的拓展；提供内存所有权和并发等主要语言特性的方案，要做到出色为止。</p>
 <p>目前Swift这个项目的负责人叫 <a target="_blank" rel="noopener" href="https://twitter.com/tkremenek"><em>Ted Kremenek</em></a>，斯坦福博士，他之前还是Rust的主力开发。在苹果工作的十年，一个人做了Clang的静态分析器，后面一直管理着Clang和Swift项目，向Chris汇报。Swift项目团队核心成员还有Dave Abrahams（已退出）、John McCall、Doug Gregor、Joe Groff、Saleem Abdulrasool（移植Swift到windows）、Tom Doron（创建SwiftNIO）等，他们的身影活跃在Github的Swift各个提案中。</p>
 <p>回到我们身边，国内Swift用的情况怎么样？</p>
 <p>一些耳熟能详的App，比如微信、淘宝、百度、支付宝、拼多多、京东、哔哩哔哩、优酷、小红书等都已经开始尝试使用Swift，这些App无一例外都采用了Swift和OC混编开发。由于国内业务竞争压力大，很难像国外公司Uber那样花大半年时间全部用Swift重构，因此如果要在现有工程基础上引入Swift开发，不可避开采用混编开发。很多App使用Swift混编，也是因为苹果对Widget功能开发语言设置了限制，即只能使用Swift，看来苹果公司这个策略是相当有效的。</p>
 <h2 id="框架选择"><a href="#框架选择" class="headerlink" title="框架选择"></a>框架选择</h2><p>而正式进入混编开发前，需要先做开发框架的选型，我们先从架构演进开始说起。</p>
 <h3 id="架构演进"><a href="#架构演进" class="headerlink" title="架构演进"></a>架构演进</h3><p>一般App经过多年发展，架构都会经过如下四个阶段：</p>
-<p><img src="/uploads/acfun-swift-practice/05.png" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/acfun-swift-practice/05.png" class="lozad post-image"src="/uploads/acfun-swift-practice/05.png"></p>
 <p>如图所示，App架构从单Module，MVC架构到几百个Module，无依赖，动态跳转。团队从小变大，如今App的架构更偏重高质量、稳定性和高可维护性。苹果公司也是顺应发展趋势，先后推出提高稳定性的Swift语言，而后推出提高可维护性的SwiftUI和Combine。</p>
 <h3 id="SwiftUI"><a href="#SwiftUI" class="headerlink" title="SwiftUI"></a>SwiftUI</h3><p>对于一个基于UIKit的项目是没有必要全部用SwiftUI重写的，在UIKit里使用SwiftUI的视图非常容易，UIHostingController是UIViewController的子类，可以直接用在UIKit里，因此直接将SwiftUI视图加到UIHostingController中，就可以在UIKit里使用SwiftUI视图了。</p>
 <p>SwiftUI的布局核心是 GeometryReader、View Preferences和Anchor Preferences。如下图所示：</p>
-<p><img src="/uploads/acfun-swift-practice/06.png" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/acfun-swift-practice/06.png" class="lozad post-image"src="/uploads/acfun-swift-practice/06.png"></p>
 <p>SwiftUI的数据流更适合Redux结构，如下图所示：</p>
-<p><img src="/uploads/acfun-swift-practice/07.png" alt=""></p>
-<p>如上图，Redux结构是真正的单向单数据源结构，易于分割，能充分利用SwiftUI内置的数据流Property Wrapper。UI组件干净、体量小、可复用并且无业务逻辑，因此开发时可以聚焦于UI代码。业务逻辑放在一起，所有业务逻辑和数据Model都在Reducer里。<a target="_blank" rel="noopener" href="https://github.com/Dimillian/ACHNBrowserUI"><em>ACHNBrowserUI</em></a> 和 <a target="_blank" rel="noopener" href="https://github.com/Dimillian/MovieSwiftUI"><em>MovieSwiftUI</em></a> 开源项目都是使用的Redux架构。最近比较瞩目的TCA（The Composable Architecture）也是类Redux/Elm的架构的框架，<a target="_blank" rel="noopener" href="https://github.com/pointfreeco/swift-composable-architecture"><em>项目地址见</em></a>。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/acfun-swift-practice/07.png" class="lozad post-image"src="/uploads/acfun-swift-practice/07.png"></p>
+<p>如上图，Redux结构是真正的单向单数据源结构，易于分割，能充分利用SwiftUI内置的数据流Property Wrapper。UI组件干净、体量小、可复用并且无业务逻辑，因此开发时可以聚焦于UI代码。业务逻辑放在一起，所有业务逻辑和数据Model都在Reducer里。<a target="_blank" rel="noopener" href="https://github.com/Dimillian/ACHNBrowserUI"><em>ACHNBrowserUI</em></a> 和 <a target="_blank" rel="noopener" href="https://github.com/Dimillian/MovieSwiftUI"><em>MovieSwiftUI</em></a> 开源项目都是使用的Redux架构。最近比较瞩目的TCA（The Composable Architecture）也是类Redux&#x2F;Elm的架构的框架，<a target="_blank" rel="noopener" href="https://github.com/pointfreeco/swift-composable-architecture"><em>项目地址见</em></a>。</p>
 <p>提到数据流就不得不说下苹果公司新出的Combine，对标的是RxSwift，由于是苹果公司官方的库，所以应该优先选择。不过和SwiftUI一样，这两个新库对APP支持最低的系统版本都要求是iOS13及以上。那么怎么能够提前用上SwiftUI和Combine呢？或者说现在使用什么库可以以相同接口方式暂时替换它们，又能在以后改为SwiftUI和Combine时成本最小化呢？</p>
 <p>对于SwiftUI，AcFun自研了声明式UI Ysera，类似SwiftUI的接口，并且重构了AcFun里收藏模块列表视图和交互逻辑，如下图所示：</p>
-<p><img src="/uploads/acfun-swift-practice/10.png" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/acfun-swift-practice/10.png" class="lozad post-image"src="/uploads/acfun-swift-practice/10.png"></p>
 <p>通过上图可以看到，swift代码量相比较OC减少了65%以上，原先使用Objective-C实现的相同功能代码超过了1000行，而Swift重写只需要350行，对于AcFun的业务研发工程师而言，同样的需求实现代码比之前少了至少30%，面对单周迭代这样的节奏，团队也变得更从容。代码可读性增加了，后期功能迭代和维护更容易了，Swift让AcFun驶入了iOS开发生态的“快车道”。</p>
-<p>SwiftUI全部都是基于Swift的各大可提高开发效率特性完成的，比如前面提到的，能够访问只给语言特性级别行为的Property Wrapper，通过Property Wrapper包装代码逻辑，来降低代码复杂度，除了SwiftUI和Combine里@开头的Property Wrapper外，Swift还自带类似<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0195-dynamic-member-lookup.md"><em>@dynamicMemberLookup</em></a> 和<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0216-dynamic-callable.md"><em>@dynamicCallable</em></a> 这样重量级的Property Wrapper。还有<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0289-result-builders.md"><em>ResultBuilder</em></a><em> </em>这种能够简化语法的特性，有些如GraphQL、REST和Networking实际使用ResultBuilder的<a target="_blank" rel="noopener" href="https://github.com/carson-katri/awesome-result-builders"><em>范例可以参考</em></a>。这些Swift的特性如果也能得到充分利用，即使不用SwiftUI也能使开发效率得到大幅提升。</p>
+<p>SwiftUI全部都是基于Swift的各大可提高开发效率特性完成的，比如前面提到的，能够访问只给语言特性级别行为的Property Wrapper，通过Property Wrapper包装代码逻辑，来降低代码复杂度，除了SwiftUI和Combine里@开头的Property Wrapper外，Swift还自带类似<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0195-dynamic-member-lookup.md"><em>@dynamicMemberLookup</em></a> 和<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0216-dynamic-callable.md"><em>@dynamicCallable</em></a> 这样重量级的Property Wrapper。还有<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0289-result-builders.md"><em>ResultBuilder</em></a>_ _这种能够简化语法的特性，有些如GraphQL、REST和Networking实际使用ResultBuilder的<a target="_blank" rel="noopener" href="https://github.com/carson-katri/awesome-result-builders"><em>范例可以参考</em></a>。这些Swift的特性如果也能得到充分利用，即使不用SwiftUI也能使开发效率得到大幅提升。</p>
 <p>网飞（Netflix）App已使用SwiftUI重构了登录界面，网飞增长团队移动负责人故胤道长记录了SwiftUI在网飞的落地过程，详细描述了<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/oRPRCx78owLe3_gROYapCw"><em>SwiftUI的收益</em></a>。网飞能够直接使用SwiftUI得益于他们最低支持iOS 13系统。</p>
-<p>不过如最低支持系统低于iOS 13，还有开源项目<a target="_blank" rel="noopener" href="https://github.com/rakutentech/AltSwiftUI"><em>AltSwiftUI</em></a><em> </em>也实现了SwiftUI的语法和特性，能够向前兼容到iOS 11。</p>
+<p>不过如最低支持系统低于iOS 13，还有开源项目<a target="_blank" rel="noopener" href="https://github.com/rakutentech/AltSwiftUI"><em>AltSwiftUI</em></a>_ _也实现了SwiftUI的语法和特性，能够向前兼容到iOS 11。</p>
 <p>对于Combine，也有开源实现<a target="_blank" rel="noopener" href="https://github.com/OpenCombine/OpenCombine"><em>OpenCombine</em></a>，目前都未完全实现所有特性。因此，具体在工程中使用还是需要了解Combine的核心原理。</p>
 <h3 id="RxSwift"><a href="#RxSwift" class="headerlink" title="RxSwift"></a>RxSwift</h3><p>Combine的灵感来源于RxSwift。RxSwift的核心，这里有份实现了RxSwift核心逻辑的<a target="_blank" rel="noopener" href="https://github.com/sergdort/HandMadeRx/tree/master/HandMadeRx.playground/Sources"><em>简版样例代码</em></a>，可以窥视其核心逻辑。整体流程如下图：</p>
-<p><img src="/uploads/acfun-swift-practice/08.png" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/acfun-swift-practice/08.png" class="lozad post-image"src="/uploads/acfun-swift-practice/08.png"></p>
 <p>如上图所示，RxSwift整体流程非常简单，主要就是订阅者和发布者之间进行订阅、发布、取消操作，订阅者会监听和处理这些事件。具体RxSwift数据传递关系如下图：</p>
-<p><img src="/uploads/acfun-swift-practice/09.png" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/acfun-swift-practice/09.png" class="lozad post-image"src="/uploads/acfun-swift-practice/09.png"></p>
 <p>上图中的Observable是发布者，Observer是订阅者。取消订阅是通过CompositeDisposable来进行管理，管理方式就是加个中间订阅者来决定是否发送事件给原订阅者。SinkDisposable是一个中间层用来把中间订阅者和原订阅者还有事件转发的逻辑放到一起。新增一个操作符就会新增一个SinkDisposable，比如新增filter操作符就会新增FilterObserver和FilterObservable，如果没有操作符就是AnoymousObserver和AnoymousObservable。订阅是通过Disposer类来管理的，会判断是否完成或者出错，执行Dispose方法。</p>
 <h3 id="Combine"><a href="#Combine" class="headerlink" title="Combine"></a>Combine</h3><p>Combine的思路基本和RxSwift一样，只是接口命名不同，这里有份<a target="_blank" rel="noopener" href="https://github.com/CombineCommunity/rxswift-to-combine-cheatsheet"><em>表格</em></a>，列出了Combine和RxSwift功能的对应关系，可以看出目前Combine相较于RxSwift还缺少很多能力，Combine毕竟新生儿，还需要时间成长。但是Combine有个特性是RxSwift没有的，那就是Backpressure，Backpressure可自定义策略控制Subscribe能够接收的数量。</p>
-<p>除了SwiftUI和Combine，在Swift开发中还有哪些库是可以直接拿来使用的呢？这里有份 <a target="_blank" rel="noopener" href="https://github.com/matteocrippa/awesome-swift"><em>Swift开源库的awesome</em></a>，在这里可以查缺补漏。AcFun主要使用了Swift开源库有<a target="_blank" rel="noopener" href="https://github.com/apple/swift-protobuf"><em>Protobuf</em></a>,<em> </em><a target="_blank" rel="noopener" href="https://github.com/ReactiveX/RxSwift"><em>RxSwift</em></a>, <a target="_blank" rel="noopener" href="https://github.com/hyperoslo/Cache"><em>Cache</em></a>, <a target="_blank" rel="noopener" href="https://github.com/slazyk/Observable-Swift"><em>Observable</em></a>。</p>
+<p>除了SwiftUI和Combine，在Swift开发中还有哪些库是可以直接拿来使用的呢？这里有份 <a target="_blank" rel="noopener" href="https://github.com/matteocrippa/awesome-swift"><em>Swift开源库的awesome</em></a>，在这里可以查缺补漏。AcFun主要使用了Swift开源库有<a target="_blank" rel="noopener" href="https://github.com/apple/swift-protobuf"><em>Protobuf</em></a>,_ _<a target="_blank" rel="noopener" href="https://github.com/ReactiveX/RxSwift"><em>RxSwift</em></a>, <a target="_blank" rel="noopener" href="https://github.com/hyperoslo/Cache"><em>Cache</em></a>, <a target="_blank" rel="noopener" href="https://github.com/slazyk/Observable-Swift"><em>Observable</em></a>。</p>
 <p>以上，为《A站 的 Swift 实践》的上篇内容，下篇我们会继续详细介绍OC和Swift是怎么混编的，以及Swift的动态性。</p>
-<h2 id="如何混编"><a href="#如何混编" class="headerlink" title="如何混编"></a>如何混编</h2><p>昨天刚刚结束的Google I/O让人想起了Kotlin在三年前曾经上过一次热搜，Google I/O官宣Kotlin替代Java，正式成为Android开发的首选语言。正所谓演进的力量，这一切都要归功于苹果公司在2014年推出的Swift替代了Objective-C，成为iOS乃至苹果全平台首选的开发语言，从而提高了iOS开发者的热情。上篇介绍了Swift的技术背景以及如何选择开发框架。下篇的内容会介绍大多数以OC为主体的工程如何与Swift共舞，以及如何利用Swift动态性解决工程难题。</p>
-<p><img src="/uploads/acfun-swift-practice/11.png" alt=""></p>
+<h2 id="如何混编"><a href="#如何混编" class="headerlink" title="如何混编"></a>如何混编</h2><p>昨天刚刚结束的Google I&#x2F;O让人想起了Kotlin在三年前曾经上过一次热搜，Google I&#x2F;O官宣Kotlin替代Java，正式成为Android开发的首选语言。正所谓演进的力量，这一切都要归功于苹果公司在2014年推出的Swift替代了Objective-C，成为iOS乃至苹果全平台首选的开发语言，从而提高了iOS开发者的热情。上篇介绍了Swift的技术背景以及如何选择开发框架。下篇的内容会介绍大多数以OC为主体的工程如何与Swift共舞，以及如何利用Swift动态性解决工程难题。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/acfun-swift-practice/11.png" class="lozad post-image"src="/uploads/acfun-swift-practice/11.png"></p>
 <p>如果你的工程是OC开发的，要用上Swift就需要进行OC和Swift的混编开发。</p>
 <p>然而，混编开发应该怎么开始呢？有没有什么前置条件？</p>
 <h3 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h3><p>混编本质上就是把OC语法的声明通过编译工具生成Swift语法的声明，这样Swift就可以通过生成的声明直接调用OC接口。反之，OC调用Swift接口也可以通过相同的方法，把Swift语法的声明生成OC语法的头文件。这些转换生成的编译工具都集成在开发工具Xcode里。</p>
 <p>Xcode其实就是执行多命令行的工具，比如Clang、ld等等。Xcode、Project文件里包含了这些命令的参数和它们执行的顺序，也有所有待编译文件和它们的依赖关系。<a target="_blank" rel="noopener" href="https://github.com/apple/swift-llbuild/"><em>llbuild</em></a>是低等级构建系统，根据Xcode Project里的配置按顺序执行命令。命令行工具的参数配置是在Xcode的Build Settings里进行设置的。如果是在同一个Project里混编，首先需要将Build Settings里Always Embed Swift Standard Libraries设置为YES，然后在桥接文件，也就是ProductName-Bridging-Header.h里导入需要暴露给Swift的OC类。如果Swift要调用的OC在不同Project里，则需要将OC的Project设置为Module，将Defines Module设为YES，再把Module里的头文件导入到OC Modulemap文件里的Umbrella Header里。</p>
-<h3 id="如何设置CocoaPods"><a href="#如何设置CocoaPods" class="headerlink" title="如何设置CocoaPods"></a>如何设置CocoaPods</h3><p>Swift Pod的Podspec需要写明对OC Pod的依赖。在工程Podfile中，OC Pod后面要写 :modular_headers =&gt; true。开启Modular Header就是把Pod转换为Module。那CocoaPods究竟做了什么？执行  Pod Install – Verbose就可以看到，在生成Pod Targets时，CocoaPods会生成Module Map File和Umbrella Header。</p>
+<h3 id="如何设置CocoaPods"><a href="#如何设置CocoaPods" class="headerlink" title="如何设置CocoaPods"></a>如何设置CocoaPods</h3><p>Swift Pod的Podspec需要写明对OC Pod的依赖。在工程Podfile中，OC Pod后面要写 :modular_headers &#x3D;&gt; true。开启Modular Header就是把Pod转换为Module。那CocoaPods究竟做了什么？执行  Pod Install – Verbose就可以看到，在生成Pod Targets时，CocoaPods会生成Module Map File和Umbrella Header。</p>
 <p>每个工程设置的情况千奇百怪，而CocoaPods主要是通过自己的dsl配置来完成这些编译参数的设置，所以就需要先了解些混编设置的编译参数和概念：</p>
 <ul>
 <li>前面提到的Defines Module，需要设置为YES。</li>
@@ -608,72 +269,173 @@
 <li>Other C Flags可以用来配置依赖其它Module文件路径。</li>
 <li>Other Swift Flags可以配置其Module Map文件路径。</li>
 </ul>
-<p>CocoaPods的主要组件有解析命令的<a target="_blank" rel="noopener" href="https://github.com/CocoaPods/CLAide"><em>CLAide</em></a><em>、</em>用来解析Pod描述文件，比如Podfile、Podfile.lock和PodSpec文件的<a target="_blank" rel="noopener" href="https://github.com/CocoaPods/Core"><em>Cocoapods-core</em></a><em>、</em>拉仓库代码和资源的<a target="_blank" rel="noopener" href="https://github.com/CocoaPods/cocoapods-downloader"><em>Cocoapods-downloader</em></a><em>、</em>分析依赖的<a target="_blank" rel="noopener" href="https://github.com/CocoaPods/Molinillo"><em>Molinillo</em></a><em>、</em>以及创建和编辑Xcode的.xcodeproj和.xcworkspace文件的<a target="_blank" rel="noopener" href="https://github.com/CocoaPods/Xcodeproj"><em>Xcodeproj</em></a>。在执行了Pod Install以后，组件调用流程以及配置Module所处流程位置，如下图所示：</p>
-<p><img src="/uploads/acfun-swift-practice/12.png" alt=""></p>
+<p>CocoaPods的主要组件有解析命令的<a target="_blank" rel="noopener" href="https://github.com/CocoaPods/CLAide"><em>CLAide</em></a>_、_用来解析Pod描述文件，比如Podfile、Podfile.lock和PodSpec文件的<a target="_blank" rel="noopener" href="https://github.com/CocoaPods/Core"><em>Cocoapods-core</em></a>_、_拉仓库代码和资源的<a target="_blank" rel="noopener" href="https://github.com/CocoaPods/cocoapods-downloader"><em>Cocoapods-downloader</em></a>_、_分析依赖的<a target="_blank" rel="noopener" href="https://github.com/CocoaPods/Molinillo"><em>Molinillo</em></a>_、_以及创建和编辑Xcode的.xcodeproj和.xcworkspace文件的<a target="_blank" rel="noopener" href="https://github.com/CocoaPods/Xcodeproj"><em>Xcodeproj</em></a>。在执行了Pod Install以后，组件调用流程以及配置Module所处流程位置，如下图所示：</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/acfun-swift-practice/12.png" class="lozad post-image"src="/uploads/acfun-swift-practice/12.png"></p>
 <p>按照上图的逻辑，Integrates这一步主要是用来配置Module的。先检查Targets，主要是对于包括Swift版本和Module依赖等问题的检查，然后再使用Xcodeproj组件做Module的工程配置。</p>
 <p>完成以上工作后，如果我们想要在Swift里使用OC开发的库FMDB，就可以直接使用Import来导入，代码如下：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="keyword">import</span> FMDB</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SwiftTestClass</span>: <span class="title">NSObject</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> db:<span class="type">FMDB</span>.<span class="type">FMDatabase</span>?</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">init</span>()</span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>()</span><br><span class="line">        <span class="keyword">self</span>.db <span class="operator">=</span> <span class="type">FMDB</span>.<span class="type">FMDatabase</span>(path: <span class="string">&quot;dbname&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;init ok&quot;</span>)</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">import</span> <span class="token class-name">UIKit</span>
+<span class="token keyword">import</span> <span class="token constant">FMDB</span>
+
+<span class="token keyword">class</span> <span class="token class-name">SwiftTestClass</span><span class="token punctuation">:</span> <span class="token class-name">NSObject</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> db<span class="token punctuation">:</span><span class="token constant">FMDB</span><span class="token punctuation">.</span><span class="token class-name">FMDatabase</span><span class="token operator">?</span>
+
+    <span class="token keyword">override</span> <span class="token keyword">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token keyword">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">self</span><span class="token punctuation">.</span>db <span class="token operator">=</span> <span class="token constant">FMDB</span><span class="token punctuation">.</span><span class="token class-name">FMDatabase</span><span class="token punctuation">(</span>path<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"dbname"</span></span><span class="token punctuation">)</span>
+        <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"init ok"</span></span><span class="token punctuation">)</span>
+
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>可以看到，Import FMDB将FMDB的Module倒入进来后，接口依然能够直接使用Swift语法调用。</p>
 <p>这里需要注意的是，Module依赖的Pod也需要是Module。因此改造时需要从底向上地改造成Module。另外，开启Module后，如果某个头文件在Umbrella Header里，那么其它包含这个头文件的Pod也需要打开Module。</p>
 <h3 id="为什么要用Module？"><a href="#为什么要用Module？" class="headerlink" title="为什么要用Module？"></a>为什么要用Module？</h3><p>在Module被使用之前，开发者们需要对要导入的C语言编译器处理方式类头文件进行预处理，查找头文件里还导入了哪些头文件，递归直到找到全部头文件。但是，预处理的方式会遇到许多问题。其一，编译的复杂度高且耗时长，这是因为每个可编译的文件都会单独编译进行预处理，所以在预处理过程中递归查找导入头文件的工作会重复很多次，尤其是当包含关系很深的头文件被很多.m所导入的时候；其二，会出现宏定义冲突时需要重新排序以及和解依赖的问题等。</p>
 <p>Module相对来说更加简易，它的头文件只需要解析一次，所以编译的复杂度会指数级降低，且编译器对Module的处理方式和C语言的预处理方式是完全不同的。编译器会将要编译的文件导入的头文件生成二进制格式，存储在Module Cache中，编译时如果碰到需要导入模块时，会先检查Module Cache，有对应的二进制文件就直接加载，没有才会解析，以此来保证Module解析只有一次。重新解析编译Module只会发生在头文件包含的任何头文件有变动，或者依赖另外一个模块有更新的时候。比如下面的代码：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#<span class="keyword">import</span> &lt;FMDB/FMDatabase.h&gt;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token other-directive property">#import</span> <span class="token operator">&lt;</span><span class="token constant">FMDB</span><span class="token operator">/</span><span class="token class-name">FMDatabase</span><span class="token punctuation">.</span>h<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>Clang会先从FMDB.framework的Headers目录里查找FMDatabase.h，再去FMDB.framework的Modules目录里查找module.modulemap文件，分析module.modulemap来判断FMDatabase.h是否是模块的一部分。Module Map用来定义Module和头文件之间的关系。FMDB.framework的module.modulemap的内容如下：</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">framework <span class="class"><span class="keyword">module</span> <span class="title">FMDB</span> &#123;</span></span><br><span class="line">  umbrella header <span class="string">&quot;FMDB-umbrella.h&quot;</span></span><br><span class="line"></span><br><span class="line">  export *</span><br><span class="line">  <span class="class"><span class="keyword">module</span> * &#123; <span class="title">export</span> * &#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-ruby" data-language="ruby"><code class="language-ruby">framework <span class="token keyword">module</span> <span class="token class-name">FMDB</span> <span class="token punctuation">&#123;</span>
+  umbrella header <span class="token string-literal"><span class="token string">"FMDB-umbrella.h"</span></span>
+
+  export <span class="token operator">*</span>
+  <span class="token keyword">module</span> <span class="token operator">*</span> <span class="token punctuation">&#123;</span> export <span class="token operator">*</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>想要确定FMDatabase.h是否是Module的一部分就要看module.modulemap里的Umbrella Header文件，即FMDB-umbrella.h目录里是否包含了FMDatabase.h。在Headers目录里查看FMDB-umbrella.h文件，内容如下：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __OBJC__</span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&lt;UIKit/UIKit.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> FOUNDATION_EXPORT</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(__cplusplus)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FOUNDATION_EXPORT extern <span class="meta-string">&quot;C&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FOUNDATION_EXPORT extern</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">&quot;FMDatabase.h&quot;</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&quot;FMDatabaseAdditions.h&quot;</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&quot;FMDatabasePool.h&quot;</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&quot;FMDatabaseQueue.h&quot;</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&quot;FMDB.h&quot;</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&quot;FMResultSet.h&quot;</span></span></span><br><span class="line"></span><br><span class="line">FOUNDATION_EXPORT <span class="keyword">double</span> FMDBVersionNumber;</span><br><span class="line">FOUNDATION_EXPORT <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> FMDBVersionString[];</span><br></pre></td></tr></table></figure>
-<p>上面代码中可以看到FMDatabase.h已经包含在文件中，因此Clang会将FMDB作为Module导入。Umbrella框架是对框架的一个封装，目的是隐藏各个框架之间的复杂依赖关系。构建完的Module会被存放到 ~/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/ 这个目录下面。</p>
+<pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">__OBJC__</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">import</span> <span class="token expression"><span class="token operator">&lt;</span>UIKit<span class="token operator">/</span>UIKit<span class="token punctuation">.</span>h<span class="token operator">></span></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">else</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">FOUNDATION_EXPORT</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">if</span> <span class="token expression"><span class="token function">defined</span><span class="token punctuation">(</span>__cplusplus<span class="token punctuation">)</span></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">FOUNDATION_EXPORT</span> <span class="token expression"><span class="token keyword">extern</span> </span><span class="token string">"C"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">else</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">FOUNDATION_EXPORT</span> <span class="token expression"><span class="token keyword">extern</span></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">import</span> <span class="token string">"FMDatabase.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">import</span> <span class="token string">"FMDatabaseAdditions.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">import</span> <span class="token string">"FMDatabasePool.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">import</span> <span class="token string">"FMDatabaseQueue.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">import</span> <span class="token string">"FMDB.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">import</span> <span class="token string">"FMResultSet.h"</span></span>
+
+FOUNDATION_EXPORT <span class="token keyword">double</span> FMDBVersionNumber<span class="token punctuation">;</span>
+FOUNDATION_EXPORT <span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span> FMDBVersionString<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>上面代码中可以看到FMDatabase.h已经包含在文件中，因此Clang会将FMDB作为Module导入。Umbrella框架是对框架的一个封装，目的是隐藏各个框架之间的复杂依赖关系。构建完的Module会被存放到 ~&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData&#x2F;ModuleCache.noindex&#x2F; 这个目录下面。</p>
 <p>Clang编译单个OC文件是通过导入头文件方式进行的，而Swift没有头文件，所以Swift编译器Swiftc就需要先查找声明，再来生成接口。除此之外，Swiftc还会在Module Map文件和Umbrella Header文件中暴露的声明里查找OC声明。</p>
 <p>如果工程要构建二进制库，需要支持Swift 5.1加的Module Stability和Library Evolution。</p>
 <h3 id="Name-Mangling"><a href="#Name-Mangling" class="headerlink" title="Name Mangling"></a>Name Mangling</h3><p>找到OC声明后，Swiftc就需要进行Name Mangling。Name Mangling的作用在一方面是会像C++那样防止命名冲突，另外一方面是会对OC接口命名进行Swift风格化重命名。如果对Name Mangling命名的效果不满意，还可以回到OC源码中用NS_SWIFT_NAME重新定义想要在Swift使用的名字。</p>
 <p>Swiftc的Name Mangling相比较于C和C++的Name Mangling会生成更多信息，比如下面的代码：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">int2string</span>(<span class="params">number</span>: <span class="type">Int</span>)</span> -&gt; <span class="type">String</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;<span class="subst">\(number)</span>&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">public</span> <span class="token keyword">func</span> <span class="token function-definition function">int2string</span><span class="token punctuation">(</span>number<span class="token punctuation">:</span> <span class="token class-name">Int</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">String</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token string-literal"><span class="token string">"</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">number</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>Swiftc编译后，使用nm -g查看生成如下的信息：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0000000000003de0 <span class="type">T</span> <span class="keyword">_</span><span class="variable">$s8demotest10int2string6numberSSSi_tF</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift">0000000000003de0 <span class="token class-name">T</span> <span class="token omit keyword">_</span>$s8demotest10int2string6numberSSSi_tF<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>如上所示，信息中的$s表示全局，8demotest的demotest是Module名，8是Module名的长度。int2string是函数名，前面的10是类名长度，6number是参数名。SS表示参数类型是Int。Si表示的是String类型，_tF表示前面的Si是返回类型。</p>
 <p>接下来对比一下Clang和Swiftc的编译过程，首先是Clang的编译过程，如下图：</p>
-<p><img src="/uploads/acfun-swift-practice/13.png" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/acfun-swift-practice/13.png" class="lozad post-image"src="/uploads/acfun-swift-practice/13.png"></p>
 <p>其次是Swift的编译过程，如下图：</p>
-<p><img src="/uploads/acfun-swift-practice/14.png" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/acfun-swift-practice/14.png" class="lozad post-image"src="/uploads/acfun-swift-practice/14.png"></p>
 <p>从两者的对比中可以看出，Swift编译过程缺少了头文件，因为它通过分组编译模糊了文件的概念，减少了很多重复查找声明的工作，这样不仅仅可以简化代码的编写，还可以给编译器更多的发挥空间。</p>
 <p>至于OC怎样调用Swift接口，Swiftc会生成一个头文件，代码中有Public的声明会先按文件生成Swiftmodule，文件链接完会合并Swiftmodule，最后整体生成到一个头文件里。过程如下图所示：</p>
-<p><img src="/uploads/acfun-swift-practice/15.png" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/acfun-swift-practice/15.png" class="lozad post-image"src="/uploads/acfun-swift-practice/15.png"></p>
 <h3 id="为什么可以调OC接口？"><a href="#为什么可以调OC接口？" class="headerlink" title="为什么可以调OC接口？"></a>为什么可以调OC接口？</h3><p>Swift代码之所以可以调OC接口，是因为OC的接口会被编译器自动生成为Swift语法接口文件。在Xcode中，在OC头文件中点击左上角的 Related Items，选择Generated Interface，就可以选择查看生成的Swift版本接口文件。自动转换成的Swift接口文件可以直接供Swift调用，在转换过程中，编译器会将NSString这种OC的基础库转换成Swift里对应的String、Date等Swift库。OC的初始化方法也会被转换成Swift的构造器方法。错误处理也会被转换成Swift风格。下面是OC和Swift转换对应的类型：</p>
-<p><img src="/uploads/acfun-swift-practice/16.png" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/acfun-swift-practice/16.png" class="lozad post-image"src="/uploads/acfun-swift-practice/16.png"></p>
 <p>但是，仅仅只依赖于编译器的转换肯定是不够的，为了能让Swift调用得更加舒服，还需要对OC接口做些修改适配，比如将函数改成使用OC泛型，NSArray paths转成Swift是open var paths:[Any]；如果使用了泛型，将其改成 NSArray paths，那对应的Swift就是open var paths:[KSPath]，这种接口Swift使用起来会更方便有效。</p>
 <p>苹果公司也提供了一些宏来帮助生成好用的Swift接口。</p>
 <p>众所周知，OC之前一直缺少是非空的类型信息，可以通过 NS_ASSUME_NONNULL_BEGIN和NS_ASSUME_NONNULL_END包起来，这样就不用逐个去指定是非空了。NS_DESIGNATED_INITIALIZER宏可以将初始化设置为Designated，不加这个宏为Convenience。NS_SWIFT_NAME用来重命名Swift中使用的名称，NS_REFINED_FOR_SWIFT可以解决数据不一致的问题。</p>
 <p>在iOS开发的过程中不可避免地需要访问 Core Foundation 类型，Core Fundation框架一旦导入到Swift混编环境中，它的类型就会被自动转为Swift类，Swift也会自动管理Annotated Core Foundation对象的内存，而不用像在OC中那样手动调用CFRetain、CFRelease或者CFAutorelease函数。Unannotated的对象会被包装在一个Unmanaged结构里，比如下面的代码：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CFStringRef</span> showTwoString(<span class="built_in">CFStringRef</span> s1, <span class="built_in">CFStringRef</span> s2)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec">CFStringRef <span class="token function">showTwoString</span><span class="token punctuation">(</span>CFStringRef s1<span class="token punctuation">,</span> CFStringRef s2<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>转成Swift就是：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">showTwoString</span>(<span class="keyword">_</span>: <span class="type">CFString</span>!, <span class="keyword">_</span>: <span class="type">CFString</span>!)</span> -&gt; <span class="type">Unmanaged</span>&lt;<span class="type">CFString</span>&gt;! &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function-definition function">showTwoString</span><span class="token punctuation">(</span><span class="token omit keyword">_</span><span class="token punctuation">:</span> <span class="token class-name">CFString</span><span class="token operator">!</span><span class="token punctuation">,</span> <span class="token omit keyword">_</span><span class="token punctuation">:</span> <span class="token class-name">CFString</span><span class="token operator">!</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">Unmanaged</span><span class="token operator">&lt;</span><span class="token class-name">CFString</span><span class="token operator">>!</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// ...</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>如上面代码所示，Core Fundation 类型的名字转换后会去掉后缀Ref，这是因为在Swift中所有类都是引用类型，Ref后缀比较多余。上面的Unmanaged结构有两个方法，一个是takeUnretainedValue()，另一个是takeRetainedValue()，这两个方法都是用来返回对象的原始未封装类型。如果对象之前没有Retain就用takeUnretainedValue()，已经Retain了，就用takeRetainedValue()。</p>
 <p>在Swift里用getVaList(<em>:</em>:<em>:) 或withVaList(</em>:<em>:) 函数调用C的Variadic函数，比如 vasprintf(</em>:<em>:</em>:)。</p>
 <p>调用指针参数的C函数，和Swift映射如下图：</p>
-<p><img src="/uploads/acfun-swift-practice/17.png" alt=""></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/acfun-swift-practice/17.png" class="lozad post-image"src="/uploads/acfun-swift-practice/17.png"></p>
 <p>Swift也有无法调用的C接口，比如复杂的宏、C风格的Variadic参数，复杂的Array成员等。简单赋值的宏会被转换成Swift里的常量赋值，对于复杂的宏定义，编译器无法自动转换，如果还是想享受宏带来的好处，比如可以避免重复输入大量模板代码和避免类型检查约束，可以通过函数和泛型替换获取同样的好处。</p>
 <p>Swift写出来的Module也可以给OC来调用。但是这样的调用会有很多限制，因为Swift中有很多类型是没法给OC用的，比如在Swift里定义的枚举、Swift定义的结构体、顶层定义的函数、全局变量、Typealiases、Nested类型，但是如果绕过这些类型，Swift也变得不那么Swift了。</p>
 <p>即使是实现了混编，开发者们还需要面对许多难题。因为在OC时代的很多问题，例如Hook，无痕埋点等可以在OC运行时很方便地实现，而Swift却缺少天然的支持。下面介绍一下Swift的动态性，在官方完善前，我们应该怎么使用它。</p>
 <h2 id="动态性"><a href="#动态性" class="headerlink" title="动态性"></a>动态性</h2><p>Swift在处理纯粹的Swift语言时是有自己的运行时的，但是对于“这个运行时是不提供访问的接口”的问题，Swift核心团队不是不做动态特性，而是因为如果想要支持动态特性就需要处理虚函数表（Virtual Method Table）的动态调用对SIL函数优化的影响，比如类没有被Override就会自动优化到静态调用，而这需要大量的时间。现阶段还有优先级更高的事情要做，比如并发模型、系统编程、静态分析支持类型状态等。因此，有人选择自己去实现一套Swift运行时，使得Swift代码具有动态特性。<a target="_blank" rel="noopener" href="https://twitter.com/UINT_MIN"><em>Jordan Rose</em></a>实现了一个<a target="_blank" rel="noopener" href="https://belkadan.com/source/ppc-swift-project/tree/refs/heads/dev:/stdlib/_Runtime"><em>精简版的Swift</em></a>运行时，更加严谨的运行时实现可以参考<a target="_blank" rel="noopener" href="https://github.com/Azoy/Echo"><em>Echo</em></a>和<a target="_blank" rel="noopener" href="https://github.com/wickwirew/Runtime"><em>Runtime</em></a>。</p>
 <p>有人可能会问，SwiftUI的Preview不就是典型的在运行时替换方法的吗？他是怎么做到的呢？其实他使用的是@_dynamicReplacement属性，这是一个可以直接拿着用来进行方法替换的内部使用属性。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@_dynamicReplacement</span>(for: runSomething())</span><br><span class="line"><span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">_replaceRunSomething</span>()</span> -&gt; <span class="type">String</span> &#123;</span><br><span class="line">    <span class="string">&quot;replaced&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token attribute atrule">@_dynamicReplacement</span><span class="token punctuation">(</span><span class="token keyword">for</span><span class="token punctuation">:</span> <span class="token function">runSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">static</span> <span class="token keyword">func</span> <span class="token function-definition function">_replaceRunSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">String</span> <span class="token punctuation">&#123;</span>
+    <span class="token string-literal"><span class="token string">"replaced"</span></span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>如果想要把上面的代码放到一个库中，并且在运行时加载这个库进行运行时方法替换可以通过这样的方式：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">runSomething()</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> file <span class="operator">=</span> <span class="type">URL</span>(fileURLWithPath: <span class="string">&quot;/path/of/replaceLib.dylib&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">guard</span> <span class="keyword">let</span> handle <span class="operator">=</span> dlopen(file.path, <span class="type">RTLD_NOW</span>) <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">fatalError</span>(<span class="string">&quot;oops dlopen failed&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">runSomething()</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token function">runSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">let</span> file <span class="token operator">=</span> <span class="token function">URL</span><span class="token punctuation">(</span>fileURLWithPath<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"/path/of/replaceLib.dylib"</span></span><span class="token punctuation">)</span>
+
+<span class="token keyword">guard</span> <span class="token keyword">let</span> handle <span class="token operator">=</span> <span class="token function">dlopen</span><span class="token punctuation">(</span>file<span class="token punctuation">.</span>path<span class="token punctuation">,</span> <span class="token constant">RTLD_NOW</span><span class="token punctuation">)</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">fatalError</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"oops dlopen failed"</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token function">runSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>除了这个方法以外，还有其他办法可以进行运行时的方法替换吗？</p>
 <h3 id="值类型的方法替换"><a href="#值类型的方法替换" class="headerlink" title="值类型的方法替换"></a>值类型的方法替换</h3><p>通过 AnyClass和class_getSuperclass方法可以查看Swift对象的继承链，没有继承NSObject的Swift类，会有一个隐含的Super Class，这个类会带有一个生成的带前缀的SwiftObject，比如_TtCs12_SwiftObject。Swift是实现了NSObject的一个objc运行时的类型，这个类型不能和OC交互。但是如果继承了NSObject就可以和OC交互。</p>
 <p>如果方法或属性声明了 @objc dynamic，那么就可以在运行时通过动态派发在Swift对象上去调用，方法是：使用AnyObject的Perform方法去执行NSSelectorFromString里传入的方法或属性名。</p>
 <p>对于Swift里的值类型，比如Struct、Enum、Array等，可以遵循_ObjectiveCBridgeable协议，经过Type Casting（显示或隐式）转成对应的OC对象类型。举个例子，如果想要查看Array的类继承关系，代码如下：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">classes</span>(<span class="params">of</span> <span class="params">cls</span>: <span class="type">AnyClass</span>)</span> -&gt; [<span class="type">AnyClass</span>] &#123;</span><br><span class="line">    <span class="keyword">var</span> clses:[<span class="type">AnyClass</span>] <span class="operator">=</span> []</span><br><span class="line">    <span class="keyword">var</span> cls: <span class="type">AnyClass</span>? <span class="operator">=</span> cls</span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">let</span> _cls <span class="operator">=</span> cls &#123;</span><br><span class="line">        clses.append(_cls)</span><br><span class="line">        cls <span class="operator">=</span> class_getSuperclass(_cls)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> clses</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> arrays <span class="operator">=</span> [<span class="string">&quot;jone&quot;</span>, <span class="string">&quot;rose&quot;</span>, <span class="string">&quot;park&quot;</span>]</span><br><span class="line"><span class="built_in">print</span>(classes(of: object_getClass(arrays)<span class="operator">!</span>))</span><br><span class="line"><span class="comment">// [Swift.__SwiftDeferredNSArray, Swift.__SwiftNativeNSArrayWithContiguousStorage, Swift.__SwiftNativeNSArray, __SwiftNativeNSArrayBase, NSArray, NSObject]</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function-definition function">classes</span><span class="token punctuation">(</span>of cls<span class="token punctuation">:</span> <span class="token class-name">AnyClass</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token punctuation">[</span><span class="token class-name">AnyClass</span><span class="token punctuation">]</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> clses<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token class-name">AnyClass</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">var</span> cls<span class="token punctuation">:</span> <span class="token class-name">AnyClass</span><span class="token operator">?</span> <span class="token operator">=</span> cls
+    <span class="token keyword">while</span> <span class="token keyword">let</span> _cls <span class="token operator">=</span> cls <span class="token punctuation">&#123;</span>
+        clses<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>_cls<span class="token punctuation">)</span>
+        cls <span class="token operator">=</span> <span class="token function">class_getSuperclass</span><span class="token punctuation">(</span>_cls<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> clses
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">let</span> arrays <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string-literal"><span class="token string">"jone"</span></span><span class="token punctuation">,</span> <span class="token string-literal"><span class="token string">"rose"</span></span><span class="token punctuation">,</span> <span class="token string-literal"><span class="token string">"park"</span></span><span class="token punctuation">]</span>
+<span class="token function">print</span><span class="token punctuation">(</span><span class="token function">classes</span><span class="token punctuation">(</span>of<span class="token punctuation">:</span> <span class="token function">object_getClass</span><span class="token punctuation">(</span>arrays<span class="token punctuation">)</span><span class="token operator">!</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">// [Swift.__SwiftDeferredNSArray, Swift.__SwiftNativeNSArrayWithContiguousStorage, Swift.__SwiftNativeNSArray, __SwiftNativeNSArrayBase, NSArray, NSObject]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>如上面代码所示，Swift的Array最终都是继承自NSObject，其它值类型也类似。可以看出，所有Swift类型都是可兼容objc运行时的。因此可以给这些值类型添加objc运行时方法，代码如下：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// MARK: 为Swift类型提供动态派发的能力</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">structWithDynamic</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> str: <span class="type">String</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">show</span>(<span class="keyword">_</span> <span class="params">str</span>: <span class="type">String</span>)</span> -&gt; <span class="type">String</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Say <span class="subst">\(str)</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> str</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">internal</span> <span class="function"><span class="keyword">func</span> <span class="title">showDynamic</span>(<span class="keyword">_</span> <span class="params">obj</span>: <span class="type">AnyObject</span>, <span class="params">str</span>: <span class="type">String</span>)</span> -&gt; <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> show(str)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> structValue <span class="operator">=</span> structWithDynamic(str: <span class="string">&quot;Hi!&quot;</span>)</span><br><span class="line"><span class="comment">// 为 structValue 添加Objc运行时方法</span></span><br><span class="line"><span class="keyword">let</span> block: <span class="keyword">@convention(block)</span>(<span class="type">AnyObject</span>, <span class="type">String</span>) -&gt; <span class="type">String</span> <span class="operator">=</span> structValue.showDynamic</span><br><span class="line"><span class="keyword">let</span> imp <span class="operator">=</span> imp_implementationWithBlock(<span class="built_in">unsafeBitCast</span>(block, to: <span class="type">AnyObject</span>.<span class="keyword">self</span>))</span><br><span class="line"><span class="keyword">let</span> dycls: <span class="type">AnyClass</span> <span class="operator">=</span> object_getClass(structValue)<span class="operator">!</span></span><br><span class="line">class_addMethod(dycls, <span class="type">NSSelectorFromString</span>(<span class="string">&quot;objcShow:&quot;</span>), imp, <span class="string">&quot;@24@0:8@16&quot;</span>)</span><br><span class="line"><span class="comment">// 使用Objc动态派发</span></span><br><span class="line"><span class="keyword">_</span> <span class="operator">=</span> (structValue <span class="keyword">as</span> <span class="type">AnyObject</span>).perform(<span class="type">NSSelectorFromString</span>(<span class="string">&quot;objcShow:&quot;</span>), with: <span class="type">String</span>(<span class="string">&quot;Bye!&quot;</span>))<span class="operator">!</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token comment">// MARK: 为Swift类型提供动态派发的能力</span>
+<span class="token keyword">struct</span> structWithDynamic <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">var</span> str<span class="token punctuation">:</span> <span class="token class-name">String</span>
+    <span class="token keyword">public</span> <span class="token keyword">func</span> <span class="token function-definition function">show</span><span class="token punctuation">(</span><span class="token omit keyword">_</span> str<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">String</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Say </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">str</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> str
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">internal</span> <span class="token keyword">func</span> <span class="token function-definition function">showDynamic</span><span class="token punctuation">(</span><span class="token omit keyword">_</span> obj<span class="token punctuation">:</span> <span class="token class-name">AnyObject</span><span class="token punctuation">,</span> str<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">String</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token function">show</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">let</span> structValue <span class="token operator">=</span> <span class="token function">structWithDynamic</span><span class="token punctuation">(</span>str<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"Hi!"</span></span><span class="token punctuation">)</span>
+<span class="token comment">// 为 structValue 添加Objc运行时方法</span>
+<span class="token keyword">let</span> block<span class="token punctuation">:</span> <span class="token attribute atrule">@convention</span><span class="token punctuation">(</span>block<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token class-name">AnyObject</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">String</span> <span class="token operator">=</span> structValue<span class="token punctuation">.</span>showDynamic
+<span class="token keyword">let</span> imp <span class="token operator">=</span> <span class="token function">imp_implementationWithBlock</span><span class="token punctuation">(</span><span class="token function">unsafeBitCast</span><span class="token punctuation">(</span>block<span class="token punctuation">,</span> to<span class="token punctuation">:</span> <span class="token class-name">AnyObject</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">let</span> dycls<span class="token punctuation">:</span> <span class="token class-name">AnyClass</span> <span class="token operator">=</span> <span class="token function">object_getClass</span><span class="token punctuation">(</span>structValue<span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token function">class_addMethod</span><span class="token punctuation">(</span>dycls<span class="token punctuation">,</span> <span class="token class-name">NSSelectorFromString</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"objcShow:"</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span> imp<span class="token punctuation">,</span> <span class="token string-literal"><span class="token string">"@24@0:8@16"</span></span><span class="token punctuation">)</span>
+<span class="token comment">// 使用Objc动态派发</span>
+<span class="token omit keyword">_</span> <span class="token operator">=</span> <span class="token punctuation">(</span>structValue <span class="token keyword">as</span> <span class="token class-name">AnyObject</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">perform</span><span class="token punctuation">(</span><span class="token class-name">NSSelectorFromString</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"objcShow:"</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span> with<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Bye!"</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>如上面代码所示，取出函数闭包可以通过 @convertion(block)转换成C函数Call Convention来调用，C函数也可以直接去执行这个指针。使用 Memory Dump 工具可以查看Swift函数内存结构，以及解析出符号信息DL_Info。Memory Dump工具有Mikeash的<a target="_blank" rel="noopener" href="https://github.com/mikeash/memorydumper2"><em>memorydumper2</em></a>，源码解读可以参考<a target="_blank" rel="noopener" href="https://www.mikeash.com/pyblog/friday-qa-2014-08-29-swift-memory-dumping.html"><em>Swift Memory Dumping</em></a>。逆向查看内存布局可以参考<a target="_blank" rel="noopener" href="https://github.com/neil-wu/FridaHookSwiftAlamofire/blob/master/howto.md"><em>《初探Swift Runtime：使用Frida实现针对Alamofire的抓包工具》</em></a><br>__</p>
 <h3 id="类的方法替换"><a href="#类的方法替换" class="headerlink" title="类的方法替换"></a>类的方法替换</h3><p>在运行时进行类方法的替换时，先将方法的Block以AnyObject类型传入imp_implementationWithBlock方法，返回一个imp，然后使用 class_getInstanceMethod 来获取实例的原方法，再通过 class_replaceMethod 进行方法替换，完整代码可以参看<a target="_blank" rel="noopener" href="https://github.com/steipete/InterposeKit"><em>InterposeKit</em></a>，另外还有一个使用libffi的方法替换库，参见<a target="_blank" rel="noopener" href="https://github.com/623637646/SwiftHook"><em>SwiftHook</em></a>。</p>
 <p>另外，通过获取函数地址来改变函数指向位置的方法在Swift里实现比较困难，这是因为NSInvocation不可用了，因此需要通过C的函数来Hook Swift。在Swift的AnyClass中有类似OC的布局，记录了指向类和类成员函数的数据，这样就可以使用汇编来做函数指针替换的事情。思路是：保存寄存器，调用新函数，然后恢复寄存器，还原函数。具体可以参考项目<a target="_blank" rel="noopener" href="https://github.com/johnno1962/SwiftTrace"><em>SwiftTrace</em></a>。</p>
 <h3 id="插桩"><a href="#插桩" class="headerlink" title="插桩"></a>插桩</h3><p>使用编译插桩的方式也可以实现运行中的方法替换，关键步骤在于编译时，需要使用DYLD_INSERT_LIBRARIES进行拦截，CommandLine.arguments可以得到Swiftc的执行参数，以查找待编译的Swift文件。通过苹果公司的<a target="_blank" rel="noopener" href="https://github.com/apple/swift-syntax"><em>SwiftSyntax</em></a>源代码解析、生成和转换的工具可以查出所有方法，并插入特定的方法替换逻辑代码。修改完通过-output-file-map来获取mach-o的地址去覆盖先前产物。使用self.originalImplementation(…)调用原始的实现作为闭包传入execute(arguments:originalImpl:)方法。</p>
-<h3 id="ClassContextDescriptorBuilder"><a href="#ClassContextDescriptorBuilder" class="headerlink" title="ClassContextDescriptorBuilder"></a>ClassContextDescriptorBuilder</h3><p>Swift运行时给每个类型保留了Metadata信息。Metadata是由编译器静态生成的，有了Metadata的调试才能够发现类型的信息。Metadata偏移-1是Witness table 指针，Witness Table 提供分配、复制和销毁类型的值，Witness Table 还记录了类型大小、对齐、Stride等其它属性。Metadata偏移量0的地方是Kind字段，其描述了Metadata所描述的类型的种类，例如Class、Struct、Enum、Optional、Opaque、Tuple、Function、Protocol等类型。这些类型的Metadata具体详述可见<a target="_blank" rel="noopener" href="https://github.com/apple/swift/blob/main/docs/ABI/TypeMetadata.rst"><em>Type Metadata 的官方文档</em></a>，代码描述可以在<a target="_blank" rel="noopener" href="https://github.com/apple/swift/blob/3ed11125f3e987722c14c10ac9c1c7ec25a86c65/include/swift/ABI/MetadataValues.h"><em>include/swift/ABI/MetadataValues.h</em></a>里看到。比如在Metadata里类的方法数量会比实际代码里写的方法数量要多，那是因为编译器会自动生成一些方法，这些方法的种类在MethodDescriptorFlags类中Kind里描述了，代码如下：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">class</span> <span class="title">Kind</span> </span>&#123;</span><br><span class="line">    <span class="type">Method</span>,</span><br><span class="line">    <span class="type">Init</span>,</span><br><span class="line">    <span class="type">Getter</span>,</span><br><span class="line">    <span class="type">Setter</span>,</span><br><span class="line">    <span class="type">ModifyCoroutine</span>,</span><br><span class="line">    <span class="type">ReadCoroutine</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="ClassContextDescriptorBuilder"><a href="#ClassContextDescriptorBuilder" class="headerlink" title="ClassContextDescriptorBuilder"></a>ClassContextDescriptorBuilder</h3><p>Swift运行时给每个类型保留了Metadata信息。Metadata是由编译器静态生成的，有了Metadata的调试才能够发现类型的信息。Metadata偏移-1是Witness table 指针，Witness Table 提供分配、复制和销毁类型的值，Witness Table 还记录了类型大小、对齐、Stride等其它属性。Metadata偏移量0的地方是Kind字段，其描述了Metadata所描述的类型的种类，例如Class、Struct、Enum、Optional、Opaque、Tuple、Function、Protocol等类型。这些类型的Metadata具体详述可见<a target="_blank" rel="noopener" href="https://github.com/apple/swift/blob/main/docs/ABI/TypeMetadata.rst"><em>Type Metadata 的官方文档</em></a>，代码描述可以在<a target="_blank" rel="noopener" href="https://github.com/apple/swift/blob/3ed11125f3e987722c14c10ac9c1c7ec25a86c65/include/swift/ABI/MetadataValues.h"><em>include&#x2F;swift&#x2F;ABI&#x2F;MetadataValues.h</em></a>里看到。比如在Metadata里类的方法数量会比实际代码里写的方法数量要多，那是因为编译器会自动生成一些方法，这些方法的种类在MethodDescriptorFlags类中Kind里描述了，代码如下：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">enum</span> <span class="token keyword">class</span> <span class="token class-name">Kind</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Method</span><span class="token punctuation">,</span>
+    <span class="token class-name">Init</span><span class="token punctuation">,</span>
+    <span class="token class-name">Getter</span><span class="token punctuation">,</span>
+    <span class="token class-name">Setter</span><span class="token punctuation">,</span>
+    <span class="token class-name">ModifyCoroutine</span><span class="token punctuation">,</span>
+    <span class="token class-name">ReadCoroutine</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>可以看到，Getter、Setter以及线程相关读写的ModifyCoroutine、ReadCoroutine类型都是自动生成的。</p>
-<p>Class的内存结构生成方法可以在<a target="_blank" rel="noopener" href="https://github.com/apple/swift/blob/3ed11125f3e987722c14c10ac9c1c7ec25a86c65/lib/IRGen/GenMeta.cpp"><em>/lib/IRGen/GenMeta.cpp</em></a>里找到：</p>
+<p>Class的内存结构生成方法可以在<a target="_blank" rel="noopener" href="https://github.com/apple/swift/blob/3ed11125f3e987722c14c10ac9c1c7ec25a86c65/lib/IRGen/GenMeta.cpp"><em>&#x2F;lib&#x2F;IRGen&#x2F;GenMeta.cpp</em></a>里找到：</p>
 <ul>
 <li>ClassContextDescriptorBuilder这个类是用来生成Class内存结构的，它继承于TypeContextDescriptorBuilderBase。</li>
 <li>Enum、Struct等类型的内存结构Builder基类都是继承于ContextDescriptorBuilderBase的TypeContextDescriptorBuilderBase。</li>
@@ -681,1728 +443,408 @@
 <li>Struct的Metadata和Enum的Metadata共享内存布局，Struct会多个指向Type Context Descriptor的指针。</li>
 </ul>
 <p>内存布局指的是使用一个Struct或者Tuple，根据每个字段的大小和对齐方式决定怎样来安排内存中的字段，在这个过程中，不仅需要描述清楚每个字段的偏移量，还有Struct或Tuple整体的大小和对齐方式。下面就是GenMeta里和Class类型相关的内存方法代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 最底层基类 ContextDescriptorBuilderBase的布局方法</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">layout</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">asImpl</span>().<span class="built_in">addFlags</span>();</span><br><span class="line">  <span class="built_in">asImpl</span>().<span class="built_in">addParent</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// TypeContextDescriptorBuilderBase的布局方法</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">layout</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">asImpl</span>().<span class="built_in">computeIdentity</span>();</span><br><span class="line"></span><br><span class="line">  super::<span class="built_in">layout</span>();</span><br><span class="line">  <span class="built_in">asImpl</span>().<span class="built_in">addName</span>();</span><br><span class="line">  <span class="built_in">asImpl</span>().<span class="built_in">addAccessFunction</span>();</span><br><span class="line">  <span class="built_in">asImpl</span>().<span class="built_in">addReflectionFieldDescriptor</span>();</span><br><span class="line">  <span class="built_in">asImpl</span>().<span class="built_in">addLayoutInfo</span>();</span><br><span class="line">  <span class="built_in">asImpl</span>().<span class="built_in">addGenericSignature</span>();</span><br><span class="line">  <span class="built_in">asImpl</span>().<span class="built_in">maybeAddResilientSuperclass</span>();</span><br><span class="line">  <span class="built_in">asImpl</span>().<span class="built_in">maybeAddMetadataInitialization</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ClassContextDescriptorBuilder的布局方法</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">layout</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  super::<span class="built_in">layout</span>();</span><br><span class="line">  <span class="built_in">addVTable</span>();</span><br><span class="line">  <span class="built_in">addOverrideTable</span>();</span><br><span class="line">  <span class="built_in">addObjCResilientClassStubInfo</span>();</span><br><span class="line">  <span class="built_in">maybeAddCanonicalMetadataPrespecializations</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 最底层基类 ContextDescriptorBuilderBase的布局方法</span>
+<span class="token keyword">void</span> <span class="token function">layout</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">asImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addFlags</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">asImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addParent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// TypeContextDescriptorBuilderBase的布局方法</span>
+<span class="token keyword">void</span> <span class="token function">layout</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">asImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">computeIdentity</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  super<span class="token double-colon punctuation">::</span><span class="token function">layout</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">asImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">asImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addAccessFunction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">asImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addReflectionFieldDescriptor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">asImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addLayoutInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">asImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addGenericSignature</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">asImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">maybeAddResilientSuperclass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">asImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">maybeAddMetadataInitialization</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// ClassContextDescriptorBuilder的布局方法</span>
+<span class="token keyword">void</span> <span class="token function">layout</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  super<span class="token double-colon punctuation">::</span><span class="token function">layout</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">addVTable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">addOverrideTable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">addObjCResilientClassStubInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">maybeAddCanonicalMetadataPrespecializations</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>根据GenMeta可以看到Swift的Class类型内存布局是根据ContextDescriptorBuilderBase、TypeContextDescriptorBuilderBase再到ClassContextDescriptorBuilder继承层层叠加的，因此对应Class类型的Nominal Type Descriptor就可以用如下C结构来描述：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">SwiftClassInfo</span> &#123;</span></span><br><span class="line">    <span class="keyword">uint32_t</span> flag;</span><br><span class="line">    <span class="keyword">uint32_t</span> parent;</span><br><span class="line">    <span class="keyword">int32_t</span> name;</span><br><span class="line">    <span class="keyword">int32_t</span> accessFunction;</span><br><span class="line">    <span class="keyword">int32_t</span> reflectionFieldDescriptor;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">uint32_t</span> vtable;</span><br><span class="line">    <span class="keyword">uint32_t</span> overrideTable;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">SwiftClassInfo</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">uint32_t</span> flag<span class="token punctuation">;</span>
+    <span class="token class-name">uint32_t</span> parent<span class="token punctuation">;</span>
+    <span class="token class-name">int32_t</span> name<span class="token punctuation">;</span>
+    <span class="token class-name">int32_t</span> accessFunction<span class="token punctuation">;</span>
+    <span class="token class-name">int32_t</span> reflectionFieldDescriptor<span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token class-name">uint32_t</span> vtable<span class="token punctuation">;</span>
+    <span class="token class-name">uint32_t</span> overrideTable<span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>代码中可见，add的前缀就是增加的偏移记录，addFlags后面的addParent就是下一个偏移的记录。FieldDescriptor换成ReflectionFieldDescriptor是苹果公司在5.0版本对Metadata做的改变，官方Mirror反射目前还不完善，有些信息还没法提供，因此在Metadata里增加了一些反射相关信息。</p>
 <p>OC动态调用方法会把_cmd作为第一个参数，第二个参数是Self，后面是可变参数列表，动态调度可以在运行时添加类、变量和方法。而在Swift中动态调用方法是基于VTable的，运行时没法对方法进行动态搜索，地址在编译时静态写在了VTable里，运行时不能改，可以用静态地址调用，或dlsym来搜索名称。</p>
 <p>VTable的地址在TypeContextDescriptor之后，OverrideTable存储位置在VTable之后，有三个字段来描述，第一个是记录哪个类被重写，第二个是被重写的函数，第三个是用来重写的函数相对的地址。因此通过OverrideTable就可以找到重写前和重写后函数指针，这样就有机会在VTable里找到对应函数进行函数指针的替换，达到Hook的效果。要注意，在Swift编译器设置优化时VTable的函数地址可能会清空或使用直接地址调用，这两种情况发生的话就没法通过VTable进行方法替换。</p>
 <p>那么还有其它思路吗？</p>
-<h3 id="Mach-override"><a href="#Mach-override" class="headerlink" title="Mach_override"></a>Mach_override</h3><p>使用<a target="_blank" rel="noopener" href="https://github.com/rentzsch"><em>Wolf Rentzsch</em></a>写的<a target="_blank" rel="noopener" href="https://github.com/rentzsch/mach_override">_Mach<em>override</em></a>也是一种方法，可以在原始函数的汇编里加个jmp，跳到自定义函数，然后再跳回原始函数。Mach_override_ptr的三个参数分别是，一，要覆盖函数的指针；二，去覆盖函数的指针；三，参数可以设置为原函数的指针地址，待Mach_override_ptr返回成功，就可以调原函数。Mach_override会分配一个虚拟内存页，使其可写可执行。需要注意的是，Mach_override_ptr初始函数和重入函数指针相同，调用后，重入函数将调用替换函数而不是原始函数。在Swift中如何使用Mach_override可参考<a target="_blank" rel="noopener" href="https://github.com/lombax85/SwiftOverride"><em>SwiftOverride</em></a>。</p>
+<h3 id="Mach-override"><a href="#Mach-override" class="headerlink" title="Mach_override"></a>Mach_override</h3><p>使用<a target="_blank" rel="noopener" href="https://github.com/rentzsch"><em>Wolf Rentzsch</em></a>写的<a target="_blank" rel="noopener" href="https://github.com/rentzsch/mach_override"><em>Mach_override</em></a>也是一种方法，可以在原始函数的汇编里加个jmp，跳到自定义函数，然后再跳回原始函数。Mach_override_ptr的三个参数分别是，一，要覆盖函数的指针；二，去覆盖函数的指针；三，参数可以设置为原函数的指针地址，待Mach_override_ptr返回成功，就可以调原函数。Mach_override会分配一个虚拟内存页，使其可写可执行。需要注意的是，Mach_override_ptr初始函数和重入函数指针相同，调用后，重入函数将调用替换函数而不是原始函数。在Swift中如何使用Mach_override可参考<a target="_blank" rel="noopener" href="https://github.com/lombax85/SwiftOverride"><em>SwiftOverride</em></a>。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过上下篇的介绍，想必你已经了解到A站为拥抱Swift都做了哪些事情。基于A站以及快手主站的一些架构师对于Swift的热爱，以及为之付于的实践，A站的开发体验才得以蜕变。</p>
-<p>为了让OC开发同学能够掌握Swift，以更“Swift”的方式进行开发，A站组织了十多次Swift组内的培训和分享，并规范了Swift代码风格和静态检查流程。针对开发体验上的痛点，A站在2020年上半年就开始了混编工程的优化、组件化以及二进制化的建设。完成了分层设计，渐进式地将模块解耦下沉到对应的分层，进而可以借助LLVM Module来抹平模块API在语言上的差异，从而代替Swift和Objective-C在主工程的桥接，为10+ A站和中台的基础库进行了Module化问题修复，并基于主站的二进制化方案 （GUNDAM）完善了对Swift以及混编的支持。从Swift ABI Stability进化为Module Stability的XCFramework，WWDC的<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2019/416/"><em>Session</em></a>很好的说明XCFramework的原理，同时表示XCFramework格式对Objective-C/C/C++也有很好的支持。目前组件的二进制化率约为80%，约有50%的组件已经完成了LLVM Module化，构建时间提升了60%以上。随着Swift优势的逐渐体现以及团队Swift能力建设的推进，A站更多的工程师开始倾向于使用Swift进行业务开发，而Swift带来的“加速度”，也让技术团队切实地感受到了强烈的“推背感“。</p>
-<p>当然，A站也曾遇到一些Swift的Bug，比如打包RxSwift5后遇到模块名和类名一样所产生的Bug和<a target="_blank" rel="noopener" href="https://bugs.swift.org/browse/SR-12647"><em>Issue</em></a>，RxSwift6通过避免使用Typealias的类型曲线形地解决了这个问题，目前此问题已被官方标记为“解决”，后面的版本可以正常使用。另外还有两个未解决的问题，一个是在Module的接口中出现Ambiguous Type Name Error问题，参考<a target="_blank" rel="noopener" href="https://bugs.swift.org/browse/SR-12646"><em>Issue</em></a><em>；</em>另一个是Import后产生.swiftinterface出现的错误，参见网站<a target="_blank" rel="noopener" href="https://bugs.swift.org/browse/SR-11422"><em>Issue</em></a>。</p>
+<p>为了让OC开发同学能够掌握Swift，以更“Swift”的方式进行开发，A站组织了十多次Swift组内的培训和分享，并规范了Swift代码风格和静态检查流程。针对开发体验上的痛点，A站在2020年上半年就开始了混编工程的优化、组件化以及二进制化的建设。完成了分层设计，渐进式地将模块解耦下沉到对应的分层，进而可以借助LLVM Module来抹平模块API在语言上的差异，从而代替Swift和Objective-C在主工程的桥接，为10+ A站和中台的基础库进行了Module化问题修复，并基于主站的二进制化方案 （GUNDAM）完善了对Swift以及混编的支持。从Swift ABI Stability进化为Module Stability的XCFramework，WWDC的<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2019/416/"><em>Session</em></a>很好的说明XCFramework的原理，同时表示XCFramework格式对Objective-C&#x2F;C&#x2F;C++也有很好的支持。目前组件的二进制化率约为80%，约有50%的组件已经完成了LLVM Module化，构建时间提升了60%以上。随着Swift优势的逐渐体现以及团队Swift能力建设的推进，A站更多的工程师开始倾向于使用Swift进行业务开发，而Swift带来的“加速度”，也让技术团队切实地感受到了强烈的“推背感“。</p>
+<p>当然，A站也曾遇到一些Swift的Bug，比如打包RxSwift5后遇到模块名和类名一样所产生的Bug和<a target="_blank" rel="noopener" href="https://bugs.swift.org/browse/SR-12647"><em>Issue</em></a>，RxSwift6通过避免使用Typealias的类型曲线形地解决了这个问题，目前此问题已被官方标记为“解决”，后面的版本可以正常使用。另外还有两个未解决的问题，一个是在Module的接口中出现Ambiguous Type Name Error问题，参考<a target="_blank" rel="noopener" href="https://bugs.swift.org/browse/SR-12646"><em>Issue</em></a>_；_另一个是Import后产生.swiftinterface出现的错误，参见网站<a target="_blank" rel="noopener" href="https://bugs.swift.org/browse/SR-11422"><em>Issue</em></a>。</p>
 <p>最后想说的是，Swift开发并不容易，不要被Swift简洁的语法所迷惑，各种大小括号组合会让开发者们感到困惑，还有一些特性会让直观理解变得很困难，比如下面的代码：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str:<span class="type">String</span>! <span class="operator">=</span> <span class="string">&quot;Hi&quot;</span></span><br><span class="line"><span class="keyword">let</span> strCopy <span class="operator">=</span> str</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">let</span> str<span class="token punctuation">:</span><span class="token class-name">String</span><span class="token operator">!</span> <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"Hi"</span></span>
+<span class="token keyword">let</span> strCopy <span class="token operator">=</span> str<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>根据Swift类型推导的特性，按道理str类型加上感叹符号后，strCopy就会被自动推导为非可选String类型。但实际情况是，按照<a target="_blank" rel="noopener" href="https://docs.swift.org/swift-book/LanguageGuide/TheBasics.html"><em>官方文档</em></a>的说法，strCopy没有直接指明类型，即隐式可选值时，str类型是String后加上感叹号，这种是属于隐含解包可选值String无法推导出非可选String类型，因此Swift会先将strCopy作为一个普通可选值来用，这样和直观的感觉非常不一样。</p>
-<p>本以为5.0的ABI在稳定后，Swift学起来会更容易，但是其实新的SwiftUI和Combine这样重量级的框架需要开发者继续钻研，真是“Write Swift, Learn Every Year”。Swift不断从其它语言中吸取精髓，接下来的async/await，你准备好了吗？要用上，先得看咱家APP系统最低版本是不是能够支持这些新特性。</p>
+<p>本以为5.0的ABI在稳定后，Swift学起来会更容易，但是其实新的SwiftUI和Combine这样重量级的框架需要开发者继续钻研，真是“Write Swift, Learn Every Year”。Swift不断从其它语言中吸取精髓，接下来的async&#x2F;await，你准备好了吗？要用上，先得看咱家APP系统最低版本是不是能够支持这些新特性。</p>
 <p>虽说不容易，但为了稳定和效率，终究跟上了时代的步伐。</p>
 
-    </article>
-    <!-- license -->
-    
-        <div class="license-wrapper">
-            <p>原文作者：<a href="http://ming1016.github.io">戴铭</a>
-            <p>原文链接：<a href="http://ming1016.github.io/2021/05/22/acfun-swift-practice/">http://ming1016.github.io/2021/05/22/acfun-swift-practice/</a>
-            <p>发表日期：<a href="http://ming1016.github.io/2021/05/22/acfun-swift-practice/">May 22nd 2021, 6:16:12 pm</a>
-            <p>更新日期：<a href="http://ming1016.github.io/2021/05/22/acfun-swift-practice/">June 5th 2021, 8:38:59 pm</a>
-            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
-        </div>
-    
-    <!-- paginator -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2021/06/08/wwdc2021-day1-note/" title="WWDC 2021 Day1 笔记">
-                    <div class="nextTitle">WWDC 2021 Day1 笔记</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href="/2021/02/21/deeply-analyse-quickjs/" title="深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言">
-                    <div class="prevTitle">深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- comment -->
-    
-        <div class="post-comment">
-            <!-- 来必力 City 版安装代码 -->
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2021/05/22/acfun-swift-practice/">http://ming1016.github.io/2021/05/22/acfun-swift-practice/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2021/06/08/wwdc2021-day1-note/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">WWDC 2021 Day1 笔记 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2021/02/21/deeply-analyse-quickjs/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
 
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">背景介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8B%B9%E6%9E%9C%E6%8E%A8%E5%87%BASwift%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.1.</span> <span class="toc-text">苹果推出Swift的原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8B%B9%E6%9E%9C%E5%AE%9E%E9%99%85%E9%87%87%E5%8F%96%E7%9A%84%E8%A1%8C%E5%8A%A8"><span class="toc-number">1.2.</span> <span class="toc-text">苹果实际采取的行动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift%E5%9C%A8AcFun%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="toc-number">1.3.</span> <span class="toc-text">Swift在AcFun的演进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift%E8%AF%AD%E8%A8%80%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="toc-number">1.4.</span> <span class="toc-text">Swift语言的演进</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%86%E6%9E%B6%E9%80%89%E6%8B%A9"><span class="toc-number">2.</span> <span class="toc-text">框架选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B"><span class="toc-number">2.1.</span> <span class="toc-text">架构演进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SwiftUI"><span class="toc-number">2.2.</span> <span class="toc-text">SwiftUI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RxSwift"><span class="toc-number">2.3.</span> <span class="toc-text">RxSwift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Combine"><span class="toc-number">2.4.</span> <span class="toc-text">Combine</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%B7%B7%E7%BC%96"><span class="toc-number">3.</span> <span class="toc-text">如何混编</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">前置条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AECocoaPods"><span class="toc-number">3.2.</span> <span class="toc-text">如何设置CocoaPods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8Module%EF%BC%9F"><span class="toc-number">3.3.</span> <span class="toc-text">为什么要用Module？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Name-Mangling"><span class="toc-number">3.4.</span> <span class="toc-text">Name Mangling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E4%BB%A5%E8%B0%83OC%E6%8E%A5%E5%8F%A3%EF%BC%9F"><span class="toc-number">3.5.</span> <span class="toc-text">为什么可以调OC接口？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">动态性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%80%BC%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%96%B9%E6%B3%95%E6%9B%BF%E6%8D%A2"><span class="toc-number">4.1.</span> <span class="toc-text">值类型的方法替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95%E6%9B%BF%E6%8D%A2"><span class="toc-number">4.2.</span> <span class="toc-text">类的方法替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E6%A1%A9"><span class="toc-number">4.3.</span> <span class="toc-text">插桩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ClassContextDescriptorBuilder"><span class="toc-number">4.4.</span> <span class="toc-text">ClassContextDescriptorBuilder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mach-override"><span class="toc-number">4.5.</span> <span class="toc-text">Mach_override</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
 
-            
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>56</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>37</span>
+    <span>标签</span>
+  </a>
+</div>
 
-            
-
-            
-
-            <!-- utteranc评论 -->
-
-
-            <!-- partial('_partial/comment/changyan') -->
-            <!--PC版-->
-
-
-            
-            
-
-        </div>
-    
-    <!-- timeliness note -->
-    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
-    
-    <!-- Mathjax -->
-    
-</main>
-
-                <!-- profile -->
-                
-            </div>
-            <footer class="footer footer-unloaded">
-    <!-- social  -->
-    
-        <div class="social">
-            
-    
-        
-            
-                <a href="mailto:ming1016@foxmail.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="//github.com/ming1016" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                    
-                    <img class="profile-qr" src="/assets/wechat-qcode.jpeg" />
-                </span>
-            
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="https://weibo.com/allstarming" class="iconfont-archer weibo" target="_blank" title=weibo></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="https://twitter.com/daiming_cn" class="iconfont-archer twitter" target="_blank" title=twitter></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
-            
-        
-    
-
-
-        </div>
-    
-    <!-- powered by Hexo  -->
-    <div class="copyright">
-        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
     </div>
-    <!-- website approve for Chinese user -->
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">背景介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8B%B9%E6%9E%9C%E6%8E%A8%E5%87%BASwift%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.1.</span> <span class="toc-text">苹果推出Swift的原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8B%B9%E6%9E%9C%E5%AE%9E%E9%99%85%E9%87%87%E5%8F%96%E7%9A%84%E8%A1%8C%E5%8A%A8"><span class="toc-number">1.2.</span> <span class="toc-text">苹果实际采取的行动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift%E5%9C%A8AcFun%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="toc-number">1.3.</span> <span class="toc-text">Swift在AcFun的演进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift%E8%AF%AD%E8%A8%80%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="toc-number">1.4.</span> <span class="toc-text">Swift语言的演进</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%86%E6%9E%B6%E9%80%89%E6%8B%A9"><span class="toc-number">2.</span> <span class="toc-text">框架选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B"><span class="toc-number">2.1.</span> <span class="toc-text">架构演进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SwiftUI"><span class="toc-number">2.2.</span> <span class="toc-text">SwiftUI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RxSwift"><span class="toc-number">2.3.</span> <span class="toc-text">RxSwift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Combine"><span class="toc-number">2.4.</span> <span class="toc-text">Combine</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%B7%B7%E7%BC%96"><span class="toc-number">3.</span> <span class="toc-text">如何混编</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">前置条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AECocoaPods"><span class="toc-number">3.2.</span> <span class="toc-text">如何设置CocoaPods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8Module%EF%BC%9F"><span class="toc-number">3.3.</span> <span class="toc-text">为什么要用Module？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Name-Mangling"><span class="toc-number">3.4.</span> <span class="toc-text">Name Mangling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E4%BB%A5%E8%B0%83OC%E6%8E%A5%E5%8F%A3%EF%BC%9F"><span class="toc-number">3.5.</span> <span class="toc-text">为什么可以调OC接口？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">动态性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%80%BC%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%96%B9%E6%B3%95%E6%9B%BF%E6%8D%A2"><span class="toc-number">4.1.</span> <span class="toc-text">值类型的方法替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95%E6%9B%BF%E6%8D%A2"><span class="toc-number">4.2.</span> <span class="toc-text">类的方法替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E6%A1%A9"><span class="toc-number">4.3.</span> <span class="toc-text">插桩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ClassContextDescriptorBuilder"><span class="toc-number">4.4.</span> <span class="toc-text">ClassContextDescriptorBuilder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mach-override"><span class="toc-number">4.5.</span> <span class="toc-text">Mach_override</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
     
-        <div class="website-approve">
-            
-                <span id="icp-approve" class="icp-approve">
-                    <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备17011999号</a>
-                </span>
-            
-            
-                
-                <img class="beian-img" src="/assets/beian.png" />
-                <span id="beian-approve" class="beian-approve">
-                    <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999" target="_blank">京公网安备 7011999号</a>
-                </span>
-            
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">42</span>
         </div>
+      </a>
     
-    <!-- 不蒜子  -->
-    
-        <div class="busuanzi-container">
-            
-             
-                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
-            
+      <a href="/categories/My novel">
+        <div class="categories-list-item">
+          My novel
+          <span class="categories-list-item-badge">4</span>
         </div>
-    	
+      </a>
+    
+      <a href="/categories/My painting">
+        <div class="categories-list-item">
+          My painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+    <a href="\tags\Pencil" title="Pencil"><div class="tags-list-item">Pencil</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">背景介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8B%B9%E6%9E%9C%E6%8E%A8%E5%87%BASwift%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.1.</span> <span class="toc-text">苹果推出Swift的原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8B%B9%E6%9E%9C%E5%AE%9E%E9%99%85%E9%87%87%E5%8F%96%E7%9A%84%E8%A1%8C%E5%8A%A8"><span class="toc-number">1.2.</span> <span class="toc-text">苹果实际采取的行动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift%E5%9C%A8AcFun%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="toc-number">1.3.</span> <span class="toc-text">Swift在AcFun的演进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift%E8%AF%AD%E8%A8%80%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="toc-number">1.4.</span> <span class="toc-text">Swift语言的演进</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%86%E6%9E%B6%E9%80%89%E6%8B%A9"><span class="toc-number">2.</span> <span class="toc-text">框架选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B"><span class="toc-number">2.1.</span> <span class="toc-text">架构演进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SwiftUI"><span class="toc-number">2.2.</span> <span class="toc-text">SwiftUI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RxSwift"><span class="toc-number">2.3.</span> <span class="toc-text">RxSwift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Combine"><span class="toc-number">2.4.</span> <span class="toc-text">Combine</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%B7%B7%E7%BC%96"><span class="toc-number">3.</span> <span class="toc-text">如何混编</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">前置条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AECocoaPods"><span class="toc-number">3.2.</span> <span class="toc-text">如何设置CocoaPods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8Module%EF%BC%9F"><span class="toc-number">3.3.</span> <span class="toc-text">为什么要用Module？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Name-Mangling"><span class="toc-number">3.4.</span> <span class="toc-text">Name Mangling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E4%BB%A5%E8%B0%83OC%E6%8E%A5%E5%8F%A3%EF%BC%9F"><span class="toc-number">3.5.</span> <span class="toc-text">为什么可以调OC接口？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">动态性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%80%BC%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%96%B9%E6%B3%95%E6%9B%BF%E6%8D%A2"><span class="toc-number">4.1.</span> <span class="toc-text">值类型的方法替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95%E6%9B%BF%E6%8D%A2"><span class="toc-number">4.2.</span> <span class="toc-text">类的方法替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E6%A1%A9"><span class="toc-number">4.3.</span> <span class="toc-text">插桩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ClassContextDescriptorBuilder"><span class="toc-number">4.4.</span> <span class="toc-text">ClassContextDescriptorBuilder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mach-override"><span class="toc-number">4.5.</span> <span class="toc-text">Mach_override</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-03-25</div>
+        <a href="/2022/03/25/develop-with-swiftui/"><div class="recent-posts-item-content">在苹果加速器活动做的 SwiftUI 开发分享</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-02-26</div>
+        <a href="/2022/02/26/draw-in-2021/"><div class="recent-posts-item-content">2021年画的</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2014 -
+          
+          2022
+        </span>
+        <a href="/" class="footer-link">戴铭的博客 </a>
+      </div>
+    </div>
+
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
+      </a>
+      <br />
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
 </footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
 
-        </div>
-        <!-- toc -->
-        
-            <div class="toc-wrapper toc-wrapper-loding" style=
-
-
-
-
-
-
-
-    top:50vh;
-
->
-                <div class="toc-catalog">
-                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-                </div>
-                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">背景介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8B%B9%E6%9E%9C%E6%8E%A8%E5%87%BASwift%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.1.</span> <span class="toc-text">苹果推出Swift的原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8B%B9%E6%9E%9C%E5%AE%9E%E9%99%85%E9%87%87%E5%8F%96%E7%9A%84%E8%A1%8C%E5%8A%A8"><span class="toc-number">1.2.</span> <span class="toc-text">苹果实际采取的行动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift%E5%9C%A8AcFun%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="toc-number">1.3.</span> <span class="toc-text">Swift在AcFun的演进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift%E8%AF%AD%E8%A8%80%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="toc-number">1.4.</span> <span class="toc-text">Swift语言的演进</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%86%E6%9E%B6%E9%80%89%E6%8B%A9"><span class="toc-number">2.</span> <span class="toc-text">框架选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B"><span class="toc-number">2.1.</span> <span class="toc-text">架构演进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SwiftUI"><span class="toc-number">2.2.</span> <span class="toc-text">SwiftUI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RxSwift"><span class="toc-number">2.3.</span> <span class="toc-text">RxSwift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Combine"><span class="toc-number">2.4.</span> <span class="toc-text">Combine</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%B7%B7%E7%BC%96"><span class="toc-number">3.</span> <span class="toc-text">如何混编</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">前置条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AECocoaPods"><span class="toc-number">3.2.</span> <span class="toc-text">如何设置CocoaPods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8Module%EF%BC%9F"><span class="toc-number">3.3.</span> <span class="toc-text">为什么要用Module？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Name-Mangling"><span class="toc-number">3.4.</span> <span class="toc-text">Name Mangling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E4%BB%A5%E8%B0%83OC%E6%8E%A5%E5%8F%A3%EF%BC%9F"><span class="toc-number">3.5.</span> <span class="toc-text">为什么可以调OC接口？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">动态性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%80%BC%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%96%B9%E6%B3%95%E6%9B%BF%E6%8D%A2"><span class="toc-number">4.1.</span> <span class="toc-text">值类型的方法替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95%E6%9B%BF%E6%8D%A2"><span class="toc-number">4.2.</span> <span class="toc-text">类的方法替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E6%A1%A9"><span class="toc-number">4.3.</span> <span class="toc-text">插桩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ClassContextDescriptorBuilder"><span class="toc-number">4.4.</span> <span class="toc-text">ClassContextDescriptorBuilder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mach-override"><span class="toc-number">4.5.</span> <span class="toc-text">Mach_override</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
-            </div>
-        
-        <!-- sidebar -->
-        <div class="sidebar sidebar-hide">
-    <ul class="sidebar-tabs sidebar-tabs-active-0">
-        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
-        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
-        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
-    </ul>
-    <div class="sidebar-content sidebar-content-show-archive">
-        <div class="sidebar-panel-archives">
-    <!-- 在 ejs 中将 archive 按照时间排序 -->
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-    
-    
-    
-    <div class="total-and-search">
-        <div class="total-archive">
-        Total : 57
-        </div>
-        <!-- search  -->
-        
-    </div>
-    
-    <div class="post-archive">
-    
-        
-            
-            
-            <div class="archive-year"> 2022 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/10</span>
-            <a class="archive-post-title" href="/2022/06/10/use-llvm/">使用 LLVM</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/10</span>
-            <a class="archive-post-title" href="/2022/06/10/wwdc22-notes/">WWDC22 笔记</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/25</span>
-            <a class="archive-post-title" href="/2022/03/25/develop-with-swiftui/">在苹果加速器活动做的 SwiftUI 开发分享</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/26</span>
-            <a class="archive-post-title" href="/2022/02/26/draw-in-2021/">2021年画的</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/10</span>
-            <a class="archive-post-title" href="/2022/02/10/swift-evolutionary-path/">Swift 演进之路</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/03</span>
-            <a class="archive-post-title" href="/2022/01/03/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/">如何用 SwiftUI + Combine + Swift Concurrency Aysnc/Await Actor 欢畅开发</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2021 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/23</span>
-            <a class="archive-post-title" href="/2021/11/23/daiming-swift-pamphlet/">戴铭的 Swift 小册子 4.0</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/24</span>
-            <a class="archive-post-title" href="/2021/07/24/my-little-idea-about-writing-technical-article/">我写技术文章的一点心得</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/13</span>
-            <a class="archive-post-title" href="/2021/07/13/deeply-analyse-autolayout-slides/">深入剖析Auto Layout的幻灯片</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/08</span>
-            <a class="archive-post-title" href="/2021/06/08/wwdc2021-day1-note/">WWDC 2021 Day1 笔记</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/22</span>
-            <a class="archive-post-title" href="/2021/05/22/acfun-swift-practice/">A站 的 Swift 实践</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/21</span>
-            <a class="archive-post-title" href="/2021/02/21/deeply-analyse-quickjs/">深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2020 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/18</span>
-            <a class="archive-post-title" href="/2020/12/18/thinking-in-how-to-speed-up-app/">App 启动提速实践和一些想法</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/04</span>
-            <a class="archive-post-title" href="/2020/05/04/draw-in-2020/">2020年涂图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span>
-            <a class="archive-post-title" href="/2020/04/12/why_write_study_ios_programming_with_daiming_book_and_draw_recently/">我为什么写了《跟戴铭学iOS编程》这本书</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/29</span>
-            <a class="archive-post-title" href="/2020/03/29/apple-system-executable-file-macho/">Apple 操作系统可执行文件 Mach-O</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/05</span>
-            <a class="archive-post-title" href="/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/">在快手做分享、无用类检查、在广州做 SwiftUI 学习笔记分享、InfoQ二叉树视频</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2019 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/28</span>
-            <a class="archive-post-title" href="/2019/12/28/japan-travel/">日本游玩</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/07</span>
-            <a class="archive-post-title" href="/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">如何对 iOS 启动阶段耗时进行分析</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/06</span>
-            <a class="archive-post-title" href="/2019/12/06/draw-in-2019/">2019年涂图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/29</span>
-            <a class="archive-post-title" href="/2019/07/29/ios-map/">iOS 开发舆图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/19</span>
-            <a class="archive-post-title" href="/2019/06/19/white-dragon-class/">白龙班</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2018 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/17</span>
-            <a class="archive-post-title" href="/2018/09/17/produce-slides-of-third-at-swift-conference/">这次swift大会分享准备的幻灯片和 demo</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/14</span>
-            <a class="archive-post-title" href="/2018/09/14/draw-with-procreate-in-ipad-during-pre-half-in-20182/">18年上半年procreate的练习图图</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/21</span>
-            <a class="archive-post-title" href="/2018/04/21/deeply-analyse-javascriptcore/">深入剖析 JavaScriptCore</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/07</span>
-            <a class="archive-post-title" href="/2018/04/07/read-snapkit-and-masonry-source-code/">读 SnapKit 和 Masonry 自动布局框架源码</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span>
-            <a class="archive-post-title" href="/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/">Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/24</span>
-            <a class="archive-post-title" href="/2018/01/24/why-swift/">Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/10</span>
-            <a class="archive-post-title" href="/2018/01/10/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/">GIAC 大会上分享的《Swift 将 Web 代码转成60帧满帧原生应用的方案及实践》的幻灯片</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span>
-            <a class="archive-post-title" href="/2018/01/04/baimi/">白芈</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/04</span>
-            <a class="archive-post-title" href="/2018/01/04/huaye/">花野</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2017 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/24</span>
-            <a class="archive-post-title" href="/2017/10/24/how-do-i-improve-the-development/">在滴滴，我是如何指数级提升开发技术的？</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/16</span>
-            <a class="archive-post-title" href="/2017/10/16/html-to-native-htn-development-record/">HTML 转原生 HTN 项目开发记录</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/11</span>
-            <a class="archive-post-title" href="/2017/10/11/deeply-analyse-webkit/">深入剖析 WebKit</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span>
-            <a class="archive-post-title" href="/2017/06/20/deeply-ios-performance-optimization/">深入剖析 iOS 性能优化</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/12</span>
-            <a class="archive-post-title" href="/2017/06/12/gmtc-ios-slimming-practice/">GMTC 上分享滴滴出行 iOS 端瘦身实践的 Slides</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/27</span>
-            <a class="archive-post-title" href="/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/">atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span>
-            <a class="archive-post-title" href="/2017/04/01/build-static-analysis-program-smck-use-swift/">用 Swift 编写的工程代码静态分析命令行工具 smck</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span>
-            <a class="archive-post-title" href="/2017/04/01/slides-of-deeply-analyse-llvm/">深入剖析 iOS 编译 Clang / LLVM 直播的 Slides</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span>
-            <a class="archive-post-title" href="/2017/03/01/deeply-analyse-llvm/">深入剖析 iOS 编译 Clang / LLVM</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2016 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/22</span>
-            <a class="archive-post-title" href="/2016/11/22/how-to-preload-web-in-ios/">iOS预加载Web页面方案</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/17</span>
-            <a class="archive-post-title" href="/2016/11/17/use-swift3-build-macos-program-to-clear-unuse-method/">使用Swift3开发了个macOS的程序可以检测出objc项目中无用方法，然后一键全部清理</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/20</span>
-            <a class="archive-post-title" href="/2016/09/20/draw-with-procreate-in-ipad-during-15-to-16/">15，16年iPad上使用Procreate画的</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/02</span>
-            <a class="archive-post-title" href="/2016/09/02/develop-rss-reader/">使用ReactiveCocoa开发RSS阅读器</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/09</span>
-            <a class="archive-post-title" href="/2016/08/09/how-to-use-reactivecocoa/">iOS函数响应式编程以及ReactiveCocoa的使用</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/21</span>
-            <a class="archive-post-title" href="/2016/07/21/assembleview/">制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/30</span>
-            <a class="archive-post-title" href="/2016/05/30/what-learn-from-reactivecocoa/">从 ReactiveCocoa 中能学到什么？不用此库也能学以致用</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/23</span>
-            <a class="archive-post-title" href="/2016/05/23/try-to-decouple-with-demo/">竭尽全力的去解耦的一次实践，封装一个TableView和一些功能组合的控件</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/04</span>
-            <a class="archive-post-title" href="/2016/04/04/tenth-middle-school/">十中</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/13</span>
-            <a class="archive-post-title" href="/2016/01/13/how-to-use-gcd/">细说 GCD（Grand Central Dispatch）如何用</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2015 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/03</span>
-            <a class="archive-post-title" href="/2015/11/03/deeply-analyse-autolayout/">深入剖析Auto Layout，分析iOS各版本新增特性</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/02</span>
-            <a class="archive-post-title" href="/2015/11/02/draw-with-note-in-ipad-during-15/">15年用iPad上的备忘录画的</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span>
-            <a class="archive-post-title" href="/2015/05/28/macos-app-i-used/">我用过的 macOS 应用</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/02</span>
-            <a class="archive-post-title" href="/2015/04/02/draw-game-of-thrones-with-pencil-during-14/">整理了画的权利的游戏里的角色，有龙女，小恶魔等等</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span>
-            <a class="archive-post-title" href="/2015/04/01/objc-runtime/">Objc Runtime 总结</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span>
-            <a class="archive-post-title" href="/2015/03/12/draw-practice-with-pencil-during-14-to-15/">14和15年间的铅笔画练习</a>
-        </li>
-    
-        
-            
-            
-                
-                </ul>
-            
-            <div class="archive-year"> 2014 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span>
-            <a class="archive-post-title" href="/2014/03/01/black-star-blue-map/">黑星蓝图</a>
-        </li>
-    
-    </div>
-</div>
-
-        <div class="sidebar-panel-tags">
-    <div class="sidebar-tags-name">
-        
-            <span class="sidebar-tag-name" data-tags="iOS">
-                <span class="iconfont-archer">&#xe606;</span>
-                iOS
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Apple">
-                <span class="iconfont-archer">&#xe606;</span>
-                Apple
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Swift">
-                <span class="iconfont-archer">&#xe606;</span>
-                Swift
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="AssembleView">
-                <span class="iconfont-archer">&#xe606;</span>
-                AssembleView
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Novel">
-                <span class="iconfont-archer">&#xe606;</span>
-                Novel
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Mach-O">
-                <span class="iconfont-archer">&#xe606;</span>
-                Mach-O
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="smck">
-                <span class="iconfont-archer">&#xe606;</span>
-                smck
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Autolayout">
-                <span class="iconfont-archer">&#xe606;</span>
-                Autolayout
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="JavaScript">
-                <span class="iconfont-archer">&#xe606;</span>
-                JavaScript
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Web">
-                <span class="iconfont-archer">&#xe606;</span>
-                Web
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="编译">
-                <span class="iconfont-archer">&#xe606;</span>
-                编译
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="RSSReader">
-                <span class="iconfont-archer">&#xe606;</span>
-                RSSReader
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="macOS">
-                <span class="iconfont-archer">&#xe606;</span>
-                macOS
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Combine">
-                <span class="iconfont-archer">&#xe606;</span>
-                Combine
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="SwiftUI">
-                <span class="iconfont-archer">&#xe606;</span>
-                SwiftUI
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Concurrency">
-                <span class="iconfont-archer">&#xe606;</span>
-                Concurrency
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="LLVM">
-                <span class="iconfont-archer">&#xe606;</span>
-                LLVM
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Clang">
-                <span class="iconfont-archer">&#xe606;</span>
-                Clang
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Performance optimization">
-                <span class="iconfont-archer">&#xe606;</span>
-                Performance optimization
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Painting">
-                <span class="iconfont-archer">&#xe606;</span>
-                Painting
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Pencil">
-                <span class="iconfont-archer">&#xe606;</span>
-                Pencil
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="GOT">
-                <span class="iconfont-archer">&#xe606;</span>
-                GOT
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="iPad">
-                <span class="iconfont-archer">&#xe606;</span>
-                iPad
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Procreate">
-                <span class="iconfont-archer">&#xe606;</span>
-                Procreate
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="WebKit">
-                <span class="iconfont-archer">&#xe606;</span>
-                WebKit
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Slides">
-                <span class="iconfont-archer">&#xe606;</span>
-                Slides
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Study">
-                <span class="iconfont-archer">&#xe606;</span>
-                Study
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="GCD">
-                <span class="iconfont-archer">&#xe606;</span>
-                GCD
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="UIWebView">
-                <span class="iconfont-archer">&#xe606;</span>
-                UIWebView
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="NSURLProtocol">
-                <span class="iconfont-archer">&#xe606;</span>
-                NSURLProtocol
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="ReactiveCocoa">
-                <span class="iconfont-archer">&#xe606;</span>
-                ReactiveCocoa
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Japan">
-                <span class="iconfont-archer">&#xe606;</span>
-                Japan
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="APP">
-                <span class="iconfont-archer">&#xe606;</span>
-                APP
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="runtime">
-                <span class="iconfont-archer">&#xe606;</span>
-                runtime
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="swift">
-                <span class="iconfont-archer">&#xe606;</span>
-                swift
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Pattern">
-                <span class="iconfont-archer">&#xe606;</span>
-                Pattern
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="book">
-                <span class="iconfont-archer">&#xe606;</span>
-                book
-            </span>
-        
-    </div>
-    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
-    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
-        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
-    </div> 
-    <div class="sidebar-tags-list"></div>
-</div>
-
-        <div class="sidebar-panel-categories">
-    <div class="sidebar-categories-name">
-    
-        <span class="sidebar-category-name" data-categories="Programming">
-            <span class="iconfont-archer">&#xe60a;</span>
-            Programming
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="My-novel">
-            <span class="iconfont-archer">&#xe60a;</span>
-            My-novel
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="My-painting">
-            <span class="iconfont-archer">&#xe60a;</span>
-            My-painting
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="travel">
-            <span class="iconfont-archer">&#xe60a;</span>
-            travel
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="APP">
-            <span class="iconfont-archer">&#xe60a;</span>
-            APP
-        </span>
-    
-    </div>
-    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
-    <div class="sidebar-categories-list"></div>
-</div>
-
-    </div>
-</div>
-
-        <!-- site-meta -->
-        <script>
-    var siteMeta = {
-        url: "http://ming1016.github.io",
-        root: "/",
-        author: "戴铭"
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
     }
+    refreshFsLightbox();
+  }
 </script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
 
-        <!-- import experimental options here -->
-        <!-- Custom Font -->
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
 
-
-        <!-- main func -->
-        <script src="/scripts/main.js?v=20210823"></script>
-        <!-- dark mode -->
-        <script src="/scripts/dark.js?v=20210823"></script>
-        <!-- fancybox -->
-        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
-        <!-- algolia -->
-        
-        <!-- busuanzi -->
-        
-            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-        
-        <!-- CNZZ -->
-        
-        <!-- async load share.js -->
-        
-            <script src="/scripts/share.js?v=20210823" async></script>
-        
-        <!-- mermaid -->
-        
-    </body>
 </html>
