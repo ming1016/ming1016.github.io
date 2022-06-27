@@ -120,17 +120,17 @@
   </div>
   <div class="navbar-menu">
     
-    <a href="/" class="navbar-menu-item">首页 </a>
+    <a href="/" class="navbar-menu-item">Home </a>
     
-    <a href="/archives" class="navbar-menu-item">归档 </a>
+    <a href="/archives" class="navbar-menu-item">Archive </a>
     
-    <a href="/tags" class="navbar-menu-item">标签 </a>
+    <a href="/tags" class="navbar-menu-item">Tags </a>
     
-    <a href="/categories" class="navbar-menu-item">分类 </a>
+    <a href="/categories" class="navbar-menu-item">Categories </a>
     
-    <a href="/about" class="navbar-menu-item">关于 </a>
+    <a href="/about" class="navbar-menu-item">About </a>
     
-    <a href="" class="navbar-menu-item">友链 </a>
+    <a href="" class="navbar-menu-item">Friends </a>
     
     <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
   </div>
@@ -165,7 +165,7 @@
     
     
     <span class="dot"></span>
-    <span>3.4k 字</span>
+    <span>4.3k words</span>
     
   </div>
   
@@ -186,16 +186,15 @@
   
   </header>
   <div id="section" class="post-content">
-    <p>本篇主要是对<a href="https://ming1016.github.io/2021/05/22/acfun-swift-practice/">《A站 的 Swift 实践》</a>文章中的一幅配图做了详细的扩展，能够更加全面和详细了解 Swift 语言的发展，文章中提到的 Swift 各版本的语法示例代码，及本文内容都可以在 <a target="_blank" rel="noopener" href="https://github.com/KwaiAppTeam/SwiftPamphletApp">Swift 小册子</a>里对应栏目里找到，这个假期我也对 Swift 小册子里栏目内容进行了些更新和补充。《A站 的 Swift 实践》文章的那个演进配图如下：</p>
+    <p>已更新到 Swift 5.7。</p>
+<p>本篇主要是对<a href="https://ming1016.github.io/2021/05/22/acfun-swift-practice/">《A站 的 Swift 实践》</a>文章中的一幅配图做了详细的扩展，能够更加全面和详细了解 Swift 语言的发展，文章中提到的 Swift 各版本的语法示例代码，及本文内容都可以在 <a target="_blank" rel="noopener" href="https://github.com/KwaiAppTeam/SwiftPamphletApp">Swift 小册子</a>里对应栏目里找到，这个假期我也对 Swift 小册子里栏目内容进行了些更新和补充。《A站 的 Swift 实践》文章的那个演进配图如下：</p>
 <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swift-evolutionary-path/01.png" class="lozad post-image"src="/uploads/swift-evolutionary-path/01.png"></p>
 <p>文章内容如下：</p>
-<p><em>Swift 1.1</em></p>
-<ul>
+<h5 id="Swift-1-1"><a href="#Swift-1-1" class="headerlink" title="Swift 1.1"></a>Swift 1.1</h5><ul>
 <li>countElements() 改成了 count()。</li>
 <li>@NSApplicationMain 可以在 macOS 上使用。</li>
 </ul>
-<p><em>Swift 1.2</em></p>
-<ul>
+<h5 id="Swift-1-2"><a href="#Swift-1-2" class="headerlink" title="Swift 1.2"></a>Swift 1.2</h5><ul>
 <li>引入 Set 类型。</li>
 <li>if let 可以放到一起，使用逗号分隔。</li>
 <li>新增 zip() 和 flatMap()。</li>
@@ -204,16 +203,14 @@
 <li>@noescape 用于描述作为参数闭包，用来告诉 Swift 闭包将在函数返回前使用。</li>
 <li>常量可以延后初始化。</li>
 </ul>
-<p><em>Swift 2.0</em></p>
-<ul>
+<h5 id="Swift-2-0"><a href="#Swift-2-0" class="headerlink" title="Swift 2.0"></a>Swift 2.0</h5><ul>
 <li>增加 guard 关键字，用于解可选项值。</li>
 <li>defer 关键字用来延迟执行，即使抛出错误了都会在最后执行。</li>
 <li>ErrorType 协议，以及 throws、do、try 和 catch 的引入用来处理错误。</li>
 <li>characters 加上 count，用来替代 count()。</li>
 <li>#available 用来检查系统版本。</li>
 </ul>
-<p><em>Swift 2.1</em></p>
-<ul>
+<h5 id="Swift-2-1"><a href="#Swift-2-1" class="headerlink" title="Swift 2.1"></a>Swift 2.1</h5><ul>
 <li>字符串插值可以包含字符串字面符号。</li>
 </ul>
 <p><em>Swift 2.2</em></p>
@@ -226,8 +223,7 @@
 <li>废弃字符串化的选择器，选择器不再能写成字符串了。</li>
 <li>元组可直接比较是否相等。</li>
 </ul>
-<p><em>Swift 3.0</em></p>
-<p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-3.0-released/">Swift 3.0 Released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-3.0-preview-1-released/">Swift 3.0 Preview 1 Released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-3.0-release-process/">Swift 3.0 Release Process</a></p>
+<h5 id="Swift-3-0"><a href="#Swift-3-0" class="headerlink" title="Swift 3.0"></a>Swift 3.0</h5><p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-3.0-released/">Swift 3.0 Released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-3.0-preview-1-released/">Swift 3.0 Preview 1 Released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-3.0-release-process/">Swift 3.0 Release Process</a></p>
 <ul>
 <li>规范动词和名词来命名。</li>
 <li>去掉 NS 前缀。</li>
@@ -236,15 +232,13 @@
 <li>枚举的属性使用小写开头。</li>
 <li>引入 C 函数的属性。</li>
 </ul>
-<p><em>Swift 3.1</em></p>
-<p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-3.1-released/">Swift 3.1 Released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-3.1-release-process/">Swift 3.1 Release Process</a></p>
+<h5 id="Swift-3-1"><a href="#Swift-3-1" class="headerlink" title="Swift 3.1"></a>Swift 3.1</h5><p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-3.1-released/">Swift 3.1 Released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-3.1-release-process/">Swift 3.1 Release Process</a></p>
 <ul>
 <li>序列新增 prefix(while:) 和 drop(while:) 方法，顺序遍历执行闭包里的逻辑判断，满足条件就返回，遇到不匹配就会停止遍历。prefix 返回满足条件的元素集合，drop 返回停止遍历之后那些元素集合。</li>
 <li>泛型适用于嵌套类型。</li>
 <li>类型的扩展可以使用约束条件，比如扩展数组时，加上元素为整数的约束，这样的扩展就只会对元素为整数的数组有效。</li>
 </ul>
-<p><em>Swift 4.0</em></p>
-<p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-4.0-released/">Swift 4.0 Released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-4.0-release-process/">Swift 4 Release Process</a></p>
+<h5 id="Swift-4-0"><a href="#Swift-4-0" class="headerlink" title="Swift 4.0"></a>Swift 4.0</h5><p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-4.0-released/">Swift 4.0 Released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-4.0-release-process/">Swift 4 Release Process</a></p>
 <ul>
 <li>加入 Codable 协议，更 Swifty 的编码和解码。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0167-swift-encoders.md">SE-0167 Swift Encoders</a></li>
 <li>字符串加入三个双引号的支持，让多行字符串编写更加直观。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0168-multi-line-string-literals.md">SE-0168 Multi-Line String Literals</a></li>
@@ -253,8 +247,7 @@
 <li>集合加入 ..&lt;10 这样语法的单边切片。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0172-one-sided-ranges.md">SE-0172 One-sided Ranges</a></li>
 <li>字典新增 mapValues，可 map 字典的值。通过 grouping 可对字典进行分组生成新字典，键和值都可以。从字典中取值，如果键对应无值，则使用通过 default 指定的默认值。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0165-dict.md">SE-0165 Dictionary &amp; Set Enhancements</a></li>
 </ul>
-<p><em>Swift 4.1</em></p>
-<p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-4.1-released/">Swift 4.1 Released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-4.1-release-process/">Swift 4.1 Release Process</a></p>
+<h5 id="Swift-4-1"><a href="#Swift-4-1" class="headerlink" title="Swift 4.1"></a>Swift 4.1</h5><p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-4.1-released/">Swift 4.1 Released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-4.1-release-process/">Swift 4.1 Release Process</a></p>
 <ul>
 <li>Hashable 也不需要返回一个唯一的 hashValue 哈希值属性。</li>
 <li>Equatable 和 Hashable 自动合成的提案参见 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0185-synthesize-equatable-hashable.md">SE-0185 Synthesizing Equatable and Hashable conformance</a>。</li>
@@ -266,8 +259,7 @@
 <li>关联类型可以创建递归约束，提案见 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0157-recursive-protocol-constraints.md">SE-0157 Support recursive constraints on associated types</a></li>
 <li>targetEnvironment 环境的判断，比如模拟器。提案见 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0190-target-environment-platform-condition.md">SE-0190 Target environment platform condition</a> 。</li>
 </ul>
-<p><em>Swift 4.2</em></p>
-<p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-4.2-released/">Swift 4.2 Released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/4.2-release-process/">Swift 4.2 Release Process</a></p>
+<h5 id="Swift-4-2"><a href="#Swift-4-2" class="headerlink" title="Swift 4.2"></a>Swift 4.2</h5><p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-4.2-released/">Swift 4.2 Released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/4.2-release-process/">Swift 4.2 Release Process</a></p>
 <ul>
 <li>新增动态成员查询，@dynamicMemberLookup 新属性，指示访问属性时调用一个已实现的处理动态查找的下标方法 subscript(dynamicMemeber:)，通过指定属性字符串名返回值。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0195-dynamic-member-lookup.md">SE-0195 Introduce User-defined “Dynamic Member Lookup” Types</a></li>
 <li>集合新加 removeAll(where:) 方法，过滤满足条件所有元素。比 filter 更高效。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0197-remove-where.md">SE-0197 Adding in-place removeAll(where:) to the Standard Library</a></li>
@@ -278,8 +270,7 @@
 <li>更简单更安全的哈希协议，引入新的 Hasher 结构，通过 combine() 方法为哈希值添加更多属性，调用 finalize() 方法生成最终哈希值。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0206-hashable-enhancements.md">SE-0206 Hashable Enhancements</a></li>
 <li>集合增加 allSatisfy() 用来判断集合中的元素是否都满足了一个条件。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0207-containsOnly.md">SE-0207 Add an allSatisfy algorithm to Sequence</a></li>
 </ul>
-<p><em>Swift 5.0</em></p>
-<p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-5-released/">Swift 5 Released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/5.0-release-process/">Swift 5.0 Release Process</a></p>
+<h5 id="Swift-5-0"><a href="#Swift-5-0" class="headerlink" title="Swift 5.0"></a>Swift 5.0</h5><p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-5-released/">Swift 5 Released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/5.0-release-process/">Swift 5.0 Release Process</a></p>
 <ul>
 <li>@dynamicCallable 动态可调用类型。通过实现 dynamicallyCall 方法来定义变参的处理。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0216-dynamic-callable.md">SE-0216 Introduce user-defined dynamically “callable” types</a></li>
 <li>新加 Result 类型用来处理错误。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0235-add-result.md">SE-0235 Add Result to the Standard Library</a></li>
@@ -290,8 +281,7 @@
 <li>扁平化 try?。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0230-flatten-optional-try.md">SE-0230 Flatten nested optionals resulting from ‘try?’</a></li>
 <li>isMultiple(of:) 方法检查一个数字是否是另一个数字的倍数。提案见 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0225-binaryinteger-iseven-isodd-ismultiple.md">SE-0225 Adding isMultiple to BinaryInteger</a></li>
 </ul>
-<p><em>Swift 5.1</em></p>
-<p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-5.1-released/">Swift 5.1 Released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/5.1-release-process/">Swift 5.1 Release Process</a></p>
+<h5 id="Swift-5-1"><a href="#Swift-5-1" class="headerlink" title="Swift 5.1"></a>Swift 5.1</h5><p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-5.1-released/">Swift 5.1 Released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/5.1-release-process/">Swift 5.1 Release Process</a></p>
 <ul>
 <li>有序集合的 diff，通过 difference(from:) 方法，可以返回要删除哪些和添加哪些项目能够让两个集合相等。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0240-ordered-collection-diffing.md">SE-0240 Ordered Collection Diffing</a></li>
 <li>属性包装。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0258-property-wrappers.md">SE-0258 Property Wrappers</a></li>
@@ -303,14 +293,12 @@
 <li>枚举里有 none 的 case 编译器会提示换成 Optional.none。</li>
 <li>引入未初始化数组。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0245-array-uninitialized-initializer.md">SE-0245 Add an Array Initializer with Access to Uninitialized Storage</a></li>
 </ul>
-<p><em>Swift 5.2</em></p>
-<p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-5.2-released/">Swift 5.2 Released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/5.2-release-process/">Swift 5.2 Release Process</a></p>
+<h5 id="Swift-5-2"><a href="#Swift-5-2" class="headerlink" title="Swift 5.2"></a>Swift 5.2</h5><p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-5.2-released/">Swift 5.2 Released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/5.2-release-process/">Swift 5.2 Release Process</a></p>
 <ul>
 <li>自定义类型中实现了 callAsFunction() 的话，该类型的值就可以直接调用。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0253-callable.md">SE-0253 Callable values of user-defined nominal types</a></li>
 <li>键路径表达式作为函数。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0249-key-path-literal-function-expressions.md">SE-0249 Key Path Expressions as Functions</a></li>
 </ul>
-<p><em>Swift 5.3</em></p>
-<p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-5.3-released/">Swift 5.3 released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/5.3-release-process/">Swift 5.3 Release Process</a></p>
+<h5 id="Swift-5-3"><a href="#Swift-5-3" class="headerlink" title="Swift 5.3"></a>Swift 5.3</h5><p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-5.3-released/">Swift 5.3 released!</a>、<a target="_blank" rel="noopener" href="https://swift.org/blog/5.3-release-process/">Swift 5.3 Release Process</a></p>
 <ul>
 <li>SPM 包管理资源，SPM 可以包含资源文件，比如多媒体或文本等。通过 Bundle.module 访问这些资源。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0271-package-manager-resources.md">SE-0271 Package Manager Resources</a></li>
 <li>SPM 包里资源本地化。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0278-package-manager-localized-resources.md">SE-0278 Package Manager Localized Resources</a></li>
@@ -326,8 +314,7 @@
 <li>完善 didSet，性能提升。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0268-didset-semantics.md">SE-0268 Refine didSet Semantics</a></li>
 <li>新增 Float16 类型，即半精度浮点类型。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0277-float16.md">SE-0277 Float16</a></li>
 </ul>
-<p><em>Swift 5.4</em></p>
-<p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-5.4-released/">Swift 5.4 Released!</a></p>
+<h5 id="Swift-5-4"><a href="#Swift-5-4" class="headerlink" title="Swift 5.4"></a>Swift 5.4</h5><p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-5.4-released/">Swift 5.4 Released!</a></p>
 <ul>
 <li>SPM 支持 @main。提案见 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0294-package-executable-targets.md">SE-0294 Declaring executable targets in Package Manifests</a></li>
 <li>结果生成器（Result builders），通过传递序列创建新值，SwiftUI就是使用的结果生成器将多个视图生成一个视图。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0289-result-builders.md">SE-0289 Result builders</a></li>
@@ -336,8 +323,7 @@
 <li>嵌套函数可以重载，嵌套函数可以在声明函数之前调用他。</li>
 <li>属性包装支持局部变量。</li>
 </ul>
-<p><em>Swift 5.5</em></p>
-<p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-5.5-released/">Swift 5.5 Released!</a></p>
+<h5 id="Swift-5-5"><a href="#Swift-5-5" class="headerlink" title="Swift 5.5"></a>Swift 5.5</h5><p>官方博客介绍：<a target="_blank" rel="noopener" href="https://swift.org/blog/swift-5.5-released/">Swift 5.5 Released!</a></p>
 <ul>
 <li>Async await，用同步写法来处理异步。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0296-async-await.md">SE-0296 Async&#x2F;await</a></li>
 <li>Async sequences，异步序列上的循环能力。符合 AsyncSequence 协议的序列可以通过 for await 来进行异步循环。提案见 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0298-asyncsequence.md">SE-0298 Async&#x2F;Await: Sequences</a> </li>
@@ -355,7 +341,41 @@
 <li>CGFloat 和 Double 之间可以隐式转换。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0307-allow-interchangeable-use-of-double-cgfloat-types.md">SE-0307 Allow interchangeable use of CGFloat and Double types</a></li>
 <li>Codable 支持关联值枚举。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0295-codable-synthesis-for-enums-with-associated-values.md">SE-0295 Codable synthesis for enums with associated values</a></li>
 </ul>
-<p>上面各个版本的语法更新的内容和更多代码的示例都可以在 Swift 小册子里查看，内容力求更全，描述力求更简洁，more big, more small。不想下载 app 也可以查看<a href="https://ming1016.github.io/2021/11/23/daiming-swift-pamphlet/">《戴铭的 Swift 小册子4.0》</a>这篇，内容也同步做了更新和补充（内容达十五万字，值得你收藏和分享）。我对小册子内容查看样式视觉做了更新，排版用了赫蹏（hètí），字体是霞鹜文楷，更新了代码高亮风格，内容看起来更舒服。还有 icon 也进行替换，不用再对着枯燥的 SFSymbol 和我先前临时从以前图里随便挑的那条小狗 App icon 看了。</p>
+<h5 id="Swift-5-6"><a href="#Swift-5-6" class="headerlink" title="Swift 5.6"></a>Swift 5.6</h5><p><a target="_blank" rel="noopener" href="https://www.swift.org/blog/swift-5.6-released/">5.6 官方博客介绍</a></p>
+<ul>
+<li>使用 any 注释此类类型，使存在类型的影响在语言中明确。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0335-existential-any.md">SE-0335 Introduce existential any</a></li>
+<li>类型占位符。<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0315-placeholder-types.md">SE-0315 Type placeholders (formerly, “Placeholder types”)</a></li>
+<li>新增 CodingKeyRepresentable 协议将非字符串和整数类型自定义表现。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0320-codingkeyrepresentable.md">SE-0320 Allow coding of non String &#x2F; Int keyed Dictionary into a KeyedContainer</a></li>
+<li>增加 Unavailability 用来在检查不可用时可以做些事情。<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0290-negative-availability.md">SE-0290 Unavailability Condition</a></li>
+<li>增加了 <code>@preconcurrency</code> 属性。提案 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0337-support-incremental-migration-to-concurrency-checking.md">SE-0337 Incremental migration to concurrency checking</a></li>
+<li>actor 的 init 和 deinit。<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0327-actor-initializers.md">SE-0327 On Actors and Initialization</a></li>
+</ul>
+<p>Package Manage 的一些提案</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0303-swiftpm-extensible-build-tools.md">SE-0303 Package Manager Extensible Build Tools</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0305-swiftpm-binary-target-improvements.md">SE-0305 Package Manager Binary Target Improvements</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0325-swiftpm-additional-plugin-apis.md">SE-0325 Additional Package Plugin APIs</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0332-swiftpm-command-plugins.md">SE-0332 Package Manager Command Plugins</a></li>
+</ul>
+<h5 id="Swift-5-7"><a href="#Swift-5-7" class="headerlink" title="Swift 5.7"></a>Swift 5.7</h5><ul>
+<li>标准库多了个 <code>Regex&lt;Output&gt;</code> 类型，Regex 语法与 Perl、Python、Ruby、Java、NSRegularExpression 和许多其他语言兼容。可以用 <code>let regex = try! Regex(&quot;a[bc]+&quot;)</code> 或 <code>let regex = /a[bc]+/</code> 写法来使用。<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0350-regex-type-overview.md">SE-0350 Regex Type and Overview</a> 引入 Regex 类型。<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0351-regex-builder.md">SE-0351 Regex builder DSL</a> 使用 result builder 来构建正则表达式的 DSL。<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0354-regex-literals.md">SE-0354 Regex Literals</a> 简化的正则表达式。<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0357-regex-string-processing-algorithms.md">SE-0357 Regex-powered string processing algorithms</a> 提案里有基于正则表达式的新字符串处理算法。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0347-type-inference-from-default-exprs.md">SE-0347 Type inference from default expressions</a> 扩展 Swift 泛型参数类型的默认值能力。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0341-opaque-parameters.md">SE-0341 Opaque Parameter Declarations</a> 使用 some 参数简化泛型参数声明。<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0328-structural-opaque-result-types.md">SE-0328 Structural opaque result types</a> 扩大不透明结果返回类型可以使用的范围。<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0360-opaque-result-types-with-availability.md">SE-0360 Opaque result types with limited availability</a> 可用性有限的不透明结果类型，比如 <code>if #available(macOS 13.0, *) &#123;&#125;</code> 就可以根据系统不同版本返回不同类型，新版本出现新类型的 View 就可以和以前的 View 类型区别开。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0309-unlock-existential-types-for-all-protocols.md">SE-0309 Unlock existentials for all protocols</a> 改进了 existentials 和 泛型的交互。这样就可以更方便的检查 Any 类型的两个值是否相等.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0346-light-weight-same-type-syntax.md">SE-0346 Lightweight same-type requirements for primary associated types</a> 引入一种新语法，用于符合泛型参数并通过相同类型要求约束关联类型。<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0358-primary-associated-types-in-stdlib.md">SE-0358 Primary Associated Types in the Standard Library</a> 引入主要关联类型概念，并将其带入了标准库。这些关联类型很像泛型，允许开发者将给定关联类型的类型指定为通用约束。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0353-constrained-existential-types.md">SE-0353 Constrained Existential Types</a> 基于 SE-0309 和 SE-0346 提案，在 existential 类型的上下文中重用轻量关联类型的约束。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0352-implicit-open-existentials.md">SE-0352 Implicitly Opened Existentials</a>  允许 Swift 在很多情况下使用协议调用泛型函数。</li>
+<li>新增 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0338-clarify-execution-non-actor-async.md">SE-0338 Clarify the Execution of Non-Actor-Isolated Async Functions</a> 通过收紧可发送性检查的规则来避免潜在的数据竞争。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0343-top-level-concurrency.md">SE-0343 Concurrency in Top-level Code</a> 这个提案主要是更好地支持命令行工具的开发，可以直接将 concurrency 代码写到 main.swift 文件里。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0340-swift-noasync.md">SE-0340 Unavailable From Async Attribute</a> 提供 noasync 语法以允许我们将类型和函数标记为在异步上下文不可用。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0336-distributed-actor-isolation.md">SE-0336 Distributed Actor Isolation</a> 和 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0344-distributed-actor-runtime.md">SE-0344 Distributed Actor Runtime</a> 是两个 Distributed Actors 的相关提案。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0345-if-let-shorthand.md">SE-0345 if let shorthand for shadowing an existing optional variable</a> 引入的新语法，用于 unwrapping optinal。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0326-extending-multi-statement-closure-inference.md">SE-0326</a> 提高了 Swift 对闭包使用参数和类型推断的能力。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0348-buildpartialblock.md">SE-0348 buildPartialBlock for result builders</a>  简化了实现复杂 result buiders 所需的重载。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0356-swift-snippets.md">SE-0356 Swift Snippets</a>  代码片段用于示例文档的提案。</li>
+<li>内存管理相关提案包括 <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0349-unaligned-loads-and-stores.md">SE-0349 Unaligned Loads and Stores from Raw Memory</a> 、<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0334-pointer-usability-improvements.md">SE-0334 Pointer API Usability Improvements</a> 、<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0333-with-memory-rebound.md">SE-0333 Expand usability of withMemoryRebound</a> 。</li>
+</ul>
+<p>上面各个版本的语法更新的内容和更多代码的示例都可以在 Swift 小册子里查看，内容力求更全，描述力求更简洁，more big, more small。不想下载 app 也可以查看<a href="https://ming1016.github.io/2021/11/23/daiming-swift-pamphlet/">《戴铭的 Swift 小册子5.0》</a>这篇，内容也同步做了更新和补充（内容达十五万字，值得你收藏和分享）。我对小册子内容查看样式视觉做了更新，排版用了赫蹏（hètí），字体是霞鹜文楷，更新了代码高亮风格，内容看起来更舒服。还有 icon 也进行替换，不用再对着枯燥的 SFSymbol 和我先前临时从以前图里随便挑的那条小狗 App icon 看了。</p>
 <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swift-evolutionary-path/02.png" class="lozad post-image"src="/uploads/swift-evolutionary-path/02.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swift-evolutionary-path/03.png" class="lozad post-image"src="/uploads/swift-evolutionary-path/03.png"></p>
 <p>另</p>
 <p>小册子现在可以直接下载 dmg 使用了，4.3下载地址：<a target="_blank" rel="noopener" href="https://github.com/KwaiAppTeam/SwiftPamphletApp/files/8055673/4.3.dmg.zip">戴铭的开发小册子4.3.dmg.zip</a></p>
@@ -378,7 +398,7 @@
     <a href="/2022/02/26/draw-in-2021/" class="nav-link">
       <i class="iconfont icon-left nav-prev-icon"></i>
       <div>
-        <div class="nav-label">上一篇</div>
+        <div class="nav-label">Prev</div>
         
         <div class="nav-title">2021年画的 </div>
         
@@ -390,7 +410,7 @@
   <div class="nav-item-next">
     <a href="/2022/01/03/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/" class="nav-link">
       <div>
-        <div class="nav-label">下一篇</div>
+        <div class="nav-label">Next</div>
         
         <div class="nav-title">如何用 SwiftUI + Combine + Swift Concurrency Aysnc/Await Actor 欢畅开发 </div>
         
@@ -402,8 +422,8 @@
 </div>
 
 <div class="card card-content toc-card" id="mobiletoc">
-  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-1-1"><span class="toc-number">1.</span> <span class="toc-text">Swift 1.1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-1-2"><span class="toc-number">2.</span> <span class="toc-text">Swift 1.2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-2-0"><span class="toc-number">3.</span> <span class="toc-text">Swift 2.0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-2-1"><span class="toc-number">4.</span> <span class="toc-text">Swift 2.1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-3-0"><span class="toc-number">5.</span> <span class="toc-text">Swift 3.0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-3-1"><span class="toc-number">6.</span> <span class="toc-text">Swift 3.1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-4-0"><span class="toc-number">7.</span> <span class="toc-text">Swift 4.0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-4-1"><span class="toc-number">8.</span> <span class="toc-text">Swift 4.1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-4-2"><span class="toc-number">9.</span> <span class="toc-text">Swift 4.2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-0"><span class="toc-number">10.</span> <span class="toc-text">Swift 5.0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-1"><span class="toc-number">11.</span> <span class="toc-text">Swift 5.1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-2"><span class="toc-number">12.</span> <span class="toc-text">Swift 5.2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-3"><span class="toc-number">13.</span> <span class="toc-text">Swift 5.3</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-4"><span class="toc-number">14.</span> <span class="toc-text">Swift 5.4</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-5"><span class="toc-number">15.</span> <span class="toc-text">Swift 5.5</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-6"><span class="toc-number">16.</span> <span class="toc-text">Swift 5.6</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-7"><span class="toc-number">17.</span> <span class="toc-text">Swift 5.7</span></a></li></ol>
 </div></main>
           <aside class="left-column">
             
@@ -416,15 +436,15 @@
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
     <span>56</span>
-    <span>文章</span>
+    <span>Posts</span>
   </a>
   <a class="author-categories-count" href="/categories">
     <span>5</span>
-    <span>分类</span>
+    <span>Categories</span>
   </a>
   <a class="author-tags-count" href="/tags">
     <span>38</span>
-    <span>标签</span>
+    <span>Tags</span>
   </a>
 </div>
 
@@ -463,15 +483,15 @@
   
   <article class="display-when-two-columns spacer">
     <div class="card card-content toc-card">
-      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-1-1"><span class="toc-number">1.</span> <span class="toc-text">Swift 1.1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-1-2"><span class="toc-number">2.</span> <span class="toc-text">Swift 1.2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-2-0"><span class="toc-number">3.</span> <span class="toc-text">Swift 2.0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-2-1"><span class="toc-number">4.</span> <span class="toc-text">Swift 2.1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-3-0"><span class="toc-number">5.</span> <span class="toc-text">Swift 3.0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-3-1"><span class="toc-number">6.</span> <span class="toc-text">Swift 3.1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-4-0"><span class="toc-number">7.</span> <span class="toc-text">Swift 4.0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-4-1"><span class="toc-number">8.</span> <span class="toc-text">Swift 4.1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-4-2"><span class="toc-number">9.</span> <span class="toc-text">Swift 4.2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-0"><span class="toc-number">10.</span> <span class="toc-text">Swift 5.0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-1"><span class="toc-number">11.</span> <span class="toc-text">Swift 5.1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-2"><span class="toc-number">12.</span> <span class="toc-text">Swift 5.2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-3"><span class="toc-number">13.</span> <span class="toc-text">Swift 5.3</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-4"><span class="toc-number">14.</span> <span class="toc-text">Swift 5.4</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-5"><span class="toc-number">15.</span> <span class="toc-text">Swift 5.5</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-6"><span class="toc-number">16.</span> <span class="toc-text">Swift 5.6</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-7"><span class="toc-number">17.</span> <span class="toc-text">Swift 5.7</span></a></li></ol>
     </div>
   </article>
   
   
   <article class="card card-content">
     <div class="categories-card">
-  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>Categories</div>
   <div class="categories-list">
     
       <a href="/categories/Programming">
@@ -515,7 +535,7 @@
   
   <article class="card card-content">
     <div class="tags-card">
-  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>hot tags</div>
   <div class="tags-list">
     
     <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
@@ -562,14 +582,14 @@
   
   
   <article class="card card-content toc-card">
-    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-1-1"><span class="toc-number">1.</span> <span class="toc-text">Swift 1.1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-1-2"><span class="toc-number">2.</span> <span class="toc-text">Swift 1.2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-2-0"><span class="toc-number">3.</span> <span class="toc-text">Swift 2.0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-2-1"><span class="toc-number">4.</span> <span class="toc-text">Swift 2.1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-3-0"><span class="toc-number">5.</span> <span class="toc-text">Swift 3.0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-3-1"><span class="toc-number">6.</span> <span class="toc-text">Swift 3.1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-4-0"><span class="toc-number">7.</span> <span class="toc-text">Swift 4.0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-4-1"><span class="toc-number">8.</span> <span class="toc-text">Swift 4.1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-4-2"><span class="toc-number">9.</span> <span class="toc-text">Swift 4.2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-0"><span class="toc-number">10.</span> <span class="toc-text">Swift 5.0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-1"><span class="toc-number">11.</span> <span class="toc-text">Swift 5.1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-2"><span class="toc-number">12.</span> <span class="toc-text">Swift 5.2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-3"><span class="toc-number">13.</span> <span class="toc-text">Swift 5.3</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-4"><span class="toc-number">14.</span> <span class="toc-text">Swift 5.4</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-5"><span class="toc-number">15.</span> <span class="toc-text">Swift 5.5</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-6"><span class="toc-number">16.</span> <span class="toc-text">Swift 5.6</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Swift-5-7"><span class="toc-number">17.</span> <span class="toc-text">Swift 5.7</span></a></li></ol>
   </article>
   
   
   <article class="card card-content">
     <div class="recent-posts-card">
-  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>Recent Posts</div>
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
