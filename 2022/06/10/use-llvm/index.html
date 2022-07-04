@@ -120,17 +120,17 @@
   </div>
   <div class="navbar-menu">
     
-    <a href="/" class="navbar-menu-item">Home </a>
+    <a href="/" class="navbar-menu-item">首页 </a>
     
-    <a href="/archives" class="navbar-menu-item">Archive </a>
+    <a href="/archives" class="navbar-menu-item">归档 </a>
     
-    <a href="/tags" class="navbar-menu-item">Tags </a>
+    <a href="/tags" class="navbar-menu-item">标签 </a>
     
-    <a href="/categories" class="navbar-menu-item">Categories </a>
+    <a href="/categories" class="navbar-menu-item">分类 </a>
     
-    <a href="/about" class="navbar-menu-item">About </a>
+    <a href="/about" class="navbar-menu-item">关于 </a>
     
-    <a href="" class="navbar-menu-item">Friends </a>
+    <a href="" class="navbar-menu-item">友链 </a>
     
     <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
   </div>
@@ -165,7 +165,7 @@
     
     
     <span class="dot"></span>
-    <span>18.2k words</span>
+    <span>18.6k 字</span>
     
   </div>
   
@@ -258,7 +258,7 @@
  <span class="token number">7</span><span class="token operator">|</span>      <span class="token number">1</span><span class="token operator">|</span><span class="token punctuation">&#125;</span>
  <span class="token number">8</span><span class="token operator">|</span>       <span class="token operator">|</span>
  <span class="token number">9</span><span class="token operator">|</span>      <span class="token number">0</span><span class="token operator">|</span>void <span class="token function-name function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-<span class="token number">10</span><span class="token operator">|</span>      <span class="token number">0</span><span class="token operator">|</span>	<span class="token builtin class-name">return</span><span class="token punctuation">;</span>
+<span class="token number">10</span><span class="token operator">|</span>      <span class="token number">0</span><span class="token operator">|</span>  <span class="token builtin class-name">return</span><span class="token punctuation">;</span>
 <span class="token number">11</span><span class="token operator">|</span>      <span class="token number">0</span><span class="token operator">|</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>上面的输出可以看到，9到11行是没有执行的。</p>
@@ -323,12 +323,12 @@ TOTAL                                           <span class="token number">2</sp
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">import</span> <span class="token expression"><span class="token operator">&lt;</span>dlfcn<span class="token punctuation">.</span>h<span class="token operator">></span></span></span>
 
 <span class="token keyword">void</span> <span class="token function">__sanitizer_cov_trace_pc_guard_init</span><span class="token punctuation">(</span><span class="token class-name">uint32_t</span> <span class="token operator">*</span>start<span class="token punctuation">,</span>
-			   <span class="token class-name">uint32_t</span> <span class="token operator">*</span>stop<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+           <span class="token class-name">uint32_t</span> <span class="token operator">*</span>stop<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">static</span> <span class="token class-name">uint64_t</span> N<span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>start <span class="token operator">==</span> stop <span class="token operator">||</span> <span class="token operator">*</span>start<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"INIT: %p %p\n"</span><span class="token punctuation">,</span> start<span class="token punctuation">,</span> stop<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">uint32_t</span> <span class="token operator">*</span>x <span class="token operator">=</span> start<span class="token punctuation">;</span> x <span class="token operator">&lt;</span> stop<span class="token punctuation">;</span> x<span class="token operator">++</span><span class="token punctuation">)</span>
- <span class="token punctuation">,</span><span class="token operator">*</span>x <span class="token operator">=</span> <span class="token operator">++</span>N<span class="token punctuation">;</span>
+  <span class="token punctuation">,</span><span class="token operator">*</span>x <span class="token operator">=</span> <span class="token operator">++</span>N<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 
 <span class="token keyword">void</span> <span class="token function">__sanitizer_cov_trace_pc_guard</span><span class="token punctuation">(</span><span class="token class-name">uint32_t</span> <span class="token operator">*</span>guard<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -359,7 +359,7 @@ fun:*myFunc*<span aria-hidden="true" class="line-numbers-rows"><span></span><spa
 <p>上线前检查出的没有用到的代码，并不表示上线后用户不会用到，比如 AB 实验、用户特殊设置、不常见 Case 等。这就可以利用 allowlist.txt 将部分不确定的代码放到线上去检测，或者通过自动插入埋点灰度检测，这些不确定的代码不是主链路的，因此检测影响范围会很低。</p>
 <p>SanitizerCoverage 本身是一个 llvm pass，代码在 llvm 工程的 llvm-project&#x2F;llvm&#x2F;lib&#x2F;Transforms&#x2F;Instrumentation&#x2F;SanitizerCoverage.cpp 路径下，那么怎么实现一个自定义的 pass 呢？</p>
 <p>先把 llvm 装到本地。</p>
-<h3 id="安装-LLVM"><a href="#安装-LLVM" class="headerlink" title="安装 LLVM"></a>安装 LLVM</h3><p>使用 homebrew，命令如下：</p>
+<h3 id="安装-LLVM"><a href="#安装-LLVM" class="headerlink" title="安装 LLVM"></a>安装 LLVM</h3><h4 id="手动"><a href="#手动" class="headerlink" title="手动"></a>手动</h4><p>使用 homebrew，命令如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">brew <span class="token function">install</span> llvm@13<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><code>@13</code> 表示 llvm 的版本。安装后使用路径在是 <code>/usr/local/opt/llvm/</code>，比如 cmake 构建编译环境可以使用下面的命令：</p>
@@ -441,7 +441,7 @@ cmake --build <span class="token builtin class-name">.</span><span aria-hidden="
 <p>替换存在指令：</p>
 <ul>
 <li>llvm::ReplaceInstWithInst() 函数<ul>
-<li><del>#include “llvm&#x2F;Transforms&#x2F;Utils&#x2F;BasicBlockUtils.h”</del></li>
+<li><code>#include &quot;llvm/Transforms/Utils/BasicBlockUtils.h&quot;</code></li>
 </ul>
 </li>
 </ul>
@@ -495,6 +495,39 @@ inst.replaceAllUsesWith(newInst);<span aria-hidden="true" class="line-numbers-ro
 <p>实现 pass 要选择是 Analysis 还是 Transformation，也就是要对进行输入 IR 的分析还是进行转换来决定采用哪种。选择 Transformation 通常继承 PassInfoMixin。Analysis 继承 AnalysisInfoMixin。</p>
 <p>pass 生成的插件分为动态和静态的。静态插件不需要在运行时用 -load-pass-plugin 选项进行加载，但需要在 llvm 工程中设置 CMake 重新构建 opt。</p>
 <p>做自己 pass 前可以先了解下 llvm 内部的 <a target="_blank" rel="noopener" href="https://llvm.org/docs/Passes.html">pass</a> 示例，可以先从两个最基本的 <a target="_blank" rel="noopener" href="https://github.com/llvm/llvm-project/blob/release/13.x/llvm/lib/Transforms/Hello">Hello</a> 和 <a target="_blank" rel="noopener" href="https://github.com/llvm/llvm-project/tree/release/13.x/llvm/examples/Bye">Bye</a> 来。比较实用的是一些做优化的 pass，这些 pass 也是学习写 pass ，了解编译器如何工作的重要资源。许多 pass 都实现了编译器开发理论中著名的概念。比如优化 memcpy 调用（比如用 memset 替换）的 <a target="_blank" rel="noopener" href="https://github.com/llvm/llvm-project/blob/release/14.x/llvm/lib/Transforms/Scalar/MemCpyOptimizer.cpp">memcpyopt</a> 、简化 CFG <a target="_blank" rel="noopener" href="https://github.com/llvm/llvm-project/tree/release/13.x/llvm/examples/IRTransforms">IRTransforms</a>、总是内联用 alwaysinline 修饰的函数的 <a target="_blank" rel="noopener" href="https://github.com/llvm/llvm-project/blob/release/14.x/llvm/lib/Transforms/IPO/AlwaysInliner.cpp">always-inline</a> 、死代码消除的 <a target="_blank" rel="noopener" href="https://github.com/llvm/llvm-project/blob/release/14.x/llvm/lib/Transforms/Scalar/DCE.cpp">dce</a> 和删除未使用的循环的 <a target="_blank" rel="noopener" href="https://github.com/llvm/llvm-project/blob/release/14.x/llvm/lib/Transforms/Scalar/LoopDeletion.cpp">loop-deletion</a>。</p>
+<h4 id="Xcode-开发模式"><a href="#Xcode-开发模式" class="headerlink" title="Xcode 开发模式"></a>Xcode 开发模式</h4><p>在下好的 LLVM 源码中找到 <code>llvm/lib/Transforms</code> 目录，创建一个 MingPass 目录，在这个目录下创建 <code>MingPass.cpp</code> 和 <code>MingPass.exports</code> ，还有 cmake 文件 <code>CMakeLists.txt</code> ，<code>CMakeLists.txt</code> 内容写成：</p>
+<pre class="line-numbers language-makefile" data-language="makefile"><code class="language-makefile">if<span class="token punctuation">(</span> NOT LLVM_REQUIRES_RTTI <span class="token punctuation">)</span>
+if<span class="token punctuation">(</span> NOT LLVM_REQUIRES_EH <span class="token punctuation">)</span>
+  set<span class="token punctuation">(</span>LLVM_EXPORTED_SYMBOL_FILE <span class="token variable">$</span><span class="token punctuation">&#123;</span>CMAKE_CURRENT_SOURCE_DIR<span class="token punctuation">&#125;</span>/MingPass.exports<span class="token punctuation">)</span>
+<span class="token keyword">endif</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">endif</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+if<span class="token punctuation">(</span>WIN32 OR CYGWIN<span class="token punctuation">)</span>
+set<span class="token punctuation">(</span>LLVM_LINK_COMPONENTS Core Support<span class="token punctuation">)</span>
+<span class="token keyword">endif</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+set<span class="token punctuation">(</span>LLVM_LINK_COMPONENTS Demangle<span class="token punctuation">)</span>
+
+add_llvm_library<span class="token punctuation">(</span> LLVMMingPass MODULE BUILDTREE_ONLY
+MingPass.cpp
+
+DEPENDS
+intrinsics_gen
+PLUGIN_TOOL
+opt
+<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在 <code>llvm/lib/Transforms/CMakelists.txt</code> 里加上 <code>add_subdirectory(MingPass)</code> 。<code>MingPass.cpp</code> 里编写实际的 pass 代码。</p>
+<p>使用 <code>cmake -G &quot;Xcode&quot;</code> 构建 LLVM 工程，打开 <code>LLVM.xcodeproj</code> ，选择 MingPass 这个 target，使用 <code>command+b</code> 进行编译，会生成 <code>MingPass.dylib</code> 产物。</p>
+<p>下载和 Xcode 对应 clang 版本。在工程中创建 <code>Config.xcconfig</code> 文件，内容如下：</p>
+<pre class="line-numbers language-makefile" data-language="makefile"><code class="language-makefile">LLVM_DIR <span class="token operator">=</span> <span class="token variable">$HOME/Downloads/PTest/LLVMSource</span>
+PASS_DYLIB <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">(</span>LLVM_DIR<span class="token punctuation">)</span>/build_dir/build_xcode/Debug/lib/LLVMMingPass.dylib
+OTHER_CFLAGS <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">(</span>inherited<span class="token punctuation">)</span> -Xclang -load -Xclang <span class="token variable">$</span><span class="token punctuation">(</span>PASS_DYLIB<span class="token punctuation">)</span>
+OTHER_CPLUSPLUSFLAGS <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">(</span>inherited<span class="token punctuation">)</span> -Xclang -load -Xclang <span class="token variable">$</span><span class="token punctuation">(</span>PASS_DYLIB<span class="token punctuation">)</span>
+COMPILER_INDEX_STORE_ENABLE <span class="token operator">=</span> NO
+CC <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">(</span>LLVM_DIR<span class="token punctuation">)</span>/clang-13.0.0/bin/clang
+CXX <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">(</span>LLVM_DIR<span class="token punctuation">)</span>/clang-13.0.0/bin/clang++<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h4 id="自制插入指令-pass"><a href="#自制插入指令-pass" class="headerlink" title="自制插入指令 pass"></a>自制插入指令 pass</h4><p>接下来，怎么在运行时插入指令来获取我们需要代码使用情况。完整代码可以在这里 <a target="_blank" rel="noopener" href="https://github.com/ming1016/DaiMingCreationToolbox/tree/main/Project/UseCompiler/MingPass">MingPass</a> 拉下代码参考进行修改调试。</p>
 <p>个 pass 功能是在运行时环境直接在特定位置执行指定的函数。先写个要执行的函数，新建个文件 loglib.m，代码如下：</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
@@ -517,19 +550,19 @@ inst.replaceAllUsesWith(newInst);<span aria-hidden="true" class="line-numbers-ro
     FunctionCallee logFunc &#x3D; F.getParent()-&gt;getOrInsertFunction(&quot;runtimeLog&quot;, funcType);
   
     for (auto &amp;BB : F) &#123;
- for (auto &amp;I : BB) &#123;
-     if (auto *op &#x3D; dyn_cast&lt;BinaryOperator&gt;(&amp;I)) &#123;
-  IRBuilder&lt;&gt; builder(op);
+  for (auto &amp;I : BB) &#123;
+      if (auto *op &#x3D; dyn_cast&lt;BinaryOperator&gt;(&amp;I)) &#123;
+    IRBuilder&lt;&gt; builder(op);
               
-  &#x2F;&#x2F; 在 op 后面加入新指令
-  builder.SetInsertPoint(&amp;BB, ++builder.GetInsertPoint());
-  &#x2F;&#x2F; 在函数中插入新指令
-  Value* args[] &#x3D; &#123;op&#125;;
-  builder.CreateCall(logFunc, args);
+    &#x2F;&#x2F; 在 op 后面加入新指令
+    builder.SetInsertPoint(&amp;BB, ++builder.GetInsertPoint());
+    &#x2F;&#x2F; 在函数中插入新指令
+    Value* args[] &#x3D; &#123;op&#125;;
+    builder.CreateCall(logFunc, args);
 
-  return true;
-     &#125; &#x2F;&#x2F; end if
- &#125;
+    return true;
+      &#125; &#x2F;&#x2F; end if
+  &#125;
     &#125;
     return false;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
@@ -593,7 +626,7 @@ clang main.o loglib.o
 <li>ptrtoint：将指针转成整数。</li>
 <li>inttoptr：将整数值转成指针类型。</li>
 </ul>
-<p>ir 库的 header 地址在 <del>include&#x2F;llvm&#x2F;IR</del> ，源文件在 <del>lib&#x2F;IR</del> ，文档 <a target="_blank" rel="noopener" href="https://llvm.org/doxygen/namespacellvm.html">llvm Namespace Reference</a>。所有类和函数都在 llvm 命名空间里。</p>
+<p>ir 库的 header 地址在 <code>include/llvm/IR</code> ，源文件在 <code>lib/IR</code> ，文档 <a target="_blank" rel="noopener" href="https://llvm.org/doxygen/namespacellvm.html">llvm Namespace Reference</a>。所有类和函数都在 llvm 命名空间里。</p>
 <p>主要基础类的说明如下：</p>
 <ul>
 <li>llvm::Module：ir 的容器类的最高级。</li>
@@ -626,9 +659,9 @@ clang main.o loglib.o
 <li>llvm::CastInst (Instrtypes.h)</li>
 </ul>
 </li>
-<li>llvm::BitCastInst (Instructions.h)</li>
 </ul>
 </li>
+<li>llvm::BitCastInst (Instructions.h)</li>
 </ul>
 </li>
 <li>llvm::Type：代表所有的 IR 数据类型，包括原始类型，结构类型和函数类型。</li>
@@ -1242,13 +1275,13 @@ end:                                     ; preds &#x3D; %btrue, %bfalse
 
 <p>这里的问题是 lambda 函数引用了调用者的一个局部变量，即 a，即使 lambda 函数是它自己的函数。这可以通过将局部变量作为隐式参数传递给 lambda 函数来轻松解决：</p>
 <pre class="line-numbers language-asm" data-language="asm"><code class="language-asm">define internal i32 @lambda(i32 %a, i32 %x) &#123;
- %1 &#x3D; add i32 %a, %x
- ret i32 %1
+  %1 &#x3D; add i32 %a, %x
+  ret i32 %1
 &#125;
 
 define i32 @foo(i32 %a) &#123;
- %1 &#x3D; call i32 @lambda(i32 %a, i32 10)
- ret i32 %1
+  %1 &#x3D; call i32 @lambda(i32 %a, i32 10)
+  ret i32 %1
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>或者，如果 lambda 函数使用多个变量，你可以将他们包装在一个结构中，然后将指针传递给 lambda 函数：</p>
@@ -1320,7 +1353,7 @@ generator int foo()
 int main()
 &#123;
     foreach (int i in foo())
- printf(&quot;Value: %d\n&quot;, i);
+  printf(&quot;Value: %d\n&quot;, i);
 
     return 0;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
@@ -1563,17 +1596,17 @@ class Foo
 public:
     Foo()
     &#123;
- _length &#x3D; 0;
+  _length &#x3D; 0;
     &#125;
 
     size_t GetLength() const
     &#123;
- return _length;
+  return _length;
     &#125;
 
     void SetLength(size_t value)
     &#123;
- _length &#x3D; value;
+  _length &#x3D; value;
     &#125;
 
 private:
@@ -1736,31 +1769,31 @@ forloop:                                          ; preds &#x3D; %start, %forloo
 @vtable.button &#x3D; private unnamed_addr constant
     &#123; void (%Button*)*, i64, i64, void (%Button*)* &#125;
     &#123;
- void (%Button*)* @&quot;core::ptr::drop_in_place&lt;test::Button&gt;&quot;,
- i64 32, i64 8,
- void (%Button*)* @&quot;&lt;test::Button as test::Draw&gt;::draw&quot;
+  void (%Button*)* @&quot;core::ptr::drop_in_place&lt;test::Button&gt;&quot;,
+  i64 32, i64 8,
+  void (%Button*)* @&quot;&lt;test::Button as test::Draw&gt;::draw&quot;
     &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这篇博文 <a target="_blank" rel="noopener" href="https://alschwalm.com/blog/static/2017/03/07/exploring-dynamic-dispatch-in-rust/">Exploring Dynamic Dispatch in Rust</a> 更详细的解释 vtable 和动态调度以及他们在 rust 和 C++ 中的区别。</p>
 <h5 id="单一继承"><a href="#单一继承" class="headerlink" title="单一继承"></a>单一继承</h5><p>单继承非常简单：每个结构体或类在内存中按声明顺序依次排列。</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++"> class Base &#123;
-   public:
-     void SetA(int value) &#123;
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class Base &#123;
+  public:
+    void SetA(int value) &#123;
 _a &#x3D; value;
-     &#125;
-   private:
-     int _a;
- &#125;;
+    &#125;
+  private:
+    int _a;
+&#125;;
 
- class Derived: public Base &#123;
-   public:
-     void SetB(int value) &#123;
+class Derived: public Base &#123;
+  public:
+    void SetB(int value) &#123;
 SetA(value);
 _b &#x3D; value;
-     &#125;
-   protected:
-     int _b;
- &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    &#125;
+  protected:
+    int _b;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>在这里 a 和 b 将在内存中彼此跟随，因此从一个类继承只是一个简单的问题。</p>
 <p>将基类声明为继承类中的第一个成员。</p>
@@ -1796,7 +1829,7 @@ define void @Derived_SetB(%Derived* %this, i32 %value) nounwind &#123;
 public:
     void SetA(int value)
     &#123;
- _a &#x3D; value;
+  _a &#x3D; value;
     &#125;
 
 private:
@@ -1808,8 +1841,8 @@ class BaseB: public BaseA
 public:
     void SetB(int value)
     &#123;
- SetA(value);
- _b &#x3D; value;
+  SetA(value);
+  _b &#x3D; value;
     &#125;
 
 private:
@@ -1823,8 +1856,8 @@ class Derived:
 public:
     void SetC(int value)
     &#123;
- SetB(value);
- _c &#x3D; value;
+  SetB(value);
+  _c &#x3D; value;
     &#125;
 
 private:
@@ -2041,13 +2074,13 @@ int sum(int a, int b) &#123;
     <span class="token function">LLVMLinkInMCJIT</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">LLVMInitializeNativeTarget</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">LLVMCreateExecutionEngineForModule</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>engine<span class="token punctuation">,</span> module<span class="token punctuation">,</span> <span class="token operator">&amp;</span>error<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
- <span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span> <span class="token string">"Could not create execution engine: %s\n"</span><span class="token punctuation">,</span> error<span class="token punctuation">)</span><span class="token punctuation">;</span>
- <span class="token keyword">return</span><span class="token punctuation">;</span>
+  <span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span> <span class="token string">"Could not create execution engine: %s\n"</span><span class="token punctuation">,</span> error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span>
     <span class="token punctuation">&#123;</span>
- <span class="token function">LLVMDisposeMessage</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
- <span class="token keyword">return</span><span class="token punctuation">;</span>
+  <span class="token function">LLVMDisposeMessage</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
   
     <span class="token keyword">long</span> <span class="token keyword">long</span> x <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
@@ -2065,8 +2098,8 @@ int sum(int a, int b) &#123;
   
     <span class="token comment">// 生成 bitcode 文件</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">LLVMWriteBitcodeToFile</span><span class="token punctuation">(</span>module<span class="token punctuation">,</span> <span class="token string">"sum.bc"</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
- <span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span> <span class="token string">"Could not write bitcode to file\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
- <span class="token keyword">return</span><span class="token punctuation">;</span>
+  <span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span> <span class="token string">"Could not write bitcode to file\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
   
     <span class="token function">LLVMDisposeBuilder</span><span class="token punctuation">(</span>builder<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -2074,7 +2107,7 @@ int sum(int a, int b) &#123;
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="Swift-调用-LLVM-接口"><a href="#Swift-调用-LLVM-接口" class="headerlink" title="Swift 调用 LLVM 接口"></a>Swift 调用 LLVM 接口</h3><p>llvm 的接口还可以通过 swift 来调用。</p>
-<p>先创建一个 module.modulemap 文件，创建 LLVMC.h 和 LLVMC.c 文件，自动生成 SwiftLLVMCase-Bridging-Header.h。设置 header search paths 为 llvm 所在路径 <del>&#x2F;usr&#x2F;local&#x2F;opt&#x2F;llvm&#x2F;include</del> ，library search paths 设置为 <del>&#x2F;usr&#x2F;local&#x2F;opt&#x2F;llvm&#x2F;lib</del> 。将 <del>&#x2F;usr&#x2F;local&#x2F;opt&#x2F;llvm&#x2F;lib&#x2F;libLLVM.dylib</del> 加到 Linked Frameworks and Libraries 里。</p>
+<p>先创建一个 module.modulemap 文件，创建 LLVMC.h 和 LLVMC.c 文件，自动生成 SwiftLLVMCase-Bridging-Header.h。设置 header search paths 为 llvm 所在路径 <code>/usr/local/opt/llvm/include</code> ，library search paths 设置为 <code>/usr/local/opt/llvm/lib</code> 。将 <code>/usr/local/opt/llvm/lib/libLLVM.dylib</code> 加到 Linked Frameworks and Libraries 里。</p>
 <p>module.modulemap 内容</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">module llvm <span class="token punctuation">[</span>extern_c<span class="token punctuation">]</span> <span class="token punctuation">&#123;</span>
     header <span class="token string">"LLVMC.h"</span>
@@ -2162,11 +2195,11 @@ ret i32 %2
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function-definition function">giveMeNumber</span><span class="token punctuation">(</span><span class="token omit keyword">_</span> isBig <span class="token punctuation">:</span> <span class="token class-name">Bool</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">Int</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> re <span class="token punctuation">:</span> <span class="token class-name">Int</span>
     <span class="token keyword">if</span> <span class="token operator">!</span>isBig <span class="token punctuation">&#123;</span>
- <span class="token comment">// the fibonacci series (sort of)</span>
- re <span class="token operator">=</span> <span class="token number">3</span>
+  <span class="token comment">// the fibonacci series (sort of)</span>
+  re <span class="token operator">=</span> <span class="token number">3</span>
     <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
- <span class="token comment">// the fibonacci series (sort of) backwards</span>
- re <span class="token operator">=</span> <span class="token number">4</span>
+  <span class="token comment">// the fibonacci series (sort of) backwards</span>
+  re <span class="token operator">=</span> <span class="token number">4</span>
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> re
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
@@ -2206,8 +2239,8 @@ ret i32 %2
     bd<span class="token punctuation">.</span><span class="token function">positionAtEnd</span><span class="token punctuation">(</span>of<span class="token punctuation">:</span> mergeBB<span class="token punctuation">)</span>
     <span class="token keyword">let</span> phi <span class="token operator">=</span> bd<span class="token punctuation">.</span><span class="token function">buildPhi</span><span class="token punctuation">(</span><span class="token class-name">FloatType</span><span class="token punctuation">.</span>double<span class="token punctuation">,</span> name<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"phi_example"</span></span><span class="token punctuation">)</span>
     phi<span class="token punctuation">.</span><span class="token function">addIncoming</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
- <span class="token punctuation">(</span>thenVal<span class="token punctuation">,</span> thenBB<span class="token punctuation">)</span><span class="token punctuation">,</span>
- <span class="token punctuation">(</span>elseVal<span class="token punctuation">,</span> elseBB<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span>thenVal<span class="token punctuation">,</span> thenBB<span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">(</span>elseVal<span class="token punctuation">,</span> elseBB<span class="token punctuation">)</span>
     <span class="token punctuation">]</span><span class="token punctuation">)</span>
     <span class="token comment">// 赋值给本地变量</span>
     bd<span class="token punctuation">.</span><span class="token function">buildStore</span><span class="token punctuation">(</span>phi<span class="token punctuation">,</span> to<span class="token punctuation">:</span> local<span class="token punctuation">)</span>
@@ -2241,7 +2274,18 @@ merge:                                            ; preds &#x3D; %else, %then
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这里有完整代码 <a target="_blank" rel="noopener" href="https://github.com/ming1016/DaiMingCreationToolbox/tree/main/Project/UseCompiler/SwiftLLVMCase">SwiftLLVMCase</a>。</p>
-<h2 id="解释执行-bitcode（IR）"><a href="#解释执行-bitcode（IR）" class="headerlink" title="解释执行 bitcode（IR）"></a>解释执行 bitcode（IR）</h2><p>IR 的表现形式有三种，一种是内存中的对象集，一种是文本语言，一种是二进制编码字节 bitcode。</p>
+<h2 id="动态执行代码"><a href="#动态执行代码" class="headerlink" title="动态执行代码"></a>动态执行代码</h2><h3 id="DYLD-INSERT-LIBRARIES"><a href="#DYLD-INSERT-LIBRARIES" class="headerlink" title="DYLD_INSERT_LIBRARIES"></a>DYLD_INSERT_LIBRARIES</h3><p>DYLD_INSERT_LIBRARIES 是一个环境变量，可以插入你的代码到没有源码的程序进程中。比如下面的代码：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">DYLD_INSERT_LIBRARIES</span><span class="token operator">=</span>@path/Frameworks/Interposing.framework/Interpos<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这样就可以在 <code>+load</code> 方法中添加自己的代码。SwiftUI Preview 也是使用的这种方法。如下：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">DYLD_INSERT_LIBRARIES</span><span class="token operator">=</span>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot//System/Library/PrivateFrameworks/PreviewsInjection.framework/PreviewsInjection<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>dyld 有机会修改一个二进制地址用来指向你定义的函数地址。在 Mach-O 里新增一个用来记录替换函数和函数地址的 <code>(__DATA,__interpose)</code>。对应宏定义：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">DYLD_INTERPOSE</span><span class="token expression"><span class="token punctuation">(</span>_replacement<span class="token punctuation">,</span>_replacee<span class="token punctuation">)</span> </span><span class="token punctuation">\</span>
+   <span class="token expression"><span class="token keyword">__attribute__</span><span class="token punctuation">(</span><span class="token punctuation">(</span>used<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">static</span> <span class="token keyword">struct</span><span class="token punctuation">&#123;</span> <span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span> replacement<span class="token punctuation">;</span> <span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span> replacee<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span> _interpose_</span><span class="token punctuation">##</span><span class="token expression">_replacee </span><span class="token punctuation">\</span>
+            <span class="token expression"><span class="token keyword">__attribute__</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">section</span> <span class="token punctuation">(</span></span><span class="token string">"__DATA,__interpose"</span><span class="token expression"><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>_replacement<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>_replacee <span class="token punctuation">&#125;</span><span class="token punctuation">;</span></span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>dyld 还包含了一个 dyld_dynamic_interpose 函数用以在运行时插入函数。</p>
+<h3 id="解释执行-bitcode（IR）"><a href="#解释执行-bitcode（IR）" class="headerlink" title="解释执行 bitcode（IR）"></a>解释执行 bitcode（IR）</h3><p>IR 的表现形式有三种，一种是内存中的对象集，一种是文本语言，一种是二进制编码字节 bitcode。</p>
 <p>对于 Intel 芯片可以通过 <a target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/developer/articles/tool/pin-a-dynamic-binary-instrumentation-tool.html">Pin</a>，arm 架构可以用 <a target="_blank" rel="noopener" href="https://github.com/DynamoRIO/dynamorio">DynamoRIO</a>，目前 DynamoRIO 只支持 Window、Linux 和 Android 系统，对 macOS 的支持还在进行中。另一种方式是通过基于 llvm 的 interpreter 开发来实现解释执行 bitcode，llvm 用很多 C++ 的接口在内存中操作，将可读的文本文件解析到内存中，编译过程文本的 IR 不会生成，只会生成一种紧凑的二进制表示，也就是 bitcode。下面具体说下怎么做。</p>
 <p>先构建一个支持 libffi 的 llvm。编译 llvm 源码时加上 libffi 的选项来打开 DLLVM_ENABLE_FFI 的选项打开 libffi，编译命令如下：</p>
 <pre class="line-numbers language-asm" data-language="asm"><code class="language-asm">cmake -G Ninja -DLLVM_ENABLE_FFI:BOOL&#x3D;ON ..&#x2F;llvm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -2250,7 +2294,7 @@ merge:                                            ; preds &#x3D; %else, %then
 <p>实现方式是通过访问 llvm 的 ExcutionEngine 进行 IR 指令解释执行。声明一个可访问 ExcutionEngine 内部的类 PInterpreter，代码如下：</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F; 使用 public 访问内部
 class PInterpreter : public llvm::ExecutionEngine,
-       public llvm::InstVisitor&lt;llvm::Interpreter&gt; &#123;
+         public llvm::InstVisitor&lt;llvm::Interpreter&gt; &#123;
     public:
     llvm::GenericValue ExitValue;
     llvm::DataLayout TD;
@@ -2274,15 +2318,15 @@ class PInterpreter : public llvm::ExecutionEngine,
   
     &#x2F;&#x2F; 入口
     virtual int runMain(std::vector&lt;std::string&gt; args,
-	  char * const *envp &#x3D; 0);
+      char * const *envp &#x3D; 0);
   
     &#x2F;&#x2F; 遵循 ExecutionEngine 接口
     llvm::GenericValue runFunction(
- llvm::Function *F,
- const std::vector&lt;llvm::GenericValue&gt; &amp;ArgValues
+  llvm::Function *F,
+  const std::vector&lt;llvm::GenericValue&gt; &amp;ArgValues
     );
     void *getPointerToNamedFunction(const std::string &amp;Name,
-		      bool AbortOnFailure &#x3D; true);
+            bool AbortOnFailure &#x3D; true);
     void *recompileAndRelinkFunction(llvm::Function *F);
     void freeMachineCodeForFunction(llvm::Function *F);
     void *getPointerToFunction(llvm::Function *F);
@@ -2294,8 +2338,8 @@ class PInterpreter : public llvm::ExecutionEngine,
     public:
     MingInterpreter(Module *M) : MInterpreter(M) &#123;&#125;;
     virtual void execute(Instruction &amp;I) &#123;
- I.print(errs());
- MInterpreter::execute(I);
+  I.print(errs());
+  MInterpreter::execute(I);
     &#125;
 &#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
@@ -2319,7 +2363,7 @@ class PInterpreter : public llvm::ExecutionEngine,
   <div class="nav-item-next">
     <a href="/2022/06/10/wwdc22-notes/" class="nav-link">
       <div>
-        <div class="nav-label">Next</div>
+        <div class="nav-label">下一篇</div>
         
         <div class="nav-title">WWDC22 笔记 </div>
         
@@ -2331,8 +2375,8 @@ class PInterpreter : public llvm::ExecutionEngine,
 </div>
 
 <div class="card card-content toc-card" id="mobiletoc">
-  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%96%B0%E9%99%88%E4%BB%A3%E8%B0%A2"><span class="toc-number">2.</span> <span class="toc-text">代码新陈代谢</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E6%80%BB%E4%BD%93%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.1.</span> <span class="toc-text">方案总体介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%8E%B0%E6%9C%89%E6%96%B9%E6%A1%88%E5%92%8C%E5%85%B6%E4%B8%8D%E5%8F%AF%E7%94%A8%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-number">2.1.1.</span> <span class="toc-text">一些现有方案和其不可用的地方</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#gcov"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">gcov</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SanitizerCoverage-%E6%8F%92%E6%A1%A9%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="toc-number">2.1.1.2.</span> <span class="toc-text">SanitizerCoverage 插桩回调函数</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%88%B6%E5%8F%AF%E6%8F%92%E5%85%A5%E6%8C%87%E4%BB%A4%E7%9A%84-Pass"><span class="toc-number">2.1.2.</span> <span class="toc-text">自制可插入指令的 Pass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">2.1.3.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87%E6%8A%A5%E5%91%8A"><span class="toc-number">2.2.</span> <span class="toc-text">生成代码覆盖率报告</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode-%E9%85%8D%E7%BD%AE%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87%E6%8A%A5%E5%91%8A"><span class="toc-number">2.3.</span> <span class="toc-text">Xcode 配置生成代码覆盖率报告</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fuzzing-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.4.</span> <span class="toc-text">Fuzzing 介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SanitizerCoverage-%E6%8F%92%E6%A1%A9%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0-1"><span class="toc-number">2.5.</span> <span class="toc-text">SanitizerCoverage 插桩回调函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-LLVM"><span class="toc-number">2.6.</span> <span class="toc-text">安装 LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%88%B6-Pass"><span class="toc-number">2.7.</span> <span class="toc-text">自制 Pass</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Pass-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.7.1.</span> <span class="toc-text">Pass 介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%88%B6%E6%8F%92%E5%85%A5%E6%8C%87%E4%BB%A4-pass"><span class="toc-number">2.7.2.</span> <span class="toc-text">自制插入指令 pass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A%E8%87%AA%E5%88%B6-pass"><span class="toc-number">2.7.3.</span> <span class="toc-text">更多自制 pass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IR"><span class="toc-number">2.7.4.</span> <span class="toc-text">IR</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#IR-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.7.4.1.</span> <span class="toc-text">IR 介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-number">2.7.4.2.</span> <span class="toc-text">全局变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%8F%98%E9%87%8F"><span class="toc-number">2.7.4.3.</span> <span class="toc-text">本地变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-number">2.7.4.4.</span> <span class="toc-text">常量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.7.4.5.</span> <span class="toc-text">字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">2.7.4.6.</span> <span class="toc-text">结构体</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.7.4.7.</span> <span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%92%8C%E5%A3%B0%E6%98%8E"><span class="toc-number">2.7.4.8.</span> <span class="toc-text">函数和声明</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Unions"><span class="toc-number">2.7.4.9.</span> <span class="toc-text">Unions</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#if-then-else-%E5%88%86%E6%94%AF"><span class="toc-number">2.7.4.10.</span> <span class="toc-text">if-then-else 分支</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%8D%95%E4%B8%80%E8%B5%8B%E5%80%BC%E8%A1%A8%EF%BC%88SSA-Form%EF%BC%89%E5%92%8C-PHI"><span class="toc-number">2.7.4.11.</span> <span class="toc-text">静态单一赋值表（SSA Form）和 PHI</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Lambda-%E5%87%BD%E6%95%B0"><span class="toc-number">2.7.4.12.</span> <span class="toc-text">Lambda 函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%99%A8-Generators"><span class="toc-number">2.7.4.13.</span> <span class="toc-text">生成器 Generators</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BB%93%E6%9E%84"><span class="toc-number">2.7.4.14.</span> <span class="toc-text">面向对象结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB"><span class="toc-number">2.7.4.15.</span> <span class="toc-text">类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%96%B9%E6%B3%95"><span class="toc-number">2.7.4.16.</span> <span class="toc-text">虚拟方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%95%E4%B8%80%E7%BB%A7%E6%89%BF"><span class="toc-number">2.7.4.17.</span> <span class="toc-text">单一继承</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E9%87%8D%E7%BB%A7%E6%89%BF"><span class="toc-number">2.7.4.18.</span> <span class="toc-text">多重继承</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E7%BB%A7%E6%89%BF"><span class="toc-number">2.7.4.19.</span> <span class="toc-text">虚拟继承</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3-Interface"><span class="toc-number">2.7.4.20.</span> <span class="toc-text">接口 Interface</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Boxing-%E5%92%8C-Unboxing"><span class="toc-number">2.7.4.21.</span> <span class="toc-text">Boxing 和 Unboxing</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#New-%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">2.7.4.22.</span> <span class="toc-text">New 运算符</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E8%B0%83%E7%94%A8-LLVM-%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.8.</span> <span class="toc-text">C 调用 LLVM 接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift-%E8%B0%83%E7%94%A8-LLVM-%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.9.</span> <span class="toc-text">Swift 调用 LLVM 接口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E6%89%A7%E8%A1%8C-bitcode%EF%BC%88IR%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">解释执行 bitcode（IR）</span></a></li></ol>
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%96%B0%E9%99%88%E4%BB%A3%E8%B0%A2"><span class="toc-number">2.</span> <span class="toc-text">代码新陈代谢</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E6%80%BB%E4%BD%93%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.1.</span> <span class="toc-text">方案总体介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%8E%B0%E6%9C%89%E6%96%B9%E6%A1%88%E5%92%8C%E5%85%B6%E4%B8%8D%E5%8F%AF%E7%94%A8%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-number">2.1.1.</span> <span class="toc-text">一些现有方案和其不可用的地方</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#gcov"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">gcov</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SanitizerCoverage-%E6%8F%92%E6%A1%A9%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="toc-number">2.1.1.2.</span> <span class="toc-text">SanitizerCoverage 插桩回调函数</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%88%B6%E5%8F%AF%E6%8F%92%E5%85%A5%E6%8C%87%E4%BB%A4%E7%9A%84-Pass"><span class="toc-number">2.1.2.</span> <span class="toc-text">自制可插入指令的 Pass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">2.1.3.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87%E6%8A%A5%E5%91%8A"><span class="toc-number">2.2.</span> <span class="toc-text">生成代码覆盖率报告</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode-%E9%85%8D%E7%BD%AE%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87%E6%8A%A5%E5%91%8A"><span class="toc-number">2.3.</span> <span class="toc-text">Xcode 配置生成代码覆盖率报告</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fuzzing-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.4.</span> <span class="toc-text">Fuzzing 介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SanitizerCoverage-%E6%8F%92%E6%A1%A9%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0-1"><span class="toc-number">2.5.</span> <span class="toc-text">SanitizerCoverage 插桩回调函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-LLVM"><span class="toc-number">2.6.</span> <span class="toc-text">安装 LLVM</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8"><span class="toc-number">2.6.1.</span> <span class="toc-text">手动</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%88%B6-Pass"><span class="toc-number">2.7.</span> <span class="toc-text">自制 Pass</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Pass-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.7.1.</span> <span class="toc-text">Pass 介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Xcode-%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.7.2.</span> <span class="toc-text">Xcode 开发模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%88%B6%E6%8F%92%E5%85%A5%E6%8C%87%E4%BB%A4-pass"><span class="toc-number">2.7.3.</span> <span class="toc-text">自制插入指令 pass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A%E8%87%AA%E5%88%B6-pass"><span class="toc-number">2.7.4.</span> <span class="toc-text">更多自制 pass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IR"><span class="toc-number">2.7.5.</span> <span class="toc-text">IR</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#IR-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.7.5.1.</span> <span class="toc-text">IR 介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-number">2.7.5.2.</span> <span class="toc-text">全局变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%8F%98%E9%87%8F"><span class="toc-number">2.7.5.3.</span> <span class="toc-text">本地变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-number">2.7.5.4.</span> <span class="toc-text">常量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.7.5.5.</span> <span class="toc-text">字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">2.7.5.6.</span> <span class="toc-text">结构体</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.7.5.7.</span> <span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%92%8C%E5%A3%B0%E6%98%8E"><span class="toc-number">2.7.5.8.</span> <span class="toc-text">函数和声明</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Unions"><span class="toc-number">2.7.5.9.</span> <span class="toc-text">Unions</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#if-then-else-%E5%88%86%E6%94%AF"><span class="toc-number">2.7.5.10.</span> <span class="toc-text">if-then-else 分支</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%8D%95%E4%B8%80%E8%B5%8B%E5%80%BC%E8%A1%A8%EF%BC%88SSA-Form%EF%BC%89%E5%92%8C-PHI"><span class="toc-number">2.7.5.11.</span> <span class="toc-text">静态单一赋值表（SSA Form）和 PHI</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Lambda-%E5%87%BD%E6%95%B0"><span class="toc-number">2.7.5.12.</span> <span class="toc-text">Lambda 函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%99%A8-Generators"><span class="toc-number">2.7.5.13.</span> <span class="toc-text">生成器 Generators</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BB%93%E6%9E%84"><span class="toc-number">2.7.5.14.</span> <span class="toc-text">面向对象结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB"><span class="toc-number">2.7.5.15.</span> <span class="toc-text">类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%96%B9%E6%B3%95"><span class="toc-number">2.7.5.16.</span> <span class="toc-text">虚拟方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%95%E4%B8%80%E7%BB%A7%E6%89%BF"><span class="toc-number">2.7.5.17.</span> <span class="toc-text">单一继承</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E9%87%8D%E7%BB%A7%E6%89%BF"><span class="toc-number">2.7.5.18.</span> <span class="toc-text">多重继承</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E7%BB%A7%E6%89%BF"><span class="toc-number">2.7.5.19.</span> <span class="toc-text">虚拟继承</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3-Interface"><span class="toc-number">2.7.5.20.</span> <span class="toc-text">接口 Interface</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Boxing-%E5%92%8C-Unboxing"><span class="toc-number">2.7.5.21.</span> <span class="toc-text">Boxing 和 Unboxing</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#New-%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">2.7.5.22.</span> <span class="toc-text">New 运算符</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E8%B0%83%E7%94%A8-LLVM-%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.8.</span> <span class="toc-text">C 调用 LLVM 接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift-%E8%B0%83%E7%94%A8-LLVM-%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.9.</span> <span class="toc-text">Swift 调用 LLVM 接口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="toc-number">3.</span> <span class="toc-text">动态执行代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DYLD-INSERT-LIBRARIES"><span class="toc-number">3.1.</span> <span class="toc-text">DYLD_INSERT_LIBRARIES</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E6%89%A7%E8%A1%8C-bitcode%EF%BC%88IR%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">解释执行 bitcode（IR）</span></a></li></ol></li></ol>
 </div></main>
           <aside class="left-column">
             
@@ -2345,15 +2389,15 @@ class PInterpreter : public llvm::ExecutionEngine,
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
     <span>56</span>
-    <span>Posts</span>
+    <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
     <span>5</span>
-    <span>Categories</span>
+    <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
     <span>38</span>
-    <span>Tags</span>
+    <span>标签</span>
   </a>
 </div>
 
@@ -2392,15 +2436,15 @@ class PInterpreter : public llvm::ExecutionEngine,
   
   <article class="display-when-two-columns spacer">
     <div class="card card-content toc-card">
-      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%96%B0%E9%99%88%E4%BB%A3%E8%B0%A2"><span class="toc-number">2.</span> <span class="toc-text">代码新陈代谢</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E6%80%BB%E4%BD%93%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.1.</span> <span class="toc-text">方案总体介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%8E%B0%E6%9C%89%E6%96%B9%E6%A1%88%E5%92%8C%E5%85%B6%E4%B8%8D%E5%8F%AF%E7%94%A8%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-number">2.1.1.</span> <span class="toc-text">一些现有方案和其不可用的地方</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#gcov"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">gcov</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SanitizerCoverage-%E6%8F%92%E6%A1%A9%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="toc-number">2.1.1.2.</span> <span class="toc-text">SanitizerCoverage 插桩回调函数</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%88%B6%E5%8F%AF%E6%8F%92%E5%85%A5%E6%8C%87%E4%BB%A4%E7%9A%84-Pass"><span class="toc-number">2.1.2.</span> <span class="toc-text">自制可插入指令的 Pass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">2.1.3.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87%E6%8A%A5%E5%91%8A"><span class="toc-number">2.2.</span> <span class="toc-text">生成代码覆盖率报告</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode-%E9%85%8D%E7%BD%AE%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87%E6%8A%A5%E5%91%8A"><span class="toc-number">2.3.</span> <span class="toc-text">Xcode 配置生成代码覆盖率报告</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fuzzing-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.4.</span> <span class="toc-text">Fuzzing 介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SanitizerCoverage-%E6%8F%92%E6%A1%A9%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0-1"><span class="toc-number">2.5.</span> <span class="toc-text">SanitizerCoverage 插桩回调函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-LLVM"><span class="toc-number">2.6.</span> <span class="toc-text">安装 LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%88%B6-Pass"><span class="toc-number">2.7.</span> <span class="toc-text">自制 Pass</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Pass-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.7.1.</span> <span class="toc-text">Pass 介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%88%B6%E6%8F%92%E5%85%A5%E6%8C%87%E4%BB%A4-pass"><span class="toc-number">2.7.2.</span> <span class="toc-text">自制插入指令 pass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A%E8%87%AA%E5%88%B6-pass"><span class="toc-number">2.7.3.</span> <span class="toc-text">更多自制 pass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IR"><span class="toc-number">2.7.4.</span> <span class="toc-text">IR</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#IR-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.7.4.1.</span> <span class="toc-text">IR 介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-number">2.7.4.2.</span> <span class="toc-text">全局变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%8F%98%E9%87%8F"><span class="toc-number">2.7.4.3.</span> <span class="toc-text">本地变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-number">2.7.4.4.</span> <span class="toc-text">常量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.7.4.5.</span> <span class="toc-text">字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">2.7.4.6.</span> <span class="toc-text">结构体</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.7.4.7.</span> <span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%92%8C%E5%A3%B0%E6%98%8E"><span class="toc-number">2.7.4.8.</span> <span class="toc-text">函数和声明</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Unions"><span class="toc-number">2.7.4.9.</span> <span class="toc-text">Unions</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#if-then-else-%E5%88%86%E6%94%AF"><span class="toc-number">2.7.4.10.</span> <span class="toc-text">if-then-else 分支</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%8D%95%E4%B8%80%E8%B5%8B%E5%80%BC%E8%A1%A8%EF%BC%88SSA-Form%EF%BC%89%E5%92%8C-PHI"><span class="toc-number">2.7.4.11.</span> <span class="toc-text">静态单一赋值表（SSA Form）和 PHI</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Lambda-%E5%87%BD%E6%95%B0"><span class="toc-number">2.7.4.12.</span> <span class="toc-text">Lambda 函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%99%A8-Generators"><span class="toc-number">2.7.4.13.</span> <span class="toc-text">生成器 Generators</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BB%93%E6%9E%84"><span class="toc-number">2.7.4.14.</span> <span class="toc-text">面向对象结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB"><span class="toc-number">2.7.4.15.</span> <span class="toc-text">类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%96%B9%E6%B3%95"><span class="toc-number">2.7.4.16.</span> <span class="toc-text">虚拟方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%95%E4%B8%80%E7%BB%A7%E6%89%BF"><span class="toc-number">2.7.4.17.</span> <span class="toc-text">单一继承</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E9%87%8D%E7%BB%A7%E6%89%BF"><span class="toc-number">2.7.4.18.</span> <span class="toc-text">多重继承</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E7%BB%A7%E6%89%BF"><span class="toc-number">2.7.4.19.</span> <span class="toc-text">虚拟继承</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3-Interface"><span class="toc-number">2.7.4.20.</span> <span class="toc-text">接口 Interface</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Boxing-%E5%92%8C-Unboxing"><span class="toc-number">2.7.4.21.</span> <span class="toc-text">Boxing 和 Unboxing</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#New-%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">2.7.4.22.</span> <span class="toc-text">New 运算符</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E8%B0%83%E7%94%A8-LLVM-%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.8.</span> <span class="toc-text">C 调用 LLVM 接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift-%E8%B0%83%E7%94%A8-LLVM-%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.9.</span> <span class="toc-text">Swift 调用 LLVM 接口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E6%89%A7%E8%A1%8C-bitcode%EF%BC%88IR%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">解释执行 bitcode（IR）</span></a></li></ol>
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%96%B0%E9%99%88%E4%BB%A3%E8%B0%A2"><span class="toc-number">2.</span> <span class="toc-text">代码新陈代谢</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E6%80%BB%E4%BD%93%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.1.</span> <span class="toc-text">方案总体介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%8E%B0%E6%9C%89%E6%96%B9%E6%A1%88%E5%92%8C%E5%85%B6%E4%B8%8D%E5%8F%AF%E7%94%A8%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-number">2.1.1.</span> <span class="toc-text">一些现有方案和其不可用的地方</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#gcov"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">gcov</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SanitizerCoverage-%E6%8F%92%E6%A1%A9%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="toc-number">2.1.1.2.</span> <span class="toc-text">SanitizerCoverage 插桩回调函数</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%88%B6%E5%8F%AF%E6%8F%92%E5%85%A5%E6%8C%87%E4%BB%A4%E7%9A%84-Pass"><span class="toc-number">2.1.2.</span> <span class="toc-text">自制可插入指令的 Pass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">2.1.3.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87%E6%8A%A5%E5%91%8A"><span class="toc-number">2.2.</span> <span class="toc-text">生成代码覆盖率报告</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode-%E9%85%8D%E7%BD%AE%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87%E6%8A%A5%E5%91%8A"><span class="toc-number">2.3.</span> <span class="toc-text">Xcode 配置生成代码覆盖率报告</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fuzzing-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.4.</span> <span class="toc-text">Fuzzing 介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SanitizerCoverage-%E6%8F%92%E6%A1%A9%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0-1"><span class="toc-number">2.5.</span> <span class="toc-text">SanitizerCoverage 插桩回调函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-LLVM"><span class="toc-number">2.6.</span> <span class="toc-text">安装 LLVM</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8"><span class="toc-number">2.6.1.</span> <span class="toc-text">手动</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%88%B6-Pass"><span class="toc-number">2.7.</span> <span class="toc-text">自制 Pass</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Pass-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.7.1.</span> <span class="toc-text">Pass 介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Xcode-%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.7.2.</span> <span class="toc-text">Xcode 开发模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%88%B6%E6%8F%92%E5%85%A5%E6%8C%87%E4%BB%A4-pass"><span class="toc-number">2.7.3.</span> <span class="toc-text">自制插入指令 pass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A%E8%87%AA%E5%88%B6-pass"><span class="toc-number">2.7.4.</span> <span class="toc-text">更多自制 pass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IR"><span class="toc-number">2.7.5.</span> <span class="toc-text">IR</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#IR-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.7.5.1.</span> <span class="toc-text">IR 介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-number">2.7.5.2.</span> <span class="toc-text">全局变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%8F%98%E9%87%8F"><span class="toc-number">2.7.5.3.</span> <span class="toc-text">本地变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-number">2.7.5.4.</span> <span class="toc-text">常量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.7.5.5.</span> <span class="toc-text">字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">2.7.5.6.</span> <span class="toc-text">结构体</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.7.5.7.</span> <span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%92%8C%E5%A3%B0%E6%98%8E"><span class="toc-number">2.7.5.8.</span> <span class="toc-text">函数和声明</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Unions"><span class="toc-number">2.7.5.9.</span> <span class="toc-text">Unions</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#if-then-else-%E5%88%86%E6%94%AF"><span class="toc-number">2.7.5.10.</span> <span class="toc-text">if-then-else 分支</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%8D%95%E4%B8%80%E8%B5%8B%E5%80%BC%E8%A1%A8%EF%BC%88SSA-Form%EF%BC%89%E5%92%8C-PHI"><span class="toc-number">2.7.5.11.</span> <span class="toc-text">静态单一赋值表（SSA Form）和 PHI</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Lambda-%E5%87%BD%E6%95%B0"><span class="toc-number">2.7.5.12.</span> <span class="toc-text">Lambda 函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%99%A8-Generators"><span class="toc-number">2.7.5.13.</span> <span class="toc-text">生成器 Generators</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BB%93%E6%9E%84"><span class="toc-number">2.7.5.14.</span> <span class="toc-text">面向对象结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB"><span class="toc-number">2.7.5.15.</span> <span class="toc-text">类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%96%B9%E6%B3%95"><span class="toc-number">2.7.5.16.</span> <span class="toc-text">虚拟方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%95%E4%B8%80%E7%BB%A7%E6%89%BF"><span class="toc-number">2.7.5.17.</span> <span class="toc-text">单一继承</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E9%87%8D%E7%BB%A7%E6%89%BF"><span class="toc-number">2.7.5.18.</span> <span class="toc-text">多重继承</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E7%BB%A7%E6%89%BF"><span class="toc-number">2.7.5.19.</span> <span class="toc-text">虚拟继承</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3-Interface"><span class="toc-number">2.7.5.20.</span> <span class="toc-text">接口 Interface</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Boxing-%E5%92%8C-Unboxing"><span class="toc-number">2.7.5.21.</span> <span class="toc-text">Boxing 和 Unboxing</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#New-%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">2.7.5.22.</span> <span class="toc-text">New 运算符</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E8%B0%83%E7%94%A8-LLVM-%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.8.</span> <span class="toc-text">C 调用 LLVM 接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift-%E8%B0%83%E7%94%A8-LLVM-%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.9.</span> <span class="toc-text">Swift 调用 LLVM 接口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="toc-number">3.</span> <span class="toc-text">动态执行代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DYLD-INSERT-LIBRARIES"><span class="toc-number">3.1.</span> <span class="toc-text">DYLD_INSERT_LIBRARIES</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E6%89%A7%E8%A1%8C-bitcode%EF%BC%88IR%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">解释执行 bitcode（IR）</span></a></li></ol></li></ol>
     </div>
   </article>
   
   
   <article class="card card-content">
     <div class="categories-card">
-  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>Categories</div>
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
   <div class="categories-list">
     
       <a href="/categories/Programming">
@@ -2444,7 +2488,7 @@ class PInterpreter : public llvm::ExecutionEngine,
   
   <article class="card card-content">
     <div class="tags-card">
-  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>hot tags</div>
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
     <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
@@ -2491,14 +2535,14 @@ class PInterpreter : public llvm::ExecutionEngine,
   
   
   <article class="card card-content toc-card">
-    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%96%B0%E9%99%88%E4%BB%A3%E8%B0%A2"><span class="toc-number">2.</span> <span class="toc-text">代码新陈代谢</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E6%80%BB%E4%BD%93%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.1.</span> <span class="toc-text">方案总体介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%8E%B0%E6%9C%89%E6%96%B9%E6%A1%88%E5%92%8C%E5%85%B6%E4%B8%8D%E5%8F%AF%E7%94%A8%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-number">2.1.1.</span> <span class="toc-text">一些现有方案和其不可用的地方</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#gcov"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">gcov</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SanitizerCoverage-%E6%8F%92%E6%A1%A9%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="toc-number">2.1.1.2.</span> <span class="toc-text">SanitizerCoverage 插桩回调函数</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%88%B6%E5%8F%AF%E6%8F%92%E5%85%A5%E6%8C%87%E4%BB%A4%E7%9A%84-Pass"><span class="toc-number">2.1.2.</span> <span class="toc-text">自制可插入指令的 Pass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">2.1.3.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87%E6%8A%A5%E5%91%8A"><span class="toc-number">2.2.</span> <span class="toc-text">生成代码覆盖率报告</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode-%E9%85%8D%E7%BD%AE%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87%E6%8A%A5%E5%91%8A"><span class="toc-number">2.3.</span> <span class="toc-text">Xcode 配置生成代码覆盖率报告</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fuzzing-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.4.</span> <span class="toc-text">Fuzzing 介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SanitizerCoverage-%E6%8F%92%E6%A1%A9%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0-1"><span class="toc-number">2.5.</span> <span class="toc-text">SanitizerCoverage 插桩回调函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-LLVM"><span class="toc-number">2.6.</span> <span class="toc-text">安装 LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%88%B6-Pass"><span class="toc-number">2.7.</span> <span class="toc-text">自制 Pass</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Pass-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.7.1.</span> <span class="toc-text">Pass 介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%88%B6%E6%8F%92%E5%85%A5%E6%8C%87%E4%BB%A4-pass"><span class="toc-number">2.7.2.</span> <span class="toc-text">自制插入指令 pass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A%E8%87%AA%E5%88%B6-pass"><span class="toc-number">2.7.3.</span> <span class="toc-text">更多自制 pass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IR"><span class="toc-number">2.7.4.</span> <span class="toc-text">IR</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#IR-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.7.4.1.</span> <span class="toc-text">IR 介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-number">2.7.4.2.</span> <span class="toc-text">全局变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%8F%98%E9%87%8F"><span class="toc-number">2.7.4.3.</span> <span class="toc-text">本地变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-number">2.7.4.4.</span> <span class="toc-text">常量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.7.4.5.</span> <span class="toc-text">字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">2.7.4.6.</span> <span class="toc-text">结构体</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.7.4.7.</span> <span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%92%8C%E5%A3%B0%E6%98%8E"><span class="toc-number">2.7.4.8.</span> <span class="toc-text">函数和声明</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Unions"><span class="toc-number">2.7.4.9.</span> <span class="toc-text">Unions</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#if-then-else-%E5%88%86%E6%94%AF"><span class="toc-number">2.7.4.10.</span> <span class="toc-text">if-then-else 分支</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%8D%95%E4%B8%80%E8%B5%8B%E5%80%BC%E8%A1%A8%EF%BC%88SSA-Form%EF%BC%89%E5%92%8C-PHI"><span class="toc-number">2.7.4.11.</span> <span class="toc-text">静态单一赋值表（SSA Form）和 PHI</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Lambda-%E5%87%BD%E6%95%B0"><span class="toc-number">2.7.4.12.</span> <span class="toc-text">Lambda 函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%99%A8-Generators"><span class="toc-number">2.7.4.13.</span> <span class="toc-text">生成器 Generators</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BB%93%E6%9E%84"><span class="toc-number">2.7.4.14.</span> <span class="toc-text">面向对象结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB"><span class="toc-number">2.7.4.15.</span> <span class="toc-text">类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%96%B9%E6%B3%95"><span class="toc-number">2.7.4.16.</span> <span class="toc-text">虚拟方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%95%E4%B8%80%E7%BB%A7%E6%89%BF"><span class="toc-number">2.7.4.17.</span> <span class="toc-text">单一继承</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E9%87%8D%E7%BB%A7%E6%89%BF"><span class="toc-number">2.7.4.18.</span> <span class="toc-text">多重继承</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E7%BB%A7%E6%89%BF"><span class="toc-number">2.7.4.19.</span> <span class="toc-text">虚拟继承</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3-Interface"><span class="toc-number">2.7.4.20.</span> <span class="toc-text">接口 Interface</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Boxing-%E5%92%8C-Unboxing"><span class="toc-number">2.7.4.21.</span> <span class="toc-text">Boxing 和 Unboxing</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#New-%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">2.7.4.22.</span> <span class="toc-text">New 运算符</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E8%B0%83%E7%94%A8-LLVM-%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.8.</span> <span class="toc-text">C 调用 LLVM 接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift-%E8%B0%83%E7%94%A8-LLVM-%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.9.</span> <span class="toc-text">Swift 调用 LLVM 接口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E6%89%A7%E8%A1%8C-bitcode%EF%BC%88IR%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">解释执行 bitcode（IR）</span></a></li></ol>
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%96%B0%E9%99%88%E4%BB%A3%E8%B0%A2"><span class="toc-number">2.</span> <span class="toc-text">代码新陈代谢</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E6%80%BB%E4%BD%93%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.1.</span> <span class="toc-text">方案总体介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%8E%B0%E6%9C%89%E6%96%B9%E6%A1%88%E5%92%8C%E5%85%B6%E4%B8%8D%E5%8F%AF%E7%94%A8%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-number">2.1.1.</span> <span class="toc-text">一些现有方案和其不可用的地方</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#gcov"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">gcov</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SanitizerCoverage-%E6%8F%92%E6%A1%A9%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="toc-number">2.1.1.2.</span> <span class="toc-text">SanitizerCoverage 插桩回调函数</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%88%B6%E5%8F%AF%E6%8F%92%E5%85%A5%E6%8C%87%E4%BB%A4%E7%9A%84-Pass"><span class="toc-number">2.1.2.</span> <span class="toc-text">自制可插入指令的 Pass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">2.1.3.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87%E6%8A%A5%E5%91%8A"><span class="toc-number">2.2.</span> <span class="toc-text">生成代码覆盖率报告</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode-%E9%85%8D%E7%BD%AE%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87%E6%8A%A5%E5%91%8A"><span class="toc-number">2.3.</span> <span class="toc-text">Xcode 配置生成代码覆盖率报告</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fuzzing-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.4.</span> <span class="toc-text">Fuzzing 介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SanitizerCoverage-%E6%8F%92%E6%A1%A9%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0-1"><span class="toc-number">2.5.</span> <span class="toc-text">SanitizerCoverage 插桩回调函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-LLVM"><span class="toc-number">2.6.</span> <span class="toc-text">安装 LLVM</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8"><span class="toc-number">2.6.1.</span> <span class="toc-text">手动</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%88%B6-Pass"><span class="toc-number">2.7.</span> <span class="toc-text">自制 Pass</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Pass-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.7.1.</span> <span class="toc-text">Pass 介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Xcode-%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.7.2.</span> <span class="toc-text">Xcode 开发模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%88%B6%E6%8F%92%E5%85%A5%E6%8C%87%E4%BB%A4-pass"><span class="toc-number">2.7.3.</span> <span class="toc-text">自制插入指令 pass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A%E8%87%AA%E5%88%B6-pass"><span class="toc-number">2.7.4.</span> <span class="toc-text">更多自制 pass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IR"><span class="toc-number">2.7.5.</span> <span class="toc-text">IR</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#IR-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.7.5.1.</span> <span class="toc-text">IR 介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-number">2.7.5.2.</span> <span class="toc-text">全局变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%8F%98%E9%87%8F"><span class="toc-number">2.7.5.3.</span> <span class="toc-text">本地变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-number">2.7.5.4.</span> <span class="toc-text">常量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.7.5.5.</span> <span class="toc-text">字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">2.7.5.6.</span> <span class="toc-text">结构体</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.7.5.7.</span> <span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%92%8C%E5%A3%B0%E6%98%8E"><span class="toc-number">2.7.5.8.</span> <span class="toc-text">函数和声明</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Unions"><span class="toc-number">2.7.5.9.</span> <span class="toc-text">Unions</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#if-then-else-%E5%88%86%E6%94%AF"><span class="toc-number">2.7.5.10.</span> <span class="toc-text">if-then-else 分支</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%8D%95%E4%B8%80%E8%B5%8B%E5%80%BC%E8%A1%A8%EF%BC%88SSA-Form%EF%BC%89%E5%92%8C-PHI"><span class="toc-number">2.7.5.11.</span> <span class="toc-text">静态单一赋值表（SSA Form）和 PHI</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Lambda-%E5%87%BD%E6%95%B0"><span class="toc-number">2.7.5.12.</span> <span class="toc-text">Lambda 函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%99%A8-Generators"><span class="toc-number">2.7.5.13.</span> <span class="toc-text">生成器 Generators</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BB%93%E6%9E%84"><span class="toc-number">2.7.5.14.</span> <span class="toc-text">面向对象结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB"><span class="toc-number">2.7.5.15.</span> <span class="toc-text">类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%96%B9%E6%B3%95"><span class="toc-number">2.7.5.16.</span> <span class="toc-text">虚拟方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%95%E4%B8%80%E7%BB%A7%E6%89%BF"><span class="toc-number">2.7.5.17.</span> <span class="toc-text">单一继承</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E9%87%8D%E7%BB%A7%E6%89%BF"><span class="toc-number">2.7.5.18.</span> <span class="toc-text">多重继承</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E7%BB%A7%E6%89%BF"><span class="toc-number">2.7.5.19.</span> <span class="toc-text">虚拟继承</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3-Interface"><span class="toc-number">2.7.5.20.</span> <span class="toc-text">接口 Interface</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Boxing-%E5%92%8C-Unboxing"><span class="toc-number">2.7.5.21.</span> <span class="toc-text">Boxing 和 Unboxing</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#New-%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">2.7.5.22.</span> <span class="toc-text">New 运算符</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E8%B0%83%E7%94%A8-LLVM-%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.8.</span> <span class="toc-text">C 调用 LLVM 接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift-%E8%B0%83%E7%94%A8-LLVM-%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.9.</span> <span class="toc-text">Swift 调用 LLVM 接口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="toc-number">3.</span> <span class="toc-text">动态执行代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DYLD-INSERT-LIBRARIES"><span class="toc-number">3.1.</span> <span class="toc-text">DYLD_INSERT_LIBRARIES</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E6%89%A7%E8%A1%8C-bitcode%EF%BC%88IR%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">解释执行 bitcode（IR）</span></a></li></ol></li></ol>
   </article>
   
   
   <article class="card card-content">
     <div class="recent-posts-card">
-  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>Recent Posts</div>
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">

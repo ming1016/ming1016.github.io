@@ -120,17 +120,17 @@
   </div>
   <div class="navbar-menu">
     
-    <a href="/" class="navbar-menu-item">Home </a>
+    <a href="/" class="navbar-menu-item">首页 </a>
     
-    <a href="/archives" class="navbar-menu-item">Archive </a>
+    <a href="/archives" class="navbar-menu-item">归档 </a>
     
-    <a href="/tags" class="navbar-menu-item">Tags </a>
+    <a href="/tags" class="navbar-menu-item">标签 </a>
     
-    <a href="/categories" class="navbar-menu-item">Categories </a>
+    <a href="/categories" class="navbar-menu-item">分类 </a>
     
-    <a href="/about" class="navbar-menu-item">About </a>
+    <a href="/about" class="navbar-menu-item">关于 </a>
     
-    <a href="" class="navbar-menu-item">Friends </a>
+    <a href="" class="navbar-menu-item">友链 </a>
     
     <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
   </div>
@@ -159,7 +159,7 @@
     
     
     <span class="dot"></span>
-    <span>4.9k words</span>
+    <span>4.9k 字</span>
     
   </div>
   
@@ -745,7 +745,7 @@ MASLayoutConstraint <span class="token operator">*</span>existingConstraint <spa
     <a href="/2018/04/21/deeply-analyse-javascriptcore/" class="nav-link">
       <i class="iconfont icon-left nav-prev-icon"></i>
       <div>
-        <div class="nav-label">Prev</div>
+        <div class="nav-label">上一篇</div>
         
         <div class="nav-title">深入剖析 JavaScriptCore </div>
         
@@ -757,7 +757,7 @@ MASLayoutConstraint <span class="token operator">*</span>existingConstraint <spa
   <div class="nav-item-next">
     <a href="/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/" class="nav-link">
       <div>
-        <div class="nav-label">Next</div>
+        <div class="nav-label">下一篇</div>
         
         <div class="nav-title">Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法 </div>
         
@@ -769,7 +769,7 @@ MASLayoutConstraint <span class="token operator">*</span>existingConstraint <spa
 </div>
 
 <div class="card card-content toc-card" id="mobiletoc">
-  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
 <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SnapKit-%E6%BA%90%E7%A0%81%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="toc-number">1.1.</span> <span class="toc-text">SnapKit 源码结构图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Masonry-%E6%BA%90%E7%A0%81%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="toc-number">1.2.</span> <span class="toc-text">Masonry 源码结构图</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%99%E8%B0%81%E5%81%9A%E7%BA%A6%E6%9D%9F%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">给谁做约束？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SnapKit"><span class="toc-number">2.1.</span> <span class="toc-text">SnapKit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintView"><span class="toc-number">2.1.1.</span> <span class="toc-text">ConstraintView</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintViewDSL"><span class="toc-number">2.1.2.</span> <span class="toc-text">ConstraintViewDSL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintAttributesDSL"><span class="toc-number">2.1.3.</span> <span class="toc-text">ConstraintAttributesDSL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Masonry"><span class="toc-number">2.2.</span> <span class="toc-text">Masonry</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#View-MASAdditions"><span class="toc-number">2.2.1.</span> <span class="toc-text">View+MASAdditions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E7%BA%A6%E6%9D%9F%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">如何设置约束？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SnapKit-1"><span class="toc-number">3.1.</span> <span class="toc-text">SnapKit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintMaker"><span class="toc-number">3.1.1.</span> <span class="toc-text">ConstraintMaker</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#OptionSet"><span class="toc-number">3.1.1.1.</span> <span class="toc-text">OptionSet</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E8%BD%BD%E5%92%8C%E8%87%AA%E5%AE%9A%E4%B9%89%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-number">3.1.1.2.</span> <span class="toc-text">重载和自定义操作符</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintMakerExtendable"><span class="toc-number">3.1.2.</span> <span class="toc-text">ConstraintMakerExtendable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintMakerRelatable"><span class="toc-number">3.1.3.</span> <span class="toc-text">ConstraintMakerRelatable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintMakerEditable"><span class="toc-number">3.1.4.</span> <span class="toc-text">ConstraintMakerEditable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintMakerPriortizable"><span class="toc-number">3.1.5.</span> <span class="toc-text">ConstraintMakerPriortizable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintMakerFinalizable"><span class="toc-number">3.1.6.</span> <span class="toc-text">ConstraintMakerFinalizable</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Masonry-1"><span class="toc-number">3.2.</span> <span class="toc-text">Masonry</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MASConstraintMaker"><span class="toc-number">3.2.1.</span> <span class="toc-text">MASConstraintMaker</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%AE%8C%E5%90%8E%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">设置完后如何处理？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SnapKit-2"><span class="toc-number">4.1.</span> <span class="toc-text">SnapKit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Masonry-2"><span class="toc-number">4.2.</span> <span class="toc-text">Masonry</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MASViewConstraint"><span class="toc-number">4.2.1.</span> <span class="toc-text">MASViewConstraint</span></a></li></ol></li></ol></li></ol>
 </div></main>
           <aside class="left-column">
@@ -783,15 +783,15 @@ MASLayoutConstraint <span class="token operator">*</span>existingConstraint <spa
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
     <span>56</span>
-    <span>Posts</span>
+    <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
     <span>5</span>
-    <span>Categories</span>
+    <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
     <span>38</span>
-    <span>Tags</span>
+    <span>标签</span>
   </a>
 </div>
 
@@ -830,7 +830,7 @@ MASLayoutConstraint <span class="token operator">*</span>existingConstraint <spa
   
   <article class="display-when-two-columns spacer">
     <div class="card card-content toc-card">
-      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
 <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SnapKit-%E6%BA%90%E7%A0%81%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="toc-number">1.1.</span> <span class="toc-text">SnapKit 源码结构图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Masonry-%E6%BA%90%E7%A0%81%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="toc-number">1.2.</span> <span class="toc-text">Masonry 源码结构图</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%99%E8%B0%81%E5%81%9A%E7%BA%A6%E6%9D%9F%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">给谁做约束？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SnapKit"><span class="toc-number">2.1.</span> <span class="toc-text">SnapKit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintView"><span class="toc-number">2.1.1.</span> <span class="toc-text">ConstraintView</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintViewDSL"><span class="toc-number">2.1.2.</span> <span class="toc-text">ConstraintViewDSL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintAttributesDSL"><span class="toc-number">2.1.3.</span> <span class="toc-text">ConstraintAttributesDSL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Masonry"><span class="toc-number">2.2.</span> <span class="toc-text">Masonry</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#View-MASAdditions"><span class="toc-number">2.2.1.</span> <span class="toc-text">View+MASAdditions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E7%BA%A6%E6%9D%9F%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">如何设置约束？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SnapKit-1"><span class="toc-number">3.1.</span> <span class="toc-text">SnapKit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintMaker"><span class="toc-number">3.1.1.</span> <span class="toc-text">ConstraintMaker</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#OptionSet"><span class="toc-number">3.1.1.1.</span> <span class="toc-text">OptionSet</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E8%BD%BD%E5%92%8C%E8%87%AA%E5%AE%9A%E4%B9%89%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-number">3.1.1.2.</span> <span class="toc-text">重载和自定义操作符</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintMakerExtendable"><span class="toc-number">3.1.2.</span> <span class="toc-text">ConstraintMakerExtendable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintMakerRelatable"><span class="toc-number">3.1.3.</span> <span class="toc-text">ConstraintMakerRelatable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintMakerEditable"><span class="toc-number">3.1.4.</span> <span class="toc-text">ConstraintMakerEditable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintMakerPriortizable"><span class="toc-number">3.1.5.</span> <span class="toc-text">ConstraintMakerPriortizable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintMakerFinalizable"><span class="toc-number">3.1.6.</span> <span class="toc-text">ConstraintMakerFinalizable</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Masonry-1"><span class="toc-number">3.2.</span> <span class="toc-text">Masonry</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MASConstraintMaker"><span class="toc-number">3.2.1.</span> <span class="toc-text">MASConstraintMaker</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%AE%8C%E5%90%8E%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">设置完后如何处理？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SnapKit-2"><span class="toc-number">4.1.</span> <span class="toc-text">SnapKit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Masonry-2"><span class="toc-number">4.2.</span> <span class="toc-text">Masonry</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MASViewConstraint"><span class="toc-number">4.2.1.</span> <span class="toc-text">MASViewConstraint</span></a></li></ol></li></ol></li></ol>
     </div>
   </article>
@@ -838,7 +838,7 @@ MASLayoutConstraint <span class="token operator">*</span>existingConstraint <spa
   
   <article class="card card-content">
     <div class="categories-card">
-  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>Categories</div>
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
   <div class="categories-list">
     
       <a href="/categories/Programming">
@@ -882,7 +882,7 @@ MASLayoutConstraint <span class="token operator">*</span>existingConstraint <spa
   
   <article class="card card-content">
     <div class="tags-card">
-  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>hot tags</div>
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
     <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
@@ -929,14 +929,14 @@ MASLayoutConstraint <span class="token operator">*</span>existingConstraint <spa
   
   
   <article class="card card-content toc-card">
-    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
 <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SnapKit-%E6%BA%90%E7%A0%81%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="toc-number">1.1.</span> <span class="toc-text">SnapKit 源码结构图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Masonry-%E6%BA%90%E7%A0%81%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="toc-number">1.2.</span> <span class="toc-text">Masonry 源码结构图</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%99%E8%B0%81%E5%81%9A%E7%BA%A6%E6%9D%9F%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">给谁做约束？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SnapKit"><span class="toc-number">2.1.</span> <span class="toc-text">SnapKit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintView"><span class="toc-number">2.1.1.</span> <span class="toc-text">ConstraintView</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintViewDSL"><span class="toc-number">2.1.2.</span> <span class="toc-text">ConstraintViewDSL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintAttributesDSL"><span class="toc-number">2.1.3.</span> <span class="toc-text">ConstraintAttributesDSL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Masonry"><span class="toc-number">2.2.</span> <span class="toc-text">Masonry</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#View-MASAdditions"><span class="toc-number">2.2.1.</span> <span class="toc-text">View+MASAdditions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E7%BA%A6%E6%9D%9F%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">如何设置约束？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SnapKit-1"><span class="toc-number">3.1.</span> <span class="toc-text">SnapKit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintMaker"><span class="toc-number">3.1.1.</span> <span class="toc-text">ConstraintMaker</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#OptionSet"><span class="toc-number">3.1.1.1.</span> <span class="toc-text">OptionSet</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E8%BD%BD%E5%92%8C%E8%87%AA%E5%AE%9A%E4%B9%89%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-number">3.1.1.2.</span> <span class="toc-text">重载和自定义操作符</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintMakerExtendable"><span class="toc-number">3.1.2.</span> <span class="toc-text">ConstraintMakerExtendable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintMakerRelatable"><span class="toc-number">3.1.3.</span> <span class="toc-text">ConstraintMakerRelatable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintMakerEditable"><span class="toc-number">3.1.4.</span> <span class="toc-text">ConstraintMakerEditable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintMakerPriortizable"><span class="toc-number">3.1.5.</span> <span class="toc-text">ConstraintMakerPriortizable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstraintMakerFinalizable"><span class="toc-number">3.1.6.</span> <span class="toc-text">ConstraintMakerFinalizable</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Masonry-1"><span class="toc-number">3.2.</span> <span class="toc-text">Masonry</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MASConstraintMaker"><span class="toc-number">3.2.1.</span> <span class="toc-text">MASConstraintMaker</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%AE%8C%E5%90%8E%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">设置完后如何处理？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SnapKit-2"><span class="toc-number">4.1.</span> <span class="toc-text">SnapKit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Masonry-2"><span class="toc-number">4.2.</span> <span class="toc-text">Masonry</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MASViewConstraint"><span class="toc-number">4.2.1.</span> <span class="toc-text">MASViewConstraint</span></a></li></ol></li></ol></li></ol>
   </article>
   
   
   <article class="card card-content">
     <div class="recent-posts-card">
-  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>Recent Posts</div>
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
