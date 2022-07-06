@@ -1,225 +1,186 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html>
+<meta  lang="zh-Hans" >
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content="Hexo Theme Keep">
-    <meta name="description" content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-    <meta name="author" content="戴铭">
-    
-    <title>
-        
-            深入剖析 iOS 性能优化 |
-        
-        戴铭的博客
-    </title>
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <link rel="shortcut icon" href="/img/logo-starming.png">
-    
-<link rel="stylesheet" href="/css/font-awesome.min.css">
-
-    <script id="hexo-configurations">
-    let KEEP = window.KEEP || {};
-    KEEP.hexo_config = {"hostname":"ming1016.github.io","root":"/","language":"zh-Hans"};
-    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/img/ming.jpeg","favicon":"/img/logo-starming.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":null,"description":"混乱中的有序"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
-    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
   </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
+  
+  
+  
 <meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
-<div class="progress-bar-container">
+  <div class="wrapper">
     
-
-    
-</div>
-
-
-<main class="page-container">
-
-    
-
-    <div class="page-main-content">
-
-        <div class="page-main-content-top">
-            <header class="header-wrapper">
-
-    <div class="header-content">
-        <div class="left">
-            
-            <a class="logo-title" href="/">
-                戴铭的博客
-            </a>
-        </div>
-
-        <div class="right">
-            <div class="pc">
-                <ul class="menu-list">
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/"
-                            >
-                                HOME
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/archives"
-                            >
-                                ARCHIVES
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/categories"
-                            >
-                                CATEGORIES
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/about"
-                            >
-                                ABOUT
-                            </a>
-                        </li>
-                    
-                    
-                </ul>
-            </div>
-            <div class="mobile">
-                
-                <div class="icon-item menu-bar">
-                    <div class="menu-bar-middle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/">HOME</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/archives">ARCHIVES</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/categories">CATEGORIES</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/about">ABOUT</a>
-                </li>
-            
-        </ul>
-    </div>
-
-    <div class="window-mask"></div>
-
-</header>
-
-
-        </div>
-
-        <div class="page-main-content-middle">
-
-            <div class="main-content">
-
-                
-                    <div class="fade-in-down-animation">
-    <div class="article-content-container">
-
-        <div class="article-title">
-            <span class="title-hover-animation">深入剖析 iOS 性能优化</span>
-        </div>
-
-        
-            <div class="article-header">
-                <div class="avatar">
-                    <img src="/img/ming.jpeg">
-                </div>
-                <div class="info">
-                    <div class="author">
-                        <span class="name">戴铭</span>
-                        
-                            <span class="author-label">Lv4</span>
-                        
-                    </div>
-                    <div class="meta-info">
-                        <div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2017-06-20 10:25:42</span>
-        <span class="mobile">2017-06-20 10:25</span>
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
+      
+      <span class="navbar-logo-dsc">戴铭的博客</span>
     </span>
+  </div>
+  <div class="navbar-menu">
     
-        <span class="article-categories article-meta-item">
-            <i class="fas fa-folder"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/categories/Programming/">Programming</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      深入剖析 iOS 性能优化
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2017-06-20T02:25:42.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2017-06-20</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Programming/" class="post-meta-link">Programming</a>
     
     
-        <span class="article-tags article-meta-item">
-            <i class="fas fa-tags"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/tags/iOS/">iOS</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/Performance-optimization/">Performance optimization</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
     
-
+    <span class="dot"></span>
+    <span>8.7k 字</span>
     
-    
-        <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>8.7k Words</span>
-        </span>
-    
-    
-        <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>38 Mins</span>
-        </span>
-    
-    
-        <span class="article-pv article-meta-item">
-            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
-        </span>
-    
-</div>
-
-                    </div>
-                </div>
-            </div>
-        
-
-        <div class="article-content markdown-body">
-            <h1 id="问题种类"><a href="#问题种类" class="headerlink" title="问题种类"></a>问题种类</h1><h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><p>在集合里数据量小的情况下时间复杂度对于性能的影响看起来微乎其微。但如果某个开发的功能是一个公共功能，无法预料调用者传入数据的量时，这个复杂度的优化显得非常重要了。<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-ios-performance-optimization/01.png" class="lozad post-image"src="/uploads/deeply-ios-performance-optimization/01.png"><br>上图列出了各种情况的时间复杂度，比如高效的排序算法一般都是 O(n log n)。接下来看看下图：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-ios-performance-optimization/02.png" class="lozad post-image"src="/uploads/deeply-ios-performance-optimization/02.png"><br>图中可以看出 O(n) 是个分水岭，大于它对于性能就具有很大的潜在影响，如果是个公共的接口一定要加上说明，自己调用也要做到心中有数。当然最好是通过算法优化或者使用合适的系统接口方法，权衡内存消耗争取通过空间来换取时间。</p>
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/iOS/" class="post-meta-link">iOS</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Performance-optimization/" class="post-meta-link">Performance optimization</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <h1 id="问题种类"><a href="#问题种类" class="headerlink" title="问题种类"></a>问题种类</h1><h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><p>在集合里数据量小的情况下时间复杂度对于性能的影响看起来微乎其微。但如果某个开发的功能是一个公共功能，无法预料调用者传入数据的量时，这个复杂度的优化显得非常重要了。<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-ios-performance-optimization/01.png" class="lozad post-image"src="/uploads/deeply-ios-performance-optimization/01.png"><br>上图列出了各种情况的时间复杂度，比如高效的排序算法一般都是 O(n log n)。接下来看看下图：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-ios-performance-optimization/02.png" class="lozad post-image"src="/uploads/deeply-ios-performance-optimization/02.png"><br>图中可以看出 O(n) 是个分水岭，大于它对于性能就具有很大的潜在影响，如果是个公共的接口一定要加上说明，自己调用也要做到心中有数。当然最好是通过算法优化或者使用合适的系统接口方法，权衡内存消耗争取通过空间来换取时间。</p>
 <p>下面通过集合里是否有某个值来举个例子：</p>
 <pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token comment">//O(1)</span>
 <span class="token keyword">return</span> array<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">==</span> value<span class="token punctuation">;</span>
@@ -1102,250 +1063,350 @@ NSMutableArray <span class="token operator">*</span>arr <span class="token opera
 </ul>
 <h1 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h1><p>最近我这需要招一名实习生来滴滴和我一起攻克一个工程开发效率的项目，绝对会成就感满满的，有兴趣的可以将简历发我 <a href="mailto:&#100;&#x61;&#x69;&#x6d;&#x69;&#x6e;&#103;&#64;&#x64;&#105;&#x64;&#105;&#x63;&#x68;&#117;&#120;&#105;&#x6e;&#x67;&#x2e;&#99;&#111;&#x6d;">&#100;&#x61;&#x69;&#x6d;&#x69;&#x6e;&#103;&#64;&#x64;&#105;&#x64;&#105;&#x63;&#x68;&#117;&#120;&#105;&#x6e;&#x67;&#x2e;&#99;&#111;&#x6d;</a> 或者在微博上联系我 @戴铭</p>
 
-        </div>
-
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2017/06/20/deeply-ios-performance-optimization/">http://ming1016.github.io/2017/06/20/deeply-ios-performance-optimization/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2017/10/11/deeply-analyse-webkit/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
         
-            <div class="post-copyright-info">
-                <div class="article-copyright-info-container">
-    <ul>
-        <li>Post title：深入剖析 iOS 性能优化</li>
-        <li>Post author：戴铭</li>
-        <li>Create time：2017-06-20 10:25:42</li>
-        <li>
-            Post link：https://ming1016.github.io/2017/06/20/deeply-ios-performance-optimization/
-        </li>
-        <li>
-            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
-        </li>
-    </ul>
+        <div class="nav-title">深入剖析 WebKit </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2017/06/12/gmtc-ios-slimming-practice/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">GMTC 上分享滴滴出行 iOS 端瘦身实践的 Slides </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E7%A7%8D%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text">问题种类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">1.1.</span> <span class="toc-text">时间复杂度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NSArray-x2F-NSMutableArray"><span class="toc-number">1.1.1.</span> <span class="toc-text">NSArray &#x2F; NSMutableArray</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NSSet-x2F-NSMutableSet-x2F-NSCountedSet"><span class="toc-number">1.1.2.</span> <span class="toc-text">NSSet &#x2F; NSMutableSet &#x2F; NSCountedSet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NSDictionary-x2F-NSMutableDictionary"><span class="toc-number">1.1.3.</span> <span class="toc-text">NSDictionary &#x2F; NSMutableDictionary</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#containsObject-%E6%96%B9%E6%B3%95%E5%9C%A8%E6%95%B0%E7%BB%84%E5%92%8C-Set-%E9%87%8C%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.1.4.</span> <span class="toc-text">containsObject 方法在数组和 Set 里不同的实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8-GCD-%E6%9D%A5%E5%81%9A%E4%BC%98%E5%8C%96"><span class="toc-number">1.2.</span> <span class="toc-text">用 GCD 来做优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E5%A4%84%E7%90%86%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.2.1.</span> <span class="toc-text">异步处理事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E8%A6%81%E8%80%97%E6%97%B6%E9%95%BF%E7%9A%84%E4%BB%BB%E5%8A%A1"><span class="toc-number">1.2.2.</span> <span class="toc-text">需要耗时长的任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%BF%E5%85%8D%E7%BA%BF%E7%A8%8B%E7%88%86%E7%82%B8"><span class="toc-number">1.2.3.</span> <span class="toc-text">避免线程爆炸</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GCD-%E7%9B%B8%E5%85%B3-Crash-%E6%97%A5%E5%BF%97"><span class="toc-number">1.2.4.</span> <span class="toc-text">GCD 相关 Crash 日志</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#I-x2F-O-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">1.3.</span> <span class="toc-text">I&#x2F;O 性能优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NSCache"><span class="toc-number">1.3.1.</span> <span class="toc-text">NSCache</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6-App-%E7%9A%84-Wake-%E6%AC%A1%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">控制 App 的 Wake 次数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%AF%B9%E4%BA%8E%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number">1.5.</span> <span class="toc-text">内存对于性能的影响</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E8%BF%99%E4%BA%9B%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%EF%BC%8C%E9%9C%80%E8%A6%81%E5%88%BB%E6%84%8F%E9%A2%84%E9%98%B2%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">如何预防这些性能问题，需要刻意预防么</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%A3%80%E6%9F%A5"><span class="toc-number">3.</span> <span class="toc-text">如何检查</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E7%9B%91%E5%90%AC%E4%B8%BB%E7%BA%BF%E7%A8%8B%E6%96%B9%E5%BC%8F%E6%9D%A5%E7%9B%91%E5%AF%9F"><span class="toc-number">4.</span> <span class="toc-text">通过监听主线程方式来监察</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%89%93%E5%8D%B0%E5%A0%86%E6%A0%88%E4%BF%A1%E6%81%AF%EF%BC%8C%E4%BF%9D%E5%AD%98%E7%8E%B0%E5%9C%BA"><span class="toc-number">5.</span> <span class="toc-text">如何打印堆栈信息，保存现场</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="toc-number">5.1.</span> <span class="toc-text">获取线程的信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E7%BA%BF%E7%A8%8B%E9%87%8C%E6%89%80%E6%9C%89%E6%A0%88%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="toc-number">5.2.</span> <span class="toc-text">获取线程里所有栈的信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E5%8C%96"><span class="toc-number">5.3.</span> <span class="toc-text">符号化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-number">5.4.</span> <span class="toc-text">需要注意的地方</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%83%BD%E5%A4%9F%E8%8E%B7%E5%8F%96%E6%9B%B4%E5%A4%9A%E4%BF%A1%E6%81%AF%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">6.</span> <span class="toc-text">能够获取更多信息的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E6%A0%91%E7%BB%93%E6%9E%84"><span class="toc-number">6.1.</span> <span class="toc-text">获取方法调用树结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%AF%BB%E5%8F%96-ThreadCallStack"><span class="toc-number">6.2.</span> <span class="toc-text">存储读取 ThreadCallStack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E6%B7%B1%E5%BA%A6"><span class="toc-number">6.3.</span> <span class="toc-text">记录方法调用深度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8-objc-msgSend-%E5%89%8D%E5%90%8E%E6%8F%92%E5%85%A5%E6%89%A7%E8%A1%8C%E6%96%B9%E6%B3%95"><span class="toc-number">6.4.</span> <span class="toc-text">在 objc_msgSend 前后插入执行方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E6%97%B6%E9%97%B4%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">6.5.</span> <span class="toc-text">记录时间的方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95-hook-msgsend-%E6%96%B9%E6%B3%95"><span class="toc-number">7.</span> <span class="toc-text">如何 hook msgsend 方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%8D%E5%8E%86-dyld"><span class="toc-number">7.1.</span> <span class="toc-text">遍历 dyld</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%BE%E5%87%BA%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%9B%B8%E5%85%B3-Command"><span class="toc-number">7.2.</span> <span class="toc-text">找出符号表相关 Command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%BE%97-base-%E5%92%8C-indirect-%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-number">7.3.</span> <span class="toc-text">获得 base 和 indirect 符号表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E8%A1%8C%E6%96%B9%E6%B3%95%E6%9B%BF%E6%8D%A2"><span class="toc-number">7.4.</span> <span class="toc-text">进行方法替换</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E9%A2%91%E6%AC%A1"><span class="toc-number">8.</span> <span class="toc-text">统计方法调用频次</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E9%A2%91%E6%AC%A1%E8%AE%B0%E5%BD%95%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">8.1.</span> <span class="toc-text">设计方法调用频次记录的结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%BC%E8%A3%85%E6%96%B9%E6%B3%95%E8%B7%AF%E5%BE%84"><span class="toc-number">8.2.</span> <span class="toc-text">拼装方法路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E9%A2%91%E6%AC%A1%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">8.3.</span> <span class="toc-text">记录方法调用频次数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">8.3.1.</span> <span class="toc-text">创建数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%AE%B0%E5%BD%95"><span class="toc-number">8.3.2.</span> <span class="toc-text">添加记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2%E8%AE%B0%E5%BD%95"><span class="toc-number">8.3.3.</span> <span class="toc-text">检索记录</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%89%BE%E5%87%BA-CPU-%E4%BD%BF%E7%94%A8%E5%A4%A7%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%A0%86%E6%A0%88"><span class="toc-number">9.</span> <span class="toc-text">找出 CPU 使用大的线程堆栈</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Demo"><span class="toc-number">10.</span> <span class="toc-text">Demo</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B5%84%E6%96%99"><span class="toc-number">11.</span> <span class="toc-text">资料</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#WWDC"><span class="toc-number">11.1.</span> <span class="toc-text">WWDC</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PS"><span class="toc-number">12.</span> <span class="toc-text">PS:</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
+
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>56</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>38</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
 </div>
 
             </div>
-        
-
-        
-            <ul class="post-tags-box">
-                
-                    <li class="tag-item">
-                        <a href="/tags/iOS/">#iOS</a>&nbsp;
-                    </li>
-                
-                    <li class="tag-item">
-                        <a href="/tags/Performance-optimization/">#Performance optimization</a>&nbsp;
-                    </li>
-                
-            </ul>
-        
-
-        
-            <div class="article-nav">
-                
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2017/10/11/deeply-analyse-webkit/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">深入剖析 WebKit</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                        </a>
-                    </div>
-                
-                
-                    <div class="article-next">
-                        <a class="next"
-                           rel="next"
-                           href="/2017/06/12/gmtc-ios-slimming-practice/"
-                        >
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">GMTC 上分享滴滴出行 iOS 端瘦身实践的 Slides</span>
-                                <span class="post-nav-item">Next posts</span>
-                            </span>
-                            <span class="right arrow-icon flex-center">
-                              <i class="fas fa-chevron-right"></i>
-                            </span>
-                        </a>
-                    </div>
-                
-            </div>
-        
-
-        
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E7%A7%8D%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text">问题种类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">1.1.</span> <span class="toc-text">时间复杂度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NSArray-x2F-NSMutableArray"><span class="toc-number">1.1.1.</span> <span class="toc-text">NSArray &#x2F; NSMutableArray</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NSSet-x2F-NSMutableSet-x2F-NSCountedSet"><span class="toc-number">1.1.2.</span> <span class="toc-text">NSSet &#x2F; NSMutableSet &#x2F; NSCountedSet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NSDictionary-x2F-NSMutableDictionary"><span class="toc-number">1.1.3.</span> <span class="toc-text">NSDictionary &#x2F; NSMutableDictionary</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#containsObject-%E6%96%B9%E6%B3%95%E5%9C%A8%E6%95%B0%E7%BB%84%E5%92%8C-Set-%E9%87%8C%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.1.4.</span> <span class="toc-text">containsObject 方法在数组和 Set 里不同的实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8-GCD-%E6%9D%A5%E5%81%9A%E4%BC%98%E5%8C%96"><span class="toc-number">1.2.</span> <span class="toc-text">用 GCD 来做优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E5%A4%84%E7%90%86%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.2.1.</span> <span class="toc-text">异步处理事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E8%A6%81%E8%80%97%E6%97%B6%E9%95%BF%E7%9A%84%E4%BB%BB%E5%8A%A1"><span class="toc-number">1.2.2.</span> <span class="toc-text">需要耗时长的任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%BF%E5%85%8D%E7%BA%BF%E7%A8%8B%E7%88%86%E7%82%B8"><span class="toc-number">1.2.3.</span> <span class="toc-text">避免线程爆炸</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GCD-%E7%9B%B8%E5%85%B3-Crash-%E6%97%A5%E5%BF%97"><span class="toc-number">1.2.4.</span> <span class="toc-text">GCD 相关 Crash 日志</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#I-x2F-O-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">1.3.</span> <span class="toc-text">I&#x2F;O 性能优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NSCache"><span class="toc-number">1.3.1.</span> <span class="toc-text">NSCache</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6-App-%E7%9A%84-Wake-%E6%AC%A1%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">控制 App 的 Wake 次数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%AF%B9%E4%BA%8E%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number">1.5.</span> <span class="toc-text">内存对于性能的影响</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E8%BF%99%E4%BA%9B%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%EF%BC%8C%E9%9C%80%E8%A6%81%E5%88%BB%E6%84%8F%E9%A2%84%E9%98%B2%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">如何预防这些性能问题，需要刻意预防么</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%A3%80%E6%9F%A5"><span class="toc-number">3.</span> <span class="toc-text">如何检查</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E7%9B%91%E5%90%AC%E4%B8%BB%E7%BA%BF%E7%A8%8B%E6%96%B9%E5%BC%8F%E6%9D%A5%E7%9B%91%E5%AF%9F"><span class="toc-number">4.</span> <span class="toc-text">通过监听主线程方式来监察</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%89%93%E5%8D%B0%E5%A0%86%E6%A0%88%E4%BF%A1%E6%81%AF%EF%BC%8C%E4%BF%9D%E5%AD%98%E7%8E%B0%E5%9C%BA"><span class="toc-number">5.</span> <span class="toc-text">如何打印堆栈信息，保存现场</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="toc-number">5.1.</span> <span class="toc-text">获取线程的信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E7%BA%BF%E7%A8%8B%E9%87%8C%E6%89%80%E6%9C%89%E6%A0%88%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="toc-number">5.2.</span> <span class="toc-text">获取线程里所有栈的信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E5%8C%96"><span class="toc-number">5.3.</span> <span class="toc-text">符号化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-number">5.4.</span> <span class="toc-text">需要注意的地方</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%83%BD%E5%A4%9F%E8%8E%B7%E5%8F%96%E6%9B%B4%E5%A4%9A%E4%BF%A1%E6%81%AF%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">6.</span> <span class="toc-text">能够获取更多信息的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E6%A0%91%E7%BB%93%E6%9E%84"><span class="toc-number">6.1.</span> <span class="toc-text">获取方法调用树结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%AF%BB%E5%8F%96-ThreadCallStack"><span class="toc-number">6.2.</span> <span class="toc-text">存储读取 ThreadCallStack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E6%B7%B1%E5%BA%A6"><span class="toc-number">6.3.</span> <span class="toc-text">记录方法调用深度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8-objc-msgSend-%E5%89%8D%E5%90%8E%E6%8F%92%E5%85%A5%E6%89%A7%E8%A1%8C%E6%96%B9%E6%B3%95"><span class="toc-number">6.4.</span> <span class="toc-text">在 objc_msgSend 前后插入执行方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E6%97%B6%E9%97%B4%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">6.5.</span> <span class="toc-text">记录时间的方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95-hook-msgsend-%E6%96%B9%E6%B3%95"><span class="toc-number">7.</span> <span class="toc-text">如何 hook msgsend 方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%8D%E5%8E%86-dyld"><span class="toc-number">7.1.</span> <span class="toc-text">遍历 dyld</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%BE%E5%87%BA%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%9B%B8%E5%85%B3-Command"><span class="toc-number">7.2.</span> <span class="toc-text">找出符号表相关 Command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%BE%97-base-%E5%92%8C-indirect-%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-number">7.3.</span> <span class="toc-text">获得 base 和 indirect 符号表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E8%A1%8C%E6%96%B9%E6%B3%95%E6%9B%BF%E6%8D%A2"><span class="toc-number">7.4.</span> <span class="toc-text">进行方法替换</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E9%A2%91%E6%AC%A1"><span class="toc-number">8.</span> <span class="toc-text">统计方法调用频次</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E9%A2%91%E6%AC%A1%E8%AE%B0%E5%BD%95%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">8.1.</span> <span class="toc-text">设计方法调用频次记录的结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%BC%E8%A3%85%E6%96%B9%E6%B3%95%E8%B7%AF%E5%BE%84"><span class="toc-number">8.2.</span> <span class="toc-text">拼装方法路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E9%A2%91%E6%AC%A1%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">8.3.</span> <span class="toc-text">记录方法调用频次数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">8.3.1.</span> <span class="toc-text">创建数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%AE%B0%E5%BD%95"><span class="toc-number">8.3.2.</span> <span class="toc-text">添加记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2%E8%AE%B0%E5%BD%95"><span class="toc-number">8.3.3.</span> <span class="toc-text">检索记录</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%89%BE%E5%87%BA-CPU-%E4%BD%BF%E7%94%A8%E5%A4%A7%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%A0%86%E6%A0%88"><span class="toc-number">9.</span> <span class="toc-text">找出 CPU 使用大的线程堆栈</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Demo"><span class="toc-number">10.</span> <span class="toc-text">Demo</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B5%84%E6%96%99"><span class="toc-number">11.</span> <span class="toc-text">资料</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#WWDC"><span class="toc-number">11.1.</span> <span class="toc-text">WWDC</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PS"><span class="toc-number">12.</span> <span class="toc-text">PS:</span></a></li></ol>
     </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">42</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-novel">
+        <div class="categories-list-item">
+          My-novel
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-painting">
+        <div class="categories-list-item">
+          My-painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
 </div>
-
-
-                
-            </div>
-
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\WWDC" title="WWDC"><div class="tags-list-item">WWDC</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E7%A7%8D%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text">问题种类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">1.1.</span> <span class="toc-text">时间复杂度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NSArray-x2F-NSMutableArray"><span class="toc-number">1.1.1.</span> <span class="toc-text">NSArray &#x2F; NSMutableArray</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NSSet-x2F-NSMutableSet-x2F-NSCountedSet"><span class="toc-number">1.1.2.</span> <span class="toc-text">NSSet &#x2F; NSMutableSet &#x2F; NSCountedSet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NSDictionary-x2F-NSMutableDictionary"><span class="toc-number">1.1.3.</span> <span class="toc-text">NSDictionary &#x2F; NSMutableDictionary</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#containsObject-%E6%96%B9%E6%B3%95%E5%9C%A8%E6%95%B0%E7%BB%84%E5%92%8C-Set-%E9%87%8C%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.1.4.</span> <span class="toc-text">containsObject 方法在数组和 Set 里不同的实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8-GCD-%E6%9D%A5%E5%81%9A%E4%BC%98%E5%8C%96"><span class="toc-number">1.2.</span> <span class="toc-text">用 GCD 来做优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E5%A4%84%E7%90%86%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.2.1.</span> <span class="toc-text">异步处理事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E8%A6%81%E8%80%97%E6%97%B6%E9%95%BF%E7%9A%84%E4%BB%BB%E5%8A%A1"><span class="toc-number">1.2.2.</span> <span class="toc-text">需要耗时长的任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%BF%E5%85%8D%E7%BA%BF%E7%A8%8B%E7%88%86%E7%82%B8"><span class="toc-number">1.2.3.</span> <span class="toc-text">避免线程爆炸</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GCD-%E7%9B%B8%E5%85%B3-Crash-%E6%97%A5%E5%BF%97"><span class="toc-number">1.2.4.</span> <span class="toc-text">GCD 相关 Crash 日志</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#I-x2F-O-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">1.3.</span> <span class="toc-text">I&#x2F;O 性能优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NSCache"><span class="toc-number">1.3.1.</span> <span class="toc-text">NSCache</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6-App-%E7%9A%84-Wake-%E6%AC%A1%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">控制 App 的 Wake 次数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%AF%B9%E4%BA%8E%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number">1.5.</span> <span class="toc-text">内存对于性能的影响</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E8%BF%99%E4%BA%9B%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%EF%BC%8C%E9%9C%80%E8%A6%81%E5%88%BB%E6%84%8F%E9%A2%84%E9%98%B2%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">如何预防这些性能问题，需要刻意预防么</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%A3%80%E6%9F%A5"><span class="toc-number">3.</span> <span class="toc-text">如何检查</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E7%9B%91%E5%90%AC%E4%B8%BB%E7%BA%BF%E7%A8%8B%E6%96%B9%E5%BC%8F%E6%9D%A5%E7%9B%91%E5%AF%9F"><span class="toc-number">4.</span> <span class="toc-text">通过监听主线程方式来监察</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%89%93%E5%8D%B0%E5%A0%86%E6%A0%88%E4%BF%A1%E6%81%AF%EF%BC%8C%E4%BF%9D%E5%AD%98%E7%8E%B0%E5%9C%BA"><span class="toc-number">5.</span> <span class="toc-text">如何打印堆栈信息，保存现场</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="toc-number">5.1.</span> <span class="toc-text">获取线程的信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E7%BA%BF%E7%A8%8B%E9%87%8C%E6%89%80%E6%9C%89%E6%A0%88%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="toc-number">5.2.</span> <span class="toc-text">获取线程里所有栈的信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E5%8C%96"><span class="toc-number">5.3.</span> <span class="toc-text">符号化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-number">5.4.</span> <span class="toc-text">需要注意的地方</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%83%BD%E5%A4%9F%E8%8E%B7%E5%8F%96%E6%9B%B4%E5%A4%9A%E4%BF%A1%E6%81%AF%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">6.</span> <span class="toc-text">能够获取更多信息的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E6%A0%91%E7%BB%93%E6%9E%84"><span class="toc-number">6.1.</span> <span class="toc-text">获取方法调用树结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%AF%BB%E5%8F%96-ThreadCallStack"><span class="toc-number">6.2.</span> <span class="toc-text">存储读取 ThreadCallStack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E6%B7%B1%E5%BA%A6"><span class="toc-number">6.3.</span> <span class="toc-text">记录方法调用深度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8-objc-msgSend-%E5%89%8D%E5%90%8E%E6%8F%92%E5%85%A5%E6%89%A7%E8%A1%8C%E6%96%B9%E6%B3%95"><span class="toc-number">6.4.</span> <span class="toc-text">在 objc_msgSend 前后插入执行方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E6%97%B6%E9%97%B4%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">6.5.</span> <span class="toc-text">记录时间的方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95-hook-msgsend-%E6%96%B9%E6%B3%95"><span class="toc-number">7.</span> <span class="toc-text">如何 hook msgsend 方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%8D%E5%8E%86-dyld"><span class="toc-number">7.1.</span> <span class="toc-text">遍历 dyld</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%BE%E5%87%BA%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%9B%B8%E5%85%B3-Command"><span class="toc-number">7.2.</span> <span class="toc-text">找出符号表相关 Command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%BE%97-base-%E5%92%8C-indirect-%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-number">7.3.</span> <span class="toc-text">获得 base 和 indirect 符号表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E8%A1%8C%E6%96%B9%E6%B3%95%E6%9B%BF%E6%8D%A2"><span class="toc-number">7.4.</span> <span class="toc-text">进行方法替换</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E9%A2%91%E6%AC%A1"><span class="toc-number">8.</span> <span class="toc-text">统计方法调用频次</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E9%A2%91%E6%AC%A1%E8%AE%B0%E5%BD%95%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">8.1.</span> <span class="toc-text">设计方法调用频次记录的结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%BC%E8%A3%85%E6%96%B9%E6%B3%95%E8%B7%AF%E5%BE%84"><span class="toc-number">8.2.</span> <span class="toc-text">拼装方法路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E9%A2%91%E6%AC%A1%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">8.3.</span> <span class="toc-text">记录方法调用频次数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">8.3.1.</span> <span class="toc-text">创建数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%AE%B0%E5%BD%95"><span class="toc-number">8.3.2.</span> <span class="toc-text">添加记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2%E8%AE%B0%E5%BD%95"><span class="toc-number">8.3.3.</span> <span class="toc-text">检索记录</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%89%BE%E5%87%BA-CPU-%E4%BD%BF%E7%94%A8%E5%A4%A7%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%A0%86%E6%A0%88"><span class="toc-number">9.</span> <span class="toc-text">找出 CPU 使用大的线程堆栈</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Demo"><span class="toc-number">10.</span> <span class="toc-text">Demo</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B5%84%E6%96%99"><span class="toc-number">11.</span> <span class="toc-text">资料</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#WWDC"><span class="toc-number">11.1.</span> <span class="toc-text">WWDC</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PS"><span class="toc-number">12.</span> <span class="toc-text">PS:</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-03-25</div>
+        <a href="/2022/03/25/develop-with-swiftui/"><div class="recent-posts-item-content">在苹果加速器活动做的 SwiftUI 开发分享</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-02-26</div>
+        <a href="/2022/02/26/draw-in-2021/"><div class="recent-posts-item-content">2021年画的</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
         </div>
-
-        <div class="page-main-content-bottom">
-            <footer class="footer">
-    <div class="info-container">
-        <div class="copyright-info info-item">
-            &copy;
-            
-              <span>2014</span>
-              -
-            
-            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">戴铭</a>
-        </div>
-        
-            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-            <div class="website-count info-item">
-                
-                    <span id="busuanzi_container_site_uv">
-                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
-                    </span>
-                
-                
-                    <span id="busuanzi_container_site_pv">
-                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
-                    </span>
-                
-            </div>
-        
-        <div class="theme-info info-item">
-            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
-        </div>
-        
-            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">鄂ICP备17011999号 京公网安备 7011999号</a></div>
-        
-        
+      </div>
     </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2014 -
+          
+          2022
+        </span>
+        <a href="/" class="footer-link">戴铭的博客 </a>
+      </div>
+    </div>
+
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
+      </a>
+      <br />
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
 </footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
 
-        </div>
-    </div>
-
-    
-        <div class="post-tools">
-            <div class="post-tools-container">
-    <ul class="tools-list">
-        <!-- TOC aside toggle -->
-        
-            <li class="tools-item page-aside-toggle">
-                <i class="fas fa-outdent"></i>
-            </li>
-        
-
-        <!-- go comment -->
-        
-    </ul>
-</div>
-
-        </div>
-    
-
-    <div class="right-bottom-side-tools">
-        <div class="side-tools-container">
-    <ul class="side-tools-list">
-        <li class="tools-item tool-font-adjust-plus flex-center">
-            <i class="fas fa-search-plus"></i>
-        </li>
-
-        <li class="tools-item tool-font-adjust-minus flex-center">
-            <i class="fas fa-search-minus"></i>
-        </li>
-
-        <li class="tools-item tool-expand-width flex-center">
-            <i class="fas fa-arrows-alt-h"></i>
-        </li>
-
-        <li class="tools-item tool-dark-light-toggle flex-center">
-            <i class="fas fa-moon"></i>
-        </li>
-
-        <!-- rss -->
-        
-            <li class="tools-item rss flex-center">
-                <a class="flex-center"
-                   href="/atom.xml"
-                   target="_blank"
-                >
-                    <i class="fas fa-rss"></i>
-                </a>
-            </li>
-        
-
-        
-            <li class="tools-item tool-scroll-to-top flex-center">
-                <i class="fas fa-arrow-up"></i>
-            </li>
-        
-
-        <li class="tools-item tool-scroll-to-bottom flex-center">
-            <i class="fas fa-arrow-down"></i>
-        </li>
-    </ul>
-
-    <ul class="exposed-tools-list">
-        <li class="tools-item tool-toggle-show flex-center">
-            <i class="fas fa-cog fa-spin"></i>
-        </li>
-        
-    </ul>
-</div>
-
-    </div>
-
-    
-        <aside class="page-aside">
-            <div class="post-toc-wrap">
-    <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E7%A7%8D%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">问题种类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-number">1.1.</span> <span class="nav-text">时间复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NSArray-x2F-NSMutableArray"><span class="nav-number">1.1.1.</span> <span class="nav-text">NSArray &#x2F; NSMutableArray</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NSSet-x2F-NSMutableSet-x2F-NSCountedSet"><span class="nav-number">1.1.2.</span> <span class="nav-text">NSSet &#x2F; NSMutableSet &#x2F; NSCountedSet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NSDictionary-x2F-NSMutableDictionary"><span class="nav-number">1.1.3.</span> <span class="nav-text">NSDictionary &#x2F; NSMutableDictionary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#containsObject-%E6%96%B9%E6%B3%95%E5%9C%A8%E6%95%B0%E7%BB%84%E5%92%8C-Set-%E9%87%8C%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.1.4.</span> <span class="nav-text">containsObject 方法在数组和 Set 里不同的实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8-GCD-%E6%9D%A5%E5%81%9A%E4%BC%98%E5%8C%96"><span class="nav-number">1.2.</span> <span class="nav-text">用 GCD 来做优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E5%A4%84%E7%90%86%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">异步处理事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E8%80%97%E6%97%B6%E9%95%BF%E7%9A%84%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.2.2.</span> <span class="nav-text">需要耗时长的任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E7%BA%BF%E7%A8%8B%E7%88%86%E7%82%B8"><span class="nav-number">1.2.3.</span> <span class="nav-text">避免线程爆炸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GCD-%E7%9B%B8%E5%85%B3-Crash-%E6%97%A5%E5%BF%97"><span class="nav-number">1.2.4.</span> <span class="nav-text">GCD 相关 Crash 日志</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-x2F-O-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">1.3.</span> <span class="nav-text">I&#x2F;O 性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NSCache"><span class="nav-number">1.3.1.</span> <span class="nav-text">NSCache</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6-App-%E7%9A%84-Wake-%E6%AC%A1%E6%95%B0"><span class="nav-number">1.4.</span> <span class="nav-text">控制 App 的 Wake 次数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%AF%B9%E4%BA%8E%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">1.5.</span> <span class="nav-text">内存对于性能的影响</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E8%BF%99%E4%BA%9B%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%EF%BC%8C%E9%9C%80%E8%A6%81%E5%88%BB%E6%84%8F%E9%A2%84%E9%98%B2%E4%B9%88"><span class="nav-number">2.</span> <span class="nav-text">如何预防这些性能问题，需要刻意预防么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%A3%80%E6%9F%A5"><span class="nav-number">3.</span> <span class="nav-text">如何检查</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E7%9B%91%E5%90%AC%E4%B8%BB%E7%BA%BF%E7%A8%8B%E6%96%B9%E5%BC%8F%E6%9D%A5%E7%9B%91%E5%AF%9F"><span class="nav-number">4.</span> <span class="nav-text">通过监听主线程方式来监察</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%89%93%E5%8D%B0%E5%A0%86%E6%A0%88%E4%BF%A1%E6%81%AF%EF%BC%8C%E4%BF%9D%E5%AD%98%E7%8E%B0%E5%9C%BA"><span class="nav-number">5.</span> <span class="nav-text">如何打印堆栈信息，保存现场</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="nav-number">5.1.</span> <span class="nav-text">获取线程的信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%BA%BF%E7%A8%8B%E9%87%8C%E6%89%80%E6%9C%89%E6%A0%88%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="nav-number">5.2.</span> <span class="nav-text">获取线程里所有栈的信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E5%8C%96"><span class="nav-number">5.3.</span> <span class="nav-text">符号化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="nav-number">5.4.</span> <span class="nav-text">需要注意的地方</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%BD%E5%A4%9F%E8%8E%B7%E5%8F%96%E6%9B%B4%E5%A4%9A%E4%BF%A1%E6%81%AF%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">能够获取更多信息的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E6%A0%91%E7%BB%93%E6%9E%84"><span class="nav-number">6.1.</span> <span class="nav-text">获取方法调用树结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%AF%BB%E5%8F%96-ThreadCallStack"><span class="nav-number">6.2.</span> <span class="nav-text">存储读取 ThreadCallStack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E6%B7%B1%E5%BA%A6"><span class="nav-number">6.3.</span> <span class="nav-text">记录方法调用深度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-objc-msgSend-%E5%89%8D%E5%90%8E%E6%8F%92%E5%85%A5%E6%89%A7%E8%A1%8C%E6%96%B9%E6%B3%95"><span class="nav-number">6.4.</span> <span class="nav-text">在 objc_msgSend 前后插入执行方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E6%97%B6%E9%97%B4%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">6.5.</span> <span class="nav-text">记录时间的方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95-hook-msgsend-%E6%96%B9%E6%B3%95"><span class="nav-number">7.</span> <span class="nav-text">如何 hook msgsend 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%8D%E5%8E%86-dyld"><span class="nav-number">7.1.</span> <span class="nav-text">遍历 dyld</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%BE%E5%87%BA%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%9B%B8%E5%85%B3-Command"><span class="nav-number">7.2.</span> <span class="nav-text">找出符号表相关 Command</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%BE%97-base-%E5%92%8C-indirect-%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="nav-number">7.3.</span> <span class="nav-text">获得 base 和 indirect 符号表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E8%A1%8C%E6%96%B9%E6%B3%95%E6%9B%BF%E6%8D%A2"><span class="nav-number">7.4.</span> <span class="nav-text">进行方法替换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E9%A2%91%E6%AC%A1"><span class="nav-number">8.</span> <span class="nav-text">统计方法调用频次</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E9%A2%91%E6%AC%A1%E8%AE%B0%E5%BD%95%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-number">8.1.</span> <span class="nav-text">设计方法调用频次记录的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%BC%E8%A3%85%E6%96%B9%E6%B3%95%E8%B7%AF%E5%BE%84"><span class="nav-number">8.2.</span> <span class="nav-text">拼装方法路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E9%A2%91%E6%AC%A1%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">8.3.</span> <span class="nav-text">记录方法调用频次数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">8.3.1.</span> <span class="nav-text">创建数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E8%AE%B0%E5%BD%95"><span class="nav-number">8.3.2.</span> <span class="nav-text">添加记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E7%B4%A2%E8%AE%B0%E5%BD%95"><span class="nav-number">8.3.3.</span> <span class="nav-text">检索记录</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%BE%E5%87%BA-CPU-%E4%BD%BF%E7%94%A8%E5%A4%A7%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%A0%86%E6%A0%88"><span class="nav-number">9.</span> <span class="nav-text">找出 CPU 使用大的线程堆栈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Demo"><span class="nav-number">10.</span> <span class="nav-text">Demo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%84%E6%96%99"><span class="nav-number">11.</span> <span class="nav-text">资料</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#WWDC"><span class="nav-number">11.1.</span> <span class="nav-text">WWDC</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PS"><span class="nav-number">12.</span> <span class="nav-text">PS:</span></a></li></ol>
-    </div>
-</div>
-        </aside>
-    
-
-    <div class="image-viewer-container">
-    <img src="">
-</div>
-
-
-    
-
-</main>
-
-
-
-
-<script src="/js/utils.js"></script>
-
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
 <script src="/js/main.js"></script>
 
-<script src="/js/header-shrink.js"></script>
-
-<script src="/js/back2top.js"></script>
-
-<script src="/js/dark-light-toggle.js"></script>
-
-
-
-
-
-
-
-
-<div class="post-scripts">
-    
-        
-<script src="/js/left-side-toggle.js"></script>
-
-<script src="/js/libs/anime.min.js"></script>
-
-<script src="/js/toc.js"></script>
-
-    
-</div>
-
-
-
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
 </body>
+
 </html>

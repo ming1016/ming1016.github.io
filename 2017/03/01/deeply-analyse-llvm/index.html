@@ -1,229 +1,197 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html>
+<meta  lang="zh-Hans" >
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content="Hexo Theme Keep">
-    <meta name="description" content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-    <meta name="author" content="戴铭">
-    
-    <title>
-        
-            深入剖析 iOS 编译 Clang / LLVM |
-        
-        戴铭的博客
-    </title>
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <link rel="shortcut icon" href="/img/logo-starming.png">
-    
-<link rel="stylesheet" href="/css/font-awesome.min.css">
-
-    <script id="hexo-configurations">
-    let KEEP = window.KEEP || {};
-    KEEP.hexo_config = {"hostname":"ming1016.github.io","root":"/","language":"zh-Hans"};
-    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/img/ming.jpeg","favicon":"/img/logo-starming.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":null,"description":"混乱中的有序"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
-    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
   </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
+  
+  
+  
 <meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
-<div class="progress-bar-container">
+  <div class="wrapper">
     
-
-    
-</div>
-
-
-<main class="page-container">
-
-    
-
-    <div class="page-main-content">
-
-        <div class="page-main-content-top">
-            <header class="header-wrapper">
-
-    <div class="header-content">
-        <div class="left">
-            
-            <a class="logo-title" href="/">
-                戴铭的博客
-            </a>
-        </div>
-
-        <div class="right">
-            <div class="pc">
-                <ul class="menu-list">
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/"
-                            >
-                                HOME
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/archives"
-                            >
-                                ARCHIVES
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/categories"
-                            >
-                                CATEGORIES
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/about"
-                            >
-                                ABOUT
-                            </a>
-                        </li>
-                    
-                    
-                </ul>
-            </div>
-            <div class="mobile">
-                
-                <div class="icon-item menu-bar">
-                    <div class="menu-bar-middle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/">HOME</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/archives">ARCHIVES</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/categories">CATEGORIES</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/about">ABOUT</a>
-                </li>
-            
-        </ul>
-    </div>
-
-    <div class="window-mask"></div>
-
-</header>
-
-
-        </div>
-
-        <div class="page-main-content-middle">
-
-            <div class="main-content">
-
-                
-                    <div class="fade-in-down-animation">
-    <div class="article-content-container">
-
-        <div class="article-title">
-            <span class="title-hover-animation">深入剖析 iOS 编译 Clang / LLVM</span>
-        </div>
-
-        
-            <div class="article-header">
-                <div class="avatar">
-                    <img src="/img/ming.jpeg">
-                </div>
-                <div class="info">
-                    <div class="author">
-                        <span class="name">戴铭</span>
-                        
-                            <span class="author-label">Lv4</span>
-                        
-                    </div>
-                    <div class="meta-info">
-                        <div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2017-03-01 21:58:09</span>
-        <span class="mobile">2017-03-01 21:58</span>
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
+      
+      <span class="navbar-logo-dsc">戴铭的博客</span>
     </span>
+  </div>
+  <div class="navbar-menu">
     
-        <span class="article-categories article-meta-item">
-            <i class="fas fa-folder"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/categories/Programming/">Programming</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
+    <a href="/" class="navbar-menu-item">首页 </a>
     
+    <a href="/archives" class="navbar-menu-item">归档 </a>
     
-        <span class="article-tags article-meta-item">
-            <i class="fas fa-tags"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/tags/iOS/">iOS</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/LLVM/">LLVM</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/Clang/">Clang</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
+    <a href="/tags" class="navbar-menu-item">标签 </a>
     
-
+    <a href="/categories" class="navbar-menu-item">分类 </a>
     
+    <a href="/about" class="navbar-menu-item">关于 </a>
     
-        <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>23.9k Words</span>
-        </span>
+    <a href="" class="navbar-menu-item">友链 </a>
     
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
     
-        <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>106 Mins</span>
-        </span>
-    
-    
-        <span class="article-pv article-meta-item">
-            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
-        </span>
-    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/deeply-analyse-llvm/10.png" data-src="/uploads/deeply-analyse-llvm/10.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
 </div>
 
-                    </div>
-                </div>
-            </div>
-        
-
-        <div class="article-content markdown-body">
-            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>2000年，伊利诺伊大学厄巴纳－香槟分校（University of Illinois at Urbana-Champaign 简称UIUC）这所享有世界声望的一流公立研究型大学的 Chris Lattner（他的 twitter <a target="_blank" rel="noopener" href="https://twitter.com/clattner_llvm">@clattner_llvm</a> ） 开发了一个叫作 Low Level Virtual Machine 的编译器开发工具套件，后来涉及范围越来越大，可以用于常规编译器，JIT编译器，汇编器，调试器，静态分析工具等一系列跟编程语言相关的工作，于是就把简称 LLVM 这个简称作为了正式的名字。Chris Lattner 后来又开发了 Clang，使得 LLVM 直接挑战 GCC 的地位。2012年，LLVM 获得美国计算机学会 ACM 的软件系统大奖，和 UNIX，WWW，TCP&#x2F;IP，Tex，JAVA 等齐名。</p>
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      深入剖析 iOS 编译 Clang / LLVM
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2017-03-01T13:58:09.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2017-03-01</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Programming/" class="post-meta-link">Programming</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>23.9k 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/iOS/" class="post-meta-link">iOS</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/LLVM/" class="post-meta-link">LLVM</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Clang/" class="post-meta-link">Clang</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>2000年，伊利诺伊大学厄巴纳－香槟分校（University of Illinois at Urbana-Champaign 简称UIUC）这所享有世界声望的一流公立研究型大学的 Chris Lattner（他的 twitter <a target="_blank" rel="noopener" href="https://twitter.com/clattner_llvm">@clattner_llvm</a> ） 开发了一个叫作 Low Level Virtual Machine 的编译器开发工具套件，后来涉及范围越来越大，可以用于常规编译器，JIT编译器，汇编器，调试器，静态分析工具等一系列跟编程语言相关的工作，于是就把简称 LLVM 这个简称作为了正式的名字。Chris Lattner 后来又开发了 Clang，使得 LLVM 直接挑战 GCC 的地位。2012年，LLVM 获得美国计算机学会 ACM 的软件系统大奖，和 UNIX，WWW，TCP&#x2F;IP，Tex，JAVA 等齐名。</p>
 <p>Chris Lattner 生于 1978 年，2005年加入苹果，将苹果使用的 GCC 全面转为 LLVM。2010年开始主导开发 Swift 语言。</p>
 <p>iOS 开发中 Objective-C 是 Clang &#x2F; LLVM 来编译的。</p>
 <p>swift 是 Swift &#x2F; LLVM，其中 Swift 前端会多出 SIL optimizer，它会把 .swift 生成的中间代码 .sil 属于 High-Level IR， 因为 swift 在编译时就完成了方法绑定直接通过地址调用属于强类型语言，方法调用不再是像OC那样的消息发送，这样编译就可以获得更多的信息用在后面的后端优化上。</p>
@@ -2047,254 +2015,350 @@ du -h -d 1
 <li><a target="_blank" rel="noopener" href="http://llvm.org/devmtg/">LLVM Developers’ Metting</a></li>
 </ul>
 
-        </div>
-
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2017/03/01/deeply-analyse-llvm/">http://ming1016.github.io/2017/03/01/deeply-analyse-llvm/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2017/04/01/slides-of-deeply-analyse-llvm/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
         
-            <div class="post-copyright-info">
-                <div class="article-copyright-info-container">
-    <ul>
-        <li>Post title：深入剖析 iOS 编译 Clang / LLVM</li>
-        <li>Post author：戴铭</li>
-        <li>Create time：2017-03-01 21:58:09</li>
-        <li>
-            Post link：https://ming1016.github.io/2017/03/01/deeply-analyse-llvm/
-        </li>
-        <li>
-            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
-        </li>
-    </ul>
+        <div class="nav-title">深入剖析 iOS 编译 Clang / LLVM 直播的 Slides </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2016/11/22/how-to-preload-web-in-ios/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">iOS预加载Web页面方案 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">编译流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clang-%E7%BC%96%E8%AF%91-m-%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">Clang 编译 .m 文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA-Target"><span class="toc-number">3.1.</span> <span class="toc-text">构建 Target</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Target-%E5%9C%A8-Build-%E8%BF%87%E7%A8%8B%E7%9A%84%E6%8E%A7%E5%88%B6"><span class="toc-number">3.2.</span> <span class="toc-text">Target 在 Build 过程的控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Build-Phases"><span class="toc-number">3.2.1.</span> <span class="toc-text">Build Phases</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Build-Rules"><span class="toc-number">3.2.2.</span> <span class="toc-text">Build Rules</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Build-Settings"><span class="toc-number">3.2.3.</span> <span class="toc-text">Build Settings</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pbxproj%E5%B7%A5%E7%A8%8B%E6%96%87%E4%BB%B6"><span class="toc-number">3.2.4.</span> <span class="toc-text">pbxproj工程文件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clang-Static-Analyzer%E9%9D%99%E6%80%81%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">Clang Static Analyzer静态代码分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CodeGen-%E7%94%9F%E6%88%90-IR-%E4%BB%A3%E7%A0%81"><span class="toc-number">5.</span> <span class="toc-text">CodeGen 生成 IR 代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IR-%E7%BB%93%E6%9E%84"><span class="toc-number">5.1.</span> <span class="toc-text">IR 结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LLVM-IR-%E4%BC%98%E5%8C%96"><span class="toc-number">5.2.</span> <span class="toc-text">LLVM IR 优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSA"><span class="toc-number">5.3.</span> <span class="toc-text">SSA</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clang-CFE"><span class="toc-number">6.</span> <span class="toc-text">Clang CFE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#libclang"><span class="toc-number">6.1.</span> <span class="toc-text">libclang</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Driver"><span class="toc-number">7.</span> <span class="toc-text">Driver</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Driver-%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-number">7.1.</span> <span class="toc-text">Driver 的工作流程图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Parse"><span class="toc-number">7.2.</span> <span class="toc-text">Parse</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pipeline"><span class="toc-number">7.3.</span> <span class="toc-text">Pipeline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Action"><span class="toc-number">7.4.</span> <span class="toc-text">Action</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bind"><span class="toc-number">7.5.</span> <span class="toc-text">Bind</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Translate"><span class="toc-number">7.6.</span> <span class="toc-text">Translate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jobs"><span class="toc-number">7.7.</span> <span class="toc-text">Jobs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Execute"><span class="toc-number">7.8.</span> <span class="toc-text">Execute</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clang-Attributes"><span class="toc-number">8.</span> <span class="toc-text">Clang Attributes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-format-NSString-F-A-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">8.1.</span> <span class="toc-text">attribute((format(NSString, F, A))) 格式化字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-deprecated-s-%E7%89%88%E6%9C%AC%E5%BC%83%E7%94%A8%E6%8F%90%E7%A4%BA"><span class="toc-number">8.2.</span> <span class="toc-text">attribute((deprecated(s))) 版本弃用提示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-availability-os-introduced-x3D-m-deprecated-x3D-n-obsoleted-x3D-o-message-x3D-%E2%80%9C%E2%80%9D-VA-ARGS-%E6%8C%87%E6%98%8E%E4%BD%BF%E7%94%A8%E7%89%88%E6%9C%AC%E8%8C%83%E5%9B%B4"><span class="toc-number">8.3.</span> <span class="toc-text">attribute((availability(os,introduced&#x3D;m,deprecated&#x3D;n, obsoleted&#x3D;o,message&#x3D;“” VA_ARGS))) 指明使用版本范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-unavailable-%E2%80%A6-%E6%96%B9%E6%B3%95%E4%B8%8D%E5%8F%AF%E7%94%A8%E6%8F%90%E7%A4%BA"><span class="toc-number">8.4.</span> <span class="toc-text">attribute((unavailable(…))) 方法不可用提示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-unused"><span class="toc-number">8.5.</span> <span class="toc-text">attribute((unused))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-warn-unused-result"><span class="toc-number">8.6.</span> <span class="toc-text">attribute((warn_unused_result))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-availability-swift-unavailable-message-x3D-msg"><span class="toc-number">8.7.</span> <span class="toc-text">attribute((availability(swift, unavailable, message&#x3D;_msg)))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-cleanup-%E2%80%A6-%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%BB%93%E6%9D%9F%E6%97%B6%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA%E6%8C%87%E5%AE%9A%E6%96%B9%E6%B3%95"><span class="toc-number">8.8.</span> <span class="toc-text">attribute((cleanup(…))) 作用域结束时自动执行一个指定方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-overloadable-%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD"><span class="toc-number">8.9.</span> <span class="toc-text">attribute((overloadable)) 方法重载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-objc-designated-initializer-%E6%8C%87%E5%AE%9A%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95"><span class="toc-number">8.10.</span> <span class="toc-text">attribute((objc_designated_initializer)) 指定内部实现的初始化方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-objc-subclassing-restricted-%E6%8C%87%E5%AE%9A%E4%B8%8D%E8%83%BD%E6%9C%89%E5%AD%90%E7%B1%BB"><span class="toc-number">8.11.</span> <span class="toc-text">attribute((objc_subclassing_restricted)) 指定不能有子类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-objc-requires-super-%E5%AD%90%E7%B1%BB%E7%BB%A7%E6%89%BF%E5%BF%85%E9%A1%BB%E8%B0%83%E7%94%A8-super"><span class="toc-number">8.12.</span> <span class="toc-text">attribute((objc_requires_super)) 子类继承必须调用 super</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#attribute-const-%E9%87%8D%E5%A4%8D%E8%B0%83%E7%94%A8%E7%9B%B8%E5%90%8C%E6%95%B0%E5%80%BC%E5%8F%82%E6%95%B0%E4%BC%98%E5%8C%96%E8%BF%94%E5%9B%9E"><span class="toc-number">9.</span> <span class="toc-text">attribute((const)) 重复调用相同数值参数优化返回</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-constructor-PRIORITY-%E5%92%8C-attribute-destructor-PRIORITY"><span class="toc-number">9.1.</span> <span class="toc-text">attribute((constructor(PRIORITY))) 和 attribute((destructor(PRIORITY)))</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clang-%E8%AD%A6%E5%91%8A%E5%A4%84%E7%90%86"><span class="toc-number">10.</span> <span class="toc-text">Clang 警告处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-libclang-%E6%9D%A5%E8%BF%9B%E8%A1%8C%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-number">11.</span> <span class="toc-text">使用 libclang 来进行语法分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LibTooling-%E5%AF%B9%E8%AF%AD%E6%B3%95%E6%A0%91%E5%AE%8C%E5%85%A8%E7%9A%84%E6%8E%A7%E5%88%B6"><span class="toc-number">12.</span> <span class="toc-text">LibTooling 对语法树完全的控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clang-Plugin"><span class="toc-number">13.</span> <span class="toc-text">Clang Plugin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LLVM-Backend"><span class="toc-number">14.</span> <span class="toc-text">LLVM Backend</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CodeGen-%E9%98%B6%E6%AE%B5"><span class="toc-number">14.1.</span> <span class="toc-text">CodeGen 阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SelectionDAG"><span class="toc-number">14.2.</span> <span class="toc-text">SelectionDAG</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SDNode"><span class="toc-number">14.2.1.</span> <span class="toc-text">SDNode</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PatFrag-%E5%8F%AF%E5%A4%8D%E7%94%A8%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">14.2.2.</span> <span class="toc-text">PatFrag 可复用的结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pattern-%E5%8C%B9%E9%85%8D%E6%8C%87%E4%BB%A4"><span class="toc-number">14.2.3.</span> <span class="toc-text">Pattern 匹配指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Predicate"><span class="toc-number">14.2.4.</span> <span class="toc-text">Predicate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Itinerary-%E5%92%8C-SchedRW-%E8%B0%83%E5%BA%A6%E4%BF%A1%E6%81%AF"><span class="toc-number">14.2.5.</span> <span class="toc-text">Itinerary 和 SchedRW 调度信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TableGen"><span class="toc-number">14.2.6.</span> <span class="toc-text">TableGen</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#TabelGen-%E7%B1%BB%E5%9E%8B"><span class="toc-number">14.2.6.1.</span> <span class="toc-text">TabelGen 类型</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Register-Allocation-%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D"><span class="toc-number">14.3.</span> <span class="toc-text">Register Allocation 寄存器分配</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">14.3.1.</span> <span class="toc-text">寄存器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RegisterClass"><span class="toc-number">14.3.2.</span> <span class="toc-text">RegisterClass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E5%9C%A8-LLVM-%E4%B8%AD%E7%9A%84%E8%A1%A8%E8%BE%BE"><span class="toc-number">14.3.3.</span> <span class="toc-text">寄存器在 LLVM 中的表达</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%B0%E7%89%A9%E7%90%86%E5%AF%84%E5%AD%98%E5%99%A8%E7%9A%84%E6%98%A0%E5%B0%84"><span class="toc-number">14.3.4.</span> <span class="toc-text">虚拟寄存器到物理寄存器的映射</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LLVM-%E8%87%AA%E5%B8%A6%E7%9A%84%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D%E7%AE%97%E6%B3%95"><span class="toc-number">14.3.5.</span> <span class="toc-text">LLVM 自带的寄存器分配算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-Emission"><span class="toc-number">14.4.</span> <span class="toc-text">Code Emission</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Swift-%E7%BC%96%E8%AF%91%E6%B5%81"><span class="toc-number">15.</span> <span class="toc-text">Swift 编译流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%86%85%E5%AE%B9-Link-Map-File"><span class="toc-number">16.</span> <span class="toc-text">编译后生成的二进制内容 Link Map File</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Object-files"><span class="toc-number">16.1.</span> <span class="toc-text">Object files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sections"><span class="toc-number">16.2.</span> <span class="toc-text">Sections</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Symbols"><span class="toc-number">16.3.</span> <span class="toc-text">Symbols</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%8F%E6%AC%A1%E7%BC%96%E8%AF%91%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84-dSYM-%E6%96%87%E4%BB%B6"><span class="toc-number">17.</span> <span class="toc-text">每次编译后生成的 dSYM 文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mach-O-%E6%96%87%E4%BB%B6"><span class="toc-number">18.</span> <span class="toc-text">Mach-O 文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mach-O-%E6%96%87%E4%BB%B6%E7%9A%84%E8%A7%A3%E6%9E%90"><span class="toc-number">18.1.</span> <span class="toc-text">Mach-O 文件的解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%86%E5%90%91-Mach-O-%E6%96%87%E4%BB%B6"><span class="toc-number">18.2.</span> <span class="toc-text">逆向 Mach-O 文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dyld%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-number">19.</span> <span class="toc-text">dyld动态链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LLVM-%E5%B7%A5%E5%85%B7%E9%93%BE"><span class="toc-number">20.</span> <span class="toc-text">LLVM 工具链</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96-LLVM"><span class="toc-number">20.1.</span> <span class="toc-text">获取 LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91-LLVM"><span class="toc-number">20.2.</span> <span class="toc-text">编译 LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LLVM-%E6%BA%90%E7%A0%81%E5%B7%A5%E7%A8%8B%E7%9B%AE%E5%BD%95%E4%BB%8B%E7%BB%8D"><span class="toc-number">20.3.</span> <span class="toc-text">LLVM 源码工程目录介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lib-%E7%9B%AE%E5%BD%95%E4%BB%8B%E7%BB%8D"><span class="toc-number">20.4.</span> <span class="toc-text">lib 目录介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E9%93%BE%E5%91%BD%E4%BB%A4%E4%BB%8B%E7%BB%8D"><span class="toc-number">20.5.</span> <span class="toc-text">工具链命令介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-number">20.5.1.</span> <span class="toc-text">基本命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="toc-number">20.5.2.</span> <span class="toc-text">调试工具</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="toc-number">20.5.3.</span> <span class="toc-text">开发工具</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Swift-%E7%BC%96%E8%AF%91"><span class="toc-number">21.</span> <span class="toc-text">Swift 编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E5%AE%83%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7"><span class="toc-number">22.</span> <span class="toc-text">其它编译工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#js%E5%86%99%E7%9A%84C-%E8%A7%A3%E9%87%8A%E5%99%A8JSCPP"><span class="toc-number">22.1.</span> <span class="toc-text">js写的C++解释器JSCPP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-SMILE-%E4%B8%80%E5%A5%97%E6%94%AF%E6%8C%81C-x2F-C-JS-JAVA%E5%9B%9B%E7%A7%8D%E8%AF%AD%E8%A8%80%E7%9A%84scripting-language"><span class="toc-number">22.2.</span> <span class="toc-text">C-SMILE 一套支持C&#x2F;C++ JS JAVA四种语言的scripting language</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%96%99%E7%BD%91%E5%9D%80"><span class="toc-number">23.</span> <span class="toc-text">资料网址</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
+
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>56</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>38</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
 </div>
 
             </div>
-        
-
-        
-            <ul class="post-tags-box">
-                
-                    <li class="tag-item">
-                        <a href="/tags/iOS/">#iOS</a>&nbsp;
-                    </li>
-                
-                    <li class="tag-item">
-                        <a href="/tags/LLVM/">#LLVM</a>&nbsp;
-                    </li>
-                
-                    <li class="tag-item">
-                        <a href="/tags/Clang/">#Clang</a>&nbsp;
-                    </li>
-                
-            </ul>
-        
-
-        
-            <div class="article-nav">
-                
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2017/04/01/slides-of-deeply-analyse-llvm/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">深入剖析 iOS 编译 Clang / LLVM 直播的 Slides</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                        </a>
-                    </div>
-                
-                
-                    <div class="article-next">
-                        <a class="next"
-                           rel="next"
-                           href="/2016/11/22/how-to-preload-web-in-ios/"
-                        >
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">iOS预加载Web页面方案</span>
-                                <span class="post-nav-item">Next posts</span>
-                            </span>
-                            <span class="right arrow-icon flex-center">
-                              <i class="fas fa-chevron-right"></i>
-                            </span>
-                        </a>
-                    </div>
-                
-            </div>
-        
-
-        
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">编译流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clang-%E7%BC%96%E8%AF%91-m-%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">Clang 编译 .m 文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA-Target"><span class="toc-number">3.1.</span> <span class="toc-text">构建 Target</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Target-%E5%9C%A8-Build-%E8%BF%87%E7%A8%8B%E7%9A%84%E6%8E%A7%E5%88%B6"><span class="toc-number">3.2.</span> <span class="toc-text">Target 在 Build 过程的控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Build-Phases"><span class="toc-number">3.2.1.</span> <span class="toc-text">Build Phases</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Build-Rules"><span class="toc-number">3.2.2.</span> <span class="toc-text">Build Rules</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Build-Settings"><span class="toc-number">3.2.3.</span> <span class="toc-text">Build Settings</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pbxproj%E5%B7%A5%E7%A8%8B%E6%96%87%E4%BB%B6"><span class="toc-number">3.2.4.</span> <span class="toc-text">pbxproj工程文件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clang-Static-Analyzer%E9%9D%99%E6%80%81%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">Clang Static Analyzer静态代码分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CodeGen-%E7%94%9F%E6%88%90-IR-%E4%BB%A3%E7%A0%81"><span class="toc-number">5.</span> <span class="toc-text">CodeGen 生成 IR 代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IR-%E7%BB%93%E6%9E%84"><span class="toc-number">5.1.</span> <span class="toc-text">IR 结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LLVM-IR-%E4%BC%98%E5%8C%96"><span class="toc-number">5.2.</span> <span class="toc-text">LLVM IR 优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSA"><span class="toc-number">5.3.</span> <span class="toc-text">SSA</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clang-CFE"><span class="toc-number">6.</span> <span class="toc-text">Clang CFE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#libclang"><span class="toc-number">6.1.</span> <span class="toc-text">libclang</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Driver"><span class="toc-number">7.</span> <span class="toc-text">Driver</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Driver-%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-number">7.1.</span> <span class="toc-text">Driver 的工作流程图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Parse"><span class="toc-number">7.2.</span> <span class="toc-text">Parse</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pipeline"><span class="toc-number">7.3.</span> <span class="toc-text">Pipeline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Action"><span class="toc-number">7.4.</span> <span class="toc-text">Action</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bind"><span class="toc-number">7.5.</span> <span class="toc-text">Bind</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Translate"><span class="toc-number">7.6.</span> <span class="toc-text">Translate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jobs"><span class="toc-number">7.7.</span> <span class="toc-text">Jobs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Execute"><span class="toc-number">7.8.</span> <span class="toc-text">Execute</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clang-Attributes"><span class="toc-number">8.</span> <span class="toc-text">Clang Attributes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-format-NSString-F-A-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">8.1.</span> <span class="toc-text">attribute((format(NSString, F, A))) 格式化字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-deprecated-s-%E7%89%88%E6%9C%AC%E5%BC%83%E7%94%A8%E6%8F%90%E7%A4%BA"><span class="toc-number">8.2.</span> <span class="toc-text">attribute((deprecated(s))) 版本弃用提示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-availability-os-introduced-x3D-m-deprecated-x3D-n-obsoleted-x3D-o-message-x3D-%E2%80%9C%E2%80%9D-VA-ARGS-%E6%8C%87%E6%98%8E%E4%BD%BF%E7%94%A8%E7%89%88%E6%9C%AC%E8%8C%83%E5%9B%B4"><span class="toc-number">8.3.</span> <span class="toc-text">attribute((availability(os,introduced&#x3D;m,deprecated&#x3D;n, obsoleted&#x3D;o,message&#x3D;“” VA_ARGS))) 指明使用版本范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-unavailable-%E2%80%A6-%E6%96%B9%E6%B3%95%E4%B8%8D%E5%8F%AF%E7%94%A8%E6%8F%90%E7%A4%BA"><span class="toc-number">8.4.</span> <span class="toc-text">attribute((unavailable(…))) 方法不可用提示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-unused"><span class="toc-number">8.5.</span> <span class="toc-text">attribute((unused))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-warn-unused-result"><span class="toc-number">8.6.</span> <span class="toc-text">attribute((warn_unused_result))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-availability-swift-unavailable-message-x3D-msg"><span class="toc-number">8.7.</span> <span class="toc-text">attribute((availability(swift, unavailable, message&#x3D;_msg)))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-cleanup-%E2%80%A6-%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%BB%93%E6%9D%9F%E6%97%B6%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA%E6%8C%87%E5%AE%9A%E6%96%B9%E6%B3%95"><span class="toc-number">8.8.</span> <span class="toc-text">attribute((cleanup(…))) 作用域结束时自动执行一个指定方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-overloadable-%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD"><span class="toc-number">8.9.</span> <span class="toc-text">attribute((overloadable)) 方法重载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-objc-designated-initializer-%E6%8C%87%E5%AE%9A%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95"><span class="toc-number">8.10.</span> <span class="toc-text">attribute((objc_designated_initializer)) 指定内部实现的初始化方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-objc-subclassing-restricted-%E6%8C%87%E5%AE%9A%E4%B8%8D%E8%83%BD%E6%9C%89%E5%AD%90%E7%B1%BB"><span class="toc-number">8.11.</span> <span class="toc-text">attribute((objc_subclassing_restricted)) 指定不能有子类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-objc-requires-super-%E5%AD%90%E7%B1%BB%E7%BB%A7%E6%89%BF%E5%BF%85%E9%A1%BB%E8%B0%83%E7%94%A8-super"><span class="toc-number">8.12.</span> <span class="toc-text">attribute((objc_requires_super)) 子类继承必须调用 super</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#attribute-const-%E9%87%8D%E5%A4%8D%E8%B0%83%E7%94%A8%E7%9B%B8%E5%90%8C%E6%95%B0%E5%80%BC%E5%8F%82%E6%95%B0%E4%BC%98%E5%8C%96%E8%BF%94%E5%9B%9E"><span class="toc-number">9.</span> <span class="toc-text">attribute((const)) 重复调用相同数值参数优化返回</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-constructor-PRIORITY-%E5%92%8C-attribute-destructor-PRIORITY"><span class="toc-number">9.1.</span> <span class="toc-text">attribute((constructor(PRIORITY))) 和 attribute((destructor(PRIORITY)))</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clang-%E8%AD%A6%E5%91%8A%E5%A4%84%E7%90%86"><span class="toc-number">10.</span> <span class="toc-text">Clang 警告处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-libclang-%E6%9D%A5%E8%BF%9B%E8%A1%8C%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-number">11.</span> <span class="toc-text">使用 libclang 来进行语法分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LibTooling-%E5%AF%B9%E8%AF%AD%E6%B3%95%E6%A0%91%E5%AE%8C%E5%85%A8%E7%9A%84%E6%8E%A7%E5%88%B6"><span class="toc-number">12.</span> <span class="toc-text">LibTooling 对语法树完全的控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clang-Plugin"><span class="toc-number">13.</span> <span class="toc-text">Clang Plugin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LLVM-Backend"><span class="toc-number">14.</span> <span class="toc-text">LLVM Backend</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CodeGen-%E9%98%B6%E6%AE%B5"><span class="toc-number">14.1.</span> <span class="toc-text">CodeGen 阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SelectionDAG"><span class="toc-number">14.2.</span> <span class="toc-text">SelectionDAG</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SDNode"><span class="toc-number">14.2.1.</span> <span class="toc-text">SDNode</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PatFrag-%E5%8F%AF%E5%A4%8D%E7%94%A8%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">14.2.2.</span> <span class="toc-text">PatFrag 可复用的结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pattern-%E5%8C%B9%E9%85%8D%E6%8C%87%E4%BB%A4"><span class="toc-number">14.2.3.</span> <span class="toc-text">Pattern 匹配指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Predicate"><span class="toc-number">14.2.4.</span> <span class="toc-text">Predicate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Itinerary-%E5%92%8C-SchedRW-%E8%B0%83%E5%BA%A6%E4%BF%A1%E6%81%AF"><span class="toc-number">14.2.5.</span> <span class="toc-text">Itinerary 和 SchedRW 调度信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TableGen"><span class="toc-number">14.2.6.</span> <span class="toc-text">TableGen</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#TabelGen-%E7%B1%BB%E5%9E%8B"><span class="toc-number">14.2.6.1.</span> <span class="toc-text">TabelGen 类型</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Register-Allocation-%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D"><span class="toc-number">14.3.</span> <span class="toc-text">Register Allocation 寄存器分配</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">14.3.1.</span> <span class="toc-text">寄存器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RegisterClass"><span class="toc-number">14.3.2.</span> <span class="toc-text">RegisterClass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E5%9C%A8-LLVM-%E4%B8%AD%E7%9A%84%E8%A1%A8%E8%BE%BE"><span class="toc-number">14.3.3.</span> <span class="toc-text">寄存器在 LLVM 中的表达</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%B0%E7%89%A9%E7%90%86%E5%AF%84%E5%AD%98%E5%99%A8%E7%9A%84%E6%98%A0%E5%B0%84"><span class="toc-number">14.3.4.</span> <span class="toc-text">虚拟寄存器到物理寄存器的映射</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LLVM-%E8%87%AA%E5%B8%A6%E7%9A%84%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D%E7%AE%97%E6%B3%95"><span class="toc-number">14.3.5.</span> <span class="toc-text">LLVM 自带的寄存器分配算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-Emission"><span class="toc-number">14.4.</span> <span class="toc-text">Code Emission</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Swift-%E7%BC%96%E8%AF%91%E6%B5%81"><span class="toc-number">15.</span> <span class="toc-text">Swift 编译流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%86%85%E5%AE%B9-Link-Map-File"><span class="toc-number">16.</span> <span class="toc-text">编译后生成的二进制内容 Link Map File</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Object-files"><span class="toc-number">16.1.</span> <span class="toc-text">Object files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sections"><span class="toc-number">16.2.</span> <span class="toc-text">Sections</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Symbols"><span class="toc-number">16.3.</span> <span class="toc-text">Symbols</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%8F%E6%AC%A1%E7%BC%96%E8%AF%91%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84-dSYM-%E6%96%87%E4%BB%B6"><span class="toc-number">17.</span> <span class="toc-text">每次编译后生成的 dSYM 文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mach-O-%E6%96%87%E4%BB%B6"><span class="toc-number">18.</span> <span class="toc-text">Mach-O 文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mach-O-%E6%96%87%E4%BB%B6%E7%9A%84%E8%A7%A3%E6%9E%90"><span class="toc-number">18.1.</span> <span class="toc-text">Mach-O 文件的解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%86%E5%90%91-Mach-O-%E6%96%87%E4%BB%B6"><span class="toc-number">18.2.</span> <span class="toc-text">逆向 Mach-O 文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dyld%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-number">19.</span> <span class="toc-text">dyld动态链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LLVM-%E5%B7%A5%E5%85%B7%E9%93%BE"><span class="toc-number">20.</span> <span class="toc-text">LLVM 工具链</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96-LLVM"><span class="toc-number">20.1.</span> <span class="toc-text">获取 LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91-LLVM"><span class="toc-number">20.2.</span> <span class="toc-text">编译 LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LLVM-%E6%BA%90%E7%A0%81%E5%B7%A5%E7%A8%8B%E7%9B%AE%E5%BD%95%E4%BB%8B%E7%BB%8D"><span class="toc-number">20.3.</span> <span class="toc-text">LLVM 源码工程目录介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lib-%E7%9B%AE%E5%BD%95%E4%BB%8B%E7%BB%8D"><span class="toc-number">20.4.</span> <span class="toc-text">lib 目录介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E9%93%BE%E5%91%BD%E4%BB%A4%E4%BB%8B%E7%BB%8D"><span class="toc-number">20.5.</span> <span class="toc-text">工具链命令介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-number">20.5.1.</span> <span class="toc-text">基本命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="toc-number">20.5.2.</span> <span class="toc-text">调试工具</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="toc-number">20.5.3.</span> <span class="toc-text">开发工具</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Swift-%E7%BC%96%E8%AF%91"><span class="toc-number">21.</span> <span class="toc-text">Swift 编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E5%AE%83%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7"><span class="toc-number">22.</span> <span class="toc-text">其它编译工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#js%E5%86%99%E7%9A%84C-%E8%A7%A3%E9%87%8A%E5%99%A8JSCPP"><span class="toc-number">22.1.</span> <span class="toc-text">js写的C++解释器JSCPP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-SMILE-%E4%B8%80%E5%A5%97%E6%94%AF%E6%8C%81C-x2F-C-JS-JAVA%E5%9B%9B%E7%A7%8D%E8%AF%AD%E8%A8%80%E7%9A%84scripting-language"><span class="toc-number">22.2.</span> <span class="toc-text">C-SMILE 一套支持C&#x2F;C++ JS JAVA四种语言的scripting language</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%96%99%E7%BD%91%E5%9D%80"><span class="toc-number">23.</span> <span class="toc-text">资料网址</span></a></li></ol>
     </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">42</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-novel">
+        <div class="categories-list-item">
+          My-novel
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-painting">
+        <div class="categories-list-item">
+          My-painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
 </div>
-
-
-                
-            </div>
-
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\WWDC" title="WWDC"><div class="tags-list-item">WWDC</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">编译流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clang-%E7%BC%96%E8%AF%91-m-%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">Clang 编译 .m 文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA-Target"><span class="toc-number">3.1.</span> <span class="toc-text">构建 Target</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Target-%E5%9C%A8-Build-%E8%BF%87%E7%A8%8B%E7%9A%84%E6%8E%A7%E5%88%B6"><span class="toc-number">3.2.</span> <span class="toc-text">Target 在 Build 过程的控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Build-Phases"><span class="toc-number">3.2.1.</span> <span class="toc-text">Build Phases</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Build-Rules"><span class="toc-number">3.2.2.</span> <span class="toc-text">Build Rules</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Build-Settings"><span class="toc-number">3.2.3.</span> <span class="toc-text">Build Settings</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pbxproj%E5%B7%A5%E7%A8%8B%E6%96%87%E4%BB%B6"><span class="toc-number">3.2.4.</span> <span class="toc-text">pbxproj工程文件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clang-Static-Analyzer%E9%9D%99%E6%80%81%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">Clang Static Analyzer静态代码分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CodeGen-%E7%94%9F%E6%88%90-IR-%E4%BB%A3%E7%A0%81"><span class="toc-number">5.</span> <span class="toc-text">CodeGen 生成 IR 代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IR-%E7%BB%93%E6%9E%84"><span class="toc-number">5.1.</span> <span class="toc-text">IR 结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LLVM-IR-%E4%BC%98%E5%8C%96"><span class="toc-number">5.2.</span> <span class="toc-text">LLVM IR 优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSA"><span class="toc-number">5.3.</span> <span class="toc-text">SSA</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clang-CFE"><span class="toc-number">6.</span> <span class="toc-text">Clang CFE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#libclang"><span class="toc-number">6.1.</span> <span class="toc-text">libclang</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Driver"><span class="toc-number">7.</span> <span class="toc-text">Driver</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Driver-%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-number">7.1.</span> <span class="toc-text">Driver 的工作流程图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Parse"><span class="toc-number">7.2.</span> <span class="toc-text">Parse</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pipeline"><span class="toc-number">7.3.</span> <span class="toc-text">Pipeline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Action"><span class="toc-number">7.4.</span> <span class="toc-text">Action</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bind"><span class="toc-number">7.5.</span> <span class="toc-text">Bind</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Translate"><span class="toc-number">7.6.</span> <span class="toc-text">Translate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jobs"><span class="toc-number">7.7.</span> <span class="toc-text">Jobs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Execute"><span class="toc-number">7.8.</span> <span class="toc-text">Execute</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clang-Attributes"><span class="toc-number">8.</span> <span class="toc-text">Clang Attributes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-format-NSString-F-A-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">8.1.</span> <span class="toc-text">attribute((format(NSString, F, A))) 格式化字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-deprecated-s-%E7%89%88%E6%9C%AC%E5%BC%83%E7%94%A8%E6%8F%90%E7%A4%BA"><span class="toc-number">8.2.</span> <span class="toc-text">attribute((deprecated(s))) 版本弃用提示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-availability-os-introduced-x3D-m-deprecated-x3D-n-obsoleted-x3D-o-message-x3D-%E2%80%9C%E2%80%9D-VA-ARGS-%E6%8C%87%E6%98%8E%E4%BD%BF%E7%94%A8%E7%89%88%E6%9C%AC%E8%8C%83%E5%9B%B4"><span class="toc-number">8.3.</span> <span class="toc-text">attribute((availability(os,introduced&#x3D;m,deprecated&#x3D;n, obsoleted&#x3D;o,message&#x3D;“” VA_ARGS))) 指明使用版本范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-unavailable-%E2%80%A6-%E6%96%B9%E6%B3%95%E4%B8%8D%E5%8F%AF%E7%94%A8%E6%8F%90%E7%A4%BA"><span class="toc-number">8.4.</span> <span class="toc-text">attribute((unavailable(…))) 方法不可用提示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-unused"><span class="toc-number">8.5.</span> <span class="toc-text">attribute((unused))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-warn-unused-result"><span class="toc-number">8.6.</span> <span class="toc-text">attribute((warn_unused_result))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-availability-swift-unavailable-message-x3D-msg"><span class="toc-number">8.7.</span> <span class="toc-text">attribute((availability(swift, unavailable, message&#x3D;_msg)))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-cleanup-%E2%80%A6-%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%BB%93%E6%9D%9F%E6%97%B6%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA%E6%8C%87%E5%AE%9A%E6%96%B9%E6%B3%95"><span class="toc-number">8.8.</span> <span class="toc-text">attribute((cleanup(…))) 作用域结束时自动执行一个指定方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-overloadable-%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD"><span class="toc-number">8.9.</span> <span class="toc-text">attribute((overloadable)) 方法重载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-objc-designated-initializer-%E6%8C%87%E5%AE%9A%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95"><span class="toc-number">8.10.</span> <span class="toc-text">attribute((objc_designated_initializer)) 指定内部实现的初始化方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-objc-subclassing-restricted-%E6%8C%87%E5%AE%9A%E4%B8%8D%E8%83%BD%E6%9C%89%E5%AD%90%E7%B1%BB"><span class="toc-number">8.11.</span> <span class="toc-text">attribute((objc_subclassing_restricted)) 指定不能有子类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-objc-requires-super-%E5%AD%90%E7%B1%BB%E7%BB%A7%E6%89%BF%E5%BF%85%E9%A1%BB%E8%B0%83%E7%94%A8-super"><span class="toc-number">8.12.</span> <span class="toc-text">attribute((objc_requires_super)) 子类继承必须调用 super</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#attribute-const-%E9%87%8D%E5%A4%8D%E8%B0%83%E7%94%A8%E7%9B%B8%E5%90%8C%E6%95%B0%E5%80%BC%E5%8F%82%E6%95%B0%E4%BC%98%E5%8C%96%E8%BF%94%E5%9B%9E"><span class="toc-number">9.</span> <span class="toc-text">attribute((const)) 重复调用相同数值参数优化返回</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#attribute-constructor-PRIORITY-%E5%92%8C-attribute-destructor-PRIORITY"><span class="toc-number">9.1.</span> <span class="toc-text">attribute((constructor(PRIORITY))) 和 attribute((destructor(PRIORITY)))</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clang-%E8%AD%A6%E5%91%8A%E5%A4%84%E7%90%86"><span class="toc-number">10.</span> <span class="toc-text">Clang 警告处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-libclang-%E6%9D%A5%E8%BF%9B%E8%A1%8C%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-number">11.</span> <span class="toc-text">使用 libclang 来进行语法分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LibTooling-%E5%AF%B9%E8%AF%AD%E6%B3%95%E6%A0%91%E5%AE%8C%E5%85%A8%E7%9A%84%E6%8E%A7%E5%88%B6"><span class="toc-number">12.</span> <span class="toc-text">LibTooling 对语法树完全的控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clang-Plugin"><span class="toc-number">13.</span> <span class="toc-text">Clang Plugin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LLVM-Backend"><span class="toc-number">14.</span> <span class="toc-text">LLVM Backend</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CodeGen-%E9%98%B6%E6%AE%B5"><span class="toc-number">14.1.</span> <span class="toc-text">CodeGen 阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SelectionDAG"><span class="toc-number">14.2.</span> <span class="toc-text">SelectionDAG</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SDNode"><span class="toc-number">14.2.1.</span> <span class="toc-text">SDNode</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PatFrag-%E5%8F%AF%E5%A4%8D%E7%94%A8%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">14.2.2.</span> <span class="toc-text">PatFrag 可复用的结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pattern-%E5%8C%B9%E9%85%8D%E6%8C%87%E4%BB%A4"><span class="toc-number">14.2.3.</span> <span class="toc-text">Pattern 匹配指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Predicate"><span class="toc-number">14.2.4.</span> <span class="toc-text">Predicate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Itinerary-%E5%92%8C-SchedRW-%E8%B0%83%E5%BA%A6%E4%BF%A1%E6%81%AF"><span class="toc-number">14.2.5.</span> <span class="toc-text">Itinerary 和 SchedRW 调度信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TableGen"><span class="toc-number">14.2.6.</span> <span class="toc-text">TableGen</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#TabelGen-%E7%B1%BB%E5%9E%8B"><span class="toc-number">14.2.6.1.</span> <span class="toc-text">TabelGen 类型</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Register-Allocation-%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D"><span class="toc-number">14.3.</span> <span class="toc-text">Register Allocation 寄存器分配</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">14.3.1.</span> <span class="toc-text">寄存器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RegisterClass"><span class="toc-number">14.3.2.</span> <span class="toc-text">RegisterClass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E5%9C%A8-LLVM-%E4%B8%AD%E7%9A%84%E8%A1%A8%E8%BE%BE"><span class="toc-number">14.3.3.</span> <span class="toc-text">寄存器在 LLVM 中的表达</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%B0%E7%89%A9%E7%90%86%E5%AF%84%E5%AD%98%E5%99%A8%E7%9A%84%E6%98%A0%E5%B0%84"><span class="toc-number">14.3.4.</span> <span class="toc-text">虚拟寄存器到物理寄存器的映射</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LLVM-%E8%87%AA%E5%B8%A6%E7%9A%84%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D%E7%AE%97%E6%B3%95"><span class="toc-number">14.3.5.</span> <span class="toc-text">LLVM 自带的寄存器分配算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-Emission"><span class="toc-number">14.4.</span> <span class="toc-text">Code Emission</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Swift-%E7%BC%96%E8%AF%91%E6%B5%81"><span class="toc-number">15.</span> <span class="toc-text">Swift 编译流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%86%85%E5%AE%B9-Link-Map-File"><span class="toc-number">16.</span> <span class="toc-text">编译后生成的二进制内容 Link Map File</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Object-files"><span class="toc-number">16.1.</span> <span class="toc-text">Object files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sections"><span class="toc-number">16.2.</span> <span class="toc-text">Sections</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Symbols"><span class="toc-number">16.3.</span> <span class="toc-text">Symbols</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%8F%E6%AC%A1%E7%BC%96%E8%AF%91%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84-dSYM-%E6%96%87%E4%BB%B6"><span class="toc-number">17.</span> <span class="toc-text">每次编译后生成的 dSYM 文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mach-O-%E6%96%87%E4%BB%B6"><span class="toc-number">18.</span> <span class="toc-text">Mach-O 文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mach-O-%E6%96%87%E4%BB%B6%E7%9A%84%E8%A7%A3%E6%9E%90"><span class="toc-number">18.1.</span> <span class="toc-text">Mach-O 文件的解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%86%E5%90%91-Mach-O-%E6%96%87%E4%BB%B6"><span class="toc-number">18.2.</span> <span class="toc-text">逆向 Mach-O 文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dyld%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-number">19.</span> <span class="toc-text">dyld动态链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LLVM-%E5%B7%A5%E5%85%B7%E9%93%BE"><span class="toc-number">20.</span> <span class="toc-text">LLVM 工具链</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96-LLVM"><span class="toc-number">20.1.</span> <span class="toc-text">获取 LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91-LLVM"><span class="toc-number">20.2.</span> <span class="toc-text">编译 LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LLVM-%E6%BA%90%E7%A0%81%E5%B7%A5%E7%A8%8B%E7%9B%AE%E5%BD%95%E4%BB%8B%E7%BB%8D"><span class="toc-number">20.3.</span> <span class="toc-text">LLVM 源码工程目录介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lib-%E7%9B%AE%E5%BD%95%E4%BB%8B%E7%BB%8D"><span class="toc-number">20.4.</span> <span class="toc-text">lib 目录介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E9%93%BE%E5%91%BD%E4%BB%A4%E4%BB%8B%E7%BB%8D"><span class="toc-number">20.5.</span> <span class="toc-text">工具链命令介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-number">20.5.1.</span> <span class="toc-text">基本命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="toc-number">20.5.2.</span> <span class="toc-text">调试工具</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="toc-number">20.5.3.</span> <span class="toc-text">开发工具</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Swift-%E7%BC%96%E8%AF%91"><span class="toc-number">21.</span> <span class="toc-text">Swift 编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E5%AE%83%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7"><span class="toc-number">22.</span> <span class="toc-text">其它编译工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#js%E5%86%99%E7%9A%84C-%E8%A7%A3%E9%87%8A%E5%99%A8JSCPP"><span class="toc-number">22.1.</span> <span class="toc-text">js写的C++解释器JSCPP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-SMILE-%E4%B8%80%E5%A5%97%E6%94%AF%E6%8C%81C-x2F-C-JS-JAVA%E5%9B%9B%E7%A7%8D%E8%AF%AD%E8%A8%80%E7%9A%84scripting-language"><span class="toc-number">22.2.</span> <span class="toc-text">C-SMILE 一套支持C&#x2F;C++ JS JAVA四种语言的scripting language</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%96%99%E7%BD%91%E5%9D%80"><span class="toc-number">23.</span> <span class="toc-text">资料网址</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-03-25</div>
+        <a href="/2022/03/25/develop-with-swiftui/"><div class="recent-posts-item-content">在苹果加速器活动做的 SwiftUI 开发分享</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-02-26</div>
+        <a href="/2022/02/26/draw-in-2021/"><div class="recent-posts-item-content">2021年画的</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
         </div>
-
-        <div class="page-main-content-bottom">
-            <footer class="footer">
-    <div class="info-container">
-        <div class="copyright-info info-item">
-            &copy;
-            
-              <span>2014</span>
-              -
-            
-            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">戴铭</a>
-        </div>
-        
-            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-            <div class="website-count info-item">
-                
-                    <span id="busuanzi_container_site_uv">
-                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
-                    </span>
-                
-                
-                    <span id="busuanzi_container_site_pv">
-                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
-                    </span>
-                
-            </div>
-        
-        <div class="theme-info info-item">
-            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
-        </div>
-        
-            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">鄂ICP备17011999号 京公网安备 7011999号</a></div>
-        
-        
+      </div>
     </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2014 -
+          
+          2022
+        </span>
+        <a href="/" class="footer-link">戴铭的博客 </a>
+      </div>
+    </div>
+
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
+      </a>
+      <br />
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
 </footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
 
-        </div>
-    </div>
-
-    
-        <div class="post-tools">
-            <div class="post-tools-container">
-    <ul class="tools-list">
-        <!-- TOC aside toggle -->
-        
-            <li class="tools-item page-aside-toggle">
-                <i class="fas fa-outdent"></i>
-            </li>
-        
-
-        <!-- go comment -->
-        
-    </ul>
-</div>
-
-        </div>
-    
-
-    <div class="right-bottom-side-tools">
-        <div class="side-tools-container">
-    <ul class="side-tools-list">
-        <li class="tools-item tool-font-adjust-plus flex-center">
-            <i class="fas fa-search-plus"></i>
-        </li>
-
-        <li class="tools-item tool-font-adjust-minus flex-center">
-            <i class="fas fa-search-minus"></i>
-        </li>
-
-        <li class="tools-item tool-expand-width flex-center">
-            <i class="fas fa-arrows-alt-h"></i>
-        </li>
-
-        <li class="tools-item tool-dark-light-toggle flex-center">
-            <i class="fas fa-moon"></i>
-        </li>
-
-        <!-- rss -->
-        
-            <li class="tools-item rss flex-center">
-                <a class="flex-center"
-                   href="/atom.xml"
-                   target="_blank"
-                >
-                    <i class="fas fa-rss"></i>
-                </a>
-            </li>
-        
-
-        
-            <li class="tools-item tool-scroll-to-top flex-center">
-                <i class="fas fa-arrow-up"></i>
-            </li>
-        
-
-        <li class="tools-item tool-scroll-to-bottom flex-center">
-            <i class="fas fa-arrow-down"></i>
-        </li>
-    </ul>
-
-    <ul class="exposed-tools-list">
-        <li class="tools-item tool-toggle-show flex-center">
-            <i class="fas fa-cog fa-spin"></i>
-        </li>
-        
-    </ul>
-</div>
-
-    </div>
-
-    
-        <aside class="page-aside">
-            <div class="post-toc-wrap">
-    <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">编译流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Clang-%E7%BC%96%E8%AF%91-m-%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">Clang 编译 .m 文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA-Target"><span class="nav-number">3.1.</span> <span class="nav-text">构建 Target</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Target-%E5%9C%A8-Build-%E8%BF%87%E7%A8%8B%E7%9A%84%E6%8E%A7%E5%88%B6"><span class="nav-number">3.2.</span> <span class="nav-text">Target 在 Build 过程的控制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Build-Phases"><span class="nav-number">3.2.1.</span> <span class="nav-text">Build Phases</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Build-Rules"><span class="nav-number">3.2.2.</span> <span class="nav-text">Build Rules</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Build-Settings"><span class="nav-number">3.2.3.</span> <span class="nav-text">Build Settings</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pbxproj%E5%B7%A5%E7%A8%8B%E6%96%87%E4%BB%B6"><span class="nav-number">3.2.4.</span> <span class="nav-text">pbxproj工程文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Clang-Static-Analyzer%E9%9D%99%E6%80%81%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">Clang Static Analyzer静态代码分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CodeGen-%E7%94%9F%E6%88%90-IR-%E4%BB%A3%E7%A0%81"><span class="nav-number">5.</span> <span class="nav-text">CodeGen 生成 IR 代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IR-%E7%BB%93%E6%9E%84"><span class="nav-number">5.1.</span> <span class="nav-text">IR 结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLVM-IR-%E4%BC%98%E5%8C%96"><span class="nav-number">5.2.</span> <span class="nav-text">LLVM IR 优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSA"><span class="nav-number">5.3.</span> <span class="nav-text">SSA</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Clang-CFE"><span class="nav-number">6.</span> <span class="nav-text">Clang CFE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#libclang"><span class="nav-number">6.1.</span> <span class="nav-text">libclang</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Driver"><span class="nav-number">7.</span> <span class="nav-text">Driver</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Driver-%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-number">7.1.</span> <span class="nav-text">Driver 的工作流程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parse"><span class="nav-number">7.2.</span> <span class="nav-text">Parse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pipeline"><span class="nav-number">7.3.</span> <span class="nav-text">Pipeline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Action"><span class="nav-number">7.4.</span> <span class="nav-text">Action</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bind"><span class="nav-number">7.5.</span> <span class="nav-text">Bind</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Translate"><span class="nav-number">7.6.</span> <span class="nav-text">Translate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jobs"><span class="nav-number">7.7.</span> <span class="nav-text">Jobs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Execute"><span class="nav-number">7.8.</span> <span class="nav-text">Execute</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Clang-Attributes"><span class="nav-number">8.</span> <span class="nav-text">Clang Attributes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#attribute-format-NSString-F-A-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">8.1.</span> <span class="nav-text">attribute((format(NSString, F, A))) 格式化字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attribute-deprecated-s-%E7%89%88%E6%9C%AC%E5%BC%83%E7%94%A8%E6%8F%90%E7%A4%BA"><span class="nav-number">8.2.</span> <span class="nav-text">attribute((deprecated(s))) 版本弃用提示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attribute-availability-os-introduced-x3D-m-deprecated-x3D-n-obsoleted-x3D-o-message-x3D-%E2%80%9C%E2%80%9D-VA-ARGS-%E6%8C%87%E6%98%8E%E4%BD%BF%E7%94%A8%E7%89%88%E6%9C%AC%E8%8C%83%E5%9B%B4"><span class="nav-number">8.3.</span> <span class="nav-text">attribute((availability(os,introduced&#x3D;m,deprecated&#x3D;n, obsoleted&#x3D;o,message&#x3D;“” VA_ARGS))) 指明使用版本范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attribute-unavailable-%E2%80%A6-%E6%96%B9%E6%B3%95%E4%B8%8D%E5%8F%AF%E7%94%A8%E6%8F%90%E7%A4%BA"><span class="nav-number">8.4.</span> <span class="nav-text">attribute((unavailable(…))) 方法不可用提示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attribute-unused"><span class="nav-number">8.5.</span> <span class="nav-text">attribute((unused))</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attribute-warn-unused-result"><span class="nav-number">8.6.</span> <span class="nav-text">attribute((warn_unused_result))</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attribute-availability-swift-unavailable-message-x3D-msg"><span class="nav-number">8.7.</span> <span class="nav-text">attribute((availability(swift, unavailable, message&#x3D;_msg)))</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attribute-cleanup-%E2%80%A6-%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%BB%93%E6%9D%9F%E6%97%B6%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA%E6%8C%87%E5%AE%9A%E6%96%B9%E6%B3%95"><span class="nav-number">8.8.</span> <span class="nav-text">attribute((cleanup(…))) 作用域结束时自动执行一个指定方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attribute-overloadable-%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD"><span class="nav-number">8.9.</span> <span class="nav-text">attribute((overloadable)) 方法重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attribute-objc-designated-initializer-%E6%8C%87%E5%AE%9A%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95"><span class="nav-number">8.10.</span> <span class="nav-text">attribute((objc_designated_initializer)) 指定内部实现的初始化方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attribute-objc-subclassing-restricted-%E6%8C%87%E5%AE%9A%E4%B8%8D%E8%83%BD%E6%9C%89%E5%AD%90%E7%B1%BB"><span class="nav-number">8.11.</span> <span class="nav-text">attribute((objc_subclassing_restricted)) 指定不能有子类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attribute-objc-requires-super-%E5%AD%90%E7%B1%BB%E7%BB%A7%E6%89%BF%E5%BF%85%E9%A1%BB%E8%B0%83%E7%94%A8-super"><span class="nav-number">8.12.</span> <span class="nav-text">attribute((objc_requires_super)) 子类继承必须调用 super</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attribute-const-%E9%87%8D%E5%A4%8D%E8%B0%83%E7%94%A8%E7%9B%B8%E5%90%8C%E6%95%B0%E5%80%BC%E5%8F%82%E6%95%B0%E4%BC%98%E5%8C%96%E8%BF%94%E5%9B%9E"><span class="nav-number">9.</span> <span class="nav-text">attribute((const)) 重复调用相同数值参数优化返回</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#attribute-constructor-PRIORITY-%E5%92%8C-attribute-destructor-PRIORITY"><span class="nav-number">9.1.</span> <span class="nav-text">attribute((constructor(PRIORITY))) 和 attribute((destructor(PRIORITY)))</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Clang-%E8%AD%A6%E5%91%8A%E5%A4%84%E7%90%86"><span class="nav-number">10.</span> <span class="nav-text">Clang 警告处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-libclang-%E6%9D%A5%E8%BF%9B%E8%A1%8C%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-number">11.</span> <span class="nav-text">使用 libclang 来进行语法分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LibTooling-%E5%AF%B9%E8%AF%AD%E6%B3%95%E6%A0%91%E5%AE%8C%E5%85%A8%E7%9A%84%E6%8E%A7%E5%88%B6"><span class="nav-number">12.</span> <span class="nav-text">LibTooling 对语法树完全的控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Clang-Plugin"><span class="nav-number">13.</span> <span class="nav-text">Clang Plugin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LLVM-Backend"><span class="nav-number">14.</span> <span class="nav-text">LLVM Backend</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CodeGen-%E9%98%B6%E6%AE%B5"><span class="nav-number">14.1.</span> <span class="nav-text">CodeGen 阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SelectionDAG"><span class="nav-number">14.2.</span> <span class="nav-text">SelectionDAG</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SDNode"><span class="nav-number">14.2.1.</span> <span class="nav-text">SDNode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PatFrag-%E5%8F%AF%E5%A4%8D%E7%94%A8%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-number">14.2.2.</span> <span class="nav-text">PatFrag 可复用的结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Pattern-%E5%8C%B9%E9%85%8D%E6%8C%87%E4%BB%A4"><span class="nav-number">14.2.3.</span> <span class="nav-text">Pattern 匹配指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Predicate"><span class="nav-number">14.2.4.</span> <span class="nav-text">Predicate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Itinerary-%E5%92%8C-SchedRW-%E8%B0%83%E5%BA%A6%E4%BF%A1%E6%81%AF"><span class="nav-number">14.2.5.</span> <span class="nav-text">Itinerary 和 SchedRW 调度信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TableGen"><span class="nav-number">14.2.6.</span> <span class="nav-text">TableGen</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#TabelGen-%E7%B1%BB%E5%9E%8B"><span class="nav-number">14.2.6.1.</span> <span class="nav-text">TabelGen 类型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Register-Allocation-%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D"><span class="nav-number">14.3.</span> <span class="nav-text">Register Allocation 寄存器分配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">14.3.1.</span> <span class="nav-text">寄存器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RegisterClass"><span class="nav-number">14.3.2.</span> <span class="nav-text">RegisterClass</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E5%9C%A8-LLVM-%E4%B8%AD%E7%9A%84%E8%A1%A8%E8%BE%BE"><span class="nav-number">14.3.3.</span> <span class="nav-text">寄存器在 LLVM 中的表达</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%B0%E7%89%A9%E7%90%86%E5%AF%84%E5%AD%98%E5%99%A8%E7%9A%84%E6%98%A0%E5%B0%84"><span class="nav-number">14.3.4.</span> <span class="nav-text">虚拟寄存器到物理寄存器的映射</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LLVM-%E8%87%AA%E5%B8%A6%E7%9A%84%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D%E7%AE%97%E6%B3%95"><span class="nav-number">14.3.5.</span> <span class="nav-text">LLVM 自带的寄存器分配算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Code-Emission"><span class="nav-number">14.4.</span> <span class="nav-text">Code Emission</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift-%E7%BC%96%E8%AF%91%E6%B5%81"><span class="nav-number">15.</span> <span class="nav-text">Swift 编译流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%86%85%E5%AE%B9-Link-Map-File"><span class="nav-number">16.</span> <span class="nav-text">编译后生成的二进制内容 Link Map File</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Object-files"><span class="nav-number">16.1.</span> <span class="nav-text">Object files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sections"><span class="nav-number">16.2.</span> <span class="nav-text">Sections</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Symbols"><span class="nav-number">16.3.</span> <span class="nav-text">Symbols</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%8F%E6%AC%A1%E7%BC%96%E8%AF%91%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84-dSYM-%E6%96%87%E4%BB%B6"><span class="nav-number">17.</span> <span class="nav-text">每次编译后生成的 dSYM 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mach-O-%E6%96%87%E4%BB%B6"><span class="nav-number">18.</span> <span class="nav-text">Mach-O 文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mach-O-%E6%96%87%E4%BB%B6%E7%9A%84%E8%A7%A3%E6%9E%90"><span class="nav-number">18.1.</span> <span class="nav-text">Mach-O 文件的解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%86%E5%90%91-Mach-O-%E6%96%87%E4%BB%B6"><span class="nav-number">18.2.</span> <span class="nav-text">逆向 Mach-O 文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dyld%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="nav-number">19.</span> <span class="nav-text">dyld动态链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LLVM-%E5%B7%A5%E5%85%B7%E9%93%BE"><span class="nav-number">20.</span> <span class="nav-text">LLVM 工具链</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96-LLVM"><span class="nav-number">20.1.</span> <span class="nav-text">获取 LLVM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91-LLVM"><span class="nav-number">20.2.</span> <span class="nav-text">编译 LLVM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLVM-%E6%BA%90%E7%A0%81%E5%B7%A5%E7%A8%8B%E7%9B%AE%E5%BD%95%E4%BB%8B%E7%BB%8D"><span class="nav-number">20.3.</span> <span class="nav-text">LLVM 源码工程目录介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lib-%E7%9B%AE%E5%BD%95%E4%BB%8B%E7%BB%8D"><span class="nav-number">20.4.</span> <span class="nav-text">lib 目录介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E9%93%BE%E5%91%BD%E4%BB%A4%E4%BB%8B%E7%BB%8D"><span class="nav-number">20.5.</span> <span class="nav-text">工具链命令介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-number">20.5.1.</span> <span class="nav-text">基本命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="nav-number">20.5.2.</span> <span class="nav-text">调试工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="nav-number">20.5.3.</span> <span class="nav-text">开发工具</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift-%E7%BC%96%E8%AF%91"><span class="nav-number">21.</span> <span class="nav-text">Swift 编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E5%AE%83%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7"><span class="nav-number">22.</span> <span class="nav-text">其它编译工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#js%E5%86%99%E7%9A%84C-%E8%A7%A3%E9%87%8A%E5%99%A8JSCPP"><span class="nav-number">22.1.</span> <span class="nav-text">js写的C++解释器JSCPP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-SMILE-%E4%B8%80%E5%A5%97%E6%94%AF%E6%8C%81C-x2F-C-JS-JAVA%E5%9B%9B%E7%A7%8D%E8%AF%AD%E8%A8%80%E7%9A%84scripting-language"><span class="nav-number">22.2.</span> <span class="nav-text">C-SMILE 一套支持C&#x2F;C++ JS JAVA四种语言的scripting language</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%96%99%E7%BD%91%E5%9D%80"><span class="nav-number">23.</span> <span class="nav-text">资料网址</span></a></li></ol>
-    </div>
-</div>
-        </aside>
-    
-
-    <div class="image-viewer-container">
-    <img src="">
-</div>
-
-
-    
-
-</main>
-
-
-
-
-<script src="/js/utils.js"></script>
-
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
 <script src="/js/main.js"></script>
 
-<script src="/js/header-shrink.js"></script>
-
-<script src="/js/back2top.js"></script>
-
-<script src="/js/dark-light-toggle.js"></script>
-
-
-
-
-
-
-
-
-<div class="post-scripts">
-    
-        
-<script src="/js/left-side-toggle.js"></script>
-
-<script src="/js/libs/anime.min.js"></script>
-
-<script src="/js/toc.js"></script>
-
-    
-</div>
-
-
-
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
 </body>
+
 </html>

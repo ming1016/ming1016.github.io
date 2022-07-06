@@ -1,229 +1,197 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html>
+<meta  lang="zh-Hans" >
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content="Hexo Theme Keep">
-    <meta name="description" content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-    <meta name="author" content="戴铭">
-    
-    <title>
-        
-            深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言 |
-        
-        戴铭的博客
-    </title>
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <link rel="shortcut icon" href="/img/logo-starming.png">
-    
-<link rel="stylesheet" href="/css/font-awesome.min.css">
-
-    <script id="hexo-configurations">
-    let KEEP = window.KEEP || {};
-    KEEP.hexo_config = {"hostname":"ming1016.github.io","root":"/","language":"zh-Hans"};
-    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/img/ming.jpeg","favicon":"/img/logo-starming.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":null,"description":"混乱中的有序"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
-    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
   </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
+  
+  
+  
 <meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
-<div class="progress-bar-container">
+  <div class="wrapper">
     
-
-    
-</div>
-
-
-<main class="page-container">
-
-    
-
-    <div class="page-main-content">
-
-        <div class="page-main-content-top">
-            <header class="header-wrapper">
-
-    <div class="header-content">
-        <div class="left">
-            
-            <a class="logo-title" href="/">
-                戴铭的博客
-            </a>
-        </div>
-
-        <div class="right">
-            <div class="pc">
-                <ul class="menu-list">
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/"
-                            >
-                                HOME
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/archives"
-                            >
-                                ARCHIVES
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/categories"
-                            >
-                                CATEGORIES
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/about"
-                            >
-                                ABOUT
-                            </a>
-                        </li>
-                    
-                    
-                </ul>
-            </div>
-            <div class="mobile">
-                
-                <div class="icon-item menu-bar">
-                    <div class="menu-bar-middle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/">HOME</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/archives">ARCHIVES</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/categories">CATEGORIES</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/about">ABOUT</a>
-                </li>
-            
-        </ul>
-    </div>
-
-    <div class="window-mask"></div>
-
-</header>
-
-
-        </div>
-
-        <div class="page-main-content-middle">
-
-            <div class="main-content">
-
-                
-                    <div class="fade-in-down-animation">
-    <div class="article-content-container">
-
-        <div class="article-title">
-            <span class="title-hover-animation">深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</span>
-        </div>
-
-        
-            <div class="article-header">
-                <div class="avatar">
-                    <img src="/img/ming.jpeg">
-                </div>
-                <div class="info">
-                    <div class="author">
-                        <span class="name">戴铭</span>
-                        
-                            <span class="author-label">Lv4</span>
-                        
-                    </div>
-                    <div class="meta-info">
-                        <div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2021-02-21 12:03:09</span>
-        <span class="mobile">2021-02-21 12:03</span>
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
+      
+      <span class="navbar-logo-dsc">戴铭的博客</span>
     </span>
+  </div>
+  <div class="navbar-menu">
     
-        <span class="article-categories article-meta-item">
-            <i class="fas fa-folder"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/categories/Programming/">Programming</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
+    <a href="/" class="navbar-menu-item">首页 </a>
     
+    <a href="/archives" class="navbar-menu-item">归档 </a>
     
-        <span class="article-tags article-meta-item">
-            <i class="fas fa-tags"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/tags/JavaScript/">JavaScript</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/Web/">Web</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/%E7%BC%96%E8%AF%91/">编译</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
+    <a href="/tags" class="navbar-menu-item">标签 </a>
     
-
+    <a href="/categories" class="navbar-menu-item">分类 </a>
     
+    <a href="/about" class="navbar-menu-item">关于 </a>
     
-        <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>32.3k Words</span>
-        </span>
+    <a href="" class="navbar-menu-item">友链 </a>
     
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
     
-        <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>123 Mins</span>
-        </span>
-    
-    
-        <span class="article-pv article-meta-item">
-            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
-        </span>
-    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/deeply-analyse-quickjs/4.png" data-src="/uploads/deeply-analyse-quickjs/4.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
 </div>
 
-                    </div>
-                </div>
-            </div>
-        
-
-        <div class="article-content markdown-body">
-            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>最近在做 JavaScript 和 Native 打交道的工作，虽然6年前服务端和前端包括 JavaScript 经验也有些，不过如今前端标准和前端引擎也发展了很多，这里做个记录吧。本文会着重介绍 QuickJS，其中会针对 js 语言的一些特性来看这些特性在 QuickJS 是如何解释执行和优化的，能够加深对 js 语言的理解。QuickJS 是在 MIT 许可下发的一个轻量 js 引擎包含 js 的编译器和解释器，支持最新 TC39 的 ECMA-262 标准。QuickJS 和其它 js 引擎的性能对比，可以参看 QuickJS 的 benchmark 对比<a target="_blank" rel="noopener" href="https://bellard.org/quickjs/bench.html">结果页</a>，从结果看，JerryScript 内存和体积小于 QuickJS，但各项性能均低于 QuickJS，Hermes 体积和内存大于 QuickJS，性能和 QuickJS 差不多，但 Hermes 对于 TC39 的标准支持并没 QuickJS 全。Frida 在<a target="_blank" rel="noopener" href="https://frida.re/news/2020/10/28/frida-14-0-released/">14.0版本</a>引入了 QuickJS，经作者验证内存使用只有 V8的五分之一，于是设为默认引擎。14.3版本将默认引擎切回 V8，主要是因为某些场景 V8表现和调试功能更好，对于调试已经在 Fabrice bellard 的规划里了，未来可期。</p>
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-02-21T04:03:09.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021-02-21</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Programming/" class="post-meta-link">Programming</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>32.3k 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/JavaScript/" class="post-meta-link">JavaScript</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Web/" class="post-meta-link">Web</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/编译/" class="post-meta-link">编译</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>最近在做 JavaScript 和 Native 打交道的工作，虽然6年前服务端和前端包括 JavaScript 经验也有些，不过如今前端标准和前端引擎也发展了很多，这里做个记录吧。本文会着重介绍 QuickJS，其中会针对 js 语言的一些特性来看这些特性在 QuickJS 是如何解释执行和优化的，能够加深对 js 语言的理解。QuickJS 是在 MIT 许可下发的一个轻量 js 引擎包含 js 的编译器和解释器，支持最新 TC39 的 ECMA-262 标准。QuickJS 和其它 js 引擎的性能对比，可以参看 QuickJS 的 benchmark 对比<a target="_blank" rel="noopener" href="https://bellard.org/quickjs/bench.html">结果页</a>，从结果看，JerryScript 内存和体积小于 QuickJS，但各项性能均低于 QuickJS，Hermes 体积和内存大于 QuickJS，性能和 QuickJS 差不多，但 Hermes 对于 TC39 的标准支持并没 QuickJS 全。Frida 在<a target="_blank" rel="noopener" href="https://frida.re/news/2020/10/28/frida-14-0-released/">14.0版本</a>引入了 QuickJS，经作者验证内存使用只有 V8的五分之一，于是设为默认引擎。14.3版本将默认引擎切回 V8，主要是因为某些场景 V8表现和调试功能更好，对于调试已经在 Fabrice bellard 的规划里了，未来可期。</p>
 <p>在详细介绍和剖析 QuickJS 之前，我先跟你聊聊 JavaScript 的背景和 QuickJS 作者的背景吧。我觉得这样更有助于理解 QuickJS。</p>
 <p>先说说 JavaScript。</p>
 <h3 id="JavaScript-背景"><a href="#JavaScript-背景" class="headerlink" title="JavaScript 背景"></a>JavaScript 背景</h3><p>第一个图文浏览器是1993年的 Mosaic，由 Marc Andreessen 开发。后替代 Mosaic 的是 Netscape 的 Netscape Navigator 浏览器。Brendan Eich 给 Netscape 开发 Java 辅助语言 Mocha（后更名为 JavaScript），耗时10天出原型（包含了eval 函数），集成到 Netscape 2预览版里，Mocha 基于对象而非 Java 那样基于类。Mocha 采用源码解析生成字节码解释执行方式而非直接使用字节码的原因是 Netscape 公司希望 Mocha 代码简单易用，能够直接在网页代码中编写。</p>
@@ -1143,254 +1111,350 @@ DEF(  put_ref_value, 1, 3, 0, none)<span aria-hidden="true" class="line-numbers-
 <p>OP_add 是加指令字节码操作符，OP_add 会先从 sp 栈里取出待相加两个数，使用 JS_VALUE_IS_BOTH_INT 和 JS_VALUE_IS_BOTH_FLOAT 函数判断两个数是否类型一样，相同的话可以直接相加，整数的话先使用64位计算，然后用32位比较是否相同，不同的话 goto 到 add_slow label 中进行计算。int 和 float 外的比如 big int 等科学计算也 goto 到 add_slow 中计算，add_slow label 里实际调用的是 js_add_slow 函数。减、乘、除的字节码操作符对应的分别是 OP_sub、OP_mul、OP_div，其实现和加字节码操作符类似，不同的是他们的复杂计算都会 goto 到 binary_arith_slow label，调用的是 js_binary_arith_slow 函数。一元计算字节码操作符 OP_plus、OP_neg、OP_inc、OP_dec、OP_inc_loc、OP_dec_loc，他们的复杂计算会调用 js_unary_arith_slow 函数。逻辑计算 OP_shl、OP_sar、OP_and、OP_or、OP_xor，复杂计算会调用 js_binary_logic_slow 函数。</p>
 <p>OP_to_object 字节码操作符会根据栈中定义对象类型来将一些非对象类型转为对象，调用的是 JS_ToObject 函数，内主要是调用 JS_NewObjectFromShape 函数来处理，类型 class_id 来区分不同的数据类型。OP_to_propkey 和 OP_to_propkey2 是将键值的类型转为键可支持的字节码操作符，其主要处理就是除了整型、字符串和 symbol 外类型通过 JS_ToStringInternal 函数转化为字符 JSValue 类型。</p>
 
-        </div>
-
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2021/02/21/deeply-analyse-quickjs/">http://ming1016.github.io/2021/02/21/deeply-analyse-quickjs/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2021/05/22/acfun-swift-practice/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
         
-            <div class="post-copyright-info">
-                <div class="article-copyright-info-container">
-    <ul>
-        <li>Post title：深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</li>
-        <li>Post author：戴铭</li>
-        <li>Create time：2021-02-21 12:03:09</li>
-        <li>
-            Post link：https://ming1016.github.io/2021/02/21/deeply-analyse-quickjs/
-        </li>
-        <li>
-            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
-        </li>
-    </ul>
+        <div class="nav-title">A站 的 Swift 实践 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2020/12/18/thinking-in-how-to-speed-up-app/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">App 启动提速实践和一些想法 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript-%E8%83%8C%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">JavaScript 背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E8%80%85"><span class="toc-number">1.2.</span> <span class="toc-text">作者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decimal"><span class="toc-number">1.3.</span> <span class="toc-text">Decimal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#QuickJS"><span class="toc-number">1.4.</span> <span class="toc-text">QuickJS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#makefile"><span class="toc-number">2.1.</span> <span class="toc-text">makefile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cmake"><span class="toc-number">2.2.</span> <span class="toc-text">cmake</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode-%E6%9D%A5%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E5%92%8C%E8%B0%83%E8%AF%95-QuickJS-%E6%BA%90%E7%A0%81"><span class="toc-number">2.3.</span> <span class="toc-text">Xcode 来编译安装和调试 QuickJS 源码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">使用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E5%8E%9F%E7%94%9F%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">调用原生函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="toc-number">5.</span> <span class="toc-text">源码文件介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QuickJS-%E6%9E%B6%E6%9E%84"><span class="toc-number">6.</span> <span class="toc-text">QuickJS 架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QuickJS-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81%E6%B5%81%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">QuickJS 核心代码流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA-Runtime"><span class="toc-number">7.1.</span> <span class="toc-text">新建 Runtime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">7.2.</span> <span class="toc-text">新建上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS-Eval"><span class="toc-number">7.3.</span> <span class="toc-text">JS_Eval</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B6%E7%BA%A7%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="toc-number">7.4.</span> <span class="toc-text">创建顶级函数定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-%E8%A7%A3%E6%9E%90%E5%92%8C%E7%94%9F%E6%88%90%E5%AD%97%E8%8A%82%E7%A0%81"><span class="toc-number">7.5.</span> <span class="toc-text">js 解析和生成字节码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-create-function-%E5%88%9B%E5%BB%BA%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%E5%8F%8A%E5%8C%85%E5%90%AB%E7%9A%84%E5%AD%90%E5%87%BD%E6%95%B0"><span class="toc-number">7.6.</span> <span class="toc-text">js_create_function 创建函数对象及包含的子函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#pass-1"><span class="toc-number">7.6.1.</span> <span class="toc-text">pass 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pass-2%EF%BC%88resolve-variables%EF%BC%89"><span class="toc-number">7.6.2.</span> <span class="toc-text">pass 2（resolve_variables）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pass3%EF%BC%88resolve-labels%EF%BC%89"><span class="toc-number">7.6.3.</span> <span class="toc-text">pass3（resolve_labels）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E6%89%A7%E8%A1%8C-JS-EvalFunctionInternal"><span class="toc-number">7.7.</span> <span class="toc-text">解释执行 JS_EvalFunctionInternal</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
+
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>56</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>38</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
 </div>
 
             </div>
-        
-
-        
-            <ul class="post-tags-box">
-                
-                    <li class="tag-item">
-                        <a href="/tags/JavaScript/">#JavaScript</a>&nbsp;
-                    </li>
-                
-                    <li class="tag-item">
-                        <a href="/tags/Web/">#Web</a>&nbsp;
-                    </li>
-                
-                    <li class="tag-item">
-                        <a href="/tags/%E7%BC%96%E8%AF%91/">#编译</a>&nbsp;
-                    </li>
-                
-            </ul>
-        
-
-        
-            <div class="article-nav">
-                
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2021/05/22/acfun-swift-practice/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">A站 的 Swift 实践</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                        </a>
-                    </div>
-                
-                
-                    <div class="article-next">
-                        <a class="next"
-                           rel="next"
-                           href="/2020/12/18/thinking-in-how-to-speed-up-app/"
-                        >
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">App 启动提速实践和一些想法</span>
-                                <span class="post-nav-item">Next posts</span>
-                            </span>
-                            <span class="right arrow-icon flex-center">
-                              <i class="fas fa-chevron-right"></i>
-                            </span>
-                        </a>
-                    </div>
-                
-            </div>
-        
-
-        
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript-%E8%83%8C%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">JavaScript 背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E8%80%85"><span class="toc-number">1.2.</span> <span class="toc-text">作者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decimal"><span class="toc-number">1.3.</span> <span class="toc-text">Decimal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#QuickJS"><span class="toc-number">1.4.</span> <span class="toc-text">QuickJS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#makefile"><span class="toc-number">2.1.</span> <span class="toc-text">makefile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cmake"><span class="toc-number">2.2.</span> <span class="toc-text">cmake</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode-%E6%9D%A5%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E5%92%8C%E8%B0%83%E8%AF%95-QuickJS-%E6%BA%90%E7%A0%81"><span class="toc-number">2.3.</span> <span class="toc-text">Xcode 来编译安装和调试 QuickJS 源码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">使用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E5%8E%9F%E7%94%9F%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">调用原生函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="toc-number">5.</span> <span class="toc-text">源码文件介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QuickJS-%E6%9E%B6%E6%9E%84"><span class="toc-number">6.</span> <span class="toc-text">QuickJS 架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QuickJS-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81%E6%B5%81%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">QuickJS 核心代码流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA-Runtime"><span class="toc-number">7.1.</span> <span class="toc-text">新建 Runtime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">7.2.</span> <span class="toc-text">新建上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS-Eval"><span class="toc-number">7.3.</span> <span class="toc-text">JS_Eval</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B6%E7%BA%A7%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="toc-number">7.4.</span> <span class="toc-text">创建顶级函数定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-%E8%A7%A3%E6%9E%90%E5%92%8C%E7%94%9F%E6%88%90%E5%AD%97%E8%8A%82%E7%A0%81"><span class="toc-number">7.5.</span> <span class="toc-text">js 解析和生成字节码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-create-function-%E5%88%9B%E5%BB%BA%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%E5%8F%8A%E5%8C%85%E5%90%AB%E7%9A%84%E5%AD%90%E5%87%BD%E6%95%B0"><span class="toc-number">7.6.</span> <span class="toc-text">js_create_function 创建函数对象及包含的子函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#pass-1"><span class="toc-number">7.6.1.</span> <span class="toc-text">pass 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pass-2%EF%BC%88resolve-variables%EF%BC%89"><span class="toc-number">7.6.2.</span> <span class="toc-text">pass 2（resolve_variables）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pass3%EF%BC%88resolve-labels%EF%BC%89"><span class="toc-number">7.6.3.</span> <span class="toc-text">pass3（resolve_labels）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E6%89%A7%E8%A1%8C-JS-EvalFunctionInternal"><span class="toc-number">7.7.</span> <span class="toc-text">解释执行 JS_EvalFunctionInternal</span></a></li></ol></li></ol>
     </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">42</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-novel">
+        <div class="categories-list-item">
+          My-novel
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-painting">
+        <div class="categories-list-item">
+          My-painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
 </div>
-
-
-                
-            </div>
-
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\WWDC" title="WWDC"><div class="tags-list-item">WWDC</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript-%E8%83%8C%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">JavaScript 背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E8%80%85"><span class="toc-number">1.2.</span> <span class="toc-text">作者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decimal"><span class="toc-number">1.3.</span> <span class="toc-text">Decimal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#QuickJS"><span class="toc-number">1.4.</span> <span class="toc-text">QuickJS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#makefile"><span class="toc-number">2.1.</span> <span class="toc-text">makefile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cmake"><span class="toc-number">2.2.</span> <span class="toc-text">cmake</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode-%E6%9D%A5%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E5%92%8C%E8%B0%83%E8%AF%95-QuickJS-%E6%BA%90%E7%A0%81"><span class="toc-number">2.3.</span> <span class="toc-text">Xcode 来编译安装和调试 QuickJS 源码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">使用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E5%8E%9F%E7%94%9F%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">调用原生函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="toc-number">5.</span> <span class="toc-text">源码文件介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QuickJS-%E6%9E%B6%E6%9E%84"><span class="toc-number">6.</span> <span class="toc-text">QuickJS 架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QuickJS-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81%E6%B5%81%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">QuickJS 核心代码流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA-Runtime"><span class="toc-number">7.1.</span> <span class="toc-text">新建 Runtime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">7.2.</span> <span class="toc-text">新建上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS-Eval"><span class="toc-number">7.3.</span> <span class="toc-text">JS_Eval</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B6%E7%BA%A7%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="toc-number">7.4.</span> <span class="toc-text">创建顶级函数定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-%E8%A7%A3%E6%9E%90%E5%92%8C%E7%94%9F%E6%88%90%E5%AD%97%E8%8A%82%E7%A0%81"><span class="toc-number">7.5.</span> <span class="toc-text">js 解析和生成字节码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-create-function-%E5%88%9B%E5%BB%BA%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%E5%8F%8A%E5%8C%85%E5%90%AB%E7%9A%84%E5%AD%90%E5%87%BD%E6%95%B0"><span class="toc-number">7.6.</span> <span class="toc-text">js_create_function 创建函数对象及包含的子函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#pass-1"><span class="toc-number">7.6.1.</span> <span class="toc-text">pass 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pass-2%EF%BC%88resolve-variables%EF%BC%89"><span class="toc-number">7.6.2.</span> <span class="toc-text">pass 2（resolve_variables）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pass3%EF%BC%88resolve-labels%EF%BC%89"><span class="toc-number">7.6.3.</span> <span class="toc-text">pass3（resolve_labels）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E6%89%A7%E8%A1%8C-JS-EvalFunctionInternal"><span class="toc-number">7.7.</span> <span class="toc-text">解释执行 JS_EvalFunctionInternal</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-03-25</div>
+        <a href="/2022/03/25/develop-with-swiftui/"><div class="recent-posts-item-content">在苹果加速器活动做的 SwiftUI 开发分享</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-02-26</div>
+        <a href="/2022/02/26/draw-in-2021/"><div class="recent-posts-item-content">2021年画的</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
         </div>
-
-        <div class="page-main-content-bottom">
-            <footer class="footer">
-    <div class="info-container">
-        <div class="copyright-info info-item">
-            &copy;
-            
-              <span>2014</span>
-              -
-            
-            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">戴铭</a>
-        </div>
-        
-            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-            <div class="website-count info-item">
-                
-                    <span id="busuanzi_container_site_uv">
-                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
-                    </span>
-                
-                
-                    <span id="busuanzi_container_site_pv">
-                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
-                    </span>
-                
-            </div>
-        
-        <div class="theme-info info-item">
-            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
-        </div>
-        
-            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">鄂ICP备17011999号 京公网安备 7011999号</a></div>
-        
-        
+      </div>
     </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2014 -
+          
+          2022
+        </span>
+        <a href="/" class="footer-link">戴铭的博客 </a>
+      </div>
+    </div>
+
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
+      </a>
+      <br />
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
 </footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
 
-        </div>
-    </div>
-
-    
-        <div class="post-tools">
-            <div class="post-tools-container">
-    <ul class="tools-list">
-        <!-- TOC aside toggle -->
-        
-            <li class="tools-item page-aside-toggle">
-                <i class="fas fa-outdent"></i>
-            </li>
-        
-
-        <!-- go comment -->
-        
-    </ul>
-</div>
-
-        </div>
-    
-
-    <div class="right-bottom-side-tools">
-        <div class="side-tools-container">
-    <ul class="side-tools-list">
-        <li class="tools-item tool-font-adjust-plus flex-center">
-            <i class="fas fa-search-plus"></i>
-        </li>
-
-        <li class="tools-item tool-font-adjust-minus flex-center">
-            <i class="fas fa-search-minus"></i>
-        </li>
-
-        <li class="tools-item tool-expand-width flex-center">
-            <i class="fas fa-arrows-alt-h"></i>
-        </li>
-
-        <li class="tools-item tool-dark-light-toggle flex-center">
-            <i class="fas fa-moon"></i>
-        </li>
-
-        <!-- rss -->
-        
-            <li class="tools-item rss flex-center">
-                <a class="flex-center"
-                   href="/atom.xml"
-                   target="_blank"
-                >
-                    <i class="fas fa-rss"></i>
-                </a>
-            </li>
-        
-
-        
-            <li class="tools-item tool-scroll-to-top flex-center">
-                <i class="fas fa-arrow-up"></i>
-            </li>
-        
-
-        <li class="tools-item tool-scroll-to-bottom flex-center">
-            <i class="fas fa-arrow-down"></i>
-        </li>
-    </ul>
-
-    <ul class="exposed-tools-list">
-        <li class="tools-item tool-toggle-show flex-center">
-            <i class="fas fa-cog fa-spin"></i>
-        </li>
-        
-    </ul>
-</div>
-
-    </div>
-
-    
-        <aside class="page-aside">
-            <div class="post-toc-wrap">
-    <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript-%E8%83%8C%E6%99%AF"><span class="nav-number">1.1.</span> <span class="nav-text">JavaScript 背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E8%80%85"><span class="nav-number">1.2.</span> <span class="nav-text">作者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Decimal"><span class="nav-number">1.3.</span> <span class="nav-text">Decimal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QuickJS"><span class="nav-number">1.4.</span> <span class="nav-text">QuickJS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#makefile"><span class="nav-number">2.1.</span> <span class="nav-text">makefile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cmake"><span class="nav-number">2.2.</span> <span class="nav-text">cmake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode-%E6%9D%A5%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E5%92%8C%E8%B0%83%E8%AF%95-QuickJS-%E6%BA%90%E7%A0%81"><span class="nav-number">2.3.</span> <span class="nav-text">Xcode 来编译安装和调试 QuickJS 源码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%E5%8E%9F%E7%94%9F%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">调用原生函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="nav-number">5.</span> <span class="nav-text">源码文件介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QuickJS-%E6%9E%B6%E6%9E%84"><span class="nav-number">6.</span> <span class="nav-text">QuickJS 架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QuickJS-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81%E6%B5%81%E7%A8%8B"><span class="nav-number">7.</span> <span class="nav-text">QuickJS 核心代码流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA-Runtime"><span class="nav-number">7.1.</span> <span class="nav-text">新建 Runtime</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="nav-number">7.2.</span> <span class="nav-text">新建上下文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS-Eval"><span class="nav-number">7.3.</span> <span class="nav-text">JS_Eval</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B6%E7%BA%A7%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="nav-number">7.4.</span> <span class="nav-text">创建顶级函数定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js-%E8%A7%A3%E6%9E%90%E5%92%8C%E7%94%9F%E6%88%90%E5%AD%97%E8%8A%82%E7%A0%81"><span class="nav-number">7.5.</span> <span class="nav-text">js 解析和生成字节码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js-create-function-%E5%88%9B%E5%BB%BA%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%E5%8F%8A%E5%8C%85%E5%90%AB%E7%9A%84%E5%AD%90%E5%87%BD%E6%95%B0"><span class="nav-number">7.6.</span> <span class="nav-text">js_create_function 创建函数对象及包含的子函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pass-1"><span class="nav-number">7.6.1.</span> <span class="nav-text">pass 1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pass-2%EF%BC%88resolve-variables%EF%BC%89"><span class="nav-number">7.6.2.</span> <span class="nav-text">pass 2（resolve_variables）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pass3%EF%BC%88resolve-labels%EF%BC%89"><span class="nav-number">7.6.3.</span> <span class="nav-text">pass3（resolve_labels）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A%E6%89%A7%E8%A1%8C-JS-EvalFunctionInternal"><span class="nav-number">7.7.</span> <span class="nav-text">解释执行 JS_EvalFunctionInternal</span></a></li></ol></li></ol>
-    </div>
-</div>
-        </aside>
-    
-
-    <div class="image-viewer-container">
-    <img src="">
-</div>
-
-
-    
-
-</main>
-
-
-
-
-<script src="/js/utils.js"></script>
-
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
 <script src="/js/main.js"></script>
 
-<script src="/js/header-shrink.js"></script>
-
-<script src="/js/back2top.js"></script>
-
-<script src="/js/dark-light-toggle.js"></script>
-
-
-
-
-
-
-
-
-<div class="post-scripts">
-    
-        
-<script src="/js/left-side-toggle.js"></script>
-
-<script src="/js/libs/anime.min.js"></script>
-
-<script src="/js/toc.js"></script>
-
-    
-</div>
-
-
-
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
 </body>
+
 </html>

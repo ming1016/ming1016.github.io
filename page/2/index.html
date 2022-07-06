@@ -1,597 +1,446 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html>
+<meta  lang="zh-Hans" >
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content="Hexo Theme Keep">
-    <meta name="description" content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-    <meta name="author" content="戴铭">
-    
-    <title>
-        
-        戴铭的博客
-    </title>
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <link rel="shortcut icon" href="/img/logo-starming.png">
-    
-<link rel="stylesheet" href="/css/font-awesome.min.css">
-
-    <script id="hexo-configurations">
-    let KEEP = window.KEEP || {};
-    KEEP.hexo_config = {"hostname":"ming1016.github.io","root":"/","language":"zh-Hans"};
-    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/img/ming.jpeg","favicon":"/img/logo-starming.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":null,"description":"混乱中的有序"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
-    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
   </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
+  
+  
+  
 <meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
-<div class="progress-bar-container">
+  <div class="wrapper">
     
-
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
+      
+      <span class="navbar-logo-dsc">戴铭的博客</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
     
-</div>
-
-
-<main class="page-container">
-
+    <a href="/" class="navbar-menu-item">首页 </a>
     
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="card">
+  
+  <a href="/2021/05/22/acfun-swift-practice/" class="image-wrapper">
+    <img src="/uploads/acfun-swift-practice/01.png" data-src="/uploads/acfun-swift-practice/01.png"
+      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+      class="image lozad">
+  </a>
+  
+  <article class="card card-content">
+    <a href="/2021/05/22/acfun-swift-practice/">
+      <h1 class="post-title">
+        A站 的 Swift 实践
+      </h1>
+    </a>
+    <div class="card-excerpt">
+      
+      文章已发在快手大前端公众号，欢迎关注，文章地址如下：
 
-    <div class="page-main-content">
-
-        <div class="page-main-content-top">
-            <header class="header-wrapper">
-
-    <div class="header-content">
-        <div class="left">
-            
-            <a class="logo-title" href="/">
-                戴铭的博客
-            </a>
-        </div>
-
-        <div class="right">
-            <div class="pc">
-                <ul class="menu-list">
-                    
-                        <li class="menu-item">
-                            <a class="active"
-                               href="/"
-                            >
-                                HOME
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/archives"
-                            >
-                                ARCHIVES
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/categories"
-                            >
-                                CATEGORIES
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/about"
-                            >
-                                ABOUT
-                            </a>
-                        </li>
-                    
-                    
-                </ul>
-            </div>
-            <div class="mobile">
-                
-                <div class="icon-item menu-bar">
-                    <div class="menu-bar-middle"></div>
-                </div>
-            </div>
-        </div>
+A站 的 Swift 实践 ...
+      
     </div>
-
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class="active"
-                       href="/">HOME</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/archives">ARCHIVES</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/categories">CATEGORIES</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/about">ABOUT</a>
-                </li>
-            
-        </ul>
+    <div class="card-post-footer">
+      <div class="post-meta">
+        <time datetime="2021-05-22T10:16:12.000Z" style="display: flex; align-items: center;">
+          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+          <span>2021-05-22</span>
+        </time>
+        
+        <span class="dot"></span>
+        
+        <a href="categories/Programming/" class="post-meta-link">Programming</a>
+        
+        
+        
+        <span class="dot"></span>
+        <span>11.2k 字</span>
+        
+      </div>
+      <a href="/2021/05/22/acfun-swift-practice/">继续阅读 </a>
     </div>
-
-    <div class="window-mask"></div>
-
-</header>
-
-
-        </div>
-
-        <div class="page-main-content-middle">
-
-            <div class="main-content">
-
-                
-                    <div class="home-content-container fade-in-down-animation">
-    <ul class="home-article-list">
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/05/22/acfun-swift-practice/">
-                        A站 的 Swift 实践
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        文章已发在快手大前端公众号，欢迎关注，文章地址如下：
-
-A站 的 Swift 实践 —— 上篇
-A站 的 Swift 实践 —— 下篇
-
-新文章写得贼累。完美错过了一览祖国大好人海的机会，TIANROAST🦔咖啡也没喝成，新买Switch怪物猎人崛...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sat May 22 2021 18:16:12 GMT+0800">2021-05-22</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/Programming/">Programming</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/iOS/">iOS</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Apple/">Apple</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Swift/">Swift</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2021/05/22/acfun-swift-practice/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
+  </article>
 </div>
 
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/02/21/deeply-analyse-quickjs/">
-                        深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        介绍最近在做 JavaScript 和 Native 打交道的工作，虽然6年前服务端和前端包括 JavaScript 经验也有些，不过如今前端标准和前端引擎也发展了很多，这里做个记录吧。本文会着重介绍 QuickJS，其中会针对 js 语言的一些特性...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sun Feb 21 2021 12:03:09 GMT+0800">2021-02-21</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/Programming/">Programming</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/JavaScript/">JavaScript</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Web/">Web</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E7%BC%96%E8%AF%91/">编译</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
+<div class="card">
+  
+  <a href="/2021/02/21/deeply-analyse-quickjs/" class="image-wrapper">
+    <img src="/uploads/deeply-analyse-quickjs/4.png" data-src="/uploads/deeply-analyse-quickjs/4.png"
+      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+      class="image lozad">
+  </a>
+  
+  <article class="card card-content">
+    <a href="/2021/02/21/deeply-analyse-quickjs/">
+      <h1 class="post-title">
+        深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言
+      </h1>
+    </a>
+    <div class="card-excerpt">
+      
+      介绍最近在做 JavaScript 和 Native 打交道的工作，虽然6年前服务端和前端包括 J...
+      
     </div>
-
-    <a href="/2021/02/21/deeply-analyse-quickjs/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
+    <div class="card-post-footer">
+      <div class="post-meta">
+        <time datetime="2021-02-21T04:03:09.000Z" style="display: flex; align-items: center;">
+          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+          <span>2021-02-21</span>
+        </time>
+        
+        <span class="dot"></span>
+        
+        <a href="categories/Programming/" class="post-meta-link">Programming</a>
+        
+        
+        
+        <span class="dot"></span>
+        <span>32.3k 字</span>
+        
+      </div>
+      <a href="/2021/02/21/deeply-analyse-quickjs/">继续阅读 </a>
+    </div>
+  </article>
 </div>
 
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2020/12/18/thinking-in-how-to-speed-up-app/">
-                        App 启动提速实践和一些想法
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        
-前言启动是门面，好的印象也助于留存率提高。苹果也在系统启动上不断努力，提升用户体验，最新的 M1 宣传中还特别强调了翻盖秒开 macOS，可以看出其对极致启动速度的追求。这篇文章提到，据 Akamai 调查，每多1秒等待，转化率会下降7%，Kiss...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Fri Dec 18 2020 16:14:09 GMT+0800">2020-12-18</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/Programming/">Programming</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/iOS/">iOS</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Swift/">Swift</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
+<div class="card">
+  
+  <a href="/2020/12/18/thinking-in-how-to-speed-up-app/" class="image-wrapper">
+    <img src="/uploads/thinking-in-how-to-speed-up-app/6.png" data-src="/uploads/thinking-in-how-to-speed-up-app/6.png"
+      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+      class="image lozad">
+  </a>
+  
+  <article class="card card-content">
+    <a href="/2020/12/18/thinking-in-how-to-speed-up-app/">
+      <h1 class="post-title">
+        App 启动提速实践和一些想法
+      </h1>
+    </a>
+    <div class="card-excerpt">
+      
+      
+      
     </div>
-
-    <a href="/2020/12/18/thinking-in-how-to-speed-up-app/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
+    <div class="card-post-footer">
+      <div class="post-meta">
+        <time datetime="2020-12-18T08:14:09.000Z" style="display: flex; align-items: center;">
+          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+          <span>2020-12-18</span>
+        </time>
+        
+        <span class="dot"></span>
+        
+        <a href="categories/Programming/" class="post-meta-link">Programming</a>
+        
+        
+        
+        <span class="dot"></span>
+        <span>11.2k 字</span>
+        
+      </div>
+      <a href="/2020/12/18/thinking-in-how-to-speed-up-app/">继续阅读 </a>
+    </div>
+  </article>
 </div>
 
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2020/05/04/draw-in-2020/">
-                        2020年涂图
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        
-
-
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Mon May 04 2020 23:47:57 GMT+0800">2020-05-04</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/My-painting/">My-painting</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/Painting/">Painting</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/iPad/">iPad</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Procreate/">Procreate</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
+<div class="card">
+  
+  <a href="/2020/05/04/draw-in-2020/" class="image-wrapper">
+    <img src="/uploads/draw-in-2020/01.jpg" data-src="/uploads/draw-in-2020/01.jpg"
+      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+      class="image lozad">
+  </a>
+  
+  <article class="card card-content">
+    <a href="/2020/05/04/draw-in-2020/">
+      <h1 class="post-title">
+        2020年涂图
+      </h1>
+    </a>
+    <div class="card-excerpt">
+      
+      
+      
     </div>
-
-    <a href="/2020/05/04/draw-in-2020/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
+    <div class="card-post-footer">
+      <div class="post-meta">
+        <time datetime="2020-05-04T15:47:57.000Z" style="display: flex; align-items: center;">
+          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+          <span>2020-05-04</span>
+        </time>
+        
+        <span class="dot"></span>
+        
+        <a href="categories/My-painting/" class="post-meta-link">My-painting</a>
+        
+        
+        
+        <span class="dot"></span>
+        <span>0 字</span>
+        
+      </div>
+      <a href="/2020/05/04/draw-in-2020/">继续阅读 </a>
+    </div>
+  </article>
 </div>
 
-            </li>
-        
-            <li class="home-article-item">
+<div class="card">
+  
+  <a href="/2020/04/12/why_write_study_ios_programming_with_daiming_book_and_draw_recently/" class="image-wrapper">
+    <img src="/uploads/why_write_study_ios_programming_with_daiming_book_and_draw_recently/01.jpg" data-src="/uploads/why_write_study_ios_programming_with_daiming_book_and_draw_recently/01.jpg"
+      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+      class="image lozad">
+  </a>
+  
+  <article class="card card-content">
+    <a href="/2020/04/12/why_write_study_ios_programming_with_daiming_book_and_draw_recently/">
+      <h1 class="post-title">
+        我为什么写了《跟戴铭学iOS编程》这本书
+      </h1>
+    </a>
+    <div class="card-excerpt">
+      
+      在我改了几次封面后，书已上架。
 
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2020/04/12/why_write_study_ios_programming_with_daiming_book_and_draw_recently/">
-                        我为什么写了《跟戴铭学iOS编程》这本书
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        在我改了几次封面后，书已上架。
-
-为什么写《跟戴铭学iOS编程》又到了新的一年开始换工作的季节，我身边好多熟人也都开始寻找机会，看起来离职原因各有不同，有绩效不好的、和领导处不好的、多年难晋升的、做的事情难提升自己的、有更好机会的。但究其核心，我觉得...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sun Apr 12 2020 20:31:03 GMT+0800">2020-04-12</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/Programming/">Programming</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/iOS/">iOS</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/book/">book</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
+      
     </div>
-
-    <a href="/2020/04/12/why_write_study_ios_programming_with_daiming_book_and_draw_recently/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
+    <div class="card-post-footer">
+      <div class="post-meta">
+        <time datetime="2020-04-12T12:31:03.000Z" style="display: flex; align-items: center;">
+          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+          <span>2020-04-12</span>
+        </time>
+        
+        <span class="dot"></span>
+        
+        <a href="categories/Programming/" class="post-meta-link">Programming</a>
+        
+        
+        
+        <span class="dot"></span>
+        <span>1.7k 字</span>
+        
+      </div>
+      <a href="/2020/04/12/why_write_study_ios_programming_with_daiming_book_and_draw_recently/">继续阅读 </a>
+    </div>
+  </article>
 </div>
 
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2020/03/29/apple-system-executable-file-macho/">
-                        Apple 操作系统可执行文件 Mach-O
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        介绍Mach-O 的全称是 Mach Object File Format。可以是可执行文件，目标代码或共享库，动态库。Mach 内核的操作系统比如 macOS，iPadOS 和 iOS 都是用的 Mach-O。Mach-O 包含程序的核心逻辑，以及...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sun Mar 29 2020 16:13:45 GMT+0800">2020-03-29</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/Programming/">Programming</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/iOS/">iOS</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Apple/">Apple</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Mach-O/">Mach-O</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
+<div class="card">
+  
+  <article class="card card-content">
+    <a href="/2020/03/29/apple-system-executable-file-macho/">
+      <h1 class="post-title">
+        Apple 操作系统可执行文件 Mach-O
+      </h1>
+    </a>
+    <div class="card-excerpt">
+      
+      介绍Mach-O 的全称是 Mach Object File Format。可以是可执行文件，目标...
+      
     </div>
-
-    <a href="/2020/03/29/apple-system-executable-file-macho/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
+    <div class="card-post-footer">
+      <div class="post-meta">
+        <time datetime="2020-03-29T08:13:45.000Z" style="display: flex; align-items: center;">
+          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+          <span>2020-03-29</span>
+        </time>
+        
+        <span class="dot"></span>
+        
+        <a href="categories/Programming/" class="post-meta-link">Programming</a>
+        
+        
+        
+        <span class="dot"></span>
+        <span>7.5k 字</span>
+        
+      </div>
+      <a href="/2020/03/29/apple-system-executable-file-macho/">继续阅读 </a>
+    </div>
+  </article>
 </div>
 
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/">
-                        在快手做分享、无用类检查、在广州做 SwiftUI 学习笔记分享、InfoQ二叉树视频
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        在快手做分享
-前滴滴同事邀请我去快手做分享。下面是分享时的 Slides：
-
-详细文章介绍：如何对 iOS 启动阶段耗时进行分析 | 星光社 - 戴铭的博客
-代码：GitHub - ming1016&#x2F;MethodTraceAnalyze: ...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sun Jan 05 2020 15:57:05 GMT+0800">2020-01-05</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/Programming/">Programming</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/iOS/">iOS</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Swift/">Swift</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/SwiftUI/">SwiftUI</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
+<div class="card">
+  
+  <a href="/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/" class="image-wrapper">
+    <img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/45.jpg" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/45.jpg"
+      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+      class="image lozad">
+  </a>
+  
+  <article class="card card-content">
+    <a href="/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/">
+      <h1 class="post-title">
+        在快手做分享、无用类检查、在广州做 SwiftUI 学习笔记分享、InfoQ二叉树视频
+      </h1>
+    </a>
+    <div class="card-excerpt">
+      
+      在快手做分享
+      
     </div>
-
-    <a href="/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
+    <div class="card-post-footer">
+      <div class="post-meta">
+        <time datetime="2020-01-05T07:57:05.000Z" style="display: flex; align-items: center;">
+          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+          <span>2020-01-05</span>
+        </time>
+        
+        <span class="dot"></span>
+        
+        <a href="categories/Programming/" class="post-meta-link">Programming</a>
+        
+        
+        
+        <span class="dot"></span>
+        <span>3.1k 字</span>
+        
+      </div>
+      <a href="/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/">继续阅读 </a>
+    </div>
+  </article>
 </div>
 
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2019/12/28/japan-travel/">
-                        日本游玩
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        
+<div class="card">
+  
+  <a href="/2019/12/28/japan-travel/" class="image-wrapper">
+    <img src="/uploads/japan-travel/211.JPG" data-src="/uploads/japan-travel/211.JPG"
+      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+      class="image lozad">
+  </a>
+  
+  <article class="card card-content">
+    <a href="/2019/12/28/japan-travel/">
+      <h1 class="post-title">
+        日本游玩
+      </h1>
+    </a>
+    <div class="card-excerpt">
+      
+      
 从羽田机场到酒店
 秋叶原
 从银座回酒店
@@ -600,340 +449,1010 @@ A站 的 Swift 实践 —— 下篇
 涉谷
 藤子不二雄博物馆
 镰仓
-台场
-东京迪斯尼海洋
-大阪
-大阪环球影城
-大阪海洋馆
-京都晴鸭楼
-清水寺
-晴空塔
-山鹰市
-东京迪斯尼
-下北泽
-东京皇宫
-上野 Mandarake
-表参道
-吉祥寺
-京...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sat Dec 28 2019 09:21:26 GMT+0800">2019-12-28</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/travel/">travel</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/Japan/">Japan</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
+      
     </div>
-
-    <a href="/2019/12/28/japan-travel/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
+    <div class="card-post-footer">
+      <div class="post-meta">
+        <time datetime="2019-12-28T01:21:26.000Z" style="display: flex; align-items: center;">
+          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+          <span>2019-12-28</span>
+        </time>
+        
+        <span class="dot"></span>
+        
+        <a href="categories/travel/" class="post-meta-link">travel</a>
+        
+        
+        
+        <span class="dot"></span>
+        <span>111 字</span>
+        
+      </div>
+      <a href="/2019/12/28/japan-travel/">继续阅读 </a>
+    </div>
+  </article>
 </div>
 
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">
-                        如何对 iOS 启动阶段耗时进行分析
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        
-前言启动优化一役后，超预期将所负责的 App 双端启动的耗时都降低了65%以上，iOS 在iPhone7上速度达到了400毫秒以内。就像产品们用后说的，快到不习惯。由于 App 日活用户过亿，算一下每天为用户省下的时间，还是蛮有成就感的。
-
-启动阶...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sat Dec 07 2019 09:25:33 GMT+0800">2019-12-07</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/Programming/">Programming</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/iOS/">iOS</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Swift/">Swift</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
+<div class="card">
+  
+  <a href="/2019/12/07/how-to-analyze-startup-time-cost-in-ios/" class="image-wrapper">
+    <img src="/uploads/how-to-analyze-startup-time-cost-in-ios/01.jpeg" data-src="/uploads/how-to-analyze-startup-time-cost-in-ios/01.jpeg"
+      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+      class="image lozad">
+  </a>
+  
+  <article class="card card-content">
+    <a href="/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">
+      <h1 class="post-title">
+        如何对 iOS 启动阶段耗时进行分析
+      </h1>
+    </a>
+    <div class="card-excerpt">
+      
+      
+      
     </div>
-
-    <a href="/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
+    <div class="card-post-footer">
+      <div class="post-meta">
+        <time datetime="2019-12-07T01:25:33.000Z" style="display: flex; align-items: center;">
+          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+          <span>2019-12-07</span>
+        </time>
+        
+        <span class="dot"></span>
+        
+        <a href="categories/Programming/" class="post-meta-link">Programming</a>
+        
+        
+        
+        <span class="dot"></span>
+        <span>11.7k 字</span>
+        
+      </div>
+      <a href="/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">继续阅读 </a>
+    </div>
+  </article>
 </div>
 
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2019/12/06/draw-in-2019/">
-                        2019年涂图
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        
-
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Fri Dec 06 2019 13:48:40 GMT+0800">2019-12-06</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/My-painting/">My-painting</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/Painting/">Painting</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/iPad/">iPad</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Procreate/">Procreate</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
+<div class="card">
+  
+  <a href="/2019/12/06/draw-in-2019/" class="image-wrapper">
+    <img src="/uploads/draw-in-2019/03.jpg" data-src="/uploads/draw-in-2019/03.jpg"
+      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+      class="image lozad">
+  </a>
+  
+  <article class="card card-content">
+    <a href="/2019/12/06/draw-in-2019/">
+      <h1 class="post-title">
+        2019年涂图
+      </h1>
+    </a>
+    <div class="card-excerpt">
+      
+      
+      
     </div>
-
-    <a href="/2019/12/06/draw-in-2019/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
+    <div class="card-post-footer">
+      <div class="post-meta">
+        <time datetime="2019-12-06T05:48:40.000Z" style="display: flex; align-items: center;">
+          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+          <span>2019-12-06</span>
+        </time>
         
-    </ul>
-
-    <div class="home-paginator">
-        <div class="paginator">
-    
-        <a class="prev btn"
-           href="/"
-        >Prev</a>
-    
-
-    
-        <a class="next btn"
-           href="/page/3/"
-        >Next</a>
-    
-</div>
-
+        <span class="dot"></span>
+        
+        <a href="categories/My-painting/" class="post-meta-link">My-painting</a>
+        
+        
+        
+        <span class="dot"></span>
+        <span>0 字</span>
+        
+      </div>
+      <a href="/2019/12/06/draw-in-2019/">继续阅读 </a>
     </div>
+  </article>
 </div>
 
 
-                
-            </div>
-
-        </div>
-
-        <div class="page-main-content-bottom">
-            <footer class="footer">
-    <div class="info-container">
-        <div class="copyright-info info-item">
-            &copy;
-            
-              <span>2014</span>
-              -
-            
-            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">戴铭</a>
-        </div>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一页</div>
         
-            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-            <div class="website-count info-item">
-                
-                    <span id="busuanzi_container_site_uv">
-                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
-                    </span>
-                
-                
-                    <span id="busuanzi_container_site_pv">
-                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
-                    </span>
-                
-            </div>
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/page/3/" class="nav-link">
+      <div>
+        <div class="nav-label">下一页</div>
         
-        <div class="theme-info info-item">
-            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
-        </div>
-        
-            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">鄂ICP备17011999号 京公网安备 7011999号</a></div>
-        
-        
-    </div>
-</footer>
-
-        </div>
-    </div>
-
-    
-
-    <div class="right-bottom-side-tools">
-        <div class="side-tools-container">
-    <ul class="side-tools-list">
-        <li class="tools-item tool-font-adjust-plus flex-center">
-            <i class="fas fa-search-plus"></i>
-        </li>
-
-        <li class="tools-item tool-font-adjust-minus flex-center">
-            <i class="fas fa-search-minus"></i>
-        </li>
-
-        <li class="tools-item tool-expand-width flex-center">
-            <i class="fas fa-arrows-alt-h"></i>
-        </li>
-
-        <li class="tools-item tool-dark-light-toggle flex-center">
-            <i class="fas fa-moon"></i>
-        </li>
-
-        <!-- rss -->
-        
-            <li class="tools-item rss flex-center">
-                <a class="flex-center"
-                   href="/atom.xml"
-                   target="_blank"
-                >
-                    <i class="fas fa-rss"></i>
-                </a>
-            </li>
-        
-
-        
-            <li class="tools-item tool-scroll-to-top flex-center">
-                <i class="fas fa-arrow-up"></i>
-            </li>
-        
-
-        <li class="tools-item tool-scroll-to-bottom flex-center">
-            <i class="fas fa-arrow-down"></i>
-        </li>
-    </ul>
-
-    <ul class="exposed-tools-list">
-        <li class="tools-item tool-toggle-show flex-center">
-            <i class="fas fa-cog fa-spin"></i>
-        </li>
-        
-    </ul>
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
 </div>
-
-    </div>
-
-    
-
-    <div class="image-viewer-container">
-    <img src="">
-</div>
-
-
-    
-
 </main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
 
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>56</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>38</span>
+    <span>标签</span>
+  </a>
+</div>
 
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
+</div>
 
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">42</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-novel">
+        <div class="categories-list-item">
+          My-novel
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-painting">
+        <div class="categories-list-item">
+          My-painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\WWDC" title="WWDC"><div class="tags-list-item">WWDC</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+  <article class="card card-content widescreen-archive">
+    <div class="archive-card">
+  <div class="archive-card-header"><i class="iconfont icon-wodebaobiao" style="padding-right: 2px;"></i>归档</div>
+  <div class="archive-card-list">
+    
+    
+    
+      
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2022" class="archive-card-list-item">
+              2022
+              <span class="archive-card-list-item-badge">6</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2021" class="archive-card-list-item">
+              2021
+              <span class="archive-card-list-item-badge">6</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2020" class="archive-card-list-item">
+              2020
+              <span class="archive-card-list-item-badge">5</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2019" class="archive-card-list-item">
+              2019
+              <span class="archive-card-list-item-badge">5</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2018" class="archive-card-list-item">
+              2018
+              <span class="archive-card-list-item-badge">9</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2017" class="archive-card-list-item">
+              2017
+              <span class="archive-card-list-item-badge">9</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2016" class="archive-card-list-item">
+              2016
+              <span class="archive-card-list-item-badge">10</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+      <a href="/archives/2015" class="archive-card-list-item">
+          2015
+          <span class="archive-card-list-item-badge">6</span>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-06-10</div>
+        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-03-25</div>
+        <a href="/2022/03/25/develop-with-swiftui/"><div class="recent-posts-item-content">在苹果加速器活动做的 SwiftUI 开发分享</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-02-26</div>
+        <a href="/2022/02/26/draw-in-2021/"><div class="recent-posts-item-content">2021年画的</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="archive-card">
+  <div class="archive-card-header"><i class="iconfont icon-wodebaobiao" style="padding-right: 2px;"></i>归档</div>
+  <div class="archive-card-list">
+    
+    
+    
+      
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2022" class="archive-card-list-item">
+              2022
+              <span class="archive-card-list-item-badge">6</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2021" class="archive-card-list-item">
+              2021
+              <span class="archive-card-list-item-badge">6</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2020" class="archive-card-list-item">
+              2020
+              <span class="archive-card-list-item-badge">5</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2019" class="archive-card-list-item">
+              2019
+              <span class="archive-card-list-item-badge">5</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2018" class="archive-card-list-item">
+              2018
+              <span class="archive-card-list-item-badge">9</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2017" class="archive-card-list-item">
+              2017
+              <span class="archive-card-list-item-badge">9</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2016" class="archive-card-list-item">
+              2016
+              <span class="archive-card-list-item-badge">10</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+      <a href="/archives/2015" class="archive-card-list-item">
+          2015
+          <span class="archive-card-list-item-badge">6</span>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2014 -
+          
+          2022
+        </span>
+        <a href="/" class="footer-link">戴铭的博客 </a>
+      </div>
+    </div>
 
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
+      </a>
+      <br />
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
 
-<script src="/js/utils.js"></script>
-
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
 <script src="/js/main.js"></script>
 
-<script src="/js/header-shrink.js"></script>
-
-<script src="/js/back2top.js"></script>
-
-<script src="/js/dark-light-toggle.js"></script>
-
-
-
-
-
-
-
-
-<div class="post-scripts">
-    
-</div>
-
-
-
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
 </body>
+
 </html>
