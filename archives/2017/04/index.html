@@ -1,1049 +1,761 @@
 <!DOCTYPE html>
-<html>
-<meta  lang="zh-Hans" >
+<html lang="zh-Hans">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="theme-color" content="#fff" id="theme-color">
-  <link rel="icon" href="/img/logo-starming.png">
-  <title>戴铭的博客</title>
-  <script>
-    // control reverse button
-    var reverseDarkList = {
-      dark: 'light',
-      light: 'dark'
-    };
-    var themeColor = {
-      dark: '#1c1c1e',
-      light: '#fff'
-    }
-    // get the data of css prefers-color-scheme
-    var getCssMediaQuery = function() {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    };
-    // reverse current darkmode setting function
-    var reverseDarkModeSetting = function() {
-      var setting = localStorage.getItem('user-color-scheme');
-      if(reverseDarkList[setting]) {
-        setting = reverseDarkList[setting];
-      } else if(setting === null) {
-        setting = reverseDarkList[getCssMediaQuery()];
-      } else {
-        return;
-      }
-      localStorage.setItem('user-color-scheme', setting);
-      return setting;
-    };
-    // apply current darkmode setting
-    var setDarkmode = function(mode) {
-      var setting = mode || localStorage.getItem('user-color-scheme');
-      if(setting === getCssMediaQuery()) {
-        document.documentElement.removeAttribute('data-user-color-scheme');
-        localStorage.removeItem('user-color-scheme');
-        document.getElementById('theme-color').content = themeColor[setting];
-      } else if(reverseDarkList[setting]) {
-        document.documentElement.setAttribute('data-user-color-scheme', setting);
-        document.getElementById('theme-color').content = themeColor[setting];
-      } else {
-        document.documentElement.removeAttribute('data-user-color-scheme');
-        localStorage.removeItem('user-color-scheme');
-        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
-      }
-    };
-    setDarkmode();
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
+    <meta name="author" content="戴铭">
+    
+    <title>
+        
+            Archive: 2017/4 |
+        
+        戴铭的博客
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/img/logo-starming.png">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"ming1016.github.io","root":"/","language":"zh-Hans"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/img/ming.jpeg","favicon":"/img/logo-starming.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":null,"description":"混乱中的有序"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
   </script>
-  <script>
-    function loadScript(url, cb) {
-      var script = document.createElement('script');
-      script.src = url;
-      if (cb) script.onload = cb;
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  </script>
-  
-  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
-  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
-  
-  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
-  
-  
-  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
-  
-  
-  
-  
-  
-  
-  
-  
-<link rel="stylesheet" href="/css/main.css">
-
-  
-  
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
-
-  
-  
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
-
-  
-  
-  
-  
-  
-  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
-  
-  
-  
-<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
-
-  
-  
-  
 <meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
-  <div class="wrapper">
+<div class="progress-bar-container">
     
-    <nav class="navbar">
-  <div class="navbar-logo">
-    <span class="navbar-logo-main">
-      
-      <img class="navbar-logo-img" src="/img/logo-starming.png">
-      
-      <span class="navbar-logo-dsc">戴铭的博客</span>
-    </span>
-  </div>
-  <div class="navbar-menu">
+
     
-    <a href="/" class="navbar-menu-item">首页 </a>
-    
-    <a href="/archives" class="navbar-menu-item">归档 </a>
-    
-    <a href="/tags" class="navbar-menu-item">标签 </a>
-    
-    <a href="/categories" class="navbar-menu-item">分类 </a>
-    
-    <a href="/about" class="navbar-menu-item">关于 </a>
-    
-    <a href="" class="navbar-menu-item">友链 </a>
-    
-    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
-  </div>
-</nav>
-    
-    <div class="section-wrap">
-      <div class="container">
-        <div class="columns">
-          <main class="main-column"><div class="card card-content">
-  <h1 class="widget-title">归档</h1>
 </div>
-<div class="archive-timeline">
-  
-  
-  
-  <div class="archive-timeline-tag"><span>2017</span></div>
-  
-  
-  <div class="archive-timeline-item">
-    <div class="archive-timeline-post">
-      <div class="card card-content">
-        <div class="archive-timeline-post-date">2017-04-01</div>
-        <div class="archive-timeline-post-content"><a href="/2017/04/01/build-static-analysis-program-smck-use-swift/"
-            class="archive-timeline-post-item">用 Swift 编写的工程代码静态分析命令行工具 smck</a></div>
-      </div>
-    </div>
-  </div>
-  
-  
-  <div class="archive-timeline-item">
-    <div class="archive-timeline-post">
-      <div class="card card-content">
-        <div class="archive-timeline-post-date">2017-04-01</div>
-        <div class="archive-timeline-post-content"><a href="/2017/04/01/slides-of-deeply-analyse-llvm/"
-            class="archive-timeline-post-item">深入剖析 iOS 编译 Clang / LLVM 直播的 Slides</a></div>
-      </div>
-    </div>
-  </div>
-  
-</div>
-</main>
-          <aside class="left-column">
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
             
-            <div class="card card-author">
-              
-<img src="/img/ming.jpeg" class="author-img">
+            <a class="logo-title" href="/">
+                戴铭的博客
+            </a>
+        </div>
 
-<p class="author-name">戴铭</p>
-<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
-<div class="author-message">
-  <a class="author-posts-count" href="/archives">
-    <span>56</span>
-    <span>文章</span>
-  </a>
-  <a class="author-categories-count" href="/categories">
-    <span>5</span>
-    <span>分类</span>
-  </a>
-  <a class="author-tags-count" href="/tags">
-    <span>38</span>
-    <span>标签</span>
-  </a>
-</div>
-
-<div class="author-card-society">
-  
-    <div class="author-card-society-icon">
-      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
-        <i class="iconfont icon-sina society-icon"></i>
-      </a>
-    </div>
-  
-    <div class="author-card-society-icon">
-      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
-        <i class="iconfont icon-github society-icon"></i>
-      </a>
-    </div>
-  
-    <div class="author-card-society-icon">
-      <a href="mailto:ming1016@foxmail.com">
-        <i class="iconfont icon-mail society-icon"></i>
-      </a>
-    </div>
-  
-    <div class="author-card-society-icon">
-      <a href="/atom.xml">
-        <i class="iconfont icon-chrome society-icon"></i>
-      </a>
-    </div>
-  
-</div>
-
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class="active"
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
             </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
             
-            <div class="sticky-tablet">
-  
-  
-  
-  <article class="card card-content">
-    <div class="categories-card">
-  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
-  <div class="categories-list">
-    
-      <a href="/categories/Programming">
-        <div class="categories-list-item">
-          Programming
-          <span class="categories-list-item-badge">42</span>
-        </div>
-      </a>
-    
-      <a href="/categories/My-novel">
-        <div class="categories-list-item">
-          My-novel
-          <span class="categories-list-item-badge">4</span>
-        </div>
-      </a>
-    
-      <a href="/categories/My-painting">
-        <div class="categories-list-item">
-          My-painting
-          <span class="categories-list-item-badge">8</span>
-        </div>
-      </a>
-    
-      <a href="/categories/travel">
-        <div class="categories-list-item">
-          travel
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-      <a href="/categories/APP">
-        <div class="categories-list-item">
-          APP
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-  </div>
-</div>
-  </article>
-  
-  <article class="card card-content">
-    <div class="tags-card">
-  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
-  <div class="tags-list">
-    
-    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
-    
-    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
-    
-    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
-    
-    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
-    
-    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
-    
-    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
-    
-    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
-    
-    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
-    
-    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
-    
-    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
-    
-    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
-    
-    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
-    
-    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
-    
-    <a href="\tags\WWDC" title="WWDC"><div class="tags-list-item">WWDC</div></a>
-    
-    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
-    
-    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
-    
-  </div>
-</div>
-  </article>
-  
-  
-  <article class="card card-content widescreen-archive">
-    <div class="archive-card">
-  <div class="archive-card-header"><i class="iconfont icon-wodebaobiao" style="padding-right: 2px;"></i>归档</div>
-  <div class="archive-card-list">
-    
-    
-    
-      
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a href="/archives/2022" class="archive-card-list-item">
-              2022
-              <span class="archive-card-list-item-badge">6</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a href="/archives/2021" class="archive-card-list-item">
-              2021
-              <span class="archive-card-list-item-badge">6</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a href="/archives/2020" class="archive-card-list-item">
-              2020
-              <span class="archive-card-list-item-badge">5</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a href="/archives/2019" class="archive-card-list-item">
-              2019
-              <span class="archive-card-list-item-badge">5</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a href="/archives/2018" class="archive-card-list-item">
-              2018
-              <span class="archive-card-list-item-badge">9</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a href="/archives/2017" class="archive-card-list-item">
-              2017
-              <span class="archive-card-list-item-badge">9</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a href="/archives/2016" class="archive-card-list-item">
-              2016
-              <span class="archive-card-list-item-badge">10</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-    
-      <a href="/archives/2015" class="archive-card-list-item">
-          2015
-          <span class="archive-card-list-item-badge">6</span>
-      </a>
-    
-  </div>
-</div>
-  </article>
-  
-</div>
-          </aside>
-          <aside class="right-column">
-            <div class="sticky-widescreen">
-  
-  
-  
-  <article class="card card-content">
-    <div class="recent-posts-card">
-  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
-  <div class="recent-posts-list">
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-03-25</div>
-        <a href="/2022/03/25/develop-with-swiftui/"><div class="recent-posts-item-content">在苹果加速器活动做的 SwiftUI 开发分享</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-02-26</div>
-        <a href="/2022/02/26/draw-in-2021/"><div class="recent-posts-item-content">2021年画的</div></a>
-      </div>
-    
-  </div>
-</div>
-  </article>
-  
-  
-  <article class="card card-content">
-    <div class="archive-card">
-  <div class="archive-card-header"><i class="iconfont icon-wodebaobiao" style="padding-right: 2px;"></i>归档</div>
-  <div class="archive-card-list">
-    
-    
-    
-      
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a href="/archives/2022" class="archive-card-list-item">
-              2022
-              <span class="archive-card-list-item-badge">6</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a href="/archives/2021" class="archive-card-list-item">
-              2021
-              <span class="archive-card-list-item-badge">6</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a href="/archives/2020" class="archive-card-list-item">
-              2020
-              <span class="archive-card-list-item-badge">5</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a href="/archives/2019" class="archive-card-list-item">
-              2019
-              <span class="archive-card-list-item-badge">5</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a href="/archives/2018" class="archive-card-list-item">
-              2018
-              <span class="archive-card-list-item-badge">9</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a href="/archives/2017" class="archive-card-list-item">
-              2017
-              <span class="archive-card-list-item-badge">9</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a href="/archives/2016" class="archive-card-list-item">
-              2016
-              <span class="archive-card-list-item-badge">10</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-    
-      <a href="/archives/2015" class="archive-card-list-item">
-          2015
-          <span class="archive-card-list-item-badge">6</span>
-      </a>
-    
-  </div>
-</div>
-  </article>
-  
-</div>
-          </aside>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <footer class="footer">
-  <div class="footer-container">
-    <div>
-      <div class="footer-dsc">
-        <span>Copyright ©
-          
-          2014 -
-          
-          2022
-        </span>
-        <a href="/" class="footer-link">戴铭的博客 </a>
-      </div>
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class="active"
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
     </div>
 
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="archive-container ">
+        
+<div class="archive-list-container">
     
+        <section class="archive-item">
+            <div class="archive-item-header">
+                <span class="archive-year">2022</span>
+                <span class="archive-year-post-count">[6]</span>
+            </div>
+            <ul class="article-list">
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2022/06/10/use-llvm/"
+                        >使用 LLVM</a>
+                        <span class="article-date">06-10</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2022/06/10/wwdc22-notes/"
+                        >WWDC22 笔记</a>
+                        <span class="article-date">06-10</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2022/03/25/develop-with-swiftui/"
+                        >在苹果加速器活动做的 SwiftUI 开发分享</a>
+                        <span class="article-date">03-25</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2022/02/26/draw-in-2021/"
+                        >2021年画的</a>
+                        <span class="article-date">02-26</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2022/02/10/swift-evolutionary-path/"
+                        >Swift 演进之路</a>
+                        <span class="article-date">02-10</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2022/01/03/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/"
+                        >如何用 SwiftUI + Combine + Swift Concurrency Aysnc/Await Actor 欢畅开发</a>
+                        <span class="article-date">01-03</span>
+                    </li>
+                
+            </ul>
+        </section>
     
+        <section class="archive-item">
+            <div class="archive-item-header">
+                <span class="archive-year">2021</span>
+                <span class="archive-year-post-count">[6]</span>
+            </div>
+            <ul class="article-list">
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2021/11/23/daiming-swift-pamphlet/"
+                        >戴铭的 Swift 小册子 5.0</a>
+                        <span class="article-date">11-23</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2021/07/24/my-little-idea-about-writing-technical-article/"
+                        >我写技术文章的一点心得</a>
+                        <span class="article-date">07-24</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2021/07/13/deeply-analyse-autolayout-slides/"
+                        >深入剖析Auto Layout的幻灯片</a>
+                        <span class="article-date">07-13</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2021/06/08/wwdc2021-day1-note/"
+                        >WWDC 2021 Day1 笔记</a>
+                        <span class="article-date">06-08</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2021/05/22/acfun-swift-practice/"
+                        >A站 的 Swift 实践</a>
+                        <span class="article-date">05-22</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2021/02/21/deeply-analyse-quickjs/"
+                        >深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</a>
+                        <span class="article-date">02-21</span>
+                    </li>
+                
+            </ul>
+        </section>
     
-    <div class="BbeiAn-info">
-      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
+        <section class="archive-item">
+            <div class="archive-item-header">
+                <span class="archive-year">2020</span>
+                <span class="archive-year-post-count">[5]</span>
+            </div>
+            <ul class="article-list">
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2020/12/18/thinking-in-how-to-speed-up-app/"
+                        >App 启动提速实践和一些想法</a>
+                        <span class="article-date">12-18</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2020/05/04/draw-in-2020/"
+                        >2020年涂图</a>
+                        <span class="article-date">05-04</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2020/04/12/why_write_study_ios_programming_with_daiming_book_and_draw_recently/"
+                        >我为什么写了《跟戴铭学iOS编程》这本书</a>
+                        <span class="article-date">04-12</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2020/03/29/apple-system-executable-file-macho/"
+                        >Apple 操作系统可执行文件 Mach-O</a>
+                        <span class="article-date">03-29</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/"
+                        >在快手做分享、无用类检查、在广州做 SwiftUI 学习笔记分享、InfoQ二叉树视频</a>
+                        <span class="article-date">01-05</span>
+                    </li>
+                
+            </ul>
+        </section>
+    
+        <section class="archive-item">
+            <div class="archive-item-header">
+                <span class="archive-year">2019</span>
+                <span class="archive-year-post-count">[5]</span>
+            </div>
+            <ul class="article-list">
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2019/12/28/japan-travel/"
+                        >日本游玩</a>
+                        <span class="article-date">12-28</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2019/12/07/how-to-analyze-startup-time-cost-in-ios/"
+                        >如何对 iOS 启动阶段耗时进行分析</a>
+                        <span class="article-date">12-07</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2019/12/06/draw-in-2019/"
+                        >2019年涂图</a>
+                        <span class="article-date">12-06</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2019/07/29/ios-map/"
+                        >iOS 开发舆图</a>
+                        <span class="article-date">07-29</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2019/06/19/white-dragon-class/"
+                        >白龙班</a>
+                        <span class="article-date">06-19</span>
+                    </li>
+                
+            </ul>
+        </section>
+    
+        <section class="archive-item">
+            <div class="archive-item-header">
+                <span class="archive-year">2018</span>
+                <span class="archive-year-post-count">[9]</span>
+            </div>
+            <ul class="article-list">
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2018/09/17/produce-slides-of-third-at-swift-conference/"
+                        >这次swift大会分享准备的幻灯片和 demo</a>
+                        <span class="article-date">09-17</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2018/09/14/draw-with-procreate-in-ipad-during-pre-half-in-20182/"
+                        >18年上半年procreate的练习图图</a>
+                        <span class="article-date">09-14</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2018/04/21/deeply-analyse-javascriptcore/"
+                        >深入剖析 JavaScriptCore</a>
+                        <span class="article-date">04-21</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2018/04/07/read-snapkit-and-masonry-source-code/"
+                        >读 SnapKit 和 Masonry 自动布局框架源码</a>
+                        <span class="article-date">04-07</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2018/04/02/record-and-think-about-swift-project-jsondecoder-networking-and-pop/"
+                        >Swift 项目中涉及到 JSONDecoder，网络请求，泛型协议式编程的一些记录和想法</a>
+                        <span class="article-date">04-02</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2018/01/24/why-swift/"
+                        >Why Swift? Generics(泛型), Collection(集合类型), POP(协议式编程), Memory Management(内存管理)</a>
+                        <span class="article-date">01-24</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2018/01/10/slides-of-giac-how-to-use-swift-transfer-web-to-60-frame-native-code/"
+                        >GIAC 大会上分享的《Swift 将 Web 代码转成60帧满帧原生应用的方案及实践》的幻灯片</a>
+                        <span class="article-date">01-10</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2018/01/04/huaye/"
+                        >花野</a>
+                        <span class="article-date">01-04</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2018/01/04/baimi/"
+                        >白芈</a>
+                        <span class="article-date">01-04</span>
+                    </li>
+                
+            </ul>
+        </section>
+    
+        <section class="archive-item">
+            <div class="archive-item-header">
+                <span class="archive-year">2017</span>
+                <span class="archive-year-post-count">[9]</span>
+            </div>
+            <ul class="article-list">
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2017/10/24/how-do-i-improve-the-development/"
+                        >在滴滴，我是如何指数级提升开发技术的？</a>
+                        <span class="article-date">10-24</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2017/10/16/html-to-native-htn-development-record/"
+                        >HTML 转原生 HTN 项目开发记录</a>
+                        <span class="article-date">10-16</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2017/10/11/deeply-analyse-webkit/"
+                        >深入剖析 WebKit</a>
+                        <span class="article-date">10-11</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2017/06/20/deeply-ios-performance-optimization/"
+                        >深入剖析 iOS 性能优化</a>
+                        <span class="article-date">06-20</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2017/06/12/gmtc-ios-slimming-practice/"
+                        >GMTC 上分享滴滴出行 iOS 端瘦身实践的 Slides</a>
+                        <span class="article-date">06-12</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/"
+                        >atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides</a>
+                        <span class="article-date">05-27</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2017/04/01/build-static-analysis-program-smck-use-swift/"
+                        >用 Swift 编写的工程代码静态分析命令行工具 smck</a>
+                        <span class="article-date">04-01</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2017/04/01/slides-of-deeply-analyse-llvm/"
+                        >深入剖析 iOS 编译 Clang / LLVM 直播的 Slides</a>
+                        <span class="article-date">04-01</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2017/03/01/deeply-analyse-llvm/"
+                        >深入剖析 iOS 编译 Clang / LLVM</a>
+                        <span class="article-date">03-01</span>
+                    </li>
+                
+            </ul>
+        </section>
+    
+        <section class="archive-item">
+            <div class="archive-item-header">
+                <span class="archive-year">2016</span>
+                <span class="archive-year-post-count">[10]</span>
+            </div>
+            <ul class="article-list">
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2016/11/22/how-to-preload-web-in-ios/"
+                        >iOS预加载Web页面方案</a>
+                        <span class="article-date">11-22</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2016/11/17/use-swift3-build-macos-program-to-clear-unuse-method/"
+                        >使用Swift3开发了个macOS的程序可以检测出objc项目中无用方法，然后一键全部清理</a>
+                        <span class="article-date">11-17</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2016/09/20/draw-with-procreate-in-ipad-during-15-to-16/"
+                        >15，16年iPad上使用Procreate画的</a>
+                        <span class="article-date">09-20</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2016/09/02/develop-rss-reader/"
+                        >使用ReactiveCocoa开发RSS阅读器</a>
+                        <span class="article-date">09-02</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2016/08/09/how-to-use-reactivecocoa/"
+                        >iOS函数响应式编程以及ReactiveCocoa的使用</a>
+                        <span class="article-date">08-09</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2016/07/21/assembleview/"
+                        >制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</a>
+                        <span class="article-date">07-21</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2016/05/30/what-learn-from-reactivecocoa/"
+                        >从 ReactiveCocoa 中能学到什么？不用此库也能学以致用</a>
+                        <span class="article-date">05-30</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2016/05/23/try-to-decouple-with-demo/"
+                        >竭尽全力的去解耦的一次实践，封装一个TableView和一些功能组合的控件</a>
+                        <span class="article-date">05-23</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2016/04/04/tenth-middle-school/"
+                        >十中</a>
+                        <span class="article-date">04-04</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2016/01/13/how-to-use-gcd/"
+                        >细说 GCD（Grand Central Dispatch）如何用</a>
+                        <span class="article-date">01-13</span>
+                    </li>
+                
+            </ul>
+        </section>
+    
+        <section class="archive-item">
+            <div class="archive-item-header">
+                <span class="archive-year">2015</span>
+                <span class="archive-year-post-count">[6]</span>
+            </div>
+            <ul class="article-list">
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2015/11/03/deeply-analyse-autolayout/"
+                        >深入剖析Auto Layout，分析iOS各版本新增特性</a>
+                        <span class="article-date">11-03</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2015/11/02/draw-with-note-in-ipad-during-15/"
+                        >15年用iPad上的备忘录画的</a>
+                        <span class="article-date">11-02</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2015/05/28/macos-app-i-used/"
+                        >我用过的 macOS 应用</a>
+                        <span class="article-date">05-28</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2015/04/02/draw-game-of-thrones-with-pencil-during-14/"
+                        >整理了画的权利的游戏里的角色，有龙女，小恶魔等等</a>
+                        <span class="article-date">04-02</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2015/04/01/objc-runtime/"
+                        >Objc Runtime 总结</a>
+                        <span class="article-date">04-01</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2015/03/12/draw-practice-with-pencil-during-14-to-15/"
+                        >14和15年间的铅笔画练习</a>
+                        <span class="article-date">03-12</span>
+                    </li>
+                
+            </ul>
+        </section>
+    
+</div>
+
     </div>
-    
-    <div class="BbeiAn-info">
-      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
-      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
-      </a>
-      <br />
+</div>
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2014</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">戴铭</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">鄂ICP备17011999号 京公网安备 7011999号</a></div>
+        
+        
     </div>
-    
-    
-    
-      <div class="footer-dsc">
-        
-        本站总访问量<span id="busuanzi_value_site_pv"></span>次
-        
-        
-        <span>&nbsp;|&nbsp;</span>
-        
-        
-        本站总访客数<span id="busuanzi_value_site_uv"></span>次
-        
-      </div>
-      
-    
 </footer>
-  <a role="button" id="scrollbutton" class="basebutton" >
-  <i class="iconfont icon-arrowleft button-icon"></i>
-</a>
-<a role="button" id="menubutton" class="basebutton">
-  <i class="iconfont icon-menu button-icon"></i>
-</a>
-<a role="button" id="popbutton" class="basebutton">
-  <i class="iconfont icon-expand button-icon"></i>
-</a>
-<a role="button" id="darkbutton" class="basebutton darkwidget">
-  <i class="iconfont icon-weather button-icon"></i>
-</a>
 
-  
-  
-  
-  <script>
-  var addImgLayout = function () {
-    var img = document.querySelectorAll('.post-content img');
-    var i;
-    for (i = 0; i < img.length; i++) {
-      var wrapper = document.createElement('a');
-      wrapper.setAttribute('data-fslightbox', 'gallery');
-      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
-      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
-      img[i].parentElement.insertBefore(wrapper, img[i]);
-      wrapper.appendChild(img[i]);
-    }
-    refreshFsLightbox();
-  }
-</script>
-<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
-  
-  
-  
+        </div>
+    </div>
+
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
 <script src="/js/main.js"></script>
 
-  
-  <script>loadScript("/js/lib/busuanzi.min.js")</script>
-  
-  
-  <script>
-    var addLazyload = function () {
-      var observer = lozad('.lozad', {
-        load: function (el) {
-          el.srcset = el.getAttribute('data-src');
-        },
-        loaded: function (el) {
-          el.classList.add('loaded');
-        }
-      });
-      observer.observe();
-    }
-  </script>
-  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
-  
-  
-</body>
+<script src="/js/header-shrink.js"></script>
 
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
 </html>

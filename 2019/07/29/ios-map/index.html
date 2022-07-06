@@ -1,192 +1,225 @@
 <!DOCTYPE html>
-<html>
-<meta  lang="zh-Hans" >
+<html lang="zh-Hans">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="theme-color" content="#fff" id="theme-color">
-  <link rel="icon" href="/img/logo-starming.png">
-  <title>戴铭的博客</title>
-  <script>
-    // control reverse button
-    var reverseDarkList = {
-      dark: 'light',
-      light: 'dark'
-    };
-    var themeColor = {
-      dark: '#1c1c1e',
-      light: '#fff'
-    }
-    // get the data of css prefers-color-scheme
-    var getCssMediaQuery = function() {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    };
-    // reverse current darkmode setting function
-    var reverseDarkModeSetting = function() {
-      var setting = localStorage.getItem('user-color-scheme');
-      if(reverseDarkList[setting]) {
-        setting = reverseDarkList[setting];
-      } else if(setting === null) {
-        setting = reverseDarkList[getCssMediaQuery()];
-      } else {
-        return;
-      }
-      localStorage.setItem('user-color-scheme', setting);
-      return setting;
-    };
-    // apply current darkmode setting
-    var setDarkmode = function(mode) {
-      var setting = mode || localStorage.getItem('user-color-scheme');
-      if(setting === getCssMediaQuery()) {
-        document.documentElement.removeAttribute('data-user-color-scheme');
-        localStorage.removeItem('user-color-scheme');
-        document.getElementById('theme-color').content = themeColor[setting];
-      } else if(reverseDarkList[setting]) {
-        document.documentElement.setAttribute('data-user-color-scheme', setting);
-        document.getElementById('theme-color').content = themeColor[setting];
-      } else {
-        document.documentElement.removeAttribute('data-user-color-scheme');
-        localStorage.removeItem('user-color-scheme');
-        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
-      }
-    };
-    setDarkmode();
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
+    <meta name="author" content="戴铭">
+    
+    <title>
+        
+            iOS 开发舆图 |
+        
+        戴铭的博客
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/img/logo-starming.png">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"ming1016.github.io","root":"/","language":"zh-Hans"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/img/ming.jpeg","favicon":"/img/logo-starming.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":null,"description":"混乱中的有序"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
   </script>
-  <script>
-    function loadScript(url, cb) {
-      var script = document.createElement('script');
-      script.src = url;
-      if (cb) script.onload = cb;
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  </script>
-  
-  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
-  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
-  
-  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
-  
-  
-  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
-  
-  
-  
-  
-  
-  
-  
-  
-<link rel="stylesheet" href="/css/main.css">
-
-  
-  
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
-
-  
-  
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
-
-  
-  
-  
-  
-  
-  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
-  
-  
-  
-<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
-
-  
-  
-  
 <meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
-  <div class="wrapper">
+<div class="progress-bar-container">
     
-    <nav class="navbar">
-  <div class="navbar-logo">
-    <span class="navbar-logo-main">
-      
-      <img class="navbar-logo-img" src="/img/logo-starming.png">
-      
-      <span class="navbar-logo-dsc">戴铭的博客</span>
-    </span>
-  </div>
-  <div class="navbar-menu">
+
     
-    <a href="/" class="navbar-menu-item">首页 </a>
-    
-    <a href="/archives" class="navbar-menu-item">归档 </a>
-    
-    <a href="/tags" class="navbar-menu-item">标签 </a>
-    
-    <a href="/categories" class="navbar-menu-item">分类 </a>
-    
-    <a href="/about" class="navbar-menu-item">关于 </a>
-    
-    <a href="" class="navbar-menu-item">友链 </a>
-    
-    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
-  </div>
-</nav>
-    
-    <div class="section-wrap">
-      <div class="container">
-        <div class="columns">
-          <main class="main-column">
-<div class="image-wrapper">
-  <img src="/uploads/ios-map/4.png" data-src="/uploads/ios-map/4.png"
-    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
-    class="image lozad">
 </div>
 
-<article class="card card-content">
-  <header>
-    <h1 class="post-title">
-      iOS 开发舆图
-    </h1>
-  </header>
-  <div class="post-meta post-show-meta">
-    <time datetime="2019-07-29T04:49:06.000Z" style="display: flex; align-items: center;">
-      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
-      <span>2019-07-29</span>
-    </time>
+
+<main class="page-container">
+
     
-    <span class="dot"></span>
-    
-    <a href="/categories/Programming/" class="post-meta-link">Programming</a>
-    
-    
-    
-    <span class="dot"></span>
-    <span>1.9k 字</span>
-    
-  </div>
-  
-  <div class="post-meta post-show-meta" style="margin-top: -10px;">
-    <div style="display: flex; align-items: center;">
-      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
-      
-      
-        <a href="/tags/iOS/" class="post-meta-link">iOS</a>
-      
-      
-      <span class="dot"></span>
-      
-        <a href="/tags/Swift/" class="post-meta-link">Swift</a>
-      
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                戴铭的博客
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  
-  </header>
-  <div id="section" class="post-content">
-    <p>43篇 <a target="_blank" rel="noopener" href="https://time.geekbang.org/column/intro/161">《iOS开发高手课》</a>已完成，后面会对内容进行迭代，丰富下内容和配图。最近画了张 iOS 开发全景舆图，还有相关一些资料整理，方便我平时开发 App 时参看。舆图如下：</p>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">iOS 开发舆图</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/img/ming.jpeg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">戴铭</span>
+                        
+                            <span class="author-label">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2019-07-29 12:49:06</span>
+        <span class="mobile">2019-07-29 12:49</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Programming/">Programming</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/iOS/">iOS</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Swift/">Swift</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.9k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>7 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>43篇 <a target="_blank" rel="noopener" href="https://time.geekbang.org/column/intro/161">《iOS开发高手课》</a>已完成，后面会对内容进行迭代，丰富下内容和配图。最近画了张 iOS 开发全景舆图，还有相关一些资料整理，方便我平时开发 App 时参看。舆图如下：</p>
 <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-map/1.png" class="lozad post-image"src="/uploads/ios-map/1.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-map/2.png" class="lozad post-image"src="/uploads/ios-map/2.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-map/3.png" class="lozad post-image"src="/uploads/ios-map/3.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-map/4.png" class="lozad post-image"src="/uploads/ios-map/4.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-map/5.png" class="lozad post-image"src="/uploads/ios-map/5.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-map/6.png" class="lozad post-image"src="/uploads/ios-map/6.png"></p>
 <p>接下来，我按照 iOS 开发地图的顺序，和你推荐一些相关的学习资料。</p>
 <h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>学习 iOS 开发最好是从学习一个完整的 App 入手，GitHub上的<a target="_blank" rel="noopener" href="https://github.com/dkhamsing/open-source-ios-apps">Open-Source iOS Apps</a><br>项目，收录了大量开源的完整 App 例子，比如 <a target="_blank" rel="noopener" href="https://github.com/Dimillian/SwiftHN">Hacker News Reader</a> 等已经上架了 App Store 的应用程序，所有例子都会标注是否上架 App Store的、所使用开发语言、推荐等级等信息，有利于进行选择学习。</p>
@@ -348,350 +381,250 @@
 <p>这里的 iOS 博客都很值得订阅，<a target="_blank" rel="noopener" href="https://github.com/awesome-tips/blogs">GitHub - awesome-tips&#x2F;blogs: 行业优质博客汇总</a>。</p>
 <p>其他资源参看上面的地图。</p>
 
-  </div>
-  <div>
-  
-  <div class="post-note note-warning copyright" style="margin-top: 42px">
-    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
-    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2019/07/29/ios-map/">http://ming1016.github.io/2019/07/29/ios-map/</a></p>
-    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
-  </div>
-  
-  </div>
-</article>
-<div class="nav">
-  
-  <div class="nav-item-prev">
-    <a href="/2019/12/06/draw-in-2019/" class="nav-link">
-      <i class="iconfont icon-left nav-prev-icon"></i>
-      <div>
-        <div class="nav-label">上一篇</div>
-        
-        <div class="nav-title">2019年涂图 </div>
-        
-      </div>
-    </a>
-  </div>
-  
-  
-  <div class="nav-item-next">
-    <a href="/2019/06/19/white-dragon-class/" class="nav-link">
-      <div>
-        <div class="nav-label">下一篇</div>
-        
-        <div class="nav-title">白龙班 </div>
-        
-      </div>
-      <i class="iconfont icon-right nav-next-icon"></i>
-    </a>
-  </div>
-  
-</div>
+        </div>
 
-<div class="card card-content toc-card" id="mobiletoc">
-  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.</span> <span class="toc-text">实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS-%E5%9F%BA%E7%A1%80"><span class="toc-number">2.</span> <span class="toc-text">iOS 基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS-%E7%B3%BB%E7%BB%9F"><span class="toc-number">3.</span> <span class="toc-text">iOS 系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80"><span class="toc-number">4.</span> <span class="toc-text">编程语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="toc-number">5.</span> <span class="toc-text">开发工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%AE%8C%E6%88%90"><span class="toc-number">6.</span> <span class="toc-text">开发完成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E7%BA%BF%E5%90%8E"><span class="toc-number">7.</span> <span class="toc-text">上线后</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80"><span class="toc-number">8.</span> <span class="toc-text">计算机基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E7%9F%A5%E8%AF%86"><span class="toc-number">9.</span> <span class="toc-text">通用知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%93%E6%9C%89%E7%9F%A5%E8%AF%86"><span class="toc-number">10.</span> <span class="toc-text">专有知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%86%E9%87%8E"><span class="toc-number">11.</span> <span class="toc-text">视野</span></a></li></ol>
-</div></main>
-          <aside class="left-column">
-            
-            <div class="card card-author">
-              
-<img src="/img/ming.jpeg" class="author-img">
-
-<p class="author-name">戴铭</p>
-<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
-<div class="author-message">
-  <a class="author-posts-count" href="/archives">
-    <span>56</span>
-    <span>文章</span>
-  </a>
-  <a class="author-categories-count" href="/categories">
-    <span>5</span>
-    <span>分类</span>
-  </a>
-  <a class="author-tags-count" href="/tags">
-    <span>38</span>
-    <span>标签</span>
-  </a>
-</div>
-
-<div class="author-card-society">
-  
-    <div class="author-card-society-icon">
-      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
-        <i class="iconfont icon-sina society-icon"></i>
-      </a>
-    </div>
-  
-    <div class="author-card-society-icon">
-      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
-        <i class="iconfont icon-github society-icon"></i>
-      </a>
-    </div>
-  
-    <div class="author-card-society-icon">
-      <a href="mailto:ming1016@foxmail.com">
-        <i class="iconfont icon-mail society-icon"></i>
-      </a>
-    </div>
-  
-    <div class="author-card-society-icon">
-      <a href="/atom.xml">
-        <i class="iconfont icon-chrome society-icon"></i>
-      </a>
-    </div>
-  
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：iOS 开发舆图</li>
+        <li>Post author：戴铭</li>
+        <li>Create time：2019-07-29 12:49:06</li>
+        <li>
+            Post link：https://ming1016.github.io/2019/07/29/ios-map/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
 </div>
 
             </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/iOS/">#iOS</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/Swift/">#Swift</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2019/12/06/draw-in-2019/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">2019年涂图</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2019/06/19/white-dragon-class/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">白龙班</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
             
-            <div class="sticky-tablet">
-  
-  
-  <article class="display-when-two-columns spacer">
-    <div class="card card-content toc-card">
-      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.</span> <span class="toc-text">实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS-%E5%9F%BA%E7%A1%80"><span class="toc-number">2.</span> <span class="toc-text">iOS 基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS-%E7%B3%BB%E7%BB%9F"><span class="toc-number">3.</span> <span class="toc-text">iOS 系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80"><span class="toc-number">4.</span> <span class="toc-text">编程语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="toc-number">5.</span> <span class="toc-text">开发工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%AE%8C%E6%88%90"><span class="toc-number">6.</span> <span class="toc-text">开发完成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E7%BA%BF%E5%90%8E"><span class="toc-number">7.</span> <span class="toc-text">上线后</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80"><span class="toc-number">8.</span> <span class="toc-text">计算机基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E7%9F%A5%E8%AF%86"><span class="toc-number">9.</span> <span class="toc-text">通用知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%93%E6%9C%89%E7%9F%A5%E8%AF%86"><span class="toc-number">10.</span> <span class="toc-text">专有知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%86%E9%87%8E"><span class="toc-number">11.</span> <span class="toc-text">视野</span></a></li></ol>
+              <span>2014</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">戴铭</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">鄂ICP备17011999号 京公网安备 7011999号</a></div>
+        
+        
     </div>
-  </article>
-  
-  
-  <article class="card card-content">
-    <div class="categories-card">
-  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
-  <div class="categories-list">
-    
-      <a href="/categories/Programming">
-        <div class="categories-list-item">
-          Programming
-          <span class="categories-list-item-badge">42</span>
-        </div>
-      </a>
-    
-      <a href="/categories/My-novel">
-        <div class="categories-list-item">
-          My-novel
-          <span class="categories-list-item-badge">4</span>
-        </div>
-      </a>
-    
-      <a href="/categories/My-painting">
-        <div class="categories-list-item">
-          My-painting
-          <span class="categories-list-item-badge">8</span>
-        </div>
-      </a>
-    
-      <a href="/categories/travel">
-        <div class="categories-list-item">
-          travel
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-      <a href="/categories/APP">
-        <div class="categories-list-item">
-          APP
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-  </div>
-</div>
-  </article>
-  
-  <article class="card card-content">
-    <div class="tags-card">
-  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
-  <div class="tags-list">
-    
-    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
-    
-    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
-    
-    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
-    
-    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
-    
-    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
-    
-    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
-    
-    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
-    
-    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
-    
-    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
-    
-    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
-    
-    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
-    
-    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
-    
-    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
-    
-    <a href="\tags\WWDC" title="WWDC"><div class="tags-list-item">WWDC</div></a>
-    
-    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
-    
-    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
-    
-  </div>
-</div>
-  </article>
-  
-  
-</div>
-          </aside>
-          <aside class="right-column">
-            <div class="sticky-widescreen">
-  
-  
-  <article class="card card-content toc-card">
-    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.</span> <span class="toc-text">实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS-%E5%9F%BA%E7%A1%80"><span class="toc-number">2.</span> <span class="toc-text">iOS 基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS-%E7%B3%BB%E7%BB%9F"><span class="toc-number">3.</span> <span class="toc-text">iOS 系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80"><span class="toc-number">4.</span> <span class="toc-text">编程语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="toc-number">5.</span> <span class="toc-text">开发工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%AE%8C%E6%88%90"><span class="toc-number">6.</span> <span class="toc-text">开发完成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E7%BA%BF%E5%90%8E"><span class="toc-number">7.</span> <span class="toc-text">上线后</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80"><span class="toc-number">8.</span> <span class="toc-text">计算机基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E7%9F%A5%E8%AF%86"><span class="toc-number">9.</span> <span class="toc-text">通用知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%93%E6%9C%89%E7%9F%A5%E8%AF%86"><span class="toc-number">10.</span> <span class="toc-text">专有知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%86%E9%87%8E"><span class="toc-number">11.</span> <span class="toc-text">视野</span></a></li></ol>
-  </article>
-  
-  
-  <article class="card card-content">
-    <div class="recent-posts-card">
-  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
-  <div class="recent-posts-list">
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-03-25</div>
-        <a href="/2022/03/25/develop-with-swiftui/"><div class="recent-posts-item-content">在苹果加速器活动做的 SwiftUI 开发分享</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-02-26</div>
-        <a href="/2022/02/26/draw-in-2021/"><div class="recent-posts-item-content">2021年画的</div></a>
-      </div>
-    
-  </div>
-</div>
-  </article>
-  
-  
-</div>
-          </aside>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <footer class="footer">
-  <div class="footer-container">
-    <div>
-      <div class="footer-dsc">
-        <span>Copyright ©
-          
-          2014 -
-          
-          2022
-        </span>
-        <a href="/" class="footer-link">戴铭的博客 </a>
-      </div>
-    </div>
-
-    
-    
-    
-    <div class="BbeiAn-info">
-      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
-    </div>
-    
-    <div class="BbeiAn-info">
-      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
-      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
-      </a>
-      <br />
-    </div>
-    
-    
-    
-      <div class="footer-dsc">
-        
-        本站总访问量<span id="busuanzi_value_site_pv"></span>次
-        
-        
-        <span>&nbsp;|&nbsp;</span>
-        
-        
-        本站总访客数<span id="busuanzi_value_site_uv"></span>次
-        
-      </div>
-      
-    
 </footer>
-  <a role="button" id="scrollbutton" class="basebutton" >
-  <i class="iconfont icon-arrowleft button-icon"></i>
-</a>
-<a role="button" id="menubutton" class="basebutton">
-  <i class="iconfont icon-menu button-icon"></i>
-</a>
-<a role="button" id="popbutton" class="basebutton">
-  <i class="iconfont icon-expand button-icon"></i>
-</a>
-<a role="button" id="darkbutton" class="basebutton darkwidget">
-  <i class="iconfont icon-weather button-icon"></i>
-</a>
 
-  
-  
-  
-  <script>
-  var addImgLayout = function () {
-    var img = document.querySelectorAll('.post-content img');
-    var i;
-    for (i = 0; i < img.length; i++) {
-      var wrapper = document.createElement('a');
-      wrapper.setAttribute('data-fslightbox', 'gallery');
-      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
-      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
-      img[i].parentElement.insertBefore(wrapper, img[i]);
-      wrapper.appendChild(img[i]);
-    }
-    refreshFsLightbox();
-  }
-</script>
-<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
-  
-  
-  
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS-%E5%9F%BA%E7%A1%80"><span class="nav-number">2.</span> <span class="nav-text">iOS 基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS-%E7%B3%BB%E7%BB%9F"><span class="nav-number">3.</span> <span class="nav-text">iOS 系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80"><span class="nav-number">4.</span> <span class="nav-text">编程语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="nav-number">5.</span> <span class="nav-text">开发工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%AE%8C%E6%88%90"><span class="nav-number">6.</span> <span class="nav-text">开发完成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E7%BA%BF%E5%90%8E"><span class="nav-number">7.</span> <span class="nav-text">上线后</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80"><span class="nav-number">8.</span> <span class="nav-text">计算机基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E7%9F%A5%E8%AF%86"><span class="nav-number">9.</span> <span class="nav-text">通用知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%93%E6%9C%89%E7%9F%A5%E8%AF%86"><span class="nav-number">10.</span> <span class="nav-text">专有知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E9%87%8E"><span class="nav-number">11.</span> <span class="nav-text">视野</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
 <script src="/js/main.js"></script>
 
-  
-  <script>loadScript("/js/lib/busuanzi.min.js")</script>
-  
-  
-  <script>
-    var addLazyload = function () {
-      var observer = lozad('.lozad', {
-        load: function (el) {
-          el.srcset = el.getAttribute('data-src');
-        },
-        loaded: function (el) {
-          el.classList.add('loaded');
-        }
-      });
-      observer.observe();
-    }
-  </script>
-  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
-  
-  
-</body>
+<script src="/js/header-shrink.js"></script>
 
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
+    
+</div>
+
+
+
+</body>
 </html>
