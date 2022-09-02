@@ -238,7 +238,7 @@
         href="/" 
         class="navbar-menu-item">
         
-          首頁
+          Home
         
       </a>
     
@@ -246,7 +246,7 @@
         href="/archives" 
         class="navbar-menu-item">
         
-          存檔
+          Archive
         
       </a>
     
@@ -254,7 +254,7 @@
         href="/tags" 
         class="navbar-menu-item">
         
-          標籤
+          Tags
         
       </a>
     
@@ -262,7 +262,7 @@
         href="/categories" 
         class="navbar-menu-item">
         
-          分類
+          Categories
         
       </a>
     
@@ -270,7 +270,7 @@
         href="/about" 
         class="navbar-menu-item">
         
-          關於
+          About
         
       </a>
     
@@ -278,7 +278,7 @@
         href="/null" 
         class="navbar-menu-item">
         
-          友鏈
+          Friends
         
       </a>
     
@@ -339,20 +339,20 @@
   <a 
     class="author-posts-count" 
     href="/archives">
-    <span>57</span>
-    <span>文章</span>
+    <span>58</span>
+    <span>Posts</span>
   </a>
   <a 
     class="author-categories-count" 
     href="/categories">
     <span>5</span>
-    <span>分類</span>
+    <span>Categories</span>
   </a>
   <a 
     class="author-tags-count" 
     href="/tags">
     <span>38</span>
-    <span>標籤</span>
+    <span>Tags</span>
   </a>
 </div>
 
@@ -394,7 +394,7 @@
   <i 
     class="iconfont icon-menu" 
     style="padding-right: 2px;">
-  </i>目錄
+  </i>TOC
 </div>
 <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">背景介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8B%B9%E6%9E%9C%E6%8E%A8%E5%87%BASwift%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.1.</span> <span class="toc-text">苹果推出Swift的原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8B%B9%E6%9E%9C%E5%AE%9E%E9%99%85%E9%87%87%E5%8F%96%E7%9A%84%E8%A1%8C%E5%8A%A8"><span class="toc-number">1.2.</span> <span class="toc-text">苹果实际采取的行动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift%E5%9C%A8AcFun%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="toc-number">1.3.</span> <span class="toc-text">Swift在AcFun的演进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift%E8%AF%AD%E8%A8%80%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="toc-number">1.4.</span> <span class="toc-text">Swift语言的演进</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%86%E6%9E%B6%E9%80%89%E6%8B%A9"><span class="toc-number">2.</span> <span class="toc-text">框架选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B"><span class="toc-number">2.1.</span> <span class="toc-text">架构演进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SwiftUI"><span class="toc-number">2.2.</span> <span class="toc-text">SwiftUI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RxSwift"><span class="toc-number">2.3.</span> <span class="toc-text">RxSwift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Combine"><span class="toc-number">2.4.</span> <span class="toc-text">Combine</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%B7%B7%E7%BC%96"><span class="toc-number">3.</span> <span class="toc-text">如何混编</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">前置条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AECocoaPods"><span class="toc-number">3.2.</span> <span class="toc-text">如何设置CocoaPods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8Module%EF%BC%9F"><span class="toc-number">3.3.</span> <span class="toc-text">为什么要用Module？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Name-Mangling"><span class="toc-number">3.4.</span> <span class="toc-text">Name Mangling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E4%BB%A5%E8%B0%83OC%E6%8E%A5%E5%8F%A3%EF%BC%9F"><span class="toc-number">3.5.</span> <span class="toc-text">为什么可以调OC接口？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">动态性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%80%BC%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%96%B9%E6%B3%95%E6%9B%BF%E6%8D%A2"><span class="toc-number">4.1.</span> <span class="toc-text">值类型的方法替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95%E6%9B%BF%E6%8D%A2"><span class="toc-number">4.2.</span> <span class="toc-text">类的方法替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E6%A1%A9"><span class="toc-number">4.3.</span> <span class="toc-text">插桩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ClassContextDescriptorBuilder"><span class="toc-number">4.4.</span> <span class="toc-text">ClassContextDescriptorBuilder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mach-override"><span class="toc-number">4.5.</span> <span class="toc-text">Mach_override</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
       </div>
@@ -407,14 +407,14 @@
     <i 
       class="iconfont icon-fenlei" 
       style="padding-right: 2px;">
-    </i>分類
+    </i>Categories
   </div>
   <div class="categories-list">
     
       <a href="/categories/Programming/">
         <div class="categories-list-item">
           Programming
-          <span class="categories-list-item-badge">43</span>
+          <span class="categories-list-item-badge">44</span>
         </div>
       </a>
     
@@ -456,7 +456,7 @@
     <i 
       class="iconfont icon-biaoqian" 
       style="padding-right: 2px;">
-    </i>熱門標籤
+    </i>hot tags
   </div>
   <div class="tags-list">
     
@@ -473,15 +473,15 @@
       </a>
     
       <a 
-        href="/tags/Apple/" 
-        title="Apple">
-        <div class="tags-list-item">Apple</div>
-      </a>
-    
-      <a 
         href="/tags/Painting/" 
         title="Painting">
         <div class="tags-list-item">Painting</div>
+      </a>
+    
+      <a 
+        href="/tags/Apple/" 
+        title="Apple">
+        <div class="tags-list-item">Apple</div>
       </a>
     
       <a 
@@ -600,7 +600,7 @@
     
     
       <span class="dot"></span>
-      <span>11.2k 個字</span>
+      <span>11.2k words</span>
     
   </div>
   
@@ -990,7 +990,7 @@ FOUNDATION_EXPORT <span class="token keyword">const</span> <span class="token ke
         class="nav-link">
         <i class="iconfont icon-left nav-prev-icon"></i>
         <div>
-          <div class="nav-label">上一篇</div>
+          <div class="nav-label">Prev</div>
           
             <div class="nav-title">WWDC 2021 Day1 笔记 </div>
           
@@ -1004,7 +1004,7 @@ FOUNDATION_EXPORT <span class="token keyword">const</span> <span class="token ke
         href="/2021/02/21/deeply-analyse-quickjs/" 
         class="nav-link">
         <div>
-          <div class="nav-label">下一篇</div>
+          <div class="nav-label">Next</div>
           
             <div class="nav-title">深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言 </div>
           
@@ -1022,7 +1022,7 @@ FOUNDATION_EXPORT <span class="token keyword">const</span> <span class="token ke
   <i 
     class="iconfont icon-menu" 
     style="padding-right: 2px;">
-  </i>目錄
+  </i>TOC
 </div>
 <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">背景介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8B%B9%E6%9E%9C%E6%8E%A8%E5%87%BASwift%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.1.</span> <span class="toc-text">苹果推出Swift的原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8B%B9%E6%9E%9C%E5%AE%9E%E9%99%85%E9%87%87%E5%8F%96%E7%9A%84%E8%A1%8C%E5%8A%A8"><span class="toc-number">1.2.</span> <span class="toc-text">苹果实际采取的行动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift%E5%9C%A8AcFun%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="toc-number">1.3.</span> <span class="toc-text">Swift在AcFun的演进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift%E8%AF%AD%E8%A8%80%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="toc-number">1.4.</span> <span class="toc-text">Swift语言的演进</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%86%E6%9E%B6%E9%80%89%E6%8B%A9"><span class="toc-number">2.</span> <span class="toc-text">框架选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B"><span class="toc-number">2.1.</span> <span class="toc-text">架构演进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SwiftUI"><span class="toc-number">2.2.</span> <span class="toc-text">SwiftUI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RxSwift"><span class="toc-number">2.3.</span> <span class="toc-text">RxSwift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Combine"><span class="toc-number">2.4.</span> <span class="toc-text">Combine</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%B7%B7%E7%BC%96"><span class="toc-number">3.</span> <span class="toc-text">如何混编</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">前置条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AECocoaPods"><span class="toc-number">3.2.</span> <span class="toc-text">如何设置CocoaPods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8Module%EF%BC%9F"><span class="toc-number">3.3.</span> <span class="toc-text">为什么要用Module？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Name-Mangling"><span class="toc-number">3.4.</span> <span class="toc-text">Name Mangling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E4%BB%A5%E8%B0%83OC%E6%8E%A5%E5%8F%A3%EF%BC%9F"><span class="toc-number">3.5.</span> <span class="toc-text">为什么可以调OC接口？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">动态性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%80%BC%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%96%B9%E6%B3%95%E6%9B%BF%E6%8D%A2"><span class="toc-number">4.1.</span> <span class="toc-text">值类型的方法替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95%E6%9B%BF%E6%8D%A2"><span class="toc-number">4.2.</span> <span class="toc-text">类的方法替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E6%A1%A9"><span class="toc-number">4.3.</span> <span class="toc-text">插桩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ClassContextDescriptorBuilder"><span class="toc-number">4.4.</span> <span class="toc-text">ClassContextDescriptorBuilder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mach-override"><span class="toc-number">4.5.</span> <span class="toc-text">Mach_override</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
 </div>
@@ -1036,7 +1036,7 @@ FOUNDATION_EXPORT <span class="token keyword">const</span> <span class="token ke
   <i 
     class="iconfont icon-menu" 
     style="padding-right: 2px;">
-  </i>目錄
+  </i>TOC
 </div>
 <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">背景介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8B%B9%E6%9E%9C%E6%8E%A8%E5%87%BASwift%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.1.</span> <span class="toc-text">苹果推出Swift的原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8B%B9%E6%9E%9C%E5%AE%9E%E9%99%85%E9%87%87%E5%8F%96%E7%9A%84%E8%A1%8C%E5%8A%A8"><span class="toc-number">1.2.</span> <span class="toc-text">苹果实际采取的行动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift%E5%9C%A8AcFun%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="toc-number">1.3.</span> <span class="toc-text">Swift在AcFun的演进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift%E8%AF%AD%E8%A8%80%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="toc-number">1.4.</span> <span class="toc-text">Swift语言的演进</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%86%E6%9E%B6%E9%80%89%E6%8B%A9"><span class="toc-number">2.</span> <span class="toc-text">框架选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B"><span class="toc-number">2.1.</span> <span class="toc-text">架构演进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SwiftUI"><span class="toc-number">2.2.</span> <span class="toc-text">SwiftUI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RxSwift"><span class="toc-number">2.3.</span> <span class="toc-text">RxSwift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Combine"><span class="toc-number">2.4.</span> <span class="toc-text">Combine</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%B7%B7%E7%BC%96"><span class="toc-number">3.</span> <span class="toc-text">如何混编</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">前置条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AECocoaPods"><span class="toc-number">3.2.</span> <span class="toc-text">如何设置CocoaPods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8Module%EF%BC%9F"><span class="toc-number">3.3.</span> <span class="toc-text">为什么要用Module？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Name-Mangling"><span class="toc-number">3.4.</span> <span class="toc-text">Name Mangling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E4%BB%A5%E8%B0%83OC%E6%8E%A5%E5%8F%A3%EF%BC%9F"><span class="toc-number">3.5.</span> <span class="toc-text">为什么可以调OC接口？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">动态性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%80%BC%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%96%B9%E6%B3%95%E6%9B%BF%E6%8D%A2"><span class="toc-number">4.1.</span> <span class="toc-text">值类型的方法替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95%E6%9B%BF%E6%8D%A2"><span class="toc-number">4.2.</span> <span class="toc-text">类的方法替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E6%A1%A9"><span class="toc-number">4.3.</span> <span class="toc-text">插桩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ClassContextDescriptorBuilder"><span class="toc-number">4.4.</span> <span class="toc-text">ClassContextDescriptorBuilder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mach-override"><span class="toc-number">4.5.</span> <span class="toc-text">Mach_override</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
     </article>
@@ -1048,7 +1048,7 @@ FOUNDATION_EXPORT <span class="token keyword">const</span> <span class="token ke
     <i 
       class="iconfont icon-wenzhang_huaban" 
       style="padding-right: 2px;">
-    </i>最新文章
+    </i>Recent Posts
   </div>
   <div class="recent-posts-list">
     
