@@ -1,150 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
-  <head>
+<html>
+<meta  lang="zh-Hans" >
+<head>
   <meta charset="UTF-8">
-  <meta 
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <meta 
-    http-equiv="X-UA-Compatible" 
-    content="ie=edge">
-  <meta 
-    name="theme-color" 
-    content="#fff" 
-    id="theme-color">
-  <meta 
-    name="description" 
-    content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-  <link 
-    rel="icon" 
-    href="/img/logo-starming.png">
-  <title>在快手做分享、无用类检查、在广州做 SwiftUI 学习笔记分享、InfoQ二叉树视频</title>
-  
-    
-      <meta 
-        property="og:title" 
-        content="在快手做分享、无用类检查、在广州做 SwiftUI 学习笔记分享、InfoQ二叉树视频">
-    
-    
-      <meta 
-        property="og:url" 
-        content="http://ming1016.github.io/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/index.html">
-    
-    
-      <meta 
-        property="og:img" 
-        content="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/45.jpg">
-    
-    
-      <meta 
-        property="og:img" 
-        content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-    
-    
-      <meta 
-        property="og:type" 
-        content="article">
-      <meta 
-        property="og:article:published_time" 
-        content="2020-01-05">
-      <meta 
-        property="og:article:modified_time" 
-        content="2022-06-14">
-      <meta 
-        property="og:article:author" 
-        content="戴铭">
-      
-        
-          <meta 
-            property="og:article:tag" 
-            content="iOS">
-        
-          <meta 
-            property="og:article:tag" 
-            content="Swift">
-        
-          <meta 
-            property="og:article:tag" 
-            content="SwiftUI">
-        
-      
-    
-  
-  
-  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
-  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
-  <link rel="preload" href="/css/main.css" as="style" >
-  
-  <link rel="modulepreload" href="//instant.page/5.1.0">
-  
-  <link rel="stylesheet" href="/css/main.css">
-  
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
-  
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
-  
-  
-  
-    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
-  
-  <script>
-    function loadScript(url, cb) {
-      var script = document.createElement('script');
-      script.src = url;
-      if (cb) script.onload = cb;
-      script.async = true;
-      document.body.appendChild(script);
-    }
-    function loadCSS(href, data, attr) {
-      var sheet = document.createElement('link');
-      sheet.ref = 'stylesheet';
-      sheet.href = href;
-      sheet.dataset[data] = attr;
-      document.head.appendChild(sheet);
-    }
-    function changeCSS(cssFile, data, attr) {
-      var oldlink = document.querySelector(data);
-      var newlink = document.createElement("link");
-      newlink.setAttribute("rel", "stylesheet");
-      newlink.setAttribute("href", cssFile);
-      newlink.dataset.prism = attr;
-      document.head.replaceChild(newlink, oldlink);
-    }
-  </script>
-  
-    
-      
-      
-      
-      
-        
-        
-        
-        <script>
-          function prismThemeChange() {
-            if(document.getElementById('theme-color').dataset.mode === 'dark') {
-              if(document.querySelector('[data-prism]')) {
-                changeCSS('/js/lib/prism/prism-tomorrow.min.css', '[data-prism]', 'prism-tomorrow');
-              } else {
-                loadCSS('/js/lib/prism/prism-tomorrow.min.css', 'prism', 'prism-tomorrow');
-              }
-            } else {
-              if(document.querySelector('[data-prism]')) {
-                changeCSS('/js/lib/prism/prism.min.css', '[data-prism]', 'prism');
-              } else {
-                loadCSS('/js/lib/prism/prism.min.css', 'prism', 'prism');
-              }
-            }
-          }
-          prismThemeChange()
-        </script>
-      
-      
-        
-        <link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
-      
-    
-  
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
   <script>
     // control reverse button
     var reverseDarkList = {
@@ -173,406 +37,114 @@
       return setting;
     };
     // apply current darkmode setting
-  </script>
-  
-    <script>
-      var setDarkmode = function(mode) {
+    var setDarkmode = function(mode) {
       var setting = mode || localStorage.getItem('user-color-scheme');
       if(setting === getCssMediaQuery()) {
         document.documentElement.removeAttribute('data-user-color-scheme');
         localStorage.removeItem('user-color-scheme');
         document.getElementById('theme-color').content = themeColor[setting];
-        document.getElementById('theme-color').dataset.mode = setting;
-        prismThemeChange();
       } else if(reverseDarkList[setting]) {
         document.documentElement.setAttribute('data-user-color-scheme', setting);
         document.getElementById('theme-color').content = themeColor[setting];
-        document.getElementById('theme-color').dataset.mode = setting;
-        prismThemeChange();
       } else {
         document.documentElement.removeAttribute('data-user-color-scheme');
         localStorage.removeItem('user-color-scheme');
         document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
-        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
-        prismThemeChange();
       }
     };
     setDarkmode();
-    </script>
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
   
   
   
-    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
-    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
-  
-  
-    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
   
   
   
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
   
   
   
 <meta name="generator" content="Hexo 5.4.2"></head>
 
-  <body>
-    <div class="wrapper">
-       
-      <nav class="navbar">
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
   <div class="navbar-logo">
-    <a class="navbar-logo-main" href="/">
+    <span class="navbar-logo-main">
       
-        <img 
-          class="navbar-logo-img"
-          width="32"
-          height="32"
-          src="/img/logo-starming.png" 
-          alt="blog logo">
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
       
       <span class="navbar-logo-dsc">戴铭的博客</span>
-      </a>
+    </span>
   </div>
   <div class="navbar-menu">
     
-      <a 
-        href="/" 
-        class="navbar-menu-item">
-        
-          Home
-        
-      </a>
+    <a href="/" class="navbar-menu-item">Home </a>
     
-      <a 
-        href="/archives" 
-        class="navbar-menu-item">
-        
-          Archive
-        
-      </a>
+    <a href="/archives" class="navbar-menu-item">Archive </a>
     
-      <a 
-        href="/tags" 
-        class="navbar-menu-item">
-        
-          Tags
-        
-      </a>
+    <a href="/tags" class="navbar-menu-item">Tags </a>
     
-      <a 
-        href="/categories" 
-        class="navbar-menu-item">
-        
-          Categories
-        
-      </a>
+    <a href="/categories" class="navbar-menu-item">Categories </a>
     
-      <a 
-        href="/about" 
-        class="navbar-menu-item">
-        
-          About
-        
-      </a>
+    <a href="/about" class="navbar-menu-item">About </a>
     
-      <a 
-        href="/null" 
-        class="navbar-menu-item">
-        
-          Friends
-        
-      </a>
+    <a href="" class="navbar-menu-item">Friends </a>
     
-    <button 
-      class="navbar-menu-item darknavbar navbar-menu-btn" 
-      aria-label="Toggle dark mode"
-      id="dark">
-      <i class="iconfont icon-weather"></i>
-    </button>
-    <button 
-      class="navbar-menu-item searchnavbar navbar-menu-btn" 
-      aria-label="Toggle search"
-      id="search">
-      <!-- <i 
-        class="iconfont icon-search" 
-        style="font-size: 1.2rem; font-weight: 400;">
-      </i> -->
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-        class="iconify iconify--ion" width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
-        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
-          d="M256 80a176 176 0 1 0 176 176A176 176 0 0 0 256 80Z"></path>
-        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
-          d="M232 160a72 72 0 1 0 72 72a72 72 0 0 0-72-72Z"></path>
-        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="28"
-          d="M283.64 283.64L336 336"></path>
-      </svg>
-    </button>
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
   </div>
-</nav> 
-      
-      <div 
-        id="local-search" 
-        style="display: none">
-        <input
-          class="navbar-menu-item"
-          id="search-input"
-          placeholder="请输入搜索内容..." />
-        <div id="search-content"></div>
-      </div>
-      
-      <div class="section-wrap">
-        <div class="container">
-          <div class="columns">
-            <aside class="left-column">
-              
-              <div class="card card-author">
-                
-  <img 
-    src="/img/ming.jpeg" 
-    class="author-img"
-    width="88"
-    height="88"
-    alt="author avatar">
-
-<p class="author-name">戴铭</p>
-<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
-<div class="author-message">
-  <a 
-    class="author-posts-count" 
-    href="/archives">
-    <span>58</span>
-    <span>Posts</span>
-  </a>
-  <a 
-    class="author-categories-count" 
-    href="/categories">
-    <span>5</span>
-    <span>Categories</span>
-  </a>
-  <a 
-    class="author-tags-count" 
-    href="/tags">
-    <span>38</span>
-    <span>Tags</span>
-  </a>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/45.jpg" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/45.jpg"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
 </div>
-
-  <div class="author-card-society">
-    
-      <div class="author-card-society-icon">
-        <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
-          <i class="iconfont icon-sina society-icon"></i>
-        </a>
-      </div>
-    
-      <div class="author-card-society-icon">
-        <a target="_blank" rel="noopener" href="https://github.com/ming1016">
-          <i class="iconfont icon-github society-icon"></i>
-        </a>
-      </div>
-    
-      <div class="author-card-society-icon">
-        <a href="mailto:ming1016@foxmail.com">
-          <i class="iconfont icon-mail society-icon"></i>
-        </a>
-      </div>
-    
-      <div class="author-card-society-icon">
-        <a href="/atom.xml">
-          <i class="iconfont icon-chrome society-icon"></i>
-        </a>
-      </div>
-    
-  </div>
-
-              </div>
-               <div class="sticky-tablet">
-  
-  
-    <article class="display-when-two-columns spacer">
-      <div class="card card-content toc-card">
-        <div class="toc-header">
-  <i 
-    class="iconfont icon-menu" 
-    style="padding-right: 2px;">
-  </i>TOC
-</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%BF%AB%E6%89%8B%E5%81%9A%E5%88%86%E4%BA%AB"><span class="toc-number">1.</span> <span class="toc-text">在快手做分享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E7%94%A8%E7%B1%BB%E6%A3%80%E6%9F%A5"><span class="toc-number">2.</span> <span class="toc-text">无用类检查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5"><span class="toc-number">2.1.</span> <span class="toc-text">第一步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5"><span class="toc-number">2.2.</span> <span class="toc-text">第二步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5"><span class="toc-number">2.3.</span> <span class="toc-text">第三步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5"><span class="toc-number">2.4.</span> <span class="toc-text">第四步</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%B9%BF%E5%B7%9E%E5%81%9A%E7%9A%84-SwiftUI-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E5%88%86%E4%BA%AB"><span class="toc-number">3.</span> <span class="toc-text">在广州做的 SwiftUI 学习笔记分享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InfoQ%E4%BA%8C%E5%8F%89%E6%A0%91%E8%A7%86%E9%A2%91"><span class="toc-number">4.</span> <span class="toc-text">InfoQ二叉树视频</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E5%BD%93%E6%BC%AB%E7%94%BB%E5%AE%B6%EF%BC%8C%E5%8F%AF%E8%83%BD%E8%BF%9E%E9%A5%AD%E9%83%BD%E5%90%83%E4%B8%8D%E9%A5%B1%E3%80%82%E2%80%9D"><span class="toc-number">4.1.</span> <span class="toc-text">“当漫画家，可能连饭都吃不饱。”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E6%88%91%E4%B8%8D%E6%83%B3%E8%AE%A9%E8%87%AA%E5%B7%B1%E6%8A%95%E5%85%A5%E4%BA%86%E7%94%9F%E5%91%BD%E7%9A%84%E7%83%AD%E7%88%B1%EF%BC%8C%E5%81%9C%E6%BB%9E%E4%B8%8D%E5%89%8D%E3%80%82%E2%80%9D"><span class="toc-number">4.2.</span> <span class="toc-text">“我不想让自己投入了生命的热爱，停滞不前。”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E5%B7%A5%E4%BD%9C%E4%B8%8D%E7%94%A8%E5%BF%83%E7%9A%84%E4%BA%BA%EF%BC%8C%E7%94%9F%E6%B4%BB%E4%B9%9F%E4%B8%8D%E4%BC%9A%E5%A4%AA%E7%B2%BE%E5%BD%A9%E2%80%9D"><span class="toc-number">4.3.</span> <span class="toc-text">“工作不用心的人，生活也不会太精彩”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E5%B0%BE"><span class="toc-number">4.4.</span> <span class="toc-text">结尾</span></a></li></ol></li></ol>
-      </div>
-    </article>
-  
-  
-  <article class="card card-content categories-widget">
-    <div class="categories-card">
-  <div class="categories-header">
-    <i 
-      class="iconfont icon-fenlei" 
-      style="padding-right: 2px;">
-    </i>Categories
-  </div>
-  <div class="categories-list">
-    
-      <a href="/categories/Programming/">
-        <div class="categories-list-item">
-          Programming
-          <span class="categories-list-item-badge">44</span>
-        </div>
-      </a>
-    
-      <a href="/categories/My-novel/">
-        <div class="categories-list-item">
-          My-novel
-          <span class="categories-list-item-badge">4</span>
-        </div>
-      </a>
-    
-      <a href="/categories/My-painting/">
-        <div class="categories-list-item">
-          My-painting
-          <span class="categories-list-item-badge">8</span>
-        </div>
-      </a>
-    
-      <a href="/categories/travel/">
-        <div class="categories-list-item">
-          travel
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-      <a href="/categories/APP/">
-        <div class="categories-list-item">
-          APP
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-  </div>
-</div>
-  </article>
-  
-  <article class="card card-content tags-widget">
-    <div class="tags-card">
-  <div class="tags-header">
-    <i 
-      class="iconfont icon-biaoqian" 
-      style="padding-right: 2px;">
-    </i>hot tags
-  </div>
-  <div class="tags-list">
-    
-      <a 
-        href="/tags/iOS/" 
-        title="iOS">
-        <div class="tags-list-item">iOS</div>
-      </a>
-    
-      <a 
-        href="/tags/Swift/" 
-        title="Swift">
-        <div class="tags-list-item">Swift</div>
-      </a>
-    
-      <a 
-        href="/tags/Painting/" 
-        title="Painting">
-        <div class="tags-list-item">Painting</div>
-      </a>
-    
-      <a 
-        href="/tags/Apple/" 
-        title="Apple">
-        <div class="tags-list-item">Apple</div>
-      </a>
-    
-      <a 
-        href="/tags/Slides/" 
-        title="Slides">
-        <div class="tags-list-item">Slides</div>
-      </a>
-    
-      <a 
-        href="/tags/iPad/" 
-        title="iPad">
-        <div class="tags-list-item">iPad</div>
-      </a>
-    
-      <a 
-        href="/tags/Procreate/" 
-        title="Procreate">
-        <div class="tags-list-item">Procreate</div>
-      </a>
-    
-      <a 
-        href="/tags/LLVM/" 
-        title="LLVM">
-        <div class="tags-list-item">LLVM</div>
-      </a>
-    
-      <a 
-        href="/tags/Web/" 
-        title="Web">
-        <div class="tags-list-item">Web</div>
-      </a>
-    
-      <a 
-        href="/tags/Novel/" 
-        title="Novel">
-        <div class="tags-list-item">Novel</div>
-      </a>
-    
-      <a 
-        href="/tags/SwiftUI/" 
-        title="SwiftUI">
-        <div class="tags-list-item">SwiftUI</div>
-      </a>
-    
-      <a 
-        href="/tags/macOS/" 
-        title="macOS">
-        <div class="tags-list-item">macOS</div>
-      </a>
-    
-      <a 
-        href="/tags/%E7%BC%96%E8%AF%91/" 
-        title="编译">
-        <div class="tags-list-item">编译</div>
-      </a>
-    
-      <a 
-        href="/tags/WWDC/" 
-        title="WWDC">
-        <div class="tags-list-item">WWDC</div>
-      </a>
-    
-      <a 
-        href="/tags/ReactiveCocoa/" 
-        title="ReactiveCocoa">
-        <div class="tags-list-item">ReactiveCocoa</div>
-      </a>
-    
-      <a 
-        href="/tags/GOT/" 
-        title="GOT">
-        <div class="tags-list-item">GOT</div>
-      </a>
-    
-  </div>
-</div>
-  </article>
-  
-  
-</div>
-            </aside>
-            <main class="main-column">
-              
-  <div class="image-wrapper">
-    <img 
-      src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/45.jpg" 
-      data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/45.jpg"
-      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
-      class="image lozad"
-      alt="在快手做分享、无用类检查、在广州做 SwiftUI 学习笔记分享、InfoQ二叉树视频 thumbnail">
-  </div>
 
 <article class="card card-content">
   <header>
@@ -581,73 +153,47 @@
     </h1>
   </header>
   <div class="post-meta post-show-meta">
-    <time datetime="2020-01-05T07:57:05.000Z">
-      <i 
-        class="iconfont icon-calendar" 
-        style="margin-right: 2px;">
-      </i>
+    <time datetime="2020-01-05T07:57:05.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
       <span>2020-01-05</span>
     </time>
     
-      <span class="dot"></span>
-      
-        <a 
-          href="/categories/Programming/" 
-          class="post-meta-link">
-          Programming
-        </a>
-      
+    <span class="dot"></span>
+    
+    <a href="/categories/Programming/" class="post-meta-link">Programming</a>
     
     
-      <span class="dot"></span>
-      <span>3.1k words</span>
+    
+    <span class="dot"></span>
+    <span>3.1k words</span>
     
   </div>
   
-    <div 
-      class="post-meta post-show-meta" 
-      style="margin-top: -10px;">
-      <div style="display: flex; align-items: center;">
-        <i 
-          class="iconfont icon-biaoqian" 
-          style="margin-right: 2px; font-size: 1.15rem;">
-        </i>
-        
-          
-          <a 
-            href="/tags/iOS/" 
-            class="post-meta-link">
-            iOS
-          </a>
-        
-          
-            <span class="dot"></span>
-          
-          <a 
-            href="/tags/Swift/" 
-            class="post-meta-link">
-            Swift
-          </a>
-        
-          
-            <span class="dot"></span>
-          
-          <a 
-            href="/tags/SwiftUI/" 
-            class="post-meta-link">
-            SwiftUI
-          </a>
-        
-      </div>
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/iOS/" class="post-meta-link">iOS</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Swift/" class="post-meta-link">Swift</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/SwiftUI/" class="post-meta-link">SwiftUI</a>
+      
     </div>
+  </div>
   
   </header>
-  <div 
-    id="section" 
-    class="post-content">
-    <h2 id="在快手做分享"><a href="#在快手做分享" class="headerlink" title="在快手做分享"></a>在快手做分享</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/00.jpeg" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/00.jpeg"></p>
+  <div id="section" class="post-content">
+    <h2 id="在快手做分享"><a href="#在快手做分享" class="headerlink" title="在快手做分享"></a>在快手做分享</h2><p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/00.jpeg"></p>
 <p>前滴滴同事邀请我去快手做分享。下面是分享时的 Slides：</p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/01.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/01.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/02.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/02.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/03.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/03.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/04.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/04.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/05.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/05.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/06.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/06.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/07.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/07.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/08.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/08.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/09.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/09.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/10.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/10.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/11.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/11.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/12.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/12.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/13.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/13.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/14.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/14.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/15.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/15.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/16.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/16.png"></p>
+<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/01.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/02.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/03.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/04.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/05.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/06.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/07.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/08.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/09.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/10.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/11.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/12.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/13.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/14.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/15.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/16.png"></p>
 <p>详细文章介绍：<a href="https://ming1016.github.io/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">如何对 iOS 启动阶段耗时进行分析 | 星光社 - 戴铭的博客</a></p>
 <p>代码：<a target="_blank" rel="noopener" href="https://github.com/ming1016/MethodTraceAnalyze">GitHub - ming1016&#x2F;MethodTraceAnalyze: 方法耗时分析</a></p>
 <h2 id="无用类检查"><a href="#无用类检查" class="headerlink" title="无用类检查"></a>无用类检查</h2><p>如果包里有一堆没用的类，不光会影响用户下载速度，也会影响启动加载速度。检查无用类，一次是无法获得全部无用类的，因为无用的类里用了其他无用的类就算是有用了，所以需要进行递归查找，这样才能够连根拔起。这个过程如果是手动做比较费劲、收益无法一次评估，很难推动。同时还需要在线上灰度运行时检查实际类的使用情况，很多静态层面关联的类使用，实际运行过程中也可能用不到。</p>
@@ -791,19 +337,19 @@
 
 <p>清理了通过这种静态扫描出的无用类，还可以通过运行时来判断类是否被初始化了，从而找出无用类。类运行时是否初始化的这个信息是个布尔值，叫 isInitialized，存储在元类 class_rw_t 结构体的 flags 字段里，在 1&lt;&lt;29 位记录。</p>
 <p>完整代码见 ParseOCMethodContent 文件：<a target="_blank" rel="noopener" href="https://github.com/ming1016/MethodTraceAnalyze/blob/master/MethodTraceAnalyze/OC/ParseOCMethodContent.swift">MethodTraceAnalyze&#x2F;ParseOCMethodContent.swift at master · ming1016&#x2F;MethodTraceAnalyze · GitHub</a></p>
-<h2 id="在广州做的-SwiftUI-学习笔记分享"><a href="#在广州做的-SwiftUI-学习笔记分享" class="headerlink" title="在广州做的 SwiftUI 学习笔记分享"></a>在广州做的 SwiftUI 学习笔记分享</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/45.jpg" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/45.jpg"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/46.jpg" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/46.jpg"></p>
+<h2 id="在广州做的-SwiftUI-学习笔记分享"><a href="#在广州做的-SwiftUI-学习笔记分享" class="headerlink" title="在广州做的 SwiftUI 学习笔记分享"></a>在广州做的 SwiftUI 学习笔记分享</h2><p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/45.jpg"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/46.jpg"></p>
 <p>下面是笔记内容：</p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/24.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/24.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/25.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/25.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/26.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/26.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/27.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/27.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/28.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/28.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/29.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/29.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/30.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/30.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/31.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/31.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/32.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/32.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/33.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/33.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/34.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/34.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/35.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/35.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/36.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/36.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/37.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/37.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/38.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/38.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/39.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/39.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/40.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/40.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/41.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/41.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/42.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/42.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/43.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/43.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/44.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/44.png"></p>
+<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/24.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/25.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/26.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/27.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/28.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/29.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/30.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/31.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/32.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/33.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/34.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/35.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/36.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/37.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/38.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/39.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/40.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/41.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/42.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/43.png"><br><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/44.png"></p>
 <p>推荐喵神的 SwiftUI 新书，<a target="_blank" rel="noopener" href="https://objccn.io/products/swift-ui">ObjC 中国 - SwiftUI 与 Combine 编程</a>。</p>
 <p>这本介绍 Combine 的书也介绍的非常详细：<a target="_blank" rel="noopener" href="https://heckj.github.io/swiftui-notes/">Using Combine</a></p>
 <p>这个网站有大量 SwiftUI 的控件使用范例可以参考：<a target="_blank" rel="noopener" href="https://www.hackingwithswift.com/quick-start/swiftui">SwiftUI by Example - free quick start tutorials for Swift developers</a></p>
 <p>这个博客每篇都是 SwiftUI 相关的，而且更新非常频繁：<a target="_blank" rel="noopener" href="https://swiftwithmajid.com/">Home | Majid’s blog about Swift development</a></p>
 <h2 id="InfoQ二叉树视频"><a href="#InfoQ二叉树视频" class="headerlink" title="InfoQ二叉树视频"></a>InfoQ二叉树视频</h2><p>五分钟的视频，在导演构思下需要一天在四个地方进行拍摄，由于前一天晚上庆功宴喝高了，拍摄当天 iPad 笔也忘带了，头还有些懵。导演中午饭都没吃专门回家拿了他的笔给我用。下午地点安排在央美，先访谈再画一张。北京电影学院毕业14年专业绘画经验的导演贾成斌，在我画时边帮我改画边传授了经验，我觉得这些经验会让我更进一步。</p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/17.jpg" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/17.jpg"></p>
+<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/17.jpg"></p>
 <p>下面是记者剡沛在 InfoQ 上发布的采访内容和视频，原文在：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Xz2TcGjG14AXr_zmXMwUxg">“创造，就值得被肯定”，一名程序员的艺术人生丨二叉树视频</a></p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/18.jpg" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/18.jpg"></p>
+<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/18.jpg"></p>
 <p>他是一名程序员，同时也用自己的业余时间画画。无论是技术分享还是珍藏回忆，他都用画笔记录自己，连接他人。他觉得程序员很酷，无论编程还是画画，都是在创造，这就是最值得肯定的事情。</p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/19.jpg" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/19.jpg"></p>
+<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/19.jpg"></p>
 <p>他在高德负责架构研发工作，也是大家眼中的艺术家，在他身上总能看到那些执念与决心，它们发着光，无时无刻不影响着周围的人。</p>
 <p>他就是戴铭，一名酷酷的程序员。</p>
 <p>当聊到”连接“这个词的时候，他的眼神异常坚定。</p>
@@ -815,7 +361,7 @@
 <p>戴铭最早接触画画，是小学之前报过的一个高阶国画班，因为老师在上海，所以他每画完一张都要寄过去并等待回信，当其中一幅画改到第三遍的时候老师回信说：这孩子可能没什么天赋。因为这件事，当时戴铭心里对画画的渴望，几乎降到了冰点，对于画画的兴趣也就此搁置。</p>
 <p>直到六年级的一次美术作业，平时酷爱看漫画的戴铭，才再一次下定决心把自己喜欢的角色搬到纸上。</p>
 <p>“同学都说画的太像了，那种被再次肯定的开心，很难忘记。”</p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/21.jpg" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/21.jpg"></p>
+<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/21.jpg"></p>
 <p>后来整个初中，戴铭都在课余时间画漫画，也没再报班，一直到初中毕业戴铭跟父亲说不想上学了，“想去画漫画，做一名漫画家”。不难预料，这个想法并没有得到父亲的支持，“当漫画家，可能连饭都吃不饱”。</p>
 <p>但从戴铭的话语中，并没有因为父亲这次选择而听到丝毫气馁，似乎心里的种子已经生根。</p>
 <p>“兴趣不是说喜欢漫画，就要去从事漫画。当我们从被动的行为中获得成就感时，也会在无形中培养出兴趣，画画如此，编程也是一样。“</p>
@@ -824,14 +370,14 @@
 <p>“大概是从四、五年前开始，空闲的时候会花很长的时间画画，平时每天也会挤出一个多小时坚持练手，因为我不希望自己热爱的东西，停滞不前，兴趣不该只是兴趣而已。”</p>
 <p>后来戴铭接触了数绘，就开始把很多创作留在屏幕上。</p>
 <p>“用 ipad 画，更适合我现在的角色，因为可以随时开始和结束，不受环境和工具的影响，另一方面数字绘图也让他的作品在色彩方面，有了更多的提升空间。”</p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/22.jpg" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/22.jpg"></p>
+<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/22.jpg"></p>
 <p>从容地掏出平板，只要自己想，就能随时还原周遭的一切。这种感觉，就跟戴铭看待程序员时的表达一样，“都是很酷的事情，因为无论程序员的人还是艺术家，他们都在创造新的事物，仅这一点，就值得被肯定。”</p>
 <h3 id="“工作不用心的人，生活也不会太精彩”"><a href="#“工作不用心的人，生活也不会太精彩”" class="headerlink" title="“工作不用心的人，生活也不会太精彩”"></a>“工作不用心的人，生活也不会太精彩”</h3><p>类似画画这种需要大量时间去“熬”的爱好，坚持总是最难的部分。</p>
 <p>“时间永远都是紧缺的，这是肯定。如果工作很忙，就先把时间全部投入到工作上，用最快的速度做好、做完，才能有更多的精力和心情去做其他事情”。</p>
 <p>戴铭上一份工作在滴滴，刚入职就希望拓宽自己的能力范围，几乎承担整个部门的研发任务，后来临近发版 Bug 实在解不完，第二天来公司发现都被领导默默解掉了，才意识到一个人的力量始终有限，“一个手指，肯定比不过一个拳头的力量。”</p>
 <p>即便如此，戴铭也始终保持着对工作的热血，当时间不够用的时候，他会换个角度去看待问题。</p>
 <p>“我觉得工作上面不上心、不拼命的人，生活也不会太精彩。工作是跟每个人的一生切实相关的事情，如果连这个都做不好，又如何能在其他事情上更用心的经营？”</p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/23.jpg" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/23.jpg"></p>
+<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/23.jpg"></p>
 <p>时间看透了，剩下的就是坚持。</p>
 <p>当聊到坚持的原动力时，除了用回忆和分享去推动自己，在戴铭身上总散发着一股劲儿。一个兴趣爱好而已，谈信念可能过于悲壮，所以他认为，这股劲儿更像是决心和执念。</p>
 <p>有刚入进入滴滴时，想肩扛所有工作的执念；</p>
@@ -840,103 +386,217 @@
 <h3 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h3><p>戴铭是很强大的人，他讲过的一段话令人印象深刻：</p>
 <p>“幸福是面对过去，恐惧是面对未知的未来。我也忘记是从哪里看到的这句话，但我自己会这样理解：回忆是让人幸福的，未知是令人恐惧的。但如果我们沉湎在回忆中不敢面对未来，幸福始终是有限的，当我们用决心去面对未来，幸福就会越来越多，恐惧也会越来越少。”</p>
 <p>裹着决心这把利剑，酷酷的戴铭就这样用代码和画笔勾勒着自己的一生，而画卷展开的部分就已经足够精彩，余下的，定会更值得期待。</p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/20.jpg" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/20.jpg"></p>
+<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/20.jpg"></p>
 
   </div>
   <div>
-    
-      <div 
-        class="post-note note-warning copyright" 
-        style="margin-top: 42px">
-        <p>
-          <span style="font-weight: bold;">作者：</span><a 
-            target="_blank" 
-            rel="nofollow noopener noreferrer" 
-            href="/about">
-            戴铭
-          </a>
-        </p>
-        <p>
-          <span style="font-weight: bold;">文章链接：</span><a 
-            target="_blank" 
-            rel="nofollow noopener noreferrer" 
-            href="http://ming1016.github.io/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/">
-            http://ming1016.github.io/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/
-          </a>
-        </p>
-        <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
-      </div>
-    
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/">http://ming1016.github.io/2020/01/05/kuaishou-unused-class-swiftui-note-binary-tree-interview/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
   </div>
 </article>
 <div class="nav">
   
-    <div class="nav-item-prev">
-      <a 
-        href="/2020/03/29/apple-system-executable-file-macho/" 
-        class="nav-link">
-        <i class="iconfont icon-left nav-prev-icon"></i>
-        <div>
-          <div class="nav-label">Prev</div>
-          
-            <div class="nav-title">Apple 操作系统可执行文件 Mach-O </div>
-          
-        </div>
+  <div class="nav-item-prev">
+    <a href="/2020/03/29/apple-system-executable-file-macho/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">Prev</div>
+        
+        <div class="nav-title">Apple 操作系统可执行文件 Mach-O </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/12/28/japan-travel/" class="nav-link">
+      <div>
+        <div class="nav-label">Next</div>
+        
+        <div class="nav-title">日本游玩 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%BF%AB%E6%89%8B%E5%81%9A%E5%88%86%E4%BA%AB"><span class="toc-number">1.</span> <span class="toc-text">在快手做分享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E7%94%A8%E7%B1%BB%E6%A3%80%E6%9F%A5"><span class="toc-number">2.</span> <span class="toc-text">无用类检查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5"><span class="toc-number">2.1.</span> <span class="toc-text">第一步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5"><span class="toc-number">2.2.</span> <span class="toc-text">第二步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5"><span class="toc-number">2.3.</span> <span class="toc-text">第三步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5"><span class="toc-number">2.4.</span> <span class="toc-text">第四步</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%B9%BF%E5%B7%9E%E5%81%9A%E7%9A%84-SwiftUI-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E5%88%86%E4%BA%AB"><span class="toc-number">3.</span> <span class="toc-text">在广州做的 SwiftUI 学习笔记分享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InfoQ%E4%BA%8C%E5%8F%89%E6%A0%91%E8%A7%86%E9%A2%91"><span class="toc-number">4.</span> <span class="toc-text">InfoQ二叉树视频</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E5%BD%93%E6%BC%AB%E7%94%BB%E5%AE%B6%EF%BC%8C%E5%8F%AF%E8%83%BD%E8%BF%9E%E9%A5%AD%E9%83%BD%E5%90%83%E4%B8%8D%E9%A5%B1%E3%80%82%E2%80%9D"><span class="toc-number">4.1.</span> <span class="toc-text">“当漫画家，可能连饭都吃不饱。”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E6%88%91%E4%B8%8D%E6%83%B3%E8%AE%A9%E8%87%AA%E5%B7%B1%E6%8A%95%E5%85%A5%E4%BA%86%E7%94%9F%E5%91%BD%E7%9A%84%E7%83%AD%E7%88%B1%EF%BC%8C%E5%81%9C%E6%BB%9E%E4%B8%8D%E5%89%8D%E3%80%82%E2%80%9D"><span class="toc-number">4.2.</span> <span class="toc-text">“我不想让自己投入了生命的热爱，停滞不前。”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E5%B7%A5%E4%BD%9C%E4%B8%8D%E7%94%A8%E5%BF%83%E7%9A%84%E4%BA%BA%EF%BC%8C%E7%94%9F%E6%B4%BB%E4%B9%9F%E4%B8%8D%E4%BC%9A%E5%A4%AA%E7%B2%BE%E5%BD%A9%E2%80%9D"><span class="toc-number">4.3.</span> <span class="toc-text">“工作不用心的人，生活也不会太精彩”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E5%B0%BE"><span class="toc-number">4.4.</span> <span class="toc-text">结尾</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
+
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>58</span>
+    <span>Posts</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>Categories</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>38</span>
+    <span>Tags</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
       </a>
     </div>
   
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
   
-    <div class="nav-item-next">
-      <a 
-        href="/2019/12/28/japan-travel/" 
-        class="nav-link">
-        <div>
-          <div class="nav-label">Next</div>
-          
-            <div class="nav-title">日本游玩 </div>
-          
-        </div>
-        <i class="iconfont icon-right nav-next-icon"></i>
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
       </a>
     </div>
   
 </div>
 
-<div 
-  class="card card-content toc-card" 
-  id="mobiletoc">
-  <div class="toc-header">
-  <i 
-    class="iconfont icon-menu" 
-    style="padding-right: 2px;">
-  </i>TOC
-</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%BF%AB%E6%89%8B%E5%81%9A%E5%88%86%E4%BA%AB"><span class="toc-number">1.</span> <span class="toc-text">在快手做分享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E7%94%A8%E7%B1%BB%E6%A3%80%E6%9F%A5"><span class="toc-number">2.</span> <span class="toc-text">无用类检查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5"><span class="toc-number">2.1.</span> <span class="toc-text">第一步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5"><span class="toc-number">2.2.</span> <span class="toc-text">第二步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5"><span class="toc-number">2.3.</span> <span class="toc-text">第三步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5"><span class="toc-number">2.4.</span> <span class="toc-text">第四步</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%B9%BF%E5%B7%9E%E5%81%9A%E7%9A%84-SwiftUI-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E5%88%86%E4%BA%AB"><span class="toc-number">3.</span> <span class="toc-text">在广州做的 SwiftUI 学习笔记分享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InfoQ%E4%BA%8C%E5%8F%89%E6%A0%91%E8%A7%86%E9%A2%91"><span class="toc-number">4.</span> <span class="toc-text">InfoQ二叉树视频</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E5%BD%93%E6%BC%AB%E7%94%BB%E5%AE%B6%EF%BC%8C%E5%8F%AF%E8%83%BD%E8%BF%9E%E9%A5%AD%E9%83%BD%E5%90%83%E4%B8%8D%E9%A5%B1%E3%80%82%E2%80%9D"><span class="toc-number">4.1.</span> <span class="toc-text">“当漫画家，可能连饭都吃不饱。”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E6%88%91%E4%B8%8D%E6%83%B3%E8%AE%A9%E8%87%AA%E5%B7%B1%E6%8A%95%E5%85%A5%E4%BA%86%E7%94%9F%E5%91%BD%E7%9A%84%E7%83%AD%E7%88%B1%EF%BC%8C%E5%81%9C%E6%BB%9E%E4%B8%8D%E5%89%8D%E3%80%82%E2%80%9D"><span class="toc-number">4.2.</span> <span class="toc-text">“我不想让自己投入了生命的热爱，停滞不前。”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E5%B7%A5%E4%BD%9C%E4%B8%8D%E7%94%A8%E5%BF%83%E7%9A%84%E4%BA%BA%EF%BC%8C%E7%94%9F%E6%B4%BB%E4%B9%9F%E4%B8%8D%E4%BC%9A%E5%A4%AA%E7%B2%BE%E5%BD%A9%E2%80%9D"><span class="toc-number">4.3.</span> <span class="toc-text">“工作不用心的人，生活也不会太精彩”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E5%B0%BE"><span class="toc-number">4.4.</span> <span class="toc-text">结尾</span></a></li></ol></li></ol>
-</div>
-            </main>
-            <aside class="right-column">
-              <div class="sticky-widescreen">
+            </div>
+            
+            <div class="sticky-tablet">
   
   
-    <article class="card card-content toc-card">
-      <div class="toc-header">
-  <i 
-    class="iconfont icon-menu" 
-    style="padding-right: 2px;">
-  </i>TOC
-</div>
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
 <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%BF%AB%E6%89%8B%E5%81%9A%E5%88%86%E4%BA%AB"><span class="toc-number">1.</span> <span class="toc-text">在快手做分享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E7%94%A8%E7%B1%BB%E6%A3%80%E6%9F%A5"><span class="toc-number">2.</span> <span class="toc-text">无用类检查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5"><span class="toc-number">2.1.</span> <span class="toc-text">第一步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5"><span class="toc-number">2.2.</span> <span class="toc-text">第二步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5"><span class="toc-number">2.3.</span> <span class="toc-text">第三步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5"><span class="toc-number">2.4.</span> <span class="toc-text">第四步</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%B9%BF%E5%B7%9E%E5%81%9A%E7%9A%84-SwiftUI-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E5%88%86%E4%BA%AB"><span class="toc-number">3.</span> <span class="toc-text">在广州做的 SwiftUI 学习笔记分享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InfoQ%E4%BA%8C%E5%8F%89%E6%A0%91%E8%A7%86%E9%A2%91"><span class="toc-number">4.</span> <span class="toc-text">InfoQ二叉树视频</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E5%BD%93%E6%BC%AB%E7%94%BB%E5%AE%B6%EF%BC%8C%E5%8F%AF%E8%83%BD%E8%BF%9E%E9%A5%AD%E9%83%BD%E5%90%83%E4%B8%8D%E9%A5%B1%E3%80%82%E2%80%9D"><span class="toc-number">4.1.</span> <span class="toc-text">“当漫画家，可能连饭都吃不饱。”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E6%88%91%E4%B8%8D%E6%83%B3%E8%AE%A9%E8%87%AA%E5%B7%B1%E6%8A%95%E5%85%A5%E4%BA%86%E7%94%9F%E5%91%BD%E7%9A%84%E7%83%AD%E7%88%B1%EF%BC%8C%E5%81%9C%E6%BB%9E%E4%B8%8D%E5%89%8D%E3%80%82%E2%80%9D"><span class="toc-number">4.2.</span> <span class="toc-text">“我不想让自己投入了生命的热爱，停滞不前。”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E5%B7%A5%E4%BD%9C%E4%B8%8D%E7%94%A8%E5%BF%83%E7%9A%84%E4%BA%BA%EF%BC%8C%E7%94%9F%E6%B4%BB%E4%B9%9F%E4%B8%8D%E4%BC%9A%E5%A4%AA%E7%B2%BE%E5%BD%A9%E2%80%9D"><span class="toc-number">4.3.</span> <span class="toc-text">“工作不用心的人，生活也不会太精彩”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E5%B0%BE"><span class="toc-number">4.4.</span> <span class="toc-text">结尾</span></a></li></ol></li></ol>
-    </article>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>Categories</div>
+  <div class="categories-list">
+    
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">44</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-novel">
+        <div class="categories-list-item">
+          My-novel
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-painting">
+        <div class="categories-list-item">
+          My-painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>hot tags</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\WWDC" title="WWDC"><div class="tags-list-item">WWDC</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%BF%AB%E6%89%8B%E5%81%9A%E5%88%86%E4%BA%AB"><span class="toc-number">1.</span> <span class="toc-text">在快手做分享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E7%94%A8%E7%B1%BB%E6%A3%80%E6%9F%A5"><span class="toc-number">2.</span> <span class="toc-text">无用类检查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5"><span class="toc-number">2.1.</span> <span class="toc-text">第一步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5"><span class="toc-number">2.2.</span> <span class="toc-text">第二步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5"><span class="toc-number">2.3.</span> <span class="toc-text">第三步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5"><span class="toc-number">2.4.</span> <span class="toc-text">第四步</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%B9%BF%E5%B7%9E%E5%81%9A%E7%9A%84-SwiftUI-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E5%88%86%E4%BA%AB"><span class="toc-number">3.</span> <span class="toc-text">在广州做的 SwiftUI 学习笔记分享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InfoQ%E4%BA%8C%E5%8F%89%E6%A0%91%E8%A7%86%E9%A2%91"><span class="toc-number">4.</span> <span class="toc-text">InfoQ二叉树视频</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E5%BD%93%E6%BC%AB%E7%94%BB%E5%AE%B6%EF%BC%8C%E5%8F%AF%E8%83%BD%E8%BF%9E%E9%A5%AD%E9%83%BD%E5%90%83%E4%B8%8D%E9%A5%B1%E3%80%82%E2%80%9D"><span class="toc-number">4.1.</span> <span class="toc-text">“当漫画家，可能连饭都吃不饱。”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E6%88%91%E4%B8%8D%E6%83%B3%E8%AE%A9%E8%87%AA%E5%B7%B1%E6%8A%95%E5%85%A5%E4%BA%86%E7%94%9F%E5%91%BD%E7%9A%84%E7%83%AD%E7%88%B1%EF%BC%8C%E5%81%9C%E6%BB%9E%E4%B8%8D%E5%89%8D%E3%80%82%E2%80%9D"><span class="toc-number">4.2.</span> <span class="toc-text">“我不想让自己投入了生命的热爱，停滞不前。”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E5%B7%A5%E4%BD%9C%E4%B8%8D%E7%94%A8%E5%BF%83%E7%9A%84%E4%BA%BA%EF%BC%8C%E7%94%9F%E6%B4%BB%E4%B9%9F%E4%B8%8D%E4%BC%9A%E5%A4%AA%E7%B2%BE%E5%BD%A9%E2%80%9D"><span class="toc-number">4.3.</span> <span class="toc-text">“工作不用心的人，生活也不会太精彩”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E5%B0%BE"><span class="toc-number">4.4.</span> <span class="toc-text">结尾</span></a></li></ol></li></ol>
+  </article>
   
   
   <article class="card card-content">
     <div class="recent-posts-card">
-  <div class="recent-posts-header">
-    <i 
-      class="iconfont icon-wenzhang_huaban" 
-      style="padding-right: 2px;">
-    </i>Recent Posts
-  </div>
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>Recent Posts</div>
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
@@ -965,164 +625,113 @@
   
   
 </div>
-            </aside>
-          </div>
+          </aside>
         </div>
       </div>
     </div>
-     
-    <footer class="footer">
+  </div>
+  
+  <footer class="footer">
   <div class="footer-container">
     <div>
       <div class="footer-dsc">
-        <span>
-          Copyright ©
+        <span>Copyright ©
           
-            2014
+          2014 -
           
-          
-                - 
-                2022
-          
+          2022
         </span>
-        &nbsp;
-        <a 
-          href="/" 
-          class="footer-link">
-          戴铭的博客
-        </a>
+        <a href="/" class="footer-link">戴铭的博客 </a>
       </div>
     </div>
 
     
     
     
-      <div class="BbeiAn-info">
-        <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">鄂ICP备17011999号 </a>
-      </div>
-      
-        <div class="BbeiAn-info">
-          <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
-          <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
-          </a>
-          <br />
-        </div>
-      
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
+      </a>
+      <br />
+    </div>
+    
     
     
       <div class="footer-dsc">
         
-          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
         
         
-          <span>&nbsp;|&nbsp;</span>
+        <span>&nbsp;|&nbsp;</span>
         
         
-          本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
         
       </div>
       
     
 </footer>
- 
-    
-  <a 
-    role="button" 
-    id="scrollbutton" 
-    class="basebutton" 
-    aria-label="回到顶部">
-    <i class="iconfont icon-arrowleft button-icon"></i>
-  </a>
-
-<a 
-  role="button" 
-  id="menubutton"
-  aria-label="menu button"
-  class="basebutton">
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
   <i class="iconfont icon-menu button-icon"></i>
 </a>
-<a 
-  role="button" 
-  id="popbutton" 
-  class="basebutton" 
-  aria-label="控制中心">
+<a role="button" id="popbutton" class="basebutton">
   <i class="iconfont icon-expand button-icon"></i>
 </a>
-<a 
-  role="button" 
-  id="darkbutton" 
-  class="basebutton darkwidget" 
-  aria-label="夜色模式">
+<a role="button" id="darkbutton" class="basebutton darkwidget">
   <i class="iconfont icon-weather button-icon"></i>
 </a>
-<a 
-  role="button" 
-  id="searchbutton" 
-  class="basebutton searchwidget" 
-  aria-label="搜索">
-  <i class="iconfont icon-search button-icon"></i>
-</a> 
-     
-     
-     
-      <script>
+
+  
+  
+  
+  <script>
   var addImgLayout = function () {
-    var img = document.querySelectorAll('.post-content img')
-    var i
+    var img = document.querySelectorAll('.post-content img');
+    var i;
     for (i = 0; i < img.length; i++) {
-      var wrapper = document.createElement('a')
-      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
-      wrapper.setAttribute('aria-label', 'illustration')
-      wrapper.style.cssText =
-        'width: 100%; display: flex; justify-content: center;'
-      if (img[i].alt) wrapper.dataset.caption = img[i].alt
-      wrapper.dataset.nolink = true
-      img[i].before(wrapper)
-      wrapper.append(img[i])
-      var divWrap = document.createElement('div')
-      divWrap.classList.add('gallery')
-      wrapper.before(divWrap)
-      divWrap.append(wrapper)
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
     }
-    baguetteBox.run('.gallery')
+    refreshFsLightbox();
   }
 </script>
-<script>
-  loadScript(
-    "/js/lib/lightbox/baguetteBox.min.js",
-    addImgLayout
-  )
-</script>
- 
-     
-     
-    <script src="/js/main.js"></script> 
-    
-      <script> 
-        loadScript('/js/lib/busuanzi.min.js') 
-      </script>
-     
-    
-      <script>
-        var addLazyload = function () {
-          var observer = lozad('.lozad', {
-            load: function (el) {
-              el.srcset = el.getAttribute('data-src')
-            },
-            loaded: function (el) {
-              el.classList.add('loaded')
-            },
-          })
-          observer.observe()
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
         }
-      </script>
-      <script>
-        loadScript('/js/lib/lozad.min.js', addLazyload)
-      </script>
-    
-    <script src="//instant.page/5.1.0" type="module"
-      integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
-    
-    
-  </body>
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
 </html>

@@ -1,150 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
-  <head>
+<html>
+<meta  lang="zh-Hans" >
+<head>
   <meta charset="UTF-8">
-  <meta 
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <meta 
-    http-equiv="X-UA-Compatible" 
-    content="ie=edge">
-  <meta 
-    name="theme-color" 
-    content="#fff" 
-    id="theme-color">
-  <meta 
-    name="description" 
-    content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-  <link 
-    rel="icon" 
-    href="/img/logo-starming.png">
-  <title>深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言</title>
-  
-    
-      <meta 
-        property="og:title" 
-        content="深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言">
-    
-    
-      <meta 
-        property="og:url" 
-        content="http://ming1016.github.io/2021/02/21/deeply-analyse-quickjs/index.html">
-    
-    
-      <meta 
-        property="og:img" 
-        content="/uploads/deeply-analyse-quickjs/4.png">
-    
-    
-      <meta 
-        property="og:img" 
-        content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-    
-    
-      <meta 
-        property="og:type" 
-        content="article">
-      <meta 
-        property="og:article:published_time" 
-        content="2021-02-21">
-      <meta 
-        property="og:article:modified_time" 
-        content="2022-06-14">
-      <meta 
-        property="og:article:author" 
-        content="戴铭">
-      
-        
-          <meta 
-            property="og:article:tag" 
-            content="JavaScript">
-        
-          <meta 
-            property="og:article:tag" 
-            content="Web">
-        
-          <meta 
-            property="og:article:tag" 
-            content="编译">
-        
-      
-    
-  
-  
-  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
-  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
-  <link rel="preload" href="/css/main.css" as="style" >
-  
-  <link rel="modulepreload" href="//instant.page/5.1.0">
-  
-  <link rel="stylesheet" href="/css/main.css">
-  
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
-  
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
-  
-  
-  
-    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
-  
-  <script>
-    function loadScript(url, cb) {
-      var script = document.createElement('script');
-      script.src = url;
-      if (cb) script.onload = cb;
-      script.async = true;
-      document.body.appendChild(script);
-    }
-    function loadCSS(href, data, attr) {
-      var sheet = document.createElement('link');
-      sheet.ref = 'stylesheet';
-      sheet.href = href;
-      sheet.dataset[data] = attr;
-      document.head.appendChild(sheet);
-    }
-    function changeCSS(cssFile, data, attr) {
-      var oldlink = document.querySelector(data);
-      var newlink = document.createElement("link");
-      newlink.setAttribute("rel", "stylesheet");
-      newlink.setAttribute("href", cssFile);
-      newlink.dataset.prism = attr;
-      document.head.replaceChild(newlink, oldlink);
-    }
-  </script>
-  
-    
-      
-      
-      
-      
-        
-        
-        
-        <script>
-          function prismThemeChange() {
-            if(document.getElementById('theme-color').dataset.mode === 'dark') {
-              if(document.querySelector('[data-prism]')) {
-                changeCSS('/js/lib/prism/prism-tomorrow.min.css', '[data-prism]', 'prism-tomorrow');
-              } else {
-                loadCSS('/js/lib/prism/prism-tomorrow.min.css', 'prism', 'prism-tomorrow');
-              }
-            } else {
-              if(document.querySelector('[data-prism]')) {
-                changeCSS('/js/lib/prism/prism.min.css', '[data-prism]', 'prism');
-              } else {
-                loadCSS('/js/lib/prism/prism.min.css', 'prism', 'prism');
-              }
-            }
-          }
-          prismThemeChange()
-        </script>
-      
-      
-        
-        <link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
-      
-    
-  
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
   <script>
     // control reverse button
     var reverseDarkList = {
@@ -173,406 +37,114 @@
       return setting;
     };
     // apply current darkmode setting
-  </script>
-  
-    <script>
-      var setDarkmode = function(mode) {
+    var setDarkmode = function(mode) {
       var setting = mode || localStorage.getItem('user-color-scheme');
       if(setting === getCssMediaQuery()) {
         document.documentElement.removeAttribute('data-user-color-scheme');
         localStorage.removeItem('user-color-scheme');
         document.getElementById('theme-color').content = themeColor[setting];
-        document.getElementById('theme-color').dataset.mode = setting;
-        prismThemeChange();
       } else if(reverseDarkList[setting]) {
         document.documentElement.setAttribute('data-user-color-scheme', setting);
         document.getElementById('theme-color').content = themeColor[setting];
-        document.getElementById('theme-color').dataset.mode = setting;
-        prismThemeChange();
       } else {
         document.documentElement.removeAttribute('data-user-color-scheme');
         localStorage.removeItem('user-color-scheme');
         document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
-        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
-        prismThemeChange();
       }
     };
     setDarkmode();
-    </script>
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
   
   
   
-    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
-    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
-  
-  
-    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
   
   
   
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
   
   
   
 <meta name="generator" content="Hexo 5.4.2"></head>
 
-  <body>
-    <div class="wrapper">
-       
-      <nav class="navbar">
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
   <div class="navbar-logo">
-    <a class="navbar-logo-main" href="/">
+    <span class="navbar-logo-main">
       
-        <img 
-          class="navbar-logo-img"
-          width="32"
-          height="32"
-          src="/img/logo-starming.png" 
-          alt="blog logo">
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
       
       <span class="navbar-logo-dsc">戴铭的博客</span>
-      </a>
+    </span>
   </div>
   <div class="navbar-menu">
     
-      <a 
-        href="/" 
-        class="navbar-menu-item">
-        
-          Home
-        
-      </a>
+    <a href="/" class="navbar-menu-item">Home </a>
     
-      <a 
-        href="/archives" 
-        class="navbar-menu-item">
-        
-          Archive
-        
-      </a>
+    <a href="/archives" class="navbar-menu-item">Archive </a>
     
-      <a 
-        href="/tags" 
-        class="navbar-menu-item">
-        
-          Tags
-        
-      </a>
+    <a href="/tags" class="navbar-menu-item">Tags </a>
     
-      <a 
-        href="/categories" 
-        class="navbar-menu-item">
-        
-          Categories
-        
-      </a>
+    <a href="/categories" class="navbar-menu-item">Categories </a>
     
-      <a 
-        href="/about" 
-        class="navbar-menu-item">
-        
-          About
-        
-      </a>
+    <a href="/about" class="navbar-menu-item">About </a>
     
-      <a 
-        href="/null" 
-        class="navbar-menu-item">
-        
-          Friends
-        
-      </a>
+    <a href="" class="navbar-menu-item">Friends </a>
     
-    <button 
-      class="navbar-menu-item darknavbar navbar-menu-btn" 
-      aria-label="Toggle dark mode"
-      id="dark">
-      <i class="iconfont icon-weather"></i>
-    </button>
-    <button 
-      class="navbar-menu-item searchnavbar navbar-menu-btn" 
-      aria-label="Toggle search"
-      id="search">
-      <!-- <i 
-        class="iconfont icon-search" 
-        style="font-size: 1.2rem; font-weight: 400;">
-      </i> -->
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-        class="iconify iconify--ion" width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
-        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
-          d="M256 80a176 176 0 1 0 176 176A176 176 0 0 0 256 80Z"></path>
-        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
-          d="M232 160a72 72 0 1 0 72 72a72 72 0 0 0-72-72Z"></path>
-        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="28"
-          d="M283.64 283.64L336 336"></path>
-      </svg>
-    </button>
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
   </div>
-</nav> 
-      
-      <div 
-        id="local-search" 
-        style="display: none">
-        <input
-          class="navbar-menu-item"
-          id="search-input"
-          placeholder="请输入搜索内容..." />
-        <div id="search-content"></div>
-      </div>
-      
-      <div class="section-wrap">
-        <div class="container">
-          <div class="columns">
-            <aside class="left-column">
-              
-              <div class="card card-author">
-                
-  <img 
-    src="/img/ming.jpeg" 
-    class="author-img"
-    width="88"
-    height="88"
-    alt="author avatar">
-
-<p class="author-name">戴铭</p>
-<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
-<div class="author-message">
-  <a 
-    class="author-posts-count" 
-    href="/archives">
-    <span>58</span>
-    <span>Posts</span>
-  </a>
-  <a 
-    class="author-categories-count" 
-    href="/categories">
-    <span>5</span>
-    <span>Categories</span>
-  </a>
-  <a 
-    class="author-tags-count" 
-    href="/tags">
-    <span>38</span>
-    <span>Tags</span>
-  </a>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/deeply-analyse-quickjs/4.png" data-src="/uploads/deeply-analyse-quickjs/4.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
 </div>
-
-  <div class="author-card-society">
-    
-      <div class="author-card-society-icon">
-        <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
-          <i class="iconfont icon-sina society-icon"></i>
-        </a>
-      </div>
-    
-      <div class="author-card-society-icon">
-        <a target="_blank" rel="noopener" href="https://github.com/ming1016">
-          <i class="iconfont icon-github society-icon"></i>
-        </a>
-      </div>
-    
-      <div class="author-card-society-icon">
-        <a href="mailto:ming1016@foxmail.com">
-          <i class="iconfont icon-mail society-icon"></i>
-        </a>
-      </div>
-    
-      <div class="author-card-society-icon">
-        <a href="/atom.xml">
-          <i class="iconfont icon-chrome society-icon"></i>
-        </a>
-      </div>
-    
-  </div>
-
-              </div>
-               <div class="sticky-tablet">
-  
-  
-    <article class="display-when-two-columns spacer">
-      <div class="card card-content toc-card">
-        <div class="toc-header">
-  <i 
-    class="iconfont icon-menu" 
-    style="padding-right: 2px;">
-  </i>TOC
-</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript-%E8%83%8C%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">JavaScript 背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E8%80%85"><span class="toc-number">1.2.</span> <span class="toc-text">作者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decimal"><span class="toc-number">1.3.</span> <span class="toc-text">Decimal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#QuickJS"><span class="toc-number">1.4.</span> <span class="toc-text">QuickJS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#makefile"><span class="toc-number">2.1.</span> <span class="toc-text">makefile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cmake"><span class="toc-number">2.2.</span> <span class="toc-text">cmake</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode-%E6%9D%A5%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E5%92%8C%E8%B0%83%E8%AF%95-QuickJS-%E6%BA%90%E7%A0%81"><span class="toc-number">2.3.</span> <span class="toc-text">Xcode 来编译安装和调试 QuickJS 源码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">使用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E5%8E%9F%E7%94%9F%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">调用原生函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="toc-number">5.</span> <span class="toc-text">源码文件介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QuickJS-%E6%9E%B6%E6%9E%84"><span class="toc-number">6.</span> <span class="toc-text">QuickJS 架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QuickJS-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81%E6%B5%81%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">QuickJS 核心代码流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA-Runtime"><span class="toc-number">7.1.</span> <span class="toc-text">新建 Runtime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">7.2.</span> <span class="toc-text">新建上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS-Eval"><span class="toc-number">7.3.</span> <span class="toc-text">JS_Eval</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B6%E7%BA%A7%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="toc-number">7.4.</span> <span class="toc-text">创建顶级函数定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-%E8%A7%A3%E6%9E%90%E5%92%8C%E7%94%9F%E6%88%90%E5%AD%97%E8%8A%82%E7%A0%81"><span class="toc-number">7.5.</span> <span class="toc-text">js 解析和生成字节码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-create-function-%E5%88%9B%E5%BB%BA%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%E5%8F%8A%E5%8C%85%E5%90%AB%E7%9A%84%E5%AD%90%E5%87%BD%E6%95%B0"><span class="toc-number">7.6.</span> <span class="toc-text">js_create_function 创建函数对象及包含的子函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#pass-1"><span class="toc-number">7.6.1.</span> <span class="toc-text">pass 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pass-2%EF%BC%88resolve-variables%EF%BC%89"><span class="toc-number">7.6.2.</span> <span class="toc-text">pass 2（resolve_variables）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pass3%EF%BC%88resolve-labels%EF%BC%89"><span class="toc-number">7.6.3.</span> <span class="toc-text">pass3（resolve_labels）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E6%89%A7%E8%A1%8C-JS-EvalFunctionInternal"><span class="toc-number">7.7.</span> <span class="toc-text">解释执行 JS_EvalFunctionInternal</span></a></li></ol></li></ol>
-      </div>
-    </article>
-  
-  
-  <article class="card card-content categories-widget">
-    <div class="categories-card">
-  <div class="categories-header">
-    <i 
-      class="iconfont icon-fenlei" 
-      style="padding-right: 2px;">
-    </i>Categories
-  </div>
-  <div class="categories-list">
-    
-      <a href="/categories/Programming/">
-        <div class="categories-list-item">
-          Programming
-          <span class="categories-list-item-badge">44</span>
-        </div>
-      </a>
-    
-      <a href="/categories/My-novel/">
-        <div class="categories-list-item">
-          My-novel
-          <span class="categories-list-item-badge">4</span>
-        </div>
-      </a>
-    
-      <a href="/categories/My-painting/">
-        <div class="categories-list-item">
-          My-painting
-          <span class="categories-list-item-badge">8</span>
-        </div>
-      </a>
-    
-      <a href="/categories/travel/">
-        <div class="categories-list-item">
-          travel
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-      <a href="/categories/APP/">
-        <div class="categories-list-item">
-          APP
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-  </div>
-</div>
-  </article>
-  
-  <article class="card card-content tags-widget">
-    <div class="tags-card">
-  <div class="tags-header">
-    <i 
-      class="iconfont icon-biaoqian" 
-      style="padding-right: 2px;">
-    </i>hot tags
-  </div>
-  <div class="tags-list">
-    
-      <a 
-        href="/tags/iOS/" 
-        title="iOS">
-        <div class="tags-list-item">iOS</div>
-      </a>
-    
-      <a 
-        href="/tags/Swift/" 
-        title="Swift">
-        <div class="tags-list-item">Swift</div>
-      </a>
-    
-      <a 
-        href="/tags/Painting/" 
-        title="Painting">
-        <div class="tags-list-item">Painting</div>
-      </a>
-    
-      <a 
-        href="/tags/Apple/" 
-        title="Apple">
-        <div class="tags-list-item">Apple</div>
-      </a>
-    
-      <a 
-        href="/tags/Slides/" 
-        title="Slides">
-        <div class="tags-list-item">Slides</div>
-      </a>
-    
-      <a 
-        href="/tags/iPad/" 
-        title="iPad">
-        <div class="tags-list-item">iPad</div>
-      </a>
-    
-      <a 
-        href="/tags/Procreate/" 
-        title="Procreate">
-        <div class="tags-list-item">Procreate</div>
-      </a>
-    
-      <a 
-        href="/tags/LLVM/" 
-        title="LLVM">
-        <div class="tags-list-item">LLVM</div>
-      </a>
-    
-      <a 
-        href="/tags/Web/" 
-        title="Web">
-        <div class="tags-list-item">Web</div>
-      </a>
-    
-      <a 
-        href="/tags/Novel/" 
-        title="Novel">
-        <div class="tags-list-item">Novel</div>
-      </a>
-    
-      <a 
-        href="/tags/SwiftUI/" 
-        title="SwiftUI">
-        <div class="tags-list-item">SwiftUI</div>
-      </a>
-    
-      <a 
-        href="/tags/macOS/" 
-        title="macOS">
-        <div class="tags-list-item">macOS</div>
-      </a>
-    
-      <a 
-        href="/tags/%E7%BC%96%E8%AF%91/" 
-        title="编译">
-        <div class="tags-list-item">编译</div>
-      </a>
-    
-      <a 
-        href="/tags/WWDC/" 
-        title="WWDC">
-        <div class="tags-list-item">WWDC</div>
-      </a>
-    
-      <a 
-        href="/tags/ReactiveCocoa/" 
-        title="ReactiveCocoa">
-        <div class="tags-list-item">ReactiveCocoa</div>
-      </a>
-    
-      <a 
-        href="/tags/GOT/" 
-        title="GOT">
-        <div class="tags-list-item">GOT</div>
-      </a>
-    
-  </div>
-</div>
-  </article>
-  
-  
-</div>
-            </aside>
-            <main class="main-column">
-              
-  <div class="image-wrapper">
-    <img 
-      src="/uploads/deeply-analyse-quickjs/4.png" 
-      data-src="/uploads/deeply-analyse-quickjs/4.png"
-      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
-      class="image lozad"
-      alt="深入剖析 JavaScript 编译器/解释器引擎 QuickJS - 多了解些 JavaScript 语言 thumbnail">
-  </div>
 
 <article class="card card-content">
   <header>
@@ -581,70 +153,44 @@
     </h1>
   </header>
   <div class="post-meta post-show-meta">
-    <time datetime="2021-02-21T04:03:09.000Z">
-      <i 
-        class="iconfont icon-calendar" 
-        style="margin-right: 2px;">
-      </i>
+    <time datetime="2021-02-21T04:03:09.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
       <span>2021-02-21</span>
     </time>
     
-      <span class="dot"></span>
-      
-        <a 
-          href="/categories/Programming/" 
-          class="post-meta-link">
-          Programming
-        </a>
-      
+    <span class="dot"></span>
+    
+    <a href="/categories/Programming/" class="post-meta-link">Programming</a>
     
     
-      <span class="dot"></span>
-      <span>32.3k words</span>
+    
+    <span class="dot"></span>
+    <span>32.3k words</span>
     
   </div>
   
-    <div 
-      class="post-meta post-show-meta" 
-      style="margin-top: -10px;">
-      <div style="display: flex; align-items: center;">
-        <i 
-          class="iconfont icon-biaoqian" 
-          style="margin-right: 2px; font-size: 1.15rem;">
-        </i>
-        
-          
-          <a 
-            href="/tags/JavaScript/" 
-            class="post-meta-link">
-            JavaScript
-          </a>
-        
-          
-            <span class="dot"></span>
-          
-          <a 
-            href="/tags/Web/" 
-            class="post-meta-link">
-            Web
-          </a>
-        
-          
-            <span class="dot"></span>
-          
-          <a 
-            href="/tags/%E7%BC%96%E8%AF%91/" 
-            class="post-meta-link">
-            编译
-          </a>
-        
-      </div>
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/JavaScript/" class="post-meta-link">JavaScript</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Web/" class="post-meta-link">Web</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/编译/" class="post-meta-link">编译</a>
+      
     </div>
+  </div>
   
   </header>
-  <div 
-    id="section" 
-    class="post-content">
+  <div id="section" class="post-content">
     <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>最近在做 JavaScript 和 Native 打交道的工作，虽然6年前服务端和前端包括 JavaScript 经验也有些，不过如今前端标准和前端引擎也发展了很多，这里做个记录吧。本文会着重介绍 QuickJS，其中会针对 js 语言的一些特性来看这些特性在 QuickJS 是如何解释执行和优化的，能够加深对 js 语言的理解。QuickJS 是在 MIT 许可下发的一个轻量 js 引擎包含 js 的编译器和解释器，支持最新 TC39 的 ECMA-262 标准。QuickJS 和其它 js 引擎的性能对比，可以参看 QuickJS 的 benchmark 对比<a target="_blank" rel="noopener" href="https://bellard.org/quickjs/bench.html">结果页</a>，从结果看，JerryScript 内存和体积小于 QuickJS，但各项性能均低于 QuickJS，Hermes 体积和内存大于 QuickJS，性能和 QuickJS 差不多，但 Hermes 对于 TC39 的标准支持并没 QuickJS 全。Frida 在<a target="_blank" rel="noopener" href="https://frida.re/news/2020/10/28/frida-14-0-released/">14.0版本</a>引入了 QuickJS，经作者验证内存使用只有 V8的五分之一，于是设为默认引擎。14.3版本将默认引擎切回 V8，主要是因为某些场景 V8表现和调试功能更好，对于调试已经在 Fabrice bellard 的规划里了，未来可期。</p>
 <p>在详细介绍和剖析 QuickJS 之前，我先跟你聊聊 JavaScript 的背景和 QuickJS 作者的背景吧。我觉得这样更有助于理解 QuickJS。</p>
 <p>先说说 JavaScript。</p>
@@ -665,9 +211,9 @@
 <p>ES5 之后 TC39 开始了 Harmony 项目，Harmony 开始的提案包括类、const、lambda、词法作用域、类型等。从 Brenda Eich 的 《<a target="_blank" rel="noopener" href="https://brendaneich.com/2011/01/harmony-of-my-dreams/">Harmony Of My Dreams</a>》这篇文章可以 js 之父对于 Harmony 的期望，例如文章中提到的 # 语法，用来隐藏 return 和 this 词法作用域绑定，最终被 ES2015 的箭头函数替代，但 # 用来表示不可变数据结构没有被支持，模块和迭代器均获得了支持。Harmony 设计了 Promise 的基础 Realm 规范抽象、内部方法规范 MOP、Proxy 对象、WeakMap、箭头函数、完整的 Unicode 支持、属性 Symbol 值、尾调用、类型数组等特性。对于类的设计，TC39 将使用 lambda 函数、类似 Scheme 的词法捕获技术、构造函数、原型继承对象、实例对象、扩展对象字面量语法来满足类所需要的多次实例化特性。模块的设计思路是通过 module 和 import 两种方式导入模块，import 可以用模块声明和字符串字面量的方式导入模块。模块导入背后是模块加载器的设计，设计的加载流程是，先处理加载标识的规范，再处理预处理，处理模块间的依赖，关联上导入和导出，最后再进行依赖模块的初始化工作。整个加载过程可以看这个 js 实现的<a target="_blank" rel="noopener" href="https://github.com/jorendorff/js-loaders">原型</a>，后来这个加载器没有被加入规范，而由浏览器去实现。CommonJS 作者 Kevin Dangoor 的文章《<a target="_blank" rel="noopener" href="https://www.blueskyonmars.com/2010/01/29/commonjs-the-first-year/">CommonJS: the First Year</a>》写下做 CommonJS 的初衷和目标，标志着 js 开始在服务端领域活跃起来。CommonJS 的思路就是将函数当作模块，和其他模块交互是通过导出局部变量作为属性提供值，但是属性能被动态改变和生成，所以对于模块使用者，这是不稳定的。Ryan Dahl 2009 开发的 Node.js （介绍参看作者<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=ztspvPYybIY&feature=youtu.be&ab_channel=stri8ted">jsconf演讲</a>）就是用 CommonJS 的模块加载器。Node.js 链接了 POSIX API，网络和文件操作，有个自己的 Event Loop，有些基础的 C 模块，还包含了 V8 引擎。</p>
 <p>2010 年开始出现其他语言源码转 js 源码这种转译器的风潮，最有代表的是 CoffeeScript，CoffeeScript 某种程度上是对 js 开发提供了更优雅更先进的开发语言辅助。从 CoffeeScript 一些特性在开发者的反馈，能够更好的帮助 TC39 对 js 特性是否进入标准提供参考。后来还有以优化性能为目的的 Emscripten 和 asm.js 翻译成高效 js 代码的转译器。转义器对于 Harmony 甚至是后面的 ES2015 来说有着更重要的意义。当时的用户没有主动进行软件升级的习惯，特别是由系统绑定的浏览器。适配 IE6的痛苦，相信老一辈的前端开发者会有很深的体会。大量浏览器低版本的存在对于新的标准推广造成了很大的阻碍，因此使用新标准编写代码转移成可兼容低版本浏览器的代码能够解决兼容问题。在 Harmony 项目开发过程中除了 Mozilla 使用 SpiderMonkey 引擎开发的 <a target="_blank" rel="noopener" href="https://github.com/mozilla/narcissus/">Narcissus</a> 转译器外，还有直到目前还在使用的 <a target="_blank" rel="noopener" href="https://babeljs.io/">Babel</a> 和 <a target="_blank" rel="noopener" href="https://www.typescriptlang.org/">TypeScript 语言</a>的转译器。另外还有使用 rust 写的 js 编译器 <a target="_blank" rel="noopener" href="https://github.com/swc-project/swc">swc</a>，主打速度，打算来替代 babel。</p>
 <p>2015年，<a target="_blank" rel="noopener" href="https://www.ecma-international.org/wp-content/uploads/ECMA-262_6th_edition_june_2015.pdf">ECMAScript 2015</a>发布。ECMAScript 2015 之后，由于各个浏览器都开始更快的迭代更新， TC39 开始配合更新的节奏，开始每年更新标准，以年作为标准的版本号。</p>
-<p>ES2016 增加了 async&#x2F;await 异步语法特性，纵观 js 的异步历程，从最开始的 Callback方式到 Promise&#x2F;then，js 解决了回调地狱的问题，但缺少能够暂停函数和恢复执行的方法，因此在 ES2015 加入了生成器，其实现核心思想就是协程，协程可以看作是运行中线程上的可暂停和恢复执行的任务，这些任务都是可通过程序控制的。在 ES2016 加入简洁的 async&#x2F;await 语法来更好的使用协程。js 异步编程历程如下图：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-quickjs/1.png" class="lozad post-image"src="/uploads/deeply-analyse-quickjs/1.png"></p>
+<p>ES2016 增加了 async&#x2F;await 异步语法特性，纵观 js 的异步历程，从最开始的 Callback方式到 Promise&#x2F;then，js 解决了回调地狱的问题，但缺少能够暂停函数和恢复执行的方法，因此在 ES2015 加入了生成器，其实现核心思想就是协程，协程可以看作是运行中线程上的可暂停和恢复执行的任务，这些任务都是可通过程序控制的。在 ES2016 加入简洁的 async&#x2F;await 语法来更好的使用协程。js 异步编程历程如下图：<br><img src="/uploads/deeply-analyse-quickjs/1.png"></p>
 <p>ECMAScript 2016 开始 js 进入了框架百家争鸣的时代。</p>
-<p>js 框架方面，早期 js 的框架是以兼容和接口优雅为基准比较胜出的 PrototypeJS 和 jQuery。MVC 流行起来的框架是 Backbone，MVVM 时代是 AngularJS 为代表的数据双向绑定只用关注 Model 框架新星崛起。Vue 在 MVVM 基础上增加了用来替代 Options API 的 Composition API 比拟 React 的 Hooks。React（React 的创作者是 <a target="_blank" rel="noopener" href="https://twitter.com/jordwalke">Jord Walke</a>，在 facebook，不过现在已经离开了 facebook，创立了自己的公司）后来居上，以函数式编程概念拿下头牌，这也是因为 React 核心团队成员喜欢 OCaml 这样的函数式编程语言的原因。。React 的组件有阿里的 <a target="_blank" rel="noopener" href="https://ant.design/index-cn">Ant Design</a> 和 <a target="_blank" rel="noopener" href="https://fusion.design/">Fusion Design</a> 可用。React 对于逻辑复用使用的是更优雅的 Hooks，接口少，以声明式方式供使用，很多开发者会将自己开发的逻辑抽出来做成 hooks，出现了很多基于 hooks 状态管理公用代码。对于状态的缓存维护由 React 的内核来维护，这能够解决一个组件树渲染没完成又开始另一个组件树并发渲染状态值管理问题，开发者能够专注写函数组件，和传统 class 组件的区别可以看 Dan Abramov 的这篇文章《<a target="_blank" rel="noopener" href="https://overreacted.io/how-are-function-components-different-from-classes/">How Are Function Components Different from Classes?</a>》。js 框架的演进如下图：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-quickjs/2.png" class="lozad post-image"src="/uploads/deeply-analyse-quickjs/2.png"></p>
+<p>js 框架方面，早期 js 的框架是以兼容和接口优雅为基准比较胜出的 PrototypeJS 和 jQuery。MVC 流行起来的框架是 Backbone，MVVM 时代是 AngularJS 为代表的数据双向绑定只用关注 Model 框架新星崛起。Vue 在 MVVM 基础上增加了用来替代 Options API 的 Composition API 比拟 React 的 Hooks。React（React 的创作者是 <a target="_blank" rel="noopener" href="https://twitter.com/jordwalke">Jord Walke</a>，在 facebook，不过现在已经离开了 facebook，创立了自己的公司）后来居上，以函数式编程概念拿下头牌，这也是因为 React 核心团队成员喜欢 OCaml 这样的函数式编程语言的原因。。React 的组件有阿里的 <a target="_blank" rel="noopener" href="https://ant.design/index-cn">Ant Design</a> 和 <a target="_blank" rel="noopener" href="https://fusion.design/">Fusion Design</a> 可用。React 对于逻辑复用使用的是更优雅的 Hooks，接口少，以声明式方式供使用，很多开发者会将自己开发的逻辑抽出来做成 hooks，出现了很多基于 hooks 状态管理公用代码。对于状态的缓存维护由 React 的内核来维护，这能够解决一个组件树渲染没完成又开始另一个组件树并发渲染状态值管理问题，开发者能够专注写函数组件，和传统 class 组件的区别可以看 Dan Abramov 的这篇文章《<a target="_blank" rel="noopener" href="https://overreacted.io/how-are-function-components-different-from-classes/">How Are Function Components Different from Classes?</a>》。js 框架的演进如下图：<br><img src="/uploads/deeply-analyse-quickjs/2.png"></p>
 <p>为了使 js 能够应用于更大的工程化中，出现了静态类型 js 框架。静态类型的 js 框架有微软的 TypeScript 和 Facebook 的 <a target="_blank" rel="noopener" href="https://flow.org/">Flow</a>。TypeScript 的作者是当年我大学时做项目使用的 IDE Delphi 的作者 Anders Hejlsberg，当时的 Delphi 开发体验非常棒，我用它做过不少项目，改善了大学生活品质。</p>
 <p>对于 React 的开发，现需要了解脚手架 <a target="_blank" rel="noopener" href="https://github.com/facebook/create-react-app">create-react-app</a>，一行命令能够在 macOS 和 Windows 上不用配置直接创建 React 应用。然后是使用 JSX 模版语法创建组件，组件是独立可重用的代码，组件一般只需要处理单一事情，数据通过参数和上下文共享，上下文共享数据适用场景类似于 UI 主题所需的数据共享。为了确保属性可用，可以使用 defaultProps 来定义默认值，使用 propTypes 在测试时进行属性类型设置和检查。在组件里使用状态用的是 Hooks，最常见的 Hooks 是 setState 和 useEffect，项目复杂后，需要维护的状态就会很复杂，React 本身有个简单使用的状态管理库 React Query 数据请求的库，作用类似 Redux，但没有模版代码，更轻量和易用，还可用 Hooks。React Router 是声明式路由，通过 URL 可以渲染出不同的组件。react 跑在 QuickJS 上的方法可以参看 QuickJS 邮件列表里<a target="_blank" rel="noopener" href="https://www.freelists.org/post/quickjs-devel/Running-React-on-QuickJS">这封邮件</a>。</p>
 <p>React 框架对应移动端开发的是 React Native。</p>
@@ -741,7 +287,7 @@ server<span class="token punctuation">.</span><span class="token function">liste
 <p>现在对机器学习模型训练而言，范围比精度更有用，因此有了 Bfloat16标准，Bfloat16标准和 IEEE 754半精度格式的内存量一样，而指数要更多，IEEE 754是5位，Bfloat16是8位。很多机器学习硬件加速器都提供了支持Bfloat16支持，Nvidia 甚至还支持了 TensorFloat-32 格式标准，指数位数更多，达到10位。</p>
 <p>如今 TC39正在努力将 Decimal 加到标准中，<a target="_blank" rel="noopener" href="https://github.com/tc39/proposal-bigint">BigInt</a> 提案已接受。TC39提案用 BigDecimal&#x2F;Decimal128 语法是类似 1.23m 这样。Swift 已经有了支持，对应的是 <a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/foundation/decimal">Decimal</a>。python也有，<a target="_blank" rel="noopener" href="https://docs.python.org/2/library/decimal.html">文档</a>。数据库MongoDB的<a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/core/shell-types/#shell-type-decimal">说明</a>。C 和 C++语言对于32、64和128位 IEEE 754 decimal 类型还是一个<a target="_blank" rel="noopener" href="http://www.open-std.org/JTC1/SC22/WG14/www/docs/n1312.pdf">提案</a>，只是GCC编译器实现了<a target="_blank" rel="noopener" href="https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/decimal/decimal.h">一个</a>，Clang不支持decimal floating point types，所以 QuickJS 专门实现了 BigInt 和 BigDecimal 的处理。BigInt 可以使 JavaScript 有任意大小的整数。QuickJS BigInt 性能上这里有个 js 程序 <a target="_blank" rel="noopener" href="https://bellard.org/quickjs/pi_bigint.js">pi_bigint.js</a> 算10万位的 pi，相同机器上 V8 是2.3s，QuickJS 是0.26s。BigDecimal 相对于 BigInt 多了小数位，用做高精度小数计算。BigDecimal 使用十进制而不是二进制 BigInt 表示非小数部分，然后用 scale 来表示小数位置。这样的表示就不会有精度问题，使用 BigDecimal 计算是在 BigInt 之间进行运算，scale进行小数点位置更新。Fabrice Bellard用BigDecimal写了这段代码来计算pi的位数，代码在<a target="_blank" rel="noopener" href="https://bellard.org/quickjs/pi_bigdecimal.js">这里</a>。</p>
 <h3 id="QuickJS"><a href="#QuickJS" class="headerlink" title="QuickJS"></a>QuickJS</h3><p>QuickJS 只有210KB，体积小，启动快，解释执行速度快，支持最新 ECMAScript 标准（ECMA-262）。</p>
-<p>ECMAScript 标准最大的变化是发生在 ES2015。类、箭头函数、静态类型数组、let关键字、maps、sets、promise等特性都是在 ES2015（ES6）增加的，ECMAScript 2016 主要增加了 await&#x2F;async 关键字，ECMAScript 2017 主要增加了 rest&#x2F;spread 运算符，ECMAScript 2020 主要增加了 BigInt。CMAScript 标准通读比较枯燥，最好在碰到坑时查阅。最新的 ECMAScript 标准在这里 <a target="_blank" rel="noopener" href="https://tc39.es/ecma262/">ecma-262</a>。QuickJS包含了 ecma-262 标准测试套件 Test262，将 <a target="_blank" rel="noopener" href="https://github.com/tc39/test262">test262 测试套件</a>安装到 QuickJS test262 目录下，QuickJS 运行测试套件的程序源文件是 run-test262.c，test262.conf 包含各种测试的选项，test262_error.txt 是记录当前显示错误信息的列表。到今年 Test262里面有已包含了三万多个单独测试 ECMAScript 规范的测试，而 QuickJS 几乎全部通过了测试，和 V8差不多，比 JavaScriptCore 强。Test262 是 ECMAScript 测试套件，在 <a target="_blank" rel="noopener" href="https://test262.report/">Test262 Report 网站</a>上可以看到各个 js 引擎对 ECMAScript 标准支持情况，最新情况如下：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-quickjs/7.png" class="lozad post-image"src="/uploads/deeply-analyse-quickjs/7.png"><br>如上图所示，在语法、内置对象上 QuickJS 和 V8 都不相上下，附加特性上做的最好。</p>
+<p>ECMAScript 标准最大的变化是发生在 ES2015。类、箭头函数、静态类型数组、let关键字、maps、sets、promise等特性都是在 ES2015（ES6）增加的，ECMAScript 2016 主要增加了 await&#x2F;async 关键字，ECMAScript 2017 主要增加了 rest&#x2F;spread 运算符，ECMAScript 2020 主要增加了 BigInt。CMAScript 标准通读比较枯燥，最好在碰到坑时查阅。最新的 ECMAScript 标准在这里 <a target="_blank" rel="noopener" href="https://tc39.es/ecma262/">ecma-262</a>。QuickJS包含了 ecma-262 标准测试套件 Test262，将 <a target="_blank" rel="noopener" href="https://github.com/tc39/test262">test262 测试套件</a>安装到 QuickJS test262 目录下，QuickJS 运行测试套件的程序源文件是 run-test262.c，test262.conf 包含各种测试的选项，test262_error.txt 是记录当前显示错误信息的列表。到今年 Test262里面有已包含了三万多个单独测试 ECMAScript 规范的测试，而 QuickJS 几乎全部通过了测试，和 V8差不多，比 JavaScriptCore 强。Test262 是 ECMAScript 测试套件，在 <a target="_blank" rel="noopener" href="https://test262.report/">Test262 Report 网站</a>上可以看到各个 js 引擎对 ECMAScript 标准支持情况，最新情况如下：<br><img src="/uploads/deeply-analyse-quickjs/7.png"><br>如上图所示，在语法、内置对象上 QuickJS 和 V8 都不相上下，附加特性上做的最好。</p>
 <p>QuickJS 发布以来功能的更新都会发布在 <a target="_blank" rel="noopener" href="https://bellard.org/quickjs/Changelog">QuickJS 的 changelog 里</a> 上，20年重要的更新就是 <a target="_blank" rel="noopener" href="https://github.com/tc39/proposal-decimal">TC39 BigDecimal 提案</a>的支持还有更新了下 TC39的 <a target="_blank" rel="noopener" href="https://github.com/tc39/proposal-operator-overloading">Operator overloading</a> 提案，更新的commit在<a target="_blank" rel="noopener" href="https://github.com/tc39/proposal-operator-overloading/commit/c26e0fdc44864051c1047d032ad72760d35200d7">这里</a>，并修改了运算符重载语义使之更接近于TC39的提案。os和std模块做了更新和新增，包括 os.realpath、os.getcwd、os.mkdir、os.stat、os.lstat、os.readlink、os.readdir、os.utimes、os.exec、os.chdir、std.popen、std.loadFile、std.strerror、std.FILE.prototype.tello、std.parseExtJSON、std.setenv、std.unsetenv、std.getenviron。加了官方 <a target="_blank" rel="noopener" href="https://github.com/bellard/quickjs">Github 镜像</a>。</p>
 <p>下面我们通过安装 QuickJS 来小试下吧。</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>QuickJS 的编译和咱们通过 Xcode 工程配置编译的方式不同，使用的是 makefile 来配置编译和安装的，和一些开源 C&#x2F;C++ 工程编译使用 cmake 方式也有些不同，以前我们写些简单 c&#x2F;c++ 的 demo 后，会简单的通过 clang 命令加参数进行编译和链接，但如果需要编译和链接的文件多了，编译配置复杂了，每次手工编写就太过复杂，因此就会用到 makefile 或者 cmake 来帮助减少复杂的操作提高效率。那什么是 makefile？ 和 cmake 有什么关系呢？</p>
@@ -929,7 +475,7 @@ CONFIG_DEFAULT_AR<span class="token operator">=</span>y
         quickjs<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>按照上面代码编写，可以编译出可执行的文件了。</p>
 <p>github 上有个 <a target="_blank" rel="noopener" href="https://github.com/mezum/quickjs-cmake">QuickJS 工程的 cmake 脚本</a>，可以用来下载编译 QuickJS 库。</p>
-<h3 id="Xcode-来编译安装和调试-QuickJS-源码"><a href="#Xcode-来编译安装和调试-QuickJS-源码" class="headerlink" title="Xcode 来编译安装和调试 QuickJS 源码"></a>Xcode 来编译安装和调试 QuickJS 源码</h3><p>由于 QuickJS 使用的是 makefile 管理，而 makefile 不能直接转成 Xcode 的工程文件，因此需要使用 Xcode 的 External Build System，创建工程 QuickJSXcode 后，给工程添加 QuickJS 源码文件，直接导入到工程即可，使用 ⌘ + B 构建工程，在 Product&#x2F;Scheme&#x2F;Edit Scheme 里选择 Run&#x2F;Info，在 Executable 里选择刚才构建生成的 qjs 可执行文件。如下图：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-quickjs/8.png" class="lozad post-image"src="/uploads/deeply-analyse-quickjs/8.png"><br>然后添加命令行工具 Target 辅助，在 Target 的 Dependencies 里添加 QuickJSXcode，在 Link Binary With Libraries 里添加编译出来的 libquickjs.a。最后在 Build Settings 的 Search Paths 里，将 QuickJS 代码路径添加到 Header Search Paths 和 Library Search Paths 里。完成后现在就可以使用 Xcode 进行 QuickJS 源码断点调试、自动补全和跳转了。如下图所示：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-quickjs/6.png" class="lozad post-image"src="/uploads/deeply-analyse-quickjs/6.png"><br>通过断点调试，更加方便阅读理解源码。可调试工程我放到了Github上，在<a target="_blank" rel="noopener" href="https://github.com/ming1016/study/tree/master/QuickJS">这里</a>。</p>
+<h3 id="Xcode-来编译安装和调试-QuickJS-源码"><a href="#Xcode-来编译安装和调试-QuickJS-源码" class="headerlink" title="Xcode 来编译安装和调试 QuickJS 源码"></a>Xcode 来编译安装和调试 QuickJS 源码</h3><p>由于 QuickJS 使用的是 makefile 管理，而 makefile 不能直接转成 Xcode 的工程文件，因此需要使用 Xcode 的 External Build System，创建工程 QuickJSXcode 后，给工程添加 QuickJS 源码文件，直接导入到工程即可，使用 ⌘ + B 构建工程，在 Product&#x2F;Scheme&#x2F;Edit Scheme 里选择 Run&#x2F;Info，在 Executable 里选择刚才构建生成的 qjs 可执行文件。如下图：<br><img src="/uploads/deeply-analyse-quickjs/8.png"><br>然后添加命令行工具 Target 辅助，在 Target 的 Dependencies 里添加 QuickJSXcode，在 Link Binary With Libraries 里添加编译出来的 libquickjs.a。最后在 Build Settings 的 Search Paths 里，将 QuickJS 代码路径添加到 Header Search Paths 和 Library Search Paths 里。完成后现在就可以使用 Xcode 进行 QuickJS 源码断点调试、自动补全和跳转了。如下图所示：<br><img src="/uploads/deeply-analyse-quickjs/6.png"><br>通过断点调试，更加方便阅读理解源码。可调试工程我放到了Github上，在<a target="_blank" rel="noopener" href="https://github.com/ming1016/study/tree/master/QuickJS">这里</a>。</p>
 <p>QuickJS 在 VSCode 的调试的话，先 fork 一份 Koushik Dutta 的 QuickJS 修改版本，代码在<a target="_blank" rel="noopener" href="https://github.com/koush/quickjs">这</a>，VSCode 扩展的 <a target="_blank" rel="noopener" href="https://github.com/koush/vscode-quickjs-debug">github 地址</a>，<a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=koush.quickjs-debug">VSCode 扩展市场链接</a>，对 QuickJS 修改的详细 Koushik Dutta 在邮件里有说明，邮件地址<a target="_blank" rel="noopener" href="https://www.freelists.org/post/quickjs-devel/QuickJS-Debugger-implementation-for-VSCode">在这</a>，Fabrice Bellard 看了也<a target="_blank" rel="noopener" href="https://www.freelists.org/post/quickjs-devel/QuickJS-Debugger-implementation-for-VSCode,4">回邮件</a>表示以后会增加调试接口。</p>
 <h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>按照<a target="_blank" rel="noopener" href="https://bellard.org/quickjs/quickjs.html#Installation">官方手册写的方式</a>使用 makefile 安装后，命令行工具会被安装到 &#x2F;usr&#x2F;local&#x2F;bin 目录下，此目录下会有 JS 解释器 qjs，有编译器 qjsc（QuickJS compiler） 编译 js 文件为可执行文件（QuickJS引擎 + js 文件打包，qjs 解释执行目标 js 文件），还有一个可以对任意长度数字计算的 qjscalc。编译的库会放到 &#x2F;usr&#x2F;local&#x2F;lib&#x2F;quickjs&#x2F; 目录下，有静态库 libquickjs.a，可以生成更小和速度更快的库 libquickjs.lto.a，lto（Link-Time-Optimization）需要在编译时加上 -flto 标识。</p>
 <p>qjsc 还可以把 js 文件编译成 QuickJS 虚拟机的字节码，比如编写下面的一段 javascript 代码，保存为 helloworld.js</p>
@@ -1137,10 +683,10 @@ options are<span class="token operator">:</span>
 <p>编译的过程是先使用 js_load_file 读取 js 文件内容，使用 JS_Eval 函数生成 JSValue 的对象，JSValue 是基本的值或指针地址，比如函数、数组、字符串都是值，然后使用 output_object_code 函数把对象的字节码写到文件里，也就是 dump 成二进制。生成可执行文件使用的函数是 output_executable。</p>
 <p>qjs 的 Options -e 表示执行表达式，-i 表示进入交互模式，-I 表示加载文件，-d 会统计内存使用情况。</p>
 <p>另外还有一些辅助函数 cutils.c、cutils.h。unicode 相关函数文件 libunicode.c、libunicode.h、libunicode-table.h。正则表达式支持相关文件 libregexp.c、libregexp.h、libregexp-opcode.h。链表 list.h。Decimal 任意精度科学计算 libBF libbf.c、libbf.h。</p>
-<h2 id="QuickJS-架构"><a href="#QuickJS-架构" class="headerlink" title="QuickJS 架构"></a>QuickJS 架构</h2><p>QuickJS 的结构图如下：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-quickjs/5.png" class="lozad post-image"src="/uploads/deeply-analyse-quickjs/5.png"><br>如上图所示，其中最上层是 qjs 和 qjsc，qjs 包含了命令行参数处理，引擎环境创建，加载模块和 js 文件读取解释执行。qjsc 可以编译 js 文件成字节码文件，生成的字节码可以直接被解释执行，性能上看是省掉了 js 文件解析的消耗。</p>
+<h2 id="QuickJS-架构"><a href="#QuickJS-架构" class="headerlink" title="QuickJS 架构"></a>QuickJS 架构</h2><p>QuickJS 的结构图如下：<br><img src="/uploads/deeply-analyse-quickjs/5.png"><br>如上图所示，其中最上层是 qjs 和 qjsc，qjs 包含了命令行参数处理，引擎环境创建，加载模块和 js 文件读取解释执行。qjsc 可以编译 js 文件成字节码文件，生成的字节码可以直接被解释执行，性能上看是省掉了 js 文件解析的消耗。</p>
 <p>中间层是核心，JSRuntime 是 js 运行时，可以看做是 js 虚拟机环境，多个 JSRuntime 之间是隔离的，他们之间不能相互调用和通信。JSContext 是虚机里的上下文环境，一个 JSRuntime 里可以有多个 JSContext，每个上下文有自己的全局和系统对象，不同 JSContext 之间可以相互访问和共享对象。JS_Eval 和 JS_Parse 会把 js 文件编译为字节码。JS_Call 是用来解释执行字节码的。JS_OPCode 是用来标识执行指令对应的操作符。JSClass 包含标准的 js 的对象，是运行时创建的类，对象类型使用 JSClassID 来标记，使用 JS_NewClassID 和 JS_NewClass 函数注册，使用 JS_NewObjectClass 来创建对象。JSOpCode 是字节码的结构体，通过 quickjs-opcode.h 里的字节码的定义可以看到，QuickJS 对于每个字节码的大小都会精确控制，目的是不浪费内存使用，比如8位以下用不到1个字节和其他信息一起放在那1个字节里，8位用2个字节，整数在第2个字节里，16位用后2个字节。Unicode 是 QuickJS 自己做的库 libunicode.c，libunicode 有 Unicode 规范化和脚本通用类别查询，包含所有 Unicode 二进制属性，libunicode 还可以单独出来用在其他工程中。中间层还包含支持科学计算 BigInt 和 BigFloat 的 libbf 库，正则表达式引擎 libregexp。扩展模块 Std Module 和 OS Module，提供标准能力和系统能力，比如文件操作和时间操作等。</p>
 <p>底层是基础，JS_RunGC 使用引用计数来管理对象的释放。JS_Exception 是会把 JSValue 返回的异常对象存在 JSContext 里，通过 JS_GetException 函数取出异常对象。内存管理控制 js 运行时全局内存分配上限使用的是 JS_SetMemoryLimit 函数，自定义分配内存用的是 JS_NewRuntime2 函数，堆栈的大小使用的是 JS_SetMaxStackSize 函数来设置。</p>
-<p>总的来说 QuickJS 的运行方式如下图：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-quickjs/3.png" class="lozad post-image"src="/uploads/deeply-analyse-quickjs/3.png"></p>
+<p>总的来说 QuickJS 的运行方式如下图：<br><img src="/uploads/deeply-analyse-quickjs/3.png"></p>
 <h2 id="QuickJS-核心代码流程"><a href="#QuickJS-核心代码流程" class="headerlink" title="QuickJS 核心代码流程"></a>QuickJS 核心代码流程</h2><p>quickjs.c 有5万多行代码。分析 QuickJS 代码可以从他解析执行 JS 代码的过程一步一步的分析。调用 QuickJS 执行一段 JS 代码的代码如下：</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">JSRuntime <span class="token operator">*</span>rt <span class="token operator">=</span> <span class="token function">JS_NewRuntime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 JSContext <span class="token operator">*</span>ctx <span class="token operator">=</span> <span class="token function">JS_NewContext</span><span class="token punctuation">(</span>rt<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1412,7 +958,7 @@ MOV R0, d  ; 把寄存器拷给 d<span aria-hidden="true" class="line-numbers-ro
 <p>resolve_labels 函数最后还会遍历一遍 s-&gt;jump_slots 做更多的跳转指令的优化。</p>
 <p>resolve_labels 函数执行完后，pass 3 阶段 js_create_function 还需要调用 compute_stack_size 函数广度优先方式来计算堆栈大小。compute_stack_size 函数对会对栈有影响的指令使用 ss_check 检查字节码的buffer 是否有字节码缓冲区溢出、堆栈溢出或堆栈大小不一致问题，并在 s-&gt;stack_level_tab 里记录每个位置的栈大小，然后用 js_resize_array 更新 s-&gt;pc_stack 数组。</p>
 <p>总的来说从脚本生成最终字节码有两个阶段，第一个阶段是脚本解析，这个阶段会先将生成的 token 使用解析各种语句和表达式的函数直接在解析时生成 pass 1字节码，然后生成函数定义树。第二阶段是优化阶段，主要是 resolve_variables 函数和 resolve_labels 函数。resolve_variables 会优化变量，比如全局变量、本地变量、自由变量、参数等，将作用域操作简化成对应定义变量种类字节码。resolve_labels 主要是对跳转相关的优化，比如通过确定最终跳转地址来优化中间跳转。</p>
-<p>总的来看，js_create_function 函数整体依赖如下图：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-quickjs/4.png" class="lozad post-image"src="/uploads/deeply-analyse-quickjs/4.png"><br>如上图所示，在创建函数时，如果当前函数使用的变量是上一级函数的局部变量，就会将上一级函数的局部变量添加到上一级函数的闭包变量的列表里。</p>
+<p>总的来看，js_create_function 函数整体依赖如下图：<br><img src="/uploads/deeply-analyse-quickjs/4.png"><br>如上图所示，在创建函数时，如果当前函数使用的变量是上一级函数的局部变量，就会将上一级函数的局部变量添加到上一级函数的闭包变量的列表里。</p>
 <h3 id="解释执行-JS-EvalFunctionInternal"><a href="#解释执行-JS-EvalFunctionInternal" class="headerlink" title="解释执行 JS_EvalFunctionInternal"></a>解释执行 JS_EvalFunctionInternal</h3><p><code>__JS_EvalInternal</code> 函数执行完 js_create_function，还会装载使用 js_resolve_module 函数处理当前模块所需所有模块。最后就是要开始解释执行函数对象 fun_obj 了。</p>
 <p>函数对象字节码信息结构体是 JSFunctionBytecode，js 函数在运行时的数据结构是 JSFunctionBytecode，创建函数就是初始化 JSFunctionBytecode 结构体，并设置里面所需的字段，这个过程就是将扫描代码生成的临时 JSFunctionDef 对应到 JSFunctionBytecode 中，由 js_create_function 函数负责处理。JSFunctionBytecode 结构体里的 byte_code_buf 字段是函数对象自己字节码的指针，vardefs 里是函数的参数和局部变量；closure_var 是用于存放外部可见的闭包变量，closure_var 通过 add_closure_var 函数进行添加，add_closure_var 函数会把要用到的变量添加成闭包变量，通过 get_closure_var2 函数往上层级递归给每层级函数添加闭包变量，直到找到目标函数；stack_size 是指堆栈的大小，stack_size 主要作用是为初始化栈时能够减少内存占用；cpool 是函数内常量池。</p>
 <p>QuickJS 解释执行的方式有五种，flag 定义了 JS_EVAL_FLAG_STRICT 表示按照 strict 模式执行，JS_EVAL_FLAG_STRIP 表示会按 strip 模式执行，JS_EVAL_FLAG_COMPILE_ONLY 指只生成函数对象，不解释执行，但返回的结果的结果是带有字节码或 JS_TAG_MODULE 的函数对象，这个函数对象也是可以使用 JS_EvalFunctionInternal 来解释执行的。JS_EVAL_FLAG_BACKTRACE_BARRIER 表示出现问题进行回溯时不需要之前堆栈帧。</p>
@@ -1567,99 +1113,213 @@ DEF(  put_ref_value, 1, 3, 0, none)<span aria-hidden="true" class="line-numbers-
 
   </div>
   <div>
-    
-      <div 
-        class="post-note note-warning copyright" 
-        style="margin-top: 42px">
-        <p>
-          <span style="font-weight: bold;">作者：</span><a 
-            target="_blank" 
-            rel="nofollow noopener noreferrer" 
-            href="/about">
-            戴铭
-          </a>
-        </p>
-        <p>
-          <span style="font-weight: bold;">文章链接：</span><a 
-            target="_blank" 
-            rel="nofollow noopener noreferrer" 
-            href="http://ming1016.github.io/2021/02/21/deeply-analyse-quickjs/">
-            http://ming1016.github.io/2021/02/21/deeply-analyse-quickjs/
-          </a>
-        </p>
-        <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
-      </div>
-    
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2021/02/21/deeply-analyse-quickjs/">http://ming1016.github.io/2021/02/21/deeply-analyse-quickjs/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
   </div>
 </article>
 <div class="nav">
   
-    <div class="nav-item-prev">
-      <a 
-        href="/2021/05/22/acfun-swift-practice/" 
-        class="nav-link">
-        <i class="iconfont icon-left nav-prev-icon"></i>
-        <div>
-          <div class="nav-label">Prev</div>
-          
-            <div class="nav-title">A站 的 Swift 实践 </div>
-          
-        </div>
+  <div class="nav-item-prev">
+    <a href="/2021/05/22/acfun-swift-practice/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">Prev</div>
+        
+        <div class="nav-title">A站 的 Swift 实践 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2020/12/18/thinking-in-how-to-speed-up-app/" class="nav-link">
+      <div>
+        <div class="nav-label">Next</div>
+        
+        <div class="nav-title">App 启动提速实践和一些想法 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript-%E8%83%8C%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">JavaScript 背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E8%80%85"><span class="toc-number">1.2.</span> <span class="toc-text">作者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decimal"><span class="toc-number">1.3.</span> <span class="toc-text">Decimal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#QuickJS"><span class="toc-number">1.4.</span> <span class="toc-text">QuickJS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#makefile"><span class="toc-number">2.1.</span> <span class="toc-text">makefile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cmake"><span class="toc-number">2.2.</span> <span class="toc-text">cmake</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode-%E6%9D%A5%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E5%92%8C%E8%B0%83%E8%AF%95-QuickJS-%E6%BA%90%E7%A0%81"><span class="toc-number">2.3.</span> <span class="toc-text">Xcode 来编译安装和调试 QuickJS 源码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">使用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E5%8E%9F%E7%94%9F%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">调用原生函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="toc-number">5.</span> <span class="toc-text">源码文件介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QuickJS-%E6%9E%B6%E6%9E%84"><span class="toc-number">6.</span> <span class="toc-text">QuickJS 架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QuickJS-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81%E6%B5%81%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">QuickJS 核心代码流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA-Runtime"><span class="toc-number">7.1.</span> <span class="toc-text">新建 Runtime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">7.2.</span> <span class="toc-text">新建上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS-Eval"><span class="toc-number">7.3.</span> <span class="toc-text">JS_Eval</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B6%E7%BA%A7%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="toc-number">7.4.</span> <span class="toc-text">创建顶级函数定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-%E8%A7%A3%E6%9E%90%E5%92%8C%E7%94%9F%E6%88%90%E5%AD%97%E8%8A%82%E7%A0%81"><span class="toc-number">7.5.</span> <span class="toc-text">js 解析和生成字节码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-create-function-%E5%88%9B%E5%BB%BA%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%E5%8F%8A%E5%8C%85%E5%90%AB%E7%9A%84%E5%AD%90%E5%87%BD%E6%95%B0"><span class="toc-number">7.6.</span> <span class="toc-text">js_create_function 创建函数对象及包含的子函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#pass-1"><span class="toc-number">7.6.1.</span> <span class="toc-text">pass 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pass-2%EF%BC%88resolve-variables%EF%BC%89"><span class="toc-number">7.6.2.</span> <span class="toc-text">pass 2（resolve_variables）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pass3%EF%BC%88resolve-labels%EF%BC%89"><span class="toc-number">7.6.3.</span> <span class="toc-text">pass3（resolve_labels）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E6%89%A7%E8%A1%8C-JS-EvalFunctionInternal"><span class="toc-number">7.7.</span> <span class="toc-text">解释执行 JS_EvalFunctionInternal</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
+
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>58</span>
+    <span>Posts</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>Categories</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>38</span>
+    <span>Tags</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
       </a>
     </div>
   
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
   
-    <div class="nav-item-next">
-      <a 
-        href="/2020/12/18/thinking-in-how-to-speed-up-app/" 
-        class="nav-link">
-        <div>
-          <div class="nav-label">Next</div>
-          
-            <div class="nav-title">App 启动提速实践和一些想法 </div>
-          
-        </div>
-        <i class="iconfont icon-right nav-next-icon"></i>
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
       </a>
     </div>
   
 </div>
 
-<div 
-  class="card card-content toc-card" 
-  id="mobiletoc">
-  <div class="toc-header">
-  <i 
-    class="iconfont icon-menu" 
-    style="padding-right: 2px;">
-  </i>TOC
-</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript-%E8%83%8C%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">JavaScript 背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E8%80%85"><span class="toc-number">1.2.</span> <span class="toc-text">作者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decimal"><span class="toc-number">1.3.</span> <span class="toc-text">Decimal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#QuickJS"><span class="toc-number">1.4.</span> <span class="toc-text">QuickJS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#makefile"><span class="toc-number">2.1.</span> <span class="toc-text">makefile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cmake"><span class="toc-number">2.2.</span> <span class="toc-text">cmake</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode-%E6%9D%A5%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E5%92%8C%E8%B0%83%E8%AF%95-QuickJS-%E6%BA%90%E7%A0%81"><span class="toc-number">2.3.</span> <span class="toc-text">Xcode 来编译安装和调试 QuickJS 源码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">使用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E5%8E%9F%E7%94%9F%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">调用原生函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="toc-number">5.</span> <span class="toc-text">源码文件介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QuickJS-%E6%9E%B6%E6%9E%84"><span class="toc-number">6.</span> <span class="toc-text">QuickJS 架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QuickJS-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81%E6%B5%81%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">QuickJS 核心代码流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA-Runtime"><span class="toc-number">7.1.</span> <span class="toc-text">新建 Runtime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">7.2.</span> <span class="toc-text">新建上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS-Eval"><span class="toc-number">7.3.</span> <span class="toc-text">JS_Eval</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B6%E7%BA%A7%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="toc-number">7.4.</span> <span class="toc-text">创建顶级函数定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-%E8%A7%A3%E6%9E%90%E5%92%8C%E7%94%9F%E6%88%90%E5%AD%97%E8%8A%82%E7%A0%81"><span class="toc-number">7.5.</span> <span class="toc-text">js 解析和生成字节码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-create-function-%E5%88%9B%E5%BB%BA%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%E5%8F%8A%E5%8C%85%E5%90%AB%E7%9A%84%E5%AD%90%E5%87%BD%E6%95%B0"><span class="toc-number">7.6.</span> <span class="toc-text">js_create_function 创建函数对象及包含的子函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#pass-1"><span class="toc-number">7.6.1.</span> <span class="toc-text">pass 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pass-2%EF%BC%88resolve-variables%EF%BC%89"><span class="toc-number">7.6.2.</span> <span class="toc-text">pass 2（resolve_variables）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pass3%EF%BC%88resolve-labels%EF%BC%89"><span class="toc-number">7.6.3.</span> <span class="toc-text">pass3（resolve_labels）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E6%89%A7%E8%A1%8C-JS-EvalFunctionInternal"><span class="toc-number">7.7.</span> <span class="toc-text">解释执行 JS_EvalFunctionInternal</span></a></li></ol></li></ol>
-</div>
-            </main>
-            <aside class="right-column">
-              <div class="sticky-widescreen">
+            </div>
+            
+            <div class="sticky-tablet">
   
   
-    <article class="card card-content toc-card">
-      <div class="toc-header">
-  <i 
-    class="iconfont icon-menu" 
-    style="padding-right: 2px;">
-  </i>TOC
-</div>
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
 <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript-%E8%83%8C%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">JavaScript 背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E8%80%85"><span class="toc-number">1.2.</span> <span class="toc-text">作者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decimal"><span class="toc-number">1.3.</span> <span class="toc-text">Decimal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#QuickJS"><span class="toc-number">1.4.</span> <span class="toc-text">QuickJS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#makefile"><span class="toc-number">2.1.</span> <span class="toc-text">makefile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cmake"><span class="toc-number">2.2.</span> <span class="toc-text">cmake</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode-%E6%9D%A5%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E5%92%8C%E8%B0%83%E8%AF%95-QuickJS-%E6%BA%90%E7%A0%81"><span class="toc-number">2.3.</span> <span class="toc-text">Xcode 来编译安装和调试 QuickJS 源码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">使用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E5%8E%9F%E7%94%9F%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">调用原生函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="toc-number">5.</span> <span class="toc-text">源码文件介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QuickJS-%E6%9E%B6%E6%9E%84"><span class="toc-number">6.</span> <span class="toc-text">QuickJS 架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QuickJS-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81%E6%B5%81%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">QuickJS 核心代码流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA-Runtime"><span class="toc-number">7.1.</span> <span class="toc-text">新建 Runtime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">7.2.</span> <span class="toc-text">新建上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS-Eval"><span class="toc-number">7.3.</span> <span class="toc-text">JS_Eval</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B6%E7%BA%A7%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="toc-number">7.4.</span> <span class="toc-text">创建顶级函数定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-%E8%A7%A3%E6%9E%90%E5%92%8C%E7%94%9F%E6%88%90%E5%AD%97%E8%8A%82%E7%A0%81"><span class="toc-number">7.5.</span> <span class="toc-text">js 解析和生成字节码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-create-function-%E5%88%9B%E5%BB%BA%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%E5%8F%8A%E5%8C%85%E5%90%AB%E7%9A%84%E5%AD%90%E5%87%BD%E6%95%B0"><span class="toc-number">7.6.</span> <span class="toc-text">js_create_function 创建函数对象及包含的子函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#pass-1"><span class="toc-number">7.6.1.</span> <span class="toc-text">pass 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pass-2%EF%BC%88resolve-variables%EF%BC%89"><span class="toc-number">7.6.2.</span> <span class="toc-text">pass 2（resolve_variables）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pass3%EF%BC%88resolve-labels%EF%BC%89"><span class="toc-number">7.6.3.</span> <span class="toc-text">pass3（resolve_labels）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E6%89%A7%E8%A1%8C-JS-EvalFunctionInternal"><span class="toc-number">7.7.</span> <span class="toc-text">解释执行 JS_EvalFunctionInternal</span></a></li></ol></li></ol>
-    </article>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>Categories</div>
+  <div class="categories-list">
+    
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">44</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-novel">
+        <div class="categories-list-item">
+          My-novel
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-painting">
+        <div class="categories-list-item">
+          My-painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>hot tags</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\WWDC" title="WWDC"><div class="tags-list-item">WWDC</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript-%E8%83%8C%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">JavaScript 背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E8%80%85"><span class="toc-number">1.2.</span> <span class="toc-text">作者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decimal"><span class="toc-number">1.3.</span> <span class="toc-text">Decimal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#QuickJS"><span class="toc-number">1.4.</span> <span class="toc-text">QuickJS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#makefile"><span class="toc-number">2.1.</span> <span class="toc-text">makefile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cmake"><span class="toc-number">2.2.</span> <span class="toc-text">cmake</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode-%E6%9D%A5%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E5%92%8C%E8%B0%83%E8%AF%95-QuickJS-%E6%BA%90%E7%A0%81"><span class="toc-number">2.3.</span> <span class="toc-text">Xcode 来编译安装和调试 QuickJS 源码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">使用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E5%8E%9F%E7%94%9F%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">调用原生函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="toc-number">5.</span> <span class="toc-text">源码文件介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QuickJS-%E6%9E%B6%E6%9E%84"><span class="toc-number">6.</span> <span class="toc-text">QuickJS 架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QuickJS-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81%E6%B5%81%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">QuickJS 核心代码流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA-Runtime"><span class="toc-number">7.1.</span> <span class="toc-text">新建 Runtime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">7.2.</span> <span class="toc-text">新建上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS-Eval"><span class="toc-number">7.3.</span> <span class="toc-text">JS_Eval</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B6%E7%BA%A7%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="toc-number">7.4.</span> <span class="toc-text">创建顶级函数定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-%E8%A7%A3%E6%9E%90%E5%92%8C%E7%94%9F%E6%88%90%E5%AD%97%E8%8A%82%E7%A0%81"><span class="toc-number">7.5.</span> <span class="toc-text">js 解析和生成字节码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-create-function-%E5%88%9B%E5%BB%BA%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%E5%8F%8A%E5%8C%85%E5%90%AB%E7%9A%84%E5%AD%90%E5%87%BD%E6%95%B0"><span class="toc-number">7.6.</span> <span class="toc-text">js_create_function 创建函数对象及包含的子函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#pass-1"><span class="toc-number">7.6.1.</span> <span class="toc-text">pass 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pass-2%EF%BC%88resolve-variables%EF%BC%89"><span class="toc-number">7.6.2.</span> <span class="toc-text">pass 2（resolve_variables）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pass3%EF%BC%88resolve-labels%EF%BC%89"><span class="toc-number">7.6.3.</span> <span class="toc-text">pass3（resolve_labels）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E6%89%A7%E8%A1%8C-JS-EvalFunctionInternal"><span class="toc-number">7.7.</span> <span class="toc-text">解释执行 JS_EvalFunctionInternal</span></a></li></ol></li></ol>
+  </article>
   
   
   <article class="card card-content">
     <div class="recent-posts-card">
-  <div class="recent-posts-header">
-    <i 
-      class="iconfont icon-wenzhang_huaban" 
-      style="padding-right: 2px;">
-    </i>Recent Posts
-  </div>
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>Recent Posts</div>
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
@@ -1688,164 +1348,113 @@ DEF(  put_ref_value, 1, 3, 0, none)<span aria-hidden="true" class="line-numbers-
   
   
 </div>
-            </aside>
-          </div>
+          </aside>
         </div>
       </div>
     </div>
-     
-    <footer class="footer">
+  </div>
+  
+  <footer class="footer">
   <div class="footer-container">
     <div>
       <div class="footer-dsc">
-        <span>
-          Copyright ©
+        <span>Copyright ©
           
-            2014
+          2014 -
           
-          
-                - 
-                2022
-          
+          2022
         </span>
-        &nbsp;
-        <a 
-          href="/" 
-          class="footer-link">
-          戴铭的博客
-        </a>
+        <a href="/" class="footer-link">戴铭的博客 </a>
       </div>
     </div>
 
     
     
     
-      <div class="BbeiAn-info">
-        <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">鄂ICP备17011999号 </a>
-      </div>
-      
-        <div class="BbeiAn-info">
-          <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
-          <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
-          </a>
-          <br />
-        </div>
-      
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
+      </a>
+      <br />
+    </div>
+    
     
     
       <div class="footer-dsc">
         
-          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
         
         
-          <span>&nbsp;|&nbsp;</span>
+        <span>&nbsp;|&nbsp;</span>
         
         
-          本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
         
       </div>
       
     
 </footer>
- 
-    
-  <a 
-    role="button" 
-    id="scrollbutton" 
-    class="basebutton" 
-    aria-label="回到顶部">
-    <i class="iconfont icon-arrowleft button-icon"></i>
-  </a>
-
-<a 
-  role="button" 
-  id="menubutton"
-  aria-label="menu button"
-  class="basebutton">
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
   <i class="iconfont icon-menu button-icon"></i>
 </a>
-<a 
-  role="button" 
-  id="popbutton" 
-  class="basebutton" 
-  aria-label="控制中心">
+<a role="button" id="popbutton" class="basebutton">
   <i class="iconfont icon-expand button-icon"></i>
 </a>
-<a 
-  role="button" 
-  id="darkbutton" 
-  class="basebutton darkwidget" 
-  aria-label="夜色模式">
+<a role="button" id="darkbutton" class="basebutton darkwidget">
   <i class="iconfont icon-weather button-icon"></i>
 </a>
-<a 
-  role="button" 
-  id="searchbutton" 
-  class="basebutton searchwidget" 
-  aria-label="搜索">
-  <i class="iconfont icon-search button-icon"></i>
-</a> 
-     
-     
-     
-      <script>
+
+  
+  
+  
+  <script>
   var addImgLayout = function () {
-    var img = document.querySelectorAll('.post-content img')
-    var i
+    var img = document.querySelectorAll('.post-content img');
+    var i;
     for (i = 0; i < img.length; i++) {
-      var wrapper = document.createElement('a')
-      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
-      wrapper.setAttribute('aria-label', 'illustration')
-      wrapper.style.cssText =
-        'width: 100%; display: flex; justify-content: center;'
-      if (img[i].alt) wrapper.dataset.caption = img[i].alt
-      wrapper.dataset.nolink = true
-      img[i].before(wrapper)
-      wrapper.append(img[i])
-      var divWrap = document.createElement('div')
-      divWrap.classList.add('gallery')
-      wrapper.before(divWrap)
-      divWrap.append(wrapper)
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
     }
-    baguetteBox.run('.gallery')
+    refreshFsLightbox();
   }
 </script>
-<script>
-  loadScript(
-    "/js/lib/lightbox/baguetteBox.min.js",
-    addImgLayout
-  )
-</script>
- 
-     
-     
-    <script src="/js/main.js"></script> 
-    
-      <script> 
-        loadScript('/js/lib/busuanzi.min.js') 
-      </script>
-     
-    
-      <script>
-        var addLazyload = function () {
-          var observer = lozad('.lozad', {
-            load: function (el) {
-              el.srcset = el.getAttribute('data-src')
-            },
-            loaded: function (el) {
-              el.classList.add('loaded')
-            },
-          })
-          observer.observe()
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
         }
-      </script>
-      <script>
-        loadScript('/js/lib/lozad.min.js', addLazyload)
-      </script>
-    
-    <script src="//instant.page/5.1.0" type="module"
-      integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
-    
-    
-  </body>
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
 </html>

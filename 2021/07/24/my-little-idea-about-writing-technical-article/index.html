@@ -1,150 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
-  <head>
+<html>
+<meta  lang="zh-Hans" >
+<head>
   <meta charset="UTF-8">
-  <meta 
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <meta 
-    http-equiv="X-UA-Compatible" 
-    content="ie=edge">
-  <meta 
-    name="theme-color" 
-    content="#fff" 
-    id="theme-color">
-  <meta 
-    name="description" 
-    content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-  <link 
-    rel="icon" 
-    href="/img/logo-starming.png">
-  <title>我写技术文章的一点心得</title>
-  
-    
-      <meta 
-        property="og:title" 
-        content="我写技术文章的一点心得">
-    
-    
-      <meta 
-        property="og:url" 
-        content="http://ming1016.github.io/2021/07/24/my-little-idea-about-writing-technical-article/index.html">
-    
-    
-      <meta 
-        property="og:img" 
-        content="/uploads/my-little-idea-about-writing-technical-article/12.PNG">
-    
-    
-      <meta 
-        property="og:img" 
-        content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-    
-    
-      <meta 
-        property="og:type" 
-        content="article">
-      <meta 
-        property="og:article:published_time" 
-        content="2021-07-24">
-      <meta 
-        property="og:article:modified_time" 
-        content="2022-06-14">
-      <meta 
-        property="og:article:author" 
-        content="戴铭">
-      
-        
-          <meta 
-            property="og:article:tag" 
-            content="iOS">
-        
-          <meta 
-            property="og:article:tag" 
-            content="Apple">
-        
-          <meta 
-            property="og:article:tag" 
-            content="Swift">
-        
-      
-    
-  
-  
-  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
-  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
-  <link rel="preload" href="/css/main.css" as="style" >
-  
-  <link rel="modulepreload" href="//instant.page/5.1.0">
-  
-  <link rel="stylesheet" href="/css/main.css">
-  
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
-  
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
-  
-  
-  
-    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
-  
-  <script>
-    function loadScript(url, cb) {
-      var script = document.createElement('script');
-      script.src = url;
-      if (cb) script.onload = cb;
-      script.async = true;
-      document.body.appendChild(script);
-    }
-    function loadCSS(href, data, attr) {
-      var sheet = document.createElement('link');
-      sheet.ref = 'stylesheet';
-      sheet.href = href;
-      sheet.dataset[data] = attr;
-      document.head.appendChild(sheet);
-    }
-    function changeCSS(cssFile, data, attr) {
-      var oldlink = document.querySelector(data);
-      var newlink = document.createElement("link");
-      newlink.setAttribute("rel", "stylesheet");
-      newlink.setAttribute("href", cssFile);
-      newlink.dataset.prism = attr;
-      document.head.replaceChild(newlink, oldlink);
-    }
-  </script>
-  
-    
-      
-      
-      
-      
-        
-        
-        
-        <script>
-          function prismThemeChange() {
-            if(document.getElementById('theme-color').dataset.mode === 'dark') {
-              if(document.querySelector('[data-prism]')) {
-                changeCSS('/js/lib/prism/prism-tomorrow.min.css', '[data-prism]', 'prism-tomorrow');
-              } else {
-                loadCSS('/js/lib/prism/prism-tomorrow.min.css', 'prism', 'prism-tomorrow');
-              }
-            } else {
-              if(document.querySelector('[data-prism]')) {
-                changeCSS('/js/lib/prism/prism.min.css', '[data-prism]', 'prism');
-              } else {
-                loadCSS('/js/lib/prism/prism.min.css', 'prism', 'prism');
-              }
-            }
-          }
-          prismThemeChange()
-        </script>
-      
-      
-        
-        <link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
-      
-    
-  
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
   <script>
     // control reverse button
     var reverseDarkList = {
@@ -173,406 +37,114 @@
       return setting;
     };
     // apply current darkmode setting
-  </script>
-  
-    <script>
-      var setDarkmode = function(mode) {
+    var setDarkmode = function(mode) {
       var setting = mode || localStorage.getItem('user-color-scheme');
       if(setting === getCssMediaQuery()) {
         document.documentElement.removeAttribute('data-user-color-scheme');
         localStorage.removeItem('user-color-scheme');
         document.getElementById('theme-color').content = themeColor[setting];
-        document.getElementById('theme-color').dataset.mode = setting;
-        prismThemeChange();
       } else if(reverseDarkList[setting]) {
         document.documentElement.setAttribute('data-user-color-scheme', setting);
         document.getElementById('theme-color').content = themeColor[setting];
-        document.getElementById('theme-color').dataset.mode = setting;
-        prismThemeChange();
       } else {
         document.documentElement.removeAttribute('data-user-color-scheme');
         localStorage.removeItem('user-color-scheme');
         document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
-        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
-        prismThemeChange();
       }
     };
     setDarkmode();
-    </script>
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
   
   
   
-    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
-    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
-  
-  
-    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
   
   
   
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
   
   
   
 <meta name="generator" content="Hexo 5.4.2"></head>
 
-  <body>
-    <div class="wrapper">
-       
-      <nav class="navbar">
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
   <div class="navbar-logo">
-    <a class="navbar-logo-main" href="/">
+    <span class="navbar-logo-main">
       
-        <img 
-          class="navbar-logo-img"
-          width="32"
-          height="32"
-          src="/img/logo-starming.png" 
-          alt="blog logo">
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
       
       <span class="navbar-logo-dsc">戴铭的博客</span>
-      </a>
+    </span>
   </div>
   <div class="navbar-menu">
     
-      <a 
-        href="/" 
-        class="navbar-menu-item">
-        
-          Home
-        
-      </a>
+    <a href="/" class="navbar-menu-item">Home </a>
     
-      <a 
-        href="/archives" 
-        class="navbar-menu-item">
-        
-          Archive
-        
-      </a>
+    <a href="/archives" class="navbar-menu-item">Archive </a>
     
-      <a 
-        href="/tags" 
-        class="navbar-menu-item">
-        
-          Tags
-        
-      </a>
+    <a href="/tags" class="navbar-menu-item">Tags </a>
     
-      <a 
-        href="/categories" 
-        class="navbar-menu-item">
-        
-          Categories
-        
-      </a>
+    <a href="/categories" class="navbar-menu-item">Categories </a>
     
-      <a 
-        href="/about" 
-        class="navbar-menu-item">
-        
-          About
-        
-      </a>
+    <a href="/about" class="navbar-menu-item">About </a>
     
-      <a 
-        href="/null" 
-        class="navbar-menu-item">
-        
-          Friends
-        
-      </a>
+    <a href="" class="navbar-menu-item">Friends </a>
     
-    <button 
-      class="navbar-menu-item darknavbar navbar-menu-btn" 
-      aria-label="Toggle dark mode"
-      id="dark">
-      <i class="iconfont icon-weather"></i>
-    </button>
-    <button 
-      class="navbar-menu-item searchnavbar navbar-menu-btn" 
-      aria-label="Toggle search"
-      id="search">
-      <!-- <i 
-        class="iconfont icon-search" 
-        style="font-size: 1.2rem; font-weight: 400;">
-      </i> -->
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-        class="iconify iconify--ion" width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
-        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
-          d="M256 80a176 176 0 1 0 176 176A176 176 0 0 0 256 80Z"></path>
-        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
-          d="M232 160a72 72 0 1 0 72 72a72 72 0 0 0-72-72Z"></path>
-        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="28"
-          d="M283.64 283.64L336 336"></path>
-      </svg>
-    </button>
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
   </div>
-</nav> 
-      
-      <div 
-        id="local-search" 
-        style="display: none">
-        <input
-          class="navbar-menu-item"
-          id="search-input"
-          placeholder="请输入搜索内容..." />
-        <div id="search-content"></div>
-      </div>
-      
-      <div class="section-wrap">
-        <div class="container">
-          <div class="columns">
-            <aside class="left-column">
-              
-              <div class="card card-author">
-                
-  <img 
-    src="/img/ming.jpeg" 
-    class="author-img"
-    width="88"
-    height="88"
-    alt="author avatar">
-
-<p class="author-name">戴铭</p>
-<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
-<div class="author-message">
-  <a 
-    class="author-posts-count" 
-    href="/archives">
-    <span>58</span>
-    <span>Posts</span>
-  </a>
-  <a 
-    class="author-categories-count" 
-    href="/categories">
-    <span>5</span>
-    <span>Categories</span>
-  </a>
-  <a 
-    class="author-tags-count" 
-    href="/tags">
-    <span>38</span>
-    <span>Tags</span>
-  </a>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/my-little-idea-about-writing-technical-article/12.PNG" data-src="/uploads/my-little-idea-about-writing-technical-article/12.PNG"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
 </div>
-
-  <div class="author-card-society">
-    
-      <div class="author-card-society-icon">
-        <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
-          <i class="iconfont icon-sina society-icon"></i>
-        </a>
-      </div>
-    
-      <div class="author-card-society-icon">
-        <a target="_blank" rel="noopener" href="https://github.com/ming1016">
-          <i class="iconfont icon-github society-icon"></i>
-        </a>
-      </div>
-    
-      <div class="author-card-society-icon">
-        <a href="mailto:ming1016@foxmail.com">
-          <i class="iconfont icon-mail society-icon"></i>
-        </a>
-      </div>
-    
-      <div class="author-card-society-icon">
-        <a href="/atom.xml">
-          <i class="iconfont icon-chrome society-icon"></i>
-        </a>
-      </div>
-    
-  </div>
-
-              </div>
-               <div class="sticky-tablet">
-  
-  
-    <article class="display-when-two-columns spacer">
-      <div class="card card-content toc-card">
-        <div class="toc-header">
-  <i 
-    class="iconfont icon-menu" 
-    style="padding-right: 2px;">
-  </i>TOC
-</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">四个点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8B%AC%E7%89%B9%E6%80%A7"><span class="toc-number">2.1.</span> <span class="toc-text">独特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%84%9F"><span class="toc-number">2.2.</span> <span class="toc-text">真实感</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%85%E4%BA%8B%E6%80%A7"><span class="toc-number">2.3.</span> <span class="toc-text">故事性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E6%84%8F"><span class="toc-number">2.4.</span> <span class="toc-text">新意</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E4%BB%A5%E5%89%8D%E7%9A%84%E6%96%87%E7%AB%A0"><span class="toc-number">3.</span> <span class="toc-text">我以前的文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A%E7%AB%99-%E7%9A%84-Swift-%E5%AE%9E%E8%B7%B5"><span class="toc-number">3.1.</span> <span class="toc-text">A站 的 Swift 实践</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90Auto-Layout%EF%BC%8C%E5%88%86%E6%9E%90iOS%E5%90%84%E7%89%88%E6%9C%AC%E6%96%B0%E5%A2%9E%E7%89%B9%E6%80%A7"><span class="toc-number">3.2.</span> <span class="toc-text">深入剖析Auto Layout，分析iOS各版本新增特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%BC%BC%E8%8B%B9%E6%9E%9CVFL-Visual-Format-Language-%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%AF%AD%E8%A8%80%E6%9D%A5%E6%8F%8F%E8%BF%B0%E7%B1%BB%E4%BC%BCUIStackView%E9%82%A3%E7%A7%8D%E5%B8%83%E5%B1%80%E6%80%9D%E8%B7%AF%EF%BC%8C%E5%B9%B6%E8%A7%A3%E6%9E%90%E7%94%9F%E6%88%90%E9%A1%B5%E9%9D%A2"><span class="toc-number">3.3.</span> <span class="toc-text">制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-JavaScriptCore"><span class="toc-number">3.4.</span> <span class="toc-text">深入剖析 JavaScriptCore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-JavaScript-%E7%BC%96%E8%AF%91%E5%99%A8-x2F-%E8%A7%A3%E9%87%8A%E5%99%A8%E5%BC%95%E6%93%8E-QuickJS-%E5%A4%9A%E4%BA%86%E8%A7%A3%E4%BA%9B-JavaScript-%E8%AF%AD%E8%A8%80"><span class="toc-number">3.5.</span> <span class="toc-text">深入剖析 JavaScript 编译器&#x2F;解释器引擎 QuickJS - 多了解些 JavaScript 语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E7%BC%96%E8%AF%91-Clang-x2F-LLVM"><span class="toc-number">3.6.</span> <span class="toc-text">深入剖析 iOS 编译 Clang &#x2F; LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-WebKit"><span class="toc-number">3.7.</span> <span class="toc-text">深入剖析 WebKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">3.8.</span> <span class="toc-text">深入剖析 iOS 性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-number">3.9.</span> <span class="toc-text">启动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%A1%E6%80%8E%E4%B9%88%E5%86%99%E8%BF%87%EF%BC%8C%E9%82%A3%E4%B8%8B%E4%B8%80%E6%AD%A5%E6%80%8E%E4%B9%88%E8%A1%8C%E5%8A%A8"><span class="toc-number">4.</span> <span class="toc-text">没怎么写过，那下一步怎么行动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.1.</span> <span class="toc-text">四个步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%80%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="toc-number">4.2.</span> <span class="toc-text">所用软件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%8C%E6%80%8E%E4%B9%88%E5%86%99%E8%BF%99%E6%AC%A1WWDC21%E7%9A%84%E8%A7%81%E9%97%BB%E6%96%87%E7%AB%A0"><span class="toc-number">5.</span> <span class="toc-text">举个例子，怎么写这次WWDC21的见闻文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E8%A7%88"><span class="toc-number">5.1.</span> <span class="toc-text">总览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Session%E6%8E%A8%E8%8D%90"><span class="toc-number">5.2.</span> <span class="toc-text">Session推荐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift-%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9B%B4%E6%96%B0"><span class="toc-number">5.3.</span> <span class="toc-text">Swift 的一些更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8A%E5%B9%B4%E9%87%8D%E5%A4%B4%E6%88%8F-Swift-Concurrency"><span class="toc-number">5.4.</span> <span class="toc-text">今年重头戏 Swift Concurrency</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#async-x2F-await"><span class="toc-number">5.4.1.</span> <span class="toc-text">async&#x2F;await</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Async-Sequences"><span class="toc-number">5.4.2.</span> <span class="toc-text">Async Sequences</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E5%B9%B6%E5%8F%91"><span class="toc-number">5.4.3.</span> <span class="toc-text">结构化并发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Actors"><span class="toc-number">5.4.4.</span> <span class="toc-text">Actors</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Concurrency%E7%9B%B8%E5%85%B3%E6%8F%90%E6%A1%88%E9%9B%86%E5%90%88"><span class="toc-number">5.4.5.</span> <span class="toc-text">Swift Concurrency相关提案集合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84"><span class="toc-number">5.4.6.</span> <span class="toc-text">学习路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Concurrency-%E5%92%8C-Combine"><span class="toc-number">5.4.7.</span> <span class="toc-text">Swift Concurrency 和 Combine</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC-playground%E7%9B%B4%E6%92%AD%E6%B4%BB%E5%8A%A8"><span class="toc-number">5.5.</span> <span class="toc-text">WWDC.playground直播活动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC%E6%B2%99%E9%BE%99%E6%B4%BB%E5%8A%A8"><span class="toc-number">5.6.</span> <span class="toc-text">WWDC沙龙活动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E7%8B%AC%E7%89%B9%E6%80%A7%E5%92%8C%E6%96%B0%E6%84%8F%E7%9A%84%E6%80%9D%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">对独特性和新意的思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Finally"><span class="toc-number">7.</span> <span class="toc-text">Finally</span></a></li></ol>
-      </div>
-    </article>
-  
-  
-  <article class="card card-content categories-widget">
-    <div class="categories-card">
-  <div class="categories-header">
-    <i 
-      class="iconfont icon-fenlei" 
-      style="padding-right: 2px;">
-    </i>Categories
-  </div>
-  <div class="categories-list">
-    
-      <a href="/categories/Programming/">
-        <div class="categories-list-item">
-          Programming
-          <span class="categories-list-item-badge">44</span>
-        </div>
-      </a>
-    
-      <a href="/categories/My-novel/">
-        <div class="categories-list-item">
-          My-novel
-          <span class="categories-list-item-badge">4</span>
-        </div>
-      </a>
-    
-      <a href="/categories/My-painting/">
-        <div class="categories-list-item">
-          My-painting
-          <span class="categories-list-item-badge">8</span>
-        </div>
-      </a>
-    
-      <a href="/categories/travel/">
-        <div class="categories-list-item">
-          travel
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-      <a href="/categories/APP/">
-        <div class="categories-list-item">
-          APP
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-  </div>
-</div>
-  </article>
-  
-  <article class="card card-content tags-widget">
-    <div class="tags-card">
-  <div class="tags-header">
-    <i 
-      class="iconfont icon-biaoqian" 
-      style="padding-right: 2px;">
-    </i>hot tags
-  </div>
-  <div class="tags-list">
-    
-      <a 
-        href="/tags/iOS/" 
-        title="iOS">
-        <div class="tags-list-item">iOS</div>
-      </a>
-    
-      <a 
-        href="/tags/Swift/" 
-        title="Swift">
-        <div class="tags-list-item">Swift</div>
-      </a>
-    
-      <a 
-        href="/tags/Painting/" 
-        title="Painting">
-        <div class="tags-list-item">Painting</div>
-      </a>
-    
-      <a 
-        href="/tags/Apple/" 
-        title="Apple">
-        <div class="tags-list-item">Apple</div>
-      </a>
-    
-      <a 
-        href="/tags/Slides/" 
-        title="Slides">
-        <div class="tags-list-item">Slides</div>
-      </a>
-    
-      <a 
-        href="/tags/iPad/" 
-        title="iPad">
-        <div class="tags-list-item">iPad</div>
-      </a>
-    
-      <a 
-        href="/tags/Procreate/" 
-        title="Procreate">
-        <div class="tags-list-item">Procreate</div>
-      </a>
-    
-      <a 
-        href="/tags/LLVM/" 
-        title="LLVM">
-        <div class="tags-list-item">LLVM</div>
-      </a>
-    
-      <a 
-        href="/tags/Web/" 
-        title="Web">
-        <div class="tags-list-item">Web</div>
-      </a>
-    
-      <a 
-        href="/tags/Novel/" 
-        title="Novel">
-        <div class="tags-list-item">Novel</div>
-      </a>
-    
-      <a 
-        href="/tags/SwiftUI/" 
-        title="SwiftUI">
-        <div class="tags-list-item">SwiftUI</div>
-      </a>
-    
-      <a 
-        href="/tags/macOS/" 
-        title="macOS">
-        <div class="tags-list-item">macOS</div>
-      </a>
-    
-      <a 
-        href="/tags/%E7%BC%96%E8%AF%91/" 
-        title="编译">
-        <div class="tags-list-item">编译</div>
-      </a>
-    
-      <a 
-        href="/tags/WWDC/" 
-        title="WWDC">
-        <div class="tags-list-item">WWDC</div>
-      </a>
-    
-      <a 
-        href="/tags/ReactiveCocoa/" 
-        title="ReactiveCocoa">
-        <div class="tags-list-item">ReactiveCocoa</div>
-      </a>
-    
-      <a 
-        href="/tags/GOT/" 
-        title="GOT">
-        <div class="tags-list-item">GOT</div>
-      </a>
-    
-  </div>
-</div>
-  </article>
-  
-  
-</div>
-            </aside>
-            <main class="main-column">
-              
-  <div class="image-wrapper">
-    <img 
-      src="/uploads/my-little-idea-about-writing-technical-article/12.PNG" 
-      data-src="/uploads/my-little-idea-about-writing-technical-article/12.PNG"
-      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
-      class="image lozad"
-      alt="我写技术文章的一点心得 thumbnail">
-  </div>
 
 <article class="card card-content">
   <header>
@@ -581,70 +153,44 @@
     </h1>
   </header>
   <div class="post-meta post-show-meta">
-    <time datetime="2021-07-23T21:52:45.000Z">
-      <i 
-        class="iconfont icon-calendar" 
-        style="margin-right: 2px;">
-      </i>
+    <time datetime="2021-07-23T21:52:45.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
       <span>2021-07-24</span>
     </time>
     
-      <span class="dot"></span>
-      
-        <a 
-          href="/categories/Programming/" 
-          class="post-meta-link">
-          Programming
-        </a>
-      
+    <span class="dot"></span>
+    
+    <a href="/categories/Programming/" class="post-meta-link">Programming</a>
     
     
-      <span class="dot"></span>
-      <span>19.7k words</span>
+    
+    <span class="dot"></span>
+    <span>19.7k words</span>
     
   </div>
   
-    <div 
-      class="post-meta post-show-meta" 
-      style="margin-top: -10px;">
-      <div style="display: flex; align-items: center;">
-        <i 
-          class="iconfont icon-biaoqian" 
-          style="margin-right: 2px; font-size: 1.15rem;">
-        </i>
-        
-          
-          <a 
-            href="/tags/iOS/" 
-            class="post-meta-link">
-            iOS
-          </a>
-        
-          
-            <span class="dot"></span>
-          
-          <a 
-            href="/tags/Apple/" 
-            class="post-meta-link">
-            Apple
-          </a>
-        
-          
-            <span class="dot"></span>
-          
-          <a 
-            href="/tags/Swift/" 
-            class="post-meta-link">
-            Swift
-          </a>
-        
-      </div>
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/iOS/" class="post-meta-link">iOS</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Apple/" class="post-meta-link">Apple</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Swift/" class="post-meta-link">Swift</a>
+      
     </div>
+  </div>
   
   </header>
-  <div 
-    id="section" 
-    class="post-content">
+  <div id="section" class="post-content">
     <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>非常感谢大家抽出生命中宝贵的一段时间来听我接下来的一大段关于写文章那些事的唠叨。写文章的好处看看<a target="_blank" rel="noopener" href="https://movie.douban.com/subject/30228394/">《觉醒年代》</a>就知道了。</p>
 <p>这篇文章我不会写一些常说的技巧，比如文章的内容前后要有逻辑关系，内容之间有关联。所讲知识前后的层次要平，不要在某个部分挖掘过深。写作过程中牢牢抓住要表达的内容，不要过于偏离主题。类似这样的技巧不会说。都说一流的人讨论思想、普通人讨论事情、三流的人讨论人，那么为了提高文章高度，除了说些事情，我还打算加些思想的内容。</p>
 <p>大家都习惯去阅读他人人生体验来体验不一样的人生，这样的方式和评头论足一样简单舒服，轻松爽快。而主动去对自己思想进行研究和开发，通过写作输出自己独特的经历和思考却是困难且难受的，但这样从0到1和从0到10的创造过程获得的乐趣却是前者的百倍甚至更多，这背后所遵循的原则是怎样的呢？</p>
@@ -669,7 +215,7 @@
 <p>关于故事性，故事性往往是用来引入读进去的一种办法，A 站的 Swift 实践这篇文章的开头通过讲述使用 Swift 的必要性、A 站为之付出的努力和收获、Swift 语言的演进的过程的方式尽量避开具体技术描述，而是使用通俗易懂的描述让读的人可以被轻松带入到文章中来。</p>
 <h3 id="深入剖析Auto-Layout，分析iOS各版本新增特性"><a href="#深入剖析Auto-Layout，分析iOS各版本新增特性" class="headerlink" title="深入剖析Auto Layout，分析iOS各版本新增特性"></a>深入剖析Auto Layout，分析iOS各版本新增特性</h3><p><a href="https://ming1016.github.io/2015/11/03/deeply-analyse-autolayout/">《深入剖析Auto Layout，分析iOS各版本新增特性》</a>。写这个文章也是有着一段不同寻常的经历。那时刚到公司，所有布局都还是使用的 frame 方式，而 Auto Layout 苹果公司才推出不久，在另一位跟我一样新进公司熟悉 Auto Layout 同事的怂恿下，我打算在改版需求中使用 Auto Layout 来替换原有布局方式。但在需求开发刚开始时，那位熟悉 Auto Layout 的新同事突然离职了，我感觉失去了援手，但是我认可了这个技术，还是坚持使用它。期间碰到的苦难无数，布局思路带来了很多开发方式的改变，还有动画的结合会出现的各种效果不一致，其间公司老员工还不断劝我还是走老路比较稳妥。改版完后大部分主流程，包括首页发单、等待页、接单进行页都被改造成 Auto Layout。</p>
 <p>更困难的事情还在后面呢，测试期间发现在 iOS6 上会出现各种崩溃、页面布局混乱、动画效果不一致等问题，我的 Bug 始终保持在 Bug 列表前十页。改 Bug 那些天，晚上调的眼发疼，深夜想的难入眠。线下 Bug 改完，上线后才是噩梦的开始，当时我们 App 的 iOS6 用户依旧很多，于是很多偶现崩溃被放大了，我的崩溃问题一直排在 Top1，虽然我很快找到了改好的办法，但是对于这几个偶现的问题还需要一个可靠可信服的解释，这样后面才能够让大家放心使用 Auto Layout。还记得当时周末坐在得实大厦窗户边的工位上，在查完和试完所有资料后依然无果时的无力感。本想着改回以前的 frame 布局算了，后又觉不甘。下几个周末跑到各大图书馆查看所有涉有 Auto Layout 的书，也是那个时候了解到了 VFL 语言。皇天不负有心人，WWDC 开始了，其中有个 Session 叫 Mysteries of Auto Layout，分为<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2015-218/">上</a>、<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2015-219/">下</a>两个部分，把 Auto Layout 的原理讲得非常透彻了，至此，透过原理我也找到了问题的根因，并把他们记录在了文章中。这部分内容我还在一个沙龙做了分享，下面是当时分享的 Auto Layout 的原理部分的内容：</p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/1.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/1.PNG"></p>
+<p><img src="/uploads/my-little-idea-about-writing-technical-article/1.PNG"></p>
 <p>完整幻灯片参看<a href="https://ming1016.github.io/2021/07/13/deeply-analyse-autolayout-slides/">这里</a>。</p>
 <p>这些经验的总结在当时是非常新的，因为官方也是刚公布出其内部的原理，没有人能够更早的知道这些信息，估计也很少有人会考究这么多。有了这些由于一直坚持下来去找根因的经历才使得文章有了独特性。</p>
 <p>当然，深入剖析 Auto Layout 这篇文章也加了 Auto Layout 的历史、生命周期、VFL 语言的介绍用来丰富内容的广度，以提升真实感，但你会发现独特性在这里显得尤为重要。</p>
@@ -688,7 +234,7 @@
 <p>就在百般无奈，各种资源条件受限的情况下。我想着看能不能把需要繁琐手动检查的动作试着写成程序自动完成。于是我用一个周末开发了查找无用方法工具，能够自动查找出工程中没有用到的方法，也兼顾了我们工程的一些运行时调用的方法检查。这样重复繁重的检查工作就变得轻松了很多。</p>
 <p>工具开发完后，我发现这工具的实现并无相关成熟理论来进行支持，以后怎么完善和优化这个工具也没有一点思路。为此我还苦恼了蛮久的。</p>
 <p>经过一位同事提醒，说大学有门编译原理的课里面就有讲怎么分析代码的，于是我就开始针对性的翻阅相关资料。于是乎，我发现了一片蓝海，这里面涉及到的技术不光是分析代码，还有很多以前不了解的程序怎么跑起来的细节，这里的知识就像可以无限递归的树，能够将你所有时间都吞没。这篇文章我更新添加内容的次数不下十次，每当get到了新的东西都忍不住记录下来。这期间动手去实践一些知识点，也遇到很多问题，解决这些问题的过程，对相关知识理解就更深入了。后来在17年的@Swift 大会上还做了 LLVM 相关内容的分享，下图是其中一张 Slide。</p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/2.png" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/2.png"></p>
+<p><img src="/uploads/my-little-idea-about-writing-technical-article/2.png"></p>
 <p>完整幻灯片参看<a href="https://ming1016.github.io/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/">这里</a></p>
 <h3 id="深入剖析-WebKit"><a href="#深入剖析-WebKit" class="headerlink" title="深入剖析 WebKit"></a>深入剖析 WebKit</h3><p>为了完成网页到原生代码的转换，我开始学习 Web 的标准，而 WebKit 是苹果公司对 Web 标准实现，V8和 Flutter 渲染技术的源头，WebKit 的学习能够让我更完整的了解网页从请求到布局再到渲染的流程和使用的相关技术。<a href="https://ming1016.github.io/2017/10/11/deeply-analyse-webkit/">WebKit的这篇文章</a>我罗列了大量的 Web 规范资料，由于 WebKit 非常的庞大，架构也很复杂，文章里对架构也进行了详细的说明，对源码的结构做了详细的说明。全文按照一个页面从请求到最终渲染的流程顺序，依次对其关键环节里对应源代码和原理进行了详细的说明。完成这篇花费时间巨大，代码基本读了个遍。之后我对于前端技术有了更深的理解，特别是页面异步加载的流程和布局原理。</p>
 <p>感觉这篇完全靠的是对前端技术的热情完成的。手冢治虫说过，那些投稿的人，都是热爱着漫画，把画出一部作品作为自己生命意义的人。所以他们才能获得成功，成为马拉松里跑到最后的人。热情可以增加25个 IQ 值。如果一个人仿佛开悟了的高僧，失去任何欲求、愿望、不甘、烦恨与伤痛，那么即使他去画漫画，即使基因再好，天赋再高，也只会画成佛教的禅画罢了。在比尔.布莱森在《人体简史》这本书中提到一个镜子相关的实验，实验来自一名防碎眼镜商人，在1980年创办了胚种精选择库（Repository for Germinal Choice），这个精子库只有诺贝尔获奖者和其他杰出知识权威的镜子。他想的是能够提供最好的精子生出天才婴儿，结果是在出生的200名儿童里，没有一个杰出天才，甚至连一个眼镜工程师都没能造出来，可见对做的事情有热情更加重要，而不仅仅只要基因好就行。</p>
@@ -914,7 +460,7 @@
 <h4 id="Swift-Concurrency-和-Combine"><a href="#Swift-Concurrency-和-Combine" class="headerlink" title="Swift Concurrency 和 Combine"></a>Swift Concurrency 和 Combine</h4><p>由于 Swift Concurrency 的推出和大量的 Session 发布，特别是<a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/swift/asyncsequence/">AsyncSequence</a>的出现，以及正在路上的<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0314-async-stream.md">AsyncStream、AsyncThrowingStream</a>和<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0300-continuation.md">continuation</a>提案（在Xcode 13.0 beta 3 AsyncStream 正式<a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/swift/asyncstream?changes=latest_beta">release</a>），这些越来越多和 Combine 功能重叠的特性出现在 Swift Concurrency 蓝图里时，大家开始猜测是否 Combine 会被 Swift Concurrency 替代。关于未来是 Swift Concurrency 还是 Combine，我的感觉是，Combine 更侧重在响应式编程上，而响应式编程并不是所有开发人员都会接受的，而 Swift Concurrency 是所有人都愿意接受的开发方式，从 Swift Concurrency 推出后开发者使用的数量和社区反应火热程度来看都比 Combine 要大。在苹果对 Combine 有下一步动作之前，我还是更偏向 Swift Concurrency。</p>
 <p>见闻写到这里，把独特性比作骨架，真实感比作血肉，故事性和新意比作皮肤，你会发现没有写出自己的经历的话，就像进击巨人里的那些小巨人，即使有了完整的皮肤，但骨头架子不大是不会有开头踢破大门的只有骨架和血肉的巨型大巨人那么强大且震撼有力。</p>
 <p>那么接下来我就描写一些我在 WWDC21 期间独特的一些经历。</p>
-<h3 id="WWDC-playground直播活动"><a href="#WWDC-playground直播活动" class="headerlink" title="WWDC.playground直播活动"></a>WWDC.playground直播活动</h3><p>想想 WWDC21 过程中我还是有些经历，比如参加了苹果官方推荐的外围活动<a target="_blank" rel="noopener" href="https://swift.gg/wwdc/">WWDC.playgournd by SwiftGG</a>。<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/3.png" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/3.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/4.png" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/4.png"></p>
+<h3 id="WWDC-playground直播活动"><a href="#WWDC-playground直播活动" class="headerlink" title="WWDC.playground直播活动"></a>WWDC.playground直播活动</h3><p>想想 WWDC21 过程中我还是有些经历，比如参加了苹果官方推荐的外围活动<a target="_blank" rel="noopener" href="https://swift.gg/wwdc/">WWDC.playgournd by SwiftGG</a>。<br><img src="/uploads/my-little-idea-about-writing-technical-article/3.png"><br><img src="/uploads/my-little-idea-about-writing-technical-article/4.png"></p>
 <p>连续看了5天活动直播，还参加了一天的 Live Coding 介绍 SwiftUI 的新特性。直播 Live Coding 准备的时间很少，而且以前我还没有现场当着几千人面写代码的经历，直播前一天晚上赶着通宵达旦看完了相关 Session，写了些代码样例测试，当天白天还开了一个很长的会，回家前和同事讨论一个技术问题时，我发现我嗓子还哑了。到家坐在桌前脚还抽筋了，你可想象到我当时内心有多崩溃。</p>
 <p>在直播前，我还专门的给思琦先演练了一遍，其中在介绍 AsyncImage 处理失败、空白、成功还有默认情况时，编译器报错提示无法找到原因，还提示让我提交 bug 的错误信息。直播开始前一直没有找到原因，重新敲了一遍才解决，所以心里没底，直播开始时还一直担心这个问题会重现。直播时在写到这段时果然编译器错误又出现了，当时我脑袋一片空白，心中大呼救我。好在没多一会我突然发现先前一段演示的 placeholder 接口没有删掉，原因真的就是这个，删掉后就正常了，别提有多开心了。后面就轻松了很多。由于只有一天时间准备，很多内容准备了，当时一边敲代码一边说也漏说了很多，比如 AsyncImage 使用的是 URLSession，用的是 URLCache，还不能自定义缓存。Refreshable 只能用在 List 里。SwiftUI 和数组绑定的代码是可以兼容前一个版本的。</p>
 <p>另外还有个 WWDC 期间很火的老系统UI挑战赛让我印象深刻，其中有个18岁小伙用 SwiftUI 开发了经典 iPhone4可用版本最火爆，Github 地址<a target="_blank" rel="noopener" href="https://github.com/zzanehip/The-OldOS-Project">在这里</a>。</p>
@@ -955,10 +501,10 @@
 <p>Swift 视图返回的类型是不固定的，因此使用了 Swift 的不透明类型语法特性来进行支持，支持其返回带有大量泛型参数的庞大类型，这个类型中还包括了 Result Builder 中的 if 条件类型值，支持多分支类型。Opaque Types的提案在这里<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0244-opaque-result-types.md">SE-0244</a>。</p>
 <p>跟着视图后面的点语法是 modifier，每个 modifier 都会在视图树中新建一个层，因此 modifier 的写的先后顺序不同，效果是不一样的。</p>
 <p>对于数据的监听和响应使用的是 swift 里的属性包装语法特性，属性包装的提案是<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0258-property-wrappers.md">SE-0258</a>。包装后数据的使用就方便了很多，对于不同属性包装类别的选择可以按照数据类型和应用场景来，对于值类型，如果是只读的数据可以什么都不加，如果数据是可读写的，使用@State，如果数据是需要在其他视图进行读写并自己也同步响应的，使用@Binding进行声明。对于对象类型的数据，指向对象的引用能发生变化要用@ObservedObject来声明，引用不可改变，那么就用@StateObject，使用环境传递对象用@EnvironmentObject。</p>
-<p>完整的 WWDC<T>沙龙活动回放可以扫下图中的二维码：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/5.jpeg" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/5.jpeg"></p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/6.JPG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/6.JPG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/7.jpeg" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/7.jpeg"></p>
+<p>完整的 WWDC<T>沙龙活动回放可以扫下图中的二维码：<br><img src="/uploads/my-little-idea-about-writing-technical-article/5.jpeg"></p>
+<p><img src="/uploads/my-little-idea-about-writing-technical-article/6.JPG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/7.jpeg"></p>
 <p>下面是当时现场演示的部分幻灯片，动画的效果可以看上面的视频回放：</p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/8.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/8.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/9.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/9.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/10.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/10.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/11.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/11.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/12.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/12.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/13.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/13.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/14.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/14.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/15.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/15.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/16.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/16.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/17.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/17.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/18.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/18.PNG"></p>
+<p><img src="/uploads/my-little-idea-about-writing-technical-article/8.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/9.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/10.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/11.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/12.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/13.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/14.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/15.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/16.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/17.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/18.PNG"></p>
 <p>至此，这篇WWDC21见闻就写完了，详细描写自己WWDC21期间的一些独特经历和其中涉及相关技术，这样会让文章的独特性和真实感有很大的提升。</p>
 <h2 id="对独特性和新意的思考"><a href="#对独特性和新意的思考" class="headerlink" title="对独特性和新意的思考"></a>对独特性和新意的思考</h2><p>通篇看下来，你是不是感觉到故事性和真实性其实是非常容易做到的。可以理解为只要努力些，时间再长些，这两点就能够完成，且能线性得到提高。只埋头做事情比较容易和舒适，但一直这么干，熵就会越来越多，不可逆的无用能量无法排除。而独特性意味着你会去体验适应新的环境，去获取实践新的认知，去结识新的朋友碰撞新的思路，使得自己体验到不同以往的经验。新意成功几率很低，非线性的，类似于基因突变产生的进化，这和努力无关。新意和独特性一样属于逆熵过程，不能忽视，大跨步的进步需要对传统的颠覆。新意会带来新的独特经历形成一个新的循环，不去尝试就不会有新的机会。</p>
 <p>如果把本文当成一篇笔记，其间又融入了写作心得；如果把本文当做一篇写作心得，其间又穿插了大量笔记内容。你说这是不是也是一种新意呢。</p>
@@ -967,99 +513,213 @@
 
   </div>
   <div>
-    
-      <div 
-        class="post-note note-warning copyright" 
-        style="margin-top: 42px">
-        <p>
-          <span style="font-weight: bold;">作者：</span><a 
-            target="_blank" 
-            rel="nofollow noopener noreferrer" 
-            href="/about">
-            戴铭
-          </a>
-        </p>
-        <p>
-          <span style="font-weight: bold;">文章链接：</span><a 
-            target="_blank" 
-            rel="nofollow noopener noreferrer" 
-            href="http://ming1016.github.io/2021/07/24/my-little-idea-about-writing-technical-article/">
-            http://ming1016.github.io/2021/07/24/my-little-idea-about-writing-technical-article/
-          </a>
-        </p>
-        <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
-      </div>
-    
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2021/07/24/my-little-idea-about-writing-technical-article/">http://ming1016.github.io/2021/07/24/my-little-idea-about-writing-technical-article/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
   </div>
 </article>
 <div class="nav">
   
-    <div class="nav-item-prev">
-      <a 
-        href="/2021/11/23/daiming-swift-pamphlet/" 
-        class="nav-link">
-        <i class="iconfont icon-left nav-prev-icon"></i>
-        <div>
-          <div class="nav-label">Prev</div>
-          
-            <div class="nav-title">戴铭的 Swift 小册子 5.0 </div>
-          
-        </div>
+  <div class="nav-item-prev">
+    <a href="/2021/11/23/daiming-swift-pamphlet/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">Prev</div>
+        
+        <div class="nav-title">戴铭的 Swift 小册子 5.0 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2021/07/13/deeply-analyse-autolayout-slides/" class="nav-link">
+      <div>
+        <div class="nav-label">Next</div>
+        
+        <div class="nav-title">深入剖析Auto Layout的幻灯片 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">四个点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8B%AC%E7%89%B9%E6%80%A7"><span class="toc-number">2.1.</span> <span class="toc-text">独特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%84%9F"><span class="toc-number">2.2.</span> <span class="toc-text">真实感</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%85%E4%BA%8B%E6%80%A7"><span class="toc-number">2.3.</span> <span class="toc-text">故事性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E6%84%8F"><span class="toc-number">2.4.</span> <span class="toc-text">新意</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E4%BB%A5%E5%89%8D%E7%9A%84%E6%96%87%E7%AB%A0"><span class="toc-number">3.</span> <span class="toc-text">我以前的文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A%E7%AB%99-%E7%9A%84-Swift-%E5%AE%9E%E8%B7%B5"><span class="toc-number">3.1.</span> <span class="toc-text">A站 的 Swift 实践</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90Auto-Layout%EF%BC%8C%E5%88%86%E6%9E%90iOS%E5%90%84%E7%89%88%E6%9C%AC%E6%96%B0%E5%A2%9E%E7%89%B9%E6%80%A7"><span class="toc-number">3.2.</span> <span class="toc-text">深入剖析Auto Layout，分析iOS各版本新增特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%BC%BC%E8%8B%B9%E6%9E%9CVFL-Visual-Format-Language-%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%AF%AD%E8%A8%80%E6%9D%A5%E6%8F%8F%E8%BF%B0%E7%B1%BB%E4%BC%BCUIStackView%E9%82%A3%E7%A7%8D%E5%B8%83%E5%B1%80%E6%80%9D%E8%B7%AF%EF%BC%8C%E5%B9%B6%E8%A7%A3%E6%9E%90%E7%94%9F%E6%88%90%E9%A1%B5%E9%9D%A2"><span class="toc-number">3.3.</span> <span class="toc-text">制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-JavaScriptCore"><span class="toc-number">3.4.</span> <span class="toc-text">深入剖析 JavaScriptCore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-JavaScript-%E7%BC%96%E8%AF%91%E5%99%A8-x2F-%E8%A7%A3%E9%87%8A%E5%99%A8%E5%BC%95%E6%93%8E-QuickJS-%E5%A4%9A%E4%BA%86%E8%A7%A3%E4%BA%9B-JavaScript-%E8%AF%AD%E8%A8%80"><span class="toc-number">3.5.</span> <span class="toc-text">深入剖析 JavaScript 编译器&#x2F;解释器引擎 QuickJS - 多了解些 JavaScript 语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E7%BC%96%E8%AF%91-Clang-x2F-LLVM"><span class="toc-number">3.6.</span> <span class="toc-text">深入剖析 iOS 编译 Clang &#x2F; LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-WebKit"><span class="toc-number">3.7.</span> <span class="toc-text">深入剖析 WebKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">3.8.</span> <span class="toc-text">深入剖析 iOS 性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-number">3.9.</span> <span class="toc-text">启动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%A1%E6%80%8E%E4%B9%88%E5%86%99%E8%BF%87%EF%BC%8C%E9%82%A3%E4%B8%8B%E4%B8%80%E6%AD%A5%E6%80%8E%E4%B9%88%E8%A1%8C%E5%8A%A8"><span class="toc-number">4.</span> <span class="toc-text">没怎么写过，那下一步怎么行动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.1.</span> <span class="toc-text">四个步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%80%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="toc-number">4.2.</span> <span class="toc-text">所用软件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%8C%E6%80%8E%E4%B9%88%E5%86%99%E8%BF%99%E6%AC%A1WWDC21%E7%9A%84%E8%A7%81%E9%97%BB%E6%96%87%E7%AB%A0"><span class="toc-number">5.</span> <span class="toc-text">举个例子，怎么写这次WWDC21的见闻文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E8%A7%88"><span class="toc-number">5.1.</span> <span class="toc-text">总览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Session%E6%8E%A8%E8%8D%90"><span class="toc-number">5.2.</span> <span class="toc-text">Session推荐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift-%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9B%B4%E6%96%B0"><span class="toc-number">5.3.</span> <span class="toc-text">Swift 的一些更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8A%E5%B9%B4%E9%87%8D%E5%A4%B4%E6%88%8F-Swift-Concurrency"><span class="toc-number">5.4.</span> <span class="toc-text">今年重头戏 Swift Concurrency</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#async-x2F-await"><span class="toc-number">5.4.1.</span> <span class="toc-text">async&#x2F;await</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Async-Sequences"><span class="toc-number">5.4.2.</span> <span class="toc-text">Async Sequences</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E5%B9%B6%E5%8F%91"><span class="toc-number">5.4.3.</span> <span class="toc-text">结构化并发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Actors"><span class="toc-number">5.4.4.</span> <span class="toc-text">Actors</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Concurrency%E7%9B%B8%E5%85%B3%E6%8F%90%E6%A1%88%E9%9B%86%E5%90%88"><span class="toc-number">5.4.5.</span> <span class="toc-text">Swift Concurrency相关提案集合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84"><span class="toc-number">5.4.6.</span> <span class="toc-text">学习路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Concurrency-%E5%92%8C-Combine"><span class="toc-number">5.4.7.</span> <span class="toc-text">Swift Concurrency 和 Combine</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC-playground%E7%9B%B4%E6%92%AD%E6%B4%BB%E5%8A%A8"><span class="toc-number">5.5.</span> <span class="toc-text">WWDC.playground直播活动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC%E6%B2%99%E9%BE%99%E6%B4%BB%E5%8A%A8"><span class="toc-number">5.6.</span> <span class="toc-text">WWDC沙龙活动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E7%8B%AC%E7%89%B9%E6%80%A7%E5%92%8C%E6%96%B0%E6%84%8F%E7%9A%84%E6%80%9D%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">对独特性和新意的思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Finally"><span class="toc-number">7.</span> <span class="toc-text">Finally</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
+
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>58</span>
+    <span>Posts</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>Categories</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>38</span>
+    <span>Tags</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
       </a>
     </div>
   
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
   
-    <div class="nav-item-next">
-      <a 
-        href="/2021/07/13/deeply-analyse-autolayout-slides/" 
-        class="nav-link">
-        <div>
-          <div class="nav-label">Next</div>
-          
-            <div class="nav-title">深入剖析Auto Layout的幻灯片 </div>
-          
-        </div>
-        <i class="iconfont icon-right nav-next-icon"></i>
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
       </a>
     </div>
   
 </div>
 
-<div 
-  class="card card-content toc-card" 
-  id="mobiletoc">
-  <div class="toc-header">
-  <i 
-    class="iconfont icon-menu" 
-    style="padding-right: 2px;">
-  </i>TOC
-</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">四个点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8B%AC%E7%89%B9%E6%80%A7"><span class="toc-number">2.1.</span> <span class="toc-text">独特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%84%9F"><span class="toc-number">2.2.</span> <span class="toc-text">真实感</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%85%E4%BA%8B%E6%80%A7"><span class="toc-number">2.3.</span> <span class="toc-text">故事性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E6%84%8F"><span class="toc-number">2.4.</span> <span class="toc-text">新意</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E4%BB%A5%E5%89%8D%E7%9A%84%E6%96%87%E7%AB%A0"><span class="toc-number">3.</span> <span class="toc-text">我以前的文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A%E7%AB%99-%E7%9A%84-Swift-%E5%AE%9E%E8%B7%B5"><span class="toc-number">3.1.</span> <span class="toc-text">A站 的 Swift 实践</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90Auto-Layout%EF%BC%8C%E5%88%86%E6%9E%90iOS%E5%90%84%E7%89%88%E6%9C%AC%E6%96%B0%E5%A2%9E%E7%89%B9%E6%80%A7"><span class="toc-number">3.2.</span> <span class="toc-text">深入剖析Auto Layout，分析iOS各版本新增特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%BC%BC%E8%8B%B9%E6%9E%9CVFL-Visual-Format-Language-%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%AF%AD%E8%A8%80%E6%9D%A5%E6%8F%8F%E8%BF%B0%E7%B1%BB%E4%BC%BCUIStackView%E9%82%A3%E7%A7%8D%E5%B8%83%E5%B1%80%E6%80%9D%E8%B7%AF%EF%BC%8C%E5%B9%B6%E8%A7%A3%E6%9E%90%E7%94%9F%E6%88%90%E9%A1%B5%E9%9D%A2"><span class="toc-number">3.3.</span> <span class="toc-text">制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-JavaScriptCore"><span class="toc-number">3.4.</span> <span class="toc-text">深入剖析 JavaScriptCore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-JavaScript-%E7%BC%96%E8%AF%91%E5%99%A8-x2F-%E8%A7%A3%E9%87%8A%E5%99%A8%E5%BC%95%E6%93%8E-QuickJS-%E5%A4%9A%E4%BA%86%E8%A7%A3%E4%BA%9B-JavaScript-%E8%AF%AD%E8%A8%80"><span class="toc-number">3.5.</span> <span class="toc-text">深入剖析 JavaScript 编译器&#x2F;解释器引擎 QuickJS - 多了解些 JavaScript 语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E7%BC%96%E8%AF%91-Clang-x2F-LLVM"><span class="toc-number">3.6.</span> <span class="toc-text">深入剖析 iOS 编译 Clang &#x2F; LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-WebKit"><span class="toc-number">3.7.</span> <span class="toc-text">深入剖析 WebKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">3.8.</span> <span class="toc-text">深入剖析 iOS 性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-number">3.9.</span> <span class="toc-text">启动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%A1%E6%80%8E%E4%B9%88%E5%86%99%E8%BF%87%EF%BC%8C%E9%82%A3%E4%B8%8B%E4%B8%80%E6%AD%A5%E6%80%8E%E4%B9%88%E8%A1%8C%E5%8A%A8"><span class="toc-number">4.</span> <span class="toc-text">没怎么写过，那下一步怎么行动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.1.</span> <span class="toc-text">四个步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%80%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="toc-number">4.2.</span> <span class="toc-text">所用软件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%8C%E6%80%8E%E4%B9%88%E5%86%99%E8%BF%99%E6%AC%A1WWDC21%E7%9A%84%E8%A7%81%E9%97%BB%E6%96%87%E7%AB%A0"><span class="toc-number">5.</span> <span class="toc-text">举个例子，怎么写这次WWDC21的见闻文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E8%A7%88"><span class="toc-number">5.1.</span> <span class="toc-text">总览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Session%E6%8E%A8%E8%8D%90"><span class="toc-number">5.2.</span> <span class="toc-text">Session推荐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift-%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9B%B4%E6%96%B0"><span class="toc-number">5.3.</span> <span class="toc-text">Swift 的一些更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8A%E5%B9%B4%E9%87%8D%E5%A4%B4%E6%88%8F-Swift-Concurrency"><span class="toc-number">5.4.</span> <span class="toc-text">今年重头戏 Swift Concurrency</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#async-x2F-await"><span class="toc-number">5.4.1.</span> <span class="toc-text">async&#x2F;await</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Async-Sequences"><span class="toc-number">5.4.2.</span> <span class="toc-text">Async Sequences</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E5%B9%B6%E5%8F%91"><span class="toc-number">5.4.3.</span> <span class="toc-text">结构化并发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Actors"><span class="toc-number">5.4.4.</span> <span class="toc-text">Actors</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Concurrency%E7%9B%B8%E5%85%B3%E6%8F%90%E6%A1%88%E9%9B%86%E5%90%88"><span class="toc-number">5.4.5.</span> <span class="toc-text">Swift Concurrency相关提案集合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84"><span class="toc-number">5.4.6.</span> <span class="toc-text">学习路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Concurrency-%E5%92%8C-Combine"><span class="toc-number">5.4.7.</span> <span class="toc-text">Swift Concurrency 和 Combine</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC-playground%E7%9B%B4%E6%92%AD%E6%B4%BB%E5%8A%A8"><span class="toc-number">5.5.</span> <span class="toc-text">WWDC.playground直播活动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC%E6%B2%99%E9%BE%99%E6%B4%BB%E5%8A%A8"><span class="toc-number">5.6.</span> <span class="toc-text">WWDC沙龙活动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E7%8B%AC%E7%89%B9%E6%80%A7%E5%92%8C%E6%96%B0%E6%84%8F%E7%9A%84%E6%80%9D%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">对独特性和新意的思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Finally"><span class="toc-number">7.</span> <span class="toc-text">Finally</span></a></li></ol>
-</div>
-            </main>
-            <aside class="right-column">
-              <div class="sticky-widescreen">
+            </div>
+            
+            <div class="sticky-tablet">
   
   
-    <article class="card card-content toc-card">
-      <div class="toc-header">
-  <i 
-    class="iconfont icon-menu" 
-    style="padding-right: 2px;">
-  </i>TOC
-</div>
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
 <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">四个点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8B%AC%E7%89%B9%E6%80%A7"><span class="toc-number">2.1.</span> <span class="toc-text">独特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%84%9F"><span class="toc-number">2.2.</span> <span class="toc-text">真实感</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%85%E4%BA%8B%E6%80%A7"><span class="toc-number">2.3.</span> <span class="toc-text">故事性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E6%84%8F"><span class="toc-number">2.4.</span> <span class="toc-text">新意</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E4%BB%A5%E5%89%8D%E7%9A%84%E6%96%87%E7%AB%A0"><span class="toc-number">3.</span> <span class="toc-text">我以前的文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A%E7%AB%99-%E7%9A%84-Swift-%E5%AE%9E%E8%B7%B5"><span class="toc-number">3.1.</span> <span class="toc-text">A站 的 Swift 实践</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90Auto-Layout%EF%BC%8C%E5%88%86%E6%9E%90iOS%E5%90%84%E7%89%88%E6%9C%AC%E6%96%B0%E5%A2%9E%E7%89%B9%E6%80%A7"><span class="toc-number">3.2.</span> <span class="toc-text">深入剖析Auto Layout，分析iOS各版本新增特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%BC%BC%E8%8B%B9%E6%9E%9CVFL-Visual-Format-Language-%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%AF%AD%E8%A8%80%E6%9D%A5%E6%8F%8F%E8%BF%B0%E7%B1%BB%E4%BC%BCUIStackView%E9%82%A3%E7%A7%8D%E5%B8%83%E5%B1%80%E6%80%9D%E8%B7%AF%EF%BC%8C%E5%B9%B6%E8%A7%A3%E6%9E%90%E7%94%9F%E6%88%90%E9%A1%B5%E9%9D%A2"><span class="toc-number">3.3.</span> <span class="toc-text">制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-JavaScriptCore"><span class="toc-number">3.4.</span> <span class="toc-text">深入剖析 JavaScriptCore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-JavaScript-%E7%BC%96%E8%AF%91%E5%99%A8-x2F-%E8%A7%A3%E9%87%8A%E5%99%A8%E5%BC%95%E6%93%8E-QuickJS-%E5%A4%9A%E4%BA%86%E8%A7%A3%E4%BA%9B-JavaScript-%E8%AF%AD%E8%A8%80"><span class="toc-number">3.5.</span> <span class="toc-text">深入剖析 JavaScript 编译器&#x2F;解释器引擎 QuickJS - 多了解些 JavaScript 语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E7%BC%96%E8%AF%91-Clang-x2F-LLVM"><span class="toc-number">3.6.</span> <span class="toc-text">深入剖析 iOS 编译 Clang &#x2F; LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-WebKit"><span class="toc-number">3.7.</span> <span class="toc-text">深入剖析 WebKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">3.8.</span> <span class="toc-text">深入剖析 iOS 性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-number">3.9.</span> <span class="toc-text">启动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%A1%E6%80%8E%E4%B9%88%E5%86%99%E8%BF%87%EF%BC%8C%E9%82%A3%E4%B8%8B%E4%B8%80%E6%AD%A5%E6%80%8E%E4%B9%88%E8%A1%8C%E5%8A%A8"><span class="toc-number">4.</span> <span class="toc-text">没怎么写过，那下一步怎么行动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.1.</span> <span class="toc-text">四个步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%80%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="toc-number">4.2.</span> <span class="toc-text">所用软件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%8C%E6%80%8E%E4%B9%88%E5%86%99%E8%BF%99%E6%AC%A1WWDC21%E7%9A%84%E8%A7%81%E9%97%BB%E6%96%87%E7%AB%A0"><span class="toc-number">5.</span> <span class="toc-text">举个例子，怎么写这次WWDC21的见闻文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E8%A7%88"><span class="toc-number">5.1.</span> <span class="toc-text">总览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Session%E6%8E%A8%E8%8D%90"><span class="toc-number">5.2.</span> <span class="toc-text">Session推荐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift-%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9B%B4%E6%96%B0"><span class="toc-number">5.3.</span> <span class="toc-text">Swift 的一些更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8A%E5%B9%B4%E9%87%8D%E5%A4%B4%E6%88%8F-Swift-Concurrency"><span class="toc-number">5.4.</span> <span class="toc-text">今年重头戏 Swift Concurrency</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#async-x2F-await"><span class="toc-number">5.4.1.</span> <span class="toc-text">async&#x2F;await</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Async-Sequences"><span class="toc-number">5.4.2.</span> <span class="toc-text">Async Sequences</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E5%B9%B6%E5%8F%91"><span class="toc-number">5.4.3.</span> <span class="toc-text">结构化并发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Actors"><span class="toc-number">5.4.4.</span> <span class="toc-text">Actors</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Concurrency%E7%9B%B8%E5%85%B3%E6%8F%90%E6%A1%88%E9%9B%86%E5%90%88"><span class="toc-number">5.4.5.</span> <span class="toc-text">Swift Concurrency相关提案集合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84"><span class="toc-number">5.4.6.</span> <span class="toc-text">学习路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Concurrency-%E5%92%8C-Combine"><span class="toc-number">5.4.7.</span> <span class="toc-text">Swift Concurrency 和 Combine</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC-playground%E7%9B%B4%E6%92%AD%E6%B4%BB%E5%8A%A8"><span class="toc-number">5.5.</span> <span class="toc-text">WWDC.playground直播活动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC%E6%B2%99%E9%BE%99%E6%B4%BB%E5%8A%A8"><span class="toc-number">5.6.</span> <span class="toc-text">WWDC沙龙活动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E7%8B%AC%E7%89%B9%E6%80%A7%E5%92%8C%E6%96%B0%E6%84%8F%E7%9A%84%E6%80%9D%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">对独特性和新意的思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Finally"><span class="toc-number">7.</span> <span class="toc-text">Finally</span></a></li></ol>
-    </article>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>Categories</div>
+  <div class="categories-list">
+    
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">44</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-novel">
+        <div class="categories-list-item">
+          My-novel
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-painting">
+        <div class="categories-list-item">
+          My-painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>hot tags</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\WWDC" title="WWDC"><div class="tags-list-item">WWDC</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">四个点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8B%AC%E7%89%B9%E6%80%A7"><span class="toc-number">2.1.</span> <span class="toc-text">独特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9E%E6%84%9F"><span class="toc-number">2.2.</span> <span class="toc-text">真实感</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%85%E4%BA%8B%E6%80%A7"><span class="toc-number">2.3.</span> <span class="toc-text">故事性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E6%84%8F"><span class="toc-number">2.4.</span> <span class="toc-text">新意</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E4%BB%A5%E5%89%8D%E7%9A%84%E6%96%87%E7%AB%A0"><span class="toc-number">3.</span> <span class="toc-text">我以前的文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A%E7%AB%99-%E7%9A%84-Swift-%E5%AE%9E%E8%B7%B5"><span class="toc-number">3.1.</span> <span class="toc-text">A站 的 Swift 实践</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90Auto-Layout%EF%BC%8C%E5%88%86%E6%9E%90iOS%E5%90%84%E7%89%88%E6%9C%AC%E6%96%B0%E5%A2%9E%E7%89%B9%E6%80%A7"><span class="toc-number">3.2.</span> <span class="toc-text">深入剖析Auto Layout，分析iOS各版本新增特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%BC%BC%E8%8B%B9%E6%9E%9CVFL-Visual-Format-Language-%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%AF%AD%E8%A8%80%E6%9D%A5%E6%8F%8F%E8%BF%B0%E7%B1%BB%E4%BC%BCUIStackView%E9%82%A3%E7%A7%8D%E5%B8%83%E5%B1%80%E6%80%9D%E8%B7%AF%EF%BC%8C%E5%B9%B6%E8%A7%A3%E6%9E%90%E7%94%9F%E6%88%90%E9%A1%B5%E9%9D%A2"><span class="toc-number">3.3.</span> <span class="toc-text">制作一个类似苹果VFL(Visual Format Language)的格式化语言来描述类似UIStackView那种布局思路，并解析生成页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-JavaScriptCore"><span class="toc-number">3.4.</span> <span class="toc-text">深入剖析 JavaScriptCore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-JavaScript-%E7%BC%96%E8%AF%91%E5%99%A8-x2F-%E8%A7%A3%E9%87%8A%E5%99%A8%E5%BC%95%E6%93%8E-QuickJS-%E5%A4%9A%E4%BA%86%E8%A7%A3%E4%BA%9B-JavaScript-%E8%AF%AD%E8%A8%80"><span class="toc-number">3.5.</span> <span class="toc-text">深入剖析 JavaScript 编译器&#x2F;解释器引擎 QuickJS - 多了解些 JavaScript 语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E7%BC%96%E8%AF%91-Clang-x2F-LLVM"><span class="toc-number">3.6.</span> <span class="toc-text">深入剖析 iOS 编译 Clang &#x2F; LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-WebKit"><span class="toc-number">3.7.</span> <span class="toc-text">深入剖析 WebKit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">3.8.</span> <span class="toc-text">深入剖析 iOS 性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-number">3.9.</span> <span class="toc-text">启动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%A1%E6%80%8E%E4%B9%88%E5%86%99%E8%BF%87%EF%BC%8C%E9%82%A3%E4%B8%8B%E4%B8%80%E6%AD%A5%E6%80%8E%E4%B9%88%E8%A1%8C%E5%8A%A8"><span class="toc-number">4.</span> <span class="toc-text">没怎么写过，那下一步怎么行动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.1.</span> <span class="toc-text">四个步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%80%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="toc-number">4.2.</span> <span class="toc-text">所用软件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%8C%E6%80%8E%E4%B9%88%E5%86%99%E8%BF%99%E6%AC%A1WWDC21%E7%9A%84%E8%A7%81%E9%97%BB%E6%96%87%E7%AB%A0"><span class="toc-number">5.</span> <span class="toc-text">举个例子，怎么写这次WWDC21的见闻文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E8%A7%88"><span class="toc-number">5.1.</span> <span class="toc-text">总览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Session%E6%8E%A8%E8%8D%90"><span class="toc-number">5.2.</span> <span class="toc-text">Session推荐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swift-%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9B%B4%E6%96%B0"><span class="toc-number">5.3.</span> <span class="toc-text">Swift 的一些更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8A%E5%B9%B4%E9%87%8D%E5%A4%B4%E6%88%8F-Swift-Concurrency"><span class="toc-number">5.4.</span> <span class="toc-text">今年重头戏 Swift Concurrency</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#async-x2F-await"><span class="toc-number">5.4.1.</span> <span class="toc-text">async&#x2F;await</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Async-Sequences"><span class="toc-number">5.4.2.</span> <span class="toc-text">Async Sequences</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E5%B9%B6%E5%8F%91"><span class="toc-number">5.4.3.</span> <span class="toc-text">结构化并发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Actors"><span class="toc-number">5.4.4.</span> <span class="toc-text">Actors</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Concurrency%E7%9B%B8%E5%85%B3%E6%8F%90%E6%A1%88%E9%9B%86%E5%90%88"><span class="toc-number">5.4.5.</span> <span class="toc-text">Swift Concurrency相关提案集合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84"><span class="toc-number">5.4.6.</span> <span class="toc-text">学习路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Concurrency-%E5%92%8C-Combine"><span class="toc-number">5.4.7.</span> <span class="toc-text">Swift Concurrency 和 Combine</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC-playground%E7%9B%B4%E6%92%AD%E6%B4%BB%E5%8A%A8"><span class="toc-number">5.5.</span> <span class="toc-text">WWDC.playground直播活动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC%E6%B2%99%E9%BE%99%E6%B4%BB%E5%8A%A8"><span class="toc-number">5.6.</span> <span class="toc-text">WWDC沙龙活动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E7%8B%AC%E7%89%B9%E6%80%A7%E5%92%8C%E6%96%B0%E6%84%8F%E7%9A%84%E6%80%9D%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">对独特性和新意的思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Finally"><span class="toc-number">7.</span> <span class="toc-text">Finally</span></a></li></ol>
+  </article>
   
   
   <article class="card card-content">
     <div class="recent-posts-card">
-  <div class="recent-posts-header">
-    <i 
-      class="iconfont icon-wenzhang_huaban" 
-      style="padding-right: 2px;">
-    </i>Recent Posts
-  </div>
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>Recent Posts</div>
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
@@ -1088,164 +748,113 @@
   
   
 </div>
-            </aside>
-          </div>
+          </aside>
         </div>
       </div>
     </div>
-     
-    <footer class="footer">
+  </div>
+  
+  <footer class="footer">
   <div class="footer-container">
     <div>
       <div class="footer-dsc">
-        <span>
-          Copyright ©
+        <span>Copyright ©
           
-            2014
+          2014 -
           
-          
-                - 
-                2022
-          
+          2022
         </span>
-        &nbsp;
-        <a 
-          href="/" 
-          class="footer-link">
-          戴铭的博客
-        </a>
+        <a href="/" class="footer-link">戴铭的博客 </a>
       </div>
     </div>
 
     
     
     
-      <div class="BbeiAn-info">
-        <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">鄂ICP备17011999号 </a>
-      </div>
-      
-        <div class="BbeiAn-info">
-          <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
-          <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
-          </a>
-          <br />
-        </div>
-      
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
+      </a>
+      <br />
+    </div>
+    
     
     
       <div class="footer-dsc">
         
-          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
         
         
-          <span>&nbsp;|&nbsp;</span>
+        <span>&nbsp;|&nbsp;</span>
         
         
-          本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
         
       </div>
       
     
 </footer>
- 
-    
-  <a 
-    role="button" 
-    id="scrollbutton" 
-    class="basebutton" 
-    aria-label="回到顶部">
-    <i class="iconfont icon-arrowleft button-icon"></i>
-  </a>
-
-<a 
-  role="button" 
-  id="menubutton"
-  aria-label="menu button"
-  class="basebutton">
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
   <i class="iconfont icon-menu button-icon"></i>
 </a>
-<a 
-  role="button" 
-  id="popbutton" 
-  class="basebutton" 
-  aria-label="控制中心">
+<a role="button" id="popbutton" class="basebutton">
   <i class="iconfont icon-expand button-icon"></i>
 </a>
-<a 
-  role="button" 
-  id="darkbutton" 
-  class="basebutton darkwidget" 
-  aria-label="夜色模式">
+<a role="button" id="darkbutton" class="basebutton darkwidget">
   <i class="iconfont icon-weather button-icon"></i>
 </a>
-<a 
-  role="button" 
-  id="searchbutton" 
-  class="basebutton searchwidget" 
-  aria-label="搜索">
-  <i class="iconfont icon-search button-icon"></i>
-</a> 
-     
-     
-     
-      <script>
+
+  
+  
+  
+  <script>
   var addImgLayout = function () {
-    var img = document.querySelectorAll('.post-content img')
-    var i
+    var img = document.querySelectorAll('.post-content img');
+    var i;
     for (i = 0; i < img.length; i++) {
-      var wrapper = document.createElement('a')
-      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
-      wrapper.setAttribute('aria-label', 'illustration')
-      wrapper.style.cssText =
-        'width: 100%; display: flex; justify-content: center;'
-      if (img[i].alt) wrapper.dataset.caption = img[i].alt
-      wrapper.dataset.nolink = true
-      img[i].before(wrapper)
-      wrapper.append(img[i])
-      var divWrap = document.createElement('div')
-      divWrap.classList.add('gallery')
-      wrapper.before(divWrap)
-      divWrap.append(wrapper)
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
     }
-    baguetteBox.run('.gallery')
+    refreshFsLightbox();
   }
 </script>
-<script>
-  loadScript(
-    "/js/lib/lightbox/baguetteBox.min.js",
-    addImgLayout
-  )
-</script>
- 
-     
-     
-    <script src="/js/main.js"></script> 
-    
-      <script> 
-        loadScript('/js/lib/busuanzi.min.js') 
-      </script>
-     
-    
-      <script>
-        var addLazyload = function () {
-          var observer = lozad('.lozad', {
-            load: function (el) {
-              el.srcset = el.getAttribute('data-src')
-            },
-            loaded: function (el) {
-              el.classList.add('loaded')
-            },
-          })
-          observer.observe()
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
         }
-      </script>
-      <script>
-        loadScript('/js/lib/lozad.min.js', addLazyload)
-      </script>
-    
-    <script src="//instant.page/5.1.0" type="module"
-      integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
-    
-    
-  </body>
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
 </html>
