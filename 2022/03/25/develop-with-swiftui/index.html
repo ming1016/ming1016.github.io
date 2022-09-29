@@ -1,146 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
-  <head>
+<html>
+<meta  lang="zh-Hans" >
+<head>
   <meta charset="UTF-8">
-  <meta 
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <meta 
-    http-equiv="X-UA-Compatible" 
-    content="ie=edge">
-  <meta 
-    name="theme-color" 
-    content="#fff" 
-    id="theme-color">
-  <meta 
-    name="description" 
-    content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-  <link 
-    rel="icon" 
-    href="/img/logo-starming.png">
-  <title>在苹果加速器活动做的 SwiftUI 开发分享</title>
-  
-    
-      <meta 
-        property="og:title" 
-        content="在苹果加速器活动做的 SwiftUI 开发分享">
-    
-    
-      <meta 
-        property="og:url" 
-        content="http://ming1016.github.io/2022/03/25/develop-with-swiftui/index.html">
-    
-    
-      <meta 
-        property="og:img" 
-        content="/uploads/develop-with-swiftui/21.PNG">
-    
-    
-      <meta 
-        property="og:img" 
-        content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-    
-    
-      <meta 
-        property="og:type" 
-        content="article">
-      <meta 
-        property="og:article:published_time" 
-        content="2022-03-25">
-      <meta 
-        property="og:article:modified_time" 
-        content="2022-06-27">
-      <meta 
-        property="og:article:author" 
-        content="戴铭">
-      
-        
-          <meta 
-            property="og:article:tag" 
-            content="Apple">
-        
-          <meta 
-            property="og:article:tag" 
-            content="SwiftUI">
-        
-      
-    
-  
-  
-  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
-  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
-  <link rel="preload" href="/css/main.css" as="style" >
-  
-  <link rel="modulepreload" href="//instant.page/5.1.0">
-  
-  <link rel="stylesheet" href="/css/main.css">
-  
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
-  
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
-  
-  
-  
-    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
-  
-  <script>
-    function loadScript(url, cb) {
-      var script = document.createElement('script');
-      script.src = url;
-      if (cb) script.onload = cb;
-      script.async = true;
-      document.body.appendChild(script);
-    }
-    function loadCSS(href, data, attr) {
-      var sheet = document.createElement('link');
-      sheet.ref = 'stylesheet';
-      sheet.href = href;
-      sheet.dataset[data] = attr;
-      document.head.appendChild(sheet);
-    }
-    function changeCSS(cssFile, data, attr) {
-      var oldlink = document.querySelector(data);
-      var newlink = document.createElement("link");
-      newlink.setAttribute("rel", "stylesheet");
-      newlink.setAttribute("href", cssFile);
-      newlink.dataset.prism = attr;
-      document.head.replaceChild(newlink, oldlink);
-    }
-  </script>
-  
-    
-      
-      
-      
-      
-        
-        
-        
-        <script>
-          function prismThemeChange() {
-            if(document.getElementById('theme-color').dataset.mode === 'dark') {
-              if(document.querySelector('[data-prism]')) {
-                changeCSS('/js/lib/prism/prism-tomorrow.min.css', '[data-prism]', 'prism-tomorrow');
-              } else {
-                loadCSS('/js/lib/prism/prism-tomorrow.min.css', 'prism', 'prism-tomorrow');
-              }
-            } else {
-              if(document.querySelector('[data-prism]')) {
-                changeCSS('/js/lib/prism/prism.min.css', '[data-prism]', 'prism');
-              } else {
-                loadCSS('/js/lib/prism/prism.min.css', 'prism', 'prism');
-              }
-            }
-          }
-          prismThemeChange()
-        </script>
-      
-      
-        
-        <link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
-      
-    
-  
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
   <script>
     // control reverse button
     var reverseDarkList = {
@@ -169,406 +37,114 @@
       return setting;
     };
     // apply current darkmode setting
-  </script>
-  
-    <script>
-      var setDarkmode = function(mode) {
+    var setDarkmode = function(mode) {
       var setting = mode || localStorage.getItem('user-color-scheme');
       if(setting === getCssMediaQuery()) {
         document.documentElement.removeAttribute('data-user-color-scheme');
         localStorage.removeItem('user-color-scheme');
         document.getElementById('theme-color').content = themeColor[setting];
-        document.getElementById('theme-color').dataset.mode = setting;
-        prismThemeChange();
       } else if(reverseDarkList[setting]) {
         document.documentElement.setAttribute('data-user-color-scheme', setting);
         document.getElementById('theme-color').content = themeColor[setting];
-        document.getElementById('theme-color').dataset.mode = setting;
-        prismThemeChange();
       } else {
         document.documentElement.removeAttribute('data-user-color-scheme');
         localStorage.removeItem('user-color-scheme');
         document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
-        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
-        prismThemeChange();
       }
     };
     setDarkmode();
-    </script>
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
   
   
   
-    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
-    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
-  
-  
-    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
   
   
   
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
   
   
   
 <meta name="generator" content="Hexo 5.4.2"></head>
 
-  <body>
-    <div class="wrapper">
-       
-      <nav class="navbar">
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
   <div class="navbar-logo">
-    <a class="navbar-logo-main" href="/">
+    <span class="navbar-logo-main">
       
-        <img 
-          class="navbar-logo-img"
-          width="32"
-          height="32"
-          src="/img/logo-starming.png" 
-          alt="blog logo">
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
       
       <span class="navbar-logo-dsc">戴铭的博客</span>
-      </a>
+    </span>
   </div>
   <div class="navbar-menu">
     
-      <a 
-        href="/" 
-        class="navbar-menu-item">
-        
-          Home
-        
-      </a>
+    <a href="/" class="navbar-menu-item">首页 </a>
     
-      <a 
-        href="/archives" 
-        class="navbar-menu-item">
-        
-          Archive
-        
-      </a>
+    <a href="/archives" class="navbar-menu-item">归档 </a>
     
-      <a 
-        href="/tags" 
-        class="navbar-menu-item">
-        
-          Tags
-        
-      </a>
+    <a href="/tags" class="navbar-menu-item">标签 </a>
     
-      <a 
-        href="/categories" 
-        class="navbar-menu-item">
-        
-          Categories
-        
-      </a>
+    <a href="/categories" class="navbar-menu-item">分类 </a>
     
-      <a 
-        href="/about" 
-        class="navbar-menu-item">
-        
-          About
-        
-      </a>
+    <a href="/about" class="navbar-menu-item">关于 </a>
     
-      <a 
-        href="/null" 
-        class="navbar-menu-item">
-        
-          Friends
-        
-      </a>
+    <a href="" class="navbar-menu-item">友链 </a>
     
-    <button 
-      class="navbar-menu-item darknavbar navbar-menu-btn" 
-      aria-label="Toggle dark mode"
-      id="dark">
-      <i class="iconfont icon-weather"></i>
-    </button>
-    <button 
-      class="navbar-menu-item searchnavbar navbar-menu-btn" 
-      aria-label="Toggle search"
-      id="search">
-      <!-- <i 
-        class="iconfont icon-search" 
-        style="font-size: 1.2rem; font-weight: 400;">
-      </i> -->
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-        class="iconify iconify--ion" width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
-        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
-          d="M256 80a176 176 0 1 0 176 176A176 176 0 0 0 256 80Z"></path>
-        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
-          d="M232 160a72 72 0 1 0 72 72a72 72 0 0 0-72-72Z"></path>
-        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="28"
-          d="M283.64 283.64L336 336"></path>
-      </svg>
-    </button>
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
   </div>
-</nav> 
-      
-      <div 
-        id="local-search" 
-        style="display: none">
-        <input
-          class="navbar-menu-item"
-          id="search-input"
-          placeholder="请输入搜索内容..." />
-        <div id="search-content"></div>
-      </div>
-      
-      <div class="section-wrap">
-        <div class="container">
-          <div class="columns">
-            <aside class="left-column">
-              
-              <div class="card card-author">
-                
-  <img 
-    src="/img/ming.jpeg" 
-    class="author-img"
-    width="88"
-    height="88"
-    alt="author avatar">
-
-<p class="author-name">戴铭</p>
-<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
-<div class="author-message">
-  <a 
-    class="author-posts-count" 
-    href="/archives">
-    <span>58</span>
-    <span>Posts</span>
-  </a>
-  <a 
-    class="author-categories-count" 
-    href="/categories">
-    <span>5</span>
-    <span>Categories</span>
-  </a>
-  <a 
-    class="author-tags-count" 
-    href="/tags">
-    <span>38</span>
-    <span>Tags</span>
-  </a>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/develop-with-swiftui/21.PNG" data-src="/uploads/develop-with-swiftui/21.PNG"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
 </div>
-
-  <div class="author-card-society">
-    
-      <div class="author-card-society-icon">
-        <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
-          <i class="iconfont icon-sina society-icon"></i>
-        </a>
-      </div>
-    
-      <div class="author-card-society-icon">
-        <a target="_blank" rel="noopener" href="https://github.com/ming1016">
-          <i class="iconfont icon-github society-icon"></i>
-        </a>
-      </div>
-    
-      <div class="author-card-society-icon">
-        <a href="mailto:ming1016@foxmail.com">
-          <i class="iconfont icon-mail society-icon"></i>
-        </a>
-      </div>
-    
-      <div class="author-card-society-icon">
-        <a href="/atom.xml">
-          <i class="iconfont icon-chrome society-icon"></i>
-        </a>
-      </div>
-    
-  </div>
-
-              </div>
-               <div class="sticky-tablet">
-  
-  
-    <article class="display-when-two-columns spacer">
-      <div class="card card-content toc-card">
-        <div class="toc-header">
-  <i 
-    class="iconfont icon-menu" 
-    style="padding-right: 2px;">
-  </i>TOC
-</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#macOS-%E5%A4%9A%E6%A0%8F"><span class="toc-number">1.</span> <span class="toc-text">macOS 多栏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Toolbar"><span class="toc-number">2.</span> <span class="toc-text">Toolbar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B9%E5%B5%8C%E5%A5%97%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">文件夹嵌套结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E5%92%8C%E4%BB%A3%E7%A0%81%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text">文本和代码编辑器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Grid"><span class="toc-number">5.</span> <span class="toc-text">Grid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vision"><span class="toc-number">6.</span> <span class="toc-text">Vision</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftUI-%E7%BB%84%E4%BB%B6"><span class="toc-number">7.</span> <span class="toc-text">SwiftUI 组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE%E7%BB%84%E4%BB%B6%E4%BD%BF%E7%94%A8"><span class="toc-number">7.1.</span> <span class="toc-text">视图组件使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SwiftUI-%E5%AF%B9%E6%A0%87%E7%9A%84-UIKit-%E8%A7%86%E5%9B%BE"><span class="toc-number">7.1.1.</span> <span class="toc-text">SwiftUI 对标的 UIKit 视图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Text"><span class="toc-number">7.1.2.</span> <span class="toc-text">Text</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Link"><span class="toc-number">7.1.3.</span> <span class="toc-text">Link</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Label"><span class="toc-number">7.1.4.</span> <span class="toc-text">Label</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TextEditor"><span class="toc-number">7.1.5.</span> <span class="toc-text">TextEditor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TextField"><span class="toc-number">7.1.6.</span> <span class="toc-text">TextField</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Button"><span class="toc-number">7.1.7.</span> <span class="toc-text">Button</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E5%BA%A6"><span class="toc-number">7.1.8.</span> <span class="toc-text">进度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Image"><span class="toc-number">7.1.9.</span> <span class="toc-text">Image</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ControlGroup"><span class="toc-number">7.1.10.</span> <span class="toc-text">ControlGroup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GroupBox"><span class="toc-number">7.1.11.</span> <span class="toc-text">GroupBox</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stack"><span class="toc-number">7.1.12.</span> <span class="toc-text">Stack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Advanced-layout-control"><span class="toc-number">7.1.13.</span> <span class="toc-text">Advanced layout control</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Navigation"><span class="toc-number">7.1.14.</span> <span class="toc-text">Navigation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#List"><span class="toc-number">7.1.15.</span> <span class="toc-text">List</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LazyVStack-%E5%92%8C-LazyHStack"><span class="toc-number">7.1.16.</span> <span class="toc-text">LazyVStack 和 LazyHStack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LazyVGrid-%E5%92%8C-LazyHGrid"><span class="toc-number">7.1.17.</span> <span class="toc-text">LazyVGrid 和 LazyHGrid</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#table"><span class="toc-number">7.1.18.</span> <span class="toc-text">table</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ScrollView"><span class="toc-number">7.1.19.</span> <span class="toc-text">ScrollView</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%AE%E5%B1%82"><span class="toc-number">7.1.20.</span> <span class="toc-text">浮层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TabView"><span class="toc-number">7.1.21.</span> <span class="toc-text">TabView</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Charts"><span class="toc-number">7.1.22.</span> <span class="toc-text">Swift Charts</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Toggle"><span class="toc-number">7.1.23.</span> <span class="toc-text">Toggle</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Picker"><span class="toc-number">7.1.24.</span> <span class="toc-text">Picker</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Slider"><span class="toc-number">7.1.25.</span> <span class="toc-text">Slider</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stepper"><span class="toc-number">7.1.26.</span> <span class="toc-text">Stepper</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Form"><span class="toc-number">7.1.27.</span> <span class="toc-text">Form</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Keyboard"><span class="toc-number">7.1.28.</span> <span class="toc-text">Keyboard</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Transferable"><span class="toc-number">7.1.29.</span> <span class="toc-text">Transferable</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ShareLink"><span class="toc-number">7.1.30.</span> <span class="toc-text">ShareLink</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E8%A7%89"><span class="toc-number">7.2.</span> <span class="toc-text">视觉</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Color"><span class="toc-number">7.2.1.</span> <span class="toc-text">Color</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Effect"><span class="toc-number">7.2.2.</span> <span class="toc-text">Effect</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Animation"><span class="toc-number">7.2.3.</span> <span class="toc-text">Animation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Canvas"><span class="toc-number">7.2.4.</span> <span class="toc-text">Canvas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SF-Symbol"><span class="toc-number">7.2.5.</span> <span class="toc-text">SF Symbol</span></a></li></ol></li></ol></li></ol>
-      </div>
-    </article>
-  
-  
-  <article class="card card-content categories-widget">
-    <div class="categories-card">
-  <div class="categories-header">
-    <i 
-      class="iconfont icon-fenlei" 
-      style="padding-right: 2px;">
-    </i>Categories
-  </div>
-  <div class="categories-list">
-    
-      <a href="/categories/Programming/">
-        <div class="categories-list-item">
-          Programming
-          <span class="categories-list-item-badge">44</span>
-        </div>
-      </a>
-    
-      <a href="/categories/My-novel/">
-        <div class="categories-list-item">
-          My-novel
-          <span class="categories-list-item-badge">4</span>
-        </div>
-      </a>
-    
-      <a href="/categories/My-painting/">
-        <div class="categories-list-item">
-          My-painting
-          <span class="categories-list-item-badge">8</span>
-        </div>
-      </a>
-    
-      <a href="/categories/travel/">
-        <div class="categories-list-item">
-          travel
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-      <a href="/categories/APP/">
-        <div class="categories-list-item">
-          APP
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-  </div>
-</div>
-  </article>
-  
-  <article class="card card-content tags-widget">
-    <div class="tags-card">
-  <div class="tags-header">
-    <i 
-      class="iconfont icon-biaoqian" 
-      style="padding-right: 2px;">
-    </i>hot tags
-  </div>
-  <div class="tags-list">
-    
-      <a 
-        href="/tags/iOS/" 
-        title="iOS">
-        <div class="tags-list-item">iOS</div>
-      </a>
-    
-      <a 
-        href="/tags/Swift/" 
-        title="Swift">
-        <div class="tags-list-item">Swift</div>
-      </a>
-    
-      <a 
-        href="/tags/Painting/" 
-        title="Painting">
-        <div class="tags-list-item">Painting</div>
-      </a>
-    
-      <a 
-        href="/tags/Apple/" 
-        title="Apple">
-        <div class="tags-list-item">Apple</div>
-      </a>
-    
-      <a 
-        href="/tags/Slides/" 
-        title="Slides">
-        <div class="tags-list-item">Slides</div>
-      </a>
-    
-      <a 
-        href="/tags/iPad/" 
-        title="iPad">
-        <div class="tags-list-item">iPad</div>
-      </a>
-    
-      <a 
-        href="/tags/Procreate/" 
-        title="Procreate">
-        <div class="tags-list-item">Procreate</div>
-      </a>
-    
-      <a 
-        href="/tags/LLVM/" 
-        title="LLVM">
-        <div class="tags-list-item">LLVM</div>
-      </a>
-    
-      <a 
-        href="/tags/Web/" 
-        title="Web">
-        <div class="tags-list-item">Web</div>
-      </a>
-    
-      <a 
-        href="/tags/Novel/" 
-        title="Novel">
-        <div class="tags-list-item">Novel</div>
-      </a>
-    
-      <a 
-        href="/tags/SwiftUI/" 
-        title="SwiftUI">
-        <div class="tags-list-item">SwiftUI</div>
-      </a>
-    
-      <a 
-        href="/tags/macOS/" 
-        title="macOS">
-        <div class="tags-list-item">macOS</div>
-      </a>
-    
-      <a 
-        href="/tags/%E7%BC%96%E8%AF%91/" 
-        title="编译">
-        <div class="tags-list-item">编译</div>
-      </a>
-    
-      <a 
-        href="/tags/WWDC/" 
-        title="WWDC">
-        <div class="tags-list-item">WWDC</div>
-      </a>
-    
-      <a 
-        href="/tags/ReactiveCocoa/" 
-        title="ReactiveCocoa">
-        <div class="tags-list-item">ReactiveCocoa</div>
-      </a>
-    
-      <a 
-        href="/tags/GOT/" 
-        title="GOT">
-        <div class="tags-list-item">GOT</div>
-      </a>
-    
-  </div>
-</div>
-  </article>
-  
-  
-</div>
-            </aside>
-            <main class="main-column">
-              
-  <div class="image-wrapper">
-    <img 
-      src="/uploads/develop-with-swiftui/21.PNG" 
-      data-src="/uploads/develop-with-swiftui/21.PNG"
-      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
-      class="image lozad"
-      alt="在苹果加速器活动做的 SwiftUI 开发分享 thumbnail">
-  </div>
 
 <article class="card card-content">
   <header>
@@ -577,70 +153,48 @@
     </h1>
   </header>
   <div class="post-meta post-show-meta">
-    <time datetime="2022-03-25T05:04:49.000Z">
-      <i 
-        class="iconfont icon-calendar" 
-        style="margin-right: 2px;">
-      </i>
+    <time datetime="2022-03-25T05:04:49.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
       <span>2022-03-25</span>
     </time>
     
-      <span class="dot"></span>
-      
-        <a 
-          href="/categories/Programming/" 
-          class="post-meta-link">
-          Programming
-        </a>
-      
+    <span class="dot"></span>
+    
+    <a href="/categories/Programming/" class="post-meta-link">Programming</a>
     
     
-      <span class="dot"></span>
-      <span>15.1k words</span>
+    
+    <span class="dot"></span>
+    <span>15.1k 字</span>
     
   </div>
   
-    <div 
-      class="post-meta post-show-meta" 
-      style="margin-top: -10px;">
-      <div style="display: flex; align-items: center;">
-        <i 
-          class="iconfont icon-biaoqian" 
-          style="margin-right: 2px; font-size: 1.15rem;">
-        </i>
-        
-          
-          <a 
-            href="/tags/Apple/" 
-            class="post-meta-link">
-            Apple
-          </a>
-        
-          
-            <span class="dot"></span>
-          
-          <a 
-            href="/tags/SwiftUI/" 
-            class="post-meta-link">
-            SwiftUI
-          </a>
-        
-      </div>
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/Apple/" class="post-meta-link">Apple</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/SwiftUI/" class="post-meta-link">SwiftUI</a>
+      
     </div>
+  </div>
   
   </header>
-  <div 
-    id="section" 
-    class="post-content">
+  <div id="section" class="post-content">
     <p>受 Apple 加速器 SwiftUI 活动邀请，做了个分享，还和喵神、61、浙剑、思琪等社区大神参与了圆桌讨论。这次完善了 SwiftUI 做的幻灯片，比去年要好一点，增加了解释执行代码交互功能。</p>
 <p>为这次幻灯画了几张图，在新西兰认识的画家，指导我了些画法，用其完成了幻灯里的图。</p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/20.PNG" class="lozad post-image"src="/uploads/develop-with-swiftui/20.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/21.PNG" class="lozad post-image"src="/uploads/develop-with-swiftui/21.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/22.png" class="lozad post-image"src="/uploads/develop-with-swiftui/22.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/24.PNG" class="lozad post-image"src="/uploads/develop-with-swiftui/24.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/25.PNG" class="lozad post-image"src="/uploads/develop-with-swiftui/25.PNG"></p>
-<h2 id="macOS-多栏"><a href="#macOS-多栏" class="headerlink" title="macOS 多栏"></a>macOS 多栏</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/06.png" class="lozad post-image"src="/uploads/develop-with-swiftui/06.png"></p>
+<p><img src="/uploads/develop-with-swiftui/20.PNG"><br><img src="/uploads/develop-with-swiftui/21.PNG"><br><img src="/uploads/develop-with-swiftui/22.png"><br><img src="/uploads/develop-with-swiftui/24.PNG"><br><img src="/uploads/develop-with-swiftui/25.PNG"></p>
+<h2 id="macOS-多栏"><a href="#macOS-多栏" class="headerlink" title="macOS 多栏"></a>macOS 多栏</h2><p><img src="/uploads/develop-with-swiftui/06.png"></p>
 <p>内容有 macOS 多栏、Toolbar、文件夹嵌套、文本和代码编辑器、网格视图和斜45度视觉。</p>
 <p>macOS 的多栏只需要使用 NavigationView 就可以了，闭包里的第一个视图就是 Sidebar，后面的视图可以作为占位视图，显示一些初始信息，通过 Sidebar 的 NavigationLink 来设置第二栏的视图就好了，第三栏通过第二栏来指定。</p>
 <p>如果想要隐藏收起 Sidebar 需要先获取 SplitViewController，然后调用 toggleSidebar 方法就可以了。如果想要收起最右侧视图或任意一栏视图，可以在 SplitViewController 的 splitViewItems 里找到对应的 Item，比如最右一栏就是 splitViewItems.last。调用找到视图的 animator().isCollapsed.toggle() 就可以了。</p>
 <p>如果只想让其中一栏全屏显示，先在 splitViewItems 找到那一栏，然后调用对应 ViewController 里 View 的 enterFullScreenMode 方法，要注意的是，设置的 Options 需要包含 .autoHideDock 和 .autoHideMenuBar，否则就没法退出全屏了。由于全屏后会将视图放到另一个 Window 中，因此退出全屏可以直接调用当前 key window 的 contentView 的 exitFullScreenMode() 方法。</p>
-<h2 id="Toolbar"><a href="#Toolbar" class="headerlink" title="Toolbar"></a>Toolbar</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/18.png" class="lozad post-image"src="/uploads/develop-with-swiftui/18.png"></p>
+<h2 id="Toolbar"><a href="#Toolbar" class="headerlink" title="Toolbar"></a>Toolbar</h2><p><img src="/uploads/develop-with-swiftui/18.png"></p>
 <p>一般的 macOS 程序多栏顶部会有一些功能按钮，以方便用户了解到程序的主要高频功能，比如 Xcode 的调试和 Target 选择按钮，Keynote 的播放、添加幻灯片、缩放文本、形状、表格、图表等按钮。这些按钮都可以通过 Toolbar 来实现。Toolbar 根据摆放位置和语义设置了一组 Options，通过 Options 统一了多平台的表现形式，比如默认位置的 option 就是 .automatic，中间位置就是 .principal，macOS Touch Bar iOS 的虚拟键盘上的按钮用的就是 .keyboard。另外还有很多语义表示，用于放置到不同平台特定的位置，比如用于导航的按钮在 macOS 上会出现在最左侧，用的就是 .navigation 这种语义的 Options。</p>
 <h2 id="文件夹嵌套结构"><a href="#文件夹嵌套结构" class="headerlink" title="文件夹嵌套结构"></a>文件夹嵌套结构</h2><p>得益于 keypaths 在 SwiftUI 中的应用，文件夹嵌套结构实现起来简单了太多。给 List 的 children 参数指定嵌套模型的嵌套键值路径即可，比如模型结构如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token comment">// MARK: - 目录结构数据模型</span>
@@ -653,12 +207,12 @@
 
 <p>其中嵌套键值是 sub，那么 children 参数只需要添上 <code>\.sub</code> ，List 内部会处理嵌套逻辑并展示出来。如果 List 表现出来的效果并不能够满足你，你也可以自己定制视图和交互。比如点击文件夹名字也能够展开子内容，List 默认只有点击左侧箭头才能够展开。</p>
 <p>自定义嵌套视图底层可以使用 DisclosureGroup，DisclosureGroup 能够展示自定义视图内容，还有一个 isExpanded 值绑定参数用来显示和隐藏内容。在遍历已展示视图时，通过 keypaths 发现嵌套值不为空时就读取子内容，同时默认 isExpanded 值为 false 就会显示不展开的箭头符号，将文件夹名字做成按钮，点击按钮触发 isExpanded.toggle()，如 isExpanded 为 false 就置为 true，即展开文件夹，反之就会收起文件夹。</p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/07.png" class="lozad post-image"src="/uploads/develop-with-swiftui/07.png"></p>
+<p><img src="/uploads/develop-with-swiftui/07.png"></p>
 <h2 id="文本和代码编辑器"><a href="#文本和代码编辑器" class="headerlink" title="文本和代码编辑器"></a>文本和代码编辑器</h2><p>文本和代码编辑器也是 macOS 上很常见的效率工具的核心功能，包含的技术点较多，比如调试和代码分析会用到编译器这里就不展开说了。感兴趣可以参看<a href="https://ming1016.github.io/2017/03/01/deeply-analyse-llvm/">深入剖析 iOS 编译 Clang &#x2F; LLVM</a>、<a href="https://ming1016.github.io/2017/04/01/slides-of-deeply-analyse-llvm/">深入剖析 iOS 编译 Clang &#x2F; LLVM 直播的 Slides</a>、<a href="https://ming1016.github.io/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/">atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides</a>、<a href="https://ming1016.github.io/2018/09/17/produce-slides-of-third-at-swift-conference/">这次swift大会分享准备的幻灯片和 demo</a>，这几篇。</p>
 <p>文本或代码分析完后可以通过 Attribute 来进行富文本展示的设置，富文本属性都在 AttributeContainer 中设置，设置好的富文本直接通过 append 进行组合。编辑器其它的比如编辑、重做、存储或自定义的能力可以通过 NSViewRepresentable 来包装 Appkit 直接使用 Appkit 里的 NSTextView 的能力。</p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/12.png" class="lozad post-image"src="/uploads/develop-with-swiftui/12.png"></p>
-<h2 id="Grid"><a href="#Grid" class="headerlink" title="Grid"></a>Grid</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/14.png" class="lozad post-image"src="/uploads/develop-with-swiftui/14.png"></p>
-<h2 id="Vision"><a href="#Vision" class="headerlink" title="Vision"></a>Vision</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/17.png" class="lozad post-image"src="/uploads/develop-with-swiftui/17.png"></p>
+<p><img src="/uploads/develop-with-swiftui/12.png"></p>
+<h2 id="Grid"><a href="#Grid" class="headerlink" title="Grid"></a>Grid</h2><p><img src="/uploads/develop-with-swiftui/14.png"></p>
+<h2 id="Vision"><a href="#Vision" class="headerlink" title="Vision"></a>Vision</h2><p><img src="/uploads/develop-with-swiftui/17.png"></p>
 <p>接下来详细的说下 SwiftUI 的视图组件的使用，这次的幻灯片程序用到的技术，除了解释执行代码的功能，其它基本都来自下面的内容。</p>
 <p>已更新 WWDC22 内容。</p>
 <h2 id="SwiftUI-组件"><a href="#SwiftUI-组件" class="headerlink" title="SwiftUI 组件"></a>SwiftUI 组件</h2><h3 id="视图组件使用"><a href="#视图组件使用" class="headerlink" title="视图组件使用"></a>视图组件使用</h3><h4 id="SwiftUI-对标的-UIKit-视图"><a href="#SwiftUI-对标的-UIKit-视图" class="headerlink" title="SwiftUI 对标的 UIKit 视图"></a>SwiftUI 对标的 UIKit 视图</h4><p>如下：</p>
@@ -759,7 +313,7 @@
 </tr>
 </tbody></table>
 <h4 id="Text"><a href="#Text" class="headerlink" title="Text"></a>Text</h4><p>基本用法</p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/154473546-94ba6f9f-2ce3-44ef-a7c6-60d86df8c90f.png" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/154473546-94ba6f9f-2ce3-44ef-a7c6-60d86df8c90f.png"></p>
+<p><img src="https://user-images.githubusercontent.com/251980/154473546-94ba6f9f-2ce3-44ef-a7c6-60d86df8c90f.png"></p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token comment">// MARK: - Text</span>
 <span class="token keyword">struct</span> <span class="token class-name">PlayTextView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> manyString <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"这是一段长文。总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么吧。"</span></span>
@@ -1217,7 +771,7 @@
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h4 id="Label"><a href="#Label" class="headerlink" title="Label"></a>Label</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/154474725-d696d50b-9da7-4a0d-808f-07894a9597cb.png" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/154474725-d696d50b-9da7-4a0d-808f-07894a9597cb.png"></p>
+<h4 id="Label"><a href="#Label" class="headerlink" title="Label"></a>Label</h4><p><img src="https://user-images.githubusercontent.com/251980/154474725-d696d50b-9da7-4a0d-808f-07894a9597cb.png"></p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayLabelView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
         <span class="token class-name">VStack</span><span class="token punctuation">(</span>spacing<span class="token punctuation">:</span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -1309,7 +863,7 @@
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h4 id="TextEditor"><a href="#TextEditor" class="headerlink" title="TextEditor"></a>TextEditor</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/154667163-e906dfd4-074e-4c04-9c80-94af86df4ba6.png" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/154667163-e906dfd4-074e-4c04-9c80-94af86df4ba6.png"></p>
+<h4 id="TextEditor"><a href="#TextEditor" class="headerlink" title="TextEditor"></a>TextEditor</h4><p><img src="https://user-images.githubusercontent.com/251980/154667163-e906dfd4-074e-4c04-9c80-94af86df4ba6.png"></p>
 <p>对应的代码如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">import</span> <span class="token class-name">SwiftUI</span>
 <span class="token keyword">import</span> <span class="token class-name">CodeEditorView</span>
@@ -1545,7 +1099,7 @@ static func number() &#123;
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>SwiftUI 中用 NSView，可以通过 NSViewRepresentable 来包装视图，这个协议主要是实现 makeNSView、updateNSView 和 makeCoordinator 三个方法。makeNSView 要求返回需要包装的 NSView。每当 SwiftUI 的状态变化时触发 updateNSView 方法的调用。为了实现 NSView 里的 delegate 和 SwiftUI 通信，就要用 makeCoordinator 返回一个用于处理 delegate 的实例。</p>
-<h4 id="TextField"><a href="#TextField" class="headerlink" title="TextField"></a>TextField</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/154916174-2e9b1bd8-992a-485e-803a-07da59d0c7e3.png" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/154916174-2e9b1bd8-992a-485e-803a-07da59d0c7e3.png"></p>
+<h4 id="TextField"><a href="#TextField" class="headerlink" title="TextField"></a>TextField</h4><p><img src="https://user-images.githubusercontent.com/251980/154916174-2e9b1bd8-992a-485e-803a-07da59d0c7e3.png"></p>
 <p>使用方法如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayTextFieldView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> t <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"Starming"</span></span>
@@ -1648,7 +1202,7 @@ static func number() &#123;
 <p>可以通过 keyboardType 修改器来指定。</p>
 <p>支持多行，使用 Axis.vertical 以允许多行。TextField 超过行限制可以变成滚动视图。</p>
 <p>今年 TextField 可以嵌到 <code>.alert</code> 里了。</p>
-<h4 id="Button"><a href="#Button" class="headerlink" title="Button"></a>Button</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/155062538-108a79b4-3e5c-417b-867a-3f7e58316664.png" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/155062538-108a79b4-3e5c-417b-867a-3f7e58316664.png"></p>
+<h4 id="Button"><a href="#Button" class="headerlink" title="Button"></a>Button</h4><p><img src="https://user-images.githubusercontent.com/251980/155062538-108a79b4-3e5c-417b-867a-3f7e58316664.png"></p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayButtonView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">var</span> asyncAction<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">async</span> <span class="token operator">-></span> <span class="token class-name">Void</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">do</span> <span class="token punctuation">&#123;</span>
@@ -1921,7 +1475,7 @@ static func number() &#123;
     <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>其中 coordinateSpace 指定为 <code>.global</code> 表示位置是相对屏幕左上角，默认是相对当前视图的左上角的位置。</p>
-<h4 id="进度"><a href="#进度" class="headerlink" title="进度"></a>进度</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/155676571-726c15d1-e4a2-4493-8fb0-c37c1c61c88c.jpeg" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/155676571-726c15d1-e4a2-4493-8fb0-c37c1c61c88c.jpeg"></p>
+<h4 id="进度"><a href="#进度" class="headerlink" title="进度"></a>进度</h4><p><img src="https://user-images.githubusercontent.com/251980/155676571-726c15d1-e4a2-4493-8fb0-c37c1c61c88c.jpeg"></p>
 <p>用 ProgressViewStyle 协议，可以创建自定义的进度条视图。在 WatchOS 上会多一个 Guage 视图。</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayProgressView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> v<span class="token punctuation">:</span> <span class="token class-name">CGFloat</span> <span class="token operator">=</span> <span class="token number">0.0</span>
@@ -2047,7 +1601,7 @@ static func number() &#123;
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h4 id="Image"><a href="#Image" class="headerlink" title="Image"></a>Image</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/155683776-0f0acdee-c7c1-44e3-a68b-38f778863821.png" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/155683776-0f0acdee-c7c1-44e3-a68b-38f778863821.png"></p>
+<h4 id="Image"><a href="#Image" class="headerlink" title="Image"></a>Image</h4><p><img src="https://user-images.githubusercontent.com/251980/155683776-0f0acdee-c7c1-44e3-a68b-38f778863821.png"></p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayImageView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
         <span class="token class-name">Image</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"logo"</span></span><span class="token punctuation">)</span>
@@ -2099,7 +1653,7 @@ static func number() &#123;
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h4 id="GroupBox"><a href="#GroupBox" class="headerlink" title="GroupBox"></a>GroupBox</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/155317172-dc137c38-64d0-415a-8412-e3f479f2bd91.png" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/155317172-dc137c38-64d0-415a-8412-e3f479f2bd91.png"></p>
+<h4 id="GroupBox"><a href="#GroupBox" class="headerlink" title="GroupBox"></a>GroupBox</h4><p><img src="https://user-images.githubusercontent.com/251980/155317172-dc137c38-64d0-415a-8412-e3f479f2bd91.png"></p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayGroupBoxView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
         <span class="token class-name">GroupBox</span> <span class="token punctuation">&#123;</span>
@@ -2136,7 +1690,7 @@ static func number() &#123;
 
 
 <h4 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h4><p>Stack View 有 VStack、HStack 和 ZStack</p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/155077158-f6efd3bb-4b82-48ac-b5e6-792dd833dfda.jpeg" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/155077158-f6efd3bb-4b82-48ac-b5e6-792dd833dfda.jpeg"></p>
+<p><img src="https://user-images.githubusercontent.com/251980/155077158-f6efd3bb-4b82-48ac-b5e6-792dd833dfda.jpeg"></p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayStackView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
         <span class="token comment">// 默认是 VStack 竖排</span>
@@ -2473,7 +2027,7 @@ static func number() &#123;
 <span class="token punctuation">.</span><span class="token function">toolbarRole</span><span class="token punctuation">(</span><span class="token punctuation">.</span>editor<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>以下是废弃的 NavigationView 的用法。</p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/155517358-4e5d54b8-0284-4fde-bf09-4b5e22e0e9a5.jpeg" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/155517358-4e5d54b8-0284-4fde-bf09-4b5e22e0e9a5.jpeg"></p>
+<p><img src="https://user-images.githubusercontent.com/251980/155517358-4e5d54b8-0284-4fde-bf09-4b5e22e0e9a5.jpeg"></p>
 <p>对应代码如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayNavigationView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> lData <span class="token operator">=</span> <span class="token number">1</span><span class="token operator">...</span><span class="token number">10</span>
@@ -2602,7 +2156,7 @@ static func number() &#123;
 <li>principal：突出的位置，iOS 和 macOS 会出现在中间的位置</li>
 <li>keyboard：macOS 会出现在 Touch Bar 里。iOS 会出现在弹出的虚拟键盘上。</li>
 </ul>
-<h4 id="List"><a href="#List" class="headerlink" title="List"></a>List</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/155293565-d85080c1-2304-491b-be72-20aa921f7067.jpeg" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/155293565-d85080c1-2304-491b-be72-20aa921f7067.jpeg"></p>
+<h4 id="List"><a href="#List" class="headerlink" title="List"></a>List</h4><p><img src="https://user-images.githubusercontent.com/251980/155293565-d85080c1-2304-491b-be72-20aa921f7067.jpeg"></p>
 <p>List 除了能够展示数据外，还有下拉刷新、过滤搜索和侧滑 Swipe 动作提供更多 Cell 操作的能力。</p>
 <p>通过 List 的可选子项参数提供数据模型的关键路径来制定子项路劲，还可以实现大纲视图，使用 DisclosureGroup 和 OutlineGroup  可以进一步定制大纲视图。</p>
 <p>下面是 List 使用，包括了 DisclosureGroup 和 OutlineGroup 的演示代码：</p>
@@ -2880,7 +2434,7 @@ static func number() &#123;
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h4 id="LazyVGrid-和-LazyHGrid"><a href="#LazyVGrid-和-LazyHGrid" class="headerlink" title="LazyVGrid 和 LazyHGrid"></a>LazyVGrid 和 LazyHGrid</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/155708552-35396dcd-f120-4498-a793-a65abd68c0a6.jpeg" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/155708552-35396dcd-f120-4498-a793-a65abd68c0a6.jpeg"></p>
+<h4 id="LazyVGrid-和-LazyHGrid"><a href="#LazyVGrid-和-LazyHGrid" class="headerlink" title="LazyVGrid 和 LazyHGrid"></a>LazyVGrid 和 LazyHGrid</h4><p><img src="https://user-images.githubusercontent.com/251980/155708552-35396dcd-f120-4498-a793-a65abd68c0a6.jpeg"></p>
 <p>列的设置有三种，这三种也可以组合用。</p>
 <ul>
 <li>GridItem(.fixed(10)) 会固定设置有多少列。</li>
@@ -3058,7 +2612,7 @@ static func number() &#123;
 <span class="token punctuation">.</span><span class="token function">scrollIndicators</span><span class="token punctuation">(</span><span class="token punctuation">.</span>visible<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h4 id="浮层"><a href="#浮层" class="headerlink" title="浮层"></a>浮层</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/156135869-7451bbc9-95b9-445f-8721-66f0aedbed70.png" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/156135869-7451bbc9-95b9-445f-8721-66f0aedbed70.png"></p>
+<h4 id="浮层"><a href="#浮层" class="headerlink" title="浮层"></a>浮层</h4><p><img src="https://user-images.githubusercontent.com/251980/156135869-7451bbc9-95b9-445f-8721-66f0aedbed70.png"></p>
 <p>浮层有 HUD、ContextMenu、Sheet、Alert、ConfirmationDialog、Popover、ActionSheet 等几种方式。这些方式实现代码如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlaySuperposedLayerView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token attribute atrule">@StateObject</span> <span class="token keyword">var</span> hudVM <span class="token operator">=</span> <span class="token function">PHUDVM</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -3413,7 +2967,7 @@ static func number() &#123;
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>社区做的更多 Swift Charts 范例 <a target="_blank" rel="noopener" href="https://github.com/jordibruin/Swift-Charts-Examples">Swift Charts Examples</a> 。</p>
-<h4 id="Toggle"><a href="#Toggle" class="headerlink" title="Toggle"></a>Toggle</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/156289124-bde3c73e-2a81-4043-8682-ae55a820f1aa.png" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/156289124-bde3c73e-2a81-4043-8682-ae55a820f1aa.png"></p>
+<h4 id="Toggle"><a href="#Toggle" class="headerlink" title="Toggle"></a>Toggle</h4><p><img src="https://user-images.githubusercontent.com/251980/156289124-bde3c73e-2a81-4043-8682-ae55a820f1aa.png"></p>
 <p>Toggle 可以设置 toggleStyle，可以自定义样式。使用示例如下</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayToggleView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> isEnable <span class="token operator">=</span> <span class="token boolean">false</span>
@@ -3466,7 +3020,7 @@ static func number() &#123;
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h4 id="Picker"><a href="#Picker" class="headerlink" title="Picker"></a>Picker</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/156298284-2fb37b3e-55f0-4918-ba8e-74f747bf3171.jpeg" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/156298284-2fb37b3e-55f0-4918-ba8e-74f747bf3171.jpeg"></p>
+<h4 id="Picker"><a href="#Picker" class="headerlink" title="Picker"></a>Picker</h4><p><img src="https://user-images.githubusercontent.com/251980/156298284-2fb37b3e-55f0-4918-ba8e-74f747bf3171.jpeg"></p>
 <p>有 Picker 视图，还有颜色和时间选择的 ColorPicker 和 DatePicker。</p>
 <p>示例代码如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayPickerView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
@@ -3798,7 +3352,7 @@ static func number() &#123;
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h4 id="Effect"><a href="#Effect" class="headerlink" title="Effect"></a>Effect</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/156332122-66813e4e-851c-4207-8cb9-b41ea0365008.jpeg" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/156332122-66813e4e-851c-4207-8cb9-b41ea0365008.jpeg"></p>
+<h4 id="Effect"><a href="#Effect" class="headerlink" title="Effect"></a>Effect</h4><p><img src="https://user-images.githubusercontent.com/251980/156332122-66813e4e-851c-4207-8cb9-b41ea0365008.jpeg"></p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayEffect</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> isHover <span class="token operator">=</span> <span class="token boolean">false</span>
     
@@ -4306,99 +3860,213 @@ static func number() &#123;
 
   </div>
   <div>
-    
-      <div 
-        class="post-note note-warning copyright" 
-        style="margin-top: 42px">
-        <p>
-          <span style="font-weight: bold;">作者：</span><a 
-            target="_blank" 
-            rel="nofollow noopener noreferrer" 
-            href="/about">
-            戴铭
-          </a>
-        </p>
-        <p>
-          <span style="font-weight: bold;">文章链接：</span><a 
-            target="_blank" 
-            rel="nofollow noopener noreferrer" 
-            href="http://ming1016.github.io/2022/03/25/develop-with-swiftui/">
-            http://ming1016.github.io/2022/03/25/develop-with-swiftui/
-          </a>
-        </p>
-        <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
-      </div>
-    
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2022/03/25/develop-with-swiftui/">http://ming1016.github.io/2022/03/25/develop-with-swiftui/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
   </div>
 </article>
 <div class="nav">
   
-    <div class="nav-item-prev">
-      <a 
-        href="/2022/06/10/wwdc22-notes/" 
-        class="nav-link">
-        <i class="iconfont icon-left nav-prev-icon"></i>
-        <div>
-          <div class="nav-label">Prev</div>
-          
-            <div class="nav-title">WWDC22 笔记 </div>
-          
-        </div>
+  <div class="nav-item-prev">
+    <a href="/2022/06/10/wwdc22-notes/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">WWDC22 笔记 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2022/02/26/draw-in-2021/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">2021年画的 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#macOS-%E5%A4%9A%E6%A0%8F"><span class="toc-number">1.</span> <span class="toc-text">macOS 多栏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Toolbar"><span class="toc-number">2.</span> <span class="toc-text">Toolbar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B9%E5%B5%8C%E5%A5%97%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">文件夹嵌套结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E5%92%8C%E4%BB%A3%E7%A0%81%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text">文本和代码编辑器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Grid"><span class="toc-number">5.</span> <span class="toc-text">Grid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vision"><span class="toc-number">6.</span> <span class="toc-text">Vision</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftUI-%E7%BB%84%E4%BB%B6"><span class="toc-number">7.</span> <span class="toc-text">SwiftUI 组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE%E7%BB%84%E4%BB%B6%E4%BD%BF%E7%94%A8"><span class="toc-number">7.1.</span> <span class="toc-text">视图组件使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SwiftUI-%E5%AF%B9%E6%A0%87%E7%9A%84-UIKit-%E8%A7%86%E5%9B%BE"><span class="toc-number">7.1.1.</span> <span class="toc-text">SwiftUI 对标的 UIKit 视图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Text"><span class="toc-number">7.1.2.</span> <span class="toc-text">Text</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Link"><span class="toc-number">7.1.3.</span> <span class="toc-text">Link</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Label"><span class="toc-number">7.1.4.</span> <span class="toc-text">Label</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TextEditor"><span class="toc-number">7.1.5.</span> <span class="toc-text">TextEditor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TextField"><span class="toc-number">7.1.6.</span> <span class="toc-text">TextField</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Button"><span class="toc-number">7.1.7.</span> <span class="toc-text">Button</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E5%BA%A6"><span class="toc-number">7.1.8.</span> <span class="toc-text">进度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Image"><span class="toc-number">7.1.9.</span> <span class="toc-text">Image</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ControlGroup"><span class="toc-number">7.1.10.</span> <span class="toc-text">ControlGroup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GroupBox"><span class="toc-number">7.1.11.</span> <span class="toc-text">GroupBox</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stack"><span class="toc-number">7.1.12.</span> <span class="toc-text">Stack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Advanced-layout-control"><span class="toc-number">7.1.13.</span> <span class="toc-text">Advanced layout control</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Navigation"><span class="toc-number">7.1.14.</span> <span class="toc-text">Navigation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#List"><span class="toc-number">7.1.15.</span> <span class="toc-text">List</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LazyVStack-%E5%92%8C-LazyHStack"><span class="toc-number">7.1.16.</span> <span class="toc-text">LazyVStack 和 LazyHStack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LazyVGrid-%E5%92%8C-LazyHGrid"><span class="toc-number">7.1.17.</span> <span class="toc-text">LazyVGrid 和 LazyHGrid</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#table"><span class="toc-number">7.1.18.</span> <span class="toc-text">table</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ScrollView"><span class="toc-number">7.1.19.</span> <span class="toc-text">ScrollView</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%AE%E5%B1%82"><span class="toc-number">7.1.20.</span> <span class="toc-text">浮层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TabView"><span class="toc-number">7.1.21.</span> <span class="toc-text">TabView</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Charts"><span class="toc-number">7.1.22.</span> <span class="toc-text">Swift Charts</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Toggle"><span class="toc-number">7.1.23.</span> <span class="toc-text">Toggle</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Picker"><span class="toc-number">7.1.24.</span> <span class="toc-text">Picker</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Slider"><span class="toc-number">7.1.25.</span> <span class="toc-text">Slider</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stepper"><span class="toc-number">7.1.26.</span> <span class="toc-text">Stepper</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Form"><span class="toc-number">7.1.27.</span> <span class="toc-text">Form</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Keyboard"><span class="toc-number">7.1.28.</span> <span class="toc-text">Keyboard</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Transferable"><span class="toc-number">7.1.29.</span> <span class="toc-text">Transferable</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ShareLink"><span class="toc-number">7.1.30.</span> <span class="toc-text">ShareLink</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E8%A7%89"><span class="toc-number">7.2.</span> <span class="toc-text">视觉</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Color"><span class="toc-number">7.2.1.</span> <span class="toc-text">Color</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Effect"><span class="toc-number">7.2.2.</span> <span class="toc-text">Effect</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Animation"><span class="toc-number">7.2.3.</span> <span class="toc-text">Animation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Canvas"><span class="toc-number">7.2.4.</span> <span class="toc-text">Canvas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SF-Symbol"><span class="toc-number">7.2.5.</span> <span class="toc-text">SF Symbol</span></a></li></ol></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
+
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>58</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>38</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
       </a>
     </div>
   
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
   
-    <div class="nav-item-next">
-      <a 
-        href="/2022/02/26/draw-in-2021/" 
-        class="nav-link">
-        <div>
-          <div class="nav-label">Next</div>
-          
-            <div class="nav-title">2021年画的 </div>
-          
-        </div>
-        <i class="iconfont icon-right nav-next-icon"></i>
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
       </a>
     </div>
   
 </div>
 
-<div 
-  class="card card-content toc-card" 
-  id="mobiletoc">
-  <div class="toc-header">
-  <i 
-    class="iconfont icon-menu" 
-    style="padding-right: 2px;">
-  </i>TOC
-</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#macOS-%E5%A4%9A%E6%A0%8F"><span class="toc-number">1.</span> <span class="toc-text">macOS 多栏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Toolbar"><span class="toc-number">2.</span> <span class="toc-text">Toolbar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B9%E5%B5%8C%E5%A5%97%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">文件夹嵌套结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E5%92%8C%E4%BB%A3%E7%A0%81%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text">文本和代码编辑器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Grid"><span class="toc-number">5.</span> <span class="toc-text">Grid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vision"><span class="toc-number">6.</span> <span class="toc-text">Vision</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftUI-%E7%BB%84%E4%BB%B6"><span class="toc-number">7.</span> <span class="toc-text">SwiftUI 组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE%E7%BB%84%E4%BB%B6%E4%BD%BF%E7%94%A8"><span class="toc-number">7.1.</span> <span class="toc-text">视图组件使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SwiftUI-%E5%AF%B9%E6%A0%87%E7%9A%84-UIKit-%E8%A7%86%E5%9B%BE"><span class="toc-number">7.1.1.</span> <span class="toc-text">SwiftUI 对标的 UIKit 视图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Text"><span class="toc-number">7.1.2.</span> <span class="toc-text">Text</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Link"><span class="toc-number">7.1.3.</span> <span class="toc-text">Link</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Label"><span class="toc-number">7.1.4.</span> <span class="toc-text">Label</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TextEditor"><span class="toc-number">7.1.5.</span> <span class="toc-text">TextEditor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TextField"><span class="toc-number">7.1.6.</span> <span class="toc-text">TextField</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Button"><span class="toc-number">7.1.7.</span> <span class="toc-text">Button</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E5%BA%A6"><span class="toc-number">7.1.8.</span> <span class="toc-text">进度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Image"><span class="toc-number">7.1.9.</span> <span class="toc-text">Image</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ControlGroup"><span class="toc-number">7.1.10.</span> <span class="toc-text">ControlGroup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GroupBox"><span class="toc-number">7.1.11.</span> <span class="toc-text">GroupBox</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stack"><span class="toc-number">7.1.12.</span> <span class="toc-text">Stack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Advanced-layout-control"><span class="toc-number">7.1.13.</span> <span class="toc-text">Advanced layout control</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Navigation"><span class="toc-number">7.1.14.</span> <span class="toc-text">Navigation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#List"><span class="toc-number">7.1.15.</span> <span class="toc-text">List</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LazyVStack-%E5%92%8C-LazyHStack"><span class="toc-number">7.1.16.</span> <span class="toc-text">LazyVStack 和 LazyHStack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LazyVGrid-%E5%92%8C-LazyHGrid"><span class="toc-number">7.1.17.</span> <span class="toc-text">LazyVGrid 和 LazyHGrid</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#table"><span class="toc-number">7.1.18.</span> <span class="toc-text">table</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ScrollView"><span class="toc-number">7.1.19.</span> <span class="toc-text">ScrollView</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%AE%E5%B1%82"><span class="toc-number">7.1.20.</span> <span class="toc-text">浮层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TabView"><span class="toc-number">7.1.21.</span> <span class="toc-text">TabView</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Charts"><span class="toc-number">7.1.22.</span> <span class="toc-text">Swift Charts</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Toggle"><span class="toc-number">7.1.23.</span> <span class="toc-text">Toggle</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Picker"><span class="toc-number">7.1.24.</span> <span class="toc-text">Picker</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Slider"><span class="toc-number">7.1.25.</span> <span class="toc-text">Slider</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stepper"><span class="toc-number">7.1.26.</span> <span class="toc-text">Stepper</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Form"><span class="toc-number">7.1.27.</span> <span class="toc-text">Form</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Keyboard"><span class="toc-number">7.1.28.</span> <span class="toc-text">Keyboard</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Transferable"><span class="toc-number">7.1.29.</span> <span class="toc-text">Transferable</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ShareLink"><span class="toc-number">7.1.30.</span> <span class="toc-text">ShareLink</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E8%A7%89"><span class="toc-number">7.2.</span> <span class="toc-text">视觉</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Color"><span class="toc-number">7.2.1.</span> <span class="toc-text">Color</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Effect"><span class="toc-number">7.2.2.</span> <span class="toc-text">Effect</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Animation"><span class="toc-number">7.2.3.</span> <span class="toc-text">Animation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Canvas"><span class="toc-number">7.2.4.</span> <span class="toc-text">Canvas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SF-Symbol"><span class="toc-number">7.2.5.</span> <span class="toc-text">SF Symbol</span></a></li></ol></li></ol></li></ol>
-</div>
-            </main>
-            <aside class="right-column">
-              <div class="sticky-widescreen">
+            </div>
+            
+            <div class="sticky-tablet">
   
   
-    <article class="card card-content toc-card">
-      <div class="toc-header">
-  <i 
-    class="iconfont icon-menu" 
-    style="padding-right: 2px;">
-  </i>TOC
-</div>
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
 <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#macOS-%E5%A4%9A%E6%A0%8F"><span class="toc-number">1.</span> <span class="toc-text">macOS 多栏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Toolbar"><span class="toc-number">2.</span> <span class="toc-text">Toolbar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B9%E5%B5%8C%E5%A5%97%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">文件夹嵌套结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E5%92%8C%E4%BB%A3%E7%A0%81%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text">文本和代码编辑器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Grid"><span class="toc-number">5.</span> <span class="toc-text">Grid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vision"><span class="toc-number">6.</span> <span class="toc-text">Vision</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftUI-%E7%BB%84%E4%BB%B6"><span class="toc-number">7.</span> <span class="toc-text">SwiftUI 组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE%E7%BB%84%E4%BB%B6%E4%BD%BF%E7%94%A8"><span class="toc-number">7.1.</span> <span class="toc-text">视图组件使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SwiftUI-%E5%AF%B9%E6%A0%87%E7%9A%84-UIKit-%E8%A7%86%E5%9B%BE"><span class="toc-number">7.1.1.</span> <span class="toc-text">SwiftUI 对标的 UIKit 视图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Text"><span class="toc-number">7.1.2.</span> <span class="toc-text">Text</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Link"><span class="toc-number">7.1.3.</span> <span class="toc-text">Link</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Label"><span class="toc-number">7.1.4.</span> <span class="toc-text">Label</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TextEditor"><span class="toc-number">7.1.5.</span> <span class="toc-text">TextEditor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TextField"><span class="toc-number">7.1.6.</span> <span class="toc-text">TextField</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Button"><span class="toc-number">7.1.7.</span> <span class="toc-text">Button</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E5%BA%A6"><span class="toc-number">7.1.8.</span> <span class="toc-text">进度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Image"><span class="toc-number">7.1.9.</span> <span class="toc-text">Image</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ControlGroup"><span class="toc-number">7.1.10.</span> <span class="toc-text">ControlGroup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GroupBox"><span class="toc-number">7.1.11.</span> <span class="toc-text">GroupBox</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stack"><span class="toc-number">7.1.12.</span> <span class="toc-text">Stack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Advanced-layout-control"><span class="toc-number">7.1.13.</span> <span class="toc-text">Advanced layout control</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Navigation"><span class="toc-number">7.1.14.</span> <span class="toc-text">Navigation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#List"><span class="toc-number">7.1.15.</span> <span class="toc-text">List</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LazyVStack-%E5%92%8C-LazyHStack"><span class="toc-number">7.1.16.</span> <span class="toc-text">LazyVStack 和 LazyHStack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LazyVGrid-%E5%92%8C-LazyHGrid"><span class="toc-number">7.1.17.</span> <span class="toc-text">LazyVGrid 和 LazyHGrid</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#table"><span class="toc-number">7.1.18.</span> <span class="toc-text">table</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ScrollView"><span class="toc-number">7.1.19.</span> <span class="toc-text">ScrollView</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%AE%E5%B1%82"><span class="toc-number">7.1.20.</span> <span class="toc-text">浮层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TabView"><span class="toc-number">7.1.21.</span> <span class="toc-text">TabView</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Charts"><span class="toc-number">7.1.22.</span> <span class="toc-text">Swift Charts</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Toggle"><span class="toc-number">7.1.23.</span> <span class="toc-text">Toggle</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Picker"><span class="toc-number">7.1.24.</span> <span class="toc-text">Picker</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Slider"><span class="toc-number">7.1.25.</span> <span class="toc-text">Slider</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stepper"><span class="toc-number">7.1.26.</span> <span class="toc-text">Stepper</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Form"><span class="toc-number">7.1.27.</span> <span class="toc-text">Form</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Keyboard"><span class="toc-number">7.1.28.</span> <span class="toc-text">Keyboard</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Transferable"><span class="toc-number">7.1.29.</span> <span class="toc-text">Transferable</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ShareLink"><span class="toc-number">7.1.30.</span> <span class="toc-text">ShareLink</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E8%A7%89"><span class="toc-number">7.2.</span> <span class="toc-text">视觉</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Color"><span class="toc-number">7.2.1.</span> <span class="toc-text">Color</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Effect"><span class="toc-number">7.2.2.</span> <span class="toc-text">Effect</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Animation"><span class="toc-number">7.2.3.</span> <span class="toc-text">Animation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Canvas"><span class="toc-number">7.2.4.</span> <span class="toc-text">Canvas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SF-Symbol"><span class="toc-number">7.2.5.</span> <span class="toc-text">SF Symbol</span></a></li></ol></li></ol></li></ol>
-    </article>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">44</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-novel">
+        <div class="categories-list-item">
+          My-novel
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-painting">
+        <div class="categories-list-item">
+          My-painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\WWDC" title="WWDC"><div class="tags-list-item">WWDC</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#macOS-%E5%A4%9A%E6%A0%8F"><span class="toc-number">1.</span> <span class="toc-text">macOS 多栏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Toolbar"><span class="toc-number">2.</span> <span class="toc-text">Toolbar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B9%E5%B5%8C%E5%A5%97%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">文件夹嵌套结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E5%92%8C%E4%BB%A3%E7%A0%81%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text">文本和代码编辑器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Grid"><span class="toc-number">5.</span> <span class="toc-text">Grid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vision"><span class="toc-number">6.</span> <span class="toc-text">Vision</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftUI-%E7%BB%84%E4%BB%B6"><span class="toc-number">7.</span> <span class="toc-text">SwiftUI 组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE%E7%BB%84%E4%BB%B6%E4%BD%BF%E7%94%A8"><span class="toc-number">7.1.</span> <span class="toc-text">视图组件使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SwiftUI-%E5%AF%B9%E6%A0%87%E7%9A%84-UIKit-%E8%A7%86%E5%9B%BE"><span class="toc-number">7.1.1.</span> <span class="toc-text">SwiftUI 对标的 UIKit 视图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Text"><span class="toc-number">7.1.2.</span> <span class="toc-text">Text</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Link"><span class="toc-number">7.1.3.</span> <span class="toc-text">Link</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Label"><span class="toc-number">7.1.4.</span> <span class="toc-text">Label</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TextEditor"><span class="toc-number">7.1.5.</span> <span class="toc-text">TextEditor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TextField"><span class="toc-number">7.1.6.</span> <span class="toc-text">TextField</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Button"><span class="toc-number">7.1.7.</span> <span class="toc-text">Button</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E5%BA%A6"><span class="toc-number">7.1.8.</span> <span class="toc-text">进度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Image"><span class="toc-number">7.1.9.</span> <span class="toc-text">Image</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ControlGroup"><span class="toc-number">7.1.10.</span> <span class="toc-text">ControlGroup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GroupBox"><span class="toc-number">7.1.11.</span> <span class="toc-text">GroupBox</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stack"><span class="toc-number">7.1.12.</span> <span class="toc-text">Stack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Advanced-layout-control"><span class="toc-number">7.1.13.</span> <span class="toc-text">Advanced layout control</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Navigation"><span class="toc-number">7.1.14.</span> <span class="toc-text">Navigation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#List"><span class="toc-number">7.1.15.</span> <span class="toc-text">List</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LazyVStack-%E5%92%8C-LazyHStack"><span class="toc-number">7.1.16.</span> <span class="toc-text">LazyVStack 和 LazyHStack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LazyVGrid-%E5%92%8C-LazyHGrid"><span class="toc-number">7.1.17.</span> <span class="toc-text">LazyVGrid 和 LazyHGrid</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#table"><span class="toc-number">7.1.18.</span> <span class="toc-text">table</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ScrollView"><span class="toc-number">7.1.19.</span> <span class="toc-text">ScrollView</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%AE%E5%B1%82"><span class="toc-number">7.1.20.</span> <span class="toc-text">浮层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TabView"><span class="toc-number">7.1.21.</span> <span class="toc-text">TabView</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swift-Charts"><span class="toc-number">7.1.22.</span> <span class="toc-text">Swift Charts</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Toggle"><span class="toc-number">7.1.23.</span> <span class="toc-text">Toggle</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Picker"><span class="toc-number">7.1.24.</span> <span class="toc-text">Picker</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Slider"><span class="toc-number">7.1.25.</span> <span class="toc-text">Slider</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stepper"><span class="toc-number">7.1.26.</span> <span class="toc-text">Stepper</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Form"><span class="toc-number">7.1.27.</span> <span class="toc-text">Form</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Keyboard"><span class="toc-number">7.1.28.</span> <span class="toc-text">Keyboard</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Transferable"><span class="toc-number">7.1.29.</span> <span class="toc-text">Transferable</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ShareLink"><span class="toc-number">7.1.30.</span> <span class="toc-text">ShareLink</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E8%A7%89"><span class="toc-number">7.2.</span> <span class="toc-text">视觉</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Color"><span class="toc-number">7.2.1.</span> <span class="toc-text">Color</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Effect"><span class="toc-number">7.2.2.</span> <span class="toc-text">Effect</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Animation"><span class="toc-number">7.2.3.</span> <span class="toc-text">Animation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Canvas"><span class="toc-number">7.2.4.</span> <span class="toc-text">Canvas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SF-Symbol"><span class="toc-number">7.2.5.</span> <span class="toc-text">SF Symbol</span></a></li></ol></li></ol></li></ol>
+  </article>
   
   
   <article class="card card-content">
     <div class="recent-posts-card">
-  <div class="recent-posts-header">
-    <i 
-      class="iconfont icon-wenzhang_huaban" 
-      style="padding-right: 2px;">
-    </i>Recent Posts
-  </div>
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
@@ -4427,164 +4095,113 @@ static func number() &#123;
   
   
 </div>
-            </aside>
-          </div>
+          </aside>
         </div>
       </div>
     </div>
-     
-    <footer class="footer">
+  </div>
+  
+  <footer class="footer">
   <div class="footer-container">
     <div>
       <div class="footer-dsc">
-        <span>
-          Copyright ©
+        <span>Copyright ©
           
-            2014
+          2014 -
           
-          
-                - 
-                2022
-          
+          2022
         </span>
-        &nbsp;
-        <a 
-          href="/" 
-          class="footer-link">
-          戴铭的博客
-        </a>
+        <a href="/" class="footer-link">戴铭的博客 </a>
       </div>
     </div>
 
     
     
     
-      <div class="BbeiAn-info">
-        <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">鄂ICP备17011999号 </a>
-      </div>
-      
-        <div class="BbeiAn-info">
-          <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
-          <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
-          </a>
-          <br />
-        </div>
-      
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
+      </a>
+      <br />
+    </div>
+    
     
     
       <div class="footer-dsc">
         
-          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
         
         
-          <span>&nbsp;|&nbsp;</span>
+        <span>&nbsp;|&nbsp;</span>
         
         
-          本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
         
       </div>
       
     
 </footer>
- 
-    
-  <a 
-    role="button" 
-    id="scrollbutton" 
-    class="basebutton" 
-    aria-label="回到顶部">
-    <i class="iconfont icon-arrowleft button-icon"></i>
-  </a>
-
-<a 
-  role="button" 
-  id="menubutton"
-  aria-label="menu button"
-  class="basebutton">
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
   <i class="iconfont icon-menu button-icon"></i>
 </a>
-<a 
-  role="button" 
-  id="popbutton" 
-  class="basebutton" 
-  aria-label="控制中心">
+<a role="button" id="popbutton" class="basebutton">
   <i class="iconfont icon-expand button-icon"></i>
 </a>
-<a 
-  role="button" 
-  id="darkbutton" 
-  class="basebutton darkwidget" 
-  aria-label="夜色模式">
+<a role="button" id="darkbutton" class="basebutton darkwidget">
   <i class="iconfont icon-weather button-icon"></i>
 </a>
-<a 
-  role="button" 
-  id="searchbutton" 
-  class="basebutton searchwidget" 
-  aria-label="搜索">
-  <i class="iconfont icon-search button-icon"></i>
-</a> 
-     
-     
-     
-      <script>
+
+  
+  
+  
+  <script>
   var addImgLayout = function () {
-    var img = document.querySelectorAll('.post-content img')
-    var i
+    var img = document.querySelectorAll('.post-content img');
+    var i;
     for (i = 0; i < img.length; i++) {
-      var wrapper = document.createElement('a')
-      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
-      wrapper.setAttribute('aria-label', 'illustration')
-      wrapper.style.cssText =
-        'width: 100%; display: flex; justify-content: center;'
-      if (img[i].alt) wrapper.dataset.caption = img[i].alt
-      wrapper.dataset.nolink = true
-      img[i].before(wrapper)
-      wrapper.append(img[i])
-      var divWrap = document.createElement('div')
-      divWrap.classList.add('gallery')
-      wrapper.before(divWrap)
-      divWrap.append(wrapper)
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
     }
-    baguetteBox.run('.gallery')
+    refreshFsLightbox();
   }
 </script>
-<script>
-  loadScript(
-    "/js/lib/lightbox/baguetteBox.min.js",
-    addImgLayout
-  )
-</script>
- 
-     
-     
-    <script src="/js/main.js"></script> 
-    
-      <script> 
-        loadScript('/js/lib/busuanzi.min.js') 
-      </script>
-     
-    
-      <script>
-        var addLazyload = function () {
-          var observer = lozad('.lozad', {
-            load: function (el) {
-              el.srcset = el.getAttribute('data-src')
-            },
-            loaded: function (el) {
-              el.classList.add('loaded')
-            },
-          })
-          observer.observe()
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
         }
-      </script>
-      <script>
-        loadScript('/js/lib/lozad.min.js', addLazyload)
-      </script>
-    
-    <script src="//instant.page/5.1.0" type="module"
-      integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
-    
-    
-  </body>
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
 </html>
