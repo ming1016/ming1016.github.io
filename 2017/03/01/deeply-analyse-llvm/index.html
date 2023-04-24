@@ -560,7 +560,7 @@ attributes #3 &#x3D; &#123; nounwind &#125;
 <p>LLVM IR 有三种表示格式，第一种是 bitcode 这样的存储格式，以 .bc 做后缀，第二种是可读的以 .ll，第三种是用于开发时操作 LLVM IR 的内存格式。</p>
 <p>一个编译的单元即一个文件在 IR 里就是一个 Module，Module 里有 Global Variable 和 Function，在 Function里有 Basic Block，Basic Block 里有 指令 Instructions。<br>‘</p>
 <p>通过下面的 IR 结构图能够更好的理解 IR 的整体结构。</p>
-<p><img src="/uploads/deeply-analyse-llvm/08.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-llvm/08.png" class="lozad post-image"src="/uploads/deeply-analyse-llvm/08.png"></p>
 <p>图中可以看出最大的是 Module，里面包含多个 Function，每个 Function 包含多个 BasicBlock，BasicBlock 里含有 Instruction，代码非常清晰，这样如果想开发一个新语言只需要完成语法解析后通过 LLVM 提供的丰富接口在内存中生成 IR 就可以直接运行在各个不同的平台。</p>
 <p>IR 语言满足静态单赋值，可以很好的降低数据流分析和控制流分析的复杂度。及只能在定义时赋值，后面不能更改。但是这样就没法写程序了，输入输出都没法弄，所以函数式编程才会有类似 Monad 这样机制的原因。</p>
 <h3 id="LLVM-IR-优化"><a href="#LLVM-IR-优化" class="headerlink" title="LLVM IR 优化"></a>LLVM IR 优化</h3><p>使用 O2，O3 这样的优化会调用对应的 Pass 来进行处理，有比如类似死代码清理，内联化，表达式重组，循环变量移动这样的 Pass。可以通过 llvm-opt 调用 LLVM 优化相关的库。</p>
@@ -944,16 +944,16 @@ public:
 	...
 &#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>通过这些关键定义再结合 BuildCompilation 函数的实现可以看出这个 Driver 的流程是按照 ArgList - Actions - Jobs 来的，完整的图如下：</p>
-<p><img src="/uploads/deeply-analyse-llvm/04.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-llvm/04.png" class="lozad post-image"src="/uploads/deeply-analyse-llvm/04.png"></p>
 <h3 id="Parse"><a href="#Parse" class="headerlink" title="Parse"></a>Parse</h3><p>看完完整的 Driver 流程后，我们就先从 Parse 开始说起。</p>
 <p>Parse 是解析选项，对应的代码在 ParseArgStrings 这个函数里。</p>
 <p>下面通过执行一个试试，比如 clang -### main.c -ITheOptionWeAdd</p>
-<p><img src="/uploads/deeply-analyse-llvm/05.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-llvm/05.png" class="lozad post-image"src="/uploads/deeply-analyse-llvm/05.png"></p>
 <p>这里的 -I 是 Clang 支持的，在 Clang 里是 Option 类，Clang 会对这些 Option 专门的进行解析，使用一种 DSL 语言将其转成 .tb 文件后使用 table-gen 转成 C++ 语言和其它代码一起进行编译。</p>
 <p>Driver 层会解析我们传入的 -I Option 参数。</p>
 <p>-x 后加个 c 表示是对 c 语言进行编译，Clang Driver 通过文件的后缀 .c 来自动加上这个 参数的。如果是 c++ 语言，仅仅通过在 -x 后添加 cpp 编译还是会出错的。</p>
 <pre class="line-numbers language-none"><code class="language-none">clang -x c++ main.cpp<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="/uploads/deeply-analyse-llvm/06.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-llvm/06.png" class="lozad post-image"src="/uploads/deeply-analyse-llvm/06.png"></p>
 <p>通过报错信息可以看出一些链接错误</p>
 <p>因为需要链接 C++ 标准库，所以加上参数 -lc++ 就可以了</p>
 <pre class="line-numbers language-none"><code class="language-none">clang -x c++ -lc++ main.cpp<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -1112,7 +1112,7 @@ public:
  C.ExecuteJobs(C.getJobs(), FailingCommands);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>能够看到 Jobs 准备好了后就要开始 Excute 他们。</p>
 <p>Execute 就是执行整个的编译过程的 Jobs。过程执行的内容和耗时可以通过添加 -ftime-report 这个 option 来看到。</p>
-<p><img src="/uploads/deeply-analyse-llvm/07.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-llvm/07.png" class="lozad post-image"src="/uploads/deeply-analyse-llvm/07.png"></p>
 <h2 id="Clang-Attributes"><a href="#Clang-Attributes" class="headerlink" title="Clang Attributes"></a>Clang Attributes</h2><p>以 <strong>attribute</strong>(xx) 的语法格式出现，是 Clang 提供的一些能够让开发者在编译过程中参与一些源码控制的方法。下面列一些会用到的用法：</p>
 <h3 id="attribute-format-NSString-F-A-格式化字符串"><a href="#attribute-format-NSString-F-A-格式化字符串" class="headerlink" title="attribute((format(NSString, F, A))) 格式化字符串"></a><strong>attribute</strong>((format(<strong>NSString</strong>, F, A))) 格式化字符串</h3><p>可以查看 NSLog 的用法</p>
 <pre class="line-numbers language-objective-c" data-language="objective-c"><code class="language-objective-c">FOUNDATION_EXPORT void NSLog(NSString *format, …) NS_FORMAT_FUNCTION(1,2) NS_NO_TAIL_CALL;
@@ -1283,9 +1283,9 @@ virtual bool VisitObjCMessageExpr(ObjCMessageExpr *E) &#123;
 <li>在 Xcode 中添加 clang 静态分析自定义 checks： <a target="_blank" rel="noopener" href="http://clang-analyzer.llvm.org/xcode.html">Running the analyzer within Xcode</a></li>
 <li>将 LLVM C 的 API 用 swift 来包装： <a target="_blank" rel="noopener" href="https://github.com/harlanhaskins/LLVMSwift">GitHub - harlanhaskins&#x2F;LLVMSwift: A Swifty wrapper for the LLVM C API version 3.9.1</a></li>
 </ul>
-<h2 id="LLVM-Backend"><a href="#LLVM-Backend" class="headerlink" title="LLVM Backend"></a>LLVM Backend</h2><p>首先通过下图看看 LLVM Backend 在整个 LLVM 里所处的位置：<br><img src="/uploads/deeply-analyse-llvm/09.png"></p>
+<h2 id="LLVM-Backend"><a href="#LLVM-Backend" class="headerlink" title="LLVM Backend"></a>LLVM Backend</h2><p>首先通过下图看看 LLVM Backend 在整个 LLVM 里所处的位置：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-llvm/09.png" class="lozad post-image"src="/uploads/deeply-analyse-llvm/09.png"></p>
 <p>接下来是整个 LLVM Backend 的流程图，后面会对每个过程详细说明</p>
-<p><img src="/uploads/deeply-analyse-llvm/10.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-llvm/10.png" class="lozad post-image"src="/uploads/deeply-analyse-llvm/10.png"></p>
 <h3 id="CodeGen-阶段"><a href="#CodeGen-阶段" class="headerlink" title="CodeGen 阶段"></a>CodeGen 阶段</h3><ul>
 <li>Instruction Selection 指令选择：将IR转化成目标平台指令组成的定向非循环图 DAG（Directed Acyclic Graph）。选择既能完成指定操作，又能执行时间最短的指令。</li>
 <li>Scheduling and Formation 调度与排序：读取 DAG，将 DAG 的指令排成 MachineInstr 的队列。根据指令间的依赖进行指令重排使得能够更好的利用 CPU 的功能单元。</li>
@@ -1303,7 +1303,7 @@ virtual bool VisitObjCMessageExpr(ObjCMessageExpr *E) &#123;
 <li>SelectionDAG Scheduling and Formation：因为 CPU 是没法执行 DAG，所以需要将指令从 DAG 中提取依据一定规则比如 minimal register pressure 或隐藏指令延迟重排成指令队列。（DAG -&gt; linear list（SSA form） -&gt; MachineInstr -&gt; MC Layer API MCInst MCStreamr -&gt; MCCodeEmitter -&gt; Binary Instr）</li>
 </ul>
 <p>下图是 llc -view-isel-dags 状态下的 DAG 图：</p>
-<p><img src="/uploads/deeply-analyse-llvm/11.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-llvm/11.png" class="lozad post-image"src="/uploads/deeply-analyse-llvm/11.png"></p>
 <p>查看 DAG 不同状态的说明如下：</p>
 <ul>
 <li>-view-dag-combine1-dags：可以显示没有被优化的 DAG</li>
@@ -1508,7 +1508,7 @@ defIIC_DIV64       : InstrItinClass;<span aria-hidden="true" class="line-numbers
 <li>Greedy - LLVM 默认寄存器分配算法，对 Basic 算法变量生存期进行分裂进行高度优化</li>
 <li>PBQP - 将寄存器分配描述成分区布尔二次规划</li>
 </ul>
-<h3 id="Code-Emission"><a href="#Code-Emission" class="headerlink" title="Code Emission"></a>Code Emission</h3><p>下图详细表达了整个 Code Emission 的过程<br><img src="/uploads/deeply-analyse-llvm/12.png"></p>
+<h3 id="Code-Emission"><a href="#Code-Emission" class="headerlink" title="Code Emission"></a>Code Emission</h3><p>下图详细表达了整个 Code Emission 的过程<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-llvm/12.png" class="lozad post-image"src="/uploads/deeply-analyse-llvm/12.png"></p>
 <h2 id="Swift-编译流"><a href="#Swift-编译流" class="headerlink" title="Swift 编译流"></a>Swift 编译流</h2><p>Swift 编译流和 Clang 一样都是编译前端，和 Clang 一样代码会被解析成语法数 AST，接下来会比 Clang 多一步，通过 SILGen 生成 SIL 这一次方便做些 Swift 特定的优化，SIL 会被传递给 IR 生成阶段生成 LLVM IR，最后由 LLVM 解决余下事情。看到这里大家肯定会好奇 swift 是如何与 C 和 OC 交互的比如系统底层的模块，这里就要提提 swift 的模块映射了（Module map），它调用 Clang 的模块，将其传入 Clang importer 中生成 AST 来分析是的 swift 能够和 C&#x2F;OC 进行交互。</p>
 <p>下面通过一个例子看详细了解下 Swift 编译流吧。先创建一个 toy.swift</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token function">print</span><span class="token punctuation">(</span>“hi<span class="token operator">!</span>”<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -1917,15 +1917,15 @@ cmake -DCMAKE_BUILD_TYPE<span class="token operator">=</span>Release -DBUILD_SHA
 <span class="token function">make</span> <span class="token function">install</span>
 <span class="token comment">#如果找不到标准库，Xcode 需要安装 xcode-select --install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="/uploads/deeply-analyse-llvm/01.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-llvm/01.png" class="lozad post-image"src="/uploads/deeply-analyse-llvm/01.png"></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#如果希望是 xcodeproject 方式 build 可以使用 -GXcode</span>
 <span class="token function">mkdir</span> xcodeBuild
 <span class="token builtin class-name">cd</span> xcodeBuild
 cmake -GXcode /path/to/llvm/source<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="/uploads/deeply-analyse-llvm/02.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-llvm/02.png" class="lozad post-image"src="/uploads/deeply-analyse-llvm/02.png"></p>
 <p>在 bin 下存放着工具链，有了这些工具链就能够完成源码编译了。</p>
-<p><img src="/uploads/deeply-analyse-llvm/03.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-llvm/03.png" class="lozad post-image"src="/uploads/deeply-analyse-llvm/03.png"></p>
 <h3 id="LLVM-源码工程目录介绍"><a href="#LLVM-源码工程目录介绍" class="headerlink" title="LLVM 源码工程目录介绍"></a>LLVM 源码工程目录介绍</h3><ul>
 <li>llvm&#x2F;examples&#x2F; - 使用 LLVM IR 和 JIT 的例子。</li>
 <li>llvm&#x2F;include&#x2F; - 导出的头文件。</li>
@@ -2069,7 +2069,7 @@ du -h -d 1
 <p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>59</span>
+    <span>60</span>
     <span>Posts</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -2131,7 +2131,7 @@ du -h -d 1
       <a href="/categories/Programming">
         <div class="categories-list-item">
           Programming
-          <span class="categories-list-item-badge">45</span>
+          <span class="categories-list-item-badge">46</span>
         </div>
       </a>
     
@@ -2188,11 +2188,11 @@ du -h -d 1
     
     <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
     
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
     <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
     
     <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
-    
-    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
     
     <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
     
@@ -2227,6 +2227,11 @@ du -h -d 1
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-24</div>
+        <a href="/2023/04/24/swiftui-rss-reader/"><div class="recent-posts-item-content">使用 SwiftUI 开发 RSS 阅读器</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-10-24</div>
         <a href="/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/"><div class="recent-posts-item-content">参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动</div></a>
       </div>
@@ -2239,11 +2244,6 @@ du -h -d 1
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-06-10</div>
         <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
       </div>
     
   </div>
@@ -2266,7 +2266,7 @@ du -h -d 1
           
           2014 -
           
-          2022
+          2023
         </span>
         <a href="/" class="footer-link">戴铭的博客 </a>
       </div>

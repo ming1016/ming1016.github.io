@@ -193,7 +193,7 @@
 <h5 id="SanitizerCoverage-插桩回调函数"><a href="#SanitizerCoverage-插桩回调函数" class="headerlink" title="SanitizerCoverage 插桩回调函数"></a>SanitizerCoverage 插桩回调函数</h5><p>SanitizerCoverage 是 libfuzzer 使用的代码覆盖技术，使用 <code>-fsanitize-coverage=trace-pc-guard</code> 这个编译 flag 插入不同级别的桩，会在程序控制流图的每条边插入<code>__sanitizer_cov_trace_pc_guard</code>。</p>
 <p>如果只对函数插桩，使用 <code>-fsanitize-coverage=func</code>,<code>trace-pc-guard</code>，只对基本块用 <code>-fsanite-coverage=bb</code>,<code>no-prune</code>,<code>trace-pc-guard</code>。swift 使用 <code>-sanitize-coverage=func</code> 和 <code>-sanitize=undefined</code> 编译 flags。</p>
 <p>在回调函数 <code>__sanitizer_cov_trace_pc_guard_init</code> 和 <code>__sanitizer_cov_trace_pc_guard</code> 里实现自己要干的事情，比如对当前插桩地址符号化，运行后就可以得到运行时调用了哪些方法。</p>
-<p><img src="/uploads/use-llvm/01.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/use-llvm/01.png" class="lozad post-image"src="/uploads/use-llvm/01.png"></p>
 <p>使用 SanitizerCoverage 插桩，一个是编译会很慢，另一个是插入范围难控制，上线后各方面影响不可控。SanitizerCoverage 本是用于 fuzzing 测试的一个 llvm pass，因此可以了解 SanitizerCoverage 使用的技术，自建一个专门用于代码新陈代谢的 pass 用来解决 SanitizerCoverage 和 gcov 不好用的问题。</p>
 <h4 id="自制可插入指令的-Pass"><a href="#自制可插入指令的-Pass" class="headerlink" title="自制可插入指令的 Pass"></a>自制可插入指令的 Pass</h4><p>之所以在编译中间层插入指令而不在编译 frontend 插入代码的原因是，这样做的话能用类似 llvm-mctoll 二进制转中间层 IR 代码的方式，可对第三方这样没有 frontend 源码而只有生成的二进制产物的库进行分析。</p>
 <p>在函数中插入执行指令执行自定功能的方法是，用 IRBuilder 使用 SetInsertPoint 设置位置，CreateCall 插入指令，插入在块的初始位置，用的是 <code>dyn_cast&lt;BinaryOperator&gt;(&amp;I)</code> 。CreateCall 调用 LLVMContextFunctionCallee 来自 <code>F.getParent()-&gt;getOrInsertFunction</code>，其第一个参数就是要执行我们自定义函数的函数名，第二个参数 FunctionType 是通过 <code>paramTypes</code> 和 <code>Type::getVoidTy</code> 根据 LLVMContext 而来。 使用编译属性可以指定要控制的函数，pass 可用 getGlobalVariable 取到 <code>llvm.global.annotations</code> ，也就是所有编译属性。 </p>
@@ -277,8 +277,8 @@ TOTAL                                           <span class="token number">2</sp
 
 <p>从生成的 json 文件可以看到这个生成的报告有5个统计项，分别是函数、实例化、行、区域和分支。</p>
 <p>更多报告生成选型参看 <a target="_blank" rel="noopener" href="https://llvm.org/docs/CommandGuide/llvm-cov.html">llvm-cov 官方说明</a> 。</p>
-<h3 id="Xcode-配置生成代码覆盖率报告"><a href="#Xcode-配置生成代码覆盖率报告" class="headerlink" title="Xcode 配置生成代码覆盖率报告"></a>Xcode 配置生成代码覆盖率报告</h3><p>在 Xcode 里开启代码覆盖率，先选择”Edit Scheme…”，再在 Test 中的 Options 里勾上 Gather coverage for all targets 或 some targets。如下图<br><img src="/uploads/use-llvm/02.png"></p>
-<p>在 Build Setting 中进行设置，添加 -profile-generate 和 -profile-coverage-mapping 编译 flags。<br><img src="/uploads/use-llvm/03.png"></p>
+<h3 id="Xcode-配置生成代码覆盖率报告"><a href="#Xcode-配置生成代码覆盖率报告" class="headerlink" title="Xcode 配置生成代码覆盖率报告"></a>Xcode 配置生成代码覆盖率报告</h3><p>在 Xcode 里开启代码覆盖率，先选择”Edit Scheme…”，再在 Test 中的 Options 里勾上 Gather coverage for all targets 或 some targets。如下图<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/use-llvm/02.png" class="lozad post-image"src="/uploads/use-llvm/02.png"></p>
+<p>在 Build Setting 中进行设置，添加 -profile-generate 和 -profile-coverage-mapping 编译 flags。<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/use-llvm/03.png" class="lozad post-image"src="/uploads/use-llvm/03.png"></p>
 <p>调用 llvm profile 的 c 函数生成 .profraw 文件。代码见：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token comment">// MARK: - 代码覆盖率</span>
 <span class="token keyword">func</span> <span class="token function-definition function">codeCoverageProfrawDump</span><span class="token punctuation">(</span>fileName<span class="token punctuation">:</span> <span class="token class-name">String</span> <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"cc"</span></span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -2400,7 +2400,7 @@ class PInterpreter : public llvm::ExecutionEngine,
 <p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>59</span>
+    <span>60</span>
     <span>Posts</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -2462,7 +2462,7 @@ class PInterpreter : public llvm::ExecutionEngine,
       <a href="/categories/Programming">
         <div class="categories-list-item">
           Programming
-          <span class="categories-list-item-badge">45</span>
+          <span class="categories-list-item-badge">46</span>
         </div>
       </a>
     
@@ -2519,11 +2519,11 @@ class PInterpreter : public llvm::ExecutionEngine,
     
     <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
     
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
     <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
     
     <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
-    
-    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
     
     <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
     
@@ -2558,6 +2558,11 @@ class PInterpreter : public llvm::ExecutionEngine,
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-24</div>
+        <a href="/2023/04/24/swiftui-rss-reader/"><div class="recent-posts-item-content">使用 SwiftUI 开发 RSS 阅读器</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-10-24</div>
         <a href="/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/"><div class="recent-posts-item-content">参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动</div></a>
       </div>
@@ -2570,11 +2575,6 @@ class PInterpreter : public llvm::ExecutionEngine,
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-06-10</div>
         <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
       </div>
     
   </div>
@@ -2597,7 +2597,7 @@ class PInterpreter : public llvm::ExecutionEngine,
           
           2014 -
           
-          2022
+          2023
         </span>
         <a href="/" class="footer-link">戴铭的博客 </a>
       </div>

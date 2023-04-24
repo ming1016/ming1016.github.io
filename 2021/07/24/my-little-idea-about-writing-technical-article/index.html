@@ -215,7 +215,7 @@
 <p>关于故事性，故事性往往是用来引入读进去的一种办法，A 站的 Swift 实践这篇文章的开头通过讲述使用 Swift 的必要性、A 站为之付出的努力和收获、Swift 语言的演进的过程的方式尽量避开具体技术描述，而是使用通俗易懂的描述让读的人可以被轻松带入到文章中来。</p>
 <h3 id="深入剖析Auto-Layout，分析iOS各版本新增特性"><a href="#深入剖析Auto-Layout，分析iOS各版本新增特性" class="headerlink" title="深入剖析Auto Layout，分析iOS各版本新增特性"></a>深入剖析Auto Layout，分析iOS各版本新增特性</h3><p><a href="https://ming1016.github.io/2015/11/03/deeply-analyse-autolayout/">《深入剖析Auto Layout，分析iOS各版本新增特性》</a>。写这个文章也是有着一段不同寻常的经历。那时刚到公司，所有布局都还是使用的 frame 方式，而 Auto Layout 苹果公司才推出不久，在另一位跟我一样新进公司熟悉 Auto Layout 同事的怂恿下，我打算在改版需求中使用 Auto Layout 来替换原有布局方式。但在需求开发刚开始时，那位熟悉 Auto Layout 的新同事突然离职了，我感觉失去了援手，但是我认可了这个技术，还是坚持使用它。期间碰到的苦难无数，布局思路带来了很多开发方式的改变，还有动画的结合会出现的各种效果不一致，其间公司老员工还不断劝我还是走老路比较稳妥。改版完后大部分主流程，包括首页发单、等待页、接单进行页都被改造成 Auto Layout。</p>
 <p>更困难的事情还在后面呢，测试期间发现在 iOS6 上会出现各种崩溃、页面布局混乱、动画效果不一致等问题，我的 Bug 始终保持在 Bug 列表前十页。改 Bug 那些天，晚上调的眼发疼，深夜想的难入眠。线下 Bug 改完，上线后才是噩梦的开始，当时我们 App 的 iOS6 用户依旧很多，于是很多偶现崩溃被放大了，我的崩溃问题一直排在 Top1，虽然我很快找到了改好的办法，但是对于这几个偶现的问题还需要一个可靠可信服的解释，这样后面才能够让大家放心使用 Auto Layout。还记得当时周末坐在得实大厦窗户边的工位上，在查完和试完所有资料后依然无果时的无力感。本想着改回以前的 frame 布局算了，后又觉不甘。下几个周末跑到各大图书馆查看所有涉有 Auto Layout 的书，也是那个时候了解到了 VFL 语言。皇天不负有心人，WWDC 开始了，其中有个 Session 叫 Mysteries of Auto Layout，分为<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2015-218/">上</a>、<a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2015-219/">下</a>两个部分，把 Auto Layout 的原理讲得非常透彻了，至此，透过原理我也找到了问题的根因，并把他们记录在了文章中。这部分内容我还在一个沙龙做了分享，下面是当时分享的 Auto Layout 的原理部分的内容：</p>
-<p><img src="/uploads/my-little-idea-about-writing-technical-article/1.PNG"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/1.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/1.PNG"></p>
 <p>完整幻灯片参看<a href="https://ming1016.github.io/2021/07/13/deeply-analyse-autolayout-slides/">这里</a>。</p>
 <p>这些经验的总结在当时是非常新的，因为官方也是刚公布出其内部的原理，没有人能够更早的知道这些信息，估计也很少有人会考究这么多。有了这些由于一直坚持下来去找根因的经历才使得文章有了独特性。</p>
 <p>当然，深入剖析 Auto Layout 这篇文章也加了 Auto Layout 的历史、生命周期、VFL 语言的介绍用来丰富内容的广度，以提升真实感，但你会发现独特性在这里显得尤为重要。</p>
@@ -234,7 +234,7 @@
 <p>就在百般无奈，各种资源条件受限的情况下。我想着看能不能把需要繁琐手动检查的动作试着写成程序自动完成。于是我用一个周末开发了查找无用方法工具，能够自动查找出工程中没有用到的方法，也兼顾了我们工程的一些运行时调用的方法检查。这样重复繁重的检查工作就变得轻松了很多。</p>
 <p>工具开发完后，我发现这工具的实现并无相关成熟理论来进行支持，以后怎么完善和优化这个工具也没有一点思路。为此我还苦恼了蛮久的。</p>
 <p>经过一位同事提醒，说大学有门编译原理的课里面就有讲怎么分析代码的，于是我就开始针对性的翻阅相关资料。于是乎，我发现了一片蓝海，这里面涉及到的技术不光是分析代码，还有很多以前不了解的程序怎么跑起来的细节，这里的知识就像可以无限递归的树，能够将你所有时间都吞没。这篇文章我更新添加内容的次数不下十次，每当get到了新的东西都忍不住记录下来。这期间动手去实践一些知识点，也遇到很多问题，解决这些问题的过程，对相关知识理解就更深入了。后来在17年的@Swift 大会上还做了 LLVM 相关内容的分享，下图是其中一张 Slide。</p>
-<p><img src="/uploads/my-little-idea-about-writing-technical-article/2.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/2.png" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/2.png"></p>
 <p>完整幻灯片参看<a href="https://ming1016.github.io/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/">这里</a></p>
 <h3 id="深入剖析-WebKit"><a href="#深入剖析-WebKit" class="headerlink" title="深入剖析 WebKit"></a>深入剖析 WebKit</h3><p>为了完成网页到原生代码的转换，我开始学习 Web 的标准，而 WebKit 是苹果公司对 Web 标准实现，V8和 Flutter 渲染技术的源头，WebKit 的学习能够让我更完整的了解网页从请求到布局再到渲染的流程和使用的相关技术。<a href="https://ming1016.github.io/2017/10/11/deeply-analyse-webkit/">WebKit的这篇文章</a>我罗列了大量的 Web 规范资料，由于 WebKit 非常的庞大，架构也很复杂，文章里对架构也进行了详细的说明，对源码的结构做了详细的说明。全文按照一个页面从请求到最终渲染的流程顺序，依次对其关键环节里对应源代码和原理进行了详细的说明。完成这篇花费时间巨大，代码基本读了个遍。之后我对于前端技术有了更深的理解，特别是页面异步加载的流程和布局原理。</p>
 <p>感觉这篇完全靠的是对前端技术的热情完成的。手冢治虫说过，那些投稿的人，都是热爱着漫画，把画出一部作品作为自己生命意义的人。所以他们才能获得成功，成为马拉松里跑到最后的人。热情可以增加25个 IQ 值。如果一个人仿佛开悟了的高僧，失去任何欲求、愿望、不甘、烦恨与伤痛，那么即使他去画漫画，即使基因再好，天赋再高，也只会画成佛教的禅画罢了。在比尔.布莱森在《人体简史》这本书中提到一个镜子相关的实验，实验来自一名防碎眼镜商人，在1980年创办了胚种精选择库（Repository for Germinal Choice），这个精子库只有诺贝尔获奖者和其他杰出知识权威的镜子。他想的是能够提供最好的精子生出天才婴儿，结果是在出生的200名儿童里，没有一个杰出天才，甚至连一个眼镜工程师都没能造出来，可见对做的事情有热情更加重要，而不仅仅只要基因好就行。</p>
@@ -460,7 +460,7 @@
 <h4 id="Swift-Concurrency-和-Combine"><a href="#Swift-Concurrency-和-Combine" class="headerlink" title="Swift Concurrency 和 Combine"></a>Swift Concurrency 和 Combine</h4><p>由于 Swift Concurrency 的推出和大量的 Session 发布，特别是<a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/swift/asyncsequence/">AsyncSequence</a>的出现，以及正在路上的<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0314-async-stream.md">AsyncStream、AsyncThrowingStream</a>和<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0300-continuation.md">continuation</a>提案（在Xcode 13.0 beta 3 AsyncStream 正式<a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/swift/asyncstream?changes=latest_beta">release</a>），这些越来越多和 Combine 功能重叠的特性出现在 Swift Concurrency 蓝图里时，大家开始猜测是否 Combine 会被 Swift Concurrency 替代。关于未来是 Swift Concurrency 还是 Combine，我的感觉是，Combine 更侧重在响应式编程上，而响应式编程并不是所有开发人员都会接受的，而 Swift Concurrency 是所有人都愿意接受的开发方式，从 Swift Concurrency 推出后开发者使用的数量和社区反应火热程度来看都比 Combine 要大。在苹果对 Combine 有下一步动作之前，我还是更偏向 Swift Concurrency。</p>
 <p>见闻写到这里，把独特性比作骨架，真实感比作血肉，故事性和新意比作皮肤，你会发现没有写出自己的经历的话，就像进击巨人里的那些小巨人，即使有了完整的皮肤，但骨头架子不大是不会有开头踢破大门的只有骨架和血肉的巨型大巨人那么强大且震撼有力。</p>
 <p>那么接下来我就描写一些我在 WWDC21 期间独特的一些经历。</p>
-<h3 id="WWDC-playground直播活动"><a href="#WWDC-playground直播活动" class="headerlink" title="WWDC.playground直播活动"></a>WWDC.playground直播活动</h3><p>想想 WWDC21 过程中我还是有些经历，比如参加了苹果官方推荐的外围活动<a target="_blank" rel="noopener" href="https://swift.gg/wwdc/">WWDC.playgournd by SwiftGG</a>。<br><img src="/uploads/my-little-idea-about-writing-technical-article/3.png"><br><img src="/uploads/my-little-idea-about-writing-technical-article/4.png"></p>
+<h3 id="WWDC-playground直播活动"><a href="#WWDC-playground直播活动" class="headerlink" title="WWDC.playground直播活动"></a>WWDC.playground直播活动</h3><p>想想 WWDC21 过程中我还是有些经历，比如参加了苹果官方推荐的外围活动<a target="_blank" rel="noopener" href="https://swift.gg/wwdc/">WWDC.playgournd by SwiftGG</a>。<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/3.png" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/3.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/4.png" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/4.png"></p>
 <p>连续看了5天活动直播，还参加了一天的 Live Coding 介绍 SwiftUI 的新特性。直播 Live Coding 准备的时间很少，而且以前我还没有现场当着几千人面写代码的经历，直播前一天晚上赶着通宵达旦看完了相关 Session，写了些代码样例测试，当天白天还开了一个很长的会，回家前和同事讨论一个技术问题时，我发现我嗓子还哑了。到家坐在桌前脚还抽筋了，你可想象到我当时内心有多崩溃。</p>
 <p>在直播前，我还专门的给思琦先演练了一遍，其中在介绍 AsyncImage 处理失败、空白、成功还有默认情况时，编译器报错提示无法找到原因，还提示让我提交 bug 的错误信息。直播开始前一直没有找到原因，重新敲了一遍才解决，所以心里没底，直播开始时还一直担心这个问题会重现。直播时在写到这段时果然编译器错误又出现了，当时我脑袋一片空白，心中大呼救我。好在没多一会我突然发现先前一段演示的 placeholder 接口没有删掉，原因真的就是这个，删掉后就正常了，别提有多开心了。后面就轻松了很多。由于只有一天时间准备，很多内容准备了，当时一边敲代码一边说也漏说了很多，比如 AsyncImage 使用的是 URLSession，用的是 URLCache，还不能自定义缓存。Refreshable 只能用在 List 里。SwiftUI 和数组绑定的代码是可以兼容前一个版本的。</p>
 <p>另外还有个 WWDC 期间很火的老系统UI挑战赛让我印象深刻，其中有个18岁小伙用 SwiftUI 开发了经典 iPhone4可用版本最火爆，Github 地址<a target="_blank" rel="noopener" href="https://github.com/zzanehip/The-OldOS-Project">在这里</a>。</p>
@@ -501,10 +501,10 @@
 <p>Swift 视图返回的类型是不固定的，因此使用了 Swift 的不透明类型语法特性来进行支持，支持其返回带有大量泛型参数的庞大类型，这个类型中还包括了 Result Builder 中的 if 条件类型值，支持多分支类型。Opaque Types的提案在这里<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0244-opaque-result-types.md">SE-0244</a>。</p>
 <p>跟着视图后面的点语法是 modifier，每个 modifier 都会在视图树中新建一个层，因此 modifier 的写的先后顺序不同，效果是不一样的。</p>
 <p>对于数据的监听和响应使用的是 swift 里的属性包装语法特性，属性包装的提案是<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0258-property-wrappers.md">SE-0258</a>。包装后数据的使用就方便了很多，对于不同属性包装类别的选择可以按照数据类型和应用场景来，对于值类型，如果是只读的数据可以什么都不加，如果数据是可读写的，使用@State，如果数据是需要在其他视图进行读写并自己也同步响应的，使用@Binding进行声明。对于对象类型的数据，指向对象的引用能发生变化要用@ObservedObject来声明，引用不可改变，那么就用@StateObject，使用环境传递对象用@EnvironmentObject。</p>
-<p>完整的 WWDC<T>沙龙活动回放可以扫下图中的二维码：<br><img src="/uploads/my-little-idea-about-writing-technical-article/5.jpeg"></p>
-<p><img src="/uploads/my-little-idea-about-writing-technical-article/6.JPG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/7.jpeg"></p>
+<p>完整的 WWDC<T>沙龙活动回放可以扫下图中的二维码：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/5.jpeg" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/5.jpeg"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/6.JPG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/6.JPG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/7.jpeg" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/7.jpeg"></p>
 <p>下面是当时现场演示的部分幻灯片，动画的效果可以看上面的视频回放：</p>
-<p><img src="/uploads/my-little-idea-about-writing-technical-article/8.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/9.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/10.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/11.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/12.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/13.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/14.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/15.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/16.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/17.PNG"><br><img src="/uploads/my-little-idea-about-writing-technical-article/18.PNG"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/8.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/8.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/9.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/9.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/10.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/10.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/11.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/11.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/12.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/12.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/13.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/13.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/14.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/14.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/15.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/15.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/16.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/16.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/17.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/17.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/my-little-idea-about-writing-technical-article/18.PNG" class="lozad post-image"src="/uploads/my-little-idea-about-writing-technical-article/18.PNG"></p>
 <p>至此，这篇WWDC21见闻就写完了，详细描写自己WWDC21期间的一些独特经历和其中涉及相关技术，这样会让文章的独特性和真实感有很大的提升。</p>
 <h2 id="对独特性和新意的思考"><a href="#对独特性和新意的思考" class="headerlink" title="对独特性和新意的思考"></a>对独特性和新意的思考</h2><p>通篇看下来，你是不是感觉到故事性和真实性其实是非常容易做到的。可以理解为只要努力些，时间再长些，这两点就能够完成，且能线性得到提高。只埋头做事情比较容易和舒适，但一直这么干，熵就会越来越多，不可逆的无用能量无法排除。而独特性意味着你会去体验适应新的环境，去获取实践新的认知，去结识新的朋友碰撞新的思路，使得自己体验到不同以往的经验。新意成功几率很低，非线性的，类似于基因突变产生的进化，这和努力无关。新意和独特性一样属于逆熵过程，不能忽视，大跨步的进步需要对传统的颠覆。新意会带来新的独特经历形成一个新的循环，不去尝试就不会有新的机会。</p>
 <p>如果把本文当成一篇笔记，其间又融入了写作心得；如果把本文当做一篇写作心得，其间又穿插了大量笔记内容。你说这是不是也是一种新意呢。</p>
@@ -565,7 +565,7 @@
 <p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>59</span>
+    <span>60</span>
     <span>Posts</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -627,7 +627,7 @@
       <a href="/categories/Programming">
         <div class="categories-list-item">
           Programming
-          <span class="categories-list-item-badge">45</span>
+          <span class="categories-list-item-badge">46</span>
         </div>
       </a>
     
@@ -684,11 +684,11 @@
     
     <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
     
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
     <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
     
     <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
-    
-    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
     
     <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
     
@@ -723,6 +723,11 @@
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-24</div>
+        <a href="/2023/04/24/swiftui-rss-reader/"><div class="recent-posts-item-content">使用 SwiftUI 开发 RSS 阅读器</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-10-24</div>
         <a href="/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/"><div class="recent-posts-item-content">参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动</div></a>
       </div>
@@ -735,11 +740,6 @@
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-06-10</div>
         <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
       </div>
     
   </div>
@@ -762,7 +762,7 @@
           
           2014 -
           
-          2022
+          2023
         </span>
         <a href="/" class="footer-link">戴铭的博客 </a>
       </div>

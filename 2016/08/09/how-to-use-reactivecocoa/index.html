@@ -256,7 +256,7 @@ RACSequence <span class="token operator">*</span> stream <span class="token oper
         <span class="token keyword">return</span> <span class="token punctuation">[</span>UIColor redColor<span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="https://github.com/ming1016/study/blob/master/pic/CombinePipeline.png?raw=true" alt="绑定键值图示"></p>
+<p><img src="https://github.com/ming1016/study/blob/master/pic/CombinePipeline.png?raw=true" alt="绑定键值图示" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://github.com/ming1016/study/blob/master/pic/CombinePipeline.png?raw=true" class="lozad post-image"></p>
 <h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><p>比较好的一个完整的RAC实践的例子：<a target="_blank" rel="noopener" href="https://github.com/ashfurrow/FunctionalReactivePixels">https://github.com/ashfurrow/FunctionalReactivePixels</a></p>
 <h3 id="网络请求生成对应model"><a href="#网络请求生成对应model" class="headerlink" title="网络请求生成对应model"></a>网络请求生成对应model</h3><pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token operator">+</span> <span class="token punctuation">(</span>RACSignal <span class="token operator">*</span><span class="token punctuation">)</span>importPhotos<span class="token punctuation">&#123;</span>
     RACReplaySubject <span class="token operator">*</span> subject <span class="token operator">=</span> <span class="token punctuation">[</span>RACReplaySubject subject<span class="token punctuation">]</span><span class="token punctuation">;</span>
@@ -459,7 +459,7 @@ RACDelegateProxy <span class="token operator">*</span>viewControllerDelegate <sp
     <span class="token keyword">return</span> nil<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="https://github.com/ming1016/study/blob/master/pic/CompletePipeline.png?raw=true" alt="不同信号顺序链接"></p>
+<p><img src="https://github.com/ming1016/study/blob/master/pic/CompletePipeline.png?raw=true" alt="不同信号顺序链接" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://github.com/ming1016/study/blob/master/pic/CompletePipeline.png?raw=true" class="lozad post-image"></p>
 <h3 id="异步加载图片"><a href="#异步加载图片" class="headerlink" title="异步加载图片"></a>异步加载图片</h3><pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token operator">-</span><span class="token punctuation">(</span>RACSignal <span class="token operator">*</span><span class="token punctuation">)</span>signalForLoadingImage<span class="token punctuation">:</span><span class="token punctuation">(</span>NSString <span class="token operator">*</span><span class="token punctuation">)</span>imageUrl <span class="token punctuation">&#123;</span>
 
     RACScheduler <span class="token operator">*</span>scheduler <span class="token operator">=</span> <span class="token punctuation">[</span>RACScheduler
@@ -832,9 +832,9 @@ RACSignal <span class="token operator">*</span>replaySignal <span class="token o
 <h3 id="NSSet"><a href="#NSSet" class="headerlink" title="NSSet"></a>NSSet</h3><ul>
 <li>rac_sequence</li>
 </ul>
-<h1 id="RAC图片版的API手册"><a href="#RAC图片版的API手册" class="headerlink" title="RAC图片版的API手册"></a>RAC图片版的API手册</h1><h2 id="ReactiveCocoa-objectivec"><a href="#ReactiveCocoa-objectivec" class="headerlink" title="ReactiveCocoa objectivec"></a>ReactiveCocoa objectivec</h2><p><img src="https://github.com/ming1016/study/blob/master/pic/ReactiveCocoaOC.png?raw=true" alt="ReactiveCocoaobjectivec"></p>
-<h2 id="ReactiveCocoa-Swift"><a href="#ReactiveCocoa-Swift" class="headerlink" title="ReactiveCocoa Swift"></a>ReactiveCocoa Swift</h2><p><img src="https://github.com/ming1016/study/blob/master/pic/ReactiveCocoaSwift.png?raw=true" alt="ReactiveCocoaSwift"></p>
-<h2 id="RXSwift"><a href="#RXSwift" class="headerlink" title="RXSwift"></a>RXSwift</h2><p><img src="https://github.com/ming1016/study/blob/master/pic/RXSwift.png?raw=true" alt="RXSwift"></p>
+<h1 id="RAC图片版的API手册"><a href="#RAC图片版的API手册" class="headerlink" title="RAC图片版的API手册"></a>RAC图片版的API手册</h1><h2 id="ReactiveCocoa-objectivec"><a href="#ReactiveCocoa-objectivec" class="headerlink" title="ReactiveCocoa objectivec"></a>ReactiveCocoa objectivec</h2><p><img src="https://github.com/ming1016/study/blob/master/pic/ReactiveCocoaOC.png?raw=true" alt="ReactiveCocoaobjectivec" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://github.com/ming1016/study/blob/master/pic/ReactiveCocoaOC.png?raw=true" class="lozad post-image"></p>
+<h2 id="ReactiveCocoa-Swift"><a href="#ReactiveCocoa-Swift" class="headerlink" title="ReactiveCocoa Swift"></a>ReactiveCocoa Swift</h2><p><img src="https://github.com/ming1016/study/blob/master/pic/ReactiveCocoaSwift.png?raw=true" alt="ReactiveCocoaSwift" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://github.com/ming1016/study/blob/master/pic/ReactiveCocoaSwift.png?raw=true" class="lozad post-image"></p>
+<h2 id="RXSwift"><a href="#RXSwift" class="headerlink" title="RXSwift"></a>RXSwift</h2><p><img src="https://github.com/ming1016/study/blob/master/pic/RXSwift.png?raw=true" alt="RXSwift" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://github.com/ming1016/study/blob/master/pic/RXSwift.png?raw=true" class="lozad post-image"></p>
 <h1 id="本文参考整理自"><a href="#本文参考整理自" class="headerlink" title="本文参考整理自"></a>本文参考整理自</h1><ul>
 <li>ReactiveCocoa Tutorial – The Definitive Introduction: Part 1&#x2F;2 <a target="_blank" rel="noopener" href="https://www.raywenderlich.com/62699/reactivecocoa-tutorial-pt1">https://www.raywenderlich.com/62699/reactivecocoa-tutorial-pt1</a></li>
 <li>ReactiveCocoa Tutorial – The Definitive Introduction: Part 2&#x2F;2 <a target="_blank" rel="noopener" href="https://www.raywenderlich.com/62796/reactivecocoa-tutorial-pt2">https://www.raywenderlich.com/62796/reactivecocoa-tutorial-pt2</a></li>
@@ -899,7 +899,7 @@ RACSignal <span class="token operator">*</span>replaySignal <span class="token o
 <p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>59</span>
+    <span>60</span>
     <span>Posts</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -961,7 +961,7 @@ RACSignal <span class="token operator">*</span>replaySignal <span class="token o
       <a href="/categories/Programming">
         <div class="categories-list-item">
           Programming
-          <span class="categories-list-item-badge">45</span>
+          <span class="categories-list-item-badge">46</span>
         </div>
       </a>
     
@@ -1018,11 +1018,11 @@ RACSignal <span class="token operator">*</span>replaySignal <span class="token o
     
     <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
     
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
     <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
     
     <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
-    
-    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
     
     <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
     
@@ -1057,6 +1057,11 @@ RACSignal <span class="token operator">*</span>replaySignal <span class="token o
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-24</div>
+        <a href="/2023/04/24/swiftui-rss-reader/"><div class="recent-posts-item-content">使用 SwiftUI 开发 RSS 阅读器</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-10-24</div>
         <a href="/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/"><div class="recent-posts-item-content">参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动</div></a>
       </div>
@@ -1069,11 +1074,6 @@ RACSignal <span class="token operator">*</span>replaySignal <span class="token o
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-06-10</div>
         <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
       </div>
     
   </div>
@@ -1096,7 +1096,7 @@ RACSignal <span class="token operator">*</span>replaySignal <span class="token o
           
           2014 -
           
-          2022
+          2023
         </span>
         <a href="/" class="footer-link">戴铭的博客 </a>
       </div>

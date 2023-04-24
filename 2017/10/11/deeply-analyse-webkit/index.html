@@ -193,15 +193,15 @@
 <p>2008年 Google 以苹果的 WebKit 为内核，建立了新的项目 Chromium，在此基础上开发了自己浏览器 Chrome。</p>
 <p>2012年 WHATWG 和 W3C 推出 HTML5 技术规范。HTML5 包含了10大类别，offline 离线，storage 存储，connectivity 连接，file access 文件访问，semantics 语义，audio &#x2F; video 音频视频，3D&#x2F;graphics 3D和图形，presentation 展示，performance 性能和 Nuts and bolts 其它。</p>
 <p>完整的浏览器发展史可以在这里看：<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Timeline_of_web_browsers">https://en.wikipedia.org/wiki/Timeline_of_web_browsers</a></p>
-<h2 id="WebKit-全貌"><a href="#WebKit-全貌" class="headerlink" title="WebKit 全貌"></a>WebKit 全貌</h2><h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p>可以看到浏览器技术的发展到了后期基本都是基于 WebKit 开发的，那么我们就来了解下 WebKit 吧。先看看它的全貌。<br>先看看它的大模块：<br><img src="/uploads/deeply-analyse-webkit/45.png" alt="45"><br>WebKit 为了能够具有 Chromium 那样的多进程优点而推出了 WebKit2 抽象出一组新的编程接口，下面是 WebKit2 的进程结构模型：<br><img src="/uploads/deeply-analyse-webkit/46.png" alt="46"><br>整个 WebKit 架构，如下：<br><img src="/uploads/deeply-analyse-webkit/49.png" alt="49"><br>实线部分是共享的，虚线部分会根据不同的平台有不同的实现。</p>
-<p>下面是 WebKit 最核心最复杂的排版引擎 WebCore 的结构图：<br><img src="/uploads/deeply-analyse-webkit/74.png" alt="74"></p>
-<p><img src="/uploads/deeply-analyse-webkit/01.png" alt="01"></p>
+<h2 id="WebKit-全貌"><a href="#WebKit-全貌" class="headerlink" title="WebKit 全貌"></a>WebKit 全貌</h2><h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p>可以看到浏览器技术的发展到了后期基本都是基于 WebKit 开发的，那么我们就来了解下 WebKit 吧。先看看它的全貌。<br>先看看它的大模块：<br><img src="/uploads/deeply-analyse-webkit/45.png" alt="45" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/45.png" class="lozad post-image"><br>WebKit 为了能够具有 Chromium 那样的多进程优点而推出了 WebKit2 抽象出一组新的编程接口，下面是 WebKit2 的进程结构模型：<br><img src="/uploads/deeply-analyse-webkit/46.png" alt="46" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/46.png" class="lozad post-image"><br>整个 WebKit 架构，如下：<br><img src="/uploads/deeply-analyse-webkit/49.png" alt="49" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/49.png" class="lozad post-image"><br>实线部分是共享的，虚线部分会根据不同的平台有不同的实现。</p>
+<p>下面是 WebKit 最核心最复杂的排版引擎 WebCore 的结构图：<br><img src="/uploads/deeply-analyse-webkit/74.png" alt="74" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/74.png" class="lozad post-image"></p>
+<p><img src="/uploads/deeply-analyse-webkit/01.png" alt="01" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/01.png" class="lozad post-image"></p>
 <p>解析后会产生 DOM Tree，解析 CSS 会产生 CSS Rule Tree，Javascript 会通过 DOM API 和 CSS Object Model（CSSOM） API 来操作 DOM Tree 和 CSS Rule Tree。</p>
-<p>DOM Tree<br><img src="/uploads/deeply-analyse-webkit/02.png" alt="02"><br>从网页 URL 到构建完 DOM 树的过程如图<br><img src="/uploads/deeply-analyse-webkit/47.png" alt="47"></p>
-<p>CSS Rule Tree<br><img src="/uploads/deeply-analyse-webkit/03.png" alt="03"></p>
-<p>通过上面的两个数构造的 Style Context Tree<br><img src="/uploads/deeply-analyse-webkit/04.png" alt="04"></p>
-<p>浏览器引擎最后会 通过 DOM Tree 和 CSS Rule Tree 来构造 Rendering Tree。这个过程如下：<br><img src="/uploads/deeply-analyse-webkit/48.png" alt="48"></p>
-<p>计算每个 Node 的位置，执行 Layout 过程<br><img src="/uploads/deeply-analyse-webkit/05.png" alt="05"></p>
+<p>DOM Tree<br><img src="/uploads/deeply-analyse-webkit/02.png" alt="02" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/02.png" class="lozad post-image"><br>从网页 URL 到构建完 DOM 树的过程如图<br><img src="/uploads/deeply-analyse-webkit/47.png" alt="47" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/47.png" class="lozad post-image"></p>
+<p>CSS Rule Tree<br><img src="/uploads/deeply-analyse-webkit/03.png" alt="03" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/03.png" class="lozad post-image"></p>
+<p>通过上面的两个数构造的 Style Context Tree<br><img src="/uploads/deeply-analyse-webkit/04.png" alt="04" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/04.png" class="lozad post-image"></p>
+<p>浏览器引擎最后会 通过 DOM Tree 和 CSS Rule Tree 来构造 Rendering Tree。这个过程如下：<br><img src="/uploads/deeply-analyse-webkit/48.png" alt="48" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/48.png" class="lozad post-image"></p>
+<p>计算每个 Node 的位置，执行 Layout 过程<br><img src="/uploads/deeply-analyse-webkit/05.png" alt="05" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/05.png" class="lozad post-image"></p>
 <p>Compute style 是计算 CSS 样式，layout 是定位坐标和大小，各种 position，overflow，z-index 等。这些箭头表示动态修改了 DOM 属性和 CSS 属性会导致 Layout 执行。</p>
 <h3 id="WebKit-源代码结构说明"><a href="#WebKit-源代码结构说明" class="headerlink" title="WebKit 源代码结构说明"></a>WebKit 源代码结构说明</h3><ul>
 <li>JavaScriptCore：默认 JavaScript 引擎，Google 已经使用了 V8 作为其 Chromium 的 JS 引擎。</li>
@@ -243,7 +243,7 @@
 <li>组合模式：用于树状结构对象，比如 DOM Tree，Render Tree，组成它们的类 ContainerNode 和 RenderObject 可以看成组合模式。</li>
 <li>命令模式：DOM 模块的 Event 类和 Editing 模块的 Command 类都是命令模式。</li>
 </ul>
-<h3 id="主要类"><a href="#主要类" class="headerlink" title="主要类"></a>主要类</h3><h4 id="整体"><a href="#整体" class="headerlink" title="整体"></a>整体</h4><p><img src="/uploads/deeply-analyse-webkit/06.png" alt="06"></p>
+<h3 id="主要类"><a href="#主要类" class="headerlink" title="主要类"></a>主要类</h3><h4 id="整体"><a href="#整体" class="headerlink" title="整体"></a>整体</h4><p><img src="/uploads/deeply-analyse-webkit/06.png" alt="06" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/06.png" class="lozad post-image"></p>
 <ul>
 <li>Frame：中心类，通过它找其它类</li>
 <li>FrameLoader：加载资源用的</li>
@@ -251,7 +251,7 @@
 <li>Page：窗口的操作</li>
 <li>EventHandler：输入事件的处理，比如键盘，鼠标，触屏等</li>
 </ul>
-<h4 id="WebCore-Frame"><a href="#WebCore-Frame" class="headerlink" title="WebCore::Frame"></a>WebCore::Frame</h4><p><img src="/uploads/deeply-analyse-webkit/29.png" alt="29"></p>
+<h4 id="WebCore-Frame"><a href="#WebCore-Frame" class="headerlink" title="WebCore::Frame"></a>WebCore::Frame</h4><p><img src="/uploads/deeply-analyse-webkit/29.png" alt="29" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/29.png" class="lozad post-image"></p>
 <ul>
 <li>FrameTree：管理父 Frame 和子 Frame 的关系，比如 main frame 里的 iframe。</li>
 <li>FrameLoader：frame 的加载</li>
@@ -265,7 +265,7 @@
 <li>AnimationControlle：动画控制。</li>
 <li>EventHandler：处理事件比如鼠标，按键，滚动和 resize 等事件。</li>
 </ul>
-<h3 id="渲染引擎"><a href="#渲染引擎" class="headerlink" title="渲染引擎"></a>渲染引擎</h3><p><img src="/uploads/deeply-analyse-webkit/43.png" alt="43"><br>上图可以看到渲染引擎处于浏览器三层结构的最上层。下面是渲染的过程：<br><img src="/uploads/deeply-analyse-webkit/44.png" alt="44"></p>
+<h3 id="渲染引擎"><a href="#渲染引擎" class="headerlink" title="渲染引擎"></a>渲染引擎</h3><p><img src="/uploads/deeply-analyse-webkit/43.png" alt="43" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/43.png" class="lozad post-image"><br>上图可以看到渲染引擎处于浏览器三层结构的最上层。下面是渲染的过程：<br><img src="/uploads/deeply-analyse-webkit/44.png" alt="44" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/44.png" class="lozad post-image"></p>
 <h3 id="Frame-的主要接口"><a href="#Frame-的主要接口" class="headerlink" title="Frame 的主要接口"></a>Frame 的主要接口</h3><h4 id="Create"><a href="#Create" class="headerlink" title="Create"></a>Create</h4><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">Ref&lt;Frame&gt; Frame::create(Page* page, HTMLFrameOwnerElement* ownerElement, FrameLoaderClient* client)
 &#123;
     ASSERT(page);
@@ -1060,19 +1060,19 @@ private:
 <li>字体：自定义的字体</li>
 <li>XSL：对 XSLT 语言编写的文件支持</li>
 </ul>
-<p>WebKit 里会有不同的类来表示这些资源，它们都会有个共同的基类 CachedResource。如下图所示，其中 HTML 的资源类型是 CachedRawResource 类，类型叫 MainResource 类。<br><img src="/uploads/deeply-analyse-webkit/50.png" alt="50"></p>
-<h3 id="FrameLoader"><a href="#FrameLoader" class="headerlink" title="FrameLoader"></a>FrameLoader</h3><p>加载的入口，最终会调到异步 load 过程。主要是提供一个下载一个 Frame 的一些接口。任何一个页面都需要至少一个 mainframe，因此 load 一般都是从 load 一个 mainframe 开始。<br><img src="/uploads/deeply-analyse-webkit/07.png" alt="07"><br><img src="/uploads/deeply-analyse-webkit/39.png" alt="39"></p>
+<p>WebKit 里会有不同的类来表示这些资源，它们都会有个共同的基类 CachedResource。如下图所示，其中 HTML 的资源类型是 CachedRawResource 类，类型叫 MainResource 类。<br><img src="/uploads/deeply-analyse-webkit/50.png" alt="50" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/50.png" class="lozad post-image"></p>
+<h3 id="FrameLoader"><a href="#FrameLoader" class="headerlink" title="FrameLoader"></a>FrameLoader</h3><p>加载的入口，最终会调到异步 load 过程。主要是提供一个下载一个 Frame 的一些接口。任何一个页面都需要至少一个 mainframe，因此 load 一般都是从 load 一个 mainframe 开始。<br><img src="/uploads/deeply-analyse-webkit/07.png" alt="07" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/07.png" class="lozad post-image"><br><img src="/uploads/deeply-analyse-webkit/39.png" alt="39" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/39.png" class="lozad post-image"></p>
 <ul>
 <li>MainResourceLoader：加载资源，html 也是资源，还有 css，javascript 和 image 等这些是 SubresourceLoader 来管理的。</li>
 <li>CacheResourceLoader：缓存资源读取。</li>
 <li>资源加载和缓存是由 ResourceLoader 和 Cache 这两个独立性高的模块来实现。</li>
 <li>DocumentWriter：辅助类，将获取的数据写到 writer 里，会创建 DOM 树的根节点 HTMLDocument 对象，作为一个缓冲区进行 DocumentParser 解析操作，同时该类还包含了文档字符解码类和 HTMLDocumentParser 类。</li>
 </ul>
-<h4 id="加载过程"><a href="#加载过程" class="headerlink" title="加载过程"></a>加载过程</h4><p><img src="/uploads/deeply-analyse-webkit/08.png" alt="08"></p>
+<h4 id="加载过程"><a href="#加载过程" class="headerlink" title="加载过程"></a>加载过程</h4><p><img src="/uploads/deeply-analyse-webkit/08.png" alt="08" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/08.png" class="lozad post-image"></p>
 <p>解析前会创建不同的 Dcoument，DocumentLoader 的 commitData 第一次收到数据时会调 DcumentWriter 的 begin，这个 begin 会调用 DocumentWriter::createDocument 创建一个 Document 对象。</p>
 <p>这里创建的对象会根据 URL 来创建不同的 Document，这里有 HTMLDocument ，详细实现可以看看 DOMImplementation::createDocument 的实现。</p>
 <p>整个资源加载过程，这篇文章有详细的介绍：<a target="_blank" rel="noopener" href="https://hacks.mozilla.org/2017/09/building-the-dom-faster-speculative-parsing-async-defer-and-preload/">https://hacks.mozilla.org/2017/09/building-the-dom-faster-speculative-parsing-async-defer-and-preload/</a></p>
-<h4 id="类关系"><a href="#类关系" class="headerlink" title="类关系"></a>类关系</h4><p><img src="/uploads/deeply-analyse-webkit/30.png" alt="30"><br><img src="/uploads/deeply-analyse-webkit/77.png" alt="77"><br><img src="/uploads/deeply-analyse-webkit/78.png" alt="78"></p>
+<h4 id="类关系"><a href="#类关系" class="headerlink" title="类关系"></a>类关系</h4><p><img src="/uploads/deeply-analyse-webkit/30.png" alt="30" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/30.png" class="lozad post-image"><br><img src="/uploads/deeply-analyse-webkit/77.png" alt="77" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/77.png" class="lozad post-image"><br><img src="/uploads/deeply-analyse-webkit/78.png" alt="78" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/78.png" class="lozad post-image"></p>
 <ul>
 <li>Frame 和 FrameLoaderClient：在 Frame 的构造函数中调用 FrameLoader 的构造函数需要传入 Frame 指针和 FrameLoaderClient 指针。一般作为不同平台适配代码，控制 WebKit 的使用逻辑。FrameLoader 会把加载过程的状态，还有结果等信息传递给 FrameLoaderClient，这样的话 FrameLoaderClient 就能够掌控 FrameLoader 的动作。</li>
 <li>SubFrameLoader：维护子 Frame。</li>
@@ -1327,7 +1327,7 @@ void FrameLoader::continueLoadAfterNavigationPolicy(const ResourceRequest&amp; r
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>接着在 continueLoadAfterWillSubmitForm() 方法里 m_provisionalDocumentLoader 会做些准备工作并将状态设置成正在加载资源的状态。在 prepareForLoadStart 中抛出加载状态，回调给 FrameLoaderClient，调用 DocumentLoader 的 startLoadingMainResource。</p>
 <h3 id="WebKit-网络处理"><a href="#WebKit-网络处理" class="headerlink" title="WebKit 网络处理"></a>WebKit 网络处理</h3><p>WebKit 资源的加载都是由其移植方实现的，网络部分代码都在 WebCore&#x2F;platform&#x2F;network 里，里面包含了 HTTP Header，MIME，状态码等信息的处理。</p>
-<h3 id="ResourceHandle-的相关类"><a href="#ResourceHandle-的相关类" class="headerlink" title="ResourceHandle 的相关类"></a>ResourceHandle 的相关类</h3><p><img src="/uploads/deeply-analyse-webkit/31.png" alt="31"></p>
+<h3 id="ResourceHandle-的相关类"><a href="#ResourceHandle-的相关类" class="headerlink" title="ResourceHandle 的相关类"></a>ResourceHandle 的相关类</h3><p><img src="/uploads/deeply-analyse-webkit/31.png" alt="31" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/31.png" class="lozad post-image"></p>
 <ul>
 <li>ResouceHandleClient：跟网络传输过程相关，是网络事件对应的回调。</li>
 <li>MainResourceLoader：主资源，指的 HTML 页面，会立刻发起，下载失败会向用户报错。没有缓存</li>
@@ -1401,10 +1401,10 @@ public:
     virtual NSCachedURLResponse *willCacheResponse(ResourceHandle*, NSCachedURLResponse *response) &#123; return response; &#125;
 #endif
 &#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>与 ResourceHandleClient 相关的类如下<br><img src="/uploads/deeply-analyse-webkit/80.png" alt="80"></p>
-<h3 id="加载流程"><a href="#加载流程" class="headerlink" title="加载流程"></a>加载流程</h3><p><img src="/uploads/deeply-analyse-webkit/98.png" alt="98"></p>
-<p><img src="/uploads/deeply-analyse-webkit/32.png" alt="32"></p>
-<h4 id="MainResourceLoader-的加载顺序"><a href="#MainResourceLoader-的加载顺序" class="headerlink" title="MainResourceLoader 的加载顺序"></a>MainResourceLoader 的加载顺序</h4><p>MainResourceLoader 加载的是 html 文本资源。<br><img src="/uploads/deeply-analyse-webkit/79.png" alt="79"></p>
+<p>与 ResourceHandleClient 相关的类如下<br><img src="/uploads/deeply-analyse-webkit/80.png" alt="80" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/80.png" class="lozad post-image"></p>
+<h3 id="加载流程"><a href="#加载流程" class="headerlink" title="加载流程"></a>加载流程</h3><p><img src="/uploads/deeply-analyse-webkit/98.png" alt="98" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/98.png" class="lozad post-image"></p>
+<p><img src="/uploads/deeply-analyse-webkit/32.png" alt="32" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/32.png" class="lozad post-image"></p>
+<h4 id="MainResourceLoader-的加载顺序"><a href="#MainResourceLoader-的加载顺序" class="headerlink" title="MainResourceLoader 的加载顺序"></a>MainResourceLoader 的加载顺序</h4><p>MainResourceLoader 加载的是 html 文本资源。<br><img src="/uploads/deeply-analyse-webkit/79.png" alt="79" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/79.png" class="lozad post-image"></p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">MainResourceLoader::load
 MainResourceLoader::loadNow
 MainResourceLoader::willSendRequest
@@ -1568,8 +1568,8 @@ HTMLDocumentParser::finish<span aria-hidden="true" class="line-numbers-rows"><sp
     append(decoded.releaseImpl());
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>数据接收完毕会回调 MainResourceLoader 的 didFinishLoading。接下来再调用 FrameLoader 的 finishedLoading 和 finishedLoadingDocument，调用 DocumentWriter 的 end。最后调用 Document 的 finishParsing，这样 MainResource 的加载完成。</p>
-<p>下面看看解码的流程：<br><img src="/uploads/deeply-analyse-webkit/85.png" alt="85"><br>decoder 的类图如下:<br><img src="/uploads/deeply-analyse-webkit/86.png" alt="86"></p>
-<h4 id="SubResourceLoader-的加载顺序"><a href="#SubResourceLoader-的加载顺序" class="headerlink" title="SubResourceLoader 的加载顺序"></a>SubResourceLoader 的加载顺序</h4><p>SubResourceLoader 加载的都是派生资源，加载派生资源的时序图如下：<br><img src="/uploads/deeply-analyse-webkit/81.png" alt="81"></p>
+<p>下面看看解码的流程：<br><img src="/uploads/deeply-analyse-webkit/85.png" alt="85" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/85.png" class="lozad post-image"><br>decoder 的类图如下:<br><img src="/uploads/deeply-analyse-webkit/86.png" alt="86" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/86.png" class="lozad post-image"></p>
+<h4 id="SubResourceLoader-的加载顺序"><a href="#SubResourceLoader-的加载顺序" class="headerlink" title="SubResourceLoader 的加载顺序"></a>SubResourceLoader 的加载顺序</h4><p>SubResourceLoader 加载的都是派生资源，加载派生资源的时序图如下：<br><img src="/uploads/deeply-analyse-webkit/81.png" alt="81" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/81.png" class="lozad post-image"></p>
 <p>会在创建 HTMLElement 设置 src 属性时会判断 tagName 是否是 img，是的话就会触发 SubResourceLoader。设置属性和判断的代码在 HTMLConstructionSite 这个类里，具体实现代码如下：</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">RefPtr&lt;Element&gt; HTMLConstructionSite::createHTMLElementOrFindCustomElementInterface(AtomicHTMLToken&amp; token, JSCustomElementInterface** customElementInterface)
 &#123;
@@ -1628,8 +1628,8 @@ HTMLDocumentParser::finish<span aria-hidden="true" class="line-numbers-rows"><sp
     m_imageLoader.updateFromElementIgnoringPreviousError();
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>SubResourceLoader 主要是转给 SubResourceLoaderClient 类来完成，如下图：<br><img src="/uploads/deeply-analyse-webkit/33.png" alt="33"></p>
-<p>ResourceLoadScheduler 会对 SubResourceLoader 进行调度管理<br><img src="/uploads/deeply-analyse-webkit/34.png" alt="34"></p>
+<p>SubResourceLoader 主要是转给 SubResourceLoaderClient 类来完成，如下图：<br><img src="/uploads/deeply-analyse-webkit/33.png" alt="33" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/33.png" class="lozad post-image"></p>
+<p>ResourceLoadScheduler 会对 SubResourceLoader 进行调度管理<br><img src="/uploads/deeply-analyse-webkit/34.png" alt="34" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/34.png" class="lozad post-image"></p>
 <ul>
 <li>Document：会创建拥有一个 CachedResourceLoader 类的对象实例 m_cachedResourceLoader，这个类有访问派生资源的接口，比如 requestImage，requestCSSStyleSheet，requestUserCSSStyleSheet，requestScript，requestFont，requestXSLStyleSheet，requestLinkPrefetch 等。这里 requestImage 有条件判断，这样外部实现接口就可以通过设置不加载图片，达到很多浏览器里提供那种无图模式了。</li>
 <li>CacheResourceLoader：会创建 CachedResourceRequest 对象发请求。在它的构造函数里会传入一个 CachedResource 对象作为参数。还会通过 m_requests 来记录资源请求数量，这样就可以把加载状态回调出去了。</li>
@@ -1688,7 +1688,7 @@ case Use:
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>在 CachedResourceLoader 的 loadResource 方法里会通过工厂方法 createResource 来创建不同的 CacheResource。</p>
-<p>CachedResource 加载<br>CachedResource 实现了 RFC2616 <a target="_blank" rel="noopener" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html">https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</a> 的 w3c 缓存标准，根据资源类型还派生出不同的子类如图所示：<br><img src="/uploads/deeply-analyse-webkit/35.png" alt="35"></p>
+<p>CachedResource 加载<br>CachedResource 实现了 RFC2616 <a target="_blank" rel="noopener" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html">https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</a> 的 w3c 缓存标准，根据资源类型还派生出不同的子类如图所示：<br><img src="/uploads/deeply-analyse-webkit/35.png" alt="35" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/35.png" class="lozad post-image"></p>
 <p>会有一个 CachedResourceClient 的集合 m_clients 来记录所有的 CachedResource，同时 CachedResourceClientWalker 这个接口可以遍历这个集合。 CacheResource 会通过 CachedResourceClient::notifyFinished 接口来在数据都到位后来进行通知。</p>
 <p>在 CachedResource 里 type 枚举定义了派生资源的类型，通过 defaultPriorityForResourceType 函数方法的返回可以看到各资源加载的优先级具体定义如下：</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">ResourceLoadPriority CachedResource::defaultPriorityForResourceType(Type type)
@@ -1851,9 +1851,9 @@ case Use:
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>以 image 为例如图所示：<br><img src="/uploads/deeply-analyse-webkit/36.png" alt="36"></p>
+<p>以 image 为例如图所示：<br><img src="/uploads/deeply-analyse-webkit/36.png" alt="36" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/36.png" class="lozad post-image"></p>
 <p>举个例子 image 加载的顺序。DocLoader 是负责子资源的加载，要加载一个图像，首先 DocLoader 要检查 Cache 中是否有对应的 CacheImage 对象，如果有就不用再次下载和解码直接用之。不在会创建一个新的 CacheImage 对象，这个 CacheImage 会要求 Loader 对象创建 SubresourceLoader 来启动网络请求。</p>
-<p>CacheImage 的加载过程如下图：<br><img src="/uploads/deeply-analyse-webkit/82.png" alt="82"></p>
+<p>CacheImage 的加载过程如下图：<br><img src="/uploads/deeply-analyse-webkit/82.png" alt="82" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/82.png" class="lozad post-image"></p>
 <p>具体调用方法顺序如下：</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">HTMLImageElement::create &#x2F;&#x2F;解析到 img 标签 会创建 HTMLImageElement 对象，里面包含 HTMLImageLoader 对象
 ImageLoader::updateFromElementIgnoringPreviousError &#x2F;&#x2F;解析到 img 的 href 属性
@@ -1886,7 +1886,7 @@ CachedResourceRequest::didFinishLoading
 CachedResource::finish
 CachedResourceLoader::loadDone
 CachedImage::data &#x2F;&#x2F;创建 Image 对象，进行解码<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>可以用下图概括下：<br><img src="/uploads/deeply-analyse-webkit/51.png" alt="51"><br>一般的资源加载都是异步执行，但是碰到 JavaScript 文件加载时会阻碍主线程的渲染，这时 WebKit 会在阻碍时去后面收集其它资源的 URL 发并发请求，这样对加载速度会有一定的优化。</p>
+<p>可以用下图概括下：<br><img src="/uploads/deeply-analyse-webkit/51.png" alt="51" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/51.png" class="lozad post-image"><br>一般的资源加载都是异步执行，但是碰到 JavaScript 文件加载时会阻碍主线程的渲染，这时 WebKit 会在阻碍时去后面收集其它资源的 URL 发并发请求，这样对加载速度会有一定的优化。</p>
 <h3 id="资源的生命周期"><a href="#资源的生命周期" class="headerlink" title="资源的生命周期"></a>资源的生命周期</h3><p>资源池采用的是 Least Recent Used 最少使用算法 LRU。通过 HTTP 协议规范中更新规范来确定下次是否需要更新资源。具体做法是先判断资源是否在资源池里，在的话就发一个 HTTP 请求带上一些信息比如资源的修改时间，然后服务器根据这个信息判断是否有更新，如果没有更新就返回 304 状态码，这样就直接使用资源池的原资源，不然就下载最新资源。</p>
 <h3 id="WebKit-的-Cache"><a href="#WebKit-的-Cache" class="headerlink" title="WebKit 的 Cache"></a>WebKit 的 Cache</h3><p>WebKit 主要有三种 Cache。</p>
 <h4 id="Page-Cache"><a href="#Page-Cache" class="headerlink" title="Page Cache"></a>Page Cache</h4><p>对浏览页面的缓存用来使页面历史操作加速。单例模式，会有页面上限，会缓存 DOM Tree，Render Tree。在打开一个新页面的时候会在 FrameLoader 的 commitProvisionalLoad 方法里把前一个页面加入 Page Cache。截取相关代码如下：</p>
@@ -1941,14 +1941,14 @@ CachedImage::data &#x2F;&#x2F;创建 Image 对象，进行解码<span aria-hidde
     prune(PruningReason::ReachedMaxSize);
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>当 Page 的 goBack 方法调用时会调用 FrameLoader 的 loadDifferentDocumentItem，同时加载类型设置为 FrameLoadTypeBack，然后页面将会从 Page Cache 里恢复。</p>
-<h4 id="Memory-Cache"><a href="#Memory-Cache" class="headerlink" title="Memory Cache"></a>Memory Cache</h4><p>使得相同 url 的资源能够快速获得。单例模式，在浏览器打开时创建，关闭时释放。关联类结构图如下：<br><img src="/uploads/deeply-analyse-webkit/83.png" alt="83"><br>Memory Cache 有三个比较重要的属性。</p>
+<h4 id="Memory-Cache"><a href="#Memory-Cache" class="headerlink" title="Memory Cache"></a>Memory Cache</h4><p>使得相同 url 的资源能够快速获得。单例模式，在浏览器打开时创建，关闭时释放。关联类结构图如下：<br><img src="/uploads/deeply-analyse-webkit/83.png" alt="83" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/83.png" class="lozad post-image"><br>Memory Cache 有三个比较重要的属性。</p>
 <ul>
 <li>m_resources：类型是 HashMap，key 是 url，值是 CacheResource。</li>
 <li>m_allResources：采用的是 LRU 算法，类型是 Vector&lt;LRUList,32&gt; 有 32 个向量，具体实现是在 MemeoryCache 的 lruListFor。回收资源是通过 MemoryCache 里的 prune 来的，会从链表尾开始进行回收直到空间大小达标为止。</li>
 <li>m_liveDecodedResource：类型为 LRUList，解码后的数据会记录在里面。</li>
 </ul>
 <h4 id="Disk-Cache"><a href="#Disk-Cache" class="headerlink" title="Disk Cache"></a>Disk Cache</h4><p>根据 HTTP 的头信息来设置缓存。属于持久化缓存存储，重新打开浏览器还能节省下载的流量和时间浪费。使用的也是 LRU 算法来控制缓存磁盘空间大小。具体实现是由平台相关代码来完成。</p>
-<h2 id="HTML-词法解析，字符串解析成-Tag-为单位的-HTML-Token"><a href="#HTML-词法解析，字符串解析成-Tag-为单位的-HTML-Token" class="headerlink" title="HTML 词法解析，字符串解析成 Tag 为单位的 HTML Token"></a>HTML 词法解析，字符串解析成 Tag 为单位的 HTML Token</h2><h3 id="解析成-HTML-Token-的算法"><a href="#解析成-HTML-Token-的算法" class="headerlink" title="解析成 HTML Token 的算法"></a>解析成 HTML Token 的算法</h3><p><img src="/uploads/deeply-analyse-webkit/17.png" alt="17"><br>初始状态是 Data state，碰到 &lt; 字符状态变为 Tag open state，下个字符为字母时就创建 Start tag token，状态变成 Tag name state，到 &gt; 字符状态变成 Data state，中间的字符都会被加到 token name 里。</p>
+<h2 id="HTML-词法解析，字符串解析成-Tag-为单位的-HTML-Token"><a href="#HTML-词法解析，字符串解析成-Tag-为单位的-HTML-Token" class="headerlink" title="HTML 词法解析，字符串解析成 Tag 为单位的 HTML Token"></a>HTML 词法解析，字符串解析成 Tag 为单位的 HTML Token</h2><h3 id="解析成-HTML-Token-的算法"><a href="#解析成-HTML-Token-的算法" class="headerlink" title="解析成 HTML Token 的算法"></a>解析成 HTML Token 的算法</h3><p><img src="/uploads/deeply-analyse-webkit/17.png" alt="17" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/17.png" class="lozad post-image"><br>初始状态是 Data state，碰到 &lt; 字符状态变为 Tag open state，下个字符为字母时就创建 Start tag token，状态变成 Tag name state，到 &gt; 字符状态变成 Data state，中间的字符都会被加到 token name 里。</p>
 <p>在 Tag open state 状态时如果碰到 &#x2F; 字符那么就会创建 End tag token，同时状态变成 Tag name state。</p>
 <p>在 WebKit 中有两个类是专门做词法分析的，一个是做标记的 HTMLToken，另一个是词法解析器 HTMLTokenizer 类，解析任务就是要把字节流解析成一个个 HTMLToken 给语法解析器分析。在 html 解析中一个 element 对应 三个 HTMLToken，一个是起始标签，一个是 element 内容，一个是结束标签 HTMLToken。在 DOM 树上起始结束标签对应一个 element node，内容是另一个 node。</p>
 <p>HTMLToken 的所有类型定义在 HTMLToken.h 里</p>
@@ -1980,7 +1980,7 @@ CachedImage::data &#x2F;&#x2F;创建 Image 对象，进行解码<span aria-hidde
     unsigned m_attributeBaseOffset &#123; 0 &#125;; &#x2F;&#x2F; Changes across document.write() boundaries.
 &#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>在说 HTMLTokenizer 具体解析实现之前我们先了解下有限状态机。先看看数学模型<br><img src="/uploads/deeply-analyse-webkit/28.png" alt="28"></p>
+<p>在说 HTMLTokenizer 具体解析实现之前我们先了解下有限状态机。先看看数学模型<br><img src="/uploads/deeply-analyse-webkit/28.png" alt="28" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/28.png" class="lozad post-image"></p>
 <p>HTMLTokenizer 里的 processToken 方法具体实现了整个状态机，实现主要是根据 w3c 的 tokenization 标准来实现的：<a target="_blank" rel="noopener" href="https://dev.w3.org/html5/spec-preview/tokenization.html">https://dev.w3.org/html5/spec-preview/tokenization.html</a> 。html 的字符集合就是数学模型里的字母表，状态的非空集合都定义在 HTMLTokenizer.h 的 state 枚举里。state 枚举值 DataState 表示初始状态。processToken 里对不同 state 所做的 case 处理就是状态转移函数。下面是 HTMLTokenizer 里的 state 枚举：</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;HTML 有限状态机的状态非空集合
 enum State &#123;
@@ -2067,9 +2067,9 @@ enum State &#123;
     CDATASectionDoubleRightSquareBracketState,
 &#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>词法解析主要接口是 nextToken 函数，下图展示了 HTMLTokenizer 的主要工作流程：<br><img src="/uploads/deeply-analyse-webkit/55.png" alt="55"></p>
+<p>词法解析主要接口是 nextToken 函数，下图展示了 HTMLTokenizer 的主要工作流程：<br><img src="/uploads/deeply-analyse-webkit/55.png" alt="55" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/55.png" class="lozad post-image"></p>
 <h2 id="HTML-语法解析"><a href="#HTML-语法解析" class="headerlink" title="HTML 语法解析"></a>HTML 语法解析</h2><h3 id="HTML-的语法定义"><a href="#HTML-的语法定义" class="headerlink" title="HTML 的语法定义"></a>HTML 的语法定义</h3><p>HTML 的语法规范是由 w3c 组织创建和定义的。语法语句可以使用正式的比如 BNF 来定义，不过对于 html 这种会在创建后允许再插入代码的语言 w3c 使用了 DTD 来定义 HTML，定义的文件可以在这里：<a target="_blank" rel="noopener" href="https://www.w3.org/TR/html4/strict.dtd">https://www.w3.org/TR/html4/strict.dtd</a></p>
-<h3 id="相关类关系图"><a href="#相关类关系图" class="headerlink" title="相关类关系图"></a>相关类关系图</h3><p><img src="/uploads/deeply-analyse-webkit/09.png" alt="09"></p>
+<h3 id="相关类关系图"><a href="#相关类关系图" class="headerlink" title="相关类关系图"></a>相关类关系图</h3><p><img src="/uploads/deeply-analyse-webkit/09.png" alt="09" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/09.png" class="lozad post-image"></p>
 <ul>
 <li>Document 和 DocumentParser 相互引用</li>
 <li>HTMLDocumentParser 父类是 ScriptableDocumentParser，DecodedDataDocumentParser（字符解码功能） 最后是 DocumentParser。</li>
@@ -2080,7 +2080,7 @@ enum State &#123;
 <li>HTMLConstructionSite：创建各种 HTMLElement，再完成 DOM Tree，关键标签比如 body，head 和 html 以外都是通过 HTMLElementFactory 来实现。属性使用生成的 Element 里对应的函数来实现。</li>
 <li>HTMLPreloadScanner：专门用来查找类似 src，link 这样的属性，获取外部资源，通过 CachedResourceLoader 这个类进行加载。</li>
 </ul>
-<h3 id="解析过程"><a href="#解析过程" class="headerlink" title="解析过程"></a>解析过程</h3><p><img src="/uploads/deeply-analyse-webkit/10.png" alt="10"></p>
+<h3 id="解析过程"><a href="#解析过程" class="headerlink" title="解析过程"></a>解析过程</h3><p><img src="/uploads/deeply-analyse-webkit/10.png" alt="10" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/10.png" class="lozad post-image"></p>
 <ul>
 <li><p>DocumentWriter 调用 DocumentParser::appendBytes 将结果存入 HTMLInputStream 中。</p>
 </li>
@@ -2115,9 +2115,9 @@ enum State &#123;
 
 <p>m_attributeData 存储属性的对象，attributeChange 函数会调用 parseAttribute 函数，作用是让 Element 能够处理 src 这样的属性加载图片</p>
 <h3 id="资源加载"><a href="#资源加载" class="headerlink" title="资源加载"></a>资源加载</h3><p>HTMLPreloadScanner 调用 CachedResourceLoader 来加载的。</p>
-<h2 id="构建-DOM-Tree"><a href="#构建-DOM-Tree" class="headerlink" title="构建 DOM Tree"></a>构建 DOM Tree</h2><p>构建 DOM Tree 需要经过的四个阶段，分别是解码，分词，解析（创建与 Tag 相对应的 Node），创建树（有 DOM Tree，Render Tree，RenderLayer Tree）<br><img src="/uploads/deeply-analyse-webkit/84.png" alt="84"><br>相关类流程图：<br><img src="/uploads/deeply-analyse-webkit/87.png" alt="87"></p>
+<h2 id="构建-DOM-Tree"><a href="#构建-DOM-Tree" class="headerlink" title="构建 DOM Tree"></a>构建 DOM Tree</h2><p>构建 DOM Tree 需要经过的四个阶段，分别是解码，分词，解析（创建与 Tag 相对应的 Node），创建树（有 DOM Tree，Render Tree，RenderLayer Tree）<br><img src="/uploads/deeply-analyse-webkit/84.png" alt="84" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/84.png" class="lozad post-image"><br>相关类流程图：<br><img src="/uploads/deeply-analyse-webkit/87.png" alt="87" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/87.png" class="lozad post-image"></p>
 <p>前三个阶段前面已经介绍，下面主要介绍下创建 DOM 树</p>
-<h3 id="DOM-标准规范"><a href="#DOM-标准规范" class="headerlink" title="DOM 标准规范"></a>DOM 标准规范</h3><p>Document Object Model 简称 DOM，全称文档对象模型，可以是 HTML，XML 和 XHTML，DOM 是以面向对象的方式来描述文档的，这样可以通过 JavaScript 或其它面向对象的语言进行访问，创建，删除和修改 DOM 结构。DOM 的接口与平台和语言无关。W3C 定义了一系列的 DOM 接口，目前已经有了四个 level 标准，每个标准都是基于上个标准基础上进行的迭代，如下图是 DOM 规范的演进过程：<br><img src="/uploads/deeply-analyse-webkit/52.png" alt="52"><br>下面对各个 level 进行说明<br>DOM level 1</p>
+<h3 id="DOM-标准规范"><a href="#DOM-标准规范" class="headerlink" title="DOM 标准规范"></a>DOM 标准规范</h3><p>Document Object Model 简称 DOM，全称文档对象模型，可以是 HTML，XML 和 XHTML，DOM 是以面向对象的方式来描述文档的，这样可以通过 JavaScript 或其它面向对象的语言进行访问，创建，删除和修改 DOM 结构。DOM 的接口与平台和语言无关。W3C 定义了一系列的 DOM 接口，目前已经有了四个 level 标准，每个标准都是基于上个标准基础上进行的迭代，如下图是 DOM 规范的演进过程：<br><img src="/uploads/deeply-analyse-webkit/52.png" alt="52" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/52.png" class="lozad post-image"><br>下面对各个 level 进行说明<br>DOM level 1</p>
 <ul>
 <li>Core：底层接口，接口支持 XML 等任何结构化文档。</li>
 <li>HTML：把 HTML 内容定义为 Document 文档，Node 节点，Attribute 属性，Element 元素，Text 文本。</li>
@@ -2313,19 +2313,19 @@ enum State &#123;
 &#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="DOM-Tree-Token-的构造算法"><a href="#DOM-Tree-Token-的构造算法" class="headerlink" title="DOM Tree Token 的构造算法"></a>DOM Tree Token 的构造算法</h3><p>这个算法被描述为一个 state machine，state 为插入模式（insertion modes）。完整算法可以参看 w3c 的定义：<a target="_blank" rel="noopener" href="https://www.w3.org/TR/html5/syntax.html#html-parser">https://www.w3.org/TR/html5/syntax.html#html-parser</a></p>
-<p><img src="/uploads/deeply-analyse-webkit/19.png" alt="19"><br>当 parser 创建后也会创建一个 Document 对象。在 tree construction 的阶段，Document 会做为 root 的 element 添加进来。tree constructor 会处理每个 tokenizer 生成的 node。每个 token 会对应一个 DOM element。每个 element 不光会被添加到 DOM tree，还会添加到 stack of open elements里。这个 stack 用于检查嵌套错误和未关闭的 tag。</p>
+<p><img src="/uploads/deeply-analyse-webkit/19.png" alt="19" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/19.png" class="lozad post-image"><br>当 parser 创建后也会创建一个 Document 对象。在 tree construction 的阶段，Document 会做为 root 的 element 添加进来。tree constructor 会处理每个 tokenizer 生成的 node。每个 token 会对应一个 DOM element。每个 element 不光会被添加到 DOM tree，还会添加到 stack of open elements里。这个 stack 用于检查嵌套错误和未关闭的 tag。</p>
 <p>具体过程是，在 tree construction 阶段的输入是来自 tokenization 的 tokens 排序的阶段。最开始的状态是 initial mode。接收 html token 会变成 before html mode，并且在那个模式里重新处理 token。这会创建一个 HTMLHtmlElement 元素添加到 Document 对象的 root 上。</p>
 <p>接下来状态会变成 before head。然后创建 HTMLHeadElement，如果 head 里有 token 就会被添加到这个 tree 里。状态会有 in head 和 after head。</p>
 <p>再后面会创建 HTMLBodyElement，添加到树中，状态转成 in body，里面的 html token 会被转成对应的 DOM element 被添加到 body 的 node 中。当收到 body end token 会让状态切换成 after body。接着就是收到 html end tag，转成 after after body 状态，接到 end of file token 会结束 parsing。</p>
-<h3 id="关键类"><a href="#关键类" class="headerlink" title="关键类"></a>关键类</h3><p>构建 DOM 的几个关键的类<br><img src="/uploads/deeply-analyse-webkit/53.png" alt="53"></p>
-<p><img src="/uploads/deeply-analyse-webkit/11.png" alt="11"></p>
+<h3 id="关键类"><a href="#关键类" class="headerlink" title="关键类"></a>关键类</h3><p>构建 DOM 的几个关键的类<br><img src="/uploads/deeply-analyse-webkit/53.png" alt="53" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/53.png" class="lozad post-image"></p>
+<p><img src="/uploads/deeply-analyse-webkit/11.png" alt="11" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/11.png" class="lozad post-image"></p>
 <ul>
 <li>HTMLDocumentParser：管理类，解析 html 文本使用词法分析器成 HTMLTokenizer 类，最后输出到 HTMLTreeBuilder。</li>
 <li>HTMLTreeBuilder：负责 DOM 树的建立，对 tokens 分类处理，创建一个个节点对象，使用 HTMLConstructionSite 类将这些创建好的节点构建为 DOM 树。</li>
 <li>HTMLConstructionSite：不同的标签类型在不同位置会有不同的函数来构建 DOM 树。m_document 代表根节点，即 javascript 里的 window.document 对象。</li>
 <li>HTMLElementFactory：一个工厂类对不同类型的标签创建不同的 html 元素，同时建立父子兄弟关系。</li>
 </ul>
-<p>构建 DOM 树的过程如下图：<br><img src="/uploads/deeply-analyse-webkit/54.png" alt="54"></p>
+<p>构建 DOM 树的过程如下图：<br><img src="/uploads/deeply-analyse-webkit/54.png" alt="54" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/54.png" class="lozad post-image"></p>
 <p>举个例子：</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span>
 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
@@ -2335,7 +2335,7 @@ enum State &#123;
 		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>example.png<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>转成 DOM Tree 如下：<br><img src="/uploads/deeply-analyse-webkit/69.png" alt="69"></p>
+<p>转成 DOM Tree 如下：<br><img src="/uploads/deeply-analyse-webkit/69.png" alt="69" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/69.png" class="lozad post-image"></p>
 <h3 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h3><p>通过 DocumentLoader 这个类里的 startLoadingMainResource 加载 url</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">FetchRequest fetchRequest(m_request, FetchInitiatorTypeNames::document,
                             mainResourceLoadOptions);
@@ -2356,12 +2356,12 @@ void DocumentLoader::ensureWriter(const AtomicString&amp; mimeType, const KURL&a
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="DOM-Tree"><a href="#DOM-Tree" class="headerlink" title="DOM Tree"></a>DOM Tree</h3><p>DOM Tree 已经被 W3 标准化了 <a target="_blank" rel="noopener" href="https://www.w3.org/DOM/DOMTR">Document Object Model (DOM) Technical Reports</a> 在 DOM Level 3 里 IDL 的定义在 <a target="_blank" rel="noopener" href="https://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/">IDL Definitions</a></p>
-<h4 id="Node-节点"><a href="#Node-节点" class="headerlink" title="Node 节点"></a>Node 节点</h4><p>Node 是 DOM 模型的基础类，根据标签的不同可以分成多个类，详细的定义可以看 NodeType，最主要的是 Document，Element 和 Text 三类。下图列出了 Node 节点相关继承关系图：<br><img src="/uploads/deeply-analyse-webkit/56.png" alt="56"></p>
+<h4 id="Node-节点"><a href="#Node-节点" class="headerlink" title="Node 节点"></a>Node 节点</h4><p>Node 是 DOM 模型的基础类，根据标签的不同可以分成多个类，详细的定义可以看 NodeType，最主要的是 Document，Element 和 Text 三类。下图列出了 Node 节点相关继承关系图：<br><img src="/uploads/deeply-analyse-webkit/56.png" alt="56" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/56.png" class="lozad post-image"></p>
 <p>在构建树时是由 Insertion Mode 来控制，这个规则是完全按照 w3c 指定，可以参看：<a target="_blank" rel="noopener" href="http://www.whatwg.org/specs/web-apps/current-work/multipage/parsing.html#the-insertion-mode">http://www.whatwg.org/specs/web-apps/current-work/multipage/parsing.html#the-insertion-mode</a> 。构建树级别时是根据堆栈来的，碰到 StartTag 的 token 就会在 m_opnElements 里压栈，碰到 EndTag 的 token 就会出栈。 w3c 对于 Element 的堆栈也有规范：<a target="_blank" rel="noopener" href="https://html.spec.whatwg.org/multipage/parsing.html#the-stack-of-open-elements">https://html.spec.whatwg.org/multipage/parsing.html#the-stack-of-open-elements</a> 。通过 ContainerNode::parserAddChild 接口添加 Node 到 DOM Tree 中。</p>
 <p>需要注意的是有些标签属于 Format 标签不参与嵌套关系属于平级，是不会被加入到 m_openElements 里。这些标签的定义可以参看：<a target="_blank" rel="noopener" href="https://html.spec.whatwg.org/multipage/parsing.html#list-of-active-formatting-elements">https://html.spec.whatwg.org/multipage/parsing.html#list-of-active-formatting-elements</a></p>
-<p><img src="/uploads/deeply-analyse-webkit/37.png" alt="37"></p>
-<p>DOM Node 的数据结构<br><img src="/uploads/deeply-analyse-webkit/12.png" alt="12"></p>
-<h4 id="HTMLElement"><a href="#HTMLElement" class="headerlink" title="HTMLElement"></a>HTMLElement</h4><p>由 HTMLElementFactory 类的 createHTMLElement 来创建，然后通过 Hash map 来记录，key 为 tag name，value 为对应的 element。不同 tag 有不同的 HTMLElement 派生类，类继承图如下：<br><img src="/uploads/deeply-analyse-webkit/75.png" alt="75"></p>
+<p><img src="/uploads/deeply-analyse-webkit/37.png" alt="37" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/37.png" class="lozad post-image"></p>
+<p>DOM Node 的数据结构<br><img src="/uploads/deeply-analyse-webkit/12.png" alt="12" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/12.png" class="lozad post-image"></p>
+<h4 id="HTMLElement"><a href="#HTMLElement" class="headerlink" title="HTMLElement"></a>HTMLElement</h4><p>由 HTMLElementFactory 类的 createHTMLElement 来创建，然后通过 Hash map 来记录，key 为 tag name，value 为对应的 element。不同 tag 有不同的 HTMLElement 派生类，类继承图如下：<br><img src="/uploads/deeply-analyse-webkit/75.png" alt="75" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/75.png" class="lozad post-image"></p>
 <h4 id="构建-DOM-Tree-1"><a href="#构建-DOM-Tree-1" class="headerlink" title="构建 DOM Tree"></a>构建 DOM Tree</h4><p>从 Token 的构建节点。是 HTMLDocumentParser 类调用了 HTMLTreeBuilder 类的 processToken 函数来处理的，该函数在 WebCore&#x2F;html&#x2F;parser&#x2F;HTMLTreeBuilder.cpp 文件里。<br>constructtreefromToken</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">void HTMLTreeBuilder::processToken(AtomicHTMLToken&amp;&amp; token)
 &#123;
@@ -2479,9 +2479,9 @@ return i !&#x3D; cMaxRedundantTagDepth;
         return;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><h3 id="CSS-语法简介"><a href="#CSS-语法简介" class="headerlink" title="CSS 语法简介"></a>CSS 语法简介</h3><p>所有的 CSS 都是由 CSSStyleSheet 集合组成，CSSStyleSheet 是有多个 CSSRule 组成，每个 CSSRule 由 CSSStyleSelector 选择器和 CSSStyleDeclaration 声明组成。CSSStyleDeclaration 是 CSS 属性的键值集合。</p>
-<h4 id="CSS-declarations"><a href="#CSS-declarations" class="headerlink" title="CSS declarations"></a>CSS declarations</h4><p><img src="/uploads/deeply-analyse-webkit/40.png" alt="40"><br>在这里可以找到 CSS  的不同的属性。</p>
-<h4 id="CSS-declaration-blocks"><a href="#CSS-declaration-blocks" class="headerlink" title="CSS declaration blocks"></a>CSS declaration blocks</h4><p>使用大括号包起来。<br><img src="/uploads/deeply-analyse-webkit/41.png" alt="41"></p>
-<h4 id="CSS-selectors-and-rules"><a href="#CSS-selectors-and-rules" class="headerlink" title="CSS selectors and rules"></a>CSS selectors and rules</h4><p>在 CSS declarations block 前加上 selector 来匹配页面上的元素。selector 和 declarations block 在一起被称作 ruleset，简称 rule。<br><img src="/uploads/deeply-analyse-webkit/42.png" alt="42"></p>
+<h4 id="CSS-declarations"><a href="#CSS-declarations" class="headerlink" title="CSS declarations"></a>CSS declarations</h4><p><img src="/uploads/deeply-analyse-webkit/40.png" alt="40" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/40.png" class="lozad post-image"><br>在这里可以找到 CSS  的不同的属性。</p>
+<h4 id="CSS-declaration-blocks"><a href="#CSS-declaration-blocks" class="headerlink" title="CSS declaration blocks"></a>CSS declaration blocks</h4><p>使用大括号包起来。<br><img src="/uploads/deeply-analyse-webkit/41.png" alt="41" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/41.png" class="lozad post-image"></p>
+<h4 id="CSS-selectors-and-rules"><a href="#CSS-selectors-and-rules" class="headerlink" title="CSS selectors and rules"></a>CSS selectors and rules</h4><p>在 CSS declarations block 前加上 selector 来匹配页面上的元素。selector 和 declarations block 在一起被称作 ruleset，简称 rule。<br><img src="/uploads/deeply-analyse-webkit/42.png" alt="42" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/42.png" class="lozad post-image"></p>
 <p>selector 可以分为以下类别</p>
 <ul>
 <li>Simple selectors：简单选择器，通过 class 或 id 类匹配一个或多个元素。</li>
@@ -2582,11 +2582,11 @@ attrib
 pseudo
   : &#39;:&#39; [ IDENT | FUNCTION S* [IDENT S*] &#39;)&#39; ]
   ;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>WebKit 会使用 Flex 和 Bison 来解析这个 BNF 文件。CSS 文件会被解析成 StyleSheet object，每个 object 包含 CSS rules object，这些 object 包含 selector 和 declaration 还要其它对应于 CSS 语法的 object。接下来进行会进行 CSSRule 的匹配过程，去找能够和 CSSRule Selector 部分匹配的 HTML 元素。<br><img src="/uploads/deeply-analyse-webkit/68.png" alt="68"></p>
-<h3 id="CSS-主要类与关系"><a href="#CSS-主要类与关系" class="headerlink" title="CSS 主要类与关系"></a>CSS 主要类与关系</h3><p><img src="/uploads/deeply-analyse-webkit/57.png" alt="57"><br>上图看出 Document 里包含了一个 DocumentStyleSheetCollection 类和一个 StyleSheetResolver 类，DocumentStyleSheetCollection 包含了所有的 StyleSheet，StyleSheet 里包含了 CSS 的 href，类型，内容等信息，这些内容就是 StyleSheetContents，包含了 StyleRuleBase。</p>
+<p>WebKit 会使用 Flex 和 Bison 来解析这个 BNF 文件。CSS 文件会被解析成 StyleSheet object，每个 object 包含 CSS rules object，这些 object 包含 selector 和 declaration 还要其它对应于 CSS 语法的 object。接下来进行会进行 CSSRule 的匹配过程，去找能够和 CSSRule Selector 部分匹配的 HTML 元素。<br><img src="/uploads/deeply-analyse-webkit/68.png" alt="68" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/68.png" class="lozad post-image"></p>
+<h3 id="CSS-主要类与关系"><a href="#CSS-主要类与关系" class="headerlink" title="CSS 主要类与关系"></a>CSS 主要类与关系</h3><p><img src="/uploads/deeply-analyse-webkit/57.png" alt="57" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/57.png" class="lozad post-image"><br>上图看出 Document 里包含了一个 DocumentStyleSheetCollection 类和一个 StyleSheetResolver 类，DocumentStyleSheetCollection 包含了所有的 StyleSheet，StyleSheet 里包含了 CSS 的 href，类型，内容等信息，这些内容就是 StyleSheetContents，包含了 StyleRuleBase。</p>
 <p>StyleSheetResolver 负责组织用来为 DOM 里的元素匹配的规则，里面包含了一个 DocumentRuleSets 的类，这个类是用来表示多个 RuleSet 的。</p>
-<p>CSS 文档结构的类图如下：<br><img src="/uploads/deeply-analyse-webkit/90.png" alt="90"></p>
-<h4 id="StyleRuleBase-类的继承关系"><a href="#StyleRuleBase-类的继承关系" class="headerlink" title="StyleRuleBase 类的继承关系"></a>StyleRuleBase 类的继承关系</h4><p>RuleSet 有很多类型，下图是 StyleRuleBase 相关继承关系<br><img src="/uploads/deeply-analyse-webkit/58.png" alt="58"><br>我们来看看这些子类类型都是对应 CSS 里的什么</p>
+<p>CSS 文档结构的类图如下：<br><img src="/uploads/deeply-analyse-webkit/90.png" alt="90" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/90.png" class="lozad post-image"></p>
+<h4 id="StyleRuleBase-类的继承关系"><a href="#StyleRuleBase-类的继承关系" class="headerlink" title="StyleRuleBase 类的继承关系"></a>StyleRuleBase 类的继承关系</h4><p>RuleSet 有很多类型，下图是 StyleRuleBase 相关继承关系<br><img src="/uploads/deeply-analyse-webkit/58.png" alt="58" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/58.png" class="lozad post-image"><br>我们来看看这些子类类型都是对应 CSS 里的什么</p>
 <ul>
 <li>StyleRule：常用的都是这个类型</li>
 <li>StyleRuleImport：对应的是 @import</li>
@@ -2596,9 +2596,9 @@ pseudo
 <li>StyleRuleKeyFrames：对应的 @-webkit-key-frames</li>
 <li>StyleRuleRegion：分区域排版</li>
 </ul>
-<h4 id="StyleRule-类的结构"><a href="#StyleRule-类的结构" class="headerlink" title="StyleRule 类的结构"></a>StyleRule 类的结构</h4><p><img src="/uploads/deeply-analyse-webkit/59.png" alt="59"></p>
-<h3 id="解析-CSS"><a href="#解析-CSS" class="headerlink" title="解析 CSS"></a>解析 CSS</h3><p>WebKit 解析的入口函数是 CSSParser::parseSheet。解析过程如下图：<br><img src="/uploads/deeply-analyse-webkit/91.png" alt="91"></p>
-<p>字符串转 tokens<br><img src="/uploads/deeply-analyse-webkit/13.png" alt="13"></p>
+<h4 id="StyleRule-类的结构"><a href="#StyleRule-类的结构" class="headerlink" title="StyleRule 类的结构"></a>StyleRule 类的结构</h4><p><img src="/uploads/deeply-analyse-webkit/59.png" alt="59" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/59.png" class="lozad post-image"></p>
+<h3 id="解析-CSS"><a href="#解析-CSS" class="headerlink" title="解析 CSS"></a>解析 CSS</h3><p>WebKit 解析的入口函数是 CSSParser::parseSheet。解析过程如下图：<br><img src="/uploads/deeply-analyse-webkit/91.png" alt="91" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/91.png" class="lozad post-image"></p>
+<p>字符串转 tokens<br><img src="/uploads/deeply-analyse-webkit/13.png" alt="13" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/13.png" class="lozad post-image"></p>
 <p>将 tokens 转成 styleRule。每个 styleRule 包含 selectors 和 properties。<br>定义 matchType</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">enum MatchType &#123;
     Unknown,
@@ -2717,7 +2717,7 @@ switch (selector.match()) &#123;
 
 <p>可以看到这个就是 selector 从右到左解释的实现，它会递归所有父节点，再次执行 checkOne ，这样直到找到需要的父节点以及如果需要的父节点的父节点才会停止递归。所以选择器不要写太长，会影响效率。</p>
 <h3 id="CSS-规则匹配"><a href="#CSS-规则匹配" class="headerlink" title="CSS 规则匹配"></a>CSS 规则匹配</h3><p>CSS 解析完，节点会调用 CSSStyleSelector 的 styleForElement 来给节点创建 RenderStyle 实例。RenderObject 需要 RenderStyle 的排版信息。</p>
-<p>CSSStyleSelector 会从 CSSRuleList 里将匹配的样式属性取出进行规则匹配，相关类图如下：<br><img src="/uploads/deeply-analyse-webkit/92.png" alt="92"><br>匹配的流程图如下：<br><img src="/uploads/deeply-analyse-webkit/93.png" alt="93"></p>
+<p>CSSStyleSelector 会从 CSSRuleList 里将匹配的样式属性取出进行规则匹配，相关类图如下：<br><img src="/uploads/deeply-analyse-webkit/92.png" alt="92" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/92.png" class="lozad post-image"><br>匹配的流程图如下：<br><img src="/uploads/deeply-analyse-webkit/93.png" alt="93" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/93.png" class="lozad post-image"></p>
 <h3 id="设置-style"><a href="#设置-style" class="headerlink" title="设置 style"></a>设置 style</h3><p>设置的顺序是先设置父节点，在使用默认的 UA 的 style，最后再使用 Author 的 style。</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">style-&gt;inheritFrom(*state.parentStyle())
 matchUARules(collector);
@@ -2789,8 +2789,8 @@ applyMatchedProperties&lt;HighPropertyPriority, CheckNeedsApplyPass&gt;(
         state, range, true, applyInheritedOnly, needsApplyPass);
   &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>最后的 style 是什么样的，style 会生成一个 ComputedStyle 对象。对象结构如下：<br><img src="/uploads/deeply-analyse-webkit/14.png" alt="14"></p>
-<p><img src="/uploads/deeply-analyse-webkit/15.png" alt="15"></p>
+<p>最后的 style 是什么样的，style 会生成一个 ComputedStyle 对象。对象结构如下：<br><img src="/uploads/deeply-analyse-webkit/14.png" alt="14" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/14.png" class="lozad post-image"></p>
+<p><img src="/uploads/deeply-analyse-webkit/15.png" alt="15" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/15.png" class="lozad post-image"></p>
 <h3 id="CSS-Object-Model-CSSOM"><a href="#CSS-Object-Model-CSSOM" class="headerlink" title="CSS Object Model (CSSOM)"></a>CSS Object Model (CSSOM)</h3><p>CSS 对象模型 CSSOM 提供了便于 JavaScript 操作 CSS 的接口 CSSStyleSheet。通过这个接口我们可以很容易获取 CSS 的 href，cssRule 这样的信息。</p>
 <p>W3C 还定义了 CSSOM View，增加了 Window，Document，Element，HTMLElement 和 MouseEvent 的接口。比如 Window 对 CSSOM View 的支持就可以在 WebCore&#x2F;page&#x2F;DOMWindow.idl 里查看到，我摘出和 CSSOM View 相关的规范定义如下：</p>
 <pre class="line-numbers language-none"><code class="language-none">&#x2F;&#x2F; Extensions from the CSSOM-View specification (https:&#x2F;&#x2F;drafts.csswg.org&#x2F;cssom-view&#x2F;#extensions-to-the-window-interface).
@@ -2827,13 +2827,13 @@ void scrollBy(unrestricted double x, unrestricted double y);
 [Replaceable] readonly attribute double devicePixelRatio;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看出 CSSOM View 定义了 Window 的大小，滚动，位置等各种信息。</p>
 <h2 id="RenderObject-Tree"><a href="#RenderObject-Tree" class="headerlink" title="RenderObject Tree"></a>RenderObject Tree</h2><p>当 DOM tree 构建过程中，在 HTMLConstruction 的 attachToCurrent 方法里会通过 createRendererIfNeeded 方法构建的另外一个 tree，叫 Render tree。构成这个 tree 的元素都是 RenderObject。RenderObject 会记录各个 node 的 render 信息，比如 RenderStyle，Node 和 RenderLayer 等。当 WebKit 创建 DOM Tree 的同时也会创建 RenderObject 对象，DOM Tree 动态加入一个新节点时也会创建相应的 RenderObject 对象。</p>
-<p>整个 tree 的创建过程都是由 NodeRenderingContext 类来完成。下图是如何创建 RenderObject 对象和构建 RenderObject Tree 的。<br><img src="/uploads/deeply-analyse-webkit/64.png" alt="64"><br>上图所示，WebKit 会先检查 DOM 节点是否需要新的  RenderObject 对象，需要的话会创建或者获取一个 NodeRenderingContext 对象来创建 RenderObject 对象。NodeRenderingContext 的作用是分析设置 RenderObject 对象父结点，兄弟节点等信息然后完成插入 RenderObject 树。</p>
-<h3 id="RenderObject"><a href="#RenderObject" class="headerlink" title="RenderObject"></a>RenderObject</h3><p>RenderObject 需要知道 CSS 相关属性，会引用在 CSS 解析过程中生成的 CSSStyleSelector 提供的 RenderStyle。RenderObject 的创建过程如下：<br><img src="/uploads/deeply-analyse-webkit/88.png" alt="88"></p>
-<p>RenderObject 被创建时创建时相关的类如下图所示：<br><img src="/uploads/deeply-analyse-webkit/62.png" alt="62"><br>Element 对象会递归调用 attach 函数，会检查是否需要创建一个新的 RenderObject。需要创建的话会使用 NodeRenderingContext 类来创建不同 DOM 节点类型的 RenderObject。attach 的具体过程是在当前的 Render 节点的父节点会将当前的 Render 节点插入到合适位置，父节点再设置当前节点的兄弟节点。attach 过程见下图：<br><img src="/uploads/deeply-analyse-webkit/89.png" alt="89"></p>
-<p>RenderObject 树和 DOM 树一样也有很多类型，下面是 RenderObject 基类和子类示意图：<br><img src="/uploads/deeply-analyse-webkit/63.png" alt="63"></p>
-<p>RenderObject 核心对象关系图如下：<br><img src="/uploads/deeply-analyse-webkit/94.png" alt="94"></p>
+<p>整个 tree 的创建过程都是由 NodeRenderingContext 类来完成。下图是如何创建 RenderObject 对象和构建 RenderObject Tree 的。<br><img src="/uploads/deeply-analyse-webkit/64.png" alt="64" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/64.png" class="lozad post-image"><br>上图所示，WebKit 会先检查 DOM 节点是否需要新的  RenderObject 对象，需要的话会创建或者获取一个 NodeRenderingContext 对象来创建 RenderObject 对象。NodeRenderingContext 的作用是分析设置 RenderObject 对象父结点，兄弟节点等信息然后完成插入 RenderObject 树。</p>
+<h3 id="RenderObject"><a href="#RenderObject" class="headerlink" title="RenderObject"></a>RenderObject</h3><p>RenderObject 需要知道 CSS 相关属性，会引用在 CSS 解析过程中生成的 CSSStyleSelector 提供的 RenderStyle。RenderObject 的创建过程如下：<br><img src="/uploads/deeply-analyse-webkit/88.png" alt="88" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/88.png" class="lozad post-image"></p>
+<p>RenderObject 被创建时创建时相关的类如下图所示：<br><img src="/uploads/deeply-analyse-webkit/62.png" alt="62" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/62.png" class="lozad post-image"><br>Element 对象会递归调用 attach 函数，会检查是否需要创建一个新的 RenderObject。需要创建的话会使用 NodeRenderingContext 类来创建不同 DOM 节点类型的 RenderObject。attach 的具体过程是在当前的 Render 节点的父节点会将当前的 Render 节点插入到合适位置，父节点再设置当前节点的兄弟节点。attach 过程见下图：<br><img src="/uploads/deeply-analyse-webkit/89.png" alt="89" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/89.png" class="lozad post-image"></p>
+<p>RenderObject 树和 DOM 树一样也有很多类型，下面是 RenderObject 基类和子类示意图：<br><img src="/uploads/deeply-analyse-webkit/63.png" alt="63" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/63.png" class="lozad post-image"></p>
+<p>RenderObject 核心对象关系图如下：<br><img src="/uploads/deeply-analyse-webkit/94.png" alt="94" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/94.png" class="lozad post-image"></p>
 <p>RenderBox 类是 Box 模型的类，包含了外边距，内边距，边框等信息。</p>
-<p>RenderObject 的继承关系图如下：<br><img src="/uploads/deeply-analyse-webkit/76.png" alt="76"></p>
+<p>RenderObject 的继承关系图如下：<br><img src="/uploads/deeply-analyse-webkit/76.png" alt="76" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/76.png" class="lozad post-image"></p>
 <p>RenderObject 的一些主要虚函数</p>
 <ul>
 <li>parent()，firstChild()，nextSibling()，previousSibling()，addChild()，removeChild() 这些遍历和修改 RenderObject 树的函数。</li>
@@ -2885,10 +2885,10 @@ bool normalChildNeedsLayout() const &#123; return m_bitfields.normalChildNeedsLa
 <p>RenderBox 是 RenderBoxModelObject 的子类，会重载 RenderObject 和 RenderBoxModelObject 的一些方法。</p>
 <p>RenderBlock 是 RenderBox 的子类，封装 CSS 里 Block 的元素，里面有布局 Inline，block，和定位相关的方法，有删除，插入 Float 浮动节点还有计算浮动节点位置等方法，绘制相关的比如绘制 Float 节点，绘制 outline，绘制选择区等方法。</p>
 <p>RenderView 继承自 RenderBlock，Render Tree 的根节点，是 Tree 布局和渲染的入口。</p>
-<p>RenderInlineBox 是 RenderBoxModelObject 的子类，会封装 CSS 里的 Inline 元素。里面的方法主要处理 Inline 的自动换多行情况。对多行的处理 RenderInlineBox 会有个 RenderInlineBoxList 类的 m_lineBoxes 持有有多个 InlineBox 的行元素。RenderBox 和 InlineBox 的关系类图如下：<br><img src="/uploads/deeply-analyse-webkit/95.png" alt="95"><br>RenderStyle 会保存 CSS 解析结果，这些 CSS 属性会保存在 InheritedFlags 和 NonInheritedFlags 里，InheritedFlags 保存的都是文本方向和文本对齐等属性，NonInheritedFlags 里保存了浮动，定位，overflow 等属性，还有大量的访问和设置 CSS 属性的方法。</p>
-<p>RenderText 继承 RenderObject，提供处理文字相关功能。相关的类图如下：<br><img src="/uploads/deeply-analyse-webkit/96.png" alt="96"></p>
-<h3 id="StyleResolver"><a href="#StyleResolver" class="headerlink" title="StyleResolver"></a>StyleResolver</h3><p>RenderStyle 来自 CSS，保存了 Render Tree 绘制需要的所有内容，StyleResolver 就是负责将 CSS 转成 RenderStyle。StyleResolver 类根据元素的信息，例如标签名和类别等，保存到新建的 RenderStyle 对象中，它们最后被 RenderObject 类所管理和使用。<br><img src="/uploads/deeply-analyse-webkit/61.png" alt="61"></p>
-<p>规则的匹配是由 ElementRuleCollector 类计算获得，根据元素属性信息，从 DocumentRuleSets 类里获得规则集合按照 ID，Class，Tag 等信息获得元素的样式，具体的过程如下：<br><img src="/uploads/deeply-analyse-webkit/60.png" alt="60"><br>创建 RenderObject 类时 StyleResolver 会收集样式信息给 RenderStyle 对象，这样 RenderStyle 对象包含了完整的样式信息。</p>
+<p>RenderInlineBox 是 RenderBoxModelObject 的子类，会封装 CSS 里的 Inline 元素。里面的方法主要处理 Inline 的自动换多行情况。对多行的处理 RenderInlineBox 会有个 RenderInlineBoxList 类的 m_lineBoxes 持有有多个 InlineBox 的行元素。RenderBox 和 InlineBox 的关系类图如下：<br><img src="/uploads/deeply-analyse-webkit/95.png" alt="95" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/95.png" class="lozad post-image"><br>RenderStyle 会保存 CSS 解析结果，这些 CSS 属性会保存在 InheritedFlags 和 NonInheritedFlags 里，InheritedFlags 保存的都是文本方向和文本对齐等属性，NonInheritedFlags 里保存了浮动，定位，overflow 等属性，还有大量的访问和设置 CSS 属性的方法。</p>
+<p>RenderText 继承 RenderObject，提供处理文字相关功能。相关的类图如下：<br><img src="/uploads/deeply-analyse-webkit/96.png" alt="96" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/96.png" class="lozad post-image"></p>
+<h3 id="StyleResolver"><a href="#StyleResolver" class="headerlink" title="StyleResolver"></a>StyleResolver</h3><p>RenderStyle 来自 CSS，保存了 Render Tree 绘制需要的所有内容，StyleResolver 就是负责将 CSS 转成 RenderStyle。StyleResolver 类根据元素的信息，例如标签名和类别等，保存到新建的 RenderStyle 对象中，它们最后被 RenderObject 类所管理和使用。<br><img src="/uploads/deeply-analyse-webkit/61.png" alt="61" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/61.png" class="lozad post-image"></p>
+<p>规则的匹配是由 ElementRuleCollector 类计算获得，根据元素属性信息，从 DocumentRuleSets 类里获得规则集合按照 ID，Class，Tag 等信息获得元素的样式，具体的过程如下：<br><img src="/uploads/deeply-analyse-webkit/60.png" alt="60" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/60.png" class="lozad post-image"><br>创建 RenderObject 类时 StyleResolver 会收集样式信息给 RenderStyle 对象，这样 RenderStyle 对象包含了完整的样式信息。</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">PassRefPtr&lt;RenderStyle&gt; styleForElement(Element*, RenderStyle* parentStyle &#x3D; 0, StyleSharingBehavior &#x3D; AllowStyleSharing,  
     RuleMatchingBehavior &#x3D; MatchAllRules, RenderRegion* regionForStyling &#x3D; 0);   
  ......  
@@ -2967,7 +2967,7 @@ AtomRuleMap m_shadowPseudoElementRules;
 
 <p>关于 AuthorStyle 用 StyleResolver::m_authorStyle 来保存 html 里所有 style tag 和 link 的外部 css。当 CSS 被改变或者页面大小变化时会调用 Document::styleResolverChanged 函数，接着调用 DocumentStyleCollection::updateActiveStyleSheets，最后调用 StyleResolver::appendAuthorStyleSheets。</p>
 <h3 id="Render-tree-和-DOM-tree-做对应"><a href="#Render-tree-和-DOM-tree-做对应" class="headerlink" title="Render tree 和 DOM tree 做对应"></a>Render tree 和 DOM tree 做对应</h3><p>其实并不是一一对应的，比如说 head 标签或者 display 属性为 none 的就不会在 Render tree 中。</p>
-<p>有些 render object 有对应的 DOM node，但是不在 tree 的相同位置，比如 floats 和 absolutely position 的元素，他们会放在 tree 的其它地方，会映根据设置的 frame 直接射到对应的位置。如下图，虚线表示他们能够对应的：<br><img src="/uploads/deeply-analyse-webkit/65.png" alt="65"><br><img src="/uploads/deeply-analyse-webkit/73.png" alt="73"></p>
+<p>有些 render object 有对应的 DOM node，但是不在 tree 的相同位置，比如 floats 和 absolutely position 的元素，他们会放在 tree 的其它地方，会映根据设置的 frame 直接射到对应的位置。如下图，虚线表示他们能够对应的：<br><img src="/uploads/deeply-analyse-webkit/65.png" alt="65" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/65.png" class="lozad post-image"><br><img src="/uploads/deeply-analyse-webkit/73.png" alt="73" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/73.png" class="lozad post-image"></p>
 <p>上图可以看到一般的 Element 比如 HTMLBodyElement 和 HTMLDivElement 对应的都是 RenderBlock。</p>
 <h3 id="构建-Render-Tree-的流程"><a href="#构建-Render-Tree-的流程" class="headerlink" title="构建 Render Tree 的流程"></a>构建 Render Tree 的流程</h3><p>解决样式和创建一个 renderer 称作 attachment，每个 Element 有一个 attach 方法，Render Tree 的创建就是从这里开始，attachment 是同步的，Element 节点插入 DOM tree 会调用新 node 的 attach 方法。在处理 html 和 body 标签时会创建 Render Tree 的 root。root Render Object 对应了 CSS 里的 containing block，top block 会包含所有的其它 block。Render Object 通过 RenderObject::CreateObject 静态方法创建，创建时会计算出 Element 的 CSSStyle。 浏览器 window 显示区域 viewport，在 WebKit 里叫做 RenderView。</p>
 <h3 id="RenderLayer-Tree"><a href="#RenderLayer-Tree" class="headerlink" title="RenderLayer Tree"></a>RenderLayer Tree</h3><p>RenderLayer Tree 是基于 RenderObject Tree 建立的，它们是多个 RenderObject 对应一个 RenderLayer 的关系。在创建完 RenderObject Tree WebKit 还会创建 RenderLayer Tree，根节点是 RenderView 实例，根据一些条件来判断是否需要创建一个新的 RenderLayer 对象，再设置 RenderLayer 对象的父对象和兄弟对象。RenderLayer 需要满足一定条件才会创建，下面是那些需要创建新 RenderLayer 对象的条件：</p>
@@ -2980,7 +2980,7 @@ AtomRuleMap m_shadowPseudoElementRules;
 <li>使用 Canvas 或 WebGL 的 RenderObject 节点。</li>
 <li>Video 节点对应的 RenderObject 节点。</li>
 </ul>
-<p>RenderObject Tree 和 RenderLayer Tree 的关系如下图：<br><img src="/uploads/deeply-analyse-webkit/66.png" alt="66"><br>接下来看看 RenderObject Tree 和 RenderLayer Tree 的布局信息如下图所示：<br><img src="/uploads/deeply-analyse-webkit/67.png" alt="67"></p>
+<p>RenderObject Tree 和 RenderLayer Tree 的关系如下图：<br><img src="/uploads/deeply-analyse-webkit/66.png" alt="66" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/66.png" class="lozad post-image"><br>接下来看看 RenderObject Tree 和 RenderLayer Tree 的布局信息如下图所示：<br><img src="/uploads/deeply-analyse-webkit/67.png" alt="67" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/67.png" class="lozad post-image"></p>
 <h3 id="style-计算"><a href="#style-计算" class="headerlink" title="style 计算"></a>style 计算</h3><p>构建 render tree 需要计算每个 render object 的视觉特性。是通过计算每个 element 的 style 属性来做到的。</p>
 <p>这个样式包含了各种来源的 style sheets，有 inline style element 和 html 里视觉属性设置比如 bgcolor 这样的属性，后面这些都会转为 CSS style 的属性。来源还有浏览器默认的 style sheets，这个 style sheets 可以是用户自定义的。</p>
 <p>我们先看看 style 计算可能会有一些什么样问题</p>
@@ -3003,7 +3003,7 @@ AtomRuleMap m_shadowPseudoElementRules;
 <li>elements 不能有 inline style 属性</li>
 <li>不要使用兄弟 selectors</li>
 </ul>
-<h4 id="Rule-tree"><a href="#Rule-tree" class="headerlink" title="Rule tree"></a>Rule tree</h4><p>WebKit 会把 style objects 和 DOM 的 node 相关联。通过正确的顺序将所有逻辑规则值转成计算值，比如百分比会被转换成绝对单位，rule tree 可以使节点之间共享这些值，避免多次计算，同时节省内存。所有匹配的规则都会存在一个 tree 里。tree 的最下面的 node 有着最高的优先级。Rule tree 是当 node style 需要的时候才会去根据规则计算的。<br><img src="/uploads/deeply-analyse-webkit/70.png" alt="70"></p>
+<h4 id="Rule-tree"><a href="#Rule-tree" class="headerlink" title="Rule tree"></a>Rule tree</h4><p>WebKit 会把 style objects 和 DOM 的 node 相关联。通过正确的顺序将所有逻辑规则值转成计算值，比如百分比会被转换成绝对单位，rule tree 可以使节点之间共享这些值，避免多次计算，同时节省内存。所有匹配的规则都会存在一个 tree 里。tree 的最下面的 node 有着最高的优先级。Rule tree 是当 node style 需要的时候才会去根据规则计算的。<br><img src="/uploads/deeply-analyse-webkit/70.png" alt="70" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/70.png" class="lozad post-image"></p>
 <p>通过上图看看设置 rule tree 的好处吧，如果我们要找到 B - E - I 的规则我们能够省掉很多工作，因为我们已经计算了 A - B - E - I。</p>
 <h4 id="可确定样式分到各个-structs-里"><a href="#可确定样式分到各个-structs-里" class="headerlink" title="可确定样式分到各个 structs 里"></a>可确定样式分到各个 structs 里</h4><p>一些样式的信息是可以一开始就确定的，比如 border 和 color。所有属性分为可继承和不可继承两种，如果是需要继承需要特别指定，默认都是不可继承的。</p>
 <p>rule tree 帮着我们缓存全部的 structs，这样的好处是如果下面的 node 没有可用的 struct，那么可以使用上一级 node 的缓存里的来用。</p>
@@ -3031,8 +3031,8 @@ AtomRuleMap m_shadowPseudoElementRules;
 <span class="token selector">div span</span> <span class="token punctuation">&#123;</span><span class="token property">margin-bottom</span><span class="token punctuation">:</span>4px<span class="token punctuation">&#125;</span>
 <span class="token selector">#div1</span> <span class="token punctuation">&#123;</span><span class="token property">color</span><span class="token punctuation">:</span>blue<span class="token punctuation">&#125;</span>
 <span class="token selector">#div2</span> <span class="token punctuation">&#123;</span><span class="token property">color</span><span class="token punctuation">:</span>green<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这里有两个 structs 需要填充， color struct 和 margin struct。color struct 只包含一个值， margin struct 有四个。下面是 rule tree<br><img src="/uploads/deeply-analyse-webkit/71.png" alt="71"></p>
-<p>context tree：<br><img src="/uploads/deeply-analyse-webkit/72.png" alt="72"></p>
+<p>这里有两个 structs 需要填充， color struct 和 margin struct。color struct 只包含一个值， margin struct 有四个。下面是 rule tree<br><img src="/uploads/deeply-analyse-webkit/71.png" alt="71" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/71.png" class="lozad post-image"></p>
+<p>context tree：<br><img src="/uploads/deeply-analyse-webkit/72.png" alt="72" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/72.png" class="lozad post-image"></p>
 <p>假设到第二个 div 标签时，我们会创建一个 style context 给这个 node 并且填充 style struct。我们找到 1，2和6这个 rule 是满足的，而且在 rule tree 里已经存在了一个这样的路径，我们只需要把 F 添加到这个 node 里。这样形成一个 context tree 来保存这些对应关系。</p>
 <p>现在需要填充 style struct，先从 margin struct 开始，比如 rule tree 里最后 node F 没有添加到 margin struct 里，我们可以往 rule tree 的上面找，找到并且使用之，最后我们找到 node B 这个是最近的一个有 margin struct 的 node。</p>
 <p>已经定义了 color struct，那么就不能使用缓存的 struct，这样就不用往 rule tree 上级 node 去找，接着就把值转成 RGB 什么的并且缓存到这个 node 里。</p>
@@ -3819,7 +3819,7 @@ m_marginBox.setStart(marginLeft);<span aria-hidden="true" class="line-numbers-ro
 | | |—— RenderText &#123;#text&#125; at (0, 24) size 48x24 &quot;Second one.&quot; <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h3 id="Box-Model-数据结构"><a href="#Box-Model-数据结构" class="headerlink" title="Box Model 数据结构"></a>Box Model 数据结构</h3><p><img src="/uploads/deeply-analyse-webkit/16.png" alt="16"><br>所有的 elements 都有 display 属性用来确定显示类型。属性值有</p>
+<h3 id="Box-Model-数据结构"><a href="#Box-Model-数据结构" class="headerlink" title="Box Model 数据结构"></a>Box Model 数据结构</h3><p><img src="/uploads/deeply-analyse-webkit/16.png" alt="16" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/16.png" class="lozad post-image"><br>所有的 elements 都有 display 属性用来确定显示类型。属性值有</p>
 <ul>
 <li>block：生成一个 block box</li>
 <li>inline：生成一个或多个 inline boxes</li>
@@ -3860,16 +3860,16 @@ while (logicalRightOffsetForPositioningFloat(
 floatLogicalLeft &#x3D; std::max(
     logicalLeftOffset - borderAndPaddingLogicalLeft(), floatLogicalLeft);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="Box-类型"><a href="#Box-类型" class="headerlink" title="Box 类型"></a>Box 类型</h4><p>Block box：在浏览器的 window 里有自己的矩形<br><img src="/uploads/deeply-analyse-webkit/20.png" alt="20"></p>
-<p>Inline box：没有自己的 block，但是会在一个 block 里<br><img src="/uploads/deeply-analyse-webkit/21.png" alt="21"></p>
-<p>Block 是按照垂直排列，Inline 是按照水平来排列<br><img src="/uploads/deeply-analyse-webkit/22.png" alt="22"></p>
-<p>Inline boxes 会被包含在 line boxes 里，lines 的高度至少和最高的 box 一样，甚至更高，当 boxes 用的是 baseline，这意味着多个元素底部对齐。如果容器宽度不够，inline 会变成多 lines。<br><img src="/uploads/deeply-analyse-webkit/23.png" alt="23"></p>
+<h4 id="Box-类型"><a href="#Box-类型" class="headerlink" title="Box 类型"></a>Box 类型</h4><p>Block box：在浏览器的 window 里有自己的矩形<br><img src="/uploads/deeply-analyse-webkit/20.png" alt="20" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/20.png" class="lozad post-image"></p>
+<p>Inline box：没有自己的 block，但是会在一个 block 里<br><img src="/uploads/deeply-analyse-webkit/21.png" alt="21" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/21.png" class="lozad post-image"></p>
+<p>Block 是按照垂直排列，Inline 是按照水平来排列<br><img src="/uploads/deeply-analyse-webkit/22.png" alt="22" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/22.png" class="lozad post-image"></p>
+<p>Inline boxes 会被包含在 line boxes 里，lines 的高度至少和最高的 box 一样，甚至更高，当 boxes 用的是 baseline，这意味着多个元素底部对齐。如果容器宽度不够，inline 会变成多 lines。<br><img src="/uploads/deeply-analyse-webkit/23.png" alt="23" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/23.png" class="lozad post-image"></p>
 <p>下面举个例子看看 Inline  类型的例子，比如有如下的 html：</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>First line.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span><span class="token punctuation">></span></span>Second one.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>这段 html 的 Render Tree 如下：<br><img src="/uploads/deeply-analyse-webkit/97.png" alt="97"></p>
-<h4 id="Position-类型"><a href="#Position-类型" class="headerlink" title="Position 类型"></a>Position 类型</h4><p>Relative：相对定位，先按照正常的定位然后根据设置的值再移动。<br><img src="/uploads/deeply-analyse-webkit/24.png" alt="24"></p>
-<p>Float：会被移动到左边或右边侧<br><img src="/uploads/deeply-analyse-webkit/25.png" alt="25"></p>
-<p>Absolute 和 fixed：不会参与 normal flow，只按照精确定位，尺寸值相对于容器，对于 fixed 来说，是相对于 view port 的。fixed box 不会随着 document 的滚动而移动。<br><img src="/uploads/deeply-analyse-webkit/26.png" alt="26"></p>
+<p>这段 html 的 Render Tree 如下：<br><img src="/uploads/deeply-analyse-webkit/97.png" alt="97" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/97.png" class="lozad post-image"></p>
+<h4 id="Position-类型"><a href="#Position-类型" class="headerlink" title="Position 类型"></a>Position 类型</h4><p>Relative：相对定位，先按照正常的定位然后根据设置的值再移动。<br><img src="/uploads/deeply-analyse-webkit/24.png" alt="24" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/24.png" class="lozad post-image"></p>
+<p>Float：会被移动到左边或右边侧<br><img src="/uploads/deeply-analyse-webkit/25.png" alt="25" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/25.png" class="lozad post-image"></p>
+<p>Absolute 和 fixed：不会参与 normal flow，只按照精确定位，尺寸值相对于容器，对于 fixed 来说，是相对于 view port 的。fixed box 不会随着 document 的滚动而移动。<br><img src="/uploads/deeply-analyse-webkit/26.png" alt="26" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/26.png" class="lozad post-image"></p>
 <h4 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h4><p>分层可以通过指定 CSS 的 z-index 属性。它表示了 box 的第三个维度，位置按照 z 轴来。这些 box 会被分成 stacks，叫做 stacking contexts，每个栈顶的 box 更靠近用户。stack 根据 z-index 的属性排序。</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>STYLE</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text/css<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">
     <span class="token selector">div</span> <span class="token punctuation">&#123;</span> 
@@ -3882,7 +3882,7 @@ floatLogicalLeft &#x3D; std::max(
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>DIV</span> <span class="token special-attr"><span class="token attr-name">style</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token value css language-css"><span class="token property">z-index</span><span class="token punctuation">:</span> 3<span class="token punctuation">;</span><span class="token property">background-color</span><span class="token punctuation">:</span>red<span class="token punctuation">;</span> <span class="token property">width</span><span class="token punctuation">:</span> 1in<span class="token punctuation">;</span> <span class="token property">height</span><span class="token punctuation">:</span> 1in<span class="token punctuation">;</span> </span><span class="token punctuation">"</span></span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>DIV</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>DIV</span> <span class="token special-attr"><span class="token attr-name">style</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token value css language-css"><span class="token property">z-index</span><span class="token punctuation">:</span> 1<span class="token punctuation">;</span><span class="token property">background-color</span><span class="token punctuation">:</span>green<span class="token punctuation">;</span><span class="token property">width</span><span class="token punctuation">:</span> 2in<span class="token punctuation">;</span> <span class="token property">height</span><span class="token punctuation">:</span> 2in<span class="token punctuation">;</span></span><span class="token punctuation">"</span></span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>DIV</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>效果如下：<br><img src="/uploads/deeply-analyse-webkit/27.png" alt="27"></p>
+<p>效果如下：<br><img src="/uploads/deeply-analyse-webkit/27.png" alt="27" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-webkit/27.png" class="lozad post-image"></p>
 <p>可以看到层级是按照 z-index 来排的。</p>
 <h4 id="大小的计算"><a href="#大小的计算" class="headerlink" title="大小的计算"></a>大小的计算</h4><p>border 及以内区域使用 m_frameRect 对象表示。不同方法通过不同的计算能够获取到不同的值比如 clientWidth 的计算方法是</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F; More IE extensions.  clientWidth and clientHeight represent the interior of
@@ -3966,7 +3966,7 @@ determineLogicalLeftPositionForChild(child);<span aria-hidden="true" class="line
 <p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>59</span>
+    <span>60</span>
     <span>Posts</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -4028,7 +4028,7 @@ determineLogicalLeftPositionForChild(child);<span aria-hidden="true" class="line
       <a href="/categories/Programming">
         <div class="categories-list-item">
           Programming
-          <span class="categories-list-item-badge">45</span>
+          <span class="categories-list-item-badge">46</span>
         </div>
       </a>
     
@@ -4085,11 +4085,11 @@ determineLogicalLeftPositionForChild(child);<span aria-hidden="true" class="line
     
     <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
     
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
     <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
     
     <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
-    
-    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
     
     <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
     
@@ -4124,6 +4124,11 @@ determineLogicalLeftPositionForChild(child);<span aria-hidden="true" class="line
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-24</div>
+        <a href="/2023/04/24/swiftui-rss-reader/"><div class="recent-posts-item-content">使用 SwiftUI 开发 RSS 阅读器</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-10-24</div>
         <a href="/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/"><div class="recent-posts-item-content">参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动</div></a>
       </div>
@@ -4136,11 +4141,6 @@ determineLogicalLeftPositionForChild(child);<span aria-hidden="true" class="line
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-06-10</div>
         <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
       </div>
     
   </div>
@@ -4163,7 +4163,7 @@ determineLogicalLeftPositionForChild(child);<span aria-hidden="true" class="line
           
           2014 -
           
-          2022
+          2023
         </span>
         <a href="/" class="footer-link">戴铭的博客 </a>
       </div>

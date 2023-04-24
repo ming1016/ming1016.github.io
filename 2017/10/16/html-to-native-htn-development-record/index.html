@@ -192,13 +192,13 @@
 <span class="token omit keyword">_</span> <span class="token operator">=</span> <span class="token class-name">HTMLToTexture</span><span class="token punctuation">(</span>nodeName<span class="token punctuation">:</span><span class="token string-literal"><span class="token string">"Flexbox"</span></span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">converter</span><span class="token punctuation">(</span>layoutElement<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//生成原生 Textrue 代码</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>比如有下面的 html</p>
-<p><img src="/uploads/html-to-native-htn-development-record/04.png" alt="04"></p>
+<p><img src="/uploads/html-to-native-htn-development-record/04.png" alt="04" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/html-to-native-htn-development-record/04.png" class="lozad post-image"></p>
 <p>在浏览器里显示是这样</p>
-<p><img src="/uploads/html-to-native-htn-development-record/06.png" alt="06"></p>
+<p><img src="/uploads/html-to-native-htn-development-record/06.png" alt="06" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/html-to-native-htn-development-record/06.png" class="lozad post-image"></p>
 <p>通过 HTN 生成的原生代码</p>
-<p><img src="/uploads/html-to-native-htn-development-record/05.png" alt="05"></p>
+<p><img src="/uploads/html-to-native-htn-development-record/05.png" alt="05" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/html-to-native-htn-development-record/05.png" class="lozad post-image"></p>
 <p>在 iPhone X 模拟器的效果如下</p>
-<p><img src="/uploads/html-to-native-htn-development-record/07.png" alt="07"></p>
+<p><img src="/uploads/html-to-native-htn-development-record/07.png" alt="07" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/html-to-native-htn-development-record/07.png" class="lozad post-image"></p>
 <p>下面详细介绍下具体的实现关键点</p>
 <h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><p>这部分最关键的部分是在 HTML&#x2F;HTMLTokenizer.swift 里。首先会根据 W3C 里的 Tokenization 的标准 <a target="_blank" rel="noopener" href="https://dev.w3.org/html5/spec-preview/tokenization.html">https://dev.w3.org/html5/spec-preview/tokenization.html</a> 来定义一个状态的枚举，如下，可以目前完成这些状态的情况</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token comment">//枚举</span>
@@ -305,8 +305,8 @@ stateMachine<span class="token punctuation">.</span><span class="token function"
     <span class="token keyword">self</span><span class="token punctuation">.</span><span class="token function">advanceIndexAndResetCurrentStr</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>W3C 也定义每个状态的处理，非常详细完整，WebKit 基本把这些定义都实现了，HTN 目前只实现了能够满足构建 DOM 树的部分。W3C 的定义可以举个 StartTags 的状态如下图<br><img src="/uploads/html-to-native-htn-development-record/01.png" alt="01"></p>
-<p>在进入构建 DOM 树之前我们需要设计一些类和结构来记录我们的内容，这里采用了 WebKit 类似的类结构设计，下图是 WebKit 的 DOM 树相关的类设计图<br><img src="/uploads/html-to-native-htn-development-record/02.png" alt="02"></p>
+<p>W3C 也定义每个状态的处理，非常详细完整，WebKit 基本把这些定义都实现了，HTN 目前只实现了能够满足构建 DOM 树的部分。W3C 的定义可以举个 StartTags 的状态如下图<br><img src="/uploads/html-to-native-htn-development-record/01.png" alt="01" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/html-to-native-htn-development-record/01.png" class="lozad post-image"></p>
+<p>在进入构建 DOM 树之前我们需要设计一些类和结构来记录我们的内容，这里采用了 WebKit 类似的类结构设计，下图是 WebKit 的 DOM 树相关的类设计图<br><img src="/uploads/html-to-native-htn-development-record/02.png" alt="02" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/html-to-native-htn-development-record/02.png" class="lozad post-image"></p>
 <p>完成了这些状态处理，接下来就可以根据这些 HTMLToken 来组装我们的 DOM 树了。这部分的实现在 HTML&#x2F;HTMLTreeBuilder.swift 里。构建 DOM 树同样使用了先前的写的状态机，只是这里的状态集和事件集不同而已，W3C 也定义一些状态可以用</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">enum</span> <span class="token class-name">S</span><span class="token punctuation">:</span> <span class="token class-name">HTNStateType</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">case</span> <span class="token class-name">InitialModeState</span>
@@ -378,7 +378,7 @@ pseudo
     <span class="token keyword">case</span> <span class="token class-name">SemicolonEvent</span>  <span class="token comment">// ;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>同样在状态的处理过程中也需要一个合理的类结构关系设计来满足，这里也参考了 WebKit 里的设计，如下：<br><img src="/uploads/html-to-native-htn-development-record/03.png" alt="03"></p>
+<p>同样在状态的处理过程中也需要一个合理的类结构关系设计来满足，这里也参考了 WebKit 里的设计，如下：<br><img src="/uploads/html-to-native-htn-development-record/03.png" alt="03" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/html-to-native-htn-development-record/03.png" class="lozad post-image"></p>
 <h2 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h2><p>布局处理目前 HTN 主要是将样式属性和 DOM 树里的 Element 对应上。具体实现是在 Layout&#x2F;StyleResolver.swift 里。思路是先将所有 CSSRule 和对应的 CSSSelector 做好映射，接着在递归 DOM 树的过程中与每个 Element 对应上。主要代码实现如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">public</span> <span class="token keyword">func</span> <span class="token function-definition function">resolver</span><span class="token punctuation">(</span><span class="token omit keyword">_</span> doc<span class="token punctuation">:</span><span class="token class-name">Document</span><span class="token punctuation">,</span> styleSheet<span class="token punctuation">:</span><span class="token class-name">CSSStyleSheet</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">Document</span><span class="token punctuation">&#123;</span>
     <span class="token comment">//样式映射表</span>
@@ -592,7 +592,7 @@ pseudo
 <p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>59</span>
+    <span>60</span>
     <span>Posts</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -654,7 +654,7 @@ pseudo
       <a href="/categories/Programming">
         <div class="categories-list-item">
           Programming
-          <span class="categories-list-item-badge">45</span>
+          <span class="categories-list-item-badge">46</span>
         </div>
       </a>
     
@@ -711,11 +711,11 @@ pseudo
     
     <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
     
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
     <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
     
     <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
-    
-    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
     
     <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
     
@@ -750,6 +750,11 @@ pseudo
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-24</div>
+        <a href="/2023/04/24/swiftui-rss-reader/"><div class="recent-posts-item-content">使用 SwiftUI 开发 RSS 阅读器</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-10-24</div>
         <a href="/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/"><div class="recent-posts-item-content">参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动</div></a>
       </div>
@@ -762,11 +767,6 @@ pseudo
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-06-10</div>
         <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
       </div>
     
   </div>
@@ -789,7 +789,7 @@ pseudo
           
           2014 -
           
-          2022
+          2023
         </span>
         <a href="/" class="footer-link">戴铭的博客 </a>
       </div>

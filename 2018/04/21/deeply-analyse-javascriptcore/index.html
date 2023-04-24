@@ -188,7 +188,7 @@
     <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近开始涉及 JS 的解析和处理工作，所以专门研究了下这块。特别是动态类型的处理以及不同引擎对于平台无关的字节码的设计和处理会有很大的帮助。</p>
 <h1 id="JavaScriptCore-介绍"><a href="#JavaScriptCore-介绍" class="headerlink" title="JavaScriptCore 介绍"></a>JavaScriptCore 介绍</h1><p>JavaScriptCore 是 JavaScript 引擎，通常会被叫做虚拟机，专门设计来解释和执行 JavaScript 代码。最开始的 JavaScriptCore  是从 KJS（KDE 的 JavaScript 引擎）以及 PCRE 正则表达式的基础上开发的，是基于抽象语法树的解释器。2008 年重写了，叫做 SquirrelFish，后来是 SquirrelFish Extreme，又叫 Nitro。目前 JavaScript 引擎还有 Google 的 V8 ，Mozilla 的 SpiderMonkey。</p>
 <p>JavaScriptCore 还能够在 Objective-C 程序中来执行 JavaScript 的代码，也可以在 JavaScript 环境中插入自定义对象。</p>
-<h1 id="JavaScriptCore-全貌"><a href="#JavaScriptCore-全貌" class="headerlink" title="JavaScriptCore 全貌"></a>JavaScriptCore 全貌</h1><p>下面是解析 JavaScript 源码解析编译的详细流程图：<br><img src="/uploads/deeply-analyse-javascriptcore/01.png"></p>
+<h1 id="JavaScriptCore-全貌"><a href="#JavaScriptCore-全貌" class="headerlink" title="JavaScriptCore 全貌"></a>JavaScriptCore 全貌</h1><p>下面是解析 JavaScript 源码解析编译的详细流程图：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-javascriptcore/01.png" class="lozad post-image"src="/uploads/deeply-analyse-javascriptcore/01.png"></p>
 <h2 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h2><ul>
 <li><p>Lexer：词法分析器，生成 tokens，大部分代码都在 parser&#x2F;Lexer.cpp 里。</p>
 </li>
@@ -203,7 +203,7 @@
 <li><p>FTL：高吞吐量优化 JIT，全称 Faster Than Light，DFG 高层优化配合 B3 底层优化。以前全称是 Fourth Tier LLVM 底层优化使用的是 LLVM。B3 对 LLVM 做了裁剪，对 JavaScriptCore 做了特性处理，B3 IR 的接口和 LLVM IR 很类似。B3 对 LLVM 的替换主要是考虑减少内存开销，LLVM 主要是针对编译器，编译器在这方面优化动力必然没有 JIT 需求高。B3 IR 将指针改成了更紧凑的整数来表示引用关系。不可变的常用的信息使用固定大小的结构来表示，其它的都放到另外的地方。紧凑的数据放到数组中，更多的数组更少的链表。这样形成的 IR 更省内存。<a target="_blank" rel="noopener" href="http://www.filpizlo.com/">Filip Pizlo</a> 主导的这个改动，DFG JIT 也是他弄的，为了能够更多的减少内存上的开销，他利用在 DFG 里已经做的 InsertionSet 将 LLVM IR 里的 def-use 干掉了，大概思路是把单向链表里批量插入新 IR 节点先放到 InsertionSet 里，在下次遍历 IR 时再批量插入。Filip Pizlo 还把 DFG 里的 UpsilonValue 替代 LLVM SSA 组成部分。B3 后面会把 LLVM 的寄存器分配算法 Greedy 一直到 B3 中。</p>
 </li>
 </ul>
-<p>执行速度的对比：<br><img src="/uploads/deeply-analyse-javascriptcore/02.png"><br>相对速度，越高表示越好。</p>
+<p>执行速度的对比：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-javascriptcore/02.png" class="lozad post-image"src="/uploads/deeply-analyse-javascriptcore/02.png"><br>相对速度，越高表示越好。</p>
 <p>更多的说明可以参看 WebKit 官网 JavaScriptCore 的 Wiki 首页部分：<a target="_blank" rel="noopener" href="https://trac.webkit.org/wiki/JavaScriptCore">https://trac.webkit.org/wiki/JavaScriptCore</a></p>
 <h2 id="主要的源码目录结构"><a href="#主要的源码目录结构" class="headerlink" title="主要的源码目录结构"></a>主要的源码目录结构</h2><ul>
 <li>API：JavaScriptCore 对外的接口类</li>
@@ -231,16 +231,16 @@
 <p>接口执行脚本，创建一个 ProgramExecutable 对象来表示要执行的脚本负责编译成 ByteCode，调用 Interpreter 执行这个 ByteCode。</p>
 <p>Binding 是 WebCore 为 JavaScriptCore 提供的封装层。这一层的定义可以在这里找到：<a target="_blank" rel="noopener" href="https://trac.webkit.org/wiki/WebKitIDL">https://trac.webkit.org/wiki/WebKitIDL</a>。WebKit 参照的是 W3C Web IDL <a target="_blank" rel="noopener" href="https://www.w3.org/TR/WebIDL-1/">https://www.w3.org/TR/WebIDL-1/</a>。</p>
 <p>使用 IDL 定义接口规范，WebKit 使用一组 perl 脚本来转换 IDL，初始脚本是 generate-binding.pl。生成接口与 DOM 组件关联是通过 JSNode 来的。执行脚本和 Frame 的 setDocument 会更新 document 对象到 JavaScriptCore，通过 JSDomWindowBase::updateDocument 更新到 JSC::Heap 里。</p>
-<h1 id="词法语法分析"><a href="#词法语法分析" class="headerlink" title="词法语法分析"></a>词法语法分析</h1><p>词法和语法分析程序 JavaScriptCore 是自己编写的。词法分析会把文本理解成很多 token，比如 a &#x3D; 5; 就会被识别成下面这些 token，VARIABLE EQUAL CONSTANT END。然后通过语法分析，输出语法树。<br><img src="/uploads/deeply-analyse-javascriptcore/03.png"></p>
-<p>需要先设计好 Node，Node 的类关系图如下：<br><img src="/uploads/deeply-analyse-javascriptcore/04.png"><br>举个包含加和乘的 statement 是如何组成 AST 的</p>
+<h1 id="词法语法分析"><a href="#词法语法分析" class="headerlink" title="词法语法分析"></a>词法语法分析</h1><p>词法和语法分析程序 JavaScriptCore 是自己编写的。词法分析会把文本理解成很多 token，比如 a &#x3D; 5; 就会被识别成下面这些 token，VARIABLE EQUAL CONSTANT END。然后通过语法分析，输出语法树。<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-javascriptcore/03.png" class="lozad post-image"src="/uploads/deeply-analyse-javascriptcore/03.png"></p>
+<p>需要先设计好 Node，Node 的类关系图如下：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-javascriptcore/04.png" class="lozad post-image"src="/uploads/deeply-analyse-javascriptcore/04.png"><br>举个包含加和乘的 statement 是如何组成 AST 的</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">o<span class="token punctuation">.</span>x <span class="token operator">*</span> o<span class="token punctuation">.</span>x <span class="token operator">+</span> o<span class="token punctuation">.</span>y <span class="token operator">*</span> o<span class="token punctuation">.</span>y<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="/uploads/deeply-analyse-javascriptcore/05.png"><br>heap 代表的是可见数据，pure 代表的是抽象说明。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-javascriptcore/05.png" class="lozad post-image"src="/uploads/deeply-analyse-javascriptcore/05.png"><br>heap 代表的是可见数据，pure 代表的是抽象说明。</p>
 <p>下面看看 Object 的构造</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">var</span> o <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 o<span class="token punctuation">.</span>f <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
 o<span class="token punctuation">.</span>g <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
 o<span class="token punctuation">.</span>h <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="/uploads/deeply-analyse-javascriptcore/06.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-javascriptcore/06.png" class="lozad post-image"src="/uploads/deeply-analyse-javascriptcore/06.png"></p>
 <p>接下来看看 function 的</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token parameter">o</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>o<span class="token punctuation">.</span>f <span class="token operator">&amp;&amp;</span> o<span class="token punctuation">.</span><span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">42</span><span class="token punctuation">)</span>
@@ -248,7 +248,7 @@ o<span class="token punctuation">.</span>h <span class="token operator">=</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>o<span class="token punctuation">.</span>g <span class="token operator">&amp;&amp;</span> o<span class="token punctuation">.</span><span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">63</span><span class="token punctuation">)</span>
         <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"bye"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="/uploads/deeply-analyse-javascriptcore/07.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-javascriptcore/07.png" class="lozad post-image"src="/uploads/deeply-analyse-javascriptcore/07.png"></p>
 <p>还有些其它的 parser 比如 Esprima 提供了一个在线 <a target="_blank" rel="noopener" href="http://esprima.org/demo/parse.html">demo</a> 可以在线 Parser。实现的代码在这里：<a target="_blank" rel="noopener" href="https://github.com/jquery/esprima/tree/master/src">https://github.com/jquery/esprima/tree/master/src</a> 主要使用的是递归下降和运算符优先级混合式来做的 parser。</p>
 <p>我在 HTN （<a target="_blank" rel="noopener" href="https://github.com/ming1016/HTN">https://github.com/ming1016/HTN</a>）项目中做了个 js 的 AST 的 builder：<a target="_blank" rel="noopener" href="https://github.com/ming1016/HTN/tree/master/Sources/Core/JavaScript">https://github.com/ming1016/HTN/tree/master/Sources/Core/JavaScript</a> 分词和语法树生成使用的是状态机处理递归下降。</p>
 <p>WebKit 的性能目录里有用 ES6 标准实现的 ECMA-55 BASIC 这个词法语法分析的测试。代码在：<a target="_blank" rel="noopener" href="https://trac.webkit.org/browser/trunk/PerformanceTests/ARES-6/Basic?rev=211697">https://trac.webkit.org/browser/trunk/PerformanceTests/ARES-6/Basic?rev=211697</a></p>
@@ -293,11 +293,11 @@ installCode(vm, codeBlock, codeBlock-&gt;codeType(), codeBlock-&gt;specializatio
 <p>CodeBlock 有 GlobalCode，EvalCode，FunctionCode，ModuleCode 这些类型，用于 LLInt 和 JIT。编译后的 ByteCode 会存在 UnlinkedCodeBlock 里。</p>
 <h1 id="分层编译"><a href="#分层编译" class="headerlink" title="分层编译"></a>分层编译</h1><p>总的来说 JavaScriptCore 是采用了类型推测和分层编译的思想，解析成字节码后 LLInt 的作用就是让 js 代码能够早点执行，由于解释的效率不高，所以达到一定条件可以并行的通过 Baseline JIT 编译成更高效的字节码来解释，如果到了更加容易使得 LLInt 解释效率差的情况就会并行使用 DFG JIT ，DFG 编译的结果也有代表 On stack replacement 的 osrExitSites 数组，这样的字节码的解释性能会更好，如果假设解释失败还可以再回到 Baseline，也不会有什么问题。启用 FTL 的条件就更高了，可能函数调用了好几万次也都不会开启。</p>
 <p>分层编译的主要思想是先把源码解释成一种内部的表示也就是字节码，将其中使用率高的字节码转成汇编代码，汇编代码可以由 CPU 直接执行来最大程度的提高性能。</p>
-<p>LLInt，Baseline JIT 和 DFG 三者会同时运行。可以在 jsc.cpp 里添加日志观察他们的工作状态<br><img src="/uploads/deeply-analyse-javascriptcore/08.png"></p>
+<p>LLInt，Baseline JIT 和 DFG 三者会同时运行。可以在 jsc.cpp 里添加日志观察他们的工作状态<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-javascriptcore/08.png" class="lozad post-image"src="/uploads/deeply-analyse-javascriptcore/08.png"></p>
 <p>箭头指示的是堆栈替换 on-stack replacement，简称 OSR。这个技术可以将执行转移到任何 statement 的地方。OSR 可以不管执行引擎是什么都在去解析字节码状态，并且能够重构它去让其它引擎继续执行，OSR entry 是进入更高层优化，OSR exit 是降至低层。LLInt 到 Baseline JIT 时 OSR 只需要跳转到相应的机器代码地址就行，因为 Baseline JIT 每个指令边界上的所有变量的表示和 LLInt 是一样的。进入 DFG JIT 就会复杂些，DFG 通过将函数控制流图当作多个进入点，一个是函数函数启动入口一个是循环的入口。</p>
 <p>如果每个函数都用像 DFG JIT 来优化那么消耗太大，这就类似每次运行就来个完整的源码编译成本地应用那样。如果每个语句都只执行一次，那么 JIT 编译就会比 LLInt 是时间要长，如果执行的次数越多，那么 LLInt 这种解释方式就会比编译方式要差，LLInt 的大部分时间都消耗在分派下个字节码指令的操作上了。</p>
 <h2 id="DFG-JIT"><a href="#DFG-JIT" class="headerlink" title="DFG JIT"></a>DFG JIT</h2><p>全称 data flow graph JIT 数据流图 JIT。是一种推测优化的技术。会开始对一个类型做出一个能够对性能好的假设，先编译一个版本，如果后面发现假设不对就会跳转回原先代码，称为 Speculation failure。DFG 是并发编译器，DFG pipeline 的每个部分都是同时运行的，包括字节码解析和分析。</p>
-<p><img src="/uploads/deeply-analyse-javascriptcore/09.png"><br>上图是 DFG JIT 的优化 pipeline。开始 DFG 会把字节码转成 DFG CPS 格式，这个格式会描述变量和临时数据之间的数据流关系。再用分析信息来推测类型，通过推测的类型减少类型的检查。接着进行传统的编译器方面的优化，最后编译器通过 DFG CPS 格式直接生成机器码。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-javascriptcore/09.png" class="lozad post-image"src="/uploads/deeply-analyse-javascriptcore/09.png"><br>上图是 DFG JIT 的优化 pipeline。开始 DFG 会把字节码转成 DFG CPS 格式，这个格式会描述变量和临时数据之间的数据流关系。再用分析信息来推测类型，通过推测的类型减少类型的检查。接着进行传统的编译器方面的优化，最后编译器通过 DFG CPS 格式直接生成机器码。</p>
 <p>DFG JIT 会将字节码解析成 SSA 形式，按执行路径收集类型信息。会使用 inlining 和 value profiling 等一些静态分析技术。类型推导把 value profile 里的常用的类型作为后面用的类型来预测，在 SpeculatedType.h 里定义里一些数据类型，符合 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Data-flow_analysis">Data-flow analysis</a> 规范，具体实现在 DFGPredictionPropagationPhase.cpp 里。Baseline JIT 次数超过一定数量就会生成一个新的类型，可能会触发 DFG 也可能会让 Baseline JIT 再执行几次。</p>
 <p>DFG 的 register allocator 中汇编程序使用的是二地址，不用 op dest, src1, src2 这样三地址形式，只需要 op src1, src2 这样的二地址形式，结果存在第一个操作数里。</p>
 <p>DFG JIT 将低效字节码转成更优化的高效形式。DFG 结合传统编译器的优化，比如寄存器的分配，控制流图的简化，公共子表达式消除，死代码消除和稀疏条件常量传播等。但是正儿八经的编译器是需要知道变量类型和堆里面的对象的结构的，这样才能更好的优化。DFG JIT 使用的是 LLInt 和 Baseline JIT 里分析出的变量类型来推断的。比如下面的例子</p>
@@ -305,9 +305,9 @@ installCode(vm, codeBlock, codeBlock-&gt;codeType(), codeBlock-&gt;specializatio
     <span class="token keyword">return</span> x <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> 
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>这里的 x 从代码上看是看不出类型的，它可能是字符串也可能是 integer 或者 double。LLInt 和 Baseline JIT 会从函数参数或者来自堆的读取来收集每个变量的值信息。DFG 不会一开始就编译 plusThe 这个函数，它会等到这个函数被执行了很多次，让 LLInt 和 Baseline JIT 尽可能的把类型信息收集全。根据这些信息来假设一个类型，一个确定的类型会节省空间和执行时间。如果假设的检查失败，就通过 OSR 把执行转移到 Baseline JIT 上。</p>
-<h2 id="FTL-JIT"><a href="#FTL-JIT" class="headerlink" title="FTL JIT"></a>FTL JIT</h2><p>DFG JIT 可以优化 long-running 运行的代码性能，但是会影响 short-running 的程序，DFG 编译的时间和 DFG 生成代码的质量相比较来说还是过大。想让 DFG 生成更好的代码都会降低代码速度，还会增加 shorter-running 代码的延迟。DFG 不可能同时成为低延迟优化和 high-throughput 代码编译器。这时就需要再多一层来做较重的优化，同时让 DFG 保持自己的轻体重，使得 longer-running 和 shorter-running 代码能够保持平衡。<br><img src="/uploads/deeply-analyse-javascriptcore/10.png"><br>新的一层 FTL 实际上是 DFG Backend 的替换。会先在 DFG 的 JavaScript 函数表示转换为静态单一指派（SSA） 格式上做些 JavaScript 特性的优化。接着把 DFG IR 转换成 FTL 里用到的 B3 的 IR。最后生成机器码。</p>
+<h2 id="FTL-JIT"><a href="#FTL-JIT" class="headerlink" title="FTL JIT"></a>FTL JIT</h2><p>DFG JIT 可以优化 long-running 运行的代码性能，但是会影响 short-running 的程序，DFG 编译的时间和 DFG 生成代码的质量相比较来说还是过大。想让 DFG 生成更好的代码都会降低代码速度，还会增加 shorter-running 代码的延迟。DFG 不可能同时成为低延迟优化和 high-throughput 代码编译器。这时就需要再多一层来做较重的优化，同时让 DFG 保持自己的轻体重，使得 longer-running 和 shorter-running 代码能够保持平衡。<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-javascriptcore/10.png" class="lozad post-image"src="/uploads/deeply-analyse-javascriptcore/10.png"><br>新的一层 FTL 实际上是 DFG Backend 的替换。会先在 DFG 的 JavaScript 函数表示转换为静态单一指派（SSA） 格式上做些 JavaScript 特性的优化。接着把 DFG IR 转换成 FTL 里用到的 B3 的 IR。最后生成机器码。</p>
 <p>DFG 的机器代码生成器很快，但没有低级优化。对这块的优化采用先转成 SSA 形式，执行比如自动执行循环不变量代码来提高执行速率的循环不变量代码移动（loop-invariant code motion）的优化技术，这些优化完成后就可以 straight-forward linear 和 一对多（DFG SSA 的每个指令都可以产生）的转换为也基于 SSA 的没有 JavaScript 语言特性的 B3 的 IR。总的来说过程就是把源码生成字节码，接着变成 DFG CPS IR，再就是 DFG SSA IR，最后成 B3 的 IR，JavaScript 的动态性就是在这些过程中一步步被消除掉的。</p>
-<p><img src="/uploads/deeply-analyse-javascriptcore/11.png"><br>代码在 LLInt，Baseline JIT 和 DFG JIT 运行一段时间才会调用 FTL。FTL 在并发线程中会从它们那收集分析信息。short-running 代码是不会导致 FTL 编译的，一般超过10毫秒的函数会触发 FTL 编译。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-javascriptcore/11.png" class="lozad post-image"src="/uploads/deeply-analyse-javascriptcore/11.png"><br>代码在 LLInt，Baseline JIT 和 DFG JIT 运行一段时间才会调用 FTL。FTL 在并发线程中会从它们那收集分析信息。short-running 代码是不会导致 FTL 编译的，一般超过10毫秒的函数会触发 FTL 编译。</p>
 <p>FTL 通过并发编译减小对启动速度的影响。</p>
 <h2 id="FTL-Backend-B3"><a href="#FTL-Backend-B3" class="headerlink" title="FTL Backend B3"></a>FTL Backend B3</h2><p>B3 的全称 Bare Bones Backend，实现了大吞吐量同时缩短总体 FTL 编译时间。B3 的 IR 是一个低级别的中间表示，低级别意味着需要大量内存去表示每个函数，大量的内存意味着编译器在分析函数时需要扫描大量内存。B3 有两个 IR，一个叫 B3 IR 另一个机器级别的叫 Assembly IR，简称 Air。这两个 IR 的目标是代表低级操作，同时能最大限度的减少分析代码所需要的内存访问。达到这个目标需要减少 IR 对象整体大小，减少表示典型操作的 IR 对象数量，减少 IR 的 pointer chasing，最后时减少 IR 的总数。</p>
 <p>B3 转换成 Air 会通过执行反向贪婪模式匹配来巧妙地针对每个 B3 操作选择正确的 Air 序列。具体的实现可以参看 B3LowerToAir.cpp 的代码。</p>
@@ -323,7 +323,7 @@ installCode(vm, codeBlock, codeBlock-&gt;codeType(), codeBlock-&gt;specializatio
 <p>Air 里做的优化包括去除死代码，控制流图的简化以及修正部分寄存器 stalls 和溢出代码症状。Air 最重要的优化是寄存器分配。</p>
 <p>B3 的动态语言支持靠的是 Patchpoints，还有一半功劳是操作码的 Check family，用来实现栈上替换，即 OSR。JavaScript 是种动态语言，没有可以快速执行的类型和操作，FTL JIT 就使用推测行为方式把这些操作转换成快速代码。</p>
 <p>Air 在寄存器分配器的选择上使用了经典的图形着色寄存器分配器，叫迭代寄存器合并，简称 IRC。</p>
-<h1 id="类型分析"><a href="#类型分析" class="headerlink" title="类型分析"></a>类型分析</h1><p>Web Inspector 工具是 WebKit 里提供的调试工具，通过这个工具可以很好的观察哪些函数甚至哪些条件执行了或者没有执行。最重要的是可以直观的观察变量类型，还能够跟踪值的继承链。<br><img src="/uploads/deeply-analyse-javascriptcore/12.png"><br>JavaScript 是动态类型语言，任何变量都可以是任何类型，表达式可以有任何类型，函数可以返回任何类型等等。由于不能立刻得到类型就没法确定地址字节大小，需要在运行时去反复推断。静态语言就不一样，一开始明确了类型，比如目标平台 int 类型占用4个字节，它对应的对象是个地址，偏移量是0，访问 int 时需要将对象地址加上4个字节。所以语言解释系统只要用数组和位移来存变量和方法地址就行了，这样几个机器语言的指令就可以对其执行各种操作。</p>
+<h1 id="类型分析"><a href="#类型分析" class="headerlink" title="类型分析"></a>类型分析</h1><p>Web Inspector 工具是 WebKit 里提供的调试工具，通过这个工具可以很好的观察哪些函数甚至哪些条件执行了或者没有执行。最重要的是可以直观的观察变量类型，还能够跟踪值的继承链。<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/deeply-analyse-javascriptcore/12.png" class="lozad post-image"src="/uploads/deeply-analyse-javascriptcore/12.png"><br>JavaScript 是动态类型语言，任何变量都可以是任何类型，表达式可以有任何类型，函数可以返回任何类型等等。由于不能立刻得到类型就没法确定地址字节大小，需要在运行时去反复推断。静态语言就不一样，一开始明确了类型，比如目标平台 int 类型占用4个字节，它对应的对象是个地址，偏移量是0，访问 int 时需要将对象地址加上4个字节。所以语言解释系统只要用数组和位移来存变量和方法地址就行了，这样几个机器语言的指令就可以对其执行各种操作。</p>
 <p>下面来个例子：</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> x <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
 <span class="token function">print</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -553,7 +553,7 @@ iastore  &#x2F;&#x2F; 赋值符号节点进行赋值<span aria-hidden="true" cla
 <p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>59</span>
+    <span>60</span>
     <span>Posts</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -615,7 +615,7 @@ iastore  &#x2F;&#x2F; 赋值符号节点进行赋值<span aria-hidden="true" cla
       <a href="/categories/Programming">
         <div class="categories-list-item">
           Programming
-          <span class="categories-list-item-badge">45</span>
+          <span class="categories-list-item-badge">46</span>
         </div>
       </a>
     
@@ -672,11 +672,11 @@ iastore  &#x2F;&#x2F; 赋值符号节点进行赋值<span aria-hidden="true" cla
     
     <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
     
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
     <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
     
     <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
-    
-    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
     
     <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
     
@@ -711,6 +711,11 @@ iastore  &#x2F;&#x2F; 赋值符号节点进行赋值<span aria-hidden="true" cla
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-24</div>
+        <a href="/2023/04/24/swiftui-rss-reader/"><div class="recent-posts-item-content">使用 SwiftUI 开发 RSS 阅读器</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-10-24</div>
         <a href="/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/"><div class="recent-posts-item-content">参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动</div></a>
       </div>
@@ -723,11 +728,6 @@ iastore  &#x2F;&#x2F; 赋值符号节点进行赋值<span aria-hidden="true" cla
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-06-10</div>
         <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
       </div>
     
   </div>
@@ -750,7 +750,7 @@ iastore  &#x2F;&#x2F; 赋值符号节点进行赋值<span aria-hidden="true" cla
           
           2014 -
           
-          2022
+          2023
         </span>
         <a href="/" class="footer-link">戴铭的博客 </a>
       </div>

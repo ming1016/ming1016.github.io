@@ -187,7 +187,7 @@
   </header>
   <div id="section" class="post-content">
     <p>目前已经完成的功能有对RSS的解析和Atom解析，RSS内容本地数据库存储和读取，抓取中状态进度展示，标记阅读状态，标记全部已读等。这些功能里我对一些异步操作产生的数据采用了ReactiveCocoa来对数据流向进行了控制，下面我来说下如何运用RAC来进行的开发。</p>
-<h1 id="初始时读取本地存储首页列表数据，过滤无效数据，监听列表数据变化进行列表更新"><a href="#初始时读取本地存储首页列表数据，过滤无效数据，监听列表数据变化进行列表更新" class="headerlink" title="初始时读取本地存储首页列表数据，过滤无效数据，监听列表数据变化进行列表更新"></a>初始时读取本地存储首页列表数据，过滤无效数据，监听列表数据变化进行列表更新</h1><p><img src="https://github.com/ming1016/GCDFetchFeed/blob/master/GCDFetchFeed/resource/ScreenShot1.png?raw=true" alt="截图"></p>
+<h1 id="初始时读取本地存储首页列表数据，过滤无效数据，监听列表数据变化进行列表更新"><a href="#初始时读取本地存储首页列表数据，过滤无效数据，监听列表数据变化进行列表更新" class="headerlink" title="初始时读取本地存储首页列表数据，过滤无效数据，监听列表数据变化进行列表更新"></a>初始时读取本地存储首页列表数据，过滤无效数据，监听列表数据变化进行列表更新</h1><p><img src="https://github.com/ming1016/GCDFetchFeed/blob/master/GCDFetchFeed/resource/ScreenShot1.png?raw=true" alt="截图" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://github.com/ming1016/GCDFetchFeed/blob/master/GCDFetchFeed/resource/ScreenShot1.png?raw=true" class="lozad post-image"></p>
 <p>这里会用到RAC这个宏可以方便的来进行键值和信号的绑定，RACObserve这个宏方便的进行键值变化的监听处理。具体实现代码如下：</p>
 <pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token operator">@</span><span class="token function">weakify</span><span class="token punctuation">(</span><span class="token keyword">self</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">//首页列表数据赋值，过滤无效数据</span>
@@ -311,7 +311,7 @@
     <span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h1 id="读取RSS列表，异步读取，主线程更新"><a href="#读取RSS列表，异步读取，主线程更新" class="headerlink" title="读取RSS列表，异步读取，主线程更新"></a>读取RSS列表，异步读取，主线程更新</h1><p><img src="https://github.com/ming1016/GCDFetchFeed/blob/master/GCDFetchFeed/resource/ScreenShot2.png?raw=true" alt="截图"></p>
+<h1 id="读取RSS列表，异步读取，主线程更新"><a href="#读取RSS列表，异步读取，主线程更新" class="headerlink" title="读取RSS列表，异步读取，主线程更新"></a>读取RSS列表，异步读取，主线程更新</h1><p><img src="https://github.com/ming1016/GCDFetchFeed/blob/master/GCDFetchFeed/resource/ScreenShot2.png?raw=true" alt="截图" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://github.com/ming1016/GCDFetchFeed/blob/master/GCDFetchFeed/resource/ScreenShot2.png?raw=true" class="lozad post-image"></p>
 <p>这里通过RAC能够很方便的进行主线程操作UI，非主线程操作数据这样的操作，具体实现如下：</p>
 <pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token comment">//获取列表数据以及对应的操作</span>
 <span class="token operator">-</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>selectFeedItems <span class="token punctuation">&#123;</span>
@@ -380,7 +380,7 @@
     <span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="https://github.com/ming1016/GCDFetchFeed/blob/master/GCDFetchFeed/resource/ScreenShot3.png?raw=true" alt="截图"></p>
+<p><img src="https://github.com/ming1016/GCDFetchFeed/blob/master/GCDFetchFeed/resource/ScreenShot3.png?raw=true" alt="截图" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://github.com/ming1016/GCDFetchFeed/blob/master/GCDFetchFeed/resource/ScreenShot3.png?raw=true" class="lozad post-image"></p>
 <p>完整代码可以在这里看:<a target="_blank" rel="noopener" href="https://github.com/ming1016/GCDFetchFeed">https://github.com/ming1016/GCDFetchFeed</a></p>
 
   </div>
@@ -437,7 +437,7 @@
 <p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>59</span>
+    <span>60</span>
     <span>Posts</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -499,7 +499,7 @@
       <a href="/categories/Programming">
         <div class="categories-list-item">
           Programming
-          <span class="categories-list-item-badge">45</span>
+          <span class="categories-list-item-badge">46</span>
         </div>
       </a>
     
@@ -556,11 +556,11 @@
     
     <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
     
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
     <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
     
     <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
-    
-    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
     
     <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
     
@@ -595,6 +595,11 @@
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-24</div>
+        <a href="/2023/04/24/swiftui-rss-reader/"><div class="recent-posts-item-content">使用 SwiftUI 开发 RSS 阅读器</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-10-24</div>
         <a href="/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/"><div class="recent-posts-item-content">参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动</div></a>
       </div>
@@ -607,11 +612,6 @@
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-06-10</div>
         <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
       </div>
     
   </div>
@@ -634,7 +634,7 @@
           
           2014 -
           
-          2022
+          2023
         </span>
         <a href="/" class="footer-link">戴铭的博客 </a>
       </div>

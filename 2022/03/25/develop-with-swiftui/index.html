@@ -188,13 +188,13 @@
   <div id="section" class="post-content">
     <p>受 Apple 加速器 SwiftUI 活动邀请，做了个分享，还和喵神、61、浙剑、思琪等社区大神参与了圆桌讨论。这次完善了 SwiftUI 做的幻灯片，比去年要好一点，增加了解释执行代码交互功能。</p>
 <p>为这次幻灯画了几张图，在新西兰认识的画家，指导我了些画法，用其完成了幻灯里的图。</p>
-<p><img src="/uploads/develop-with-swiftui/20.PNG"><br><img src="/uploads/develop-with-swiftui/21.PNG"><br><img src="/uploads/develop-with-swiftui/22.png"><br><img src="/uploads/develop-with-swiftui/24.PNG"><br><img src="/uploads/develop-with-swiftui/25.PNG"></p>
-<h2 id="macOS-多栏"><a href="#macOS-多栏" class="headerlink" title="macOS 多栏"></a>macOS 多栏</h2><p><img src="/uploads/develop-with-swiftui/06.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/20.PNG" class="lozad post-image"src="/uploads/develop-with-swiftui/20.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/21.PNG" class="lozad post-image"src="/uploads/develop-with-swiftui/21.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/22.png" class="lozad post-image"src="/uploads/develop-with-swiftui/22.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/24.PNG" class="lozad post-image"src="/uploads/develop-with-swiftui/24.PNG"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/25.PNG" class="lozad post-image"src="/uploads/develop-with-swiftui/25.PNG"></p>
+<h2 id="macOS-多栏"><a href="#macOS-多栏" class="headerlink" title="macOS 多栏"></a>macOS 多栏</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/06.png" class="lozad post-image"src="/uploads/develop-with-swiftui/06.png"></p>
 <p>内容有 macOS 多栏、Toolbar、文件夹嵌套、文本和代码编辑器、网格视图和斜45度视觉。</p>
 <p>macOS 的多栏只需要使用 NavigationView 就可以了，闭包里的第一个视图就是 Sidebar，后面的视图可以作为占位视图，显示一些初始信息，通过 Sidebar 的 NavigationLink 来设置第二栏的视图就好了，第三栏通过第二栏来指定。</p>
 <p>如果想要隐藏收起 Sidebar 需要先获取 SplitViewController，然后调用 toggleSidebar 方法就可以了。如果想要收起最右侧视图或任意一栏视图，可以在 SplitViewController 的 splitViewItems 里找到对应的 Item，比如最右一栏就是 splitViewItems.last。调用找到视图的 animator().isCollapsed.toggle() 就可以了。</p>
 <p>如果只想让其中一栏全屏显示，先在 splitViewItems 找到那一栏，然后调用对应 ViewController 里 View 的 enterFullScreenMode 方法，要注意的是，设置的 Options 需要包含 .autoHideDock 和 .autoHideMenuBar，否则就没法退出全屏了。由于全屏后会将视图放到另一个 Window 中，因此退出全屏可以直接调用当前 key window 的 contentView 的 exitFullScreenMode() 方法。</p>
-<h2 id="Toolbar"><a href="#Toolbar" class="headerlink" title="Toolbar"></a>Toolbar</h2><p><img src="/uploads/develop-with-swiftui/18.png"></p>
+<h2 id="Toolbar"><a href="#Toolbar" class="headerlink" title="Toolbar"></a>Toolbar</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/18.png" class="lozad post-image"src="/uploads/develop-with-swiftui/18.png"></p>
 <p>一般的 macOS 程序多栏顶部会有一些功能按钮，以方便用户了解到程序的主要高频功能，比如 Xcode 的调试和 Target 选择按钮，Keynote 的播放、添加幻灯片、缩放文本、形状、表格、图表等按钮。这些按钮都可以通过 Toolbar 来实现。Toolbar 根据摆放位置和语义设置了一组 Options，通过 Options 统一了多平台的表现形式，比如默认位置的 option 就是 .automatic，中间位置就是 .principal，macOS Touch Bar iOS 的虚拟键盘上的按钮用的就是 .keyboard。另外还有很多语义表示，用于放置到不同平台特定的位置，比如用于导航的按钮在 macOS 上会出现在最左侧，用的就是 .navigation 这种语义的 Options。</p>
 <h2 id="文件夹嵌套结构"><a href="#文件夹嵌套结构" class="headerlink" title="文件夹嵌套结构"></a>文件夹嵌套结构</h2><p>得益于 keypaths 在 SwiftUI 中的应用，文件夹嵌套结构实现起来简单了太多。给 List 的 children 参数指定嵌套模型的嵌套键值路径即可，比如模型结构如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token comment">// MARK: - 目录结构数据模型</span>
@@ -207,12 +207,12 @@
 
 <p>其中嵌套键值是 sub，那么 children 参数只需要添上 <code>\.sub</code> ，List 内部会处理嵌套逻辑并展示出来。如果 List 表现出来的效果并不能够满足你，你也可以自己定制视图和交互。比如点击文件夹名字也能够展开子内容，List 默认只有点击左侧箭头才能够展开。</p>
 <p>自定义嵌套视图底层可以使用 DisclosureGroup，DisclosureGroup 能够展示自定义视图内容，还有一个 isExpanded 值绑定参数用来显示和隐藏内容。在遍历已展示视图时，通过 keypaths 发现嵌套值不为空时就读取子内容，同时默认 isExpanded 值为 false 就会显示不展开的箭头符号，将文件夹名字做成按钮，点击按钮触发 isExpanded.toggle()，如 isExpanded 为 false 就置为 true，即展开文件夹，反之就会收起文件夹。</p>
-<p><img src="/uploads/develop-with-swiftui/07.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/07.png" class="lozad post-image"src="/uploads/develop-with-swiftui/07.png"></p>
 <h2 id="文本和代码编辑器"><a href="#文本和代码编辑器" class="headerlink" title="文本和代码编辑器"></a>文本和代码编辑器</h2><p>文本和代码编辑器也是 macOS 上很常见的效率工具的核心功能，包含的技术点较多，比如调试和代码分析会用到编译器这里就不展开说了。感兴趣可以参看<a href="https://ming1016.github.io/2017/03/01/deeply-analyse-llvm/">深入剖析 iOS 编译 Clang &#x2F; LLVM</a>、<a href="https://ming1016.github.io/2017/04/01/slides-of-deeply-analyse-llvm/">深入剖析 iOS 编译 Clang &#x2F; LLVM 直播的 Slides</a>、<a href="https://ming1016.github.io/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/">atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides</a>、<a href="https://ming1016.github.io/2018/09/17/produce-slides-of-third-at-swift-conference/">这次swift大会分享准备的幻灯片和 demo</a>，这几篇。</p>
 <p>文本或代码分析完后可以通过 Attribute 来进行富文本展示的设置，富文本属性都在 AttributeContainer 中设置，设置好的富文本直接通过 append 进行组合。编辑器其它的比如编辑、重做、存储或自定义的能力可以通过 NSViewRepresentable 来包装 Appkit 直接使用 Appkit 里的 NSTextView 的能力。</p>
-<p><img src="/uploads/develop-with-swiftui/12.png"></p>
-<h2 id="Grid"><a href="#Grid" class="headerlink" title="Grid"></a>Grid</h2><p><img src="/uploads/develop-with-swiftui/14.png"></p>
-<h2 id="Vision"><a href="#Vision" class="headerlink" title="Vision"></a>Vision</h2><p><img src="/uploads/develop-with-swiftui/17.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/12.png" class="lozad post-image"src="/uploads/develop-with-swiftui/12.png"></p>
+<h2 id="Grid"><a href="#Grid" class="headerlink" title="Grid"></a>Grid</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/14.png" class="lozad post-image"src="/uploads/develop-with-swiftui/14.png"></p>
+<h2 id="Vision"><a href="#Vision" class="headerlink" title="Vision"></a>Vision</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/17.png" class="lozad post-image"src="/uploads/develop-with-swiftui/17.png"></p>
 <p>接下来详细的说下 SwiftUI 的视图组件的使用，这次的幻灯片程序用到的技术，除了解释执行代码的功能，其它基本都来自下面的内容。</p>
 <p>已更新 WWDC22 内容。</p>
 <h2 id="SwiftUI-组件"><a href="#SwiftUI-组件" class="headerlink" title="SwiftUI 组件"></a>SwiftUI 组件</h2><h3 id="视图组件使用"><a href="#视图组件使用" class="headerlink" title="视图组件使用"></a>视图组件使用</h3><h4 id="SwiftUI-对标的-UIKit-视图"><a href="#SwiftUI-对标的-UIKit-视图" class="headerlink" title="SwiftUI 对标的 UIKit 视图"></a>SwiftUI 对标的 UIKit 视图</h4><p>如下：</p>
@@ -313,7 +313,7 @@
 </tr>
 </tbody></table>
 <h4 id="Text"><a href="#Text" class="headerlink" title="Text"></a>Text</h4><p>基本用法</p>
-<p><img src="https://user-images.githubusercontent.com/251980/154473546-94ba6f9f-2ce3-44ef-a7c6-60d86df8c90f.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/154473546-94ba6f9f-2ce3-44ef-a7c6-60d86df8c90f.png" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/154473546-94ba6f9f-2ce3-44ef-a7c6-60d86df8c90f.png"></p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token comment">// MARK: - Text</span>
 <span class="token keyword">struct</span> <span class="token class-name">PlayTextView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> manyString <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"这是一段长文。总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么，总得说点什么吧。"</span></span>
@@ -771,7 +771,7 @@
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h4 id="Label"><a href="#Label" class="headerlink" title="Label"></a>Label</h4><p><img src="https://user-images.githubusercontent.com/251980/154474725-d696d50b-9da7-4a0d-808f-07894a9597cb.png"></p>
+<h4 id="Label"><a href="#Label" class="headerlink" title="Label"></a>Label</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/154474725-d696d50b-9da7-4a0d-808f-07894a9597cb.png" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/154474725-d696d50b-9da7-4a0d-808f-07894a9597cb.png"></p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayLabelView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
         <span class="token class-name">VStack</span><span class="token punctuation">(</span>spacing<span class="token punctuation">:</span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -863,7 +863,7 @@
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h4 id="TextEditor"><a href="#TextEditor" class="headerlink" title="TextEditor"></a>TextEditor</h4><p><img src="https://user-images.githubusercontent.com/251980/154667163-e906dfd4-074e-4c04-9c80-94af86df4ba6.png"></p>
+<h4 id="TextEditor"><a href="#TextEditor" class="headerlink" title="TextEditor"></a>TextEditor</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/154667163-e906dfd4-074e-4c04-9c80-94af86df4ba6.png" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/154667163-e906dfd4-074e-4c04-9c80-94af86df4ba6.png"></p>
 <p>对应的代码如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">import</span> <span class="token class-name">SwiftUI</span>
 <span class="token keyword">import</span> <span class="token class-name">CodeEditorView</span>
@@ -1099,7 +1099,7 @@ static func number() &#123;
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>SwiftUI 中用 NSView，可以通过 NSViewRepresentable 来包装视图，这个协议主要是实现 makeNSView、updateNSView 和 makeCoordinator 三个方法。makeNSView 要求返回需要包装的 NSView。每当 SwiftUI 的状态变化时触发 updateNSView 方法的调用。为了实现 NSView 里的 delegate 和 SwiftUI 通信，就要用 makeCoordinator 返回一个用于处理 delegate 的实例。</p>
-<h4 id="TextField"><a href="#TextField" class="headerlink" title="TextField"></a>TextField</h4><p><img src="https://user-images.githubusercontent.com/251980/154916174-2e9b1bd8-992a-485e-803a-07da59d0c7e3.png"></p>
+<h4 id="TextField"><a href="#TextField" class="headerlink" title="TextField"></a>TextField</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/154916174-2e9b1bd8-992a-485e-803a-07da59d0c7e3.png" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/154916174-2e9b1bd8-992a-485e-803a-07da59d0c7e3.png"></p>
 <p>使用方法如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayTextFieldView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> t <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"Starming"</span></span>
@@ -1202,7 +1202,7 @@ static func number() &#123;
 <p>可以通过 keyboardType 修改器来指定。</p>
 <p>支持多行，使用 Axis.vertical 以允许多行。TextField 超过行限制可以变成滚动视图。</p>
 <p>今年 TextField 可以嵌到 <code>.alert</code> 里了。</p>
-<h4 id="Button"><a href="#Button" class="headerlink" title="Button"></a>Button</h4><p><img src="https://user-images.githubusercontent.com/251980/155062538-108a79b4-3e5c-417b-867a-3f7e58316664.png"></p>
+<h4 id="Button"><a href="#Button" class="headerlink" title="Button"></a>Button</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/155062538-108a79b4-3e5c-417b-867a-3f7e58316664.png" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/155062538-108a79b4-3e5c-417b-867a-3f7e58316664.png"></p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayButtonView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">var</span> asyncAction<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">async</span> <span class="token operator">-></span> <span class="token class-name">Void</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">do</span> <span class="token punctuation">&#123;</span>
@@ -1475,7 +1475,7 @@ static func number() &#123;
     <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>其中 coordinateSpace 指定为 <code>.global</code> 表示位置是相对屏幕左上角，默认是相对当前视图的左上角的位置。</p>
-<h4 id="进度"><a href="#进度" class="headerlink" title="进度"></a>进度</h4><p><img src="https://user-images.githubusercontent.com/251980/155676571-726c15d1-e4a2-4493-8fb0-c37c1c61c88c.jpeg"></p>
+<h4 id="进度"><a href="#进度" class="headerlink" title="进度"></a>进度</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/155676571-726c15d1-e4a2-4493-8fb0-c37c1c61c88c.jpeg" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/155676571-726c15d1-e4a2-4493-8fb0-c37c1c61c88c.jpeg"></p>
 <p>用 ProgressViewStyle 协议，可以创建自定义的进度条视图。在 WatchOS 上会多一个 Guage 视图。</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayProgressView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> v<span class="token punctuation">:</span> <span class="token class-name">CGFloat</span> <span class="token operator">=</span> <span class="token number">0.0</span>
@@ -1601,7 +1601,7 @@ static func number() &#123;
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h4 id="Image"><a href="#Image" class="headerlink" title="Image"></a>Image</h4><p><img src="https://user-images.githubusercontent.com/251980/155683776-0f0acdee-c7c1-44e3-a68b-38f778863821.png"></p>
+<h4 id="Image"><a href="#Image" class="headerlink" title="Image"></a>Image</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/155683776-0f0acdee-c7c1-44e3-a68b-38f778863821.png" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/155683776-0f0acdee-c7c1-44e3-a68b-38f778863821.png"></p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayImageView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
         <span class="token class-name">Image</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"logo"</span></span><span class="token punctuation">)</span>
@@ -1653,7 +1653,7 @@ static func number() &#123;
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h4 id="GroupBox"><a href="#GroupBox" class="headerlink" title="GroupBox"></a>GroupBox</h4><p><img src="https://user-images.githubusercontent.com/251980/155317172-dc137c38-64d0-415a-8412-e3f479f2bd91.png"></p>
+<h4 id="GroupBox"><a href="#GroupBox" class="headerlink" title="GroupBox"></a>GroupBox</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/155317172-dc137c38-64d0-415a-8412-e3f479f2bd91.png" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/155317172-dc137c38-64d0-415a-8412-e3f479f2bd91.png"></p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayGroupBoxView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
         <span class="token class-name">GroupBox</span> <span class="token punctuation">&#123;</span>
@@ -1690,7 +1690,7 @@ static func number() &#123;
 
 
 <h4 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h4><p>Stack View 有 VStack、HStack 和 ZStack</p>
-<p><img src="https://user-images.githubusercontent.com/251980/155077158-f6efd3bb-4b82-48ac-b5e6-792dd833dfda.jpeg"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/155077158-f6efd3bb-4b82-48ac-b5e6-792dd833dfda.jpeg" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/155077158-f6efd3bb-4b82-48ac-b5e6-792dd833dfda.jpeg"></p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayStackView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
         <span class="token comment">// 默认是 VStack 竖排</span>
@@ -2027,7 +2027,7 @@ static func number() &#123;
 <span class="token punctuation">.</span><span class="token function">toolbarRole</span><span class="token punctuation">(</span><span class="token punctuation">.</span>editor<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>以下是废弃的 NavigationView 的用法。</p>
-<p><img src="https://user-images.githubusercontent.com/251980/155517358-4e5d54b8-0284-4fde-bf09-4b5e22e0e9a5.jpeg"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/155517358-4e5d54b8-0284-4fde-bf09-4b5e22e0e9a5.jpeg" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/155517358-4e5d54b8-0284-4fde-bf09-4b5e22e0e9a5.jpeg"></p>
 <p>对应代码如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayNavigationView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> lData <span class="token operator">=</span> <span class="token number">1</span><span class="token operator">...</span><span class="token number">10</span>
@@ -2156,7 +2156,7 @@ static func number() &#123;
 <li>principal：突出的位置，iOS 和 macOS 会出现在中间的位置</li>
 <li>keyboard：macOS 会出现在 Touch Bar 里。iOS 会出现在弹出的虚拟键盘上。</li>
 </ul>
-<h4 id="List"><a href="#List" class="headerlink" title="List"></a>List</h4><p><img src="https://user-images.githubusercontent.com/251980/155293565-d85080c1-2304-491b-be72-20aa921f7067.jpeg"></p>
+<h4 id="List"><a href="#List" class="headerlink" title="List"></a>List</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/155293565-d85080c1-2304-491b-be72-20aa921f7067.jpeg" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/155293565-d85080c1-2304-491b-be72-20aa921f7067.jpeg"></p>
 <p>List 除了能够展示数据外，还有下拉刷新、过滤搜索和侧滑 Swipe 动作提供更多 Cell 操作的能力。</p>
 <p>通过 List 的可选子项参数提供数据模型的关键路径来制定子项路劲，还可以实现大纲视图，使用 DisclosureGroup 和 OutlineGroup  可以进一步定制大纲视图。</p>
 <p>下面是 List 使用，包括了 DisclosureGroup 和 OutlineGroup 的演示代码：</p>
@@ -2434,7 +2434,7 @@ static func number() &#123;
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h4 id="LazyVGrid-和-LazyHGrid"><a href="#LazyVGrid-和-LazyHGrid" class="headerlink" title="LazyVGrid 和 LazyHGrid"></a>LazyVGrid 和 LazyHGrid</h4><p><img src="https://user-images.githubusercontent.com/251980/155708552-35396dcd-f120-4498-a793-a65abd68c0a6.jpeg"></p>
+<h4 id="LazyVGrid-和-LazyHGrid"><a href="#LazyVGrid-和-LazyHGrid" class="headerlink" title="LazyVGrid 和 LazyHGrid"></a>LazyVGrid 和 LazyHGrid</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/155708552-35396dcd-f120-4498-a793-a65abd68c0a6.jpeg" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/155708552-35396dcd-f120-4498-a793-a65abd68c0a6.jpeg"></p>
 <p>列的设置有三种，这三种也可以组合用。</p>
 <ul>
 <li>GridItem(.fixed(10)) 会固定设置有多少列。</li>
@@ -2612,7 +2612,7 @@ static func number() &#123;
 <span class="token punctuation">.</span><span class="token function">scrollIndicators</span><span class="token punctuation">(</span><span class="token punctuation">.</span>visible<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h4 id="浮层"><a href="#浮层" class="headerlink" title="浮层"></a>浮层</h4><p><img src="https://user-images.githubusercontent.com/251980/156135869-7451bbc9-95b9-445f-8721-66f0aedbed70.png"></p>
+<h4 id="浮层"><a href="#浮层" class="headerlink" title="浮层"></a>浮层</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/156135869-7451bbc9-95b9-445f-8721-66f0aedbed70.png" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/156135869-7451bbc9-95b9-445f-8721-66f0aedbed70.png"></p>
 <p>浮层有 HUD、ContextMenu、Sheet、Alert、ConfirmationDialog、Popover、ActionSheet 等几种方式。这些方式实现代码如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlaySuperposedLayerView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token attribute atrule">@StateObject</span> <span class="token keyword">var</span> hudVM <span class="token operator">=</span> <span class="token function">PHUDVM</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -2967,7 +2967,7 @@ static func number() &#123;
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>社区做的更多 Swift Charts 范例 <a target="_blank" rel="noopener" href="https://github.com/jordibruin/Swift-Charts-Examples">Swift Charts Examples</a> 。</p>
-<h4 id="Toggle"><a href="#Toggle" class="headerlink" title="Toggle"></a>Toggle</h4><p><img src="https://user-images.githubusercontent.com/251980/156289124-bde3c73e-2a81-4043-8682-ae55a820f1aa.png"></p>
+<h4 id="Toggle"><a href="#Toggle" class="headerlink" title="Toggle"></a>Toggle</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/156289124-bde3c73e-2a81-4043-8682-ae55a820f1aa.png" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/156289124-bde3c73e-2a81-4043-8682-ae55a820f1aa.png"></p>
 <p>Toggle 可以设置 toggleStyle，可以自定义样式。使用示例如下</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayToggleView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> isEnable <span class="token operator">=</span> <span class="token boolean">false</span>
@@ -3020,7 +3020,7 @@ static func number() &#123;
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h4 id="Picker"><a href="#Picker" class="headerlink" title="Picker"></a>Picker</h4><p><img src="https://user-images.githubusercontent.com/251980/156298284-2fb37b3e-55f0-4918-ba8e-74f747bf3171.jpeg"></p>
+<h4 id="Picker"><a href="#Picker" class="headerlink" title="Picker"></a>Picker</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/156298284-2fb37b3e-55f0-4918-ba8e-74f747bf3171.jpeg" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/156298284-2fb37b3e-55f0-4918-ba8e-74f747bf3171.jpeg"></p>
 <p>有 Picker 视图，还有颜色和时间选择的 ColorPicker 和 DatePicker。</p>
 <p>示例代码如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayPickerView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
@@ -3352,7 +3352,7 @@ static func number() &#123;
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h4 id="Effect"><a href="#Effect" class="headerlink" title="Effect"></a>Effect</h4><p><img src="https://user-images.githubusercontent.com/251980/156332122-66813e4e-851c-4207-8cb9-b41ea0365008.jpeg"></p>
+<h4 id="Effect"><a href="#Effect" class="headerlink" title="Effect"></a>Effect</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://user-images.githubusercontent.com/251980/156332122-66813e4e-851c-4207-8cb9-b41ea0365008.jpeg" class="lozad post-image"src="https://user-images.githubusercontent.com/251980/156332122-66813e4e-851c-4207-8cb9-b41ea0365008.jpeg"></p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayEffect</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
     <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> isHover <span class="token operator">=</span> <span class="token boolean">false</span>
     
@@ -3912,7 +3912,7 @@ static func number() &#123;
 <p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>59</span>
+    <span>60</span>
     <span>Posts</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -3974,7 +3974,7 @@ static func number() &#123;
       <a href="/categories/Programming">
         <div class="categories-list-item">
           Programming
-          <span class="categories-list-item-badge">45</span>
+          <span class="categories-list-item-badge">46</span>
         </div>
       </a>
     
@@ -4031,11 +4031,11 @@ static func number() &#123;
     
     <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
     
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
     <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
     
     <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
-    
-    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
     
     <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
     
@@ -4070,6 +4070,11 @@ static func number() &#123;
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-24</div>
+        <a href="/2023/04/24/swiftui-rss-reader/"><div class="recent-posts-item-content">使用 SwiftUI 开发 RSS 阅读器</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-10-24</div>
         <a href="/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/"><div class="recent-posts-item-content">参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动</div></a>
       </div>
@@ -4082,11 +4087,6 @@ static func number() &#123;
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-06-10</div>
         <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
       </div>
     
   </div>
@@ -4109,7 +4109,7 @@ static func number() &#123;
           
           2014 -
           
-          2022
+          2023
         </span>
         <a href="/" class="footer-link">戴铭的博客 </a>
       </div>

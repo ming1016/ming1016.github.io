@@ -184,8 +184,8 @@
 <p>如果还不了解这两个框架的使用的话可以参看它们项目 GitHub 说明：<a target="_blank" rel="noopener" href="https://github.com/SnapKit/SnapKit">GitHub - SnapKit&#x2F;SnapKit: A Swift Autolayout DSL for iOS &amp; OS X</a>，<a target="_blank" rel="noopener" href="https://github.com/SnapKit/Masonry">GitHub - SnapKit&#x2F;Masonry: Harness the power of AutoLayout NSLayoutConstraints with a simplified, chainable and expressive syntax. Supports iOS and OSX Auto Layout</a></p>
 <p>如果还不了解自动布局或者还没有用过的同学可以参看我三年前这篇文章，里面有详细的介绍和相关资料：<a target="_blank" rel="noopener" href="http://www.starming.com/2015/11/03/deeply-analyse-autolayout/">深入剖析Auto Layout，分析iOS各版本新增特性 | 星光社 - 戴铭的博客</a></p>
 <p>进入那三个问题之前我们先看看两个框架的整体结构图，对它们有个大概的印象。</p>
-<h2 id="SnapKit-源码结构图"><a href="#SnapKit-源码结构图" class="headerlink" title="SnapKit 源码结构图"></a>SnapKit 源码结构图</h2><p><img src="/uploads/read-snapkit-and-masonry-source-code/01.jpg"></p>
-<h2 id="Masonry-源码结构图"><a href="#Masonry-源码结构图" class="headerlink" title="Masonry 源码结构图"></a>Masonry 源码结构图</h2><p><img src="/uploads/read-snapkit-and-masonry-source-code/02.jpg"></p>
+<h2 id="SnapKit-源码结构图"><a href="#SnapKit-源码结构图" class="headerlink" title="SnapKit 源码结构图"></a>SnapKit 源码结构图</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/read-snapkit-and-masonry-source-code/01.jpg" class="lozad post-image"src="/uploads/read-snapkit-and-masonry-source-code/01.jpg"></p>
+<h2 id="Masonry-源码结构图"><a href="#Masonry-源码结构图" class="headerlink" title="Masonry 源码结构图"></a>Masonry 源码结构图</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/read-snapkit-and-masonry-source-code/02.jpg" class="lozad post-image"src="/uploads/read-snapkit-and-masonry-source-code/02.jpg"></p>
 <p>接下来我们来详细看看两个框架的内部，首先来看看刚才那三个问题中的第一个问题。</p>
 <h1 id="给谁做约束？"><a href="#给谁做约束？" class="headerlink" title="给谁做约束？"></a>给谁做约束？</h1><h2 id="SnapKit"><a href="#SnapKit" class="headerlink" title="SnapKit"></a>SnapKit</h2><h3 id="ConstraintView"><a href="#ConstraintView" class="headerlink" title="ConstraintView"></a>ConstraintView</h3><p>这个 View 实际上在 iOS 里就是 UIView，在 macOS 上就是 NSView。</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token directive property"><span class="token directive-name">#if</span> os<span class="token punctuation">(</span>iOS<span class="token punctuation">)</span> <span class="token operator">||</span> os<span class="token punctuation">(</span>tvOS<span class="token punctuation">)</span></span>
@@ -357,7 +357,7 @@
     <span class="token keyword">return</span> closestCommonSuperview<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这个查找是 N 方的，谁有办法能够优化下么。</p>
-<h1 id="如何设置约束？"><a href="#如何设置约束？" class="headerlink" title="如何设置约束？"></a>如何设置约束？</h1><h2 id="SnapKit-1"><a href="#SnapKit-1" class="headerlink" title="SnapKit"></a>SnapKit</h2><p>先看看这张图，里面是我们使用框架时用的最多的设置 make 的过程，图里将每个操作对应的不同 ConstraintMaker 做了说明。<br><img src="/uploads/read-snapkit-and-masonry-source-code/03.jpg"><br>下面来对这几种 ConstraintMaker 来详细说下。</p>
+<h1 id="如何设置约束？"><a href="#如何设置约束？" class="headerlink" title="如何设置约束？"></a>如何设置约束？</h1><h2 id="SnapKit-1"><a href="#SnapKit-1" class="headerlink" title="SnapKit"></a>SnapKit</h2><p>先看看这张图，里面是我们使用框架时用的最多的设置 make 的过程，图里将每个操作对应的不同 ConstraintMaker 做了说明。<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/read-snapkit-and-masonry-source-code/03.jpg" class="lozad post-image"src="/uploads/read-snapkit-and-masonry-source-code/03.jpg"><br>下面来对这几种 ConstraintMaker 来详细说下。</p>
 <h3 id="ConstraintMaker"><a href="#ConstraintMaker" class="headerlink" title="ConstraintMaker"></a>ConstraintMaker</h3><p>这个是设置的入口，makeConstraints 函数一个闭包参数可以提供外部去设置ConstraintMaker 自己的 left，right，top 等属性来描述约束。这些属性的 getter 方法会返回 ConstraintMakerExtendable 实例。</p>
 <p>先看看 ConstraintMaker 的构造函数：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">internal</span> <span class="token keyword">init</span><span class="token punctuation">(</span>item<span class="token punctuation">:</span> <span class="token class-name">LayoutConstraintItem</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -782,7 +782,7 @@ MASLayoutConstraint <span class="token operator">*</span>existingConstraint <spa
 <p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>59</span>
+    <span>60</span>
     <span>Posts</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -844,7 +844,7 @@ MASLayoutConstraint <span class="token operator">*</span>existingConstraint <spa
       <a href="/categories/Programming">
         <div class="categories-list-item">
           Programming
-          <span class="categories-list-item-badge">45</span>
+          <span class="categories-list-item-badge">46</span>
         </div>
       </a>
     
@@ -901,11 +901,11 @@ MASLayoutConstraint <span class="token operator">*</span>existingConstraint <spa
     
     <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
     
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
     <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
     
     <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
-    
-    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
     
     <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
     
@@ -940,6 +940,11 @@ MASLayoutConstraint <span class="token operator">*</span>existingConstraint <spa
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-24</div>
+        <a href="/2023/04/24/swiftui-rss-reader/"><div class="recent-posts-item-content">使用 SwiftUI 开发 RSS 阅读器</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-10-24</div>
         <a href="/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/"><div class="recent-posts-item-content">参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动</div></a>
       </div>
@@ -952,11 +957,6 @@ MASLayoutConstraint <span class="token operator">*</span>existingConstraint <spa
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-06-10</div>
         <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
       </div>
     
   </div>
@@ -979,7 +979,7 @@ MASLayoutConstraint <span class="token operator">*</span>existingConstraint <spa
           
           2014 -
           
-          2022
+          2023
         </span>
         <a href="/" class="footer-link">戴铭的博客 </a>
       </div>

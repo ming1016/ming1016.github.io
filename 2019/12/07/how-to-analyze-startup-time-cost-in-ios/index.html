@@ -186,9 +186,9 @@
   
   </header>
   <div id="section" class="post-content">
-    <p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/01.png"></p>
+    <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/01.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/01.png"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>启动优化一役后，超预期将所负责的 App 双端启动的耗时都降低了65%以上，iOS 在iPhone7上速度达到了400毫秒以内。就像产品们用后说的，快到不习惯。由于 App 日活用户过亿，算一下每天为用户省下的时间，还是蛮有成就感的。</p>
-<p><img src="/uploads/how-to-analyze-startup-time-cost-in-ios/01.jpeg"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/how-to-analyze-startup-time-cost-in-ios/01.jpeg" class="lozad post-image"src="/uploads/how-to-analyze-startup-time-cost-in-ios/01.jpeg"></p>
 <h2 id="启动阶段性能多维度分析"><a href="#启动阶段性能多维度分析" class="headerlink" title="启动阶段性能多维度分析"></a>启动阶段性能多维度分析</h2><p>要优化，先要做到的是对启动阶段各个性能纬度做分析，包括主线程耗时、CPU、内存、I&#x2F;O、网络。这样才能够更加全面的掌握启动阶段的开销，找出不合理的方法调用。启动越快，更多的方法调用就应该做成按需执行，将启动压力分摊，只留下那些启动后方法都会依赖的方法和库的初始化，比如网络库、Crash 库等。而剩下那些需要预加载的功能可以放到启动阶段后再执行。</p>
 <p>启动有哪几种类型，启动有哪些阶段呢？</p>
 <p>启动类型分为：</p>
@@ -198,7 +198,7 @@
 <li>Resume：App 没结束，只是暂停，全在内存中，进程也存在。</li>
 </ul>
 <p>分析阶段一般都是针对 Cold 类型进行分析，目的就是要让测试环境稳定。为了稳定测试环境有时还需要找些稳定的机型，对于 iOS 来说iPhone7性能中等，稳定性也不错就很适合，Android 的 Vivo 系列也相对稳定，华为和小米系列数据波动就比较大。除了机型外控制测试机温度也很重要，一旦温度过高系统还会降频执行影响测试数据。有时候还会置飞行模式采用 Mock 网络请求的方式来减少不稳定的网络影响测试数据。最好时重启后退 iCloud 账号，放置一段时间再测，更加准确些。</p>
-<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/05.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/05.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/05.png"></p>
 <p>了解启动的阶段目的就是聚焦范围，从用户体验上来确定哪个阶段要快，以便能够让用户可视和响应用户操作的时间更快。</p>
 <p>简单来说 iOS 启动分为加载 Mach-O 和运行时初始化过程，加载 Mach-O 会先判断加载的文件是不是 Mach-O，通过文件第一个字节，也叫魔数来判断，当是下面四种时可以判定是 Mach-O 文件：</p>
 <ul>
@@ -243,9 +243,9 @@ end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <li>初始化帧渲染，到 viewDidAppear 执行完，用户可见可操作。</li>
 </ul>
 <p>过程概括起来如下图：</p>
-<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/02.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/02.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/02.png"></p>
 <p>也就是说对启动阶段的分析以 viewDidAppear 为截止。这次优化之前已经对 Application 初始化之前做过优化，效果并不明显，没有本质的提高，所以这次主要针对 Application 初始化到 viewDidAppear 这个阶段各个性能多纬度进行分析。多维度具体包含内容如下图：</p>
-<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/03.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/03.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/03.png"></p>
 <p>工具的选择其实目前看来是很多的，Apple 提供的 System Trace 会提供全面系统的行为，可以显示底层系统线程和内存调度情况，分析锁、线程、内存、系统调用等问题。总的来说，通过 System Trace 你能清楚知道每时每刻 App 对系统资源使用情况。</p>
 <p>System Trace 能查看线程的状态，可以了解高优线程使用相对于 CPU 数量是否合理，可以看到线程在执行、挂起、上下文切换、被打断还是被抢占的情况。虚拟内存使用产生的耗时也能看到，比如分配物理内存，内存解压缩，无缓存时进行缓存的耗时等。甚至是发热情况也能看到。</p>
 <p>System Trace 还提供手动打点进行信息显式，在你的代码中 导入 sys&#x2F;kdebug_signpost.h 后，配对 kdebug_signpost_start 和 kdebug_signpost_end 就可以了。这两个方法有五个参数，第一个是 id，最后一个是颜色，中间都是预留字段。</p>
@@ -276,7 +276,7 @@ end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 </ul>
 <h3 id="I-x2F-O"><a href="#I-x2F-O" class="headerlink" title="I&#x2F;O"></a>I&#x2F;O</h3><p>对于 I&#x2F;O 可以使用 <a target="_blank" rel="noopener" href="https://www.frida.re/">Frida • A world-class dynamic instrumentation framework | Inject JavaScript to explore native apps on Windows, macOS, GNU&#x2F;Linux, iOS, Android, and QNX</a> 这种动态二进制插桩技术，在程序运行时去插入自定义代码获取 I&#x2F;O 的耗时和处理的数据大小等数据。Frida 还能够在其它平台使用。</p>
 <p>关于多维度分析更多的资料可以看看历届 WWDC 的介绍。下面我列下16年来 WWDC 关于启动优化的 Session，每场都很精彩。</p>
-<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/04.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/04.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/04.png"></p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2016/418/">Using Time Profiler in Instruments - WWDC 2016 - Videos - Apple Developer</a></li>
 <li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2016/719/">Optimizing I&#x2F;O for Performance and Battery Life - WWDC 2016 - Videos - Apple Developer</a></li>
@@ -292,12 +292,12 @@ end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <li>闲时主线程串行队列</li>
 <li>闲时异步串行队列</li>
 </ul>
-<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/06.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/06.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/06.png"></p>
 <p>有依赖关系的任务可以放到异步串行队列中执行。异步并行队列可以分组执行，比如使用 dispatch_group，然后对每组任务数量进行限制，避免 CPU、线程和内存瞬时激增影响主线程用户操作，定义有限数量的串行队列，每个串行队列做特定的事情，这样也能够避免性能消耗短时间突然暴涨引起无法响应用户操作。使用 dispatch_semaphore_t 在信号量阻塞主队列时容易出现优先级反转，需要减少使用，确保QoS传播。可以用dispatch group 替代，性能一样，功能不差。异步编程可以直接 GCD 接口来写，也可以使用阿里的协程框架 coobjc <a target="_blank" rel="noopener" href="https://github.com/alibaba/coobjc">coobjc</a>。</p>
 <p>闲时队列实现方式是监听主线程 runloop 状态，在 kCFRunLoopBeforeWaiting 时开始执行闲时队列里的任务，在 kCFRunLoopAfterWaiting 时停止。</p>
 <h2 id="优化后如何保持？"><a href="#优化后如何保持？" class="headerlink" title="优化后如何保持？"></a>优化后如何保持？</h2><p>攻易守难，就像刚到新团队时将包大小减少了48兆，但是一年多一直能够守住除了决心还需要有手段。对于启动优化来说，将各个性能纬度通过监控的方式盯住是必要的，但是发现问题后快速、便捷的定位到问题还是需要找些突破口。我的思路是将启动阶段方法耗时多的按照时间线一条一条排出来，每条包括方法名、方法层级、所属类、所属模块、维护人。考虑到便捷性，最好还能方便的查看方法代码内容。</p>
 <p>接下来我通过开发一个工具，跟你详细说说怎么实现这样的效果。设计最终希望展示内容如下：</p>
-<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/07.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/07.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/07.png"></p>
 <h3 id="解析-json"><a href="#解析-json" class="headerlink" title="解析 json"></a>解析 json</h3><p>如前面所说在输出一份 Chrome trace 规范的方法耗时 json 后，先要解析这份数据。这份 json 数据类似下面的样子：</p>
 <pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span><span class="token property">"name"</span><span class="token operator">:</span><span class="token string">"[SMVeilweaa]upVeilState:"</span><span class="token punctuation">,</span><span class="token property">"cat"</span><span class="token operator">:</span><span class="token string">"catname"</span><span class="token punctuation">,</span><span class="token property">"ph"</span><span class="token operator">:</span><span class="token string">"B"</span><span class="token punctuation">,</span><span class="token property">"pid"</span><span class="token operator">:</span><span class="token number">2381</span><span class="token punctuation">,</span><span class="token property">"tid"</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token property">"ts"</span><span class="token operator">:</span><span class="token number">21</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
 <span class="token punctuation">&#123;</span><span class="token property">"name"</span><span class="token operator">:</span><span class="token string">"[SMVeilweaa]tatLaunchState:"</span><span class="token punctuation">,</span><span class="token property">"cat"</span><span class="token operator">:</span><span class="token string">"catname"</span><span class="token punctuation">,</span><span class="token property">"ph"</span><span class="token operator">:</span><span class="token string">"B"</span><span class="token punctuation">,</span><span class="token property">"pid"</span><span class="token operator">:</span><span class="token number">2381</span><span class="token punctuation">,</span><span class="token property">"tid"</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token property">"ts"</span><span class="token operator">:</span><span class="token number">4557</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
@@ -307,7 +307,7 @@ end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <span class="token punctuation">&#123;</span><span class="token property">"name"</span><span class="token operator">:</span><span class="token string">"[SMVeilweaa]upVeilState:"</span><span class="token punctuation">,</span><span class="token property">"cat"</span><span class="token operator">:</span><span class="token string">"catname"</span><span class="token punctuation">,</span><span class="token property">"ph"</span><span class="token operator">:</span><span class="token string">"E"</span><span class="token punctuation">,</span><span class="token property">"pid"</span><span class="token operator">:</span><span class="token number">2381</span><span class="token punctuation">,</span><span class="token property">"tid"</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token property">"ts"</span><span class="token operator">:</span><span class="token number">5815</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
 …<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>通过 Chrome 的 <a target="_blank" rel="noopener" href="https://chromium.googlesource.com/catapult/+/HEAD/tracing/README.md">Trace-Viewer</a> 可以生成一个火焰图。其中 name 字段包含了类、方法和参数的信息，cat 字段可以加入其它性能数据，ph 为 B 表示方法开始，为 E 表示方法结束，ts 字段表示。</p>
-<h4 id="json-分词"><a href="#json-分词" class="headerlink" title="json 分词"></a>json 分词</h4><p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/08.png"></p>
+<h4 id="json-分词"><a href="#json-分词" class="headerlink" title="json 分词"></a>json 分词</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/08.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/08.png"></p>
 <p>读取 json 文件</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token comment">// 根据文件路径返回文件内容</span>
 <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">func</span> <span class="token function-definition function">fileContent</span><span class="token punctuation">(</span>path<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">String</span> <span class="token punctuation">&#123;</span>
@@ -439,7 +439,7 @@ end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <p>在 normal 状态下，会记录操作符类型的 json token，当遇到{符号后，下一个是“符号就会更改状态为 keyStart。另一种情况就是在遇到,符号后，下一个是”符号也会更改状态为 keyStart。</p>
 <p>状态更改成 valueStart 的条件是遇到:符号，当下一个是“时进入 valueStart 状态，如果不是“符号，就需要做区分，是{或者[时直接跳过:符号，然后记录这两个操作符。其它情况表示 value 不是字符而是数字，直接记录为 json token 就可以了。完整 json token 的解析代码见 <a target="_blank" rel="noopener" href="https://github.com/ming1016/MethodTraceAnalyze/blob/master/MethodTraceAnalyze/JSON/ParseJSONTokens.swift">MethodTraceAnalyze&#x2F;ParseJSONTokens.swift</a>。</p>
 <p>JSONToken 集合目前还只是扁平态，而 json 数据是有 key 和 value 的多级关系在的，比如 value 可能是字符串或数字，也可能是另一组 key value 结构或者 value 的数组集合。所以下面还需要定义一个 JSONItem 结构来容纳多级关系。</p>
-<h4 id="JSONItem"><a href="#JSONItem" class="headerlink" title="JSONItem"></a>JSONItem</h4><p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/09.png"></p>
+<h4 id="JSONItem"><a href="#JSONItem" class="headerlink" title="JSONItem"></a>JSONItem</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/09.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/09.png"></p>
 <p>JSONItem 的结构体定义如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">public</span> <span class="token keyword">struct</span> <span class="token class-name">JSONItem</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token keyword">var</span> type<span class="token punctuation">:</span> <span class="token class-name">JSONItemType</span>
@@ -509,7 +509,7 @@ end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <span class="token keyword">let</span> item <span class="token operator">=</span> <span class="token class-name">ParseJSONItem</span><span class="token punctuation">(</span>input<span class="token punctuation">:</span> jsonOContent<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>得到的 item 数据如下图所示</p>
-<p><img src="/uploads/how-to-analyze-startup-time-cost-in-ios/02.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/how-to-analyze-startup-time-cost-in-ios/02.png" class="lozad post-image"src="/uploads/how-to-analyze-startup-time-cost-in-ios/02.png"></p>
 <p>可以看到，item 的结构和前面的 json 结构是一致的。</p>
 <h4 id="json-单测"><a href="#json-单测" class="headerlink" title="json 单测"></a>json 单测</h4><p>为了保证后面对 json 的解析修改和完善对上面列的测试 case 解析结果不会有影响，可以写个简单测试类来做。这个类只需要做到将实际结果和预期值做比较，相等即可通过，不等即可提示并中断，方便定位问题。因此传入参数只需要有运行结果、预期结果、描述就够用了。我写个 Test 协议，通过扩展默认实现一个比较的方法，以后需要单测的类遵循这个协议就可以使用和扩展单测功能了。Test 协议具体代码如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">protocol</span> <span class="token class-name">Test</span> <span class="token punctuation">&#123;</span>
@@ -539,7 +539,7 @@ end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <p>完整单测代码在这里：<a target="_blank" rel="noopener" href="https://github.com/ming1016/MethodTraceAnalyze/blob/master/MethodTraceAnalyze/JSON/TestJSON.swift">MethodTraceAnalyze&#x2F;TestJSON.swift</a></p>
 <h3 id="解析-Launch-Trace-的-json"><a href="#解析-Launch-Trace-的-json" class="headerlink" title="解析 Launch Trace 的 json"></a>解析 Launch Trace 的 json</h3><p>前面说的 JSONItem 是通用的多层级 json 结构体。对于启动的 json，实际要表现的方法调用链和 json 的层级并不是对应的。方法调用链是通过 ph 字段表示，B 表示方法开始，E 表示方法结束，中间会有其它方法调用的闭合，这些方法在调用链里可以被称为调用方法的子方法。</p>
 <p>为了能够表现出这样的调用链关系，我设计了下面的 LaunchItem 结构：</p>
-<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/10.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/10.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/10.png"></p>
 <p>结构体代码如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">public</span> <span class="token keyword">struct</span> <span class="token class-name">LaunchItem</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token keyword">let</span> name<span class="token punctuation">:</span> <span class="token class-name">String</span>  <span class="token comment">// 调用方法</span>
@@ -565,7 +565,7 @@ end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 
 <p>代码见<a target="_blank" rel="noopener" href="https://github.com/ming1016/MethodTraceAnalyze/blob/master/MethodTraceAnalyze/Launch/LaunchJSON.swift">MethodTraceAnalyze&#x2F;LaunchJSON.swift</a>里的 launchJSON 函数。</p>
 <h3 id="展示启动方法链"><a href="#展示启动方法链" class="headerlink" title="展示启动方法链"></a>展示启动方法链</h3><p>前面通过 launchJSON 函数取到了方法调用链的根部 LaunchItem。使用 recusiveItemTree 函数递归这个根 LaunchItem ，可以输出方法调用关系图。很多工程在启动阶段会执行大量方法，很多方法耗时很少，可以过滤那些小于10毫秒的方法，让分析更加聚焦。</p>
-<p><img src="/uploads/how-to-analyze-startup-time-cost-in-ios/03.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/how-to-analyze-startup-time-cost-in-ios/03.png" class="lozad post-image"src="/uploads/how-to-analyze-startup-time-cost-in-ios/03.png"></p>
 <p>展示效果如上图所示，完整代码在 <a target="_blank" rel="noopener" href="https://github.com/ming1016/MethodTraceAnalyze/blob/master/MethodTraceAnalyze/Launch/LaunchJSON.swift">MethodTraceAnalyze&#x2F;LaunchJSON.swift</a> 里的 tree 函数里。图中的阶段切换，比如 T1到 T2的切换可以在 recusiveItemTree 函数中设置，对应的处理代码是：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token comment">// 获取 T1 到 T5 阶段信息，其中 updateLauncherState 函数名需要替换成自己阶段切换的函数名，最多5个阶段</span>
 <span class="token keyword">if</span> methodName <span class="token operator">==</span> “updateLauncherState<span class="token punctuation">:</span>” <span class="token punctuation">&#123;</span>
@@ -615,9 +615,9 @@ sysCost <span class="token operator">=</span> <span class="token punctuation">(<
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>展示的效果如下：</p>
-<p><img src="/uploads/how-to-analyze-startup-time-cost-in-ios/04.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/how-to-analyze-startup-time-cost-in-ios/04.png" class="lozad post-image"src="/uploads/how-to-analyze-startup-time-cost-in-ios/04.png"></p>
 <h3 id="展示方法源码"><a href="#展示方法源码" class="headerlink" title="展示方法源码"></a>展示方法源码</h3><p>在页面上展示源码需要先解析 .xcworkspace 文件，通过 .xcworkspace文件取到工程里所有的 .xcodeproj 文件。分析 .xcodeproj 文件取到所有 .m 和.mm 源码文件路径，解析源码，取到方法的源码内容进行展示。</p>
-<h4 id="解析-xcworkspace"><a href="#解析-xcworkspace" class="headerlink" title="解析 .xcworkspace"></a>解析 .xcworkspace</h4><p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/11.png"></p>
+<h4 id="解析-xcworkspace"><a href="#解析-xcworkspace" class="headerlink" title="解析 .xcworkspace"></a>解析 .xcworkspace</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/11.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/11.png"></p>
 <p>打开.xcworkspace，可以看到这个包内主要文件是 contents.xcworkspacedata。内容是一个 xml：</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Workspace</span>
@@ -705,7 +705,7 @@ sysCost <span class="token operator">=</span> <span class="token punctuation">(<
 
 <p>XML  标签节点的解析我没有用状态机，将解析结果记录到了 XMLTagNode 结构体中。标签节点解析过程代码在这里 <a target="_blank" rel="noopener" href="https://github.com/ming1016/MethodTraceAnalyze/blob/master/MethodTraceAnalyze/XML/ParseStandXMLTags.swift">MethodTraceAnalyze&#x2F;ParseStandXMLTags.swift</a> 。标签节点解析完后还需要解决 XML 的层级问题，也就是标签包含标签的问题。</p>
 <p>先定义一个结构体 XMLNode，用来记录 XML 的节点树：</p>
-<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/12.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/12.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/12.png"></p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">public</span> <span class="token keyword">struct</span> <span class="token class-name">XMLNode</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token keyword">let</span> name<span class="token punctuation">:</span> <span class="token class-name">String</span>
     <span class="token keyword">public</span> <span class="token keyword">let</span> attributes<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">XMLTagAttribute</span><span class="token punctuation">]</span>
@@ -759,9 +759,9 @@ sysCost <span class="token operator">=</span> <span class="token punctuation">(<
 <span class="token punctuation">&#125;</span> <span class="token comment">// end for</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>完成 xcworkspace 的 XML 解析，获取 XML 的节点树如下所示：</p>
-<p><img src="/uploads/how-to-analyze-startup-time-cost-in-ios/05.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/how-to-analyze-startup-time-cost-in-ios/05.png" class="lozad post-image"src="/uploads/how-to-analyze-startup-time-cost-in-ios/05.png"></p>
 <p>写个单测，保证后面增加功能和更新优化解析后不会影响结果。单测代码在这里 <a target="_blank" rel="noopener" href="https://github.com/ming1016/MethodTraceAnalyze/blob/master/MethodTraceAnalyze/XML/TestXML.swift">MethodTraceAnalyze&#x2F;TestXML.swift</a>。</p>
-<h4 id="解析-xcodeproj"><a href="#解析-xcodeproj" class="headerlink" title="解析 .xcodeproj"></a>解析 .xcodeproj</h4><p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/13.png"></p>
+<h4 id="解析-xcodeproj"><a href="#解析-xcodeproj" class="headerlink" title="解析 .xcodeproj"></a>解析 .xcodeproj</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/13.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/13.png"></p>
 <p>通过 XML 的解析可以获取 FileRef 节点内容， xcodeproj 的文件路径就在 FileRef 节点的 location 属性里。每个 xcodeproj 文件里会有 project 工程的源码文件。为了能够获取方法的源码进行展示，那么就先要取出所有 project 工程里包含的源文件的路径。</p>
 <p>取 xcodeproj 文件路径的方式如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">if</span> aFile<span class="token punctuation">.</span>fileName <span class="token operator">==</span> “contents<span class="token punctuation">.</span>xcworkspacedata” <span class="token punctuation">&#123;</span>
@@ -788,7 +788,7 @@ sysCost <span class="token operator">=</span> <span class="token punctuation">(<
 
 <p>如上面代码所示，ParseXcodeprojSource 是专门用来解析 xcodeproj 的，parseAllFiles 方法根据解析的结果，取出所有 xcodeproj 包含的源码文件。</p>
 <p>xcodeproj 的文件内容看起来大概是下面的样子。</p>
-<p><img src="/uploads/how-to-analyze-startup-time-cost-in-ios/06.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/how-to-analyze-startup-time-cost-in-ios/06.png" class="lozad post-image"src="/uploads/how-to-analyze-startup-time-cost-in-ios/06.png"></p>
 <p>其实内容还有很多，需要一个个解析出来。</p>
 <p>分析后分词的分割符号有 &#x2F;*&#x3D;{};\”,() 这些，根据这些分割符号设计分词的 token 类型 XcodeprojTokensType，XcodeprojTokensType 为枚举包含下面十个类型：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">public</span> <span class="token keyword">enum</span> <span class="token class-name">XcodeprojTokensType</span> <span class="token punctuation">&#123;</span>
@@ -867,9 +867,9 @@ sysCost <span class="token operator">=</span> <span class="token punctuation">(<
 
 <p>考虑到 xcodeproj 里的注释很多，也都很有用，因此会多设计些结构来保存值和注释。思路是根据 XcodeprojNode 的类型来判断下一级是 key value 结构还是 array 结构。如果 XcodeprojNode 的类型是 XcodeprojNode 的类型是 dicStart 表示下级是 key value 结构。如果类型是 arrStart 就是 array 结构。当碰到类型是 dicEnd 同时和最初 dicStart 是同级时，递归下一级树结构。而 arrEnd 不用递归，xcodeproj 里的 array 只有值类型的数据。生成节点树结构这部分代码实现在这里 <a target="_blank" rel="noopener" href="https://github.com/ming1016/MethodTraceAnalyze/blob/master/MethodTraceAnalyze/Xcodeproj/ParseXcodeprojTreeNode.swift">MethodTraceAnalyze&#x2F;ParseXcodeprojTreeNode.swift</a></p>
 <p>断点看生成的结构如下图：</p>
-<p><img src="/uploads/how-to-analyze-startup-time-cost-in-ios/07.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/how-to-analyze-startup-time-cost-in-ios/07.png" class="lozad post-image"src="/uploads/how-to-analyze-startup-time-cost-in-ios/07.png"></p>
 <p>其中 section 内容都在 objects 里</p>
-<p><img src="/uploads/how-to-analyze-startup-time-cost-in-ios/08.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/how-to-analyze-startup-time-cost-in-ios/08.png" class="lozad post-image"src="/uploads/how-to-analyze-startup-time-cost-in-ios/08.png"></p>
 <p>有了基本节点树结构以后就可以设计 xcodeproj 里各个 section 的结构。主要有一下的 section：</p>
 <ul>
 <li>PBXBuildFile：文件，最终会关联到 PBXFileReference</li>
@@ -915,9 +915,9 @@ sysCost <span class="token operator">=</span> <span class="token punctuation">(<
 
 <p>具体每个字段集合元素的结构体比如 PBXBuildFile 和 PBXFileReference 对应的结构体和 xcodeproj 的 section 结构对应上。然后使用 ParseXcodeprojTreeNode 解析的节点树结构生成最终的 Xcodeproj section 的结构体。解析过程在这里 <a target="_blank" rel="noopener" href="https://github.com/ming1016/MethodTraceAnalyze/blob/master/MethodTraceAnalyze/Xcodeproj/ParseXcodeprojSection.swift">MethodTraceAnalyze&#x2F;ParseXcodeprojSection.swift</a>。</p>
 <p>调试看到 Xcodeproj 的结构如下：</p>
-<p><img src="/uploads/how-to-analyze-startup-time-cost-in-ios/09.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/how-to-analyze-startup-time-cost-in-ios/09.png" class="lozad post-image"src="/uploads/how-to-analyze-startup-time-cost-in-ios/09.png"></p>
 <p>对 xcodeproj 的解析也写了单测来保证后期 <a target="_blank" rel="noopener" href="https://github.com/ming1016/MethodTraceAnalyze/blob/master/MethodTraceAnalyze/Xcodeproj/TestXcodeproj.swift">MethodTraceAnalyze&#x2F;TestXcodeproj.swift</a>。</p>
-<p><img src="/uploads/how-to-analyze-startup-time-cost-in-ios/10.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/how-to-analyze-startup-time-cost-in-ios/10.png" class="lozad post-image"src="/uploads/how-to-analyze-startup-time-cost-in-ios/10.png"></p>
 <p>得到 section 结构 Xcodeproj 后，就可以开始分析所有源文件的路径了。根据前面列出的 section 的说明，PBXGroup 包含了所有文件夹和文件的关系，Xcodeproj 的 pbxGroup 字段的 key 是文件夹，值是文件集合，因此可以设计一个结构体 XcodeprojSourceNode 用来存储文件夹和文件关系。XcodeprojSourceNode 结构如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">public</span> <span class="token keyword">struct</span> <span class="token class-name">XcodeprojSourceNode</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">let</span> fatherValue<span class="token punctuation">:</span> <span class="token class-name">String</span> <span class="token comment">// 文件夹</span>
@@ -954,7 +954,7 @@ sysCost <span class="token operator">=</span> <span class="token punctuation">(<
 
 <p>接下来需要取得完整的文件路径。通过 recusiveFatherPaths 函数获取文件夹路径。这里需要注意的是需要处理 ..&#x2F; 这种文件夹路径符，获取完整路径的实现代码可以看这里 <a target="_blank" rel="noopener" href="https://github.com/ming1016/MethodTraceAnalyze/blob/master/MethodTraceAnalyze/Xcodeproj/ParseXcodeprojSource.swift">MethodTraceAnalyze&#x2F;ParseXcodeprojSource.swift</a>。</p>
 <p>有了每个源文件的路径，接下来就可以对这些源文件进行解析了。</p>
-<h4 id="解析-m-mm-文件"><a href="#解析-m-mm-文件" class="headerlink" title="解析 .m .mm 文件"></a>解析 .m .mm 文件</h4><p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/14.png"></p>
+<h4 id="解析-m-mm-文件"><a href="#解析-m-mm-文件" class="headerlink" title="解析 .m .mm 文件"></a>解析 .m .mm 文件</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/14.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/14.png"></p>
 <p>对 Objective-C 解析可以参考 LLVM，这里只需要找到每个方法对应的源码，所以自己也可以实现。分词前先看看 LLVM 是怎么定义 token 的。定义文件在这里 <a target="_blank" rel="noopener" href="https://opensource.apple.com/source/lldb/lldb-69/llvm/tools/clang/include/clang/Basic/TokenKinds.def">https://opensource.apple.com/source/lldb/lldb-69/llvm/tools/clang/include/clang/Basic/TokenKinds.def</a> 。根据这个定义我设计了 token 的结构体，主体部分如下：</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token comment">// 切割符号 []()&#123;&#125;.&amp;=*+-&lt;>~!/%^|?:;,#@</span>
 <span class="token keyword">public</span> <span class="token keyword">enum</span> <span class="token constant">OCTK</span> <span class="token punctuation">&#123;</span>
@@ -1061,7 +1061,7 @@ sysCost <span class="token operator">=</span> <span class="token punctuation">(<
 <span class="token punctuation">&#125;</span> <span class="token comment">// end for</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>使用的是 dispatch group 的 wait，保证并行的一组完成再进入下一组。</p>
-<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/15.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/15.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/15.png"></p>
 <p>现在有了每个方法对应的源码，接下来就可以和前面 trace 的方法对应上。页面展示只需要写段 js 就能够控制点击时展示对应方法的源码。</p>
 <h4 id="页面展示"><a href="#页面展示" class="headerlink" title="页面展示"></a>页面展示</h4><p>在进行 HTML 页面展示前，需要将代码里的换行和空格替换成 HTML 里的对应的</br>和 &amp;nbsp; 。</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">let</span> allNodes <span class="token operator">=</span> <span class="token class-name">ParseOC</span><span class="token punctuation">.</span><span class="token function">ocNodes</span><span class="token punctuation">(</span>workspacePath<span class="token punctuation">:</span> “<span class="token operator">/</span><span class="token class-name">Users</span><span class="token operator">/</span>ming<span class="token operator">/</span><span class="token class-name">Downloads</span><span class="token operator">/</span><span class="token class-name">GCDFetchFeed</span><span class="token operator">/</span><span class="token class-name">GCDFetchFeed</span><span class="token operator">/</span><span class="token class-name">GCDFetchFeed</span><span class="token punctuation">.</span>xcworkspace”<span class="token punctuation">)</span>
@@ -1078,7 +1078,7 @@ sysCost <span class="token operator">=</span> <span class="token punctuation">(<
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>最终效果如下图：</p>
-<p><img src="/uploads/how-to-analyze-startup-time-cost-in-ios/11.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/how-to-analyze-startup-time-cost-in-ios/11.png" class="lozad post-image"src="/uploads/how-to-analyze-startup-time-cost-in-ios/11.png"></p>
 <p>将动态分析和静态分析进行了结合，后面可以通过不同版本进行对比，发现哪些方法的代码实现改变了，能展示在页面上。还可以进一步静态分析出哪些方法会调用到 I&#x2F;O 函数、起新线程、新队列等，然后展示到页面上，方便分析。</p>
 <p>读到最后，可以看到这个方法分析工具并没有用任何一个轮子，其实有些是可以使用现有轮子的，比如 json、xml、xcodeproj、Objective-C 语法分析等，之所有没有用是因为不同轮子使用的语言和技术区别较大，当格式更新时如果使用的单个轮子没有更新会影响整个工具。开发这个工具主要工作是在解析上，所以使用自有解析技术也能够让所做的功能更聚焦，不做没用的功能，减少代码维护量，所要解析格式更新后，也能够自主去更新解析方式。更重要的一点是可以亲手接触下这些格式的语法设计。</p>
 <h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>今天说了下启动优化的技术手段，总的说，对启动进行优化的决心重要程度是远大于技术手段的，决定着是否能够优化的更多。技术手段有很多，我觉得手段的好坏区别只是在效率上，最差的情况全用手动一个个去查耗时也是能够解题的。</p>
@@ -1102,7 +1102,7 @@ sysCost <span class="token operator">=</span> <span class="token punctuation">(<
 我们活在这样的地方
 我们活在这样的时代<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/16.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/16.png" class="lozad post-image"src="/uploads/kuaishou-unused-class-swiftui-note-binary-tree-interview/16.png"></p>
 
   </div>
   <div>
@@ -1158,7 +1158,7 @@ sysCost <span class="token operator">=</span> <span class="token punctuation">(<
 <p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>59</span>
+    <span>60</span>
     <span>Posts</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -1220,7 +1220,7 @@ sysCost <span class="token operator">=</span> <span class="token punctuation">(<
       <a href="/categories/Programming">
         <div class="categories-list-item">
           Programming
-          <span class="categories-list-item-badge">45</span>
+          <span class="categories-list-item-badge">46</span>
         </div>
       </a>
     
@@ -1277,11 +1277,11 @@ sysCost <span class="token operator">=</span> <span class="token punctuation">(<
     
     <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
     
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
     <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
     
     <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
-    
-    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
     
     <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
     
@@ -1316,6 +1316,11 @@ sysCost <span class="token operator">=</span> <span class="token punctuation">(<
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-24</div>
+        <a href="/2023/04/24/swiftui-rss-reader/"><div class="recent-posts-item-content">使用 SwiftUI 开发 RSS 阅读器</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-10-24</div>
         <a href="/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/"><div class="recent-posts-item-content">参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动</div></a>
       </div>
@@ -1328,11 +1333,6 @@ sysCost <span class="token operator">=</span> <span class="token punctuation">(<
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-06-10</div>
         <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
       </div>
     
   </div>
@@ -1355,7 +1355,7 @@ sysCost <span class="token operator">=</span> <span class="token punctuation">(<
           
           2014 -
           
-          2022
+          2023
         </span>
         <a href="/" class="footer-link">戴铭的博客 </a>
       </div>

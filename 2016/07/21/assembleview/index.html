@@ -174,12 +174,12 @@
       <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
       
       
-        <a href="/tags/AssembleView/" class="post-meta-link">AssembleView</a>
+        <a href="/tags/iOS/" class="post-meta-link">iOS</a>
       
       
       <span class="dot"></span>
       
-        <a href="/tags/iOS/" class="post-meta-link">iOS</a>
+        <a href="/tags/AssembleView/" class="post-meta-link">AssembleView</a>
       
     </div>
   </div>
@@ -192,7 +192,7 @@
 <p>一个是AssembleView组合视图，专门用于对其PartView子视图进行排列，比如说是水平排列还是垂直排列，PartView是按照居中对齐还是居左等对齐方式，各个PartView之间间隔是多少。</p>
 <p>PartView决定自己视图类型，内容，无固定大小的可以设置大小，同时AssembleView可以作为PartView被加入另一个AssembleView里进行排列，这样各种设计图都可以在初期通过拆解分成不同的AssembleView和PartView进行组合套组合布局出来。</p>
 <h1 id="格式化语言"><a href="#格式化语言" class="headerlink" title="格式化语言"></a>格式化语言</h1><p>接下来是如何通过格式化语言来描述AssembleView和PartView。“{}”符号里包含的是AssembleView的设置，“[]”符号里是PartView的设置，“()”里是他们的属性设置，“&lt;&gt;”可以将对象带入到设置里。下面举几个例子说明下。完整Demo放到了Github上：<a target="_blank" rel="noopener" href="https://github.com/ming1016/STMAssembleView">https://github.com/ming1016/STMAssembleView</a></p>
-<h2 id="三个星星水平对齐居中排列"><a href="#三个星星水平对齐居中排列" class="headerlink" title="三个星星水平对齐居中排列"></a>三个星星水平对齐居中排列</h2><p>h表示水平排列horizontal，c表示居中center，“[]”PartView会根据顺序依次添加排列，imageName属性能够指定本地图片<br><img src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/center.png?raw=true" alt="三个星星水平对齐居中排列"></p>
+<h2 id="三个星星水平对齐居中排列"><a href="#三个星星水平对齐居中排列" class="headerlink" title="三个星星水平对齐居中排列"></a>三个星星水平对齐居中排列</h2><p>h表示水平排列horizontal，c表示居中center，“[]”PartView会根据顺序依次添加排列，imageName属性能够指定本地图片<br><img src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/center.png?raw=true" alt="三个星星水平对齐居中排列" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/center.png?raw=true" class="lozad post-image"></p>
 <pre class="line-numbers language-none"><code class="language-none">&#123;
     hc(padding:30)
     [(imageName:starmingicon)]
@@ -200,7 +200,7 @@
     [(imageName:starmingicon)]
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="AssembleView里套作为PartView的AssembleView的复杂情况"><a href="#AssembleView里套作为PartView的AssembleView的复杂情况" class="headerlink" title="AssembleView里套作为PartView的AssembleView的复杂情况"></a>AssembleView里套作为PartView的AssembleView的复杂情况</h2><p>color可以指定文字颜色，font指定文字大小<br><img src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/mid.png?raw=true" alt="AssembleView里套作为PartView的AssembleView的复杂情况"></p>
+<h2 id="AssembleView里套作为PartView的AssembleView的复杂情况"><a href="#AssembleView里套作为PartView的AssembleView的复杂情况" class="headerlink" title="AssembleView里套作为PartView的AssembleView的复杂情况"></a>AssembleView里套作为PartView的AssembleView的复杂情况</h2><p>color可以指定文字颜色，font指定文字大小<br><img src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/mid.png?raw=true" alt="AssembleView里套作为PartView的AssembleView的复杂情况" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/mid.png?raw=true" class="lozad post-image"></p>
 <pre class="line-numbers language-none"><code class="language-none">&#123;
     ht(padding:10)
     [avatarImageView(imageName:avatar)]
@@ -215,7 +215,7 @@
     ]
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="给PartView设置背景色和按钮"><a href="#给PartView设置背景色和按钮" class="headerlink" title="给PartView设置背景色和按钮"></a>给PartView设置背景色和按钮</h2><p>设置背景色使用backColor，背景距离设置的PartView的内容间距通过backPaddingHorizontal属性设置水平间距，backPaddingVertical设置垂直间距，“&lt;&gt;”符号带入的button通过button属性设置。<br><img src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/followBt.png?raw=true" alt="给PartView设置背景色和按钮"></p>
+<h2 id="给PartView设置背景色和按钮"><a href="#给PartView设置背景色和按钮" class="headerlink" title="给PartView设置背景色和按钮"></a>给PartView设置背景色和按钮</h2><p>设置背景色使用backColor，背景距离设置的PartView的内容间距通过backPaddingHorizontal属性设置水平间距，backPaddingVertical设置垂直间距，“&lt;&gt;”符号带入的button通过button属性设置。<br><img src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/followBt.png?raw=true" alt="给PartView设置背景色和按钮" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/followBt.png?raw=true" class="lozad post-image"></p>
 <pre class="line-numbers language-none"><code class="language-none">[
     &#123;
         hc(padding:4)
@@ -225,7 +225,7 @@
     (height:36,backColor:AAA0A3,radius:8,backBorderWidth:1,backBorderColor:E3DEE0,backPaddingHorizontal:80,backPaddingVertical:10,button:&lt;clickBt&gt;)
 ]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="AssembleView设置忽略约束的方法"><a href="#AssembleView设置忽略约束的方法" class="headerlink" title="AssembleView设置忽略约束的方法"></a>AssembleView设置忽略约束的方法</h2><p>水平排列时，通过ignoreAlignment属性设置忽略left约束，如果是垂直排列设置top忽略。<br><img src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/des.png?raw=true" alt="AssembleView设置忽略约束的方法"></p>
+<h2 id="AssembleView设置忽略约束的方法"><a href="#AssembleView设置忽略约束的方法" class="headerlink" title="AssembleView设置忽略约束的方法"></a>AssembleView设置忽略约束的方法</h2><p>水平排列时，通过ignoreAlignment属性设置忽略left约束，如果是垂直排列设置top忽略。<br><img src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/des.png?raw=true" alt="AssembleView设置忽略约束的方法" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/des.png?raw=true" class="lozad post-image"></p>
 <pre class="line-numbers language-none"><code class="language-none">&#123;
     hc(padding:5)
     [(text:STMAssembleView演示,color:E3DEE0,font:13)]
@@ -233,7 +233,7 @@
     [(text:Starming星光社,color:E3DEE0,font:13)]
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="将前面的视图组合成一个AssembleView"><a href="#将前面的视图组合成一个AssembleView" class="headerlink" title="将前面的视图组合成一个AssembleView"></a>将前面的视图组合成一个AssembleView</h2><p><img src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/as.png?raw=true" alt="将前面的视图组合成一个AssembleView"></p>
+<h2 id="将前面的视图组合成一个AssembleView"><a href="#将前面的视图组合成一个AssembleView" class="headerlink" title="将前面的视图组合成一个AssembleView"></a>将前面的视图组合成一个AssembleView</h2><p><img src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/as.png?raw=true" alt="将前面的视图组合成一个AssembleView" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://github.com/ming1016/STMAssembleView/blob/master/STMAssembleView/as.png?raw=true" class="lozad post-image"></p>
 <pre class="line-numbers language-none"><code class="language-none">ASS(@&quot;&#123;
     vc(padding:20)
     [%@(height:90)]
@@ -342,7 +342,7 @@
 <p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>59</span>
+    <span>60</span>
     <span>Posts</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -404,7 +404,7 @@
       <a href="/categories/Programming">
         <div class="categories-list-item">
           Programming
-          <span class="categories-list-item-badge">45</span>
+          <span class="categories-list-item-badge">46</span>
         </div>
       </a>
     
@@ -461,11 +461,11 @@
     
     <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
     
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
     <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
     
     <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
-    
-    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
     
     <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
     
@@ -500,6 +500,11 @@
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-24</div>
+        <a href="/2023/04/24/swiftui-rss-reader/"><div class="recent-posts-item-content">使用 SwiftUI 开发 RSS 阅读器</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-10-24</div>
         <a href="/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/"><div class="recent-posts-item-content">参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动</div></a>
       </div>
@@ -512,11 +517,6 @@
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-06-10</div>
         <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
       </div>
     
   </div>
@@ -539,7 +539,7 @@
           
           2014 -
           
-          2022
+          2023
         </span>
         <a href="/" class="footer-link">戴铭的博客 </a>
       </div>

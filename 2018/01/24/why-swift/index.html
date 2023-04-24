@@ -258,7 +258,7 @@
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">let</span> stateArray<span class="token punctuation">:</span> <span class="token class-name">Array</span><span class="token operator">&lt;</span><span class="token class-name">String</span><span class="token operator">></span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string-literal"><span class="token string">"工作"</span></span><span class="token punctuation">,</span><span class="token string-literal"><span class="token string">"吃饭"</span></span><span class="token punctuation">,</span><span class="token string-literal"><span class="token string">"玩游戏"</span></span><span class="token punctuation">,</span><span class="token string-literal"><span class="token string">"睡觉"</span></span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>集合它需要先有个遍历的功能，通过 GeneratorType 协议，可以不关注具体元素类型只要不断的用迭代器调 next 就可以得到全部元素。但是使用迭代器没法进行多次的遍历，这时就需要使用 Sequence 来解决这个问题。像集合的 forEach，elementsEqual，contains，minElement，maxElement，map，flatMap，filter，reduce 等功能都是因为有了 Sequence 的多次遍历。</p>
 <p>最后 Collection 概念是因为 Sequence 无法确定集合里的位置而在 Sequence 的基础上实现了 Indexable 协议。有了 Collection 就可以确定元素的位置，包括开始位置和结束位置，这样就能够确定哪些元素是已经访问过的，从而避免多次访问同一个元素。还能够通过一个给定的位置直接找到那个位置的元素。</p>
-<p>以上描述如下图：<br><img src="/uploads/why-swift/01.png"></p>
+<p>以上描述如下图：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/why-swift/01.png" class="lozad post-image"src="/uploads/why-swift/01.png"></p>
 <h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><p>Swift 里有个简单的 AnyIterator<Element> 结构体</p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">AnyIterator</span><span class="token operator">&lt;</span><span class="token class-name">Element</span><span class="token operator">></span><span class="token punctuation">:</span> <span class="token class-name">IteratorProtocol</span> <span class="token punctuation">&#123;</span> 
 	<span class="token keyword">init</span><span class="token punctuation">(</span><span class="token omit keyword">_</span> body<span class="token punctuation">:</span> <span class="token attribute atrule">@escaping</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">Element</span><span class="token operator">?</span><span class="token punctuation">)</span>
@@ -729,7 +729,7 @@ strs<span class="token punctuation">[</span><span class="token number">16</span>
 <p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>59</span>
+    <span>60</span>
     <span>Posts</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -791,7 +791,7 @@ strs<span class="token punctuation">[</span><span class="token number">16</span>
       <a href="/categories/Programming">
         <div class="categories-list-item">
           Programming
-          <span class="categories-list-item-badge">45</span>
+          <span class="categories-list-item-badge">46</span>
         </div>
       </a>
     
@@ -848,11 +848,11 @@ strs<span class="token punctuation">[</span><span class="token number">16</span>
     
     <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
     
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
     <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
     
     <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
-    
-    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
     
     <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
     
@@ -887,6 +887,11 @@ strs<span class="token punctuation">[</span><span class="token number">16</span>
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-24</div>
+        <a href="/2023/04/24/swiftui-rss-reader/"><div class="recent-posts-item-content">使用 SwiftUI 开发 RSS 阅读器</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-10-24</div>
         <a href="/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/"><div class="recent-posts-item-content">参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动</div></a>
       </div>
@@ -899,11 +904,6 @@ strs<span class="token punctuation">[</span><span class="token number">16</span>
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-06-10</div>
         <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
       </div>
     
   </div>
@@ -926,7 +926,7 @@ strs<span class="token punctuation">[</span><span class="token number">16</span>
           
           2014 -
           
-          2022
+          2023
         </span>
         <a href="/" class="footer-link">戴铭的博客 </a>
       </div>
