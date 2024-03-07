@@ -1,120 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
-  <head>
+<html>
+<meta  lang="zh-Hans" >
+<head>
   <meta charset="UTF-8">
-  <meta 
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <meta 
-    http-equiv="X-UA-Compatible" 
-    content="ie=edge">
-  <meta 
-    name="theme-color" 
-    content="#fff" 
-    id="theme-color">
-  <meta 
-    name="description" 
-    content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-  <link 
-    rel="icon" 
-    href="/img/logo-starming.png">
-  <title>Categories</title>
-  
-    
-      <meta 
-        property="og:title" 
-        content="Categories">
-    
-    
-      <meta 
-        property="og:url" 
-        content="http://ming1016.github.io/categories/My-painting/index.html">
-    
-    
-      <meta 
-        property="og:img" 
-        content="/img/ming.jpeg">
-    
-    
-      <meta 
-        property="og:img" 
-        content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-    
-    
-  
-  
-  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
-  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
-  <link rel="preload" href="/css/main.css" as="style" >
-  
-  <link rel="modulepreload" href="//instant.page/5.1.0">
-  
-  <link rel="stylesheet" href="/css/main.css">
-  
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
-  
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
-  
-  
-  
-  <script>
-    function loadScript(url, cb) {
-      var script = document.createElement('script');
-      script.src = url;
-      if (cb) script.onload = cb;
-      script.async = true;
-      document.body.appendChild(script);
-    }
-    function loadCSS(href, data, attr) {
-      var sheet = document.createElement('link');
-      sheet.ref = 'stylesheet';
-      sheet.href = href;
-      sheet.dataset[data] = attr;
-      document.head.appendChild(sheet);
-    }
-    function changeCSS(cssFile, data, attr) {
-      var oldlink = document.querySelector(data);
-      var newlink = document.createElement("link");
-      newlink.setAttribute("rel", "stylesheet");
-      newlink.setAttribute("href", cssFile);
-      newlink.dataset.prism = attr;
-      document.head.replaceChild(newlink, oldlink);
-    }
-  </script>
-  
-    
-      
-      
-      
-      
-        
-        
-        
-        <script>
-          function prismThemeChange() {
-            if(document.getElementById('theme-color').dataset.mode === 'dark') {
-              if(document.querySelector('[data-prism]')) {
-                changeCSS('/js/lib/prism/prism-tomorrow.min.css', '[data-prism]', 'prism-tomorrow');
-              } else {
-                loadCSS('/js/lib/prism/prism-tomorrow.min.css', 'prism', 'prism-tomorrow');
-              }
-            } else {
-              if(document.querySelector('[data-prism]')) {
-                changeCSS('/js/lib/prism/prism.min.css', '[data-prism]', 'prism');
-              } else {
-                loadCSS('/js/lib/prism/prism.min.css', 'prism', 'prism');
-              }
-            }
-          }
-          prismThemeChange()
-        </script>
-      
-      
-        
-        <link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
-      
-    
-  
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
   <script>
     // control reverse button
     var reverseDarkList = {
@@ -143,261 +37,321 @@
       return setting;
     };
     // apply current darkmode setting
-  </script>
-  
-    <script>
-      var setDarkmode = function(mode) {
+    var setDarkmode = function(mode) {
       var setting = mode || localStorage.getItem('user-color-scheme');
       if(setting === getCssMediaQuery()) {
         document.documentElement.removeAttribute('data-user-color-scheme');
         localStorage.removeItem('user-color-scheme');
         document.getElementById('theme-color').content = themeColor[setting];
-        document.getElementById('theme-color').dataset.mode = setting;
-        prismThemeChange();
       } else if(reverseDarkList[setting]) {
         document.documentElement.setAttribute('data-user-color-scheme', setting);
         document.getElementById('theme-color').content = themeColor[setting];
-        document.getElementById('theme-color').dataset.mode = setting;
-        prismThemeChange();
       } else {
         document.documentElement.removeAttribute('data-user-color-scheme');
         localStorage.removeItem('user-color-scheme');
         document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
-        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
-        prismThemeChange();
       }
     };
     setDarkmode();
-    </script>
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
   
   
   
-    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
-    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
-  
-  
-    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
   
   
   
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
   
   
   
 <meta name="generator" content="Hexo 5.4.2"></head>
 
-  <body>
-    <div class="wrapper">
-       
-      <nav class="navbar">
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
   <div class="navbar-logo">
-    <a class="navbar-logo-main" href="/">
+    <span class="navbar-logo-main">
       
-        <img 
-          class="navbar-logo-img"
-          width="32"
-          height="32"
-          src="/img/logo-starming.png" 
-          alt="blog logo">
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
       
       <span class="navbar-logo-dsc">戴铭的博客</span>
-      </a>
+    </span>
   </div>
   <div class="navbar-menu">
     
-      <a 
-        href="/" 
-        class="navbar-menu-item">
-        
-          Home
-        
-      </a>
+    <a href="/" class="navbar-menu-item">Home </a>
     
-      <a 
-        href="/archives" 
-        class="navbar-menu-item">
-        
-          Archive
-        
-      </a>
+    <a href="/archives" class="navbar-menu-item">Archive </a>
     
-      <a 
-        href="/tags" 
-        class="navbar-menu-item">
-        
-          Tags
-        
-      </a>
+    <a href="/tags" class="navbar-menu-item">Tags </a>
     
-      <a 
-        href="/categories" 
-        class="navbar-menu-item">
-        
-          Categories
-        
-      </a>
+    <a href="/categories" class="navbar-menu-item">Categories </a>
     
-      <a 
-        href="/about" 
-        class="navbar-menu-item">
-        
-          About
-        
-      </a>
+    <a href="/about" class="navbar-menu-item">About </a>
     
-      <a 
-        href="/null" 
-        class="navbar-menu-item">
-        
-          Friends
-        
-      </a>
+    <a href="" class="navbar-menu-item">Friends </a>
     
-    <button 
-      class="navbar-menu-item darknavbar navbar-menu-btn" 
-      aria-label="Toggle dark mode"
-      id="dark">
-      <i class="iconfont icon-weather"></i>
-    </button>
-    <button 
-      class="navbar-menu-item searchnavbar navbar-menu-btn" 
-      aria-label="Toggle search"
-      id="search">
-      <!-- <i 
-        class="iconfont icon-search" 
-        style="font-size: 1.2rem; font-weight: 400;">
-      </i> -->
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-        class="iconify iconify--ion" width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
-        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
-          d="M256 80a176 176 0 1 0 176 176A176 176 0 0 0 256 80Z"></path>
-        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
-          d="M232 160a72 72 0 1 0 72 72a72 72 0 0 0-72-72Z"></path>
-        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="28"
-          d="M283.64 283.64L336 336"></path>
-      </svg>
-    </button>
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
   </div>
-</nav> 
-      
-      <div 
-        id="local-search" 
-        style="display: none">
-        <input
-          class="navbar-menu-item"
-          id="search-input"
-          placeholder="请输入搜索内容..." />
-        <div id="search-content"></div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column"><div class="card card-content category-page-card">
+  <div class="categories-page-title">Categories&nbsp-&nbspMy-painting</div>
+</div>
+<div class="archive-timeline">
+  
+  
+  
+  <div class="archive-timeline-tag"><span>2022</span></div>
+  
+  
+  <div class="archive-timeline-item">
+    <div class="archive-timeline-post">
+      <div class="card card-content">
+        <div class="archive-timeline-post-date">2022-02-26</div>
+        <div class="archive-timeline-post-content">
+          <a href="/2022/02/26/draw-in-2021/" class="archive-timeline-post-item">2021年画的</a>
+        </div>
       </div>
-      
-      <div class="section-wrap">
-        <div class="container">
-          <div class="columns">
-            <aside class="left-column">
+    </div>
+  </div>
+  
+  
+  <div class="archive-timeline-tag"><span>2020</span></div>
+  
+  
+  <div class="archive-timeline-item">
+    <div class="archive-timeline-post">
+      <div class="card card-content">
+        <div class="archive-timeline-post-date">2020-05-04</div>
+        <div class="archive-timeline-post-content">
+          <a href="/2020/05/04/draw-in-2020/" class="archive-timeline-post-item">2020年涂图</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="archive-timeline-tag"><span>2019</span></div>
+  
+  
+  <div class="archive-timeline-item">
+    <div class="archive-timeline-post">
+      <div class="card card-content">
+        <div class="archive-timeline-post-date">2019-12-06</div>
+        <div class="archive-timeline-post-content">
+          <a href="/2019/12/06/draw-in-2019/" class="archive-timeline-post-item">2019年涂图</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="archive-timeline-tag"><span>2018</span></div>
+  
+  
+  <div class="archive-timeline-item">
+    <div class="archive-timeline-post">
+      <div class="card card-content">
+        <div class="archive-timeline-post-date">2018-09-14</div>
+        <div class="archive-timeline-post-content">
+          <a href="/2018/09/14/draw-with-procreate-in-ipad-during-pre-half-in-20182/" class="archive-timeline-post-item">18年上半年procreate的练习图图</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="archive-timeline-tag"><span>2016</span></div>
+  
+  
+  <div class="archive-timeline-item">
+    <div class="archive-timeline-post">
+      <div class="card card-content">
+        <div class="archive-timeline-post-date">2016-09-20</div>
+        <div class="archive-timeline-post-content">
+          <a href="/2016/09/20/draw-with-procreate-in-ipad-during-15-to-16/" class="archive-timeline-post-item">15，16年iPad上使用Procreate画的</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="archive-timeline-tag"><span>2015</span></div>
+  
+  
+  <div class="archive-timeline-item">
+    <div class="archive-timeline-post">
+      <div class="card card-content">
+        <div class="archive-timeline-post-date">2015-11-02</div>
+        <div class="archive-timeline-post-content">
+          <a href="/2015/11/02/draw-with-note-in-ipad-during-15/" class="archive-timeline-post-item">15年用iPad上的备忘录画的</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="archive-timeline-item">
+    <div class="archive-timeline-post">
+      <div class="card card-content">
+        <div class="archive-timeline-post-date">2015-04-02</div>
+        <div class="archive-timeline-post-content">
+          <a href="/2015/04/02/draw-game-of-thrones-with-pencil-during-14/" class="archive-timeline-post-item">整理了画的权利的游戏里的角色，有龙女，小恶魔等等</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="archive-timeline-item">
+    <div class="archive-timeline-post">
+      <div class="card card-content">
+        <div class="archive-timeline-post-date">2015-03-12</div>
+        <div class="archive-timeline-post-content">
+          <a href="/2015/03/12/draw-practice-with-pencil-during-14-to-15/" class="archive-timeline-post-item">14和15年间的铅笔画练习</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+</main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
               
-              <div class="card card-author">
-                
-  <img 
-    src="/img/ming.jpeg" 
-    class="author-img"
-    width="88"
-    height="88"
-    alt="author avatar">
+<img src="/img/ming.jpeg" class="author-img">
 
 <p class="author-name">戴铭</p>
 <p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
 <div class="author-message">
-  <a 
-    class="author-posts-count" 
-    href="/archives">
-    <span>57</span>
+  <a class="author-posts-count" href="/archives">
+    <span>61</span>
     <span>Posts</span>
   </a>
-  <a 
-    class="author-categories-count" 
-    href="/categories">
+  <a class="author-categories-count" href="/categories">
     <span>5</span>
     <span>Categories</span>
   </a>
-  <a 
-    class="author-tags-count" 
-    href="/tags">
-    <span>38</span>
+  <a class="author-tags-count" href="/tags">
+    <span>39</span>
     <span>Tags</span>
   </a>
 </div>
 
-  <div class="author-card-society">
-    
-      <div class="author-card-society-icon">
-        <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
-          <i class="iconfont icon-sina society-icon"></i>
-        </a>
-      </div>
-    
-      <div class="author-card-society-icon">
-        <a target="_blank" rel="noopener" href="https://github.com/ming1016">
-          <i class="iconfont icon-github society-icon"></i>
-        </a>
-      </div>
-    
-      <div class="author-card-society-icon">
-        <a href="mailto:ming1016@foxmail.com">
-          <i class="iconfont icon-mail society-icon"></i>
-        </a>
-      </div>
-    
-      <div class="author-card-society-icon">
-        <a href="/atom.xml">
-          <i class="iconfont icon-chrome society-icon"></i>
-        </a>
-      </div>
-    
-  </div>
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
+</div>
 
-              </div>
-               <div class="sticky-tablet">
+            </div>
+            
+            <div class="sticky-tablet">
   
   
   
-  <article class="card card-content categories-widget">
+  <article class="card card-content">
     <div class="categories-card">
-  <div class="categories-header">
-    <i 
-      class="iconfont icon-fenlei" 
-      style="padding-right: 2px;">
-    </i>Categories
-  </div>
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>Categories</div>
   <div class="categories-list">
     
-      <a href="/categories/Programming/">
+      <a href="/categories/Programming">
         <div class="categories-list-item">
           Programming
-          <span class="categories-list-item-badge">43</span>
+          <span class="categories-list-item-badge">47</span>
         </div>
       </a>
     
-      <a href="/categories/My-novel/">
+      <a href="/categories/My-novel">
         <div class="categories-list-item">
           My-novel
           <span class="categories-list-item-badge">4</span>
         </div>
       </a>
     
-      <a href="/categories/My-painting/">
+      <a href="/categories/My-painting">
         <div class="categories-list-item">
           My-painting
           <span class="categories-list-item-badge">8</span>
         </div>
       </a>
     
-      <a href="/categories/travel/">
+      <a href="/categories/travel">
         <div class="categories-list-item">
           travel
           <span class="categories-list-item-badge">1</span>
         </div>
       </a>
     
-      <a href="/categories/APP/">
+      <a href="/categories/APP">
         <div class="categories-list-item">
           APP
           <span class="categories-list-item-badge">1</span>
@@ -408,125 +362,51 @@
 </div>
   </article>
   
-  <article class="card card-content tags-widget">
+  <article class="card card-content">
     <div class="tags-card">
-  <div class="tags-header">
-    <i 
-      class="iconfont icon-biaoqian" 
-      style="padding-right: 2px;">
-    </i>hot tags
-  </div>
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>hot tags</div>
   <div class="tags-list">
     
-      <a 
-        href="/tags/iOS/" 
-        title="iOS">
-        <div class="tags-list-item">iOS</div>
-      </a>
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
     
-      <a 
-        href="/tags/Swift/" 
-        title="Swift">
-        <div class="tags-list-item">Swift</div>
-      </a>
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
     
-      <a 
-        href="/tags/Apple/" 
-        title="Apple">
-        <div class="tags-list-item">Apple</div>
-      </a>
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
     
-      <a 
-        href="/tags/Painting/" 
-        title="Painting">
-        <div class="tags-list-item">Painting</div>
-      </a>
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
     
-      <a 
-        href="/tags/Slides/" 
-        title="Slides">
-        <div class="tags-list-item">Slides</div>
-      </a>
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
     
-      <a 
-        href="/tags/iPad/" 
-        title="iPad">
-        <div class="tags-list-item">iPad</div>
-      </a>
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
     
-      <a 
-        href="/tags/Procreate/" 
-        title="Procreate">
-        <div class="tags-list-item">Procreate</div>
-      </a>
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
     
-      <a 
-        href="/tags/LLVM/" 
-        title="LLVM">
-        <div class="tags-list-item">LLVM</div>
-      </a>
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
     
-      <a 
-        href="/tags/Web/" 
-        title="Web">
-        <div class="tags-list-item">Web</div>
-      </a>
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
     
-      <a 
-        href="/tags/Novel/" 
-        title="Novel">
-        <div class="tags-list-item">Novel</div>
-      </a>
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
     
-      <a 
-        href="/tags/SwiftUI/" 
-        title="SwiftUI">
-        <div class="tags-list-item">SwiftUI</div>
-      </a>
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
     
-      <a 
-        href="/tags/macOS/" 
-        title="macOS">
-        <div class="tags-list-item">macOS</div>
-      </a>
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
     
-      <a 
-        href="/tags/%E7%BC%96%E8%AF%91/" 
-        title="编译">
-        <div class="tags-list-item">编译</div>
-      </a>
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
     
-      <a 
-        href="/tags/WWDC/" 
-        title="WWDC">
-        <div class="tags-list-item">WWDC</div>
-      </a>
+    <a href="\tags\WWDC" title="WWDC"><div class="tags-list-item">WWDC</div></a>
     
-      <a 
-        href="/tags/ReactiveCocoa/" 
-        title="ReactiveCocoa">
-        <div class="tags-list-item">ReactiveCocoa</div>
-      </a>
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
     
-      <a 
-        href="/tags/GOT/" 
-        title="GOT">
-        <div class="tags-list-item">GOT</div>
-      </a>
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
     
   </div>
 </div>
   </article>
   
   
-    <article class="card card-content widescreen-archive archive-widget">
-      <div class="archive-card">
-  <div class="archive-card-header">
-    <i 
-      class="iconfont icon-wodebaobiao" 
-      style="padding-right: 2px;">
-    </i>Archive
-  </div>
+  <article class="card card-content widescreen-archive">
+    <div class="archive-card">
+  <div class="archive-card-header"><i class="iconfont icon-wodebaobiao" style="padding-right: 2px;"></i>Archive</div>
   <div class="archive-card-list">
     
     
@@ -543,122 +423,9 @@
     
       
         
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a 
-            href="/archives/2022" 
-            class="archive-card-list-item">
-            2022
-            <span class="archive-card-list-item-badge">7</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a 
-            href="/archives/2021" 
-            class="archive-card-list-item">
-            2021
-            <span class="archive-card-list-item-badge">6</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a 
-            href="/archives/2020" 
-            class="archive-card-list-item">
-            2020
-            <span class="archive-card-list-item-badge">5</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a 
-            href="/archives/2019" 
-            class="archive-card-list-item">
-            2019
-            <span class="archive-card-list-item-badge">5</span>
+          <a href="/archives/2023" class="archive-card-list-item">
+              2023
+              <span class="archive-card-list-item-badge">2</span>
           </a>
         
         
@@ -695,15 +462,94 @@
     
       
         
+          <a href="/archives/2022" class="archive-card-list-item">
+              2022
+              <span class="archive-card-list-item-badge">8</span>
+          </a>
+        
+        
+        
       
     
       
         
-          <a 
-            href="/archives/2018" 
-            class="archive-card-list-item">
-            2018
-            <span class="archive-card-list-item-badge">9</span>
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2021" class="archive-card-list-item">
+              2021
+              <span class="archive-card-list-item-badge">6</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2020" class="archive-card-list-item">
+              2020
+              <span class="archive-card-list-item-badge">5</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2019" class="archive-card-list-item">
+              2019
+              <span class="archive-card-list-item-badge">5</span>
           </a>
         
         
@@ -744,11 +590,52 @@
     
       
         
-          <a 
-            href="/archives/2017" 
-            class="archive-card-list-item">
-            2017
-            <span class="archive-card-list-item-badge">9</span>
+          <a href="/archives/2018" class="archive-card-list-item">
+              2018
+              <span class="archive-card-list-item-badge">9</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2017" class="archive-card-list-item">
+              2017
+              <span class="archive-card-list-item-badge">9</span>
           </a>
         
         
@@ -793,11 +680,9 @@
     
       
         
-          <a 
-            href="/archives/2016" 
-            class="archive-card-list-item">
-            2016
-            <span class="archive-card-list-item-badge">10</span>
+          <a href="/archives/2016" class="archive-card-list-item">
+              2016
+              <span class="archive-card-list-item-badge">10</span>
           </a>
         
         
@@ -824,225 +709,60 @@
         
       
     
+      
+        
+      
     
-      <a 
-        href="/archives/2015" 
-        class="archive-card-list-item">
-        2015
-        <span class="archive-card-list-item-badge">6</span>
+    
+      <a href="/archives/2015" class="archive-card-list-item">
+          2015
+          <span class="archive-card-list-item-badge">7</span>
       </a>
     
   </div>
 </div>
-    </article>
+  </article>
   
 </div>
-            </aside>
-            <main class="main-column">
-              
-<div class="card card-content category-page-card">
-  <div class="categories-page-title">Categories&nbsp-&nbspMy-painting</div>
-</div>
-<div class="archive-timeline">
-  
-  
-    
-      <div class="archive-timeline-tag"><span>2022</span></div>
-      
-    
-    <div class="archive-timeline-item">
-      <div class="archive-timeline-post">
-        <div class="card card-content">
-          <div class="archive-timeline-post-date">2022-02-26</div>
-          <div class="archive-timeline-post-content">
-            <a 
-              href="/2022/02/26/draw-in-2021/" 
-              class="archive-timeline-post-item">
-              2021年画的
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    
-      <div class="archive-timeline-tag"><span>2020</span></div>
-      
-    
-    <div class="archive-timeline-item">
-      <div class="archive-timeline-post">
-        <div class="card card-content">
-          <div class="archive-timeline-post-date">2020-05-04</div>
-          <div class="archive-timeline-post-content">
-            <a 
-              href="/2020/05/04/draw-in-2020/" 
-              class="archive-timeline-post-item">
-              2020年涂图
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    
-      <div class="archive-timeline-tag"><span>2019</span></div>
-      
-    
-    <div class="archive-timeline-item">
-      <div class="archive-timeline-post">
-        <div class="card card-content">
-          <div class="archive-timeline-post-date">2019-12-06</div>
-          <div class="archive-timeline-post-content">
-            <a 
-              href="/2019/12/06/draw-in-2019/" 
-              class="archive-timeline-post-item">
-              2019年涂图
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    
-      <div class="archive-timeline-tag"><span>2018</span></div>
-      
-    
-    <div class="archive-timeline-item">
-      <div class="archive-timeline-post">
-        <div class="card card-content">
-          <div class="archive-timeline-post-date">2018-09-14</div>
-          <div class="archive-timeline-post-content">
-            <a 
-              href="/2018/09/14/draw-with-procreate-in-ipad-during-pre-half-in-20182/" 
-              class="archive-timeline-post-item">
-              18年上半年procreate的练习图图
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    
-      <div class="archive-timeline-tag"><span>2016</span></div>
-      
-    
-    <div class="archive-timeline-item">
-      <div class="archive-timeline-post">
-        <div class="card card-content">
-          <div class="archive-timeline-post-date">2016-09-20</div>
-          <div class="archive-timeline-post-content">
-            <a 
-              href="/2016/09/20/draw-with-procreate-in-ipad-during-15-to-16/" 
-              class="archive-timeline-post-item">
-              15，16年iPad上使用Procreate画的
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    
-      <div class="archive-timeline-tag"><span>2015</span></div>
-      
-    
-    <div class="archive-timeline-item">
-      <div class="archive-timeline-post">
-        <div class="card card-content">
-          <div class="archive-timeline-post-date">2015-11-02</div>
-          <div class="archive-timeline-post-content">
-            <a 
-              href="/2015/11/02/draw-with-note-in-ipad-during-15/" 
-              class="archive-timeline-post-item">
-              15年用iPad上的备忘录画的
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    
-    <div class="archive-timeline-item">
-      <div class="archive-timeline-post">
-        <div class="card card-content">
-          <div class="archive-timeline-post-date">2015-04-02</div>
-          <div class="archive-timeline-post-content">
-            <a 
-              href="/2015/04/02/draw-game-of-thrones-with-pencil-during-14/" 
-              class="archive-timeline-post-item">
-              整理了画的权利的游戏里的角色，有龙女，小恶魔等等
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    
-    <div class="archive-timeline-item">
-      <div class="archive-timeline-post">
-        <div class="card card-content">
-          <div class="archive-timeline-post-date">2015-03-12</div>
-          <div class="archive-timeline-post-content">
-            <a 
-              href="/2015/03/12/draw-practice-with-pencil-during-14-to-15/" 
-              class="archive-timeline-post-item">
-              14和15年间的铅笔画练习
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-</div>
-
-            </main>
-            <aside class="right-column">
-              <div class="sticky-widescreen">
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
   
   
   
   <article class="card card-content">
     <div class="recent-posts-card">
-  <div class="recent-posts-header">
-    <i 
-      class="iconfont icon-wenzhang_huaban" 
-      style="padding-right: 2px;">
-    </i>Recent Posts
-  </div>
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>Recent Posts</div>
   <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-05-31</div>
+        <a href="/2023/05/31/sharing-cs-in-elementary-school/"><div class="recent-posts-item-content">给孩子小学的家长讲堂做了一个计算机科普分享</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-24</div>
+        <a href="/2023/04/24/swiftui-rss-reader/"><div class="recent-posts-item-content">使用 SwiftUI 开发 RSS 阅读器</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-10-24</div>
+        <a href="/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/"><div class="recent-posts-item-content">参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动</div></a>
+      </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-07-08</div>
         <a href="/2022/07/08/slides-of-use-llvm/"><div class="recent-posts-item-content">使用 LLVM 分享的幻灯片</div></a>
       </div>
     
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-03-25</div>
-        <a href="/2022/03/25/develop-with-swiftui/"><div class="recent-posts-item-content">在苹果加速器活动做的 SwiftUI 开发分享</div></a>
-      </div>
-    
   </div>
 </div>
   </article>
   
   
-    <article class="card card-content">
-      <div class="archive-card">
-  <div class="archive-card-header">
-    <i 
-      class="iconfont icon-wodebaobiao" 
-      style="padding-right: 2px;">
-    </i>Archive
-  </div>
+  <article class="card card-content">
+    <div class="archive-card">
+  <div class="archive-card-header"><i class="iconfont icon-wodebaobiao" style="padding-right: 2px;"></i>Archive</div>
   <div class="archive-card-list">
     
     
@@ -1059,122 +779,9 @@
     
       
         
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a 
-            href="/archives/2022" 
-            class="archive-card-list-item">
-            2022
-            <span class="archive-card-list-item-badge">7</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a 
-            href="/archives/2021" 
-            class="archive-card-list-item">
-            2021
-            <span class="archive-card-list-item-badge">6</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a 
-            href="/archives/2020" 
-            class="archive-card-list-item">
-            2020
-            <span class="archive-card-list-item-badge">5</span>
-          </a>
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a 
-            href="/archives/2019" 
-            class="archive-card-list-item">
-            2019
-            <span class="archive-card-list-item-badge">5</span>
+          <a href="/archives/2023" class="archive-card-list-item">
+              2023
+              <span class="archive-card-list-item-badge">2</span>
           </a>
         
         
@@ -1211,15 +818,94 @@
     
       
         
+          <a href="/archives/2022" class="archive-card-list-item">
+              2022
+              <span class="archive-card-list-item-badge">8</span>
+          </a>
+        
+        
+        
       
     
       
         
-          <a 
-            href="/archives/2018" 
-            class="archive-card-list-item">
-            2018
-            <span class="archive-card-list-item-badge">9</span>
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2021" class="archive-card-list-item">
+              2021
+              <span class="archive-card-list-item-badge">6</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2020" class="archive-card-list-item">
+              2020
+              <span class="archive-card-list-item-badge">5</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2019" class="archive-card-list-item">
+              2019
+              <span class="archive-card-list-item-badge">5</span>
           </a>
         
         
@@ -1260,11 +946,52 @@
     
       
         
-          <a 
-            href="/archives/2017" 
-            class="archive-card-list-item">
-            2017
-            <span class="archive-card-list-item-badge">9</span>
+          <a href="/archives/2018" class="archive-card-list-item">
+              2018
+              <span class="archive-card-list-item-badge">9</span>
+          </a>
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a href="/archives/2017" class="archive-card-list-item">
+              2017
+              <span class="archive-card-list-item-badge">9</span>
           </a>
         
         
@@ -1309,11 +1036,9 @@
     
       
         
-          <a 
-            href="/archives/2016" 
-            class="archive-card-list-item">
-            2016
-            <span class="archive-card-list-item-badge">10</span>
+          <a href="/archives/2016" class="archive-card-list-item">
+              2016
+              <span class="archive-card-list-item-badge">10</span>
           </a>
         
         
@@ -1340,147 +1065,128 @@
         
       
     
+      
+        
+      
     
-      <a 
-        href="/archives/2015" 
-        class="archive-card-list-item">
-        2015
-        <span class="archive-card-list-item-badge">6</span>
+    
+      <a href="/archives/2015" class="archive-card-list-item">
+          2015
+          <span class="archive-card-list-item-badge">7</span>
       </a>
     
   </div>
 </div>
-    </article>
+  </article>
   
 </div>
-            </aside>
-          </div>
+          </aside>
         </div>
       </div>
     </div>
-     
-    <footer class="footer">
+  </div>
+  
+  <footer class="footer">
   <div class="footer-container">
     <div>
       <div class="footer-dsc">
-        <span>
-          Copyright ©
+        <span>Copyright ©
           
-            2014
+          2014 -
           
-          
-                - 
-                2022
-          
+          2023
         </span>
-        &nbsp;
-        <a 
-          href="/" 
-          class="footer-link">
-          戴铭的博客
-        </a>
+        <a href="/" class="footer-link">戴铭的博客 </a>
       </div>
     </div>
 
     
     
     
-      <div class="BbeiAn-info">
-        <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">鄂ICP备17011999号 </a>
-      </div>
-      
-        <div class="BbeiAn-info">
-          <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
-          <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
-          </a>
-          <br />
-        </div>
-      
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
+      </a>
+      <br />
+    </div>
+    
     
     
       <div class="footer-dsc">
         
-          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
         
         
-          <span>&nbsp;|&nbsp;</span>
+        <span>&nbsp;|&nbsp;</span>
         
         
-          本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
         
       </div>
       
     
 </footer>
- 
-    
-  <a 
-    role="button" 
-    id="scrollbutton" 
-    class="basebutton" 
-    aria-label="回到顶部">
-    <i class="iconfont icon-arrowleft button-icon"></i>
-  </a>
-
-<a 
-  role="button" 
-  id="menubutton"
-  aria-label="menu button"
-  class="basebutton">
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
   <i class="iconfont icon-menu button-icon"></i>
 </a>
-<a 
-  role="button" 
-  id="popbutton" 
-  class="basebutton" 
-  aria-label="控制中心">
+<a role="button" id="popbutton" class="basebutton">
   <i class="iconfont icon-expand button-icon"></i>
 </a>
-<a 
-  role="button" 
-  id="darkbutton" 
-  class="basebutton darkwidget" 
-  aria-label="夜色模式">
+<a role="button" id="darkbutton" class="basebutton darkwidget">
   <i class="iconfont icon-weather button-icon"></i>
 </a>
-<a 
-  role="button" 
-  id="searchbutton" 
-  class="basebutton searchwidget" 
-  aria-label="搜索">
-  <i class="iconfont icon-search button-icon"></i>
-</a> 
-     
-     
-     
-     
-    <script src="/js/main.js"></script> 
-    
-      <script> 
-        loadScript('/js/lib/busuanzi.min.js') 
-      </script>
-     
-    
-      <script>
-        var addLazyload = function () {
-          var observer = lozad('.lozad', {
-            load: function (el) {
-              el.srcset = el.getAttribute('data-src')
-            },
-            loaded: function (el) {
-              el.classList.add('loaded')
-            },
-          })
-          observer.observe()
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
         }
-      </script>
-      <script>
-        loadScript('/js/lib/lozad.min.js', addLazyload)
-      </script>
-    
-    <script src="//instant.page/5.1.0" type="module"
-      integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
-    
-    
-  </body>
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
 </html>

@@ -1,162 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
-  <head>
+<html>
+<meta  lang="zh-Hans" >
+<head>
   <meta charset="UTF-8">
-  <meta 
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <meta 
-    http-equiv="X-UA-Compatible" 
-    content="ie=edge">
-  <meta 
-    name="theme-color" 
-    content="#fff" 
-    id="theme-color">
-  <meta 
-    name="description" 
-    content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-  <link 
-    rel="icon" 
-    href="/img/logo-starming.png">
-  <title>如何用 SwiftUI + Combine + Swift Concurrency Aysnc/Await Actor 欢畅开发</title>
-  
-    
-      <meta 
-        property="og:title" 
-        content="如何用 SwiftUI + Combine + Swift Concurrency Aysnc/Await Actor 欢畅开发">
-    
-    
-      <meta 
-        property="og:url" 
-        content="http://ming1016.github.io/2022/01/03/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/index.html">
-    
-    
-      <meta 
-        property="og:img" 
-        content="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/16.png">
-    
-    
-      <meta 
-        property="og:img" 
-        content="前滴滴出行技术专家。极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者。个人博客：戴铭的博客。微信公共号：starming-weixin。微博：@戴铭">
-    
-    
-      <meta 
-        property="og:type" 
-        content="article">
-      <meta 
-        property="og:article:published_time" 
-        content="2022-01-03">
-      <meta 
-        property="og:article:modified_time" 
-        content="2022-06-14">
-      <meta 
-        property="og:article:author" 
-        content="戴铭">
-      
-        
-          <meta 
-            property="og:article:tag" 
-            content="Apple">
-        
-          <meta 
-            property="og:article:tag" 
-            content="Swift">
-        
-          <meta 
-            property="og:article:tag" 
-            content="macOS">
-        
-          <meta 
-            property="og:article:tag" 
-            content="Combine">
-        
-          <meta 
-            property="og:article:tag" 
-            content="SwiftUI">
-        
-          <meta 
-            property="og:article:tag" 
-            content="Concurrency">
-        
-      
-    
-  
-  
-  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
-  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
-  <link rel="preload" href="/css/main.css" as="style" >
-  
-  <link rel="modulepreload" href="//instant.page/5.1.0">
-  
-  <link rel="stylesheet" href="/css/main.css">
-  
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
-  
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
-  
-  
-  
-    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
-  
-  <script>
-    function loadScript(url, cb) {
-      var script = document.createElement('script');
-      script.src = url;
-      if (cb) script.onload = cb;
-      script.async = true;
-      document.body.appendChild(script);
-    }
-    function loadCSS(href, data, attr) {
-      var sheet = document.createElement('link');
-      sheet.ref = 'stylesheet';
-      sheet.href = href;
-      sheet.dataset[data] = attr;
-      document.head.appendChild(sheet);
-    }
-    function changeCSS(cssFile, data, attr) {
-      var oldlink = document.querySelector(data);
-      var newlink = document.createElement("link");
-      newlink.setAttribute("rel", "stylesheet");
-      newlink.setAttribute("href", cssFile);
-      newlink.dataset.prism = attr;
-      document.head.replaceChild(newlink, oldlink);
-    }
-  </script>
-  
-    
-      
-      
-      
-      
-        
-        
-        
-        <script>
-          function prismThemeChange() {
-            if(document.getElementById('theme-color').dataset.mode === 'dark') {
-              if(document.querySelector('[data-prism]')) {
-                changeCSS('/js/lib/prism/prism-tomorrow.min.css', '[data-prism]', 'prism-tomorrow');
-              } else {
-                loadCSS('/js/lib/prism/prism-tomorrow.min.css', 'prism', 'prism-tomorrow');
-              }
-            } else {
-              if(document.querySelector('[data-prism]')) {
-                changeCSS('/js/lib/prism/prism.min.css', '[data-prism]', 'prism');
-              } else {
-                loadCSS('/js/lib/prism/prism.min.css', 'prism', 'prism');
-              }
-            }
-          }
-          prismThemeChange()
-        </script>
-      
-      
-        
-        <link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
-      
-    
-  
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
   <script>
     // control reverse button
     var reverseDarkList = {
@@ -185,406 +37,114 @@
       return setting;
     };
     // apply current darkmode setting
-  </script>
-  
-    <script>
-      var setDarkmode = function(mode) {
+    var setDarkmode = function(mode) {
       var setting = mode || localStorage.getItem('user-color-scheme');
       if(setting === getCssMediaQuery()) {
         document.documentElement.removeAttribute('data-user-color-scheme');
         localStorage.removeItem('user-color-scheme');
         document.getElementById('theme-color').content = themeColor[setting];
-        document.getElementById('theme-color').dataset.mode = setting;
-        prismThemeChange();
       } else if(reverseDarkList[setting]) {
         document.documentElement.setAttribute('data-user-color-scheme', setting);
         document.getElementById('theme-color').content = themeColor[setting];
-        document.getElementById('theme-color').dataset.mode = setting;
-        prismThemeChange();
       } else {
         document.documentElement.removeAttribute('data-user-color-scheme');
         localStorage.removeItem('user-color-scheme');
         document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
-        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
-        prismThemeChange();
       }
     };
     setDarkmode();
-    </script>
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
   
   
   
-    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
-    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
-  
-  
-    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
   
   
   
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
   
   
   
 <meta name="generator" content="Hexo 5.4.2"></head>
 
-  <body>
-    <div class="wrapper">
-       
-      <nav class="navbar">
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
   <div class="navbar-logo">
-    <a class="navbar-logo-main" href="/">
+    <span class="navbar-logo-main">
       
-        <img 
-          class="navbar-logo-img"
-          width="32"
-          height="32"
-          src="/img/logo-starming.png" 
-          alt="blog logo">
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
       
       <span class="navbar-logo-dsc">戴铭的博客</span>
-      </a>
+    </span>
   </div>
   <div class="navbar-menu">
     
-      <a 
-        href="/" 
-        class="navbar-menu-item">
-        
-          Home
-        
-      </a>
+    <a href="/" class="navbar-menu-item">Home </a>
     
-      <a 
-        href="/archives" 
-        class="navbar-menu-item">
-        
-          Archive
-        
-      </a>
+    <a href="/archives" class="navbar-menu-item">Archive </a>
     
-      <a 
-        href="/tags" 
-        class="navbar-menu-item">
-        
-          Tags
-        
-      </a>
+    <a href="/tags" class="navbar-menu-item">Tags </a>
     
-      <a 
-        href="/categories" 
-        class="navbar-menu-item">
-        
-          Categories
-        
-      </a>
+    <a href="/categories" class="navbar-menu-item">Categories </a>
     
-      <a 
-        href="/about" 
-        class="navbar-menu-item">
-        
-          About
-        
-      </a>
+    <a href="/about" class="navbar-menu-item">About </a>
     
-      <a 
-        href="/null" 
-        class="navbar-menu-item">
-        
-          Friends
-        
-      </a>
+    <a href="" class="navbar-menu-item">Friends </a>
     
-    <button 
-      class="navbar-menu-item darknavbar navbar-menu-btn" 
-      aria-label="Toggle dark mode"
-      id="dark">
-      <i class="iconfont icon-weather"></i>
-    </button>
-    <button 
-      class="navbar-menu-item searchnavbar navbar-menu-btn" 
-      aria-label="Toggle search"
-      id="search">
-      <!-- <i 
-        class="iconfont icon-search" 
-        style="font-size: 1.2rem; font-weight: 400;">
-      </i> -->
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-        class="iconify iconify--ion" width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
-        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
-          d="M256 80a176 176 0 1 0 176 176A176 176 0 0 0 256 80Z"></path>
-        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
-          d="M232 160a72 72 0 1 0 72 72a72 72 0 0 0-72-72Z"></path>
-        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="28"
-          d="M283.64 283.64L336 336"></path>
-      </svg>
-    </button>
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
   </div>
-</nav> 
-      
-      <div 
-        id="local-search" 
-        style="display: none">
-        <input
-          class="navbar-menu-item"
-          id="search-input"
-          placeholder="请输入搜索内容..." />
-        <div id="search-content"></div>
-      </div>
-      
-      <div class="section-wrap">
-        <div class="container">
-          <div class="columns">
-            <aside class="left-column">
-              
-              <div class="card card-author">
-                
-  <img 
-    src="/img/ming.jpeg" 
-    class="author-img"
-    width="88"
-    height="88"
-    alt="author avatar">
-
-<p class="author-name">戴铭</p>
-<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
-<div class="author-message">
-  <a 
-    class="author-posts-count" 
-    href="/archives">
-    <span>57</span>
-    <span>Posts</span>
-  </a>
-  <a 
-    class="author-categories-count" 
-    href="/categories">
-    <span>5</span>
-    <span>Categories</span>
-  </a>
-  <a 
-    class="author-tags-count" 
-    href="/tags">
-    <span>38</span>
-    <span>Tags</span>
-  </a>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/16.png" data-src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/16.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
 </div>
-
-  <div class="author-card-society">
-    
-      <div class="author-card-society-icon">
-        <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
-          <i class="iconfont icon-sina society-icon"></i>
-        </a>
-      </div>
-    
-      <div class="author-card-society-icon">
-        <a target="_blank" rel="noopener" href="https://github.com/ming1016">
-          <i class="iconfont icon-github society-icon"></i>
-        </a>
-      </div>
-    
-      <div class="author-card-society-icon">
-        <a href="mailto:ming1016@foxmail.com">
-          <i class="iconfont icon-mail society-icon"></i>
-        </a>
-      </div>
-    
-      <div class="author-card-society-icon">
-        <a href="/atom.xml">
-          <i class="iconfont icon-chrome society-icon"></i>
-        </a>
-      </div>
-    
-  </div>
-
-              </div>
-               <div class="sticky-tablet">
-  
-  
-    <article class="display-when-two-columns spacer">
-      <div class="card card-content toc-card">
-        <div class="toc-header">
-  <i 
-    class="iconfont icon-menu" 
-    style="padding-right: 2px;">
-  </i>TOC
-</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E8%AF%B4%E4%B8%A4%E5%8F%A5%E5%BA%9F%E8%AF%9D%EF%BC%88Don%E2%80%99t-blame-me-about-my-calculation%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">先说两句废话（Don’t blame me about my calculation）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9C%8B%E7%9C%8B%E5%81%9A%E5%87%BA%E6%9D%A5%E7%9A%84%E6%A0%B7%E5%AD%90"><span class="toc-number">2.</span> <span class="toc-text">看看做出来的样子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%BD%91%E7%BB%9C%E8%83%BD%E5%8A%9B"><span class="toc-number">3.</span> <span class="toc-text">基础网络能力</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97%E5%8A%9F%E8%83%BD"><span class="toc-number">4.</span> <span class="toc-text">怎么开发指南功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E8%80%85%E5%92%8C%E4%BB%93%E5%BA%93%E5%8A%A8%E6%80%81"><span class="toc-number">5.</span> <span class="toc-text">开发者和仓库动态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%9C%89%E6%9B%B4%E6%96%B0%EF%BC%8C%E6%80%8E%E4%B9%88%E6%8F%90%E9%86%92%E7%9A%84"><span class="toc-number">6.</span> <span class="toc-text">动态有更新，怎么提醒的</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-number">6.1.</span> <span class="toc-text">定时器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8"><span class="toc-number">6.2.</span> <span class="toc-text">本地存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E9%86%92"><span class="toc-number">6.3.</span> <span class="toc-text">提醒</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%9A%E5%AE%A2-RSS-%E6%9B%B4%E6%96%B0%E5%8A%A8%E6%80%81"><span class="toc-number">7.</span> <span class="toc-text">博客 RSS 更新动态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%91%E6%89%93%E5%8C%85"><span class="toc-number">8.</span> <span class="toc-text">云打包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E5%8F%AF%E4%BB%A5%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93"><span class="toc-number">9.</span> <span class="toc-text">推荐可以学习的开源仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A5%BD%E5%BA%93"><span class="toc-number">9.1.</span> <span class="toc-text">好库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%98%E6%96%B9"><span class="toc-number">9.1.1.</span> <span class="toc-text">官方</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E9%B2%9C%E4%BA%8B"><span class="toc-number">9.1.2.</span> <span class="toc-text">新鲜事</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%81%E8%A3%85%E6%98%93%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="toc-number">9.1.3.</span> <span class="toc-text">封装易用功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C"><span class="toc-number">9.1.4.</span> <span class="toc-text">网络</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BE%E7%89%87"><span class="toc-number">9.1.5.</span> <span class="toc-text">图片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E5%AD%97%E5%A4%84%E7%90%86"><span class="toc-number">9.1.6.</span> <span class="toc-text">文字处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E7%94%BB"><span class="toc-number">9.1.7.</span> <span class="toc-text">动画</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96%E5%AD%98%E5%82%A8"><span class="toc-number">9.1.8.</span> <span class="toc-text">持久化存储</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F"><span class="toc-number">9.1.9.</span> <span class="toc-text">编程范式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="toc-number">9.1.10.</span> <span class="toc-text">路由</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%A3%80%E6%9F%A5"><span class="toc-number">9.1.11.</span> <span class="toc-text">静态检查</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%83%BD%E5%8A%9B"><span class="toc-number">9.1.12.</span> <span class="toc-text">系统能力</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3"><span class="toc-number">9.1.13.</span> <span class="toc-text">接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#macOS%E7%A8%8B%E5%BA%8F"><span class="toc-number">9.1.14.</span> <span class="toc-text">macOS程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%92%8C%E5%B7%A5%E7%A8%8B%E6%9E%84%E5%BB%BA"><span class="toc-number">9.1.15.</span> <span class="toc-text">性能和工程构建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9F%B3%E8%A7%86%E9%A2%91"><span class="toc-number">9.1.16.</span> <span class="toc-text">音视频</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">9.1.17.</span> <span class="toc-text">服务器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A2%E7%B4%A2%E5%BA%93"><span class="toc-number">9.2.</span> <span class="toc-text">探索库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SwiftUI%E6%89%A9%E5%B1%95"><span class="toc-number">9.2.1.</span> <span class="toc-text">SwiftUI扩展</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%BA%94%E7%94%A8"><span class="toc-number">9.2.2.</span> <span class="toc-text">接口应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#macOS"><span class="toc-number">9.2.3.</span> <span class="toc-text">macOS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BA%94%E7%94%A8"><span class="toc-number">9.2.4.</span> <span class="toc-text">应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B8%B8%E6%88%8F"><span class="toc-number">9.2.5.</span> <span class="toc-text">游戏</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E6%8A%80%E6%9C%AF%E5%B1%95%E7%A4%BA"><span class="toc-number">9.2.6.</span> <span class="toc-text">新技术展示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E9%B2%9C%E4%BA%8B-1"><span class="toc-number">9.2.7.</span> <span class="toc-text">新鲜事</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%9A%E5%90%88"><span class="toc-number">9.2.8.</span> <span class="toc-text">聚合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86"><span class="toc-number">9.2.9.</span> <span class="toc-text">知识管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%92%8C%E5%B7%A5%E7%A8%8B%E6%9E%84%E5%BB%BA-1"><span class="toc-number">9.2.10.</span> <span class="toc-text">性能和工程构建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C-1"><span class="toc-number">9.2.11.</span> <span class="toc-text">网络</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BE%E5%BD%A2"><span class="toc-number">9.2.12.</span> <span class="toc-text">图形</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F"><span class="toc-number">9.2.13.</span> <span class="toc-text">系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Apple"><span class="toc-number">9.2.14.</span> <span class="toc-text">Apple</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%85%E5%88%86%E7%B1%BB"><span class="toc-number">9.2.15.</span> <span class="toc-text">待分类</span></a></li></ol></li></ol></li></ol>
-      </div>
-    </article>
-  
-  
-  <article class="card card-content categories-widget">
-    <div class="categories-card">
-  <div class="categories-header">
-    <i 
-      class="iconfont icon-fenlei" 
-      style="padding-right: 2px;">
-    </i>Categories
-  </div>
-  <div class="categories-list">
-    
-      <a href="/categories/Programming/">
-        <div class="categories-list-item">
-          Programming
-          <span class="categories-list-item-badge">43</span>
-        </div>
-      </a>
-    
-      <a href="/categories/My-novel/">
-        <div class="categories-list-item">
-          My-novel
-          <span class="categories-list-item-badge">4</span>
-        </div>
-      </a>
-    
-      <a href="/categories/My-painting/">
-        <div class="categories-list-item">
-          My-painting
-          <span class="categories-list-item-badge">8</span>
-        </div>
-      </a>
-    
-      <a href="/categories/travel/">
-        <div class="categories-list-item">
-          travel
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-      <a href="/categories/APP/">
-        <div class="categories-list-item">
-          APP
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-  </div>
-</div>
-  </article>
-  
-  <article class="card card-content tags-widget">
-    <div class="tags-card">
-  <div class="tags-header">
-    <i 
-      class="iconfont icon-biaoqian" 
-      style="padding-right: 2px;">
-    </i>hot tags
-  </div>
-  <div class="tags-list">
-    
-      <a 
-        href="/tags/iOS/" 
-        title="iOS">
-        <div class="tags-list-item">iOS</div>
-      </a>
-    
-      <a 
-        href="/tags/Swift/" 
-        title="Swift">
-        <div class="tags-list-item">Swift</div>
-      </a>
-    
-      <a 
-        href="/tags/Apple/" 
-        title="Apple">
-        <div class="tags-list-item">Apple</div>
-      </a>
-    
-      <a 
-        href="/tags/Painting/" 
-        title="Painting">
-        <div class="tags-list-item">Painting</div>
-      </a>
-    
-      <a 
-        href="/tags/Slides/" 
-        title="Slides">
-        <div class="tags-list-item">Slides</div>
-      </a>
-    
-      <a 
-        href="/tags/iPad/" 
-        title="iPad">
-        <div class="tags-list-item">iPad</div>
-      </a>
-    
-      <a 
-        href="/tags/Procreate/" 
-        title="Procreate">
-        <div class="tags-list-item">Procreate</div>
-      </a>
-    
-      <a 
-        href="/tags/LLVM/" 
-        title="LLVM">
-        <div class="tags-list-item">LLVM</div>
-      </a>
-    
-      <a 
-        href="/tags/Web/" 
-        title="Web">
-        <div class="tags-list-item">Web</div>
-      </a>
-    
-      <a 
-        href="/tags/Novel/" 
-        title="Novel">
-        <div class="tags-list-item">Novel</div>
-      </a>
-    
-      <a 
-        href="/tags/SwiftUI/" 
-        title="SwiftUI">
-        <div class="tags-list-item">SwiftUI</div>
-      </a>
-    
-      <a 
-        href="/tags/macOS/" 
-        title="macOS">
-        <div class="tags-list-item">macOS</div>
-      </a>
-    
-      <a 
-        href="/tags/%E7%BC%96%E8%AF%91/" 
-        title="编译">
-        <div class="tags-list-item">编译</div>
-      </a>
-    
-      <a 
-        href="/tags/WWDC/" 
-        title="WWDC">
-        <div class="tags-list-item">WWDC</div>
-      </a>
-    
-      <a 
-        href="/tags/ReactiveCocoa/" 
-        title="ReactiveCocoa">
-        <div class="tags-list-item">ReactiveCocoa</div>
-      </a>
-    
-      <a 
-        href="/tags/GOT/" 
-        title="GOT">
-        <div class="tags-list-item">GOT</div>
-      </a>
-    
-  </div>
-</div>
-  </article>
-  
-  
-</div>
-            </aside>
-            <main class="main-column">
-              
-  <div class="image-wrapper">
-    <img 
-      src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/16.png" 
-      data-src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/16.png"
-      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
-      class="image lozad"
-      alt="如何用 SwiftUI + Combine + Swift Concurrency Aysnc/Await Actor 欢畅开发 thumbnail">
-  </div>
 
 <article class="card card-content">
   <header>
@@ -593,99 +153,61 @@
     </h1>
   </header>
   <div class="post-meta post-show-meta">
-    <time datetime="2022-01-03T03:53:21.000Z">
-      <i 
-        class="iconfont icon-calendar" 
-        style="margin-right: 2px;">
-      </i>
+    <time datetime="2022-01-03T03:53:21.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
       <span>2022-01-03</span>
     </time>
     
-      <span class="dot"></span>
-      
-        <a 
-          href="/categories/Programming/" 
-          class="post-meta-link">
-          Programming
-        </a>
-      
+    <span class="dot"></span>
+    
+    <a href="/categories/Programming/" class="post-meta-link">Programming</a>
     
     
-      <span class="dot"></span>
-      <span>6.6k words</span>
+    
+    <span class="dot"></span>
+    <span>6.5k words</span>
     
   </div>
   
-    <div 
-      class="post-meta post-show-meta" 
-      style="margin-top: -10px;">
-      <div style="display: flex; align-items: center;">
-        <i 
-          class="iconfont icon-biaoqian" 
-          style="margin-right: 2px; font-size: 1.15rem;">
-        </i>
-        
-          
-          <a 
-            href="/tags/Apple/" 
-            class="post-meta-link">
-            Apple
-          </a>
-        
-          
-            <span class="dot"></span>
-          
-          <a 
-            href="/tags/Swift/" 
-            class="post-meta-link">
-            Swift
-          </a>
-        
-          
-            <span class="dot"></span>
-          
-          <a 
-            href="/tags/macOS/" 
-            class="post-meta-link">
-            macOS
-          </a>
-        
-          
-            <span class="dot"></span>
-          
-          <a 
-            href="/tags/Combine/" 
-            class="post-meta-link">
-            Combine
-          </a>
-        
-          
-            <span class="dot"></span>
-          
-          <a 
-            href="/tags/SwiftUI/" 
-            class="post-meta-link">
-            SwiftUI
-          </a>
-        
-          
-            <span class="dot"></span>
-          
-          <a 
-            href="/tags/Concurrency/" 
-            class="post-meta-link">
-            Concurrency
-          </a>
-        
-      </div>
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/Apple/" class="post-meta-link">Apple</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Swift/" class="post-meta-link">Swift</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/macOS/" class="post-meta-link">macOS</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Combine/" class="post-meta-link">Combine</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/SwiftUI/" class="post-meta-link">SwiftUI</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Concurrency/" class="post-meta-link">Concurrency</a>
+      
     </div>
+  </div>
   
   </header>
-  <div 
-    id="section" 
-    class="post-content">
+  <div id="section" class="post-content">
     <h2 id="先说两句废话（Don’t-blame-me-about-my-calculation）"><a href="#先说两句废话（Don’t-blame-me-about-my-calculation）" class="headerlink" title="先说两句废话（Don’t blame me about my calculation）"></a>先说两句废话（Don’t blame me about my calculation）</h2><p>为啥写这篇文章，简单说，这些日子以来，总觉着做事还是专注些好，于是也逐步减少了很多信息消费，缩减了些欲望吧。目前更加关注怎么能够让开发更快乐些，相信有了这个方向，其他事情就更容易见招拆招了，面对的挑战也不再是挑战，而是激发自己斗志的辅助工具，其实不用在乎那些看似权威的做法和打法，只要是没让你开心的，肯定是有改进空间的。思路和方向才是最重要的，比如<a target="_blank" rel="noopener" href="https://search.douban.com/movie/subject_search?search_text=%E5%A4%A7%E4%BE%A6%E6%8E%A2%E6%B3%A2%E7%BD%97&cat=1002">《大侦探波洛》</a>，每次破案之前波洛就已经通过利害关系找好了方向，他的推理都是基于认定的方向去寻找素材。 </p>
-<p>开心不是因为没有挑战，没有困难，没有煎熬，而是因为找到了方向，这个方向就是，快乐的 Coding，开心的工作，为了达成这个目标那些艰难挑战也就不算什么了。对于 Coding，经过实操，我觉得声明式 UI 响应式编程范式就是很好的提升工作愉悦程度的方式。代码在 GitHub 上，链接：<a target="_blank" rel="noopener" href="https://github.com/KwaiAppTeam/SwiftPamphletApp">https://github.com/KwaiAppTeam/SwiftPamphletApp</a> 。后面我会详细跟你说说这个应用如何开发的及相关知识点，希望你也能够感受下这种 Happy 的开发模式。 </p>
+<p>开心不是因为没有挑战，没有困难，没有煎熬，而是因为找到了方向，这个方向就是，快乐的 Coding，开心的工作，为了达成这个目标那些艰难挑战也就不算什么了。对于 Coding，经过实操，我觉得声明式 UI 响应式编程范式就是很好的提升工作愉悦程度的方式。代码在 GitHub 上，<a target="_blank" rel="noopener" href="https://github.com/ming1016/SwiftPamphletApp">链接</a>。后面我会详细跟你说说这个应用如何开发的及相关知识点，希望你也能够感受下这种 Happy 的开发模式。 </p>
 <p>这之前，我想先说下为什么我觉得快乐是很件重要的事情。这段时间，我接受了好几次采访，有关于工程师文化方面的，还有《时尚COSMOPOLITAN》杂志的采访，记者会问到一些以前的事情，在聊过往事情时我发现原来快乐才是每天自己存在着的最根本的原动力。为了能够让自己能够一直活着，就不要偏离快乐。摄影师是任欣羽，参与过《一代宗师》的拍摄，还是《时尚芭莎》的模特。以下是时尚 COSMOPOLITAN 的采访内容： </p>
 <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/00.jpg" class="lozad post-image"src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/00.jpg"></p>
 <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/01.jpg" class="lozad post-image"src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/01.jpg"></p>
@@ -709,7 +231,7 @@
 <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/30.jpg" class="lozad post-image"src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/30.jpg"></p>
 <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/13.jpg" class="lozad post-image"src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/13.jpg"></p>
 <p>那么，怎样高效开发，带来愉悦的呢？ </p>
-<h2 id="看看做出来的样子"><a href="#看看做出来的样子" class="headerlink" title="看看做出来的样子"></a>看看做出来的样子</h2><p>这是个 macOS 应用（<a target="_blank" rel="noopener" href="https://github.com/KwaiAppTeam/SwiftPamphletApp%EF%BC%89%E3%80%8A%E6%88%B4%E9%93%AD%E7%9A%84">https://github.com/KwaiAppTeam/SwiftPamphletApp）《戴铭的</a> Swift 小册子》，能够方便的查看 Swift 语法，还有一些主要库的使用指南，内容还在完善中，选择的库主要就是开发小册子应用使用到的 SwitUI、Combine、Swift Concurrency。小册子应用目前在 GitHub 上已有<a target="_blank" rel="noopener" href="https://github.com/KwaiAppTeam/SwiftPamphletApp">一千多 Star</a>（感谢有爱😄❤️），成为我第三个过千的仓库，现已移至<a target="_blank" rel="noopener" href="https://github.com/KwaiAppTeam">快手 App 团队账号</a>下继续迭代完善。 </p>
+<h2 id="看看做出来的样子"><a href="#看看做出来的样子" class="headerlink" title="看看做出来的样子"></a>看看做出来的样子</h2><p>这是个 macOS 应用《<a target="_blank" rel="noopener" href="https://github.com/ming1016/SwiftPamphletApp">戴铭的小册子</a>》，能够方便的查看 Swift 语法，还有一些主要库的使用指南，内容还在完善中，选择的库主要就是开发小册子应用使用到的 SwitUI、Combine、Swift Concurrency。 </p>
 <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/14.png" class="lozad post-image"src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/14.png"></p>
 <p>除了这些速查和库的使用内容外，这个应用还有一些开发者的动态，当他们有新的动作，比如提交了代码、star 了什么项目，提交和留言了议题都会直接在程序坞中提醒你。 </p>
 <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/15.png" class="lozad post-image"src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/15.png"></p>
@@ -989,7 +511,7 @@
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>这是社区 <a target="_blank" rel="noopener" href="https://github.com/Kam-To">@Kam-To</a> 提的一个 <a target="_blank" rel="noopener" href="https://github.com/KwaiAppTeam/SwiftPamphletApp/pull/104">PR</a>，是解的 macOS 上的一个性能问题，也就是在 List 中直接使用 Button，在列表快速滚动时，流畅度会有损伤，加上上面的 ButtonStyle 代码就好了。 </p>
+<p>这是社区 <a target="_blank" rel="noopener" href="https://github.com/Kam-To">@Kam-To</a> 提的一个 PR，是解的 macOS 上的一个性能问题，也就是在 List 中直接使用 Button，在列表快速滚动时，流畅度会有损伤，加上上面的 ButtonStyle 代码就好了。 </p>
 <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/22.png" class="lozad post-image"src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/22.png"></p>
 <p>原推见 <a target="_blank" rel="noopener" href="https://twitter.com/fcbunn/status/1259078251340800000">https://twitter.com/fcbunn/status/1259078251340800000</a>。 </p>
 <p>开发者接受事件和事件类似，只是会多显示事件的 actor 字段内容，表明开发者接受的是谁发出的事件。事件界面如下所示： </p>
@@ -1102,7 +624,7 @@
 <h4 id="新鲜事"><a href="#新鲜事" class="headerlink" title="新鲜事"></a>新鲜事</h4><ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/SwiftOldDriver/iOS-Weekly">iOS-Weekly</a> 老司机 iOS 周报 </li>
 <li><a target="_blank" rel="noopener" href="https://github.com/matteocrippa/awesome-swift">awesome-swift</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/KwaiAppTeam/SwiftPamphletApp">SwiftPamphletApp</a> 戴铭的 Swift 小册子</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ming1016/Brochure">Brochure</a> 戴铭的小册子</li>
 </ul>
 <h4 id="封装易用功能"><a href="#封装易用功能" class="headerlink" title="封装易用功能"></a>封装易用功能</h4><ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/SwifterSwift/SwifterSwift">SwifterSwift</a> Handy Swift extensions</li>
@@ -1340,119 +862,233 @@
 
   </div>
   <div>
-    
-      <div 
-        class="post-note note-warning copyright" 
-        style="margin-top: 42px">
-        <p>
-          <span style="font-weight: bold;">作者：</span><a 
-            target="_blank" 
-            rel="nofollow noopener noreferrer" 
-            href="/about">
-            戴铭
-          </a>
-        </p>
-        <p>
-          <span style="font-weight: bold;">文章链接：</span><a 
-            target="_blank" 
-            rel="nofollow noopener noreferrer" 
-            href="http://ming1016.github.io/2022/01/03/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/">
-            http://ming1016.github.io/2022/01/03/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/
-          </a>
-        </p>
-        <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
-      </div>
-    
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2022/01/03/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/">http://ming1016.github.io/2022/01/03/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
   </div>
 </article>
 <div class="nav">
   
-    <div class="nav-item-prev">
-      <a 
-        href="/2022/02/10/swift-evolutionary-path/" 
-        class="nav-link">
-        <i class="iconfont icon-left nav-prev-icon"></i>
-        <div>
-          <div class="nav-label">Prev</div>
-          
-            <div class="nav-title">Swift 演进之路 </div>
-          
-        </div>
+  <div class="nav-item-prev">
+    <a href="/2022/02/10/swift-evolutionary-path/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">Prev</div>
+        
+        <div class="nav-title">Swift 演进之路 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2021/11/23/daiming-swift-pamphlet/" class="nav-link">
+      <div>
+        <div class="nav-label">Next</div>
+        
+        <div class="nav-title">戴铭的 Swift 小册子 5.0 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E8%AF%B4%E4%B8%A4%E5%8F%A5%E5%BA%9F%E8%AF%9D%EF%BC%88Don%E2%80%99t-blame-me-about-my-calculation%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">先说两句废话（Don’t blame me about my calculation）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9C%8B%E7%9C%8B%E5%81%9A%E5%87%BA%E6%9D%A5%E7%9A%84%E6%A0%B7%E5%AD%90"><span class="toc-number">2.</span> <span class="toc-text">看看做出来的样子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%BD%91%E7%BB%9C%E8%83%BD%E5%8A%9B"><span class="toc-number">3.</span> <span class="toc-text">基础网络能力</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97%E5%8A%9F%E8%83%BD"><span class="toc-number">4.</span> <span class="toc-text">怎么开发指南功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E8%80%85%E5%92%8C%E4%BB%93%E5%BA%93%E5%8A%A8%E6%80%81"><span class="toc-number">5.</span> <span class="toc-text">开发者和仓库动态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%9C%89%E6%9B%B4%E6%96%B0%EF%BC%8C%E6%80%8E%E4%B9%88%E6%8F%90%E9%86%92%E7%9A%84"><span class="toc-number">6.</span> <span class="toc-text">动态有更新，怎么提醒的</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-number">6.1.</span> <span class="toc-text">定时器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8"><span class="toc-number">6.2.</span> <span class="toc-text">本地存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E9%86%92"><span class="toc-number">6.3.</span> <span class="toc-text">提醒</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%9A%E5%AE%A2-RSS-%E6%9B%B4%E6%96%B0%E5%8A%A8%E6%80%81"><span class="toc-number">7.</span> <span class="toc-text">博客 RSS 更新动态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%91%E6%89%93%E5%8C%85"><span class="toc-number">8.</span> <span class="toc-text">云打包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E5%8F%AF%E4%BB%A5%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93"><span class="toc-number">9.</span> <span class="toc-text">推荐可以学习的开源仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A5%BD%E5%BA%93"><span class="toc-number">9.1.</span> <span class="toc-text">好库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%98%E6%96%B9"><span class="toc-number">9.1.1.</span> <span class="toc-text">官方</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E9%B2%9C%E4%BA%8B"><span class="toc-number">9.1.2.</span> <span class="toc-text">新鲜事</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%81%E8%A3%85%E6%98%93%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="toc-number">9.1.3.</span> <span class="toc-text">封装易用功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C"><span class="toc-number">9.1.4.</span> <span class="toc-text">网络</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BE%E7%89%87"><span class="toc-number">9.1.5.</span> <span class="toc-text">图片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E5%AD%97%E5%A4%84%E7%90%86"><span class="toc-number">9.1.6.</span> <span class="toc-text">文字处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E7%94%BB"><span class="toc-number">9.1.7.</span> <span class="toc-text">动画</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96%E5%AD%98%E5%82%A8"><span class="toc-number">9.1.8.</span> <span class="toc-text">持久化存储</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F"><span class="toc-number">9.1.9.</span> <span class="toc-text">编程范式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="toc-number">9.1.10.</span> <span class="toc-text">路由</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%A3%80%E6%9F%A5"><span class="toc-number">9.1.11.</span> <span class="toc-text">静态检查</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%83%BD%E5%8A%9B"><span class="toc-number">9.1.12.</span> <span class="toc-text">系统能力</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3"><span class="toc-number">9.1.13.</span> <span class="toc-text">接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#macOS%E7%A8%8B%E5%BA%8F"><span class="toc-number">9.1.14.</span> <span class="toc-text">macOS程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%92%8C%E5%B7%A5%E7%A8%8B%E6%9E%84%E5%BB%BA"><span class="toc-number">9.1.15.</span> <span class="toc-text">性能和工程构建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9F%B3%E8%A7%86%E9%A2%91"><span class="toc-number">9.1.16.</span> <span class="toc-text">音视频</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">9.1.17.</span> <span class="toc-text">服务器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A2%E7%B4%A2%E5%BA%93"><span class="toc-number">9.2.</span> <span class="toc-text">探索库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SwiftUI%E6%89%A9%E5%B1%95"><span class="toc-number">9.2.1.</span> <span class="toc-text">SwiftUI扩展</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%BA%94%E7%94%A8"><span class="toc-number">9.2.2.</span> <span class="toc-text">接口应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#macOS"><span class="toc-number">9.2.3.</span> <span class="toc-text">macOS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BA%94%E7%94%A8"><span class="toc-number">9.2.4.</span> <span class="toc-text">应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B8%B8%E6%88%8F"><span class="toc-number">9.2.5.</span> <span class="toc-text">游戏</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E6%8A%80%E6%9C%AF%E5%B1%95%E7%A4%BA"><span class="toc-number">9.2.6.</span> <span class="toc-text">新技术展示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E9%B2%9C%E4%BA%8B-1"><span class="toc-number">9.2.7.</span> <span class="toc-text">新鲜事</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%9A%E5%90%88"><span class="toc-number">9.2.8.</span> <span class="toc-text">聚合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86"><span class="toc-number">9.2.9.</span> <span class="toc-text">知识管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%92%8C%E5%B7%A5%E7%A8%8B%E6%9E%84%E5%BB%BA-1"><span class="toc-number">9.2.10.</span> <span class="toc-text">性能和工程构建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C-1"><span class="toc-number">9.2.11.</span> <span class="toc-text">网络</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BE%E5%BD%A2"><span class="toc-number">9.2.12.</span> <span class="toc-text">图形</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F"><span class="toc-number">9.2.13.</span> <span class="toc-text">系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Apple"><span class="toc-number">9.2.14.</span> <span class="toc-text">Apple</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%85%E5%88%86%E7%B1%BB"><span class="toc-number">9.2.15.</span> <span class="toc-text">待分类</span></a></li></ol></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
+
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>61</span>
+    <span>Posts</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>Categories</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>39</span>
+    <span>Tags</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
       </a>
     </div>
   
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
   
-    <div class="nav-item-next">
-      <a 
-        href="/2021/11/23/daiming-swift-pamphlet/" 
-        class="nav-link">
-        <div>
-          <div class="nav-label">Next</div>
-          
-            <div class="nav-title">戴铭的 Swift 小册子 5.0 </div>
-          
-        </div>
-        <i class="iconfont icon-right nav-next-icon"></i>
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
       </a>
     </div>
   
 </div>
 
-<div 
-  class="card card-content toc-card" 
-  id="mobiletoc">
-  <div class="toc-header">
-  <i 
-    class="iconfont icon-menu" 
-    style="padding-right: 2px;">
-  </i>TOC
-</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E8%AF%B4%E4%B8%A4%E5%8F%A5%E5%BA%9F%E8%AF%9D%EF%BC%88Don%E2%80%99t-blame-me-about-my-calculation%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">先说两句废话（Don’t blame me about my calculation）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9C%8B%E7%9C%8B%E5%81%9A%E5%87%BA%E6%9D%A5%E7%9A%84%E6%A0%B7%E5%AD%90"><span class="toc-number">2.</span> <span class="toc-text">看看做出来的样子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%BD%91%E7%BB%9C%E8%83%BD%E5%8A%9B"><span class="toc-number">3.</span> <span class="toc-text">基础网络能力</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97%E5%8A%9F%E8%83%BD"><span class="toc-number">4.</span> <span class="toc-text">怎么开发指南功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E8%80%85%E5%92%8C%E4%BB%93%E5%BA%93%E5%8A%A8%E6%80%81"><span class="toc-number">5.</span> <span class="toc-text">开发者和仓库动态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%9C%89%E6%9B%B4%E6%96%B0%EF%BC%8C%E6%80%8E%E4%B9%88%E6%8F%90%E9%86%92%E7%9A%84"><span class="toc-number">6.</span> <span class="toc-text">动态有更新，怎么提醒的</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-number">6.1.</span> <span class="toc-text">定时器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8"><span class="toc-number">6.2.</span> <span class="toc-text">本地存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E9%86%92"><span class="toc-number">6.3.</span> <span class="toc-text">提醒</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%9A%E5%AE%A2-RSS-%E6%9B%B4%E6%96%B0%E5%8A%A8%E6%80%81"><span class="toc-number">7.</span> <span class="toc-text">博客 RSS 更新动态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%91%E6%89%93%E5%8C%85"><span class="toc-number">8.</span> <span class="toc-text">云打包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E5%8F%AF%E4%BB%A5%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93"><span class="toc-number">9.</span> <span class="toc-text">推荐可以学习的开源仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A5%BD%E5%BA%93"><span class="toc-number">9.1.</span> <span class="toc-text">好库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%98%E6%96%B9"><span class="toc-number">9.1.1.</span> <span class="toc-text">官方</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E9%B2%9C%E4%BA%8B"><span class="toc-number">9.1.2.</span> <span class="toc-text">新鲜事</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%81%E8%A3%85%E6%98%93%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="toc-number">9.1.3.</span> <span class="toc-text">封装易用功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C"><span class="toc-number">9.1.4.</span> <span class="toc-text">网络</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BE%E7%89%87"><span class="toc-number">9.1.5.</span> <span class="toc-text">图片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E5%AD%97%E5%A4%84%E7%90%86"><span class="toc-number">9.1.6.</span> <span class="toc-text">文字处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E7%94%BB"><span class="toc-number">9.1.7.</span> <span class="toc-text">动画</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96%E5%AD%98%E5%82%A8"><span class="toc-number">9.1.8.</span> <span class="toc-text">持久化存储</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F"><span class="toc-number">9.1.9.</span> <span class="toc-text">编程范式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="toc-number">9.1.10.</span> <span class="toc-text">路由</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%A3%80%E6%9F%A5"><span class="toc-number">9.1.11.</span> <span class="toc-text">静态检查</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%83%BD%E5%8A%9B"><span class="toc-number">9.1.12.</span> <span class="toc-text">系统能力</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3"><span class="toc-number">9.1.13.</span> <span class="toc-text">接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#macOS%E7%A8%8B%E5%BA%8F"><span class="toc-number">9.1.14.</span> <span class="toc-text">macOS程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%92%8C%E5%B7%A5%E7%A8%8B%E6%9E%84%E5%BB%BA"><span class="toc-number">9.1.15.</span> <span class="toc-text">性能和工程构建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9F%B3%E8%A7%86%E9%A2%91"><span class="toc-number">9.1.16.</span> <span class="toc-text">音视频</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">9.1.17.</span> <span class="toc-text">服务器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A2%E7%B4%A2%E5%BA%93"><span class="toc-number">9.2.</span> <span class="toc-text">探索库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SwiftUI%E6%89%A9%E5%B1%95"><span class="toc-number">9.2.1.</span> <span class="toc-text">SwiftUI扩展</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%BA%94%E7%94%A8"><span class="toc-number">9.2.2.</span> <span class="toc-text">接口应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#macOS"><span class="toc-number">9.2.3.</span> <span class="toc-text">macOS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BA%94%E7%94%A8"><span class="toc-number">9.2.4.</span> <span class="toc-text">应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B8%B8%E6%88%8F"><span class="toc-number">9.2.5.</span> <span class="toc-text">游戏</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E6%8A%80%E6%9C%AF%E5%B1%95%E7%A4%BA"><span class="toc-number">9.2.6.</span> <span class="toc-text">新技术展示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E9%B2%9C%E4%BA%8B-1"><span class="toc-number">9.2.7.</span> <span class="toc-text">新鲜事</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%9A%E5%90%88"><span class="toc-number">9.2.8.</span> <span class="toc-text">聚合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86"><span class="toc-number">9.2.9.</span> <span class="toc-text">知识管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%92%8C%E5%B7%A5%E7%A8%8B%E6%9E%84%E5%BB%BA-1"><span class="toc-number">9.2.10.</span> <span class="toc-text">性能和工程构建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C-1"><span class="toc-number">9.2.11.</span> <span class="toc-text">网络</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BE%E5%BD%A2"><span class="toc-number">9.2.12.</span> <span class="toc-text">图形</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F"><span class="toc-number">9.2.13.</span> <span class="toc-text">系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Apple"><span class="toc-number">9.2.14.</span> <span class="toc-text">Apple</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%85%E5%88%86%E7%B1%BB"><span class="toc-number">9.2.15.</span> <span class="toc-text">待分类</span></a></li></ol></li></ol></li></ol>
-</div>
-            </main>
-            <aside class="right-column">
-              <div class="sticky-widescreen">
+            </div>
+            
+            <div class="sticky-tablet">
   
   
-    <article class="card card-content toc-card">
-      <div class="toc-header">
-  <i 
-    class="iconfont icon-menu" 
-    style="padding-right: 2px;">
-  </i>TOC
-</div>
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
 <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E8%AF%B4%E4%B8%A4%E5%8F%A5%E5%BA%9F%E8%AF%9D%EF%BC%88Don%E2%80%99t-blame-me-about-my-calculation%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">先说两句废话（Don’t blame me about my calculation）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9C%8B%E7%9C%8B%E5%81%9A%E5%87%BA%E6%9D%A5%E7%9A%84%E6%A0%B7%E5%AD%90"><span class="toc-number">2.</span> <span class="toc-text">看看做出来的样子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%BD%91%E7%BB%9C%E8%83%BD%E5%8A%9B"><span class="toc-number">3.</span> <span class="toc-text">基础网络能力</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97%E5%8A%9F%E8%83%BD"><span class="toc-number">4.</span> <span class="toc-text">怎么开发指南功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E8%80%85%E5%92%8C%E4%BB%93%E5%BA%93%E5%8A%A8%E6%80%81"><span class="toc-number">5.</span> <span class="toc-text">开发者和仓库动态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%9C%89%E6%9B%B4%E6%96%B0%EF%BC%8C%E6%80%8E%E4%B9%88%E6%8F%90%E9%86%92%E7%9A%84"><span class="toc-number">6.</span> <span class="toc-text">动态有更新，怎么提醒的</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-number">6.1.</span> <span class="toc-text">定时器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8"><span class="toc-number">6.2.</span> <span class="toc-text">本地存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E9%86%92"><span class="toc-number">6.3.</span> <span class="toc-text">提醒</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%9A%E5%AE%A2-RSS-%E6%9B%B4%E6%96%B0%E5%8A%A8%E6%80%81"><span class="toc-number">7.</span> <span class="toc-text">博客 RSS 更新动态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%91%E6%89%93%E5%8C%85"><span class="toc-number">8.</span> <span class="toc-text">云打包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E5%8F%AF%E4%BB%A5%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93"><span class="toc-number">9.</span> <span class="toc-text">推荐可以学习的开源仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A5%BD%E5%BA%93"><span class="toc-number">9.1.</span> <span class="toc-text">好库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%98%E6%96%B9"><span class="toc-number">9.1.1.</span> <span class="toc-text">官方</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E9%B2%9C%E4%BA%8B"><span class="toc-number">9.1.2.</span> <span class="toc-text">新鲜事</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%81%E8%A3%85%E6%98%93%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="toc-number">9.1.3.</span> <span class="toc-text">封装易用功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C"><span class="toc-number">9.1.4.</span> <span class="toc-text">网络</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BE%E7%89%87"><span class="toc-number">9.1.5.</span> <span class="toc-text">图片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E5%AD%97%E5%A4%84%E7%90%86"><span class="toc-number">9.1.6.</span> <span class="toc-text">文字处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E7%94%BB"><span class="toc-number">9.1.7.</span> <span class="toc-text">动画</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96%E5%AD%98%E5%82%A8"><span class="toc-number">9.1.8.</span> <span class="toc-text">持久化存储</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F"><span class="toc-number">9.1.9.</span> <span class="toc-text">编程范式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="toc-number">9.1.10.</span> <span class="toc-text">路由</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%A3%80%E6%9F%A5"><span class="toc-number">9.1.11.</span> <span class="toc-text">静态检查</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%83%BD%E5%8A%9B"><span class="toc-number">9.1.12.</span> <span class="toc-text">系统能力</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3"><span class="toc-number">9.1.13.</span> <span class="toc-text">接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#macOS%E7%A8%8B%E5%BA%8F"><span class="toc-number">9.1.14.</span> <span class="toc-text">macOS程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%92%8C%E5%B7%A5%E7%A8%8B%E6%9E%84%E5%BB%BA"><span class="toc-number">9.1.15.</span> <span class="toc-text">性能和工程构建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9F%B3%E8%A7%86%E9%A2%91"><span class="toc-number">9.1.16.</span> <span class="toc-text">音视频</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">9.1.17.</span> <span class="toc-text">服务器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A2%E7%B4%A2%E5%BA%93"><span class="toc-number">9.2.</span> <span class="toc-text">探索库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SwiftUI%E6%89%A9%E5%B1%95"><span class="toc-number">9.2.1.</span> <span class="toc-text">SwiftUI扩展</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%BA%94%E7%94%A8"><span class="toc-number">9.2.2.</span> <span class="toc-text">接口应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#macOS"><span class="toc-number">9.2.3.</span> <span class="toc-text">macOS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BA%94%E7%94%A8"><span class="toc-number">9.2.4.</span> <span class="toc-text">应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B8%B8%E6%88%8F"><span class="toc-number">9.2.5.</span> <span class="toc-text">游戏</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E6%8A%80%E6%9C%AF%E5%B1%95%E7%A4%BA"><span class="toc-number">9.2.6.</span> <span class="toc-text">新技术展示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E9%B2%9C%E4%BA%8B-1"><span class="toc-number">9.2.7.</span> <span class="toc-text">新鲜事</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%9A%E5%90%88"><span class="toc-number">9.2.8.</span> <span class="toc-text">聚合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86"><span class="toc-number">9.2.9.</span> <span class="toc-text">知识管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%92%8C%E5%B7%A5%E7%A8%8B%E6%9E%84%E5%BB%BA-1"><span class="toc-number">9.2.10.</span> <span class="toc-text">性能和工程构建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C-1"><span class="toc-number">9.2.11.</span> <span class="toc-text">网络</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BE%E5%BD%A2"><span class="toc-number">9.2.12.</span> <span class="toc-text">图形</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F"><span class="toc-number">9.2.13.</span> <span class="toc-text">系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Apple"><span class="toc-number">9.2.14.</span> <span class="toc-text">Apple</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%85%E5%88%86%E7%B1%BB"><span class="toc-number">9.2.15.</span> <span class="toc-text">待分类</span></a></li></ol></li></ol></li></ol>
-    </article>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>Categories</div>
+  <div class="categories-list">
+    
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">47</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-novel">
+        <div class="categories-list-item">
+          My-novel
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-painting">
+        <div class="categories-list-item">
+          My-painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>hot tags</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\WWDC" title="WWDC"><div class="tags-list-item">WWDC</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E8%AF%B4%E4%B8%A4%E5%8F%A5%E5%BA%9F%E8%AF%9D%EF%BC%88Don%E2%80%99t-blame-me-about-my-calculation%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">先说两句废话（Don’t blame me about my calculation）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9C%8B%E7%9C%8B%E5%81%9A%E5%87%BA%E6%9D%A5%E7%9A%84%E6%A0%B7%E5%AD%90"><span class="toc-number">2.</span> <span class="toc-text">看看做出来的样子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%BD%91%E7%BB%9C%E8%83%BD%E5%8A%9B"><span class="toc-number">3.</span> <span class="toc-text">基础网络能力</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97%E5%8A%9F%E8%83%BD"><span class="toc-number">4.</span> <span class="toc-text">怎么开发指南功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E8%80%85%E5%92%8C%E4%BB%93%E5%BA%93%E5%8A%A8%E6%80%81"><span class="toc-number">5.</span> <span class="toc-text">开发者和仓库动态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%9C%89%E6%9B%B4%E6%96%B0%EF%BC%8C%E6%80%8E%E4%B9%88%E6%8F%90%E9%86%92%E7%9A%84"><span class="toc-number">6.</span> <span class="toc-text">动态有更新，怎么提醒的</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-number">6.1.</span> <span class="toc-text">定时器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8"><span class="toc-number">6.2.</span> <span class="toc-text">本地存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E9%86%92"><span class="toc-number">6.3.</span> <span class="toc-text">提醒</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%9A%E5%AE%A2-RSS-%E6%9B%B4%E6%96%B0%E5%8A%A8%E6%80%81"><span class="toc-number">7.</span> <span class="toc-text">博客 RSS 更新动态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%91%E6%89%93%E5%8C%85"><span class="toc-number">8.</span> <span class="toc-text">云打包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E5%8F%AF%E4%BB%A5%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93"><span class="toc-number">9.</span> <span class="toc-text">推荐可以学习的开源仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A5%BD%E5%BA%93"><span class="toc-number">9.1.</span> <span class="toc-text">好库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%98%E6%96%B9"><span class="toc-number">9.1.1.</span> <span class="toc-text">官方</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E9%B2%9C%E4%BA%8B"><span class="toc-number">9.1.2.</span> <span class="toc-text">新鲜事</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%81%E8%A3%85%E6%98%93%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="toc-number">9.1.3.</span> <span class="toc-text">封装易用功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C"><span class="toc-number">9.1.4.</span> <span class="toc-text">网络</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BE%E7%89%87"><span class="toc-number">9.1.5.</span> <span class="toc-text">图片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E5%AD%97%E5%A4%84%E7%90%86"><span class="toc-number">9.1.6.</span> <span class="toc-text">文字处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E7%94%BB"><span class="toc-number">9.1.7.</span> <span class="toc-text">动画</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96%E5%AD%98%E5%82%A8"><span class="toc-number">9.1.8.</span> <span class="toc-text">持久化存储</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F"><span class="toc-number">9.1.9.</span> <span class="toc-text">编程范式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="toc-number">9.1.10.</span> <span class="toc-text">路由</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%A3%80%E6%9F%A5"><span class="toc-number">9.1.11.</span> <span class="toc-text">静态检查</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%83%BD%E5%8A%9B"><span class="toc-number">9.1.12.</span> <span class="toc-text">系统能力</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3"><span class="toc-number">9.1.13.</span> <span class="toc-text">接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#macOS%E7%A8%8B%E5%BA%8F"><span class="toc-number">9.1.14.</span> <span class="toc-text">macOS程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%92%8C%E5%B7%A5%E7%A8%8B%E6%9E%84%E5%BB%BA"><span class="toc-number">9.1.15.</span> <span class="toc-text">性能和工程构建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9F%B3%E8%A7%86%E9%A2%91"><span class="toc-number">9.1.16.</span> <span class="toc-text">音视频</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">9.1.17.</span> <span class="toc-text">服务器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A2%E7%B4%A2%E5%BA%93"><span class="toc-number">9.2.</span> <span class="toc-text">探索库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SwiftUI%E6%89%A9%E5%B1%95"><span class="toc-number">9.2.1.</span> <span class="toc-text">SwiftUI扩展</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%BA%94%E7%94%A8"><span class="toc-number">9.2.2.</span> <span class="toc-text">接口应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#macOS"><span class="toc-number">9.2.3.</span> <span class="toc-text">macOS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BA%94%E7%94%A8"><span class="toc-number">9.2.4.</span> <span class="toc-text">应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B8%B8%E6%88%8F"><span class="toc-number">9.2.5.</span> <span class="toc-text">游戏</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E6%8A%80%E6%9C%AF%E5%B1%95%E7%A4%BA"><span class="toc-number">9.2.6.</span> <span class="toc-text">新技术展示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E9%B2%9C%E4%BA%8B-1"><span class="toc-number">9.2.7.</span> <span class="toc-text">新鲜事</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%9A%E5%90%88"><span class="toc-number">9.2.8.</span> <span class="toc-text">聚合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86"><span class="toc-number">9.2.9.</span> <span class="toc-text">知识管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%92%8C%E5%B7%A5%E7%A8%8B%E6%9E%84%E5%BB%BA-1"><span class="toc-number">9.2.10.</span> <span class="toc-text">性能和工程构建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C-1"><span class="toc-number">9.2.11.</span> <span class="toc-text">网络</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BE%E5%BD%A2"><span class="toc-number">9.2.12.</span> <span class="toc-text">图形</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F"><span class="toc-number">9.2.13.</span> <span class="toc-text">系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Apple"><span class="toc-number">9.2.14.</span> <span class="toc-text">Apple</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%85%E5%88%86%E7%B1%BB"><span class="toc-number">9.2.15.</span> <span class="toc-text">待分类</span></a></li></ol></li></ol></li></ol>
+  </article>
   
   
   <article class="card card-content">
     <div class="recent-posts-card">
-  <div class="recent-posts-header">
-    <i 
-      class="iconfont icon-wenzhang_huaban" 
-      style="padding-right: 2px;">
-    </i>Recent Posts
-  </div>
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>Recent Posts</div>
   <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-05-31</div>
+        <a href="/2023/05/31/sharing-cs-in-elementary-school/"><div class="recent-posts-item-content">给孩子小学的家长讲堂做了一个计算机科普分享</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-24</div>
+        <a href="/2023/04/24/swiftui-rss-reader/"><div class="recent-posts-item-content">使用 SwiftUI 开发 RSS 阅读器</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-10-24</div>
+        <a href="/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/"><div class="recent-posts-item-content">参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动</div></a>
+      </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-07-08</div>
         <a href="/2022/07/08/slides-of-use-llvm/"><div class="recent-posts-item-content">使用 LLVM 分享的幻灯片</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/use-llvm/"><div class="recent-posts-item-content">使用 LLVM</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-06-10</div>
-        <a href="/2022/06/10/wwdc22-notes/"><div class="recent-posts-item-content">WWDC22 笔记</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-03-25</div>
-        <a href="/2022/03/25/develop-with-swiftui/"><div class="recent-posts-item-content">在苹果加速器活动做的 SwiftUI 开发分享</div></a>
       </div>
     
   </div>
@@ -1461,164 +1097,113 @@
   
   
 </div>
-            </aside>
-          </div>
+          </aside>
         </div>
       </div>
     </div>
-     
-    <footer class="footer">
+  </div>
+  
+  <footer class="footer">
   <div class="footer-container">
     <div>
       <div class="footer-dsc">
-        <span>
-          Copyright ©
+        <span>Copyright ©
           
-            2014
+          2014 -
           
-          
-                - 
-                2022
-          
+          2023
         </span>
-        &nbsp;
-        <a 
-          href="/" 
-          class="footer-link">
-          戴铭的博客
-        </a>
+        <a href="/" class="footer-link">戴铭的博客 </a>
       </div>
     </div>
 
     
     
     
-      <div class="BbeiAn-info">
-        <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">鄂ICP备17011999号 </a>
-      </div>
-      
-        <div class="BbeiAn-info">
-          <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
-          <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
-          </a>
-          <br />
-        </div>
-      
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
+      </a>
+      <br />
+    </div>
+    
     
     
       <div class="footer-dsc">
         
-          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
         
         
-          <span>&nbsp;|&nbsp;</span>
+        <span>&nbsp;|&nbsp;</span>
         
         
-          本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
         
       </div>
       
     
 </footer>
- 
-    
-  <a 
-    role="button" 
-    id="scrollbutton" 
-    class="basebutton" 
-    aria-label="回到顶部">
-    <i class="iconfont icon-arrowleft button-icon"></i>
-  </a>
-
-<a 
-  role="button" 
-  id="menubutton"
-  aria-label="menu button"
-  class="basebutton">
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
   <i class="iconfont icon-menu button-icon"></i>
 </a>
-<a 
-  role="button" 
-  id="popbutton" 
-  class="basebutton" 
-  aria-label="控制中心">
+<a role="button" id="popbutton" class="basebutton">
   <i class="iconfont icon-expand button-icon"></i>
 </a>
-<a 
-  role="button" 
-  id="darkbutton" 
-  class="basebutton darkwidget" 
-  aria-label="夜色模式">
+<a role="button" id="darkbutton" class="basebutton darkwidget">
   <i class="iconfont icon-weather button-icon"></i>
 </a>
-<a 
-  role="button" 
-  id="searchbutton" 
-  class="basebutton searchwidget" 
-  aria-label="搜索">
-  <i class="iconfont icon-search button-icon"></i>
-</a> 
-     
-     
-     
-      <script>
+
+  
+  
+  
+  <script>
   var addImgLayout = function () {
-    var img = document.querySelectorAll('.post-content img')
-    var i
+    var img = document.querySelectorAll('.post-content img');
+    var i;
     for (i = 0; i < img.length; i++) {
-      var wrapper = document.createElement('a')
-      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
-      wrapper.setAttribute('aria-label', 'illustration')
-      wrapper.style.cssText =
-        'width: 100%; display: flex; justify-content: center;'
-      if (img[i].alt) wrapper.dataset.caption = img[i].alt
-      wrapper.dataset.nolink = true
-      img[i].before(wrapper)
-      wrapper.append(img[i])
-      var divWrap = document.createElement('div')
-      divWrap.classList.add('gallery')
-      wrapper.before(divWrap)
-      divWrap.append(wrapper)
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
     }
-    baguetteBox.run('.gallery')
+    refreshFsLightbox();
   }
 </script>
-<script>
-  loadScript(
-    "/js/lib/lightbox/baguetteBox.min.js",
-    addImgLayout
-  )
-</script>
- 
-     
-     
-    <script src="/js/main.js"></script> 
-    
-      <script> 
-        loadScript('/js/lib/busuanzi.min.js') 
-      </script>
-     
-    
-      <script>
-        var addLazyload = function () {
-          var observer = lozad('.lozad', {
-            load: function (el) {
-              el.srcset = el.getAttribute('data-src')
-            },
-            loaded: function (el) {
-              el.classList.add('loaded')
-            },
-          })
-          observer.observe()
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
         }
-      </script>
-      <script>
-        loadScript('/js/lib/lozad.min.js', addLazyload)
-      </script>
-    
-    <script src="//instant.page/5.1.0" type="module"
-      integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
-    
-    
-  </body>
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
 </html>

@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-Hans" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
+      
+      <span class="navbar-logo-dsc">戴铭的博客</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">Home </a>
+    
+    <a href="/archives" class="navbar-menu-item">Archive </a>
+    
+    <a href="/tags" class="navbar-menu-item">Tags </a>
+    
+    <a href="/categories" class="navbar-menu-item">Categories </a>
+    
+    <a href="/about" class="navbar-menu-item">About </a>
+    
+    <a href="" class="navbar-menu-item">Friends </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/swiftui-rss-reader/09.png" data-src="/uploads/swiftui-rss-reader/09.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      使用 SwiftUI 开发 RSS 阅读器
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2023-04-24T07:51:34.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2023-04-24</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Programming/" class="post-meta-link">Programming</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.9k words</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/iOS/" class="post-meta-link">iOS</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Apple/" class="post-meta-link">Apple</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/SwiftUI/" class="post-meta-link">SwiftUI</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/01.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/01.png"></p>
+<p>在 Apple 加速器活动和字节内分享了使用 SwiftUI 做 RSS 阅读器的一点心得。可能你还不知道什么是 RSS 阅读器，简单来说 RSS 是一些博客和新闻网站，甚至是播客和视频平台发布他们的内容更新的一种 XML 格式，阅读器就是通过请求这个 XML 以获取他们内容更新的客户端。</p>
+<p>这就有了接下来几个问题：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/02.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/02.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/03.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/03.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/04.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/04.png"></p>
+<p>目前已有 Reeder 和 NetNewsWire 等 RSS 阅读器，那么为什么还要再开发一个呢，早在14年我曾做过一个，陆续也更新过，后来还是以 Reeder 作为主力，feedly 作为服务，后来 feedly 有些不稳定，我又改成本地获取 feed 的方式，但是改成本地模式后设备同步又成了问题。正好最近几年苹果在界面、数据流和存储上都做了很大的功能加强。于是我打算将以前 objc、rac和 FMDB 替换成 SwiftUI 和 CoreData 技术，同时补上以前缺少的一些功能，比如添加管理feed，不同设备同步订阅 feed、文章已读状态和收藏信息等功能。</p>
+<p>先说下怎么订阅 RSS。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/05.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/05.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/06.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/06.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/07.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/07.png"></p>
+<p>如上图所示先通过链接获取待解析的数据，以及 mimeType，通过 mimeType 看里面是否包含如下描述：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift">application<span class="token operator">/</span>atom<span class="token operator">+</span>xml
+application<span class="token operator">/</span>rss<span class="token operator">+</span>xml
+application<span class="token operator">/</span>json
+application<span class="token operator">/</span>feed<span class="token operator">+</span>json
+text<span class="token operator">/</span>xml
+application<span class="token operator">/</span>xml<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>包含的话就可以判断是 RSS。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/08.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/08.png"></p>
+<p>如果不是的话就需要手动从网页里获取 RSS 的链接，方法如下：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift">mime<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"text/html"</span></span><span class="token punctuation">)</span>
+<span class="token class-name">SwiftSoup</span><span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>homepageHTML<span class="token punctuation">)</span>
+htmlDom<span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"link[rel=alternate]"</span></span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>其中 SwiftSoup 是一个专门用来将 HTML 解析成 DOM 对象的库。一般 RSS 的链接会在属性键值是 rel 和 alternate 的 Link 这个标签里。但是很多网站并没有遵循这个规范，那么就需要在链接后直接通过添加以下文件名来查找哪个是它的 RSS 链接：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token punctuation">[</span><span class="token string-literal"><span class="token string">"feed.xml"</span></span><span class="token punctuation">,</span><span class="token string-literal"><span class="token string">"rss.xml"</span></span><span class="token punctuation">,</span><span class="token string-literal"><span class="token string">"atom.xml"</span></span><span class="token punctuation">,</span><span class="token string-literal"><span class="token string">"feed"</span></span><span class="token punctuation">,</span><span class="token string-literal"><span class="token string">"feed.rss"</span></span><span class="token punctuation">,</span><span class="token string-literal"><span class="token string">"rss"</span></span><span class="token punctuation">,</span><span class="token string-literal"><span class="token string">"index.xml"</span></span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>找到了 RSS 的链接就可以获取到它的数据，接下来就是对数据的处理，根据 RSS 的规范，RSS 的数据主要是以下三种。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/09.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/09.png"></p>
+<p>对应的结构体如下：</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/10.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/10.png"></p>
+<p>RSS 的图标的获取方式有两种</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/11.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/11.png"></p>
+<p>对处理好的数据需要进行本地的存储，目前不管是 Apple 还是三方库主要都是基于 SQLite 的封装。估计是因为 SQLite 开销小，支持大多数 SQL 92 标准语法，采用标准的 ANSI-C 代码，很容易在多个平台运行，同时 SQLite 还支持所有 SQL 用来保障数据安全和完整性的事务属性，比如原子性、一致性、隔离性和持久性。以下是 iOS 上一些主要基于 SQLite 封装库：</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/12.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/12.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/13.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/13.png"></p>
+<p>我选择的是 Core Data，首先是 Core Data 的 API 很强，将复杂数据建模和操作的 SQL 语句都做成了可视化和对象模式操作。多个数据对象之间的关联关系也做了很多自动处理。Core Data 还使用了惰性加载的方式，只有在需要时才从存储区域获取数据，以节省内存，提高执行效率。</p>
+<p>Core Data 的使用需要对数据库进行设置。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/14.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/14.png"></p>
+<p>在读取实体存储时可以设置 Core Spotlight 以及进行一些调试测试工作。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/16.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/16.png"></p>
+<p>Core Data 对数据的增删改和检索操作都是在 NSManagerObjectContext 中完成的。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/17.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/17.png"></p>
+<p>如果要支持 CloudKit，NSManagerObjectContext 初始化时需要在合并策略做一些设置。context 的数据操作都是基于对象操作的方式，比如增加一个 feed 就是在 context 中创建一个 feed 的对象，然后对其字段对应的属性进行设置即可。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/18.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/18.png"></p>
+<p>删除就是用 context 的 delete 方法将对要删除数据对应的对象进行删除即可。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/19.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/19.png"></p>
+<p>修改就是对读取的对象进行设置。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/20.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/20.png"></p>
+<p>检索有两种方式，一种是创建一个 Controller，使用 lazy 来修饰检索检索结果，惰性加载以节省内存。数据变化会在 NSFetchedResultsController 代理里进行回调，在回调里可以更新 @Published 属性包装的属性以及时同步展示更新的数据。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/21.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/21.png"></p>
+<p>另一种检索方式是使用 @FetchRequest 属性包装，写法更加简洁。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/22.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/22.png"></p>
+<p>下面是 RSS 数据操作对应的代码。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/23.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/23.png"></p>
+<p>添加 Feed 的代码</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">let</span> newFeed <span class="token operator">=</span> <span class="token class-name">WebFeedMO</span><span class="token punctuation">(</span>context<span class="token punctuation">:</span> stack<span class="token punctuation">.</span>context<span class="token punctuation">)</span>
+newFeed<span class="token punctuation">.</span>id <span class="token operator">=</span> <span class="token function">UUID</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+newFeed<span class="token punctuation">.</span>createAt <span class="token operator">=</span> <span class="token class-name">Date</span><span class="token punctuation">.</span>now
+newFeed<span class="token punctuation">.</span>homePageURL <span class="token operator">=</span> inputURL
+stack<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">await</span> <span class="token function">handleAFeed</span><span class="token punctuation">(</span>webFeed<span class="token punctuation">:</span> newFeed<span class="token punctuation">)</span> <span class="token comment">// 文章</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>删除 Feed</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">for</span> a <span class="token keyword">in</span> webFeed<span class="token punctuation">.</span>allElements <span class="token punctuation">&#123;</span>
+    stack<span class="token punctuation">.</span>context<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+stack<span class="token punctuation">.</span><span class="token function">deleteWebFeed</span><span class="token punctuation">(</span>webFeed<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>检索 Feed 列表</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">let</span> fetch <span class="token operator">=</span> <span class="token class-name">WebFeedMO</span><span class="token punctuation">.</span><span class="token function">fetchRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">let</span> sortDescriptorUnreadCount <span class="token operator">=</span> <span class="token class-name">NSSortDescriptor</span><span class="token punctuation">(</span>key<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"unreadCount"</span></span><span class="token punctuation">,</span> ascending<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+<span class="token keyword">let</span> sortDescriptorCreateAt <span class="token operator">=</span> <span class="token class-name">NSSortDescriptor</span><span class="token punctuation">(</span>key<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"createAt"</span></span><span class="token punctuation">,</span> ascending<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+fetch<span class="token punctuation">.</span>sortDescriptors <span class="token operator">=</span> <span class="token punctuation">[</span>sortDescriptorUnreadCount<span class="token punctuation">,</span> sortDescriptorCreateAt<span class="token punctuation">]</span>
+
+<span class="token keyword">let</span> controller <span class="token operator">=</span> <span class="token class-name">NSFetchedResultsController</span><span class="token punctuation">(</span>fetchRequest<span class="token punctuation">:</span> fetch<span class="token punctuation">,</span> managedObjectContext<span class="token punctuation">:</span> stack<span class="token punctuation">.</span>context<span class="token punctuation">,</span> sectionNameKeyPath<span class="token punctuation">:</span> <span class="token nil constant">nil</span><span class="token punctuation">,</span> cacheName<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"webFeeds"</span></span><span class="token punctuation">)</span>
+controller<span class="token punctuation">.</span>delegate <span class="token operator">=</span> <span class="token keyword">self</span>
+
+<span class="token keyword">try</span><span class="token operator">?</span> controller<span class="token punctuation">.</span><span class="token function">performFetch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/24.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/24.png"></p>
+<p>Feed 里文章的列表检索</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">let</span> fetch <span class="token operator">=</span> <span class="token class-name">ArticleMO</span><span class="token punctuation">.</span><span class="token function">fetchRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">let</span> sortDescriptor <span class="token operator">=</span> <span class="token class-name">NSSortDescriptor</span><span class="token punctuation">(</span>key<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"datePublished"</span></span><span class="token punctuation">,</span> ascending<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+fetch<span class="token punctuation">.</span>sortDescriptors <span class="token operator">=</span> <span class="token punctuation">[</span>sortDescriptor<span class="token punctuation">]</span>
+
+<span class="token keyword">let</span> controller <span class="token operator">=</span> <span class="token class-name">NSFetchedResultsController</span><span class="token punctuation">(</span>fetchRequest<span class="token punctuation">:</span> fetch<span class="token punctuation">,</span> managedObjectContext<span class="token punctuation">:</span> stack<span class="token punctuation">.</span>context<span class="token punctuation">,</span> sectionNameKeyPath<span class="token punctuation">:</span> <span class="token nil constant">nil</span><span class="token punctuation">,</span> cacheName<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"newArticles"</span></span><span class="token punctuation">)</span>
+controller<span class="token punctuation">.</span>delegate <span class="token operator">=</span> <span class="token keyword">self</span>
+<span class="token keyword">try</span><span class="token operator">?</span> controller<span class="token punctuation">.</span><span class="token function">performFetch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>标记已读</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token attribute atrule">@Published</span> <span class="token keyword">var</span> selectedArticle<span class="token punctuation">:</span> <span class="token class-name">ArticleMO</span><span class="token operator">?</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">willSet</span><span class="token punctuation">(</span>newValue<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        newValue<span class="token operator">?</span><span class="token punctuation">.</span>read <span class="token operator">=</span> <span class="token boolean">true</span>
+        selectedWebFeed<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">countUnreadArticles</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>全部标记已读</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">let</span> countElement <span class="token operator">=</span> selectedWebFeed<span class="token operator">?</span><span class="token punctuation">.</span>allElements<span class="token punctuation">.</span>count <span class="token operator">??</span> <span class="token number">0</span>
+<span class="token keyword">var</span> index <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">for</span> a <span class="token keyword">in</span> selectedWebFeed<span class="token operator">?</span><span class="token punctuation">.</span>allElements <span class="token operator">??</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">&#123;</span>
+    index <span class="token operator">+=</span> <span class="token number">1</span>
+    <span class="token keyword">if</span> a<span class="token punctuation">.</span>read <span class="token operator">==</span> <span class="token boolean">false</span> <span class="token punctuation">&#123;</span>
+        a<span class="token punctuation">.</span>read <span class="token operator">=</span> <span class="token boolean">true</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> countElement <span class="token operator">></span> <span class="token number">1000</span> <span class="token operator">&amp;&amp;</span> index <span class="token operator">></span> <span class="token number">1000</span> <span class="token operator">&amp;&amp;</span> a<span class="token punctuation">.</span>favourite <span class="token operator">==</span> <span class="token boolean">false</span> <span class="token punctuation">&#123;</span>
+        stack<span class="token punctuation">.</span>context<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// 最后重置未读总数</span>
+selectedWebFeed<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">countUnreadArticles</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/25.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/25.png"></p>
+<p>收藏状态的切换直接对布尔属性 favourite 执行 toggle 方法。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift">selectedArticle<span class="token operator">?</span><span class="token punctuation">.</span>favourite<span class="token punctuation">.</span><span class="token function">toggle</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+selectedArticle<span class="token operator">?</span><span class="token punctuation">.</span>dateModified <span class="token operator">=</span> <span class="token class-name">Date</span><span class="token punctuation">.</span>now<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>工具栏中的分享功能可以直接使用 SwiftUI 内置的 ShareLink 视图。Item 的 placement 对于不同平台的位置会有不同。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token punctuation">.</span>toolbar <span class="token punctuation">&#123;</span>
+    <span class="token class-name">ToolbarItemGroup</span><span class="token punctuation">(</span>placement<span class="token punctuation">:</span> <span class="token punctuation">.</span>primaryAction<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Menu</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Button</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span> label<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">Label</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"拷贝链接"</span></span><span class="token punctuation">,</span> systemImage<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"doc.on.doc"</span></span><span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token class-name">Divider</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token class-name">ShareLink</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"分享"</span></span><span class="token punctuation">,</span> item<span class="token punctuation">:</span> link<span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span> label<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Image</span><span class="token punctuation">(</span>systemName<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"square.and.arrow.up"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token class-name">ToolbarItemGroup</span><span class="token punctuation">(</span>placement<span class="token punctuation">:</span> <span class="token punctuation">.</span>automatic<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Button</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span> label<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Label</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"收藏"</span></span><span class="token punctuation">,</span> systemImage<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"star"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token class-name">Button</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span> label<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Label</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"浏览器"</span></span><span class="token punctuation">,</span> systemImage<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"safari"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span> <span class="token comment">// end toolbar</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>由于网站提供的 RSS 是静态的，因此每次获取数据时需要进行和本地存储的数据进行比对去重。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/26.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/26.png"></p>
+<p>Core Data 提供了一种通过简单配置约束就可以去重的方法。具体方法如上图所示。</p>
+<p>但是如果要支持 iCloud 就没法使用唯一约束这个功能。因此只能回到老办法，手动比对。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/27.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/27.png"></p>
+<p>为了提升大量数据添加的效率，可以使用 NSBatchInsertRequest。正常情况下，在使用 Core Data 进行大量数据插入时，应用程序需要为每个插入操作都创建上下文和执行请求。这样会导致上下文过度膨胀和查询操作的重复，并且会对内存和 CPU 带来负担。而 NSBatchInsertRequest 则能够通过批量插入的方式一次性将多条数据插入到 Core Data 中，并且执行速度要比逐条插入要快得多。NSBatchInsertRequest 实际上是在底层利用 SQLite 数据库的 INSERT INTO 语法来执行批量插入操作。这种方式通过一次性将数据提交给 SQLite，可以减少插入操作所需的检查、协调和锁定操作，从而提高插入操作的效率和性能。当使用 NSBatchInsertRequest 执行批量插入时，Core Data 会首先创建一个临时表，然后将待插入的数据全部插入到该临时表中。接着，Core Data 会使用关联操作将临时表中的数据一次性插入到实际的数据库表中，从而进一步提高了数据插入的效率。NSBatchInsertRequest 还提供了一些可用的参数设置选项，开发者可以根据具体的需求进行灵活配置。例如，通过设置 batchSize 参数，可以控制批量插入时每个批次所包含的最大行数，以避免内存的过度消耗；通过设置 propertiesToUpdate 参数，可以在批量插入后更新指定的属性值，从而避免对整个对象进行额外的查询和更新操作。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/28.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/28.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/29.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/29.png"></p>
+<p>Core Data 里的数据可以通过 iCloud 实现多设备的同步，比如我在 macOS 上订阅、阅读和收藏的信息能够无缝切换到手机和 iPad 上。未来支持 iCloud 可以进行如下的设置：</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/30.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/30.png"></p>
+<p>支持 iCloud 也会有一些限制，对于我目前来说最大限制就是不支持唯一约束，另外数据表结构更改后老版本的兼容也是需要注意的，这是由于 iCloud 是云端数据统一传输，并不会兼容多版本。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/31.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/31.png"></p>
+<p>通过以下方法可以让兼容合并更安全。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/32.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/32.png"></p>
+<p>应用支持 iCloud 后会有 cloudd 这个后台进程对 iCloud 服务的同步和管理，定期检查 iCloud 上数据是否需要同步到本地设备，或者本地数据是否需要传到 iCloud。 apsd 进程会将数据的更新以通知的方式推送到其他设备，dasd 进程会对 iCloud 的数据进行处理然后交给应用进程。对这个流程的调试就是基于上面提到的这四个进程进行日志记录。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/33.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/33.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/34.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/34.png"></p>
+<p>另外 Core Data 还支持一些调试参数，除了 iCloud 还可以支持多线程、SQL、合并等信息的日志打印。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/35.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/35.png"></p>
+<p>为了节省 iCloud 空间大小，对于文章内容这样数据量大的数据就不用支持 iCloud 了，方法是如下：</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/36.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/36.png"></p>
+<p>另外，Core Data 里的数据还能够很容易的支持 spotlight 索引，方便在应用外能够被检索。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/37.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/37.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/38.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/38.png"></p>
+<p>界面使用的是 NavigationSplitView。代码如下：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">HomeThreeColumnView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@EnvironmentObject</span> <span class="token keyword">var</span> webFeedController<span class="token punctuation">:</span> <span class="token class-name">WebFeedController</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">NavigationSplitView</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">SidebarView</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 左侧频道列表</span>
+        <span class="token punctuation">&#125;</span> content<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">AWebFeedArticlesView</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 文章列表</span>
+        <span class="token punctuation">&#125;</span> detail<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">ArticleWebView</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 文章内容</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span> <span class="token comment">// end body</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>NavigationSplitView 可以同时显示主视图和辅助视图。实现了 iOS 系统中常见的 iPad 多窗口布局模式，允许用户同时操作两个视图，提高了应用程序的多任务处理能力和用户体验。NavigationSplitView 提供了一组简洁易用的 API，开发者可以通过少量的代码实现大部分常见的多窗口布局需求。例如，只需要设置主视图和辅助视图的内容即可快速创建一个 NavigationSplitView，而无需手动管理视图控制器的层次结构。NavigationSplitView 还支持自定义视图拆分行为、边缘滑动手势等功能。</p>
+<p>数据处理，包括 Core Data 的初始化配置和增删改和检索等我都放在了 Controller 里，Controller 的关键代码如下：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">WebFeedController</span><span class="token punctuation">:</span> <span class="token class-name">NSObject</span> <span class="token punctuation">,</span><span class="token class-name">ObservableObject</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@Published</span> <span class="token keyword">var</span> selectedWebFeed<span class="token punctuation">:</span> <span class="token class-name">WebFeedMO</span><span class="token operator">?</span>
+    <span class="token attribute atrule">@Published</span> <span class="token keyword">var</span> selectedArticle<span class="token punctuation">:</span> <span class="token class-name">ArticleMO</span><span class="token operator">?</span>
+    
+    <span class="token attribute atrule">@Published</span> <span class="token keyword">private</span><span class="token punctuation">(</span><span class="token keyword">set</span><span class="token punctuation">)</span> <span class="token keyword">var</span> webFeeds<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">WebFeedMO</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token attribute atrule">@Published</span> <span class="token keyword">private</span><span class="token punctuation">(</span><span class="token keyword">set</span><span class="token punctuation">)</span> <span class="token keyword">var</span> newArticles<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">ArticleMO</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment">// 最新文章</span>
+    <span class="token attribute atrule">@Published</span> <span class="token keyword">private</span><span class="token punctuation">(</span><span class="token keyword">set</span><span class="token punctuation">)</span> <span class="token keyword">var</span> favoriteArticles<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">ArticleMO</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment">// 收藏的文章</span>
+
+    <span class="token keyword">var</span> stack<span class="token punctuation">:</span> <span class="token class-name">NRCDStack</span>
+    
+    <span class="token keyword">init</span><span class="token punctuation">(</span>stack<span class="token punctuation">:</span> <span class="token class-name">NRCDStack</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token operator">...</span>
+        webFeeds <span class="token operator">=</span> fetchedResults<span class="token punctuation">.</span>fetchedObjects <span class="token operator">??</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        newArticles <span class="token operator">=</span> fetchedNewArticlesResults<span class="token punctuation">.</span>fetchedObjects <span class="token operator">??</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        favoriteArticles <span class="token operator">=</span> fetchFavoriteArticlesResults<span class="token punctuation">.</span>fetchedObjects <span class="token operator">??</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token comment">// 获取所有 feed 源</span>
+    <span class="token keyword">lazy</span> <span class="token keyword">var</span> fetchedResults<span class="token punctuation">:</span> <span class="token class-name">NSFetchedResultsController</span><span class="token operator">&lt;</span><span class="token class-name">WebFeedMO</span><span class="token operator">></span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">// 获取最新 article</span>
+    <span class="token keyword">lazy</span> <span class="token keyword">var</span> fetchedNewArticlesResults<span class="token punctuation">:</span> <span class="token class-name">NSFetchedResultsController</span><span class="token operator">&lt;</span><span class="token class-name">ArticleMO</span><span class="token operator">></span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">// 获取收集 article</span>
+    <span class="token keyword">lazy</span> <span class="token keyword">var</span> fetchFavoriteArticlesResults<span class="token punctuation">:</span> <span class="token class-name">NSFetchedResultsController</span><span class="token operator">&lt;</span><span class="token class-name">ArticleMO</span><span class="token operator">></span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// MARK: - NSFetchedResultsControllerDelegate</span>
+<span class="token comment">// 跟踪变化，在回调中处理。</span>
+<span class="token keyword">extension</span> <span class="token class-name">WebFeedController</span><span class="token punctuation">:</span> <span class="token class-name">NSFetchedResultsControllerDelegate</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">controllerDidChangeContent</span><span class="token punctuation">(</span><span class="token omit keyword">_</span> controller<span class="token punctuation">:</span> <span class="token class-name">NSFetchedResultsController</span><span class="token operator">&lt;</span><span class="token class-name">NSFetchRequestResult</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        webFeeds <span class="token operator">=</span> fetchedResults<span class="token punctuation">.</span>fetchedObjects <span class="token operator">??</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        newArticles <span class="token operator">=</span> fetchedNewArticlesResults<span class="token punctuation">.</span>fetchedObjects <span class="token operator">??</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        favoriteArticles <span class="token operator">=</span> fetchFavoriteArticlesResults<span class="token punctuation">.</span>fetchedObjects <span class="token operator">??</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// MARK: - 数据 CRUD 操作</span>
+<span class="token keyword">extension</span> <span class="token class-name">WebFeedController</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 更新全部 Feed</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">updateAllFeeds</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">async</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span>
+    
+    <span class="token comment">// MARK: - Feed 的操作</span>
+    <span class="token comment">// 添加 Feed</span>
+    <span class="token attribute atrule">@discardableResult</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">createFeed</span><span class="token punctuation">(</span>inputURL<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span> nameForDisplay<span class="token punctuation">:</span> <span class="token class-name">String</span> <span class="token operator">=</span> <span class="token string-literal"><span class="token string">""</span></span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">WebFeedMO</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 删除操作，删掉一个 Feed</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">deleteWebFeed</span><span class="token punctuation">(</span><span class="token omit keyword">_</span> webFeed<span class="token punctuation">:</span> <span class="token class-name">WebFeedMO</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        stack<span class="token punctuation">.</span><span class="token function">deleteWebFeed</span><span class="token punctuation">(</span>webFeed<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token comment">// 更新</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">updateFeedByModel</span><span class="token punctuation">(</span><span class="token keyword">for</span> webFeed<span class="token punctuation">:</span> <span class="token class-name">WebFeedMO</span><span class="token punctuation">,</span> model<span class="token punctuation">:</span> <span class="token class-name">FeedModel</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span>
+    
+    <span class="token comment">// MARK: - 文章的操作</span>
+    <span class="token comment">// 收藏的文章</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">fetchFavoriteArticles</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        favoriteArticles <span class="token operator">=</span> fetchFavoriteArticlesResults<span class="token punctuation">.</span>fetchedObjects <span class="token operator">??</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token comment">// 最新文章</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">fetchNewArticles</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        newArticles <span class="token operator">=</span> fetchedNewArticlesResults<span class="token punctuation">.</span>fetchedObjects <span class="token operator">??</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token comment">// 收藏</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">favoriteArticle</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        selectedArticle<span class="token operator">?</span><span class="token punctuation">.</span>favourite<span class="token punctuation">.</span><span class="token function">toggle</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        selectedArticle<span class="token operator">?</span><span class="token punctuation">.</span>dateModified <span class="token operator">=</span> <span class="token class-name">Date</span><span class="token punctuation">.</span>now
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token comment">// 清空所选 feed 下所有文章</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">deleteAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span>
+    
+    <span class="token comment">// 标记全部已读</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">markAllAsRead</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span>
+    
+    <span class="token comment">// 新增文章</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">createArticleByModel</span><span class="token punctuation">(</span><span class="token keyword">for</span> webFeed<span class="token punctuation">:</span> <span class="token class-name">WebFeedMO</span><span class="token punctuation">,</span> model<span class="token punctuation">:</span> <span class="token class-name">ArticleModel</span><span class="token punctuation">)</span> <span class="token keyword">async</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span>
+ <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>应用最终效果如下图：</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/swiftui-rss-reader/42.png" class="lozad post-image"src="/uploads/swiftui-rss-reader/42.png"></p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2023/04/24/swiftui-rss-reader/">http://ming1016.github.io/2023/04/24/swiftui-rss-reader/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2023/05/31/sharing-cs-in-elementary-school/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">Prev</div>
+        
+        <div class="nav-title">给孩子小学的家长讲堂做了一个计算机科普分享 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/" class="nav-link">
+      <div>
+        <div class="nav-label">Next</div>
+        
+        <div class="nav-title">参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
+
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>61</span>
+    <span>Posts</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>Categories</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>39</span>
+    <span>Tags</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>Categories</div>
+  <div class="categories-list">
+    
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">47</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-novel">
+        <div class="categories-list-item">
+          My-novel
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-painting">
+        <div class="categories-list-item">
+          My-painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>hot tags</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\WWDC" title="WWDC"><div class="tags-list-item">WWDC</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>Recent Posts</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-05-31</div>
+        <a href="/2023/05/31/sharing-cs-in-elementary-school/"><div class="recent-posts-item-content">给孩子小学的家长讲堂做了一个计算机科普分享</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-24</div>
+        <a href="/2023/04/24/swiftui-rss-reader/"><div class="recent-posts-item-content">使用 SwiftUI 开发 RSS 阅读器</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-10-24</div>
+        <a href="/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/"><div class="recent-posts-item-content">参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-07-08</div>
+        <a href="/2022/07/08/slides-of-use-llvm/"><div class="recent-posts-item-content">使用 LLVM 分享的幻灯片</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2014 -
+          
+          2023
+        </span>
+        <a href="/" class="footer-link">戴铭的博客 </a>
+      </div>
+    </div>
+
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">鄂ICP备17011999号 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=7011999 ">京公网安备 7011999号
+      </a>
+      <br />
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>
