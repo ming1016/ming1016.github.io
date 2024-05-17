@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-Hans" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
+      
+      <span class="navbar-logo-dsc">戴铭的博客</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">Home </a>
+    
+    <a href="/archives" class="navbar-menu-item">Archive </a>
+    
+    <a href="/tags" class="navbar-menu-item">Tags </a>
+    
+    <a href="/categories" class="navbar-menu-item">Categories </a>
+    
+    <a href="/about" class="navbar-menu-item">About </a>
+    
+    <a href="" class="navbar-menu-item">Friends </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/pamphlet-series-swiftdata/01.png" data-src="/uploads/pamphlet-series-swiftdata/01.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      小册子之如何使用 SwiftData 开发 SwiftUI 应用
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2024-05-17T16:17:12.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2024-05-18</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/App/" class="post-meta-link">App</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.4k words</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/SwiftUI/" class="post-meta-link">SwiftUI</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/SwiftData/" class="post-meta-link">SwiftData</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p>以下内容已整理到小册子中，小册子代码在 <a target="_blank" rel="noopener" href="https://github.com/ming1016/SwiftPamphletApp">Github</a> 上，可以在 macOS 应用商店安装<a target="_blank" rel="noopener" href="https://apps.apple.com/cn/app/%E6%88%B4%E9%93%AD%E7%9A%84%E5%BC%80%E5%8F%91%E5%B0%8F%E5%86%8C%E5%AD%90/id1609702529?mt=12">“戴铭的开发小册子”</a>应用查看。</p>
+<p>小册子代码里有大量 SwiftData 实际使用实践的代码。</p>
+<p>在 Swift 中，有许多库可以用于处理数据，包括但不限于 SwiftData、CoreData、Realm、SQLite.swift 等。这些库各有优势。</p>
+<p>但，如果使用 SwiftData，你可以在 Swift 中更加方便地处理数据。SwiftData 是 Apple 在 WWDC23 上推出的一个新的数据持久化框架，它是 CoreData 的替代品，提供了更简单、更易用的 API。</p>
+<h2 id="创建-Model模型"><a href="#创建-Model模型" class="headerlink" title="创建@Model模型"></a>创建@Model模型</h2><p>先说说如何创建 SwiftData 模型。</p>
+<h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><p>用 <code>@Model</code> 宏装饰类</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token attribute atrule">@Model</span>
+<span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">Article</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> title<span class="token punctuation">:</span> <span class="token class-name">String</span>
+    <span class="token keyword">let</span> author<span class="token punctuation">:</span> <span class="token class-name">String</span>
+    <span class="token keyword">let</span> content<span class="token punctuation">:</span> <span class="token class-name">String</span>
+    <span class="token keyword">let</span> publishedDate<span class="token punctuation">:</span> <span class="token class-name">Date</span>
+    
+    <span class="token keyword">init</span><span class="token punctuation">(</span>title<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span> author<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span> content<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span> publishedDate<span class="token punctuation">:</span> <span class="token class-name">Date</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">self</span><span class="token punctuation">.</span>title <span class="token operator">=</span> title
+        <span class="token keyword">self</span><span class="token punctuation">.</span>author <span class="token operator">=</span> author
+        <span class="token keyword">self</span><span class="token punctuation">.</span>content <span class="token operator">=</span> content
+        <span class="token keyword">self</span><span class="token punctuation">.</span>publishedDate <span class="token operator">=</span> publishedDate
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>以上代码创建了一个 Article 模型，包含了标题、作者、内容和发布日期。</p>
+<p>以下数据类型默认支持：</p>
+<ul>
+<li>基础类型：Int, Int8, Int16, Int32, Int64, UInt, UInt8, UInt16, UInt32, UInt64, Float, Double, Bool, String, Date, Data 等</li>
+<li>复杂的类型：Array, Dictionary, Set, Optional, Enum, Struct, Codable 等</li>
+<li>模型关系：一对一、一对多、多对多</li>
+</ul>
+<p>默认数据库路径： <code>Data/Library/Application Support/default.store</code></p>
+<h3 id="Attribute"><a href="#Attribute" class="headerlink" title="@Attribute"></a><code>@Attribute</code></h3><p>接下来说说如何使用 <code>@Attribute</code> 宏。</p>
+<p>一些常用的：</p>
+<ul>
+<li>spotlight：使其能出现在 Spotlight 搜索结果里</li>
+<li>unique：值是唯一的</li>
+<li>externalStorage：值存储为二进制数据</li>
+<li>transient：值不存储</li>
+<li>encrypt：加密存储</li>
+</ul>
+<p>使用方法</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token attribute atrule">@Attribute</span><span class="token punctuation">(</span><span class="token punctuation">.</span>externalStorage<span class="token punctuation">)</span> <span class="token keyword">var</span> imgData<span class="token punctuation">:</span> <span class="token class-name">Data</span><span class="token operator">?</span> <span class="token operator">=</span> <span class="token nil constant">nil</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>二进制会将其存储为单独的文件，然后在数据库中引用文件名。文件会存到  <code>Data/Library/Application Support/.default_SUPPORT/_EXTERNAL_DATA</code> 目录下。</p>
+<h3 id="Transient-不存"><a href="#Transient-不存" class="headerlink" title="@Transient 不存"></a><code>@Transient</code> 不存</h3><p>如果有的属性不希望进行存储，可以使用 <code>@Transient</code></p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token attribute atrule">@Model</span>
+<span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">Article</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> title<span class="token punctuation">:</span> <span class="token class-name">String</span>
+    <span class="token keyword">let</span> author<span class="token punctuation">:</span> <span class="token class-name">String</span>
+    <span class="token attribute atrule">@Transient</span> <span class="token keyword">var</span> content<span class="token punctuation">:</span> <span class="token class-name">String</span>
+    <span class="token operator">...</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="transformable"><a href="#transformable" class="headerlink" title="transformable"></a>transformable</h3><p>SwiftData 除了能够存储字符串和整数这样基本类型，还可以存储更复杂的自定义类型。要存储自定义类型，可用 transformable。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token attribute atrule">@Model</span>
+<span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">Article</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> title<span class="token punctuation">:</span> <span class="token class-name">String</span>
+    <span class="token keyword">let</span> author<span class="token punctuation">:</span> <span class="token class-name">String</span>
+    <span class="token keyword">let</span> content<span class="token punctuation">:</span> <span class="token class-name">String</span>
+    <span class="token keyword">let</span> publishedDate<span class="token punctuation">:</span> <span class="token class-name">Date</span>
+    <span class="token attribute atrule">@Attribute</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token function">transformable</span><span class="token punctuation">(</span>by<span class="token punctuation">:</span> <span class="token class-name">UIColorValueTransformer</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">var</span> bgColor<span class="token punctuation">:</span> <span class="token class-name">UIColor</span>
+    <span class="token operator">...</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>UIColorValueTransformer 类的实现</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">class</span> <span class="token class-name">UIColorValueTransformer</span><span class="token punctuation">:</span> <span class="token class-name">ValueTransformer</span> <span class="token punctuation">&#123;</span>
+    
+    <span class="token comment">// return data</span>
+    <span class="token keyword">override</span> <span class="token keyword">func</span> <span class="token function-definition function">transformedValue</span><span class="token punctuation">(</span><span class="token omit keyword">_</span> value<span class="token punctuation">:</span> <span class="token keyword">Any</span><span class="token operator">?</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token keyword">Any</span><span class="token operator">?</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">guard</span> <span class="token keyword">let</span> color <span class="token operator">=</span> value <span class="token keyword">as</span><span class="token operator">?</span> <span class="token class-name">UIColor</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token nil constant">nil</span> <span class="token punctuation">&#125;</span>
+        <span class="token keyword">do</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">let</span> data <span class="token operator">=</span> <span class="token keyword">try</span> <span class="token class-name">NSKeyedArchiver</span><span class="token punctuation">.</span><span class="token function">archivedData</span><span class="token punctuation">(</span>withRootObject<span class="token punctuation">:</span> color<span class="token punctuation">,</span> requiringSecureCoding<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> data
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token nil constant">nil</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token comment">// return UIColor</span>
+    <span class="token keyword">override</span> <span class="token keyword">func</span> <span class="token function-definition function">reverseTransformedValue</span><span class="token punctuation">(</span><span class="token omit keyword">_</span> value<span class="token punctuation">:</span> <span class="token keyword">Any</span><span class="token operator">?</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token keyword">Any</span><span class="token operator">?</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">guard</span> <span class="token keyword">let</span> data <span class="token operator">=</span> value <span class="token keyword">as</span><span class="token operator">?</span> <span class="token class-name">Data</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token nil constant">nil</span> <span class="token punctuation">&#125;</span>
+        
+        <span class="token keyword">do</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">let</span> color <span class="token operator">=</span> <span class="token keyword">try</span> <span class="token class-name">NSKeyedUnarchiver</span><span class="token punctuation">.</span><span class="token function">unarchivedObject</span><span class="token punctuation">(</span>ofClass<span class="token punctuation">:</span> <span class="token class-name">UIColor</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span> from<span class="token punctuation">:</span> data<span class="token punctuation">)</span>
+            <span class="token keyword">return</span> color
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token nil constant">nil</span> 
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注册</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">SwiftPamphletAppApp</span><span class="token punctuation">:</span> <span class="token class-name">App</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">ValueTransformer</span><span class="token punctuation">.</span><span class="token function">setValueTransformer</span><span class="token punctuation">(</span><span class="token class-name">UIColorValueTransformer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> forName<span class="token punctuation">:</span> <span class="token class-name">NSValueTransformerName</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"UIColorValueTransformer"</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">Scene</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">WindowGroup</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">ContentView</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">modelContainer</span><span class="token punctuation">(</span><span class="token keyword">for</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">Article</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="SwiftData-模型关系"><a href="#SwiftData-模型关系" class="headerlink" title="SwiftData-模型关系"></a>SwiftData-模型关系</h2><p>使用 &#96;&#96;@Relationship&#96; 添加关系，但是不加这个宏也可以，SwiftData 会自动添加模型之间的关系。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token attribute atrule">@Model</span>
+<span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">Author</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> name<span class="token punctuation">:</span> <span class="token class-name">String</span>
+
+    <span class="token attribute atrule">@Relationship</span><span class="token punctuation">(</span>deleteRule<span class="token punctuation">:</span> <span class="token punctuation">.</span>cascade<span class="token punctuation">,</span> inverse<span class="token punctuation">:</span> <span class="token punctuation">\</span><span class="token class-name">Brew</span><span class="token punctuation">.</span>brewer<span class="token punctuation">)</span>
+    <span class="token keyword">var</span> articles<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">Article</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token attribute atrule">@Model</span>
+<span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">Article</span> <span class="token punctuation">&#123;</span>
+    <span class="token operator">...</span>
+    <span class="token keyword">var</span> author<span class="token punctuation">:</span> <span class="token class-name">Author</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>默认情况 deleteRule 是 <code>.nullify</code>，这个删除后只会删除引用关系。<code>.cascade</code> 会在删除用户后删除其所有文章。</p>
+<p>SwiftData 可以添加一对一，一对多，多对多的关系。</p>
+<p>限制关系表数量</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token attribute atrule">@Relationship</span><span class="token punctuation">(</span>maximumModelCount<span class="token punctuation">:</span> <span class="token number">5</span><span class="token punctuation">)</span>
+    <span class="token keyword">var</span> articles<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">Article</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+<h2 id="容器配置modelContainer"><a href="#容器配置modelContainer" class="headerlink" title="容器配置modelContainer"></a>容器配置modelContainer</h2><h3 id="多模型"><a href="#多模型" class="headerlink" title="多模型"></a>多模型</h3><p>配置方法</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token attribute atrule">@main</span>
+<span class="token keyword">struct</span> <span class="token class-name">SomeApp</span><span class="token punctuation">:</span> <span class="token class-name">App</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">Scene</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">WindowGroup</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">ContentView</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">modelContainer</span><span class="token punctuation">(</span><span class="token keyword">for</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">Article</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span> <span class="token class-name">Author</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>有关系的两个模型，只需要加父模型，SwiftData 会推断出子模型。</p>
+<h3 id="数据存内存"><a href="#数据存内存" class="headerlink" title="数据存内存"></a>数据存内存</h3><pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">let</span> configuration <span class="token operator">=</span> <span class="token class-name">ModelConfiguration</span><span class="token punctuation">(</span>inMemory<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+<span class="token keyword">let</span> container <span class="token operator">=</span> <span class="token keyword">try</span> <span class="token class-name">ModelContainer</span><span class="token punctuation">(</span><span class="token keyword">for</span><span class="token punctuation">:</span> schema<span class="token punctuation">,</span> configurations<span class="token punctuation">:</span> <span class="token punctuation">[</span>configuration<span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="数据只读"><a href="#数据只读" class="headerlink" title="数据只读"></a>数据只读</h3><pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">let</span> config <span class="token operator">=</span> <span class="token class-name">ModelConfiguration</span><span class="token punctuation">(</span>allowsSave<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="自定义存储文件和位置"><a href="#自定义存储文件和位置" class="headerlink" title="自定义存储文件和位置"></a>自定义存储文件和位置</h3><p>如果要指定数据库存储的位置，可以按下面写法：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token attribute atrule">@main</span>
+<span class="token keyword">struct</span> <span class="token class-name">SomeApp</span><span class="token punctuation">:</span> <span class="token class-name">App</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> container<span class="token punctuation">:</span> <span class="token class-name">ModelContainer</span>
+
+    <span class="token keyword">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">do</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">let</span> storeURL <span class="token operator">=</span> <span class="token constant">URL</span><span class="token punctuation">.</span>documentsDirectory<span class="token punctuation">.</span><span class="token function">appending</span><span class="token punctuation">(</span>path<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"database.sqlite"</span></span><span class="token punctuation">)</span>
+            <span class="token keyword">let</span> config <span class="token operator">=</span> <span class="token class-name">ModelConfiguration</span><span class="token punctuation">(</span>url<span class="token punctuation">:</span> storeURL<span class="token punctuation">)</span>
+            container <span class="token operator">=</span> <span class="token keyword">try</span> <span class="token class-name">ModelContainer</span><span class="token punctuation">(</span><span class="token keyword">for</span><span class="token punctuation">:</span> <span class="token class-name">Article</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span> configurations<span class="token punctuation">:</span> config<span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">fatalError</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Failed"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">Scene</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">WindowGroup</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">ContentView</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">modelContainer</span><span class="token punctuation">(</span>container<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="iCloud-支持"><a href="#iCloud-支持" class="headerlink" title="iCloud 支持"></a>iCloud 支持</h3><p>如果要添加 iCloud 支持，需要先确定模型满足以下条件：</p>
+<ul>
+<li>没有唯一约束</li>
+<li>关系是可选的</li>
+<li>有所值有默认值</li>
+</ul>
+<p>iCloud 支持操作步骤：</p>
+<ul>
+<li>进入 Signing &amp; Capabilities 中，在 Capability 里选择 iCloud</li>
+<li>选中 CloudKit 旁边的框</li>
+<li>设置 bundle identifier</li>
+<li>再按 Capability，选择 Background Modes</li>
+<li>选择 Remote Notifications</li>
+</ul>
+<h3 id="指定部分表同步到-iCloud"><a href="#指定部分表同步到-iCloud" class="headerlink" title="指定部分表同步到 iCloud"></a>指定部分表同步到 iCloud</h3><p>使用多个 ModelConfiguration 对象来配置，这样可以指定哪个配置成同步到 iCloud，哪些不同步。</p>
+<h3 id="添加多个配置"><a href="#添加多个配置" class="headerlink" title="添加多个配置"></a>添加多个配置</h3><pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token attribute atrule">@main</span>
+<span class="token keyword">struct</span> <span class="token class-name">SomeApp</span><span class="token punctuation">:</span> <span class="token class-name">App</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> container<span class="token punctuation">:</span> <span class="token class-name">ModelContainer</span>
+    <span class="token keyword">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">do</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">let</span> c1 <span class="token operator">=</span> <span class="token class-name">ModelConfiguration</span><span class="token punctuation">(</span><span class="token keyword">for</span><span class="token punctuation">:</span> <span class="token class-name">Article</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">)</span>
+            <span class="token keyword">let</span> c2 <span class="token operator">=</span> <span class="token class-name">ModelConfiguration</span><span class="token punctuation">(</span><span class="token keyword">for</span><span class="token punctuation">:</span> <span class="token class-name">Author</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span> isStoredInMemoryOnly<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+            container <span class="token operator">=</span> <span class="token keyword">try</span> <span class="token class-name">ModelContainer</span><span class="token punctuation">(</span><span class="token keyword">for</span><span class="token punctuation">:</span> <span class="token class-name">Article</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span> <span class="token class-name">Author</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span> configurations<span class="token punctuation">:</span> c1<span class="token punctuation">,</span> c2<span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">fatalError</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Failed"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">Scene</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">WindowGroup</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">ContentView</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">modelContainer</span><span class="token punctuation">(</span>container<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="撤销和重做"><a href="#撤销和重做" class="headerlink" title="撤销和重做"></a>撤销和重做</h3><p>创建容器时进行指定</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token punctuation">.</span><span class="token function">modelContainer</span><span class="token punctuation">(</span><span class="token keyword">for</span><span class="token punctuation">:</span> <span class="token class-name">Article</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span> isUndoEnabled<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这样 modelContext 就可以调用撤销和重做函数。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">SomeView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@Environment</span><span class="token punctuation">(</span><span class="token punctuation">\</span><span class="token punctuation">.</span>modelContext<span class="token punctuation">)</span> <span class="token keyword">private</span> <span class="token keyword">var</span> context
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Button</span><span class="token punctuation">(</span>action<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+            context<span class="token punctuation">.</span>undoManager<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">undo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> label<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"撤销"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="context"><a href="#context" class="headerlink" title="context"></a>context</h3><p>View 之外的地方，可以通过 ModelContainer 的 context 属性来获取 modelContext。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">let</span> context <span class="token operator">=</span> container<span class="token punctuation">.</span>mainContext
+<span class="token keyword">let</span> context <span class="token operator">=</span> <span class="token class-name">ModelContext</span><span class="token punctuation">(</span>container<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="预先导入数据"><a href="#预先导入数据" class="headerlink" title="预先导入数据"></a>预先导入数据</h3><p>方法如下：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token punctuation">.</span><span class="token function">modelContainer</span><span class="token punctuation">(</span><span class="token keyword">for</span><span class="token punctuation">:</span> <span class="token class-name">Article</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> result <span class="token keyword">in</span>
+    <span class="token keyword">do</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">let</span> container <span class="token operator">=</span> <span class="token keyword">try</span> result<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token comment">// 先检查有没数据</span>
+        <span class="token keyword">let</span> descriptor <span class="token operator">=</span> <span class="token class-name">FetchDescriptor</span><span class="token operator">&lt;</span><span class="token class-name">Article</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">let</span> existingArticles <span class="token operator">=</span> <span class="token keyword">try</span> container<span class="token punctuation">.</span>mainContext<span class="token punctuation">.</span><span class="token function">fetchCount</span><span class="token punctuation">(</span>descriptor<span class="token punctuation">)</span>
+        <span class="token keyword">guard</span> existingArticles <span class="token operator">==</span> <span class="token number">0</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token punctuation">&#125;</span>
+
+        <span class="token comment">// 读取 bundle 里的文件</span>
+        <span class="token keyword">guard</span> <span class="token keyword">let</span> url <span class="token operator">=</span> <span class="token class-name">Bundle</span><span class="token punctuation">.</span>main<span class="token punctuation">.</span><span class="token function">url</span><span class="token punctuation">(</span>forResource<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"articles"</span></span><span class="token punctuation">,</span> withExtension<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"json"</span></span><span class="token punctuation">)</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">fatalError</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Failed"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token keyword">let</span> data <span class="token operator">=</span> <span class="token keyword">try</span> <span class="token class-name">Data</span><span class="token punctuation">(</span>contentsOf<span class="token punctuation">:</span> url<span class="token punctuation">)</span>
+        <span class="token keyword">let</span> articles <span class="token operator">=</span> <span class="token keyword">try</span> <span class="token class-name">JSONDecoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">decode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token class-name">Article</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span> from<span class="token punctuation">:</span> data<span class="token punctuation">)</span>
+
+        <span class="token keyword">for</span> article <span class="token keyword">in</span> articles <span class="token punctuation">&#123;</span>
+            container<span class="token punctuation">.</span>mainContext<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>article<span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Failed"</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="增删modelContext"><a href="#增删modelContext" class="headerlink" title="增删modelContext"></a>增删modelContext</h2><h3 id="添加保存数据"><a href="#添加保存数据" class="headerlink" title="添加保存数据"></a>添加保存数据</h3><pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">SomeView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+   <span class="token attribute atrule">@Environment</span><span class="token punctuation">(</span><span class="token punctuation">\</span><span class="token punctuation">.</span>modelContext<span class="token punctuation">)</span> <span class="token keyword">var</span> context
+   <span class="token operator">...</span>
+
+   <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+         <span class="token operator">...</span>
+         <span class="token class-name">Button</span><span class="token punctuation">(</span>action<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+             <span class="token keyword">self</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+         <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> label<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+             <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"添加"</span></span><span class="token punctuation">)</span>
+         <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+   <span class="token punctuation">&#125;</span>
+
+   <span class="token keyword">func</span> <span class="token function-definition function">add</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token operator">...</span>
+      context<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>article<span class="token punctuation">)</span>
+   <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>默认不用使用 <code>context.save()</code>，SwiftData 会自动进行保存，如果不想自动保存，可以在容器中设置</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">Scene</span> <span class="token punctuation">&#123;</span>
+   <span class="token class-name">WindowGroup</span> <span class="token punctuation">&#123;</span>
+      <span class="token class-name">ContentView</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+   <span class="token punctuation">&#125;</span>
+   <span class="token punctuation">.</span><span class="token function">modelContainer</span><span class="token punctuation">(</span><span class="token keyword">for</span><span class="token punctuation">:</span> <span class="token class-name">Article</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span> isAutosaveEnabled<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">)</span>       
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="编辑和删除数据"><a href="#编辑和删除数据" class="headerlink" title="编辑和删除数据"></a>编辑和删除数据</h3><p>编辑数据使用 <code>@Bindable</code>。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">SomeView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@Bindable</span> <span class="token keyword">var</span> article<span class="token punctuation">:</span> <span class="token class-name">Article</span>
+    <span class="token attribute atrule">@Environment</span><span class="token punctuation">(</span><span class="token punctuation">\</span><span class="token punctuation">.</span>modelContext<span class="token punctuation">)</span> <span class="token keyword">private</span> <span class="token keyword">var</span> modelContext
+    <span class="token operator">...</span>
+    
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Form</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">TextField</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"文章标题"</span></span><span class="token punctuation">,</span> text<span class="token punctuation">:</span> $article<span class="token punctuation">.</span>title<span class="token punctuation">)</span>
+            <span class="token operator">...</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span>toolbar <span class="token punctuation">&#123;</span>
+            <span class="token class-name">ToolbarItem</span><span class="token punctuation">(</span>placement<span class="token punctuation">:</span> <span class="token punctuation">.</span>destructiveAction<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">Button</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"删除"</span></span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    modelContext<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span>article<span class="token punctuation">)</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token operator">...</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="SwiftData-检索"><a href="#SwiftData-检索" class="headerlink" title="SwiftData-检索"></a>SwiftData-检索</h2><h3 id="Query"><a href="#Query" class="headerlink" title="@Query"></a><code>@Query</code></h3><p>使用 <code>@Query</code> 会从数据库中获取数据。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token attribute atrule">@Query</span> <span class="token keyword">private</span> <span class="token keyword">var</span> articles<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">Article</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><code>@Query</code> 还支持 filter、sort、order 和 animation 等参数。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token attribute atrule">@Query</span><span class="token punctuation">(</span>sort<span class="token punctuation">:</span> <span class="token punctuation">\</span><span class="token class-name">Article</span><span class="token punctuation">.</span>title<span class="token punctuation">,</span> order<span class="token punctuation">:</span> <span class="token punctuation">.</span>forward<span class="token punctuation">)</span> <span class="token keyword">private</span> <span class="token keyword">var</span> articles<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">Article</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>sort 可支持多个 SortDescriptor，SwiftData 会按顺序处理。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token attribute atrule">@Query</span><span class="token punctuation">(</span>sort<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">SortDescriptor</span><span class="token punctuation">(</span><span class="token punctuation">\</span><span class="token class-name">Article</span><span class="token punctuation">.</span>isArchived<span class="token punctuation">,</span> order<span class="token punctuation">:</span> <span class="token punctuation">.</span>forward<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token class-name">SortDescriptor</span><span class="token punctuation">(</span><span class="token punctuation">\</span><span class="token class-name">Article</span><span class="token punctuation">.</span>updateDate<span class="token punctuation">,</span> order<span class="token punctuation">:</span> <span class="token punctuation">.</span>reverse<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">var</span> articles<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">Article</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="Predicate"><a href="#Predicate" class="headerlink" title="Predicate"></a>Predicate</h3><p>filter 使用的是 <code>#Predicate</code> </p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">static</span> <span class="token keyword">var</span> now<span class="token punctuation">:</span> <span class="token class-name">Date</span> <span class="token punctuation">&#123;</span> <span class="token class-name">Date</span><span class="token punctuation">.</span>now <span class="token punctuation">&#125;</span>
+
+<span class="token attribute atrule">@Query</span><span class="token punctuation">(</span>filter<span class="token punctuation">:</span> <span class="token other-directive property">#Predicate</span><span class="token operator">&lt;</span><span class="token class-name">Article</span><span class="token operator">></span> <span class="token punctuation">&#123;</span> article <span class="token keyword">in</span>
+    article<span class="token punctuation">.</span>releaseDate <span class="token operator">></span> now
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token keyword">var</span> draftArticles<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">Article</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>Predicate 支持的内置方法主要有 <code>contains</code>、<code>allSatisfy</code>、<code>flatMap</code>、<code>filter</code>、<code>subscript</code>、<code>starts</code>、<code>min</code>、<code>max</code>、<code>localizedStandardContains</code>、<code>localizedCompare</code>、<code>caseInsensitiveCompare</code> 等。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token attribute atrule">@Query</span><span class="token punctuation">(</span>filter<span class="token punctuation">:</span> <span class="token other-directive property">#Predicate</span><span class="token operator">&lt;</span><span class="token class-name">Article</span><span class="token operator">></span> <span class="token punctuation">&#123;</span> article <span class="token keyword">in</span>
+    article<span class="token punctuation">.</span>title<span class="token punctuation">.</span><span class="token function">starts</span><span class="token punctuation">(</span>with<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"苹果发布会"</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token keyword">var</span> articles<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">Article</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>需要注意的是 <code>.isEmpty</code>  不能使用  <code>article.title.isEmpty == false</code> ，否则会崩溃。</p>
+<h3 id="FetchDescriptor"><a href="#FetchDescriptor" class="headerlink" title="FetchDescriptor"></a>FetchDescriptor</h3><p>FetchDescriptor 可以在模型中查找数据，而不必在视图层做。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token attribute atrule">@Model</span>
+<span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">Article</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> title<span class="token punctuation">:</span> <span class="token class-name">String</span>
+    <span class="token operator">...</span>
+    <span class="token keyword">static</span> <span class="token keyword">var</span> all<span class="token punctuation">:</span> <span class="token class-name">FetchDescriptor</span><span class="token operator">&lt;</span><span class="token class-name">Article</span><span class="token operator">></span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">FetchDescriptor</span><span class="token punctuation">(</span>sortBy<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">SortDescriptor</span><span class="token punctuation">(</span><span class="token punctuation">\</span><span class="token class-name">Article</span><span class="token punctuation">.</span>updateDate<span class="token punctuation">,</span> order<span class="token punctuation">:</span> <span class="token punctuation">.</span>reverse<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">SomeView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>   
+    <span class="token attribute atrule">@Query</span><span class="token punctuation">(</span><span class="token class-name">Article</span><span class="token punctuation">.</span>all<span class="token punctuation">)</span> <span class="token keyword">private</span> <span class="token keyword">var</span> articles<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">Article</span><span class="token punctuation">]</span>
+    <span class="token operator">...</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="获取数量而不加载"><a href="#获取数量而不加载" class="headerlink" title="获取数量而不加载"></a>获取数量而不加载</h3><p>使用 <code>fetchCount()</code> 方法，可完成整个计数，且很快，内存占用少。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">let</span> descriptor <span class="token operator">=</span> <span class="token class-name">FetchDescriptor</span><span class="token operator">&lt;</span><span class="token class-name">Article</span><span class="token operator">></span><span class="token punctuation">(</span>predicate<span class="token punctuation">:</span> <span class="token other-directive property">#Predicate</span> <span class="token punctuation">&#123;</span> <span class="token short-argument">$0</span><span class="token punctuation">.</span>words <span class="token operator">></span> <span class="token number">50</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">try</span><span class="token operator">?</span> modelContext<span class="token punctuation">.</span><span class="token function">fetchCount</span><span class="token punctuation">(</span>descriptor<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">??</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="fetchLimit-限制获取数量"><a href="#fetchLimit-限制获取数量" class="headerlink" title="fetchLimit 限制获取数量"></a>fetchLimit 限制获取数量</h3><pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">var</span> descriptor <span class="token operator">=</span> <span class="token class-name">FetchDescriptor</span><span class="token operator">&lt;</span><span class="token class-name">Article</span><span class="token operator">></span><span class="token punctuation">(</span>
+  predicate<span class="token punctuation">:</span> <span class="token other-directive property">#Predicate</span> <span class="token punctuation">&#123;</span> <span class="token short-argument">$0</span><span class="token punctuation">.</span>read <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  sortBy<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">SortDescriptor</span><span class="token punctuation">(</span><span class="token punctuation">\</span><span class="token class-name">Article</span><span class="token punctuation">.</span>updateDate<span class="token punctuation">,</span>
+           order<span class="token punctuation">:</span> <span class="token punctuation">.</span>reverse<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+descriptor<span class="token punctuation">.</span>fetchLimit <span class="token operator">=</span> <span class="token number">30</span>
+<span class="token keyword">let</span> articles <span class="token operator">=</span> <span class="token keyword">try</span> context<span class="token punctuation">.</span><span class="token function">fetch</span><span class="token punctuation">(</span>descriptor<span class="token punctuation">)</span>
+
+<span class="token comment">// 翻页</span>
+<span class="token keyword">let</span> pSize <span class="token operator">=</span> <span class="token number">30</span>
+<span class="token keyword">let</span> pNumber <span class="token operator">=</span> <span class="token number">1</span>
+<span class="token keyword">var</span> fetchDescriptor <span class="token operator">=</span> <span class="token class-name">FetchDescriptor</span><span class="token operator">&lt;</span><span class="token class-name">Article</span><span class="token operator">></span><span class="token punctuation">(</span>sortBy<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">SortDescriptor</span><span class="token punctuation">(</span><span class="token punctuation">\</span><span class="token class-name">Article</span><span class="token punctuation">.</span>updateDate<span class="token punctuation">,</span> order<span class="token punctuation">:</span> <span class="token punctuation">.</span>reverse<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+fetchDescriptor<span class="token punctuation">.</span>fetchOffset <span class="token operator">=</span> pNumber <span class="token operator">*</span> pSize
+fetchDescriptor<span class="token punctuation">.</span>fetchLimit <span class="token operator">=</span> pSize<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="限制获取的属性"><a href="#限制获取的属性" class="headerlink" title="限制获取的属性"></a>限制获取的属性</h3><p>只请求要用的属性</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">var</span> fetchDescriptor <span class="token operator">=</span> <span class="token class-name">FetchDescriptor</span><span class="token operator">&lt;</span><span class="token class-name">Article</span><span class="token operator">></span><span class="token punctuation">(</span>sortBy<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">SortDescriptor</span><span class="token punctuation">(</span><span class="token punctuation">\</span><span class="token punctuation">.</span>updateDate<span class="token punctuation">,</span> order<span class="token punctuation">:</span> <span class="token punctuation">.</span>reverse<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+fetchDescriptor<span class="token punctuation">.</span>propertiesToFetch <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">\</span><span class="token punctuation">.</span>title<span class="token punctuation">,</span> <span class="token punctuation">\</span><span class="token punctuation">.</span>updateDate<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="SwiftData-处理大量数据"><a href="#SwiftData-处理大量数据" class="headerlink" title="SwiftData-处理大量数据"></a>SwiftData-处理大量数据</h2><p>SwiftData 模型上下文有个方法叫 <code>enumerate()</code>，可以高效遍历大量数据。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">let</span> descriptor <span class="token operator">=</span> <span class="token class-name">FetchDescriptor</span><span class="token operator">&lt;</span><span class="token class-name">Article</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token operator">...</span>
+
+<span class="token keyword">do</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">try</span> modelContext<span class="token punctuation">.</span><span class="token function">enumerate</span><span class="token punctuation">(</span>descriptor<span class="token punctuation">,</span> batchSize<span class="token punctuation">:</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> article <span class="token keyword">in</span>
+        <span class="token operator">...</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Failed."</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>其中 batchSize 参数是调整批量处理的数量，也就是一次加载多少对象。因此可以通过这个值来权衡内存和IO数量。这个值默认是 5000。</p>
+<h2 id="SwiftData多线程"><a href="#SwiftData多线程" class="headerlink" title="SwiftData多线程"></a>SwiftData多线程</h2><p>创建一个 Actor，然后 SwiftData 上下文在其中执行操作。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token attribute atrule">@ModelActor</span>
+<span class="token keyword">actor</span> <span class="token class-name">DataHandler</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+<span class="token keyword">extension</span> <span class="token class-name">DataHandler</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">addInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token operator">-></span> <span class="token class-name">IOInfo</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">let</span> info <span class="token operator">=</span> <span class="token class-name">IOInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        modelContext<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>info<span class="token punctuation">)</span>
+        <span class="token keyword">try</span> modelContext<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> info
+    <span class="token punctuation">&#125;</span>
+    <span class="token operator">...</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>使用</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token class-name">Task</span><span class="token punctuation">.</span>detached <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> handler <span class="token operator">=</span> <span class="token class-name">DataHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">let</span> item <span class="token operator">=</span> <span class="token keyword">try</span> <span class="token keyword">await</span> handler<span class="token punctuation">.</span><span class="token function">addInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>   
+    <span class="token operator">...</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="SwiftData-版本迁移"><a href="#SwiftData-版本迁移" class="headerlink" title="SwiftData-版本迁移"></a>SwiftData-版本迁移</h2><p>以下的小改动 SwiftData 会自动执行轻量迁移：</p>
+<ul>
+<li>增加模型</li>
+<li>增加有默认值的新属性</li>
+<li>重命名属性</li>
+<li>删除属性</li>
+<li>增加或删除 <code>.externalStorage</code> 或 <code>.allowsCloudEncryption</code> 属性。</li>
+<li>增加所有值都是唯一属性为 <code>.unique</code></li>
+<li>调整关系的删除规则</li>
+</ul>
+<p>其他情况需要用到版本迁移，版本迁移步骤如下：</p>
+<ul>
+<li>用 VersionedSchema 创建 SwiftData 模型的版本</li>
+<li>用 SchemaMigrationPlan 对创建的版本进行排序</li>
+<li>为每个迁移定义一个迁移阶段</li>
+</ul>
+<p>设置版本</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">enum</span> <span class="token class-name">ArticleV1Schema</span><span class="token punctuation">:</span> <span class="token class-name">VersionedSchema</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">static</span> <span class="token keyword">var</span> versionIdentifier<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token operator">?</span> <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"v1"</span></span>
+    <span class="token keyword">static</span> <span class="token keyword">var</span> models<span class="token punctuation">:</span> <span class="token punctuation">[</span>any <span class="token class-name">PersistentModel</span><span class="token punctuation">.</span><span class="token keyword">Type</span><span class="token punctuation">]</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">[</span><span class="token class-name">Article</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">]</span> <span class="token punctuation">&#125;</span>
+
+    <span class="token attribute atrule">@Model</span>
+    <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">Article</span> <span class="token punctuation">&#123;</span>
+        <span class="token operator">...</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>SchemaMigrationPlan 轻量迁移</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">enum</span> <span class="token class-name">ArticleMigrationPlan</span><span class="token punctuation">:</span> <span class="token class-name">SchemaMigrationPlan</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">static</span> <span class="token keyword">var</span> schemas<span class="token punctuation">:</span> <span class="token punctuation">[</span>any <span class="token class-name">VersionedSchema</span><span class="token punctuation">.</span><span class="token keyword">Type</span><span class="token punctuation">]</span> <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">[</span><span class="token class-name">ArticleV1Schema</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span> <span class="token class-name">ArticleV2Schema</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">static</span> <span class="token keyword">var</span> stages<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">MigrationStage</span><span class="token punctuation">]</span> <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">[</span>migrateV1toV2<span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">static</span> <span class="token keyword">let</span> migrateV1toV2 <span class="token operator">=</span> <span class="token class-name">MigrationStage</span><span class="token punctuation">.</span><span class="token function">lightweight</span><span class="token punctuation">(</span>
+        fromVersion<span class="token punctuation">:</span> <span class="token class-name">ArticleV1Schema</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span>
+        toVersion<span class="token punctuation">:</span> <span class="token class-name">ArticleV2Schema</span><span class="token punctuation">.</span><span class="token keyword">self</span>
+    <span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>自定义迁移</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">static</span> <span class="token keyword">let</span> migrateV1toV2 <span class="token operator">=</span> <span class="token class-name">MigrationStage</span><span class="token punctuation">.</span><span class="token function">custom</span><span class="token punctuation">(</span>
+    fromVersion<span class="token punctuation">:</span> <span class="token class-name">ArticleV1Schema</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span>
+    toVersion<span class="token punctuation">:</span> <span class="token class-name">ArticleV2Schema</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span>
+    willMigrate<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> context <span class="token keyword">in</span>
+        <span class="token comment">// 合并前的处理</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    didMigrate<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> context <span class="token keyword">in</span>
+        <span class="token comment">// 合并后的处理</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="SwiftData-调试"><a href="#SwiftData-调试" class="headerlink" title="SwiftData-调试"></a>SwiftData-调试</h2><p>CoreData 的调试方式依然适用于 SwiftData。</p>
+<p>你可以设置启动参数来让 CoreData 打印出执行的 SQL 语句。在你的项目中，选择 “Product” -&gt; “Scheme” -&gt; “Edit Scheme”，然后在 “Arguments” 标签下的 “Arguments Passed On Launch” 中添加 -com.apple.CoreData.SQLDebug 1。这样，每当 CoreData 执行 SQL 语句时，都会在控制台中打印出来。</p>
+<p>使用 <code>-com.apple.CoreData.SQLDebug 3</code> 获取后台更多信息。</p>
+<h2 id="SwiftData-资料"><a href="#SwiftData-资料" class="headerlink" title="SwiftData-资料"></a>SwiftData-资料</h2><h3 id="WWDC"><a href="#WWDC" class="headerlink" title="WWDC"></a>WWDC</h3><p>23</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc23/10196">Dive deeper into SwiftData - WWDC23 - Videos - Apple Developer</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc23/10189">Migrate to SwiftData - WWDC23 - Videos - Apple Developer</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc23/10187">Meet SwiftData - WWDC23 - Videos - Apple Developer</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc23/10195">Model your schema with SwiftData - WWDC23 - Videos - Apple Developer</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc23/10154">Build an app with SwiftData - WWDC23 - Videos - Apple Developer</a></li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2024/05/18/pamphlet-series-swiftdata/">http://ming1016.github.io/2024/05/18/pamphlet-series-swiftdata/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/2024/05/08/swiftpamphletapp6/" class="nav-link">
+      <div>
+        <div class="nav-label">Next</div>
+        
+        <div class="nav-title">戴铭的开发小册子6.0，使用SwiftUI、SwiftData、Observable、NavigationSplitView 进行了重构 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA-Model%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">创建@Model模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA"><span class="toc-number">1.1.</span> <span class="toc-text">创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Attribute"><span class="toc-number">1.2.</span> <span class="toc-text">@Attribute</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Transient-%E4%B8%8D%E5%AD%98"><span class="toc-number">1.3.</span> <span class="toc-text">@Transient 不存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#transformable"><span class="toc-number">1.4.</span> <span class="toc-text">transformable</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData-%E6%A8%A1%E5%9E%8B%E5%85%B3%E7%B3%BB"><span class="toc-number">2.</span> <span class="toc-text">SwiftData-模型关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E9%85%8D%E7%BD%AEmodelContainer"><span class="toc-number">3.</span> <span class="toc-text">容器配置modelContainer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.1.</span> <span class="toc-text">多模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%AD%98%E5%86%85%E5%AD%98"><span class="toc-number">3.2.</span> <span class="toc-text">数据存内存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%AA%E8%AF%BB"><span class="toc-number">3.3.</span> <span class="toc-text">数据只读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%98%E5%82%A8%E6%96%87%E4%BB%B6%E5%92%8C%E4%BD%8D%E7%BD%AE"><span class="toc-number">3.4.</span> <span class="toc-text">自定义存储文件和位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iCloud-%E6%94%AF%E6%8C%81"><span class="toc-number">3.5.</span> <span class="toc-text">iCloud 支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E9%83%A8%E5%88%86%E8%A1%A8%E5%90%8C%E6%AD%A5%E5%88%B0-iCloud"><span class="toc-number">3.6.</span> <span class="toc-text">指定部分表同步到 iCloud</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%A4%9A%E4%B8%AA%E9%85%8D%E7%BD%AE"><span class="toc-number">3.7.</span> <span class="toc-text">添加多个配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%92%A4%E9%94%80%E5%92%8C%E9%87%8D%E5%81%9A"><span class="toc-number">3.8.</span> <span class="toc-text">撤销和重做</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#context"><span class="toc-number">3.9.</span> <span class="toc-text">context</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E5%85%88%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-number">3.10.</span> <span class="toc-text">预先导入数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A2%9E%E5%88%A0modelContext"><span class="toc-number">4.</span> <span class="toc-text">增删modelContext</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE"><span class="toc-number">4.1.</span> <span class="toc-text">添加保存数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%BE%91%E5%92%8C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="toc-number">4.2.</span> <span class="toc-text">编辑和删除数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData-%E6%A3%80%E7%B4%A2"><span class="toc-number">5.</span> <span class="toc-text">SwiftData-检索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Query"><span class="toc-number">5.1.</span> <span class="toc-text">@Query</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Predicate"><span class="toc-number">5.2.</span> <span class="toc-text">Predicate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FetchDescriptor"><span class="toc-number">5.3.</span> <span class="toc-text">FetchDescriptor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%95%B0%E9%87%8F%E8%80%8C%E4%B8%8D%E5%8A%A0%E8%BD%BD"><span class="toc-number">5.4.</span> <span class="toc-text">获取数量而不加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fetchLimit-%E9%99%90%E5%88%B6%E8%8E%B7%E5%8F%96%E6%95%B0%E9%87%8F"><span class="toc-number">5.5.</span> <span class="toc-text">fetchLimit 限制获取数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%90%E5%88%B6%E8%8E%B7%E5%8F%96%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">5.6.</span> <span class="toc-text">限制获取的属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData-%E5%A4%84%E7%90%86%E5%A4%A7%E9%87%8F%E6%95%B0%E6%8D%AE"><span class="toc-number">6.</span> <span class="toc-text">SwiftData-处理大量数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">SwiftData多线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData-%E7%89%88%E6%9C%AC%E8%BF%81%E7%A7%BB"><span class="toc-number">8.</span> <span class="toc-text">SwiftData-版本迁移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData-%E8%B0%83%E8%AF%95"><span class="toc-number">9.</span> <span class="toc-text">SwiftData-调试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData-%E8%B5%84%E6%96%99"><span class="toc-number">10.</span> <span class="toc-text">SwiftData-资料</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC"><span class="toc-number">10.1.</span> <span class="toc-text">WWDC</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
+
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>63</span>
+    <span>Posts</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>6</span>
+    <span>Categories</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>41</span>
+    <span>Tags</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA-Model%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">创建@Model模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA"><span class="toc-number">1.1.</span> <span class="toc-text">创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Attribute"><span class="toc-number">1.2.</span> <span class="toc-text">@Attribute</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Transient-%E4%B8%8D%E5%AD%98"><span class="toc-number">1.3.</span> <span class="toc-text">@Transient 不存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#transformable"><span class="toc-number">1.4.</span> <span class="toc-text">transformable</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData-%E6%A8%A1%E5%9E%8B%E5%85%B3%E7%B3%BB"><span class="toc-number">2.</span> <span class="toc-text">SwiftData-模型关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E9%85%8D%E7%BD%AEmodelContainer"><span class="toc-number">3.</span> <span class="toc-text">容器配置modelContainer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.1.</span> <span class="toc-text">多模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%AD%98%E5%86%85%E5%AD%98"><span class="toc-number">3.2.</span> <span class="toc-text">数据存内存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%AA%E8%AF%BB"><span class="toc-number">3.3.</span> <span class="toc-text">数据只读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%98%E5%82%A8%E6%96%87%E4%BB%B6%E5%92%8C%E4%BD%8D%E7%BD%AE"><span class="toc-number">3.4.</span> <span class="toc-text">自定义存储文件和位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iCloud-%E6%94%AF%E6%8C%81"><span class="toc-number">3.5.</span> <span class="toc-text">iCloud 支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E9%83%A8%E5%88%86%E8%A1%A8%E5%90%8C%E6%AD%A5%E5%88%B0-iCloud"><span class="toc-number">3.6.</span> <span class="toc-text">指定部分表同步到 iCloud</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%A4%9A%E4%B8%AA%E9%85%8D%E7%BD%AE"><span class="toc-number">3.7.</span> <span class="toc-text">添加多个配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%92%A4%E9%94%80%E5%92%8C%E9%87%8D%E5%81%9A"><span class="toc-number">3.8.</span> <span class="toc-text">撤销和重做</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#context"><span class="toc-number">3.9.</span> <span class="toc-text">context</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E5%85%88%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-number">3.10.</span> <span class="toc-text">预先导入数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A2%9E%E5%88%A0modelContext"><span class="toc-number">4.</span> <span class="toc-text">增删modelContext</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE"><span class="toc-number">4.1.</span> <span class="toc-text">添加保存数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%BE%91%E5%92%8C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="toc-number">4.2.</span> <span class="toc-text">编辑和删除数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData-%E6%A3%80%E7%B4%A2"><span class="toc-number">5.</span> <span class="toc-text">SwiftData-检索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Query"><span class="toc-number">5.1.</span> <span class="toc-text">@Query</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Predicate"><span class="toc-number">5.2.</span> <span class="toc-text">Predicate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FetchDescriptor"><span class="toc-number">5.3.</span> <span class="toc-text">FetchDescriptor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%95%B0%E9%87%8F%E8%80%8C%E4%B8%8D%E5%8A%A0%E8%BD%BD"><span class="toc-number">5.4.</span> <span class="toc-text">获取数量而不加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fetchLimit-%E9%99%90%E5%88%B6%E8%8E%B7%E5%8F%96%E6%95%B0%E9%87%8F"><span class="toc-number">5.5.</span> <span class="toc-text">fetchLimit 限制获取数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%90%E5%88%B6%E8%8E%B7%E5%8F%96%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">5.6.</span> <span class="toc-text">限制获取的属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData-%E5%A4%84%E7%90%86%E5%A4%A7%E9%87%8F%E6%95%B0%E6%8D%AE"><span class="toc-number">6.</span> <span class="toc-text">SwiftData-处理大量数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">SwiftData多线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData-%E7%89%88%E6%9C%AC%E8%BF%81%E7%A7%BB"><span class="toc-number">8.</span> <span class="toc-text">SwiftData-版本迁移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData-%E8%B0%83%E8%AF%95"><span class="toc-number">9.</span> <span class="toc-text">SwiftData-调试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData-%E8%B5%84%E6%96%99"><span class="toc-number">10.</span> <span class="toc-text">SwiftData-资料</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC"><span class="toc-number">10.1.</span> <span class="toc-text">WWDC</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>Categories</div>
+  <div class="categories-list">
+    
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">47</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-novel">
+        <div class="categories-list-item">
+          My-novel
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-painting">
+        <div class="categories-list-item">
+          My-painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/App">
+        <div class="categories-list-item">
+          App
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>hot tags</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\WWDC" title="WWDC"><div class="tags-list-item">WWDC</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA-Model%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">创建@Model模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA"><span class="toc-number">1.1.</span> <span class="toc-text">创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Attribute"><span class="toc-number">1.2.</span> <span class="toc-text">@Attribute</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Transient-%E4%B8%8D%E5%AD%98"><span class="toc-number">1.3.</span> <span class="toc-text">@Transient 不存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#transformable"><span class="toc-number">1.4.</span> <span class="toc-text">transformable</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData-%E6%A8%A1%E5%9E%8B%E5%85%B3%E7%B3%BB"><span class="toc-number">2.</span> <span class="toc-text">SwiftData-模型关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E9%85%8D%E7%BD%AEmodelContainer"><span class="toc-number">3.</span> <span class="toc-text">容器配置modelContainer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.1.</span> <span class="toc-text">多模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%AD%98%E5%86%85%E5%AD%98"><span class="toc-number">3.2.</span> <span class="toc-text">数据存内存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%AA%E8%AF%BB"><span class="toc-number">3.3.</span> <span class="toc-text">数据只读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%98%E5%82%A8%E6%96%87%E4%BB%B6%E5%92%8C%E4%BD%8D%E7%BD%AE"><span class="toc-number">3.4.</span> <span class="toc-text">自定义存储文件和位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iCloud-%E6%94%AF%E6%8C%81"><span class="toc-number">3.5.</span> <span class="toc-text">iCloud 支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E9%83%A8%E5%88%86%E8%A1%A8%E5%90%8C%E6%AD%A5%E5%88%B0-iCloud"><span class="toc-number">3.6.</span> <span class="toc-text">指定部分表同步到 iCloud</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%A4%9A%E4%B8%AA%E9%85%8D%E7%BD%AE"><span class="toc-number">3.7.</span> <span class="toc-text">添加多个配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%92%A4%E9%94%80%E5%92%8C%E9%87%8D%E5%81%9A"><span class="toc-number">3.8.</span> <span class="toc-text">撤销和重做</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#context"><span class="toc-number">3.9.</span> <span class="toc-text">context</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E5%85%88%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-number">3.10.</span> <span class="toc-text">预先导入数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A2%9E%E5%88%A0modelContext"><span class="toc-number">4.</span> <span class="toc-text">增删modelContext</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE"><span class="toc-number">4.1.</span> <span class="toc-text">添加保存数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%BE%91%E5%92%8C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="toc-number">4.2.</span> <span class="toc-text">编辑和删除数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData-%E6%A3%80%E7%B4%A2"><span class="toc-number">5.</span> <span class="toc-text">SwiftData-检索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Query"><span class="toc-number">5.1.</span> <span class="toc-text">@Query</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Predicate"><span class="toc-number">5.2.</span> <span class="toc-text">Predicate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FetchDescriptor"><span class="toc-number">5.3.</span> <span class="toc-text">FetchDescriptor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%95%B0%E9%87%8F%E8%80%8C%E4%B8%8D%E5%8A%A0%E8%BD%BD"><span class="toc-number">5.4.</span> <span class="toc-text">获取数量而不加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fetchLimit-%E9%99%90%E5%88%B6%E8%8E%B7%E5%8F%96%E6%95%B0%E9%87%8F"><span class="toc-number">5.5.</span> <span class="toc-text">fetchLimit 限制获取数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%90%E5%88%B6%E8%8E%B7%E5%8F%96%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">5.6.</span> <span class="toc-text">限制获取的属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData-%E5%A4%84%E7%90%86%E5%A4%A7%E9%87%8F%E6%95%B0%E6%8D%AE"><span class="toc-number">6.</span> <span class="toc-text">SwiftData-处理大量数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">SwiftData多线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData-%E7%89%88%E6%9C%AC%E8%BF%81%E7%A7%BB"><span class="toc-number">8.</span> <span class="toc-text">SwiftData-版本迁移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData-%E8%B0%83%E8%AF%95"><span class="toc-number">9.</span> <span class="toc-text">SwiftData-调试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SwiftData-%E8%B5%84%E6%96%99"><span class="toc-number">10.</span> <span class="toc-text">SwiftData-资料</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WWDC"><span class="toc-number">10.1.</span> <span class="toc-text">WWDC</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>Recent Posts</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-05-18</div>
+        <a href="/2024/05/18/pamphlet-series-swiftdata/"><div class="recent-posts-item-content">小册子之如何使用 SwiftData 开发 SwiftUI 应用</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-05-08</div>
+        <a href="/2024/05/08/swiftpamphletapp6/"><div class="recent-posts-item-content">戴铭的开发小册子6.0，使用SwiftUI、SwiftData、Observable、NavigationSplitView 进行了重构</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-05-31</div>
+        <a href="/2023/05/31/sharing-cs-in-elementary-school/"><div class="recent-posts-item-content">给孩子小学的家长讲堂做了一个计算机科普分享</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-24</div>
+        <a href="/2023/04/24/swiftui-rss-reader/"><div class="recent-posts-item-content">使用 SwiftUI 开发 RSS 阅读器</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2014 -
+          
+          2024
+        </span>
+        <a href="/" class="footer-link">戴铭的博客 </a>
+      </div>
+    </div>
+
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>
