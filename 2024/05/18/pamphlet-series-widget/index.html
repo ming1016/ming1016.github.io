@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-Hans" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
+      
+      <span class="navbar-logo-dsc">戴铭的博客</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">Home </a>
+    
+    <a href="/archives" class="navbar-menu-item">Archive </a>
+    
+    <a href="/tags" class="navbar-menu-item">Tags </a>
+    
+    <a href="/categories" class="navbar-menu-item">Categories </a>
+    
+    <a href="/about" class="navbar-menu-item">About </a>
+    
+    <a href="" class="navbar-menu-item">Friends </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/pamphlet-series-widget/01.png" data-src="/uploads/pamphlet-series-widget/01.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      小册子之简说 Widget 小组件
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2024-05-18T00:07:31.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2024-05-18</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/App/" class="post-meta-link">App</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3k words</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/SwiftUI/" class="post-meta-link">SwiftUI</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p>以下内容已整理到小册子中，小册子代码在 <a target="_blank" rel="noopener" href="https://github.com/ming1016/SwiftPamphletApp">Github</a> 上，可以在 macOS 应用商店安装<a target="_blank" rel="noopener" href="https://apps.apple.com/cn/app/%E6%88%B4%E9%93%AD%E7%9A%84%E5%BC%80%E5%8F%91%E5%B0%8F%E5%86%8C%E5%AD%90/id1609702529?mt=12">“戴铭的开发小册子”</a>应用查看。</p>
+<p>Widge 允许开发者在用户的主屏幕或通知中心展示应用的信息。Widget 可以提供快速的信息预览，或者提供快速访问应用的方式。</p>
+<p>开发 Widget 的基本步骤如下：</p>
+<ol>
+<li><p><strong>创建 Widget Extension</strong>：在 Xcode 中，你需要创建一个新的 Widget Extension。这将会生成一个新的 target，包含了创建 Widget 所需的基本代码。</p>
+</li>
+<li><p><strong>定义 Timeline Entry</strong>：Timeline Entry 是 Widget 数据的模型。你需要创建一个遵循 <code>TimelineEntry</code> 协议的结构体，定义你的 Widget 所需的数据。</p>
+</li>
+<li><p><strong>创建 Widget View</strong>：Widget View 是 Widget 的用户界面。你需要创建一个 <code>View</code>，展示你的 Widget 的内容。</p>
+</li>
+<li><p><strong>实现 Timeline Provider</strong>：Timeline Provider 是 Widget 数据的提供者。你需要创建一个遵循 <code>TimelineProvider</code> 协议的结构体，提供 Widget 的数据。</p>
+</li>
+<li><p><strong>配置 Widget</strong>：在 Widget 的主结构体中，你需要配置你的 Widget，包括它的类型（静态或者动态）、数据提供者、视图等。</p>
+</li>
+<li><p><strong>测试 Widget</strong>：在模拟器或者真机上测试你的 Widget，确保它的数据和视图都按预期工作。</p>
+</li>
+</ol>
+<p>接下来，我们将详细介绍 Widget 的开发流程。</p>
+<h2 id="小组件-StaticConfiguration-静态配置"><a href="#小组件-StaticConfiguration-静态配置" class="headerlink" title="小组件-StaticConfiguration 静态配置"></a>小组件-StaticConfiguration 静态配置</h2><p>在 Xcode 中，File -&gt; New -&gt; Target，选择 Widget Extension。这将会生成一个新的 target，包含了创建 Widget 所需的基本代码。</p>
+<p>以下是一个简单的小组件代码示例：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">import</span> <span class="token class-name">WidgetKit</span>
+<span class="token keyword">import</span> <span class="token class-name">SwiftUI</span>
+
+<span class="token comment">// Timeline Entry</span>
+<span class="token keyword">struct</span> <span class="token class-name">ArticleEntry</span><span class="token punctuation">:</span> <span class="token class-name">TimelineEntry</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> date<span class="token punctuation">:</span> <span class="token class-name">Date</span>
+    <span class="token keyword">let</span> title<span class="token punctuation">:</span> <span class="token class-name">String</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// Widget View</span>
+<span class="token keyword">struct</span> <span class="token class-name">ArticleWidgetView</span> <span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> entry<span class="token punctuation">:</span> <span class="token class-name">ArticleEntry</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Text</span><span class="token punctuation">(</span>entry<span class="token punctuation">.</span>title<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// Timeline Provider</span>
+<span class="token keyword">struct</span> <span class="token class-name">ArticleTimelineProvider</span><span class="token punctuation">:</span> <span class="token class-name">TimelineProvider</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">typealias</span> <span class="token class-name">Entry</span> <span class="token operator">=</span> <span class="token class-name">ArticleEntry</span>
+    
+    <span class="token keyword">func</span> <span class="token function-definition function">placeholder</span><span class="token punctuation">(</span><span class="token keyword">in</span> context<span class="token punctuation">:</span> <span class="token class-name">Context</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">Entry</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 占位大小，内容不会显示</span>
+        <span class="token keyword">return</span> <span class="token class-name">ArticleEntry</span><span class="token punctuation">(</span>date<span class="token punctuation">:</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> title<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"Placeholder"</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">func</span> <span class="token function-definition function">getSnapshot</span><span class="token punctuation">(</span><span class="token keyword">in</span> context<span class="token punctuation">:</span> <span class="token class-name">Context</span><span class="token punctuation">,</span> completion<span class="token punctuation">:</span> <span class="token attribute atrule">@escaping</span> <span class="token punctuation">(</span><span class="token class-name">Entry</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">let</span> entry <span class="token operator">=</span> <span class="token class-name">ArticleEntry</span><span class="token punctuation">(</span>date<span class="token punctuation">:</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> title<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"Snapshot"</span></span><span class="token punctuation">)</span>
+        <span class="token function">completion</span><span class="token punctuation">(</span>entry<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">func</span> <span class="token function-definition function">getTimeline</span><span class="token punctuation">(</span><span class="token keyword">in</span> context<span class="token punctuation">:</span> <span class="token class-name">Context</span><span class="token punctuation">,</span> completion<span class="token punctuation">:</span> <span class="token attribute atrule">@escaping</span> <span class="token punctuation">(</span><span class="token class-name">Timeline</span><span class="token operator">&lt;</span><span class="token class-name">Entry</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">let</span> entry <span class="token operator">=</span> <span class="token class-name">ArticleEntry</span><span class="token punctuation">(</span>date<span class="token punctuation">:</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> title<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"Timeline"</span></span><span class="token punctuation">)</span>
+        <span class="token keyword">let</span> timeline <span class="token operator">=</span> <span class="token class-name">Timeline</span><span class="token punctuation">(</span>entries<span class="token punctuation">:</span> <span class="token punctuation">[</span>entry<span class="token punctuation">]</span><span class="token punctuation">,</span> policy<span class="token punctuation">:</span> <span class="token punctuation">.</span>never<span class="token punctuation">)</span>
+        <span class="token function">completion</span><span class="token punctuation">(</span>timeline<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// Widget Configuration</span>
+<span class="token attribute atrule">@main</span>
+<span class="token keyword">struct</span> <span class="token class-name">ArticleWidget</span><span class="token punctuation">:</span> <span class="token class-name">Widget</span> <span class="token punctuation">&#123;</span>
+    
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">WidgetConfiguration</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">StaticConfiguration</span><span class="token punctuation">(</span>
+            kind<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"com.starming.articleWidget"</span></span><span class="token punctuation">,</span>
+            provider<span class="token punctuation">:</span> <span class="token class-name">ArticleTimelineProvider</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> entry <span class="token keyword">in</span>
+            <span class="token class-name">ArticleWidgetView</span><span class="token punctuation">(</span>entry<span class="token punctuation">:</span> entry<span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">configurationDisplayName</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Article Widget"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">description</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"这是一个 Article Widget."</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">supportedFamilies</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+            <span class="token punctuation">.</span>systemSmall<span class="token punctuation">,</span>
+            <span class="token punctuation">.</span>systemMedium<span class="token punctuation">,</span>
+            <span class="token punctuation">.</span>systemLarge<span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在上面的代码中，我们定义了一个 ArticleWidget 小组件，它包含了一个 ArticleEntry 数据模型、一个 ArticleWidgetView 视图、一个 ArticleTimelineProvider 数据提供者和一个 ArticleWidget 配置。</p>
+<h2 id="小组件-AppIntentConfiguration"><a href="#小组件-AppIntentConfiguration" class="headerlink" title="小组件-AppIntentConfiguration"></a>小组件-AppIntentConfiguration</h2><p>iOS 17 开始可以使用 AppIntentConfiguration 来配置小组件，这样可以让小组件和 AppIntent 交互。这样可以让小组件和 App 之间的进行交互。</p>
+<p>下面是一个简单的小组件代码示例，展示了如何使用 AppIntentConfiguration 来配置小组件和 AppIntent 交互</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">import</span> <span class="token class-name">SwiftUI</span>
+<span class="token keyword">import</span> <span class="token class-name">WidgetKit</span>
+<span class="token keyword">import</span> <span class="token class-name">AppIntents</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">ArticleWidget</span><span class="token punctuation">:</span> <span class="token class-name">Widget</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">WidgetConfiguration</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">AppIntentConfiguration</span><span class="token punctuation">(</span>
+            kind<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"com.starming.articleWidget"</span></span><span class="token punctuation">,</span>
+            intent<span class="token punctuation">:</span> <span class="token class-name">ArticleIntent</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">,</span>
+            provider<span class="token punctuation">:</span> <span class="token class-name">ArticleIntentProvider</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> entry <span class="token keyword">in</span>
+            <span class="token class-name">ArticleWidgetView</span><span class="token punctuation">(</span>entry<span class="token punctuation">:</span> entry<span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">configurationDisplayName</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Article Widget"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">description</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"这是一个 Article Widget."</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">supportedFamilies</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">.</span>systemSmall<span class="token punctuation">,</span> <span class="token punctuation">.</span>systemMedium<span class="token punctuation">,</span> <span class="token punctuation">.</span>systemLarge<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">ArticleWidgetView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> entry<span class="token punctuation">:</span> <span class="token class-name">IntentProvider</span><span class="token punctuation">.</span><span class="token class-name">Entry</span>
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Text</span><span class="token punctuation">(</span>entry<span class="token punctuation">.</span>author<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">ArticleIntentProvider</span><span class="token punctuation">:</span> <span class="token class-name">AppIntentTimelineProvider</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">func</span> <span class="token function-definition function">snapshot</span><span class="token punctuation">(</span><span class="token keyword">for</span> configuration<span class="token punctuation">:</span> <span class="token class-name">ArticleIntent</span><span class="token punctuation">,</span> <span class="token keyword">in</span> context<span class="token punctuation">:</span> <span class="token class-name">Context</span><span class="token punctuation">)</span> <span class="token keyword">async</span> <span class="token operator">-></span> <span class="token class-name">ArticleEntry</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">.</span><span class="token keyword">init</span><span class="token punctuation">(</span>
+            date<span class="token punctuation">:</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            author<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"snapshot"</span></span>
+        <span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">func</span> <span class="token function-definition function">placeholder</span><span class="token punctuation">(</span><span class="token keyword">in</span> context<span class="token punctuation">:</span> <span class="token class-name">Context</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">ArticleEntry</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">.</span><span class="token keyword">init</span><span class="token punctuation">(</span>
+            date<span class="token punctuation">:</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            author<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"某人"</span></span>
+        <span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">func</span> <span class="token function-definition function">timeline</span><span class="token punctuation">(</span><span class="token keyword">for</span> configuration<span class="token punctuation">:</span> <span class="token class-name">ArticleIntent</span><span class="token punctuation">,</span> <span class="token keyword">in</span> context<span class="token punctuation">:</span> <span class="token class-name">Context</span><span class="token punctuation">)</span> <span class="token keyword">async</span> <span class="token operator">-></span> <span class="token class-name">Timeline</span><span class="token operator">&lt;</span><span class="token class-name">ArticleEntry</span><span class="token operator">></span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token class-name">Timeline</span><span class="token punctuation">(</span>
+            entries<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+                <span class="token punctuation">.</span><span class="token keyword">init</span><span class="token punctuation">(</span>date<span class="token punctuation">:</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                      author<span class="token punctuation">:</span> configuration<span class="token punctuation">.</span>author<span class="token punctuation">,</span>
+                      rate<span class="token punctuation">:</span> <span class="token keyword">await</span> <span class="token class-name">ArticleStore</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">rate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            policy<span class="token punctuation">:</span> <span class="token punctuation">.</span>never<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">ArticleEntry</span><span class="token punctuation">:</span> <span class="token class-name">TimelineEntry</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> date<span class="token punctuation">:</span> <span class="token class-name">Date</span>
+    <span class="token keyword">let</span> author<span class="token punctuation">:</span> <span class="token class-name">String</span>
+    <span class="token keyword">var</span> rate<span class="token punctuation">:</span> <span class="token class-name">Int</span> <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token comment">//...</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 放在主应用中和小组件交互</span>
+<span class="token keyword">struct</span> <span class="token class-name">ArticleIntent</span><span class="token punctuation">:</span> <span class="token class-name">WidgetConfigurationIntent</span> <span class="token punctuation">&#123;</span>
+    
+    <span class="token keyword">static</span> <span class="token keyword">var</span> title<span class="token punctuation">:</span> <span class="token class-name">LocalizedStringResource</span>  <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"文章"</span></span>
+    <span class="token keyword">var</span> author<span class="token punctuation">:</span> <span class="token class-name">String</span> <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"某某某"</span></span>
+
+    <span class="token keyword">func</span> <span class="token function-definition function">perform</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">async</span> <span class="token keyword">throws</span> <span class="token operator">-></span> <span class="token keyword">some</span> <span class="token class-name">IntentResult</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//...</span>
+        <span class="token keyword">return</span> <span class="token punctuation">.</span><span class="token function">result</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">ArticleStore</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//... SwiftData 相关配置</span>
+    <span class="token attribute atrule">@MainActor</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">rate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">async</span> <span class="token operator">-></span> <span class="token class-name">Int</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//... 获取</span>
+        <span class="token keyword">return</span> <span class="token number">5</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如上代码所示，我们定义了一个 ArticleWidget 小组件，它包含了一个 ArticleIntent 数据模型、一个 ArticleWidgetView 视图、一个 ArticleIntentProvider 数据提供者和一个 ArticleWidget 配置。</p>
+<h2 id="小组件-配置选项"><a href="#小组件-配置选项" class="headerlink" title="小组件-配置选项"></a>小组件-配置选项</h2><h3 id="显示区域"><a href="#显示区域" class="headerlink" title="显示区域"></a>显示区域</h3><p>iOS 17 新增显示区域配置，有下面四种</p>
+<ul>
+<li>homeScreen：主屏幕</li>
+<li>lockScreen：锁屏</li>
+<li>standBy：待机</li>
+<li>iPhoneWidgetsOnMac：iPhone 上的 Mac 小组件</li>
+</ul>
+<p>设置小组件不在哪个区域显示某尺寸。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">SomeWidget</span><span class="token punctuation">:</span> <span class="token class-name">Widget</span> <span class="token punctuation">&#123;</span>
+    <span class="token operator">...</span>
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">WidgetConfiguration</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">AppIntentConfiguration</span><span class="token punctuation">(</span>
+            <span class="token operator">...</span> <span class="token punctuation">&#123;</span> entry <span class="token keyword">in</span>
+            <span class="token operator">...</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">// 在 StandBy 中取消显示 systemSmall 尺寸</span>
+        <span class="token punctuation">.</span><span class="token function">disfavoredLocations</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">.</span>standBy<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">for</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">.</span>systemSmall<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="取消内容边距"><a href="#取消内容边距" class="headerlink" title="取消内容边距"></a>取消内容边距</h3><p>使用 <code>.contentMarginsDisabled()</code> 取消内容边距。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">SomeWidget</span><span class="token punctuation">:</span> <span class="token class-name">Widget</span> <span class="token punctuation">&#123;</span>
+    <span class="token operator">...</span>
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">WidgetConfiguration</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">AppIntentConfiguration</span><span class="token punctuation">(</span>
+            <span class="token operator">...</span> <span class="token punctuation">&#123;</span> entry <span class="token keyword">in</span>
+            <span class="token operator">...</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">// 使 Content margin 失效</span>
+        <span class="token punctuation">.</span><span class="token function">contentMarginsDisabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>每个平台内容边距大小不同，环境变量 <code>\.widgetContentMargins</code> 可以读取内容边距的大小。</p>
+<h3 id="取消背景删除"><a href="#取消背景删除" class="headerlink" title="取消背景删除"></a>取消背景删除</h3><p>在 StandBy 和 LockScreen 的某些情况，小组件的背景是会被自动删除的。</p>
+<p>使用 <code>containerBackgroundRemovable()</code> 修饰符可以取消背景删除。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">SomeWidget</span><span class="token punctuation">:</span> <span class="token class-name">Widget</span> <span class="token punctuation">&#123;</span>
+    <span class="token operator">...</span>
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">WidgetConfiguration</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">AppIntentConfiguration</span><span class="token punctuation">(</span>
+            <span class="token operator">...</span> <span class="token punctuation">&#123;</span> entry <span class="token keyword">in</span>
+            <span class="token operator">...</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">// 取消背景删除</span>
+        <span class="token punctuation">.</span><span class="token function">containerBackgroundRemovable</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span>
+        <span class="token comment">// 让自己的背景可以全覆盖</span>
+        <span class="token punctuation">.</span><span class="token function">contentMarginsDisabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="后台网络处理"><a href="#后台网络处理" class="headerlink" title="后台网络处理"></a>后台网络处理</h3><pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token punctuation">.</span>onBackgroundURLSessionEvents <span class="token punctuation">&#123;</span> <span class="token punctuation">(</span>identifier<span class="token punctuation">,</span> completion<span class="token punctuation">)</span> <span class="token keyword">in</span>
+    <span class="token comment">//...</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="AppIntentTimelineProvider"><a href="#AppIntentTimelineProvider" class="headerlink" title="AppIntentTimelineProvider"></a>AppIntentTimelineProvider</h2><p>AppIntentConfiguration 需要 AppIntentTimelineProvider，AppIntentTimelineProvider 需要实现 <code>snapshot</code>、<code>placeholder</code> 和 <code>timeline</code> 三个方法来确定小组件在展示和实际运行时间线时的视图和数据。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">ArticleIntentProvider</span><span class="token punctuation">:</span> <span class="token class-name">AppIntentTimelineProvider</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">func</span> <span class="token function-definition function">snapshot</span><span class="token punctuation">(</span><span class="token keyword">for</span> configuration<span class="token punctuation">:</span> <span class="token class-name">ArticleIntent</span><span class="token punctuation">,</span> <span class="token keyword">in</span> context<span class="token punctuation">:</span> <span class="token class-name">Context</span><span class="token punctuation">)</span> <span class="token keyword">async</span> <span class="token operator">-></span> <span class="token class-name">ArticleEntry</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">.</span><span class="token keyword">init</span><span class="token punctuation">(</span>
+            date<span class="token punctuation">:</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            author<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"snapshot"</span></span>
+        <span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">func</span> <span class="token function-definition function">placeholder</span><span class="token punctuation">(</span><span class="token keyword">in</span> context<span class="token punctuation">:</span> <span class="token class-name">Context</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">ArticleEntry</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">.</span><span class="token keyword">init</span><span class="token punctuation">(</span>
+            date<span class="token punctuation">:</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            author<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"某人"</span></span>
+        <span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">func</span> <span class="token function-definition function">timeline</span><span class="token punctuation">(</span><span class="token keyword">for</span> configuration<span class="token punctuation">:</span> <span class="token class-name">ArticleIntent</span><span class="token punctuation">,</span> <span class="token keyword">in</span> context<span class="token punctuation">:</span> <span class="token class-name">Context</span><span class="token punctuation">)</span> <span class="token keyword">async</span> <span class="token operator">-></span> <span class="token class-name">Timeline</span><span class="token operator">&lt;</span><span class="token class-name">ArticleEntry</span><span class="token operator">></span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token class-name">Timeline</span><span class="token punctuation">(</span>
+            entries<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+                <span class="token punctuation">.</span><span class="token keyword">init</span><span class="token punctuation">(</span>date<span class="token punctuation">:</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                      author<span class="token punctuation">:</span> configuration<span class="token punctuation">.</span>author<span class="token punctuation">,</span>
+                      rate<span class="token punctuation">:</span> <span class="token keyword">await</span> <span class="token class-name">ArticleStore</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">rate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            policy<span class="token punctuation">:</span> <span class="token punctuation">.</span>never<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">ArticleEntry</span><span class="token punctuation">:</span> <span class="token class-name">TimelineEntry</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> date<span class="token punctuation">:</span> <span class="token class-name">Date</span>
+    <span class="token keyword">let</span> author<span class="token punctuation">:</span> <span class="token class-name">String</span>
+    <span class="token keyword">var</span> rate<span class="token punctuation">:</span> <span class="token class-name">Int</span> <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token comment">//...</span>
+<span class="token punctuation">&#125;</span>
+````
+## <span class="token class-name">Widget</span> <span class="token class-name">View</span>
+
+### 不同的大小设置不同视图
+
+```swift
+<span class="token keyword">struct</span> <span class="token class-name">ArticleWidgetView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">var</span> entry<span class="token punctuation">:</span> <span class="token class-name">Provider</span><span class="token punctuation">.</span><span class="token class-name">Entry</span>
+  <span class="token attribute atrule">@Environment</span><span class="token punctuation">(</span><span class="token punctuation">\</span><span class="token punctuation">.</span>widgetFamily<span class="token punctuation">)</span> <span class="token keyword">var</span> family
+
+  <span class="token attribute atrule">@ViewBuilder</span>
+  <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">switch</span> family <span class="token punctuation">&#123;</span>
+    <span class="token keyword">case</span> <span class="token punctuation">.</span>systemSmall<span class="token punctuation">:</span>
+        <span class="token class-name">SomeViewSmall</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">default</span><span class="token punctuation">:</span>
+      <span class="token class-name">SomeViewDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="锁屏小组件"><a href="#锁屏小组件" class="headerlink" title="锁屏小组件"></a>锁屏小组件</h3><p>让小组件支持锁屏</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">ArticleWidget</span><span class="token punctuation">:</span> <span class="token class-name">Widget</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">WidgetConfiguration</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">StaticConfiguration</span><span class="token punctuation">(</span>
+            <span class="token operator">...</span>
+        <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> entry <span class="token keyword">in</span>
+            <span class="token operator">...</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token operator">...</span>
+        <span class="token punctuation">.</span><span class="token function">supportedFamilies</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+            <span class="token punctuation">.</span>systemSmall<span class="token punctuation">,</span>
+            <span class="token punctuation">.</span>systemMedium<span class="token punctuation">,</span>
+            <span class="token punctuation">.</span>systemLarge<span class="token punctuation">,</span>
+
+            <span class="token comment">// 添加支持到 Lock Screen widgets</span>
+            <span class="token punctuation">.</span>accessoryCircular<span class="token punctuation">,</span>
+            <span class="token punctuation">.</span>accessoryRectangular<span class="token punctuation">,</span>
+            <span class="token punctuation">.</span>accessoryInline<span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="不同类型-widgetFamily-实现不同视图"><a href="#不同类型-widgetFamily-实现不同视图" class="headerlink" title="不同类型 widgetFamily 实现不同视图"></a>不同类型 widgetFamily 实现不同视图</h3><pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">ArticleWidgetView</span> <span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+   
+    <span class="token keyword">let</span> entry<span class="token punctuation">:</span> <span class="token class-name">ViewSizeEntry</span>
+    <span class="token comment">// 获取 widget family 值</span>
+    <span class="token attribute atrule">@Environment</span><span class="token punctuation">(</span><span class="token punctuation">\</span><span class="token punctuation">.</span>widgetFamily<span class="token punctuation">)</span> <span class="token keyword">var</span> family
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">switch</span> family <span class="token punctuation">&#123;</span>
+        <span class="token keyword">case</span> <span class="token punctuation">.</span>accessoryRectangular<span class="token punctuation">:</span>
+            <span class="token class-name">RectangularWidgetView</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">case</span> <span class="token punctuation">.</span>accessoryCircular<span class="token punctuation">:</span>
+            <span class="token class-name">CircularWidgetView</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">case</span> <span class="token punctuation">.</span>accessoryInline<span class="token punctuation">:</span>
+            <span class="token class-name">InlineWidgetView</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">default</span><span class="token punctuation">:</span>
+            <span class="token class-name">ArticleWidgetView</span><span class="token punctuation">(</span>entry<span class="token punctuation">:</span> entry<span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="不同渲染模式实现不同视图"><a href="#不同渲染模式实现不同视图" class="headerlink" title="不同渲染模式实现不同视图"></a>不同渲染模式实现不同视图</h3><p>小组件有三种不同的渲染模式：</p>
+<ul>
+<li>Full-color：主屏用</li>
+<li>Vibrant：用于待机模式和锁屏</li>
+<li>The accented：用于手表</li>
+</ul>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">ArticleWidgetView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> entry<span class="token punctuation">:</span> <span class="token class-name">Entry</span>
+    
+    <span class="token attribute atrule">@Environment</span><span class="token punctuation">(</span><span class="token punctuation">\</span><span class="token punctuation">.</span>widgetRenderingMode<span class="token punctuation">)</span> <span class="token keyword">private</span> <span class="token keyword">var</span> renderingMode
+    
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">switch</span> renderingMode <span class="token punctuation">&#123;</span>
+        <span class="token keyword">case</span> <span class="token punctuation">.</span>accented<span class="token punctuation">:</span>
+            <span class="token class-name">AccentedWidgetView</span><span class="token punctuation">(</span>entry<span class="token punctuation">:</span> entry<span class="token punctuation">)</span>
+        <span class="token keyword">case</span> <span class="token punctuation">.</span>fullColor<span class="token punctuation">:</span>
+            <span class="token class-name">FullColorWidgetView</span><span class="token punctuation">(</span>entry<span class="token punctuation">:</span> entry<span class="token punctuation">)</span>
+        <span class="token keyword">case</span> <span class="token punctuation">.</span>vibrant<span class="token punctuation">:</span>
+            <span class="token class-name">VibrantWidgetView</span><span class="token punctuation">(</span>entry<span class="token punctuation">:</span> entry<span class="token punctuation">)</span>
+        <span class="token keyword">default</span><span class="token punctuation">:</span>
+            <span class="token class-name">DefaultView</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="视图交互"><a href="#视图交互" class="headerlink" title="视图交互"></a>视图交互</h3><p>使用 AppIntent</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">ArticleWidgetView</span> <span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> entry<span class="token punctuation">:</span> <span class="token class-name">IntentProvider</span><span class="token punctuation">.</span><span class="token class-name">Entry</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">VStack</span><span class="token punctuation">(</span>spacing<span class="token punctuation">:</span> <span class="token number">20</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token operator">...</span>
+
+            <span class="token class-name">Button</span><span class="token punctuation">(</span>intent<span class="token punctuation">:</span> <span class="token class-name">RunIntent</span><span class="token punctuation">(</span>rate<span class="token punctuation">:</span> entry<span class="token punctuation">.</span>rate<span class="token punctuation">)</span><span class="token punctuation">,</span> label<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+                <span class="token operator">...</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="刷新小组件"><a href="#刷新小组件" class="headerlink" title="刷新小组件"></a>刷新小组件</h2><h3 id="通过-Text-视图更新"><a href="#通过-Text-视图更新" class="headerlink" title="通过 Text 视图更新"></a>通过 Text 视图更新</h3><p>倒计时</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift">
+<span class="token keyword">let</span> futureDate <span class="token operator">=</span> <span class="token class-name">Calendar</span><span class="token punctuation">.</span>current<span class="token punctuation">.</span><span class="token function">date</span><span class="token punctuation">(</span>byAdding<span class="token punctuation">:</span> components<span class="token punctuation">,</span> to<span class="token punctuation">:</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">!</span>
+
+<span class="token comment">// 日期会在 Text 视图中动态变化</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">CountdownWidgetView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token function">futureDate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> style<span class="token punctuation">:</span> <span class="token punctuation">.</span>timer<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token keyword">private</span> <span class="token keyword">func</span> <span class="token function-definition function">futureDate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">Date</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">let</span> components <span class="token operator">=</span> <span class="token class-name">DateComponents</span><span class="token punctuation">(</span>second<span class="token punctuation">:</span> <span class="token number">10</span><span class="token punctuation">)</span>
+        <span class="token keyword">let</span> futureDate <span class="token operator">=</span> <span class="token class-name">Calendar</span><span class="token punctuation">.</span>current<span class="token punctuation">.</span><span class="token function">date</span><span class="token punctuation">(</span>byAdding<span class="token punctuation">:</span> components<span class="token punctuation">,</span> to<span class="token punctuation">:</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">!</span>
+        <span class="token keyword">return</span> futureDate
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Timeline-Provider-更新"><a href="#Timeline-Provider-更新" class="headerlink" title="Timeline Provider 更新"></a>Timeline Provider 更新</h3><p>在 timeline 方法中实现，entries 包含了不同更新的数据。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function-definition function">timeline</span><span class="token punctuation">(</span><span class="token keyword">for</span> configuration<span class="token punctuation">:</span> <span class="token class-name">ArticleIntent</span><span class="token punctuation">,</span> <span class="token keyword">in</span> context<span class="token punctuation">:</span> <span class="token class-name">Context</span><span class="token punctuation">)</span> <span class="token keyword">async</span> <span class="token operator">-></span> <span class="token class-name">Timeline</span><span class="token operator">&lt;</span><span class="token class-name">ArticleEntry</span><span class="token operator">></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token class-name">Timeline</span><span class="token punctuation">(</span>
+        entries<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+            <span class="token punctuation">.</span><span class="token keyword">init</span><span class="token punctuation">(</span>date<span class="token punctuation">:</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                  author<span class="token punctuation">:</span> configuration<span class="token punctuation">.</span>author<span class="token punctuation">,</span>
+                  rate<span class="token punctuation">:</span> <span class="token keyword">await</span> <span class="token class-name">ArticleStore</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">rate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        policy<span class="token punctuation">:</span> <span class="token punctuation">.</span>never<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="更新策略"><a href="#更新策略" class="headerlink" title="更新策略"></a>更新策略</h3><p>3 种类型的刷新策略：</p>
+<ul>
+<li><code>atEnd</code>：上个刷新完成直接进入下个刷新，但是进入下一个刷新的时间由系统决定。</li>
+<li><code>after(Date)</code>：指定进入下个刷新的时间，但是具体时间还是由系统说了算，因此可以理解为是指定的是最早进入下个刷新的时间。</li>
+<li><code>never</code>：不会进入下个刷新，除非显式调用 <code>reloadTimelines(ofKind:)</code></li>
+</ul>
+<p>举例，指定下个刷新周期至少是上个周期结束10秒后：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">let</span> lastUpdateDate <span class="token operator">=</span> entries<span class="token punctuation">.</span>last<span class="token operator">!</span><span class="token punctuation">.</span>date
+<span class="token keyword">let</span> nextUpdateDate <span class="token operator">=</span> <span class="token class-name">Calendar</span><span class="token punctuation">.</span>current<span class="token punctuation">.</span><span class="token function">date</span><span class="token punctuation">(</span>byAdding<span class="token punctuation">:</span> <span class="token class-name">DateComponents</span><span class="token punctuation">(</span>second<span class="token punctuation">:</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span> to<span class="token punctuation">:</span> lastUpdate<span class="token punctuation">)</span><span class="token operator">!</span>
+
+<span class="token keyword">let</span> timeline <span class="token operator">=</span> <span class="token class-name">Timeline</span><span class="token punctuation">(</span>entries<span class="token punctuation">:</span> entries<span class="token punctuation">,</span> policy<span class="token punctuation">:</span> <span class="token punctuation">.</span><span class="token function">after</span><span class="token punctuation">(</span>nextUpdate<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Relevance-优先级"><a href="#Relevance-优先级" class="headerlink" title="Relevance 优先级"></a>Relevance 优先级</h3><p>App 自定义刷新 Timeline 的优先级，使用 Relevance。先在 TimelineEntry 里定义：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">ArticleEntry</span><span class="token punctuation">:</span> <span class="token class-name">TimelineEntry</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> date<span class="token punctuation">:</span> <span class="token class-name">Date</span>
+    <span class="token operator">...</span>
+    <span class="token keyword">let</span> relevance<span class="token punctuation">:</span> <span class="token class-name">TimelineEntryRelevance</span><span class="token operator">?</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在 timeline 方法中根据必要刷新程序，定义不同 relevance 的值。</p>
+<h3 id="App-主动刷新"><a href="#App-主动刷新" class="headerlink" title="App 主动刷新"></a>App 主动刷新</h3><pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token comment">// 刷新单个小组件</span>
+<span class="token class-name">WidgetCenter</span><span class="token punctuation">.</span>shared<span class="token punctuation">.</span><span class="token function">reloadTimelines</span><span class="token punctuation">(</span>ofKind<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"CountryWidget"</span></span><span class="token punctuation">)</span>
+
+<span class="token comment">// 刷新所有小组件</span>
+<span class="token class-name">WidgetCenter</span><span class="token punctuation">.</span>shared<span class="token punctuation">.</span><span class="token function">reloadAllTimelines</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="刷新小组件的最佳实践"><a href="#刷新小组件的最佳实践" class="headerlink" title="刷新小组件的最佳实践"></a>刷新小组件的最佳实践</h3><p>调试时刷新率不会有限制，生产环境每天最多40到70次，相当于每15到60分钟刷新一次。</p>
+<h2 id="小组件动画"><a href="#小组件动画" class="headerlink" title="小组件动画"></a>小组件动画</h2><h3 id="Text-视图动态时间"><a href="#Text-视图动态时间" class="headerlink" title="Text 视图动态时间"></a>Text 视图动态时间</h3><p>利用 Text 的动态时间能力</p>
+<h3 id="timeline-动画"><a href="#timeline-动画" class="headerlink" title="timeline 动画"></a>timeline 动画</h3><p>timeline 是由一组时间和数据组成的，每次刷新时，小组件通过和上次数据不一致加入动画效果。</p>
+<p>默认情况小组件使用的是弹簧动画。我们也可以添加转场（Transition）、动画（Animation）和内容过渡（Content Transition）动画效果。</p>
+<h3 id="文本内容过渡动画效果"><a href="#文本内容过渡动画效果" class="headerlink" title="文本内容过渡动画效果"></a>文本内容过渡动画效果</h3><pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token punctuation">.</span><span class="token function">contentTransition</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token function">numericText</span><span class="token punctuation">(</span>value<span class="token punctuation">:</span> rate<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="从底部翻上来的专场"><a href="#从底部翻上来的专场" class="headerlink" title="从底部翻上来的专场"></a>从底部翻上来的专场</h3><pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token punctuation">.</span><span class="token function">transition</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>from<span class="token punctuation">:</span> <span class="token punctuation">.</span>bottom<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="小组件-远程定时获取数据"><a href="#小组件-远程定时获取数据" class="headerlink" title="小组件-远程定时获取数据"></a>小组件-远程定时获取数据</h2><p>在 TimelineProvider 中的 timeline 方法中加入请求逻辑</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function-definition function">timeline</span><span class="token punctuation">(</span><span class="token keyword">for</span> configuration<span class="token punctuation">:</span> <span class="token class-name">RunIntent</span><span class="token punctuation">,</span> <span class="token keyword">in</span> context<span class="token punctuation">:</span> <span class="token class-name">Context</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">Void</span><span class="token punctuation">)</span> <span class="token keyword">async</span> <span class="token operator">-></span> <span class="token class-name">Timeline</span><span class="token operator">&lt;</span><span class="token class-name">ArticleEntry</span><span class="token operator">></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">guard</span> <span class="token keyword">let</span> article <span class="token operator">=</span> <span class="token keyword">try</span><span class="token operator">?</span> <span class="token keyword">await</span> <span class="token class-name">ArticleFetch</span><span class="token punctuation">.</span><span class="token function">fetchNewestArticle</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">let</span> entry <span class="token operator">=</span> <span class="token class-name">ArticleEntry</span><span class="token punctuation">(</span>date<span class="token punctuation">:</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> article<span class="token punctuation">:</span> article<span class="token punctuation">)</span>
+    
+    <span class="token comment">// 下次在 30 分钟后再请求</span>
+    <span class="token keyword">let</span> afterDate <span class="token operator">=</span> <span class="token class-name">Calendar</span><span class="token punctuation">.</span>current<span class="token punctuation">.</span><span class="token function">date</span><span class="token punctuation">(</span>byAdding<span class="token punctuation">:</span> <span class="token class-name">DateComponents</span><span class="token punctuation">(</span>minute<span class="token punctuation">:</span> <span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">,</span> to<span class="token punctuation">:</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">!</span>
+    <span class="token keyword">return</span> <span class="token class-name">Timeline</span><span class="token punctuation">(</span>entries<span class="token punctuation">:</span> <span class="token punctuation">[</span>entry<span class="token punctuation">]</span><span class="token punctuation">,</span> policy<span class="token punctuation">:</span> <span class="token punctuation">.</span><span class="token function">after</span><span class="token punctuation">(</span>afterDate<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>以上代码中，我们在 timeline 方法中请求了最新的文章数据，并且设置了下次请求的时间是当前时间的 30 分钟后。</p>
+<h2 id="小组件-获取位置权限更新内容"><a href="#小组件-获取位置权限更新内容" class="headerlink" title="小组件-获取位置权限更新内容"></a>小组件-获取位置权限更新内容</h2><p>小组件获取位置权限和主应用 target 里获取方式很类似，步骤：</p>
+<ul>
+<li>在 info 里添加 <code>NSWidgetUseLocation = ture</code>。</li>
+<li>使用 CLLocationManager 来获取位置信息，设置较低的精度。</li>
+<li>用 <code>isAuthorizedForWidgetUpdates</code> 请求位置权限。</li>
+</ul>
+<h2 id="支持多个小组件"><a href="#支持多个小组件" class="headerlink" title="支持多个小组件"></a>支持多个小组件</h2><p>widget bundle 可以支持多个小组件。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token attribute atrule">@main</span>
+<span class="token keyword">struct</span> <span class="token class-name">FirstWidgetBundle</span><span class="token punctuation">:</span> <span class="token class-name">WidgetBundle</span> <span class="token punctuation">&#123;</span>
+    
+    <span class="token attribute atrule">@WidgetBundleBuilder</span>
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">Widget</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">FirstWidget</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token class-name">SecondWidget</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token operator">...</span>
+        <span class="token class-name">SecondWidgetBundle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>body
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">SecondWidgetBundle</span><span class="token punctuation">:</span> <span class="token class-name">WidgetBundle</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token attribute atrule">@WidgetBundleBuilder</span>
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">Widget</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">SomeWidgetOne</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token class-name">SomeWidgetTwo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token operator">...</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="获取小组件形状"><a href="#获取小组件形状" class="headerlink" title="获取小组件形状"></a>获取小组件形状</h2><p>不同设备小组件大小和形状都不同，比如要加个边框，就很困难。这就需要使用 <code>ContainerRelativeShape</code> 来获取 Shape 视图容器。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+  <span class="token class-name">ZStack</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">ContainerRelativeShape</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">inset</span><span class="token punctuation">(</span>by<span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">fill</span><span class="token punctuation">(</span><span class="token punctuation">.</span>pink<span class="token punctuation">)</span>
+    <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Hello world"</span></span><span class="token punctuation">)</span>
+    <span class="token operator">...</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="小组件-Deep-link"><a href="#小组件-Deep-link" class="headerlink" title="小组件-Deep link"></a>小组件-Deep link</h2><p>medium 和 large 的小组件可以使用 Link，small 小组件使用 <code>.widgetURL</code> 修饰符。</p>
+<h2 id="小组件访问SwiftData"><a href="#小组件访问SwiftData" class="headerlink" title="小组件访问SwiftData"></a>小组件访问SwiftData</h2><p>Wdiget target 访问主应用 target 的 SwiftData 数据步骤如下：</p>
+<ul>
+<li>对主应用和 Widget 的 target 中的 Signing &amp; Capabilities 都添加 App Groups，并创建一个新组，名字相同。</li>
+<li>SwiftData 的模型同时在主应用和 Widget 的 target 中。</li>
+<li>StaticConfiguration 或 AppIntentConfiguration 中添加 <code>modelContainer()</code> 修饰符，让 SwiftData 的容器可用。</li>
+</ul>
+<h2 id="小组件-参考资料"><a href="#小组件-参考资料" class="headerlink" title="小组件-参考资料"></a>小组件-参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2022/10050/">Complications and widgets: Reloaded - WWDC22 - Videos - Apple Developer</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/WidgetKit">WidgetKit 官方</a></li>
+<li>官方指南 <a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/WidgetKit/Creating-lock-screen-widgets-and-watch-complications">Creating Lock Screen Widgets and Watch Complications</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/widgets/">WidgetKit 主题</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/widgetkit/debugging-widgets">Debugging Widgets</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/all-videos/?q=WidgetKit">WidgetKit Session</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2022/10050">Complications and widgets: Reloaded - WWDC22 - Videos - Apple Developer</a></li>
+</ul>
+<p>WWDC</p>
+<ul>
+<li>介绍怎么将 widgets 添加到 lock screen 的 session <a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2022-10050">Complications and widgets: Reloaded</a>。对应的实例代码 <a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/widgetkit/adding_widgets_to_the_lock_screen_and_watch_faces">Adding widgets to the Lock Screen and watch faces</a></li>
+</ul>
+<p>23</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc23/10028">Bring widgets to life - WWDC23 - Videos - Apple Developer</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc23/10029">Build widgets for the Smart Stack on Apple Watch - WWDC23 - Videos - Apple Developer</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc23/10027">Bring widgets to new places - WWDC23 - Videos - Apple Developer</a></li>
+</ul>
+<p>22</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc22/10051">Go further with Complications in WidgetKit - WWDC22 - Videos - Apple Developer</a> 进一步了解 WidgetKit 中的复杂功能</li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/news/?id=2q8t97ob">Challenge: WidgetKit workshop - Discover - Apple Developer</a> 挑战：WidgetKit 研讨会</li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc22/10050">Complications and widgets: Reloaded - WWDC22 - Videos - Apple Developer</a> 复杂功能和小组件：重新载入</li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc22/10051">Go further with Complications in WidgetKit - WWDC22 - Videos - Apple Developer</a> 进一步了解 WidgetKit 中的复杂功能</li>
+</ul>
+<p>21</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc21/10048">Principles of great widgets - WWDC21 - Videos - Apple Developer</a> 优秀小组件的原则</li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc21/10049">Add intelligence to your widgets - WWDC21 - Videos - Apple Developer</a> 让您的小组件更加智能</li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/news/?id=zawi5f1g">Documentation Spotlight: Dynamically display timely data in your widgets - Discover - Apple Developer</a> 聚焦文档：在小组件中适时动态显示数据</li>
+</ul>
+<p>20</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc20/10033">Build SwiftUI views for widgets - WWDC20 - Videos - Apple Developer</a> 为小组件构建 SwiftUI 视图。中文：<a target="_blank" rel="noopener" href="https://xiaozhuanlan.com/topic/3691507248">WWDC20 - Build SwiftUI views for widgets － 小专栏</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/news/?id=yv6so7ie">Widgets code-along - Discover - Apple Developer</a> 小组件编写临摹课程</li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc20/10034">Widgets Code-along, part 1: The adventure begins - WWDC20 - Videos - Apple Developer</a> 小组件编程临摹课程1：开始学习</li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc20/10035">Widgets Code-along, part 2: Alternate timelines - WWDC20 - Videos - Apple Developer</a> 小组件编程临摹课程2：变更时间线</li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc20/10036">Widgets Code-along, part 3: Advancing timelines - WWDC20 - Videos - Apple Developer</a> 小组件编程临摹课程3：加速时间线</li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc20/10028">Meet WidgetKit - WWDC20 - Videos - Apple Developer</a> 为你介绍 WidgetKit</li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/news/?id=yv6so7ie">Widgets code-along - Discover - Apple Developer</a> 小组件编程临摹课程</li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc20/10194">Add configuration and intelligence to your widgets - WWDC20 - Videos - Apple Developer</a> 为小组件添加配置和智能</li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/wwdc20/10028">Meet WidgetKit - WWDC20 - Videos - Apple Developer</a> 为你介绍 WidgetKit</li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2024/05/18/pamphlet-series-widget/">http://ming1016.github.io/2024/05/18/pamphlet-series-widget/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2024/05/18/pamphlet-series-listdataview/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">Prev</div>
+        
+        <div class="nav-title">小册子之 List、Lazy 容器、ScrollView、Grid 和 Table 数据集合视图 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2024/05/18/pamphlet-series-swiftdata/" class="nav-link">
+      <div>
+        <div class="nav-label">Next</div>
+        
+        <div class="nav-title">小册子之如何使用 SwiftData 开发 SwiftUI 应用 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-StaticConfiguration-%E9%9D%99%E6%80%81%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">小组件-StaticConfiguration 静态配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-AppIntentConfiguration"><span class="toc-number">2.</span> <span class="toc-text">小组件-AppIntentConfiguration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-%E9%85%8D%E7%BD%AE%E9%80%89%E9%A1%B9"><span class="toc-number">3.</span> <span class="toc-text">小组件-配置选项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E5%8C%BA%E5%9F%9F"><span class="toc-number">3.1.</span> <span class="toc-text">显示区域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%96%E6%B6%88%E5%86%85%E5%AE%B9%E8%BE%B9%E8%B7%9D"><span class="toc-number">3.2.</span> <span class="toc-text">取消内容边距</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%96%E6%B6%88%E8%83%8C%E6%99%AF%E5%88%A0%E9%99%A4"><span class="toc-number">3.3.</span> <span class="toc-text">取消背景删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E7%BD%91%E7%BB%9C%E5%A4%84%E7%90%86"><span class="toc-number">3.4.</span> <span class="toc-text">后台网络处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AppIntentTimelineProvider"><span class="toc-number">4.</span> <span class="toc-text">AppIntentTimelineProvider</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%81%E5%B1%8F%E5%B0%8F%E7%BB%84%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text">锁屏小组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B-widgetFamily-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E8%A7%86%E5%9B%BE"><span class="toc-number">4.2.</span> <span class="toc-text">不同类型 widgetFamily 实现不同视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E6%B8%B2%E6%9F%93%E6%A8%A1%E5%BC%8F%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E8%A7%86%E5%9B%BE"><span class="toc-number">4.3.</span> <span class="toc-text">不同渲染模式实现不同视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE%E4%BA%A4%E4%BA%92"><span class="toc-number">4.4.</span> <span class="toc-text">视图交互</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%B7%E6%96%B0%E5%B0%8F%E7%BB%84%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">刷新小组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-Text-%E8%A7%86%E5%9B%BE%E6%9B%B4%E6%96%B0"><span class="toc-number">5.1.</span> <span class="toc-text">通过 Text 视图更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Timeline-Provider-%E6%9B%B4%E6%96%B0"><span class="toc-number">5.2.</span> <span class="toc-text">Timeline Provider 更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5"><span class="toc-number">5.3.</span> <span class="toc-text">更新策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Relevance-%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">5.4.</span> <span class="toc-text">Relevance 优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#App-%E4%B8%BB%E5%8A%A8%E5%88%B7%E6%96%B0"><span class="toc-number">5.5.</span> <span class="toc-text">App 主动刷新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B7%E6%96%B0%E5%B0%8F%E7%BB%84%E4%BB%B6%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-number">5.6.</span> <span class="toc-text">刷新小组件的最佳实践</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6%E5%8A%A8%E7%94%BB"><span class="toc-number">6.</span> <span class="toc-text">小组件动画</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Text-%E8%A7%86%E5%9B%BE%E5%8A%A8%E6%80%81%E6%97%B6%E9%97%B4"><span class="toc-number">6.1.</span> <span class="toc-text">Text 视图动态时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#timeline-%E5%8A%A8%E7%94%BB"><span class="toc-number">6.2.</span> <span class="toc-text">timeline 动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E5%86%85%E5%AE%B9%E8%BF%87%E6%B8%A1%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C"><span class="toc-number">6.3.</span> <span class="toc-text">文本内容过渡动画效果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E5%BA%95%E9%83%A8%E7%BF%BB%E4%B8%8A%E6%9D%A5%E7%9A%84%E4%B8%93%E5%9C%BA"><span class="toc-number">6.4.</span> <span class="toc-text">从底部翻上来的专场</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-%E8%BF%9C%E7%A8%8B%E5%AE%9A%E6%97%B6%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="toc-number">7.</span> <span class="toc-text">小组件-远程定时获取数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-%E8%8E%B7%E5%8F%96%E4%BD%8D%E7%BD%AE%E6%9D%83%E9%99%90%E6%9B%B4%E6%96%B0%E5%86%85%E5%AE%B9"><span class="toc-number">8.</span> <span class="toc-text">小组件-获取位置权限更新内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E5%A4%9A%E4%B8%AA%E5%B0%8F%E7%BB%84%E4%BB%B6"><span class="toc-number">9.</span> <span class="toc-text">支持多个小组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%B0%8F%E7%BB%84%E4%BB%B6%E5%BD%A2%E7%8A%B6"><span class="toc-number">10.</span> <span class="toc-text">获取小组件形状</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-Deep-link"><span class="toc-number">11.</span> <span class="toc-text">小组件-Deep link</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6%E8%AE%BF%E9%97%AESwiftData"><span class="toc-number">12.</span> <span class="toc-text">小组件访问SwiftData</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">13.</span> <span class="toc-text">小组件-参考资料</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
+
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>67</span>
+    <span>Posts</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>6</span>
+    <span>Categories</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>40</span>
+    <span>Tags</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-StaticConfiguration-%E9%9D%99%E6%80%81%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">小组件-StaticConfiguration 静态配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-AppIntentConfiguration"><span class="toc-number">2.</span> <span class="toc-text">小组件-AppIntentConfiguration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-%E9%85%8D%E7%BD%AE%E9%80%89%E9%A1%B9"><span class="toc-number">3.</span> <span class="toc-text">小组件-配置选项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E5%8C%BA%E5%9F%9F"><span class="toc-number">3.1.</span> <span class="toc-text">显示区域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%96%E6%B6%88%E5%86%85%E5%AE%B9%E8%BE%B9%E8%B7%9D"><span class="toc-number">3.2.</span> <span class="toc-text">取消内容边距</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%96%E6%B6%88%E8%83%8C%E6%99%AF%E5%88%A0%E9%99%A4"><span class="toc-number">3.3.</span> <span class="toc-text">取消背景删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E7%BD%91%E7%BB%9C%E5%A4%84%E7%90%86"><span class="toc-number">3.4.</span> <span class="toc-text">后台网络处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AppIntentTimelineProvider"><span class="toc-number">4.</span> <span class="toc-text">AppIntentTimelineProvider</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%81%E5%B1%8F%E5%B0%8F%E7%BB%84%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text">锁屏小组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B-widgetFamily-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E8%A7%86%E5%9B%BE"><span class="toc-number">4.2.</span> <span class="toc-text">不同类型 widgetFamily 实现不同视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E6%B8%B2%E6%9F%93%E6%A8%A1%E5%BC%8F%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E8%A7%86%E5%9B%BE"><span class="toc-number">4.3.</span> <span class="toc-text">不同渲染模式实现不同视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE%E4%BA%A4%E4%BA%92"><span class="toc-number">4.4.</span> <span class="toc-text">视图交互</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%B7%E6%96%B0%E5%B0%8F%E7%BB%84%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">刷新小组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-Text-%E8%A7%86%E5%9B%BE%E6%9B%B4%E6%96%B0"><span class="toc-number">5.1.</span> <span class="toc-text">通过 Text 视图更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Timeline-Provider-%E6%9B%B4%E6%96%B0"><span class="toc-number">5.2.</span> <span class="toc-text">Timeline Provider 更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5"><span class="toc-number">5.3.</span> <span class="toc-text">更新策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Relevance-%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">5.4.</span> <span class="toc-text">Relevance 优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#App-%E4%B8%BB%E5%8A%A8%E5%88%B7%E6%96%B0"><span class="toc-number">5.5.</span> <span class="toc-text">App 主动刷新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B7%E6%96%B0%E5%B0%8F%E7%BB%84%E4%BB%B6%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-number">5.6.</span> <span class="toc-text">刷新小组件的最佳实践</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6%E5%8A%A8%E7%94%BB"><span class="toc-number">6.</span> <span class="toc-text">小组件动画</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Text-%E8%A7%86%E5%9B%BE%E5%8A%A8%E6%80%81%E6%97%B6%E9%97%B4"><span class="toc-number">6.1.</span> <span class="toc-text">Text 视图动态时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#timeline-%E5%8A%A8%E7%94%BB"><span class="toc-number">6.2.</span> <span class="toc-text">timeline 动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E5%86%85%E5%AE%B9%E8%BF%87%E6%B8%A1%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C"><span class="toc-number">6.3.</span> <span class="toc-text">文本内容过渡动画效果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E5%BA%95%E9%83%A8%E7%BF%BB%E4%B8%8A%E6%9D%A5%E7%9A%84%E4%B8%93%E5%9C%BA"><span class="toc-number">6.4.</span> <span class="toc-text">从底部翻上来的专场</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-%E8%BF%9C%E7%A8%8B%E5%AE%9A%E6%97%B6%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="toc-number">7.</span> <span class="toc-text">小组件-远程定时获取数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-%E8%8E%B7%E5%8F%96%E4%BD%8D%E7%BD%AE%E6%9D%83%E9%99%90%E6%9B%B4%E6%96%B0%E5%86%85%E5%AE%B9"><span class="toc-number">8.</span> <span class="toc-text">小组件-获取位置权限更新内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E5%A4%9A%E4%B8%AA%E5%B0%8F%E7%BB%84%E4%BB%B6"><span class="toc-number">9.</span> <span class="toc-text">支持多个小组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%B0%8F%E7%BB%84%E4%BB%B6%E5%BD%A2%E7%8A%B6"><span class="toc-number">10.</span> <span class="toc-text">获取小组件形状</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-Deep-link"><span class="toc-number">11.</span> <span class="toc-text">小组件-Deep link</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6%E8%AE%BF%E9%97%AESwiftData"><span class="toc-number">12.</span> <span class="toc-text">小组件访问SwiftData</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">13.</span> <span class="toc-text">小组件-参考资料</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>Categories</div>
+  <div class="categories-list">
+    
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">47</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-novel">
+        <div class="categories-list-item">
+          My-novel
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-painting">
+        <div class="categories-list-item">
+          My-painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/App">
+        <div class="categories-list-item">
+          App
+          <span class="categories-list-item-badge">6</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>hot tags</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\WWDC" title="WWDC"><div class="tags-list-item">WWDC</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-StaticConfiguration-%E9%9D%99%E6%80%81%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">小组件-StaticConfiguration 静态配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-AppIntentConfiguration"><span class="toc-number">2.</span> <span class="toc-text">小组件-AppIntentConfiguration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-%E9%85%8D%E7%BD%AE%E9%80%89%E9%A1%B9"><span class="toc-number">3.</span> <span class="toc-text">小组件-配置选项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E5%8C%BA%E5%9F%9F"><span class="toc-number">3.1.</span> <span class="toc-text">显示区域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%96%E6%B6%88%E5%86%85%E5%AE%B9%E8%BE%B9%E8%B7%9D"><span class="toc-number">3.2.</span> <span class="toc-text">取消内容边距</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%96%E6%B6%88%E8%83%8C%E6%99%AF%E5%88%A0%E9%99%A4"><span class="toc-number">3.3.</span> <span class="toc-text">取消背景删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E7%BD%91%E7%BB%9C%E5%A4%84%E7%90%86"><span class="toc-number">3.4.</span> <span class="toc-text">后台网络处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AppIntentTimelineProvider"><span class="toc-number">4.</span> <span class="toc-text">AppIntentTimelineProvider</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%81%E5%B1%8F%E5%B0%8F%E7%BB%84%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text">锁屏小组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B-widgetFamily-%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E8%A7%86%E5%9B%BE"><span class="toc-number">4.2.</span> <span class="toc-text">不同类型 widgetFamily 实现不同视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E6%B8%B2%E6%9F%93%E6%A8%A1%E5%BC%8F%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E8%A7%86%E5%9B%BE"><span class="toc-number">4.3.</span> <span class="toc-text">不同渲染模式实现不同视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE%E4%BA%A4%E4%BA%92"><span class="toc-number">4.4.</span> <span class="toc-text">视图交互</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%B7%E6%96%B0%E5%B0%8F%E7%BB%84%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">刷新小组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-Text-%E8%A7%86%E5%9B%BE%E6%9B%B4%E6%96%B0"><span class="toc-number">5.1.</span> <span class="toc-text">通过 Text 视图更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Timeline-Provider-%E6%9B%B4%E6%96%B0"><span class="toc-number">5.2.</span> <span class="toc-text">Timeline Provider 更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5"><span class="toc-number">5.3.</span> <span class="toc-text">更新策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Relevance-%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">5.4.</span> <span class="toc-text">Relevance 优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#App-%E4%B8%BB%E5%8A%A8%E5%88%B7%E6%96%B0"><span class="toc-number">5.5.</span> <span class="toc-text">App 主动刷新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B7%E6%96%B0%E5%B0%8F%E7%BB%84%E4%BB%B6%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-number">5.6.</span> <span class="toc-text">刷新小组件的最佳实践</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6%E5%8A%A8%E7%94%BB"><span class="toc-number">6.</span> <span class="toc-text">小组件动画</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Text-%E8%A7%86%E5%9B%BE%E5%8A%A8%E6%80%81%E6%97%B6%E9%97%B4"><span class="toc-number">6.1.</span> <span class="toc-text">Text 视图动态时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#timeline-%E5%8A%A8%E7%94%BB"><span class="toc-number">6.2.</span> <span class="toc-text">timeline 动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E5%86%85%E5%AE%B9%E8%BF%87%E6%B8%A1%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C"><span class="toc-number">6.3.</span> <span class="toc-text">文本内容过渡动画效果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E5%BA%95%E9%83%A8%E7%BF%BB%E4%B8%8A%E6%9D%A5%E7%9A%84%E4%B8%93%E5%9C%BA"><span class="toc-number">6.4.</span> <span class="toc-text">从底部翻上来的专场</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-%E8%BF%9C%E7%A8%8B%E5%AE%9A%E6%97%B6%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="toc-number">7.</span> <span class="toc-text">小组件-远程定时获取数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-%E8%8E%B7%E5%8F%96%E4%BD%8D%E7%BD%AE%E6%9D%83%E9%99%90%E6%9B%B4%E6%96%B0%E5%86%85%E5%AE%B9"><span class="toc-number">8.</span> <span class="toc-text">小组件-获取位置权限更新内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E5%A4%9A%E4%B8%AA%E5%B0%8F%E7%BB%84%E4%BB%B6"><span class="toc-number">9.</span> <span class="toc-text">支持多个小组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%B0%8F%E7%BB%84%E4%BB%B6%E5%BD%A2%E7%8A%B6"><span class="toc-number">10.</span> <span class="toc-text">获取小组件形状</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-Deep-link"><span class="toc-number">11.</span> <span class="toc-text">小组件-Deep link</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6%E8%AE%BF%E9%97%AESwiftData"><span class="toc-number">12.</span> <span class="toc-text">小组件访问SwiftData</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6-%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">13.</span> <span class="toc-text">小组件-参考资料</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>Recent Posts</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-05-18</div>
+        <a href="/2024/05/18/pamphlet-series-form/"><div class="recent-posts-item-content">小册子之 Form、Picker、Toggle、Slider 和 Stepper 表单相关视图</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-05-18</div>
+        <a href="/2024/05/18/pamphlet-series-layout/"><div class="recent-posts-item-content">小册子之详说 Navigation、ViewThatFits、Layout 协议等布局组件</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-05-18</div>
+        <a href="/2024/05/18/pamphlet-series-listdataview/"><div class="recent-posts-item-content">小册子之 List、Lazy 容器、ScrollView、Grid 和 Table 数据集合视图</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-05-18</div>
+        <a href="/2024/05/18/pamphlet-series-widget/"><div class="recent-posts-item-content">小册子之简说 Widget 小组件</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2014 -
+          
+          2024
+        </span>
+        <a href="/" class="footer-link">戴铭的博客 </a>
+      </div>
+    </div>
+
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>

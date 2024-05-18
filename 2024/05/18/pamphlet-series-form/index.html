@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-Hans" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
+      
+      <span class="navbar-logo-dsc">戴铭的博客</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">Home </a>
+    
+    <a href="/archives" class="navbar-menu-item">Archive </a>
+    
+    <a href="/tags" class="navbar-menu-item">Tags </a>
+    
+    <a href="/categories" class="navbar-menu-item">Categories </a>
+    
+    <a href="/about" class="navbar-menu-item">About </a>
+    
+    <a href="" class="navbar-menu-item">Friends </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/pamphlet-series-form/01.png" data-src="/uploads/pamphlet-series-form/01.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      小册子之 Form、Picker、Toggle、Slider 和 Stepper 表单相关视图
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2024-05-18T02:24:12.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2024-05-18</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/App/" class="post-meta-link">App</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>4.4k words</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/SwiftUI/" class="post-meta-link">SwiftUI</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p>以下内容已整理到小册子中，小册子代码在 <a target="_blank" rel="noopener" href="https://github.com/ming1016/SwiftPamphletApp">Github</a> 上，可以在 macOS 应用商店安装<a target="_blank" rel="noopener" href="https://apps.apple.com/cn/app/%E6%88%B4%E9%93%AD%E7%9A%84%E5%BC%80%E5%8F%91%E5%B0%8F%E5%86%8C%E5%AD%90/id1609702529?mt=12">“戴铭的开发小册子”</a>应用查看。</p>
+<h2 id="Form"><a href="#Form" class="headerlink" title="Form"></a>Form</h2><table>
+<thead>
+<tr>
+<th>控件视图</th>
+<th>说明</th>
+<th>Style</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Button</td>
+<td>触发操作的按钮</td>
+<td>.bordered, .borderless, .borderedProminent, .plain</td>
+</tr>
+<tr>
+<td>Picker</td>
+<td>提供多选项供选择</td>
+<td>.wheel, .inline, .segmented, .menu, .radioGroup</td>
+</tr>
+<tr>
+<td>DatePicker and MultiDatePicker</td>
+<td>选择日期的工具</td>
+<td>.compact, .wheel, .graphical</td>
+</tr>
+<tr>
+<td>Toggle</td>
+<td>切换两种状态的开关</td>
+<td>.switch, .botton, .checkbox</td>
+</tr>
+<tr>
+<td>Stepper</td>
+<td>调整数值的步进器</td>
+<td>无样式选项</td>
+</tr>
+<tr>
+<td>Menu</td>
+<td>显示选项列表的菜单</td>
+<td>.borderlessButton, .button</td>
+</tr>
+</tbody></table>
+<p>Form 有 ColumnFormStyle 还有 GroupedFormStyle。使用 buttonStyle 修饰符：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token class-name">Form</span> <span class="token punctuation">&#123;</span>
+   <span class="token operator">...</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">.</span><span class="token function">formStyle</span><span class="token punctuation">(</span><span class="token punctuation">.</span>grouped<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>Form 新版也得到了增强，示例如下：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">SimpleFormView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> date <span class="token operator">=</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> eventDescription <span class="token operator">=</span> <span class="token string-literal"><span class="token string">""</span></span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> accent <span class="token operator">=</span> <span class="token class-name">Color</span><span class="token punctuation">.</span>red
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> scheme <span class="token operator">=</span> <span class="token class-name">ColorScheme</span><span class="token punctuation">.</span>light
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Form</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Section</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">DatePicker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Date"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $date<span class="token punctuation">)</span>
+                <span class="token class-name">TextField</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Description"</span></span><span class="token punctuation">,</span> text<span class="token punctuation">:</span> $eventDescription<span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">lineLimit</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span>
+            
+            <span class="token class-name">Section</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Vibe"</span></span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">Picker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Accent color"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $accent<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    <span class="token class-name">ForEach</span><span class="token punctuation">(</span><span class="token class-name">Color</span><span class="token punctuation">.</span>accentColors<span class="token punctuation">,</span> id<span class="token punctuation">:</span> <span class="token punctuation">\</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> color <span class="token keyword">in</span>
+                        <span class="token class-name">Text</span><span class="token punctuation">(</span>color<span class="token punctuation">.</span>description<span class="token punctuation">.</span>capitalized<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">tag</span><span class="token punctuation">(</span>color<span class="token punctuation">)</span>
+                    <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">&#125;</span>
+                <span class="token class-name">Picker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Color scheme"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $scheme<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Light"</span></span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">tag</span><span class="token punctuation">(</span><span class="token class-name">ColorScheme</span><span class="token punctuation">.</span>light<span class="token punctuation">)</span>
+                    <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Dark"</span></span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">tag</span><span class="token punctuation">(</span><span class="token class-name">ColorScheme</span><span class="token punctuation">.</span>dark<span class="token punctuation">)</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">formStyle</span><span class="token punctuation">(</span><span class="token punctuation">.</span>grouped<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">extension</span> <span class="token class-name">Color</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">static</span> <span class="token keyword">let</span> accentColors<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">Color</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">.</span>red<span class="token punctuation">,</span> <span class="token punctuation">.</span>green<span class="token punctuation">,</span> <span class="token punctuation">.</span>blue<span class="token punctuation">,</span> <span class="token punctuation">.</span>orange<span class="token punctuation">,</span> <span class="token punctuation">.</span>pink<span class="token punctuation">,</span> <span class="token punctuation">.</span>purple<span class="token punctuation">,</span> <span class="token punctuation">.</span>yellow<span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>Form 的样式除了 <code>.formStyle(.grouped)</code> 还有 <code>.formStyle(..columns)</code>。</p>
+<p>关于 Form 字体、单元、背景颜色设置，参看下面代码：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">ContentView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> movieTitle <span class="token operator">=</span> <span class="token string-literal"><span class="token string">""</span></span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> isWatched <span class="token operator">=</span> <span class="token boolean">false</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> rating <span class="token operator">=</span> <span class="token number">1</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> watchDate <span class="token operator">=</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Form</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Section</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">TextField</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"电影标题"</span></span><span class="token punctuation">,</span> text<span class="token punctuation">:</span> $movieTitle<span class="token punctuation">)</span>
+                <span class="token class-name">LabeledContent</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"导演"</span></span><span class="token punctuation">,</span> value<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"克里斯托弗·诺兰"</span></span><span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span> header<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"关于电影"</span></span><span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span><span class="token function">listRowBackground</span><span class="token punctuation">(</span><span class="token class-name">Color</span><span class="token punctuation">.</span>gray<span class="token punctuation">.</span><span class="token function">opacity</span><span class="token punctuation">(</span><span class="token number">0.1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+            <span class="token class-name">Section</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">Toggle</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"已观看"</span></span><span class="token punctuation">,</span> isOn<span class="token punctuation">:</span> $isWatched<span class="token punctuation">)</span>
+                <span class="token class-name">Picker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"评分"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $rating<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    <span class="token class-name">ForEach</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">...</span><span class="token number">5</span><span class="token punctuation">,</span> id<span class="token punctuation">:</span> <span class="token punctuation">\</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> number <span class="token keyword">in</span>
+                        <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">number</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string"> 星"</span></span><span class="token punctuation">)</span>
+                    <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">&#125;</span>
+
+            <span class="token punctuation">&#125;</span> header<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"电影详情"</span></span><span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span><span class="token function">listRowBackground</span><span class="token punctuation">(</span><span class="token class-name">Color</span><span class="token punctuation">.</span>gray<span class="token punctuation">.</span><span class="token function">opacity</span><span class="token punctuation">(</span><span class="token number">0.1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            
+            <span class="token class-name">Section</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">DatePicker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"观看日期"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $watchDate<span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span><span class="token function">listRowBackground</span><span class="token punctuation">(</span><span class="token class-name">Color</span><span class="token punctuation">.</span>gray<span class="token punctuation">.</span><span class="token function">opacity</span><span class="token punctuation">(</span><span class="token number">0.1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            
+            <span class="token class-name">Section</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">Button</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"重置所有电影数据"</span></span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    <span class="token function">resetAllData</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span><span class="token function">listRowBackground</span><span class="token punctuation">(</span><span class="token class-name">Color</span><span class="token punctuation">.</span>white<span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">foregroundColor</span><span class="token punctuation">(</span><span class="token punctuation">.</span>black<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">tint</span><span class="token punctuation">(</span><span class="token punctuation">.</span>indigo<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">background</span><span class="token punctuation">(</span><span class="token class-name">Color</span><span class="token punctuation">.</span>yellow<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">scrollContentBackground</span><span class="token punctuation">(</span><span class="token punctuation">.</span>hidden<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">navigationBarTitle</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"电影追踪器"</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token keyword">private</span> <span class="token keyword">func</span> <span class="token function-definition function">resetAllData</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        movieTitle <span class="token operator">=</span> <span class="token string-literal"><span class="token string">""</span></span>
+        isWatched <span class="token operator">=</span> <span class="token boolean">false</span>
+        rating <span class="token operator">=</span> <span class="token number">1</span>
+        watchDate <span class="token operator">=</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">LabeledContent</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> label<span class="token punctuation">:</span> <span class="token class-name">String</span>
+    <span class="token keyword">let</span> value<span class="token punctuation">:</span> <span class="token class-name">String</span>
+
+    <span class="token keyword">init</span><span class="token punctuation">(</span><span class="token omit keyword">_</span> label<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span> value<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">self</span><span class="token punctuation">.</span>label <span class="token operator">=</span> label
+        <span class="token keyword">self</span><span class="token punctuation">.</span>value <span class="token operator">=</span> value
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">HStack</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span>label<span class="token punctuation">)</span>
+            <span class="token class-name">Spacer</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h2 id="Picker选择器"><a href="#Picker选择器" class="headerlink" title="Picker选择器"></a>Picker选择器</h2><h3 id="Picker"><a href="#Picker" class="headerlink" title="Picker"></a>Picker</h3><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://ming1016.github.io/qdimg/240505/picker-ap01.jpeg" class="lozad post-image"src="https://ming1016.github.io/qdimg/240505/picker-ap01.jpeg"></p>
+<p>SwiftUI 中的 <code>Picker</code> 视图是一个用于选择列表中的一个选项的用户界面元素。你可以使用 <code>Picker</code> 视图来创建各种类型的选择器，包括滚动选择器、弹出菜单和分段控制。</p>
+<p>示例代码如下：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayPickerView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> select <span class="token operator">=</span> <span class="token number">1</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> color <span class="token operator">=</span> <span class="token class-name">Color</span><span class="token punctuation">.</span>red<span class="token punctuation">.</span><span class="token function">opacity</span><span class="token punctuation">(</span><span class="token number">0.3</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">var</span> dateFt<span class="token punctuation">:</span> <span class="token class-name">DateFormatter</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">let</span> ft <span class="token operator">=</span> <span class="token class-name">DateFormatter</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        ft<span class="token punctuation">.</span>dateStyle <span class="token operator">=</span> <span class="token punctuation">.</span>long
+        <span class="token keyword">return</span> ft
+    <span class="token punctuation">&#125;</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> date <span class="token operator">=</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        
+        <span class="token comment">// 默认是下拉的风格</span>
+        <span class="token class-name">Form</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Section</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选区"</span></span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">Picker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选一个"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $select<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"1"</span></span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">tag</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+                    <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"2"</span></span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">tag</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">padding</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        
+        <span class="token comment">// Segment 风格，</span>
+        <span class="token class-name">Picker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选一个"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $select<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"one"</span></span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">tag</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"two"</span></span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">tag</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">pickerStyle</span><span class="token punctuation">(</span><span class="token class-name">SegmentedPickerStyle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">padding</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        
+        <span class="token comment">// 颜色选择器</span>
+        <span class="token class-name">ColorPicker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选一个颜色"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $color<span class="token punctuation">,</span> supportsOpacity<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">padding</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        
+        <span class="token class-name">RoundedRectangle</span><span class="token punctuation">(</span>cornerRadius<span class="token punctuation">:</span> <span class="token number">8</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">fill</span><span class="token punctuation">(</span>color<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">frame</span><span class="token punctuation">(</span>width<span class="token punctuation">:</span> <span class="token number">50</span><span class="token punctuation">,</span> height<span class="token punctuation">:</span> <span class="token number">50</span><span class="token punctuation">)</span>
+        
+        <span class="token comment">// 时间选择器</span>
+        <span class="token class-name">VStack</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">DatePicker</span><span class="token punctuation">(</span>selection<span class="token punctuation">:</span> $date<span class="token punctuation">,</span> <span class="token keyword">in</span><span class="token punctuation">:</span> <span class="token operator">...</span><span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> displayedComponents<span class="token punctuation">:</span> <span class="token punctuation">.</span>date<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选时间"</span></span><span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span>
+            
+            <span class="token class-name">DatePicker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选时间"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $date<span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">datePickerStyle</span><span class="token punctuation">(</span><span class="token class-name">GraphicalDatePickerStyle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">frame</span><span class="token punctuation">(</span>maxHeight<span class="token punctuation">:</span> <span class="token number">400</span><span class="token punctuation">)</span>
+            
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"时间：</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">date<span class="token punctuation">,</span> formatter<span class="token punctuation">:</span> dateFt</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">padding</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>上面的代码中，有三种类型的 <code>Picker</code> 视图：</p>
+<ol>
+<li>默认的下拉风格 <code>Picker</code> 视图。这种类型的 <code>Picker</code> 视图在 <code>Form</code> 中使用，用户可以点击选择器来打开一个下拉菜单，然后从菜单中选择一个选项。</li>
+</ol>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token class-name">Form</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Section</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选区"</span></span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Picker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选一个"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $select<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"1"</span></span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">tag</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"2"</span></span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">tag</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="2">
+<li>分段控制风格 <code>Picker</code> 视图。这种类型的 <code>Picker</code> 视图使用 <code>SegmentedPickerStyle()</code> 修饰符，它将选择器显示为一组水平排列的按钮，用户可以点击按钮来选择一个选项。</li>
+</ol>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token class-name">Picker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选一个"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $select<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"one"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">tag</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"two"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">tag</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+<span class="token punctuation">.</span><span class="token function">pickerStyle</span><span class="token punctuation">(</span><span class="token class-name">SegmentedPickerStyle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="3">
+<li><code>ColorPicker</code> 和 <code>DatePicker</code> 视图。这两种类型的视图是 <code>Picker</code> 视图的特殊形式，它们分别用于选择颜色和日期。</li>
+</ol>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token class-name">ColorPicker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选一个颜色"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $color<span class="token punctuation">,</span> supportsOpacity<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+
+<span class="token class-name">DatePicker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选时间"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $date<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">datePickerStyle</span><span class="token punctuation">(</span><span class="token class-name">GraphicalDatePickerStyle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在所有这些 <code>Picker</code> 视图中，你都需要提供一个绑定的选择状态，这个状态会在用户选择一个新的选项时更新。你还需要为每个选项提供一个视图和一个唯一的标签。</p>
+<h3 id="文字Picker"><a href="#文字Picker" class="headerlink" title="文字Picker"></a>文字Picker</h3><h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><p>文字 Picker 示例：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">StaticDataPickerView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> selectedCategory <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"动作"</span></span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">VStack</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选择的类别: </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">selectedCategory</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+            <span class="token class-name">Picker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"电影类别"</span></span><span class="token punctuation">,</span>
+                 selection<span class="token punctuation">:</span> $selectedCategory<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"动作"</span></span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">tag</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"动作"</span></span><span class="token punctuation">)</span>
+                <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"喜剧"</span></span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">tag</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"喜剧"</span></span><span class="token punctuation">)</span>
+                <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"剧情"</span></span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">tag</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"剧情"</span></span><span class="token punctuation">)</span>
+                <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"恐怖"</span></span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">tag</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"恐怖"</span></span><span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="使用枚举"><a href="#使用枚举" class="headerlink" title="使用枚举"></a>使用枚举</h4><p>使用枚举来创建选取器的示例：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">enum</span> <span class="token class-name">MovieCategory</span><span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">CaseIterable</span><span class="token punctuation">,</span> <span class="token class-name">Identifiable</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">case</span> action <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"动作"</span></span>
+    <span class="token keyword">case</span> comedy <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"喜剧"</span></span>
+    <span class="token keyword">case</span> drama <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"剧情"</span></span>
+    <span class="token keyword">case</span> horror <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"恐怖"</span></span>
+    <span class="token keyword">var</span> id<span class="token punctuation">:</span> <span class="token class-name">MovieCategory</span> <span class="token punctuation">&#123;</span> <span class="token keyword">self</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">MoviePicker</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+   <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> selectedCategory<span class="token punctuation">:</span> <span class="token class-name">MovieCategory</span> <span class="token operator">=</span> <span class="token punctuation">.</span>action
+
+  <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+     <span class="token class-name">Picker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"电影类别"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $selectedCategory<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">ForEach</span><span class="token punctuation">(</span><span class="token class-name">MovieCategory</span><span class="token punctuation">.</span>allCases<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> category <span class="token keyword">in</span>
+             <span class="token class-name">Text</span><span class="token punctuation">(</span>category<span class="token punctuation">.</span>rawValue<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">tag</span><span class="token punctuation">(</span>category<span class="token punctuation">)</span>
+       <span class="token punctuation">&#125;</span>
+     <span class="token punctuation">&#125;</span>
+   <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h4 id="样式"><a href="#样式" class="headerlink" title="样式"></a>样式</h4><p>SwiftUI 提供了多种内置的 <code>Picker</code> 样式，以改变 <code>Picker</code> 的外观和行为。以下是一些主要的 <code>Picker</code> 样式及其使用示例：</p>
+<ul>
+<li><code>DefaultPickerStyle</code>：根据平台和环境自动调整样式。这是默认的 <code>Picker</code> 样式。</li>
+</ul>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token class-name">Picker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Label"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $selection<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">ForEach</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token operator">..&lt;</span>options<span class="token punctuation">.</span>count<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token keyword">self</span><span class="token punctuation">.</span>options<span class="token punctuation">[</span><span class="token short-argument">$0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><code>WheelPickerStyle</code>：以旋转轮的形式展示选项。在 iOS 上，这种样式会显示一个滚动的选择器。</li>
+</ul>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token class-name">Picker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Label"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $selection<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">ForEach</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token operator">..&lt;</span>options<span class="token punctuation">.</span>count<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token keyword">self</span><span class="token punctuation">.</span>options<span class="token punctuation">[</span><span class="token short-argument">$0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token punctuation">.</span><span class="token function">pickerStyle</span><span class="token punctuation">(</span><span class="token class-name">WheelPickerStyle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><code>SegmentedPickerStyle</code>：将选项以分段控件的形式展示。这种样式会显示一个分段控制，用户可以在其中选择一个选项。</li>
+</ul>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token class-name">Picker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Label"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $selection<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">ForEach</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token operator">..&lt;</span>options<span class="token punctuation">.</span>count<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token keyword">self</span><span class="token punctuation">.</span>options<span class="token punctuation">[</span><span class="token short-argument">$0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token punctuation">.</span><span class="token function">pickerStyle</span><span class="token punctuation">(</span><span class="token class-name">SegmentedPickerStyle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><code>InlinePickerStyle</code>：在列表或表格中内联展示选项。这种样式会在 <code>Form</code> 或 <code>List</code> 中显示一个内联的选择器。</li>
+</ul>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token class-name">Form</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Picker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Label"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $selection<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">ForEach</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token operator">..&lt;</span>options<span class="token punctuation">.</span>count<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token keyword">self</span><span class="token punctuation">.</span>options<span class="token punctuation">[</span><span class="token short-argument">$0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">.</span><span class="token function">pickerStyle</span><span class="token punctuation">(</span><span class="token class-name">InlinePickerStyle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><code>MenuPickerStyle</code>：点击时以菜单的形式展示选项。这种样式会显示一个菜单，用户可以在其中选择一个选项。</li>
+</ul>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token class-name">Picker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Label"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $selection<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">ForEach</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token operator">..&lt;</span>options<span class="token punctuation">.</span>count<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token keyword">self</span><span class="token punctuation">.</span>options<span class="token punctuation">[</span><span class="token short-argument">$0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token punctuation">.</span><span class="token function">pickerStyle</span><span class="token punctuation">(</span><span class="token class-name">MenuPickerStyle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><code>.navigationLink</code>：在 iOS 16+ 中，点击后进入下一个页面。这种样式会显示一个导航链接，用户可以点击它来打开一个新的视图。</li>
+<li><code>.radioGrouped</code>：仅在 macOS 中可用，以单选按钮组的形式展示选项。这种样式会显示一个单选按钮组，用户可以在其中选择一个选项。</li>
+</ul>
+<h3 id="ColorPicker"><a href="#ColorPicker" class="headerlink" title="ColorPicker"></a>ColorPicker</h3><p><code>ColorPicker</code> 是一个允许用户选择颜色的视图。以下是一个 <code>ColorPicker</code> 的使用示例：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">import</span> <span class="token class-name">SwiftUI</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">ContentView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> selectedColor <span class="token operator">=</span> <span class="token class-name">Color</span><span class="token punctuation">.</span>white
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">VStack</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">ColorPicker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选择一个颜色"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $selectedColor<span class="token punctuation">)</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"你选择的颜色"</span></span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">foregroundColor</span><span class="token punctuation">(</span>selectedColor<span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在这个示例中，我们创建了一个 <code>ColorPicker</code> 视图，用户可以通过这个视图选择一个颜色。我们使用 <code>@State</code> 属性包装器来创建一个可以绑定到 <code>ColorPicker</code> 的 <code>selectedColor</code> 状态。当用户选择一个新的颜色时，<code>selectedColor</code> 状态会自动更新，<code>Text</code> 视图的前景色也会相应地更新。</p>
+<h3 id="DatePicker"><a href="#DatePicker" class="headerlink" title="DatePicker"></a>DatePicker</h3><h4 id="基本使用-1"><a href="#基本使用-1" class="headerlink" title="基本使用"></a>基本使用</h4><pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">ContentView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> releaseDate<span class="token punctuation">:</span> <span class="token class-name">Date</span> <span class="token operator">=</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">VStack</span><span class="token punctuation">(</span>spacing<span class="token punctuation">:</span> <span class="token number">30</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">DatePicker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选择电影发布日期"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $releaseDate<span class="token punctuation">,</span> displayedComponents<span class="token punctuation">:</span> <span class="token punctuation">.</span>date<span class="token punctuation">)</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选择的发布日期: </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">releaseDate<span class="token punctuation">,</span> formatter<span class="token punctuation">:</span> <span class="token class-name">DateFormatter</span><span class="token punctuation">.</span>dateMedium</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">padding</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h4 id="选择多个日期"><a href="#选择多个日期" class="headerlink" title="选择多个日期"></a>选择多个日期</h4><p>在 iOS 16 中，您现在可以允许用户选择多个日期，MultiDatePicker 视图会显示一个日历，用户可以选择多个日期，可以设置选择范围。示例如下：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PMultiDatePicker</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@Environment</span><span class="token punctuation">(</span><span class="token punctuation">\</span><span class="token punctuation">.</span>calendar<span class="token punctuation">)</span> <span class="token keyword">var</span> cal
+    <span class="token attribute atrule">@State</span> <span class="token keyword">var</span> dates<span class="token punctuation">:</span> <span class="token class-name">Set</span><span class="token operator">&lt;</span><span class="token class-name">DateComponents</span><span class="token operator">></span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">MultiDatePicker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选择个日子"</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $dates<span class="token punctuation">,</span> <span class="token keyword">in</span><span class="token punctuation">:</span> <span class="token class-name">Date</span><span class="token punctuation">.</span>now<span class="token operator">...</span><span class="token punctuation">)</span>
+        <span class="token class-name">Text</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">var</span> s<span class="token punctuation">:</span> <span class="token class-name">String</span> <span class="token punctuation">&#123;</span>
+        dates<span class="token punctuation">.</span>compactMap <span class="token punctuation">&#123;</span> c <span class="token keyword">in</span>
+            cal<span class="token punctuation">.</span><span class="token function">date</span><span class="token punctuation">(</span>from<span class="token punctuation">:</span>c<span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">formatted</span><span class="token punctuation">(</span>date<span class="token punctuation">:</span> <span class="token punctuation">.</span>long<span class="token punctuation">,</span> time<span class="token punctuation">:</span> <span class="token punctuation">.</span>omitted<span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">formatted</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="指定日期范围"><a href="#指定日期范围" class="headerlink" title="指定日期范围"></a>指定日期范围</h4><p>指定日期的范围，例如只能选择当前日期之后的日期，示例如下：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token class-name">DatePicker</span><span class="token punctuation">(</span>
+    <span class="token string-literal"><span class="token string">"选择日期"</span></span><span class="token punctuation">,</span>
+    selection<span class="token punctuation">:</span> $selectedDate<span class="token punctuation">,</span>
+    <span class="token keyword">in</span><span class="token punctuation">:</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">...</span><span class="token punctuation">,</span>
+    displayedComponents<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">.</span>date<span class="token punctuation">]</span>
+<span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">datePickerStyle</span><span class="token punctuation">(</span><span class="token class-name">WheelDatePickerStyle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">labelsHidden</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在这个示例中：</p>
+<ul>
+<li><code>selection: $selectedDate</code> 表示选定的日期和时间。</li>
+<li><code>in: Date()...</code> 表示可选日期的范围。在这个例子中，用户只能选择当前日期之后的日期。你也可以使用 <code>...Date()</code> 来限制用户只能选择当前日期之前的日期，或者使用 <code>Date().addingTimeInterval(86400*7)</code> 来限制用户只能选择从当前日期开始的接下来一周内的日期。</li>
+<li><code>displayedComponents: [.date]</code> 表示 <code>DatePicker</code> 应该显示哪些组件。在这个例子中，我们只显示日期组件。你也可以使用 <code>.hourAndMinute</code> 来显示小时和分钟组件，或者同时显示日期和时间组件。</li>
+<li><code>.datePickerStyle(WheelDatePickerStyle())</code> 表示 <code>DatePicker</code> 的样式。在这个例子中，我们使用滚轮样式。你也可以使用 <code>GraphicalDatePickerStyle()</code> 来应用图形样式。</li>
+<li><code>.labelsHidden()</code> 表示隐藏 <code>DatePicker</code> 的标签。</li>
+</ul>
+<h3 id="PhotoPicker"><a href="#PhotoPicker" class="headerlink" title="PhotoPicker"></a>PhotoPicker</h3><h4 id="PhotoPicker-使用示例"><a href="#PhotoPicker-使用示例" class="headerlink" title="PhotoPicker 使用示例"></a>PhotoPicker 使用示例</h4><pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">import</span> <span class="token class-name">SwiftUI</span>
+<span class="token keyword">import</span> <span class="token class-name">PhotosUI</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">ContentView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> selectedItem<span class="token punctuation">:</span> <span class="token class-name">PhotosPickerItem</span><span class="token operator">?</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> selectedPhotoData<span class="token punctuation">:</span> <span class="token class-name">Data</span><span class="token operator">?</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">NavigationView</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">VStack</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">if</span> <span class="token keyword">let</span> item <span class="token operator">=</span> selectedItem<span class="token punctuation">,</span> <span class="token keyword">let</span> data <span class="token operator">=</span> selectedPhotoData<span class="token punctuation">,</span> <span class="token keyword">let</span> image <span class="token operator">=</span> <span class="token class-name">UIImage</span><span class="token punctuation">(</span>data<span class="token punctuation">:</span> data<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    <span class="token class-name">Image</span><span class="token punctuation">(</span>uiImage<span class="token punctuation">:</span> image<span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">resizable</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">scaledToFit</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+                    <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选择电影海报"</span></span><span class="token punctuation">)</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span><span class="token function">navigationTitle</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"电影海报"</span></span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span>toolbar <span class="token punctuation">&#123;</span>
+                <span class="token class-name">ToolbarItem</span><span class="token punctuation">(</span>placement<span class="token punctuation">:</span> <span class="token punctuation">.</span>navigationBarTrailing<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    <span class="token class-name">PhotosPicker</span><span class="token punctuation">(</span>selection<span class="token punctuation">:</span> $selectedItem<span class="token punctuation">,</span> matching<span class="token punctuation">:</span> <span class="token punctuation">.</span>images<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                        <span class="token class-name">Label</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选择照片"</span></span><span class="token punctuation">,</span> systemImage<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"photo"</span></span><span class="token punctuation">)</span>
+                    <span class="token punctuation">&#125;</span>
+                    <span class="token punctuation">.</span><span class="token function">tint</span><span class="token punctuation">(</span><span class="token punctuation">.</span>indigo<span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">controlSize</span><span class="token punctuation">(</span><span class="token punctuation">.</span>extraLarge<span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">buttonStyle</span><span class="token punctuation">(</span><span class="token punctuation">.</span>borderedProminent<span class="token punctuation">)</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span><span class="token function">onChange</span><span class="token punctuation">(</span>of<span class="token punctuation">:</span> selectedItem<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> oldValue<span class="token punctuation">,</span> newValue <span class="token keyword">in</span>
+                <span class="token class-name">Task</span> <span class="token punctuation">&#123;</span>
+                    <span class="token keyword">if</span> <span class="token keyword">let</span> data <span class="token operator">=</span> <span class="token keyword">try</span><span class="token operator">?</span> <span class="token keyword">await</span> newValue<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">loadTransferable</span><span class="token punctuation">(</span>type<span class="token punctuation">:</span> <span class="token class-name">Data</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                        selectedPhotoData <span class="token operator">=</span> data
+                    <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="限制选择媒体类型"><a href="#限制选择媒体类型" class="headerlink" title="限制选择媒体类型"></a>限制选择媒体类型</h4><p>我们可以使用 <code>matching</code> 参数来过滤 <code>PhotosPicker</code> 中显示的媒体类型。这个参数接受一个 <code>PHAssetMediaType</code> 枚举值，可以是 <code>.images</code>、<code>.videos</code>、<code>.audio</code>、<code>.any</code> 等。</p>
+<p>例如，如果我们只想显示图片，可以这样设置：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token class-name">PhotosPicker</span><span class="token punctuation">(</span>selection<span class="token punctuation">:</span> $selectedItem<span class="token punctuation">,</span> matching<span class="token punctuation">:</span> <span class="token punctuation">.</span>images<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Label</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选择照片"</span></span><span class="token punctuation">,</span> systemImage<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"photo"</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>如果我们想同时显示图片和视频，可以使用 <code>.any(of:)</code> 方法：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token class-name">PhotosPicker</span><span class="token punctuation">(</span>selection<span class="token punctuation">:</span> $selectedItem<span class="token punctuation">,</span> matching<span class="token punctuation">:</span> <span class="token punctuation">.</span><span class="token function">any</span><span class="token punctuation">(</span>of<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">.</span>images<span class="token punctuation">,</span> <span class="token punctuation">.</span>videos<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Label</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选择照片"</span></span><span class="token punctuation">,</span> systemImage<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"photo"</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>此外，我们还可以使用 <code>.not(_:)</code> 方法来排除某种类型的媒体。例如，如果我们想显示所有的图片，但是不包括 Live Photo，可以这样设置：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token class-name">PhotosPicker</span><span class="token punctuation">(</span>selection<span class="token punctuation">:</span> $selectedItem<span class="token punctuation">,</span> matching<span class="token punctuation">:</span> <span class="token punctuation">.</span><span class="token function">any</span><span class="token punctuation">(</span>of<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">.</span>images<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token function">not</span><span class="token punctuation">(</span><span class="token punctuation">.</span>livePhotos<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Label</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选择照片"</span></span><span class="token punctuation">,</span> systemImage<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"photo"</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>这些设置可以让我们更精确地控制 <code>PhotosPicker</code> 中显示的媒体类型。</p>
+<h4 id="选择多张图片"><a href="#选择多张图片" class="headerlink" title="选择多张图片"></a>选择多张图片</h4><p>以下示例演示了如何使用 <code>PhotosPicker</code> 选择多张图片，并将它们显示在一个 <code>LazyVGrid</code> 中：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">import</span> <span class="token class-name">SwiftUI</span>
+<span class="token keyword">import</span> <span class="token class-name">PhotosUI</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">ContentView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> selectedItems<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">PhotosPickerItem</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token class-name">PhotosPickerItem</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> selectedPhotosData<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">Data</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token class-name">Data</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">NavigationStack</span> <span class="token punctuation">&#123;</span>
+
+            <span class="token class-name">ScrollView</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">LazyVGrid</span><span class="token punctuation">(</span>columns<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">GridItem</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token function">adaptive</span><span class="token punctuation">(</span>minimum<span class="token punctuation">:</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    <span class="token class-name">ForEach</span><span class="token punctuation">(</span>selectedPhotosData<span class="token punctuation">,</span> id<span class="token punctuation">:</span> <span class="token punctuation">\</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> photoData <span class="token keyword">in</span>
+                        <span class="token keyword">if</span> <span class="token keyword">let</span> image <span class="token operator">=</span> <span class="token class-name">UIImage</span><span class="token punctuation">(</span>data<span class="token punctuation">:</span> photoData<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                            <span class="token class-name">Image</span><span class="token punctuation">(</span>uiImage<span class="token punctuation">:</span> image<span class="token punctuation">)</span>
+                                <span class="token punctuation">.</span><span class="token function">resizable</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                                <span class="token punctuation">.</span><span class="token function">scaledToFit</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                                <span class="token punctuation">.</span><span class="token function">cornerRadius</span><span class="token punctuation">(</span><span class="token number">10.0</span><span class="token punctuation">)</span>
+                                <span class="token punctuation">.</span><span class="token function">padding</span><span class="token punctuation">(</span><span class="token punctuation">.</span>horizontal<span class="token punctuation">)</span>
+                        <span class="token punctuation">&#125;</span>
+                    <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span><span class="token function">navigationTitle</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"书籍"</span></span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span>toolbar <span class="token punctuation">&#123;</span>
+                <span class="token class-name">ToolbarItem</span><span class="token punctuation">(</span>placement<span class="token punctuation">:</span> <span class="token punctuation">.</span>navigationBarTrailing<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    <span class="token class-name">PhotosPicker</span><span class="token punctuation">(</span>selection<span class="token punctuation">:</span> $selectedItems<span class="token punctuation">,</span> maxSelectionCount<span class="token punctuation">:</span> <span class="token number">5</span><span class="token punctuation">,</span> matching<span class="token punctuation">:</span> <span class="token punctuation">.</span>images<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                        <span class="token class-name">Image</span><span class="token punctuation">(</span>systemName<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"book.fill"</span></span><span class="token punctuation">)</span>
+                            <span class="token punctuation">.</span><span class="token function">foregroundColor</span><span class="token punctuation">(</span><span class="token punctuation">.</span>brown<span class="token punctuation">)</span>
+                    <span class="token punctuation">&#125;</span>
+                    <span class="token punctuation">.</span><span class="token function">onChange</span><span class="token punctuation">(</span>of<span class="token punctuation">:</span> selectedItems<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> oldValue<span class="token punctuation">,</span> newValue <span class="token keyword">in</span>
+                        <span class="token keyword">for</span> newItem <span class="token keyword">in</span> newValue <span class="token punctuation">&#123;</span>
+                            <span class="token class-name">Task</span> <span class="token punctuation">&#123;</span>
+                                <span class="token keyword">if</span> <span class="token keyword">let</span> data <span class="token operator">=</span> <span class="token keyword">try</span><span class="token operator">?</span> <span class="token keyword">await</span> newItem<span class="token punctuation">.</span><span class="token function">loadTransferable</span><span class="token punctuation">(</span>type<span class="token punctuation">:</span> <span class="token class-name">Data</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                                    selectedPhotosData<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+                                <span class="token punctuation">&#125;</span>
+                            <span class="token punctuation">&#125;</span>
+                        <span class="token punctuation">&#125;</span>
+                    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>以上示例中，我们使用了 <code>PhotosPicker</code> 的 <code>maxSelectionCount</code> 参数来限制用户最多只能选择 5 张图片。当用户选择图片后，我们将图片数据保存在 <code>selectedPhotosData</code> 数组中，并在 <code>LazyVGrid</code> 中显示这些图片。</p>
+<h3 id="字体Picker"><a href="#字体Picker" class="headerlink" title="字体Picker"></a>字体Picker</h3><p>这段代码实现了一个字体选择器的功能，用户可以在其中选择和查看自己喜欢的字体。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">ContentView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> fontFamily<span class="token punctuation">:</span> <span class="token class-name">String</span> <span class="token operator">=</span> <span class="token string-literal"><span class="token string">""</span></span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">VStack</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"选择字体:"</span></span><span class="token punctuation">)</span>
+            <span class="token class-name">FontPicker</span><span class="token punctuation">(</span>fontFamily<span class="token punctuation">:</span> $fontFamily<span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">equatable</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">FontPicker</span><span class="token punctuation">:</span> <span class="token class-name">View</span><span class="token punctuation">,</span> <span class="token class-name">Equatable</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@Binding</span> <span class="token keyword">var</span> fontFamily<span class="token punctuation">:</span> <span class="token class-name">String</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">VStack</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">fontFamily</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">font</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token function">custom</span><span class="token punctuation">(</span>fontFamily<span class="token punctuation">,</span> size<span class="token punctuation">:</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token class-name">Picker</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">""</span></span><span class="token punctuation">,</span> selection<span class="token punctuation">:</span> $fontFamily<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">ForEach</span><span class="token punctuation">(</span><span class="token class-name">NSFontManager</span><span class="token punctuation">.</span>shared<span class="token punctuation">.</span>availableFontFamilies<span class="token punctuation">,</span> id<span class="token punctuation">:</span> <span class="token punctuation">\</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> family <span class="token keyword">in</span>
+                    <span class="token class-name">Text</span><span class="token punctuation">(</span>family<span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">tag</span><span class="token punctuation">(</span>family<span class="token punctuation">)</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token class-name">Spacer</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">padding</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">static</span> <span class="token keyword">func</span> <span class="token operator">==</span> <span class="token punctuation">(</span>l<span class="token punctuation">:</span> <span class="token class-name">FontPicker</span><span class="token punctuation">,</span> r<span class="token punctuation">:</span> <span class="token class-name">FontPicker</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">Bool</span> <span class="token punctuation">&#123;</span>
+        l<span class="token punctuation">.</span>fontFamily <span class="token operator">==</span> r<span class="token punctuation">.</span>fontFamily
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="WheelPicker"><a href="#WheelPicker" class="headerlink" title="WheelPicker"></a>WheelPicker</h3><p>本示例是一个可折叠的滚轮选择器 <code>CollapsibleWheelPicker</code>。这个选择器允许用户从一组书籍中选择一本。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">ContentView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+  <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> selection <span class="token operator">=</span> <span class="token number">0</span>
+  <span class="token keyword">let</span> items <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string-literal"><span class="token string">"Book 1"</span></span><span class="token punctuation">,</span> <span class="token string-literal"><span class="token string">"Book 2"</span></span><span class="token punctuation">,</span> <span class="token string-literal"><span class="token string">"Book 3"</span></span><span class="token punctuation">,</span> <span class="token string-literal"><span class="token string">"Book 4"</span></span><span class="token punctuation">,</span> <span class="token string-literal"><span class="token string">"Book 5"</span></span><span class="token punctuation">]</span>
+
+  <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">NavigationStack</span> <span class="token punctuation">&#123;</span>
+      <span class="token class-name">Form</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">CollapsibleWheelPicker</span><span class="token punctuation">(</span>selection<span class="token punctuation">:</span> $selection<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+          <span class="token class-name">ForEach</span><span class="token punctuation">(</span>items<span class="token punctuation">,</span> id<span class="token punctuation">:</span> <span class="token punctuation">\</span><span class="token punctuation">.</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> item <span class="token keyword">in</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">item</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span>
+          <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span> label<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+          <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Books"</span></span><span class="token punctuation">)</span>
+          <span class="token class-name">Spacer</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+          <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">items<span class="token punctuation">[</span>selection<span class="token punctuation">]</span></span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">CollapsibleWheelPicker</span><span class="token operator">&lt;</span><span class="token class-name">SelectionValue</span><span class="token punctuation">,</span> <span class="token class-name">Content</span><span class="token punctuation">,</span> <span class="token class-name">Label</span><span class="token operator">></span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token keyword">where</span> <span class="token class-name">SelectionValue</span><span class="token punctuation">:</span> <span class="token class-name">Hashable</span><span class="token punctuation">,</span> <span class="token class-name">Content</span><span class="token punctuation">:</span> <span class="token class-name">View</span><span class="token punctuation">,</span> <span class="token class-name">Label</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@Binding</span> <span class="token keyword">var</span> selection<span class="token punctuation">:</span> <span class="token class-name">SelectionValue</span>
+    <span class="token attribute atrule">@ViewBuilder</span> <span class="token keyword">let</span> content<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">Content</span>
+    <span class="token attribute atrule">@ViewBuilder</span> <span class="token keyword">let</span> label<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">Label</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">CollapsibleView</span><span class="token punctuation">(</span>label<span class="token punctuation">:</span> label<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Picker</span><span class="token punctuation">(</span>selection<span class="token punctuation">:</span> $selection<span class="token punctuation">,</span> content<span class="token punctuation">:</span> content<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">EmptyView</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span><span class="token function">pickerStyle</span><span class="token punctuation">(</span><span class="token punctuation">.</span>wheel<span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">CollapsibleView</span><span class="token operator">&lt;</span><span class="token class-name">Label</span><span class="token punctuation">,</span> <span class="token class-name">Content</span><span class="token operator">></span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token keyword">where</span> <span class="token class-name">Label</span><span class="token punctuation">:</span> <span class="token class-name">View</span><span class="token punctuation">,</span> <span class="token class-name">Content</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+  <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> isSecondaryViewVisible <span class="token operator">=</span> <span class="token boolean">false</span>
+
+  <span class="token attribute atrule">@ViewBuilder</span> <span class="token keyword">let</span> label<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">Label</span>
+  <span class="token attribute atrule">@ViewBuilder</span> <span class="token keyword">let</span> content<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">Content</span>
+
+  <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Group</span> <span class="token punctuation">&#123;</span>
+      <span class="token class-name">Button</span><span class="token punctuation">(</span>action<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> isSecondaryViewVisible<span class="token punctuation">.</span><span class="token function">toggle</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> label<span class="token punctuation">:</span> label<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">buttonStyle</span><span class="token punctuation">(</span><span class="token punctuation">.</span>plain<span class="token punctuation">)</span>
+      <span class="token keyword">if</span> isSecondaryViewVisible <span class="token punctuation">&#123;</span>
+        <span class="token function">content</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在 <code>ContentView</code> 中，我们创建了一个 <code>CollapsibleWheelPicker</code> 视图。这个视图包含一个滚轮样式的选择器，用户可以从中选择一本书。选择的书籍会绑定到 <code>selection</code> 变量。</p>
+<p><code>CollapsibleWheelPicker</code> 视图是一个可折叠的滚轮选择器，它接受一个绑定的选择变量、一个内容视图和一个标签视图。内容视图是一个 <code>Picker</code> 视图，用于显示可供选择的书籍。标签视图是一个 <code>Text</code> 视图，显示当前选择的书籍。</p>
+<h2 id="Toggle"><a href="#Toggle" class="headerlink" title="Toggle"></a>Toggle</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://ming1016.github.io/qdimg/240505/toggle-ap01.png" class="lozad post-image"src="https://ming1016.github.io/qdimg/240505/toggle-ap01.png"></p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>使用示例如下</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlayToggleView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> isEnable <span class="token operator">=</span> <span class="token boolean">false</span>
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 普通样式</span>
+        <span class="token class-name">Toggle</span><span class="token punctuation">(</span>isOn<span class="token punctuation">:</span> $isEnable<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">isEnable <span class="token operator">?</span> <span class="token string-literal"><span class="token string">"开了"</span></span> <span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"关了"</span></span></span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">padding</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        
+        <span class="token comment">// 按钮样式</span>
+        <span class="token class-name">Toggle</span><span class="token punctuation">(</span>isOn<span class="token punctuation">:</span> $isEnable<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Label</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">isEnable <span class="token operator">?</span> <span class="token string-literal"><span class="token string">"打开了"</span></span> <span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"关闭了"</span></span></span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">,</span> systemImage<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"cloud.moon"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">padding</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">tint</span><span class="token punctuation">(</span><span class="token punctuation">.</span>pink<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">controlSize</span><span class="token punctuation">(</span><span class="token punctuation">.</span>large<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">toggleStyle</span><span class="token punctuation">(</span><span class="token punctuation">.</span>button<span class="token punctuation">)</span>
+        
+        <span class="token comment">// Switch 样式</span>
+        <span class="token class-name">Toggle</span><span class="token punctuation">(</span>isOn<span class="token punctuation">:</span> $isEnable<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">isEnable <span class="token operator">?</span> <span class="token string-literal"><span class="token string">"开了"</span></span> <span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"关了"</span></span></span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">toggleStyle</span><span class="token punctuation">(</span><span class="token class-name">SwitchToggleStyle</span><span class="token punctuation">(</span>tint<span class="token punctuation">:</span> <span class="token punctuation">.</span>orange<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">padding</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        
+        <span class="token comment">// 自定义样式</span>
+        <span class="token class-name">Toggle</span><span class="token punctuation">(</span>isOn<span class="token punctuation">:</span> $isEnable<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span>isEnable <span class="token operator">?</span> <span class="token string-literal"><span class="token string">"录音中"</span></span> <span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"已静音"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">toggleStyle</span><span class="token punctuation">(</span><span class="token class-name">PCToggleStyle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// MARK: - 自定义样式</span>
+<span class="token keyword">struct</span> <span class="token class-name">PCToggleStyle</span><span class="token punctuation">:</span> <span class="token class-name">ToggleStyle</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">makeBody</span><span class="token punctuation">(</span>configuration<span class="token punctuation">:</span> <span class="token class-name">Configuration</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token class-name">HStack</span> <span class="token punctuation">&#123;</span>
+            configuration<span class="token punctuation">.</span>label
+            <span class="token class-name">Image</span><span class="token punctuation">(</span>systemName<span class="token punctuation">:</span> configuration<span class="token punctuation">.</span>isOn <span class="token operator">?</span> <span class="token string-literal"><span class="token string">"mic.square.fill"</span></span> <span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"mic.slash.circle.fill"</span></span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">renderingMode</span><span class="token punctuation">(</span><span class="token punctuation">.</span>original<span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">resizable</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">frame</span><span class="token punctuation">(</span>width<span class="token punctuation">:</span> <span class="token number">30</span><span class="token punctuation">,</span> height<span class="token punctuation">:</span> <span class="token number">30</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span>onTapGesture <span class="token punctuation">&#123;</span>
+                    configuration<span class="token punctuation">.</span>isOn<span class="token punctuation">.</span><span class="token function">toggle</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="样式-1"><a href="#样式-1" class="headerlink" title="样式"></a>样式</h3><p>Toggle 可以设置 toggleStyle，可以自定义样式。</p>
+<p>下表是不同平台支持的样式</p>
+<ul>
+<li>DefaultToggleStyle：iOS 表现的是 Switch，macOS 是 Checkbox</li>
+<li>SwitchToggleStyle：iOS 和 macOS 都支持</li>
+<li>CheckboxToggleStyle：只支持 macOS</li>
+</ul>
+<h3 id="纯图像的-Toggle"><a href="#纯图像的-Toggle" class="headerlink" title="纯图像的 Toggle"></a>纯图像的 Toggle</h3><pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">ContentView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> isMuted <span class="token operator">=</span> <span class="token boolean">false</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Toggle</span><span class="token punctuation">(</span>isOn<span class="token punctuation">:</span> $isMuted<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Image</span><span class="token punctuation">(</span>systemName<span class="token punctuation">:</span> isMuted <span class="token operator">?</span> <span class="token string-literal"><span class="token string">"speaker.slash.fill"</span></span> <span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"speaker.fill"</span></span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">font</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token function">system</span><span class="token punctuation">(</span>size<span class="token punctuation">:</span> <span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">tint</span><span class="token punctuation">(</span><span class="token punctuation">.</span>red<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">toggleStyle</span><span class="token punctuation">(</span><span class="token punctuation">.</span>button<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">clipShape</span><span class="token punctuation">(</span><span class="token class-name">Circle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="自定义-ToggleStyle"><a href="#自定义-ToggleStyle" class="headerlink" title="自定义 ToggleStyle"></a>自定义 ToggleStyle</h3><p>做一个自定义的切换按钮 OfflineModeToggleStyle。这个切换按钮允许用户控制是否开启离线模式。代码如下：</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">ContentView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> isOfflineMode <span class="token operator">=</span> <span class="token boolean">false</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Toggle</span><span class="token punctuation">(</span>isOn<span class="token punctuation">:</span> $isOfflineMode<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Offline Mode"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">toggleStyle</span><span class="token punctuation">(</span><span class="token class-name">OfflineModeToggleStyle</span><span class="token punctuation">(</span>systemImage<span class="token punctuation">:</span> isOfflineMode <span class="token operator">?</span> <span class="token string-literal"><span class="token string">"wifi.slash"</span></span> <span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"wifi"</span></span><span class="token punctuation">,</span> activeColor<span class="token punctuation">:</span> <span class="token punctuation">.</span>blue<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">OfflineModeToggleStyle</span><span class="token punctuation">:</span> <span class="token class-name">ToggleStyle</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> systemImage<span class="token punctuation">:</span> <span class="token class-name">String</span>
+    <span class="token keyword">var</span> activeColor<span class="token punctuation">:</span> <span class="token class-name">Color</span>
+
+    <span class="token keyword">func</span> <span class="token function-definition function">makeBody</span><span class="token punctuation">(</span>configuration<span class="token punctuation">:</span> <span class="token class-name">Configuration</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">HStack</span> <span class="token punctuation">&#123;</span>
+            configuration<span class="token punctuation">.</span>label
+
+            <span class="token class-name">Spacer</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+            <span class="token class-name">RoundedRectangle</span><span class="token punctuation">(</span>cornerRadius<span class="token punctuation">:</span> <span class="token number">16</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">fill</span><span class="token punctuation">(</span>configuration<span class="token punctuation">.</span>isOn <span class="token operator">?</span> activeColor <span class="token punctuation">:</span> <span class="token class-name">Color</span><span class="token punctuation">(</span><span class="token punctuation">.</span>systemGray5<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span>overlay <span class="token punctuation">&#123;</span>
+                    <span class="token class-name">Circle</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">fill</span><span class="token punctuation">(</span><span class="token punctuation">.</span>white<span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">padding</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span>overlay <span class="token punctuation">&#123;</span>
+                            <span class="token class-name">Image</span><span class="token punctuation">(</span>systemName<span class="token punctuation">:</span> systemImage<span class="token punctuation">)</span>
+                                <span class="token punctuation">.</span><span class="token function">foregroundColor</span><span class="token punctuation">(</span>configuration<span class="token punctuation">.</span>isOn <span class="token operator">?</span> activeColor <span class="token punctuation">:</span> <span class="token class-name">Color</span><span class="token punctuation">(</span><span class="token punctuation">.</span>systemGray5<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">&#125;</span>
+                        <span class="token punctuation">.</span><span class="token function">offset</span><span class="token punctuation">(</span>x<span class="token punctuation">:</span> configuration<span class="token punctuation">.</span>isOn <span class="token operator">?</span> <span class="token number">8</span> <span class="token punctuation">:</span> <span class="token operator">-</span><span class="token number">8</span><span class="token punctuation">)</span>
+                <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">.</span><span class="token function">frame</span><span class="token punctuation">(</span>width<span class="token punctuation">:</span> <span class="token number">50</span><span class="token punctuation">,</span> height<span class="token punctuation">:</span> <span class="token number">32</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span>onTapGesture <span class="token punctuation">&#123;</span>
+                    <span class="token function">withAnimation</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token function">spring</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                        configuration<span class="token punctuation">.</span>isOn<span class="token punctuation">.</span><span class="token function">toggle</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>以上代码中，我们定义了一个 OfflineModeToggleStyle，它接受两个参数：systemImage 和 activeColor。systemImage 是一个字符串，表示图像的系统名称。activeColor 是一个颜色，表示激活状态的颜色。</p>
+<h3 id="动画化的-Toggle"><a href="#动画化的-Toggle" class="headerlink" title="动画化的 Toggle"></a>动画化的 Toggle</h3><p>以下是一个自定义的切换按钮 MuteToggleStyle。这个切换按钮允许用户控制是否开启静音模式。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">ContentView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> isMuted <span class="token operator">=</span> <span class="token boolean">false</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">VStack</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Toggle</span><span class="token punctuation">(</span>isOn<span class="token punctuation">:</span> $isMuted<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Mute Mode"</span></span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">foregroundColor</span><span class="token punctuation">(</span>isMuted <span class="token operator">?</span> <span class="token punctuation">.</span>white <span class="token punctuation">:</span> <span class="token punctuation">.</span>black<span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span><span class="token function">toggleStyle</span><span class="token punctuation">(</span><span class="token class-name">MuteToggleStyle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">padding</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">.</span><span class="token function">frame</span><span class="token punctuation">(</span>maxWidth<span class="token punctuation">:</span> <span class="token punctuation">.</span>infinity<span class="token punctuation">,</span> maxHeight<span class="token punctuation">:</span> <span class="token punctuation">.</span>infinity<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">MuteToggleStyle</span><span class="token punctuation">:</span> <span class="token class-name">ToggleStyle</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> onImage <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"speaker.slash.fill"</span></span>
+    <span class="token keyword">var</span> offImage <span class="token operator">=</span> <span class="token string-literal"><span class="token string">"speaker.2.fill"</span></span>
+
+    <span class="token keyword">func</span> <span class="token function-definition function">makeBody</span><span class="token punctuation">(</span>configuration<span class="token punctuation">:</span> <span class="token class-name">Configuration</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">HStack</span> <span class="token punctuation">&#123;</span>
+            configuration<span class="token punctuation">.</span>label
+
+            <span class="token class-name">Spacer</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+            <span class="token class-name">RoundedRectangle</span><span class="token punctuation">(</span>cornerRadius<span class="token punctuation">:</span> <span class="token number">30</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">fill</span><span class="token punctuation">(</span>configuration<span class="token punctuation">.</span>isOn <span class="token operator">?</span> <span class="token class-name">Color</span><span class="token punctuation">(</span><span class="token punctuation">.</span>systemGray6<span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token punctuation">.</span>yellow<span class="token punctuation">)</span>
+                <span class="token punctuation">.</span>overlay <span class="token punctuation">&#123;</span>
+                    <span class="token class-name">Image</span><span class="token punctuation">(</span>systemName<span class="token punctuation">:</span> configuration<span class="token punctuation">.</span>isOn <span class="token operator">?</span> onImage <span class="token punctuation">:</span> offImage<span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">resizable</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">scaledToFit</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">clipShape</span><span class="token punctuation">(</span><span class="token class-name">Circle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">padding</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">rotationEffect</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token function">degrees</span><span class="token punctuation">(</span>configuration<span class="token punctuation">.</span>isOn <span class="token operator">?</span> <span class="token number">0</span> <span class="token punctuation">:</span> <span class="token number">180</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">offset</span><span class="token punctuation">(</span>x<span class="token punctuation">:</span> configuration<span class="token punctuation">.</span>isOn <span class="token operator">?</span> <span class="token number">10</span> <span class="token punctuation">:</span> <span class="token operator">-</span><span class="token number">10</span><span class="token punctuation">)</span>
+                <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">.</span><span class="token function">frame</span><span class="token punctuation">(</span>width<span class="token punctuation">:</span> <span class="token number">50</span><span class="token punctuation">,</span> height<span class="token punctuation">:</span> <span class="token number">32</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span>onTapGesture <span class="token punctuation">&#123;</span>
+                    <span class="token function">withAnimation</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token function">easeInOut</span><span class="token punctuation">(</span>duration<span class="token punctuation">:</span> <span class="token number">0.2</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                        configuration<span class="token punctuation">.</span>isOn<span class="token punctuation">.</span><span class="token function">toggle</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">extension</span> <span class="token class-name">ToggleStyle</span> <span class="token keyword">where</span> <span class="token keyword">Self</span> <span class="token operator">==</span> <span class="token class-name">MuteToggleStyle</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">static</span> <span class="token keyword">var</span> mute<span class="token punctuation">:</span> <span class="token class-name">MuteToggleStyle</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">.</span><span class="token keyword">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>以上代码中，我们定义了一个 MuteToggleStyle，它接受两个参数：onImage 和 offImage。onImage 是一个字符串，表示激活状态的图像的系统名称。offImage 是一个字符串，表示非激活状态的图像的系统名称。</p>
+<h3 id="两个标签的-Toggle"><a href="#两个标签的-Toggle" class="headerlink" title="两个标签的 Toggle"></a>两个标签的 Toggle</h3><p>以下是一个自定义的切换按钮，它有两个标签。这个切换按钮允许用户控制是否开启静音模式。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token class-name">Toggle</span><span class="token punctuation">(</span>isOn<span class="token punctuation">:</span> $mute<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"静音"</span></span><span class="token punctuation">)</span>
+  <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"这将关闭所有声音"</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h2 id="Slider"><a href="#Slider" class="headerlink" title="Slider"></a>Slider</h2><p>简单示例</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">PlaySliderView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">var</span> count<span class="token punctuation">:</span> <span class="token class-name">Double</span> <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Slider</span><span class="token punctuation">(</span>value<span class="token punctuation">:</span> $count<span class="token punctuation">,</span> <span class="token keyword">in</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token operator">...</span><span class="token number">100</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">padding</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation"><span class="token class-name">Int</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span></span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>以下代码演示了如何创建一个自定义的 <code>Slider</code> 控件，用于调整亮度。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">ContentView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> brightness<span class="token punctuation">:</span> <span class="token class-name">Double</span> <span class="token operator">=</span> <span class="token number">50</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> isEditing<span class="token punctuation">:</span> <span class="token class-name">Bool</span> <span class="token operator">=</span> <span class="token boolean">false</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">VStack</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Brightness Control"</span></span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">font</span><span class="token punctuation">(</span><span class="token punctuation">.</span>title<span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">padding</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+            <span class="token class-name">BrightnessSlider</span><span class="token punctuation">(</span>value<span class="token punctuation">:</span> $brightness<span class="token punctuation">,</span> range<span class="token punctuation">:</span> <span class="token number">0</span><span class="token operator">...</span><span class="token number">100</span><span class="token punctuation">,</span> step<span class="token punctuation">:</span> <span class="token number">5</span><span class="token punctuation">,</span> isEditing<span class="token punctuation">:</span> $isEditing<span class="token punctuation">)</span>
+
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"Brightness: </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation"><span class="token class-name">Int</span><span class="token punctuation">(</span>brightness<span class="token punctuation">)</span></span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">, is changing: </span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">isEditing</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">font</span><span class="token punctuation">(</span><span class="token punctuation">.</span>footnote<span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">padding</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">BrightnessSlider</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@Binding</span> <span class="token keyword">var</span> value<span class="token punctuation">:</span> <span class="token class-name">Double</span>
+    <span class="token keyword">var</span> range<span class="token punctuation">:</span> <span class="token class-name">ClosedRange</span><span class="token operator">&lt;</span><span class="token class-name">Double</span><span class="token operator">></span>
+    <span class="token keyword">var</span> step<span class="token punctuation">:</span> <span class="token class-name">Double</span>
+    <span class="token attribute atrule">@Binding</span> <span class="token keyword">var</span> isEditing<span class="token punctuation">:</span> <span class="token class-name">Bool</span>
+
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Slider</span><span class="token punctuation">(</span>value<span class="token punctuation">:</span> $value<span class="token punctuation">,</span> <span class="token keyword">in</span><span class="token punctuation">:</span> range<span class="token punctuation">,</span> step<span class="token punctuation">:</span> step<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Label</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"亮度"</span></span><span class="token punctuation">,</span> systemImage<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"light.max"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span> minimumValueLabel<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation"><span class="token class-name">Int</span><span class="token punctuation">(</span>range<span class="token punctuation">.</span>lowerBound<span class="token punctuation">)</span></span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span> maximumValueLabel<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation"><span class="token class-name">Int</span><span class="token punctuation">(</span>range<span class="token punctuation">.</span>upperBound<span class="token punctuation">)</span></span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span> onEditingChanged<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">print</span><span class="token punctuation">(</span><span class="token short-argument">$0</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>以上代码中，我们创建了一个 <code>BrightnessSlider</code> 控件，它是一个自定义的 <code>Slider</code> 控件，用于调整亮度。<code>BrightnessSlider</code> 接受一个 <code>value</code> 绑定，一个 <code>range</code> 范围，一个 <code>step</code> 步长，以及一个 <code>isEditing</code> 绑定。在 <code>BrightnessSlider</code> 中，我们使用 <code>Slider</code> 控件来显示亮度调整器。我们还使用 <code>Label</code> 来显示亮度调整器的标题，并使用 <code>minimumValueLabel</code> 和 <code>maximumValueLabel</code> 来显示亮度调整器的最小值和最大值。最后，我们使用 <code>onEditingChanged</code> 修饰符来监听亮度调整器的编辑状态。</p>
+<h2 id="Stepper"><a href="#Stepper" class="headerlink" title="Stepper"></a>Stepper</h2><p><code>Stepper</code> 控件允许用户通过点击按钮来增加或减少数值。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">ContentView</span><span class="token punctuation">:</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+    <span class="token attribute atrule">@State</span> <span class="token keyword">private</span> <span class="token keyword">var</span> count<span class="token punctuation">:</span> <span class="token class-name">Int</span> <span class="token operator">=</span> <span class="token number">2</span>
+    <span class="token keyword">var</span> body<span class="token punctuation">:</span> <span class="token keyword">some</span> <span class="token class-name">View</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Stepper</span><span class="token punctuation">(</span>value<span class="token punctuation">:</span> $count<span class="token punctuation">,</span> <span class="token keyword">in</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token operator">...</span><span class="token number">20</span><span class="token punctuation">,</span> step<span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"共</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">count</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span> onEditingChanged<span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> b <span class="token keyword">in</span>
+            <span class="token function">print</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span> <span class="token comment">// end Stepper</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在 <code>ContentView</code> 中，我们定义了一个状态变量 <code>count</code>，并将其初始化为 2。然后，我们创建了一个 <code>Stepper</code> 视图，并将其绑定到 <code>count</code> 状态变量。</p>
+<p><code>Stepper</code> 视图的值范围为 2 到 20，步进值为 2，这意味着每次点击按钮，<code>count</code> 的值会增加或减少 2。我们还添加了一个标签，显示当前的 <code>count</code> 值。</p>
+<p>我们还添加了 <code>onEditingChanged</code> 回调，当 <code>Stepper</code> 的值改变时，会打印出一个布尔值，表示 <code>Stepper</code> 是否正在被编辑。</p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2024/05/18/pamphlet-series-form/">http://ming1016.github.io/2024/05/18/pamphlet-series-form/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/2024/05/18/pamphlet-series-layout/" class="nav-link">
+      <div>
+        <div class="nav-label">Next</div>
+        
+        <div class="nav-title">小册子之详说 Navigation、ViewThatFits、Layout 协议等布局组件 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Form"><span class="toc-number">1.</span> <span class="toc-text">Form</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Picker%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">Picker选择器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Picker"><span class="toc-number">2.1.</span> <span class="toc-text">Picker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E5%AD%97Picker"><span class="toc-number">2.2.</span> <span class="toc-text">文字Picker</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">2.2.1.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%9E%9A%E4%B8%BE"><span class="toc-number">2.2.2.</span> <span class="toc-text">使用枚举</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B7%E5%BC%8F"><span class="toc-number">2.2.3.</span> <span class="toc-text">样式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ColorPicker"><span class="toc-number">2.3.</span> <span class="toc-text">ColorPicker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DatePicker"><span class="toc-number">2.4.</span> <span class="toc-text">DatePicker</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-1"><span class="toc-number">2.4.1.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%A4%9A%E4%B8%AA%E6%97%A5%E6%9C%9F"><span class="toc-number">2.4.2.</span> <span class="toc-text">选择多个日期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E6%97%A5%E6%9C%9F%E8%8C%83%E5%9B%B4"><span class="toc-number">2.4.3.</span> <span class="toc-text">指定日期范围</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PhotoPicker"><span class="toc-number">2.5.</span> <span class="toc-text">PhotoPicker</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PhotoPicker-%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-number">2.5.1.</span> <span class="toc-text">PhotoPicker 使用示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%99%90%E5%88%B6%E9%80%89%E6%8B%A9%E5%AA%92%E4%BD%93%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.5.2.</span> <span class="toc-text">限制选择媒体类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%A4%9A%E5%BC%A0%E5%9B%BE%E7%89%87"><span class="toc-number">2.5.3.</span> <span class="toc-text">选择多张图片</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E4%BD%93Picker"><span class="toc-number">2.6.</span> <span class="toc-text">字体Picker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WheelPicker"><span class="toc-number">2.7.</span> <span class="toc-text">WheelPicker</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Toggle"><span class="toc-number">3.</span> <span class="toc-text">Toggle</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">3.1.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B7%E5%BC%8F-1"><span class="toc-number">3.2.</span> <span class="toc-text">样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%AF%E5%9B%BE%E5%83%8F%E7%9A%84-Toggle"><span class="toc-number">3.3.</span> <span class="toc-text">纯图像的 Toggle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-ToggleStyle"><span class="toc-number">3.4.</span> <span class="toc-text">自定义 ToggleStyle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E7%94%BB%E5%8C%96%E7%9A%84-Toggle"><span class="toc-number">3.5.</span> <span class="toc-text">动画化的 Toggle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E6%A0%87%E7%AD%BE%E7%9A%84-Toggle"><span class="toc-number">3.6.</span> <span class="toc-text">两个标签的 Toggle</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Slider"><span class="toc-number">4.</span> <span class="toc-text">Slider</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stepper"><span class="toc-number">5.</span> <span class="toc-text">Stepper</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
+
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>67</span>
+    <span>Posts</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>6</span>
+    <span>Categories</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>40</span>
+    <span>Tags</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Form"><span class="toc-number">1.</span> <span class="toc-text">Form</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Picker%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">Picker选择器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Picker"><span class="toc-number">2.1.</span> <span class="toc-text">Picker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E5%AD%97Picker"><span class="toc-number">2.2.</span> <span class="toc-text">文字Picker</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">2.2.1.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%9E%9A%E4%B8%BE"><span class="toc-number">2.2.2.</span> <span class="toc-text">使用枚举</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B7%E5%BC%8F"><span class="toc-number">2.2.3.</span> <span class="toc-text">样式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ColorPicker"><span class="toc-number">2.3.</span> <span class="toc-text">ColorPicker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DatePicker"><span class="toc-number">2.4.</span> <span class="toc-text">DatePicker</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-1"><span class="toc-number">2.4.1.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%A4%9A%E4%B8%AA%E6%97%A5%E6%9C%9F"><span class="toc-number">2.4.2.</span> <span class="toc-text">选择多个日期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E6%97%A5%E6%9C%9F%E8%8C%83%E5%9B%B4"><span class="toc-number">2.4.3.</span> <span class="toc-text">指定日期范围</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PhotoPicker"><span class="toc-number">2.5.</span> <span class="toc-text">PhotoPicker</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PhotoPicker-%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-number">2.5.1.</span> <span class="toc-text">PhotoPicker 使用示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%99%90%E5%88%B6%E9%80%89%E6%8B%A9%E5%AA%92%E4%BD%93%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.5.2.</span> <span class="toc-text">限制选择媒体类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%A4%9A%E5%BC%A0%E5%9B%BE%E7%89%87"><span class="toc-number">2.5.3.</span> <span class="toc-text">选择多张图片</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E4%BD%93Picker"><span class="toc-number">2.6.</span> <span class="toc-text">字体Picker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WheelPicker"><span class="toc-number">2.7.</span> <span class="toc-text">WheelPicker</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Toggle"><span class="toc-number">3.</span> <span class="toc-text">Toggle</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">3.1.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B7%E5%BC%8F-1"><span class="toc-number">3.2.</span> <span class="toc-text">样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%AF%E5%9B%BE%E5%83%8F%E7%9A%84-Toggle"><span class="toc-number">3.3.</span> <span class="toc-text">纯图像的 Toggle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-ToggleStyle"><span class="toc-number">3.4.</span> <span class="toc-text">自定义 ToggleStyle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E7%94%BB%E5%8C%96%E7%9A%84-Toggle"><span class="toc-number">3.5.</span> <span class="toc-text">动画化的 Toggle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E6%A0%87%E7%AD%BE%E7%9A%84-Toggle"><span class="toc-number">3.6.</span> <span class="toc-text">两个标签的 Toggle</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Slider"><span class="toc-number">4.</span> <span class="toc-text">Slider</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stepper"><span class="toc-number">5.</span> <span class="toc-text">Stepper</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>Categories</div>
+  <div class="categories-list">
+    
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">47</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-novel">
+        <div class="categories-list-item">
+          My-novel
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-painting">
+        <div class="categories-list-item">
+          My-painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/App">
+        <div class="categories-list-item">
+          App
+          <span class="categories-list-item-badge">6</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>hot tags</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\编译" title="编译"><div class="tags-list-item">编译</div></a>
+    
+    <a href="\tags\WWDC" title="WWDC"><div class="tags-list-item">WWDC</div></a>
+    
+    <a href="\tags\ReactiveCocoa" title="ReactiveCocoa"><div class="tags-list-item">ReactiveCocoa</div></a>
+    
+    <a href="\tags\GOT" title="GOT"><div class="tags-list-item">GOT</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Form"><span class="toc-number">1.</span> <span class="toc-text">Form</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Picker%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">Picker选择器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Picker"><span class="toc-number">2.1.</span> <span class="toc-text">Picker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E5%AD%97Picker"><span class="toc-number">2.2.</span> <span class="toc-text">文字Picker</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">2.2.1.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%9E%9A%E4%B8%BE"><span class="toc-number">2.2.2.</span> <span class="toc-text">使用枚举</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B7%E5%BC%8F"><span class="toc-number">2.2.3.</span> <span class="toc-text">样式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ColorPicker"><span class="toc-number">2.3.</span> <span class="toc-text">ColorPicker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DatePicker"><span class="toc-number">2.4.</span> <span class="toc-text">DatePicker</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-1"><span class="toc-number">2.4.1.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%A4%9A%E4%B8%AA%E6%97%A5%E6%9C%9F"><span class="toc-number">2.4.2.</span> <span class="toc-text">选择多个日期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E6%97%A5%E6%9C%9F%E8%8C%83%E5%9B%B4"><span class="toc-number">2.4.3.</span> <span class="toc-text">指定日期范围</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PhotoPicker"><span class="toc-number">2.5.</span> <span class="toc-text">PhotoPicker</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PhotoPicker-%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-number">2.5.1.</span> <span class="toc-text">PhotoPicker 使用示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%99%90%E5%88%B6%E9%80%89%E6%8B%A9%E5%AA%92%E4%BD%93%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.5.2.</span> <span class="toc-text">限制选择媒体类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%A4%9A%E5%BC%A0%E5%9B%BE%E7%89%87"><span class="toc-number">2.5.3.</span> <span class="toc-text">选择多张图片</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E4%BD%93Picker"><span class="toc-number">2.6.</span> <span class="toc-text">字体Picker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WheelPicker"><span class="toc-number">2.7.</span> <span class="toc-text">WheelPicker</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Toggle"><span class="toc-number">3.</span> <span class="toc-text">Toggle</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">3.1.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B7%E5%BC%8F-1"><span class="toc-number">3.2.</span> <span class="toc-text">样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%AF%E5%9B%BE%E5%83%8F%E7%9A%84-Toggle"><span class="toc-number">3.3.</span> <span class="toc-text">纯图像的 Toggle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-ToggleStyle"><span class="toc-number">3.4.</span> <span class="toc-text">自定义 ToggleStyle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E7%94%BB%E5%8C%96%E7%9A%84-Toggle"><span class="toc-number">3.5.</span> <span class="toc-text">动画化的 Toggle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E6%A0%87%E7%AD%BE%E7%9A%84-Toggle"><span class="toc-number">3.6.</span> <span class="toc-text">两个标签的 Toggle</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Slider"><span class="toc-number">4.</span> <span class="toc-text">Slider</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stepper"><span class="toc-number">5.</span> <span class="toc-text">Stepper</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>Recent Posts</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-05-18</div>
+        <a href="/2024/05/18/pamphlet-series-form/"><div class="recent-posts-item-content">小册子之 Form、Picker、Toggle、Slider 和 Stepper 表单相关视图</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-05-18</div>
+        <a href="/2024/05/18/pamphlet-series-layout/"><div class="recent-posts-item-content">小册子之详说 Navigation、ViewThatFits、Layout 协议等布局组件</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-05-18</div>
+        <a href="/2024/05/18/pamphlet-series-listdataview/"><div class="recent-posts-item-content">小册子之 List、Lazy 容器、ScrollView、Grid 和 Table 数据集合视图</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-05-18</div>
+        <a href="/2024/05/18/pamphlet-series-widget/"><div class="recent-posts-item-content">小册子之简说 Widget 小组件</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2014 -
+          
+          2024
+        </span>
+        <a href="/" class="footer-link">戴铭的博客 </a>
+      </div>
+    </div>
+
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>
