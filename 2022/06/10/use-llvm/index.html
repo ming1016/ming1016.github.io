@@ -182,7 +182,7 @@
   </header>
   <div id="section" class="post-content">
     <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本篇还会持续更新，增加更多用 llvm 干的事情，直到本句话被删掉为止。欢迎关注本篇。</p>
-<p>目前在做一些编译相关调研。先前写过篇《<a href="https://ming1016.github.io/2017/03/01/deeply-analyse-llvm/">深入剖析 iOS 编译 Clang &#x2F; LLVM</a>》和《<a href="https://ming1016.github.io/2017/04/01/slides-of-deeply-analyse-llvm/">深入剖析 iOS 编译 Clang &#x2F; LLVM 直播的 Slides</a>》，内容偏理论。本篇着重对 LLVM 的使用，理论内容会很少，主要是说下如何使用 llvm 来做些事情，会有详细的操作步骤和工程示例。本文对应的幻灯片见 《<a href="https://ming1016.github.io/2022/07/08/slides-of-use-llvm/">使用 LLVM 分享的幻灯片</a>》。</p>
+<p>目前在做一些编译相关调研。先前写过篇《<a target="_blank" rel="noopener" href="https://ming1016.github.io/2017/03/01/deeply-analyse-llvm/">深入剖析 iOS 编译 Clang &#x2F; LLVM</a>》和《<a target="_blank" rel="noopener" href="https://ming1016.github.io/2017/04/01/slides-of-deeply-analyse-llvm/">深入剖析 iOS 编译 Clang &#x2F; LLVM 直播的 Slides</a>》，内容偏理论。本篇着重对 LLVM 的使用，理论内容会很少，主要是说下如何使用 llvm 来做些事情，会有详细的操作步骤和工程示例。本文对应的幻灯片见 《<a target="_blank" rel="noopener" href="https://ming1016.github.io/2022/07/08/slides-of-use-llvm/">使用 LLVM 分享的幻灯片</a>》。</p>
 <h2 id="代码新陈代谢"><a href="#代码新陈代谢" class="headerlink" title="代码新陈代谢"></a>代码新陈代谢</h2><p>昨天看了昨天和今天 WWDC22 的 session，看到了苹果为包体积也做了很多工作，甚至不惜改 C ABI的 call convention 来达到此目的。</p>
 <p>我很早前就做过一个方案，可以说是一个更好处理代码新陈代谢的方案，那就先说下这个。</p>
 <h3 id="方案总体介绍"><a href="#方案总体介绍" class="headerlink" title="方案总体介绍"></a>方案总体介绍</h3><p>静态检查无法分析真实使用场景里代码是不是真的用了，或用的是否多。</p>
@@ -2350,8 +2350,8 @@ class PInterpreter : public llvm::ExecutionEngine,
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
-    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
-    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2022/06/10/use-llvm/">http://ming1016.github.io/2022/06/10/use-llvm/</a></p>
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://starming.com/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://starming.com/2022/06/10/use-llvm/">https://starming.com/2022/06/10/use-llvm/</a></p>
     <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
   </div>
   
@@ -2566,17 +2566,17 @@ class PInterpreter : public llvm::ExecutionEngine,
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2024-05-18</div>
-        <a href="/2024/05/18/pamphlet-series-form/"><div class="recent-posts-item-content">小册子之 Form、Picker、Toggle、Slider 和 Stepper 表单相关视图</div></a>
+        <a href="/2024/05/18/pamphlet-series-form/"><div class="recent-posts-item-content">小册子之 Form、Picker、Toggle、Slider 和 Stepper 表单相关 SwiftUI 视图</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2024-05-18</div>
-        <a href="/2024/05/18/pamphlet-series-layout/"><div class="recent-posts-item-content">小册子之详说 Navigation、ViewThatFits、Layout 协议等布局组件</div></a>
+        <a href="/2024/05/18/pamphlet-series-layout/"><div class="recent-posts-item-content">小册子之详说 Navigation、ViewThatFits、Layout 协议等布局 SwiftUI 组件</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2024-05-18</div>
-        <a href="/2024/05/18/pamphlet-series-listdataview/"><div class="recent-posts-item-content">小册子之 List、Lazy 容器、ScrollView、Grid 和 Table 数据集合视图</div></a>
+        <a href="/2024/05/18/pamphlet-series-listdataview/"><div class="recent-posts-item-content">小册子之 List、Lazy 容器、ScrollView、Grid 和 Table 数据集合 SwiftUI 视图</div></a>
       </div>
     
       <div class="recent-posts-item">
@@ -2611,6 +2611,11 @@ class PInterpreter : public llvm::ExecutionEngine,
     </div>
 
     
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">京ICP备2024068292号-1 </a>
+    </div>
     
     
     

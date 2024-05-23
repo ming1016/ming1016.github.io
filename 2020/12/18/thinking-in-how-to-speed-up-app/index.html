@@ -188,7 +188,7 @@
   <div id="section" class="post-content">
     <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/thinking-in-how-to-speed-up-app/1.png" class="lozad post-image"src="/uploads/thinking-in-how-to-speed-up-app/1.png"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>启动是门面，好的印象也助于留存率提高。苹果也在系统启动上不断努力，提升用户体验，最新的 M1 宣传中还特别强调了翻盖秒开 macOS，可以看出其对极致启动速度的追求。<a target="_blank" rel="noopener" href="https://farfetchtechblog.com/en/blog/post/mobile-app-launch-performance-ii/">这篇文章</a>提到，据 <a target="_blank" rel="noopener" href="https://wemakewebsites.com/blog/improve-page-load-speed-increase-conversion/">Akamai</a> 调查，每多1秒等待，转化率会下降7%，KissMetrics 的一份报告说启动超5秒，会使19%的用户放弃等待卸载 App。<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/thinking-in-how-to-speed-up-app/2.png" class="lozad post-image"src="/uploads/thinking-in-how-to-speed-up-app/2.png"></p>
-<p>高德 App 启动优化专项完成后已经有一段时间了，一直保持实属不易，我一年前在这篇<a href="https://ming1016.github.io/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">文章</a>里也做了些总结。我这里再补充些启动优化用到一些手段和一些想法，希望这些能够对你有帮助。</p>
+<p>高德 App 启动优化专项完成后已经有一段时间了，一直保持实属不易，我一年前在这篇<a target="_blank" rel="noopener" href="https://ming1016.github.io/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">文章</a>里也做了些总结。我这里再补充些启动优化用到一些手段和一些想法，希望这些能够对你有帮助。</p>
 <h2 id="通过-Universal-Links-和-App-Links-优化唤端启动体验"><a href="#通过-Universal-Links-和-App-Links-优化唤端启动体验" class="headerlink" title="通过 Universal Links 和 App Links 优化唤端启动体验"></a>通过 Universal Links 和 App Links 优化唤端启动体验</h2><p>App 都会存在拉新和导流的诉求，如何提高这样场景的用户体验呢？这里会用到唤端技术。包含选择什么样的换端协议，我们先看看唤端路径，如下：<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/thinking-in-how-to-speed-up-app/3.png" class="lozad post-image"src="/uploads/thinking-in-how-to-speed-up-app/3.png"></p>
 <p>唤端的协议分为自定义协议和平台标准协议，自定义协议在 iOS 端会有系统提示弹框，在 Android 端 chrome 25 后自定义协议失效，需用 Intent 协议包装才能打开 App。如果希望提高体验最好使用平台标准协议。平台标准协议在 iOS 平台叫 Universal Links，在 iOS 9 开始引入的，所以 iOS 9 及以上系统都支持，如果用户安装了要跳的 App 就会直接跳到 App，不会有系统弹框提示。相对应的 Android 平台标准协议叫 App Links，Android 6 以上都支持。</p>
 <p>这里需要注意的是 iOS 的 Universal Links 不支持自动唤端，也就是页面加载后自动执行唤端是不行的，需要用户主动点击进行唤端。对于自定义协议和平台标准协议在有些 App 里是遇到屏蔽或者那些 App 自定义弹窗提示，这就只能通过沟通加白来解决了。</p>
@@ -270,7 +270,7 @@ and x9<span class="token punctuation">,</span> x13<span class="token punctuation
 
 
 <p>检查通过就可以用这个指针读取偏移量，并修改指向跳转地址，跳转page完成，hook 函数就可以被调用了。</p>
-<p>接下来看下 hook _objc_msgSend 的函数，这个我在以前博客《<a href="https://ming1016.github.io/2017/06/20/deeply-ios-performance-optimization/">深入剖析 iOS 性能优化</a>》写过，不过多赘述，只做点补充说明。从<a target="_blank" rel="noopener" href="https://github.com/ming1016/GCDFetchFeed/blob/master/GCDFetchFeed/GCDFetchFeed/Lib/SMLagMonitor/SMCallTraceCore.c">这里的源码</a>可以看实现，其中的attribute((naked)) 表示无参数准备和栈初始化， asm 表示其后面是汇编代码，volatile 是让后面的指令避免被编译优化到缓存寄存器中和改变指令顺序，volatile 使其修饰变量被访问时都会在共享内存里重新读取，变量值变化时也能写到共享内存中，这样不同线程看到的变量都是一个值。如果你发现不加 volatile 也没有问题，你可以把编译优化选项调到更优试试。stp表示操作两个寄存器，中括号部分表示压栈存入sp偏移地址，!符号表合并了压栈指令。</p>
+<p>接下来看下 hook _objc_msgSend 的函数，这个我在以前博客《<a target="_blank" rel="noopener" href="https://ming1016.github.io/2017/06/20/deeply-ios-performance-optimization/">深入剖析 iOS 性能优化</a>》写过，不过多赘述，只做点补充说明。从<a target="_blank" rel="noopener" href="https://github.com/ming1016/GCDFetchFeed/blob/master/GCDFetchFeed/GCDFetchFeed/Lib/SMLagMonitor/SMCallTraceCore.c">这里的源码</a>可以看实现，其中的attribute((naked)) 表示无参数准备和栈初始化， asm 表示其后面是汇编代码，volatile 是让后面的指令避免被编译优化到缓存寄存器中和改变指令顺序，volatile 使其修饰变量被访问时都会在共享内存里重新读取，变量值变化时也能写到共享内存中，这样不同线程看到的变量都是一个值。如果你发现不加 volatile 也没有问题，你可以把编译优化选项调到更优试试。stp表示操作两个寄存器，中括号部分表示压栈存入sp偏移地址，!符号表合并了压栈指令。</p>
 <p>save() 的作用是把传递参数寄存器入栈保存，call(b, value)用来跳到指定函数地址，call(blr, &amp;before_objc_msgSend) 是调用原 _objc_msgSend 之前指定执行函数，call(blr, orig_objc_msgSend) 是调用 objc_msgSend 函数，call(blr, &amp;after_objc_msgSend) 是调用原 _objc_msgSend 之后指定执行函数。before_objc_msgSend 和 after_objc_msgSend 分别记录时间，差值就是方法调用执行的时长。</p>
 <p>调用之间通过 save() 保存参数，通过 load() 来读取参数。call 的第一个参数是blr，blr 是指跳转到寄存器地址后会返回，由于 blr 会改变 lr 寄存器X30的值，影响 ret 跳到原方法调用方地址，崩溃堆栈找方法调研栈也依赖 lr 在栈上记录的地址，所以需要在 call() 之前对 lr 进行保存，call() 都调用完后再进行恢复。跳转到hook函数，hook函数可以执行我们自定义的事情，完成后恢复CPU状态。</p>
 <h2 id="进入主图后的优化"><a href="#进入主图后的优化" class="headerlink" title="进入主图后的优化"></a>进入主图后的优化</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/thinking-in-how-to-speed-up-app/12.png" class="lozad post-image"src="/uploads/thinking-in-how-to-speed-up-app/12.png"></p>
@@ -525,8 +525,8 @@ movl    <span class="token operator">%</span>ecx<span class="token punctuation">
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
-    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
-    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2020/12/18/thinking-in-how-to-speed-up-app/">http://ming1016.github.io/2020/12/18/thinking-in-how-to-speed-up-app/</a></p>
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://starming.com/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://starming.com/2020/12/18/thinking-in-how-to-speed-up-app/">https://starming.com/2020/12/18/thinking-in-how-to-speed-up-app/</a></p>
     <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
   </div>
   
@@ -741,17 +741,17 @@ movl    <span class="token operator">%</span>ecx<span class="token punctuation">
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2024-05-18</div>
-        <a href="/2024/05/18/pamphlet-series-form/"><div class="recent-posts-item-content">小册子之 Form、Picker、Toggle、Slider 和 Stepper 表单相关视图</div></a>
+        <a href="/2024/05/18/pamphlet-series-form/"><div class="recent-posts-item-content">小册子之 Form、Picker、Toggle、Slider 和 Stepper 表单相关 SwiftUI 视图</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2024-05-18</div>
-        <a href="/2024/05/18/pamphlet-series-layout/"><div class="recent-posts-item-content">小册子之详说 Navigation、ViewThatFits、Layout 协议等布局组件</div></a>
+        <a href="/2024/05/18/pamphlet-series-layout/"><div class="recent-posts-item-content">小册子之详说 Navigation、ViewThatFits、Layout 协议等布局 SwiftUI 组件</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2024-05-18</div>
-        <a href="/2024/05/18/pamphlet-series-listdataview/"><div class="recent-posts-item-content">小册子之 List、Lazy 容器、ScrollView、Grid 和 Table 数据集合视图</div></a>
+        <a href="/2024/05/18/pamphlet-series-listdataview/"><div class="recent-posts-item-content">小册子之 List、Lazy 容器、ScrollView、Grid 和 Table 数据集合 SwiftUI 视图</div></a>
       </div>
     
       <div class="recent-posts-item">
@@ -786,6 +786,11 @@ movl    <span class="token operator">%</span>ecx<span class="token punctuation">
     </div>
 
     
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">京ICP备2024068292号-1 </a>
+    </div>
     
     
     

@@ -208,7 +208,7 @@
 <p>其中嵌套键值是 sub，那么 children 参数只需要添上 <code>\.sub</code> ，List 内部会处理嵌套逻辑并展示出来。如果 List 表现出来的效果并不能够满足你，你也可以自己定制视图和交互。比如点击文件夹名字也能够展开子内容，List 默认只有点击左侧箭头才能够展开。</p>
 <p>自定义嵌套视图底层可以使用 DisclosureGroup，DisclosureGroup 能够展示自定义视图内容，还有一个 isExpanded 值绑定参数用来显示和隐藏内容。在遍历已展示视图时，通过 keypaths 发现嵌套值不为空时就读取子内容，同时默认 isExpanded 值为 false 就会显示不展开的箭头符号，将文件夹名字做成按钮，点击按钮触发 isExpanded.toggle()，如 isExpanded 为 false 就置为 true，即展开文件夹，反之就会收起文件夹。</p>
 <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/07.png" class="lozad post-image"src="/uploads/develop-with-swiftui/07.png"></p>
-<h2 id="文本和代码编辑器"><a href="#文本和代码编辑器" class="headerlink" title="文本和代码编辑器"></a>文本和代码编辑器</h2><p>文本和代码编辑器也是 macOS 上很常见的效率工具的核心功能，包含的技术点较多，比如调试和代码分析会用到编译器这里就不展开说了。感兴趣可以参看<a href="https://ming1016.github.io/2017/03/01/deeply-analyse-llvm/">深入剖析 iOS 编译 Clang &#x2F; LLVM</a>、<a href="https://ming1016.github.io/2017/04/01/slides-of-deeply-analyse-llvm/">深入剖析 iOS 编译 Clang &#x2F; LLVM 直播的 Slides</a>、<a href="https://ming1016.github.io/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/">atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides</a>、<a href="https://ming1016.github.io/2018/09/17/produce-slides-of-third-at-swift-conference/">这次swift大会分享准备的幻灯片和 demo</a>，这几篇。</p>
+<h2 id="文本和代码编辑器"><a href="#文本和代码编辑器" class="headerlink" title="文本和代码编辑器"></a>文本和代码编辑器</h2><p>文本和代码编辑器也是 macOS 上很常见的效率工具的核心功能，包含的技术点较多，比如调试和代码分析会用到编译器这里就不展开说了。感兴趣可以参看<a target="_blank" rel="noopener" href="https://ming1016.github.io/2017/03/01/deeply-analyse-llvm/">深入剖析 iOS 编译 Clang &#x2F; LLVM</a>、<a target="_blank" rel="noopener" href="https://ming1016.github.io/2017/04/01/slides-of-deeply-analyse-llvm/">深入剖析 iOS 编译 Clang &#x2F; LLVM 直播的 Slides</a>、<a target="_blank" rel="noopener" href="https://ming1016.github.io/2017/05/27/slides-of-learn-what-interesting-things-you-can-do-with-iOS-compilation/">atSwift大会上分享《学习iOS编译原理能做哪些有意思的事情》的 Slides</a>、<a target="_blank" rel="noopener" href="https://ming1016.github.io/2018/09/17/produce-slides-of-third-at-swift-conference/">这次swift大会分享准备的幻灯片和 demo</a>，这几篇。</p>
 <p>文本或代码分析完后可以通过 Attribute 来进行富文本展示的设置，富文本属性都在 AttributeContainer 中设置，设置好的富文本直接通过 append 进行组合。编辑器其它的比如编辑、重做、存储或自定义的能力可以通过 NSViewRepresentable 来包装 Appkit 直接使用 Appkit 里的 NSTextView 的能力。</p>
 <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/12.png" class="lozad post-image"src="/uploads/develop-with-swiftui/12.png"></p>
 <h2 id="Grid"><a href="#Grid" class="headerlink" title="Grid"></a>Grid</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-with-swiftui/14.png" class="lozad post-image"src="/uploads/develop-with-swiftui/14.png"></p>
@@ -3862,8 +3862,8 @@ static func number() &#123;
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
-    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
-    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2022/03/25/develop-with-swiftui/">http://ming1016.github.io/2022/03/25/develop-with-swiftui/</a></p>
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://starming.com/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://starming.com/2022/03/25/develop-with-swiftui/">https://starming.com/2022/03/25/develop-with-swiftui/</a></p>
     <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
   </div>
   
@@ -4078,17 +4078,17 @@ static func number() &#123;
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2024-05-18</div>
-        <a href="/2024/05/18/pamphlet-series-form/"><div class="recent-posts-item-content">小册子之 Form、Picker、Toggle、Slider 和 Stepper 表单相关视图</div></a>
+        <a href="/2024/05/18/pamphlet-series-form/"><div class="recent-posts-item-content">小册子之 Form、Picker、Toggle、Slider 和 Stepper 表单相关 SwiftUI 视图</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2024-05-18</div>
-        <a href="/2024/05/18/pamphlet-series-layout/"><div class="recent-posts-item-content">小册子之详说 Navigation、ViewThatFits、Layout 协议等布局组件</div></a>
+        <a href="/2024/05/18/pamphlet-series-layout/"><div class="recent-posts-item-content">小册子之详说 Navigation、ViewThatFits、Layout 协议等布局 SwiftUI 组件</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2024-05-18</div>
-        <a href="/2024/05/18/pamphlet-series-listdataview/"><div class="recent-posts-item-content">小册子之 List、Lazy 容器、ScrollView、Grid 和 Table 数据集合视图</div></a>
+        <a href="/2024/05/18/pamphlet-series-listdataview/"><div class="recent-posts-item-content">小册子之 List、Lazy 容器、ScrollView、Grid 和 Table 数据集合 SwiftUI 视图</div></a>
       </div>
     
       <div class="recent-posts-item">
@@ -4123,6 +4123,11 @@ static func number() &#123;
     </div>
 
     
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">京ICP备2024068292号-1 </a>
+    </div>
     
     
     

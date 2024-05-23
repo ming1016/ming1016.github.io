@@ -221,7 +221,7 @@
 <p>这样的代码以前都是使用的原生代码和 C++ 代码编写，C++ 代码通过静态编译方式集成到工程中，也能实现部分平台通用，但是 C++ 编写代码在并发情况下非常容易产生难查的内存安全和并发问题，对于一些比较大的工程，开启 Monkey 测试由于插桩导致内存会增大好几倍，从而无法正常启动，查问题更加困难。当然 Rust 也许是另一种选择，rust 语言层面对 FFI 有支持，使用 extern 就可以实现 rust 与其他编程语言的交互。rust 对内存安全和并发的问题都能够在编译时发现，而不用担心会在运行时发现，这样开发体验和效率都会提高很多，特别是在重构时不会担心引入未知内存和并发问题。使用 rust 编译 iOS 架构的产物也很简单，先安装 Rustup，然后在 rustup 里添加 iOS 相关架构，rust 的包管理工具是 cargo，类似于 cocoapods，cargo 的子命令 cargo-lipo 可以生成 iOS 库，创建一个 C 的桥接文件，再集成到工程中。对于 Android 平台，rust 有专门的 android-ndk-rs 库。rust 的 ffi 在多语言处理中需要一个中间的通信层处理数据，性能和安全性都不高，可以使用 flatbuffers 。关于序列化方案性能比较可以参看 <a target="_blank" rel="noopener" href="https://codeburst.io/json-vs-protocol-buffers-vs-flatbuffers-a4247f8bda6f">JSON vs Protocol Buffers vs FlatBuffers</a> 这篇文章。</p>
 <p>React Native 本身也在往前走。以前 React Native 有三个线程，分别是执行 js 代码的 JS Thread，负责原生渲染和调用原生能力的 UI Thread，模拟虚拟 DOM 将 Flexbox 布局转原生布局的 Shadow Thread。三个线程工作方式是 JS Thread 会先对 React 代码进行序列化，通过 Bridge 发给 Shadow Thread，Shadow Thread 会进行反序列化，形成虚拟 DOM 交由 Yogo 转成原生布局，Shadow Thread 再通过 Bridge 传给 UI Thread，UI Thread 获取消息先反序列化，再按布局信息进行绘制，可以看出三个线程交互复杂，而且消息队列都是异步，使得事件难保处理，序列化都是用的 JSON 性能和 Protocol Buffers 还有 FlatBuffers 相比差很多。新架构会从线程模型做改进，高优先级线程会直接同步调用 js，低优先级更新 UI 的任务不在主线程工作。同时新架构的核心 JSI 方案简化 js 和原生调用，改造成更轻量更高效的调用方式，用来替换 Bridge。JSI 使得以前的三个线程通信不用都通过 Bridge 这种依赖消息序列化异步通信方式，而是直接同步通信，消除异步通信会出现的拥塞问题，具体使用例子可以看这篇文章《<a target="_blank" rel="noopener" href="https://medium.com/@christian.falch/https-medium-com-christian-falch-react-native-jsi-challenge-1201a69c8fbf">React Native JSI Challenge</a>》。另外 React Native 新架构的 JSI 是一个轻量的 C++桥接框架，通信对接的 js 引擎比如 JSC、Hermes、V8、QuickJS、JerryScript 可以很方便的替换。关于 JSI 的详情和进展可以参考其<a target="_blank" rel="noopener" href="https://github.com/react-native-community/discussions-and-proposals/issues/91">提案地址</a>。</p>
 <p>2019 年出现的 Svelte。Svelte 的特点是构建出的代码小，使用时可以直接使用构建出带有少量仅会用到逻辑的运行时的组件，不需要专门的框架代码作为运行时使用，不会浪费。Svelte 没有 diff 和 patch 操作，也能够减少代码，减少内存占用，性能会有提升。当然 Svelte 的优点在项目大了后可能不会像小项目那么明显。</p>
-<p>CSS 框架有 Bootstrap、Bulma、Tailwind CSS，其中认可度最高的是 Tailwind CSS，近年来 Bootstrap 持续降低，Tailwind CSS 和 Bootstrap 最大的不同就是 Tailwind CSS 没有必要的内置组件，因此非常轻量，还提供了 utility class 集合和等价于 Less、Sass 样式声明的 DSL。浏览器对 CSS 样式和 DOM 结合进行渲染的原理可以参看我以前《<a href="https://ming1016.github.io/2017/10/11/deeply-analyse-webkit/">深入剖析 WebKit</a>》这篇文章。</p>
+<p>CSS 框架有 Bootstrap、Bulma、Tailwind CSS，其中认可度最高的是 Tailwind CSS，近年来 Bootstrap 持续降低，Tailwind CSS 和 Bootstrap 最大的不同就是 Tailwind CSS 没有必要的内置组件，因此非常轻量，还提供了 utility class 集合和等价于 Less、Sass 样式声明的 DSL。浏览器对 CSS 样式和 DOM 结合进行渲染的原理可以参看我以前《<a target="_blank" rel="noopener" href="https://ming1016.github.io/2017/10/11/deeply-analyse-webkit/">深入剖析 WebKit</a>》这篇文章。</p>
 <p>在浏览器之外领域最成功的框架要数 Node.js 了。</p>
 <p>Ryan Dahl 基于 V8 开发了 Node.js，提供标准库让 js 能够建立 HTTP 服务端应用。比如下面的 js 代码：</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">const</span> http <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'http'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -970,7 +970,7 @@ MOV R0, d  ; 把寄存器拷给 d<span aria-hidden="true" class="line-numbers-ro
 <p>执行完 js_create_module_function，会调用 js_link_module 函数，js_link_module 函数会处理所有要导入的变量，将其保存在 JSModuleDef 的 req_module_entries 数组里供解释执行时使用。然后 js_link_module 还会检查间接的导入。最后将导出的变量保存在模块 JSExportEntry 的 export_entries 数组里，然后使用 JS_Call 函数执行导出的这些全局变量的初始化。</p>
 <p>JS_EvalFunctionInteral 函数对于 tag 是 JS_TAG_FUNCTION_BYTECODE 的函数对象会调用 js_closure 和 JS_CallFree 两个函数进行字节码的解释执行。</p>
 <p>js_closure 函数最终会生成函数闭包对象，这个对象会设置属性。js_closure 还会生成设置变量属性，比如来源和类型，并存在当前函数的 var_refs 里，变量处理使用的是 js_closure2 函数。js_closure 先使用 JS_NewObjectClass 将 func_obj 类型由 js_closure2 函数会遍历闭包变量，通过 get_var_ref 函数来看闭包变量来自哪一层上下文，最后存在当前函数的 JSVarRef 里，JSVarRef 表变量引用。在 js_closure2 函数中，当发现自由变量的 is_local 为 false 也就是变量来自外层，就会直接从 js_closure2 函数传入的上层的参数 cur_var_refs 里取出变量，存在 var_refs 里，当 JS_CallInternal 执行时当遇到 OP_get_var_ref 字节码操作符时函数闭包会直接通过索引从 var_refs 里取出变量并通过 JS_DupValue 将引用加1，同时把引用加到栈顶。OP_put_var_ref 使用 set_value 函数将栈顶值更新到 var_refs 对应索引位置，并 pop 栈顶值。js_function_set_properties 函数设置属性。</p>
-<p>创建了闭包环境，接下来执行 JS_Call 函数，JS_Call 函数会逐个执行字节码的指令。JS_Call 会调用 JS_CallInternal 函数，QuickJS 的字节码执行架构是基于栈指令的，JavaScriptCore 是基于寄存器解释执行的，关于 JavaScriptCore 的详细介绍可以参看我以前的文章《<a href="https://ming1016.github.io/2018/04/21/deeply-analyse-javascriptcore/">深入剖析 JavaScriptCore</a>》。JSStackFrame 是模拟栈，在一个运行时只会有一个模拟栈在使用，generator 通过保存一个还在运行中没结束的栈来达到挂起的目的。</p>
+<p>创建了闭包环境，接下来执行 JS_Call 函数，JS_Call 函数会逐个执行字节码的指令。JS_Call 会调用 JS_CallInternal 函数，QuickJS 的字节码执行架构是基于栈指令的，JavaScriptCore 是基于寄存器解释执行的，关于 JavaScriptCore 的详细介绍可以参看我以前的文章《<a target="_blank" rel="noopener" href="https://ming1016.github.io/2018/04/21/deeply-analyse-javascriptcore/">深入剖析 JavaScriptCore</a>》。JSStackFrame 是模拟栈，在一个运行时只会有一个模拟栈在使用，generator 通过保存一个还在运行中没结束的栈来达到挂起的目的。</p>
 <p>JS_CallInternal 会对字节码的每条指令都进行解释执行。会先为变量、存放数据的栈还有参数等进行内存的分配。然后再对每条字节码指令一个一个进行解释执行，指令类型有 push 开头的入栈指令。goto、if 打头的跳转指令。call 开头的调用指令。交换类的指令有 swap、nip、dup、perm、drop 等。用于计算的指令有加减乘除、一元计算、逻辑计算等。处理指令时生成 JSValue 用的是 JS_MKVAL 和 JS_MKPTR 这两个宏。新建字符串类型用的是 JS_NewString，对象是 JS_NewObject，数组是 JS_NewArray等。类型转换使用的函数有 JS_toString 来转换成字符串类型，JS_ToNumeric 转换成数字，JS_ToObject 转换成对象等。</p>
 <p>内存相关指令有 JS_DupValue 函数对 JSRefCountHeader 进行引用计数加1，JS_FreeValue 对引用计数减1，触发GC使用 js_trigger_gc 函数，添加一个 GC 对象使用 add_gc_object 函数，移出使用 remove_gc_object 函数。触发 GC 的时机是可以看哪里调用了 JS_NewObjectProtoClass 这个函数，JS_NewObjectProtoClass 函数会调用 JS_NewObjectFromShape 函数会触发 js_trigger_gc 函数，js_trigger_gc 函数会判断内存大小是否大于 malloc_gc_threshold，超过就会调用 JS_RunGC 函数。对应判断代码如下：</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">force_gc <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>rt<span class="token operator">-></span>malloc_state<span class="token punctuation">.</span>malloc_size <span class="token operator">+</span> size<span class="token punctuation">)</span> <span class="token operator">></span>
@@ -1115,8 +1115,8 @@ DEF(  put_ref_value, 1, 3, 0, none)<span aria-hidden="true" class="line-numbers-
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
-    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
-    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2021/02/21/deeply-analyse-quickjs/">http://ming1016.github.io/2021/02/21/deeply-analyse-quickjs/</a></p>
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://starming.com/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://starming.com/2021/02/21/deeply-analyse-quickjs/">https://starming.com/2021/02/21/deeply-analyse-quickjs/</a></p>
     <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
   </div>
   
@@ -1331,17 +1331,17 @@ DEF(  put_ref_value, 1, 3, 0, none)<span aria-hidden="true" class="line-numbers-
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2024-05-18</div>
-        <a href="/2024/05/18/pamphlet-series-form/"><div class="recent-posts-item-content">小册子之 Form、Picker、Toggle、Slider 和 Stepper 表单相关视图</div></a>
+        <a href="/2024/05/18/pamphlet-series-form/"><div class="recent-posts-item-content">小册子之 Form、Picker、Toggle、Slider 和 Stepper 表单相关 SwiftUI 视图</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2024-05-18</div>
-        <a href="/2024/05/18/pamphlet-series-layout/"><div class="recent-posts-item-content">小册子之详说 Navigation、ViewThatFits、Layout 协议等布局组件</div></a>
+        <a href="/2024/05/18/pamphlet-series-layout/"><div class="recent-posts-item-content">小册子之详说 Navigation、ViewThatFits、Layout 协议等布局 SwiftUI 组件</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2024-05-18</div>
-        <a href="/2024/05/18/pamphlet-series-listdataview/"><div class="recent-posts-item-content">小册子之 List、Lazy 容器、ScrollView、Grid 和 Table 数据集合视图</div></a>
+        <a href="/2024/05/18/pamphlet-series-listdataview/"><div class="recent-posts-item-content">小册子之 List、Lazy 容器、ScrollView、Grid 和 Table 数据集合 SwiftUI 视图</div></a>
       </div>
     
       <div class="recent-posts-item">
@@ -1376,6 +1376,11 @@ DEF(  put_ref_value, 1, 3, 0, none)<span aria-hidden="true" class="line-numbers-
     </div>
 
     
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">京ICP备2024068292号-1 </a>
+    </div>
     
     
     

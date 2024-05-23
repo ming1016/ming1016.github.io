@@ -565,7 +565,7 @@
 
 <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/28.png" class="lozad post-image"src="/uploads/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/28.png"></p>
 <p>小册子里还可以查看 Swift 社区里博主们博客更新动态。我接着跟你说说我怎么做的。 </p>
-<h2 id="博客-RSS-更新动态"><a href="#博客-RSS-更新动态" class="headerlink" title="博客 RSS 更新动态"></a>博客 RSS 更新动态</h2><p>博客 RSS 的数据获取我在前面基础网络能力中已经说了。所有解析逻辑我都写在了工程 RSSReader&#x2F;Parser&#x2F; 目录下的 ParseStandXMLTagTokens.swift、ParseStandXMLTags.swift、ParseStandXML.swift 三个文件中，实现思路我在先前<a href="https://ming1016.github.io/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">《如何对 iOS 启动阶段耗时进行分析》</a>文章的“优化后如何保持？”章节有详细说明。 </p>
+<h2 id="博客-RSS-更新动态"><a href="#博客-RSS-更新动态" class="headerlink" title="博客 RSS 更新动态"></a>博客 RSS 更新动态</h2><p>博客 RSS 的数据获取我在前面基础网络能力中已经说了。所有解析逻辑我都写在了工程 RSSReader&#x2F;Parser&#x2F; 目录下的 ParseStandXMLTagTokens.swift、ParseStandXMLTags.swift、ParseStandXML.swift 三个文件中，实现思路我在先前<a target="_blank" rel="noopener" href="https://ming1016.github.io/2019/12/07/how-to-analyze-startup-time-cost-in-ios/">《如何对 iOS 启动阶段耗时进行分析》</a>文章的“优化后如何保持？”章节有详细说明。 </p>
 <p>根据 RSS 的 XML 结构，定义 Model 结构如下： </p>
 <pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">struct</span> <span class="token class-name">RSSModel</span><span class="token punctuation">:</span> <span class="token class-name">Identifiable</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">var</span> id <span class="token operator">=</span> <span class="token function">UUID</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -864,8 +864,8 @@
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
-    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/about">戴铭</a></p>
-    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://ming1016.github.io/2022/01/03/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/">http://ming1016.github.io/2022/01/03/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/</a></p>
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://starming.com/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://starming.com/2022/01/03/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/">https://starming.com/2022/01/03/develop-macos-with-swiftui-combine-concurrency-aysnc-await-actor/</a></p>
     <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
   </div>
   
@@ -1080,17 +1080,17 @@
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2024-05-18</div>
-        <a href="/2024/05/18/pamphlet-series-form/"><div class="recent-posts-item-content">小册子之 Form、Picker、Toggle、Slider 和 Stepper 表单相关视图</div></a>
+        <a href="/2024/05/18/pamphlet-series-form/"><div class="recent-posts-item-content">小册子之 Form、Picker、Toggle、Slider 和 Stepper 表单相关 SwiftUI 视图</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2024-05-18</div>
-        <a href="/2024/05/18/pamphlet-series-layout/"><div class="recent-posts-item-content">小册子之详说 Navigation、ViewThatFits、Layout 协议等布局组件</div></a>
+        <a href="/2024/05/18/pamphlet-series-layout/"><div class="recent-posts-item-content">小册子之详说 Navigation、ViewThatFits、Layout 协议等布局 SwiftUI 组件</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2024-05-18</div>
-        <a href="/2024/05/18/pamphlet-series-listdataview/"><div class="recent-posts-item-content">小册子之 List、Lazy 容器、ScrollView、Grid 和 Table 数据集合视图</div></a>
+        <a href="/2024/05/18/pamphlet-series-listdataview/"><div class="recent-posts-item-content">小册子之 List、Lazy 容器、ScrollView、Grid 和 Table 数据集合 SwiftUI 视图</div></a>
       </div>
     
       <div class="recent-posts-item">
@@ -1125,6 +1125,11 @@
     </div>
 
     
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">京ICP备2024068292号-1 </a>
+    </div>
     
     
     
