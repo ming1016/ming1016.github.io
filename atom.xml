@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://starming.com/"/>
-  <updated>2024-05-25T12:25:18.445Z</updated>
+  <updated>2024-07-03T21:50:01.369Z</updated>
   <id>https://starming.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>梵高灵感的来自江户浮世绘，颜气江户APP来自江户的色彩</title>
+    <link href="https://starming.com/2024/07/04/edocolorapp/"/>
+    <id>https://starming.com/2024/07/04/edocolorapp/</id>
+    <published>2024-07-03T21:48:02.000Z</published>
+    <updated>2024-07-03T21:50:01.369Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>看过我前面博客的同学会发现我很喜欢自己画些配图，每次给画配色都会有些新的体会，却不知道是什么，于是每次都要经过一轮新的摸爬滚打才能调到自己满意的颜色，最近我为了能够提高自己的配色效率，就专门的看了一些色彩相关的书籍，学习了点色彩的理论，还专门的手写了一款 APP，提高了上色的效率呢。这个 APP 叫颜气江户，我已经发到苹果商店（28元），iOS、iPad 和 macOS 商店都可以找到，搜索“颜气江户”。下面我会聊一点色彩的理论，以及怎么将其融入到 APP 中的。</p><p>颜气江户 APP 有一些色彩 APP 的基本功能，200个江户色卡，色卡配图和配色表，以及识别图片配色等功能。</p><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/edocolorapp/08.png" class="lozad post-image"src="/uploads/edocolorapp/08.png"></p><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/edocolorapp/06.png" class="lozad post-image"src="/uploads/edocolorapp/06.png"></p><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/edocolorapp/04.png" class="lozad post-image"src="/uploads/edocolorapp/04.png"></p><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/edocolorapp/07.png" class="lozad post-image"src="/uploads/edocolorapp/07.png"></p><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/edocolorapp/03.png" class="lozad post-image"src="/uploads/edocolorapp/03.png"></p><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/edocolorapp/02.png" class="lozad post-image"src="/uploads/edocolorapp/02.png"></p><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/edocolorapp/05.png" class="lozad post-image"src="/uploads/edocolorapp/05.png"></p><h2 id="舒服的配色"><a href="#舒服的配色" class="headerlink" title="舒服的配色"></a>舒服的配色</h2><p>首先，无论你是否画画，你都会觉得一些配色看起来很舒服，也会觉得有些配色看起来很丑。这些其实是有一定规律可循的。你的眼睛会寻求中等灰色才会达到一种平衡状态，互补色调合后会变成灰色，所以灰色和互补色很容易让配色舒服。因此苹果笔记本常年都是主打银灰色，macOS 操作系统的窗口和 Sidebar 一直以来也都是灰色的，非常耐看。有颜色的手机，单个不耐看，放在一起看着就很舒服，也是这个道理。</p><p>色彩即是物理的、化学的，还是生理的和心理的。物理主要是关于光谱和色彩光波，化学就是染色和载色剂相关的东西，对于艺术美学来说，主要是生理和心理方面的作用，看着舒服就是生理方面的，生理学家埃瓦尔德·赫林就说过眼睛和大脑需要中等灰色，没有的话大脑会处于不安状态。</p><p>这种灰色是可以通过色彩调合而成，最简单的调合方式就是互补色加白色。</p><h2 id="互补色"><a href="#互补色" class="headerlink" title="互补色"></a>互补色</h2><p>那么什么是互补色呢。灰色好理解，互补色可能就比较复杂些了。严谨点的理论上通过色轮可以获取不同数量的互补颜色组合。比如双色互补是色轮上的直线段两端的颜色，三色互补是色轮上构成等边三角形火等腰三角形的三种色彩，四色互补是色轮上构成正方形或长方形的四种色彩。</p><p>虽然互补色会让画面配色看起来和谐舒服，但是有些艺术作品是需要有冲击性的，又或者有鲜明个性的，不然就不好玩了。因此创作时是不用严格按照互补色来配色，根据个人主观喜好来用色就好，当觉得配的不好时再运用互补色的理论调整好了。</p><h2 id="对比色"><a href="#对比色" class="headerlink" title="对比色"></a>对比色</h2><p>另外，通过对比色可以突出你想突出的内容，有五种常用的色彩对比方法</p><ul><li>色相对比：十二色轮的主色</li><li>明暗对比：黄色最亮，紫色最暗</li><li>冷暖对比：红色和橙色最暖，蓝绿色最冷，风景画中远处色彩较冷</li><li>补色对比：调合后成灰色的颜色对比</li><li>面积对比：颜色所占比例对比</li></ul><h2 id="色彩的意义"><a href="#色彩的意义" class="headerlink" title="色彩的意义"></a>色彩的意义</h2><p>色彩的组合其实和音乐的音阶一样，了解音阶的理论并不能创作出美妙的旋律，了解配色原理和每个颜色也不并能创作出美丽的作品。</p><p>了解色彩只是一切美好的基础，也是好的开端。</p><p>同时色彩的变迁和演变也伴随着历史、文化和艺术的演变，了解更多色彩的知识也能够探索到更多未知的领域，让日子意义感更足些呢。</p><h2 id="江户色"><a href="#江户色" class="headerlink" title="江户色"></a>江户色</h2><p>19世纪50年代，江户时期的艺术品传入欧洲，在欧洲流行起来，巴黎一些前卫的艺术家很喜欢这些艺术品。1886年梵高来到巴黎见到江户浮世绘后对其产生了极大兴趣。</p><p>梵高起初收集浮世绘作品是想在咖啡馆里卖这些作品，结果没人买。梵高作品《铃鼓咖啡馆里的阿戈斯蒂娜·塞迦陀利》中可以看到咖啡馆上挂着浮世绘艺伎图。</p><p>虽然梵高没有从浮世绘中获取收入，却从其中获取了创作灵感。他临摹了歌川广重的《开花的李树园》和《大桥安宅骤雨》，还有溪斋英泉的《身穿云龙打挂的花魁》。</p><p>梵高《包扎着耳朵的自画像》这张自画像中墙上挂着的是佐藤虎清的《艺者与富士》。梵高曾表示自己很喜欢葛饰北斋的《神奈川冲浪里》，而后创作了最著名的《星月夜》，其中旋转的星云和神奈川冲浪里的浪非常神似。</p><p>梵高曾经说过：“如果你研究日本艺术，你看到的是一个充满智慧、哲思和悟性的人将时间用来做什么呢？研究地球与月亮的距离？不。研究俾斯麦政策？不。他研究一片草叶。这难道不是日本人教给我们的真正的宗教吗?他们简单地生活在自然之中如同花儿一样。”</p><p>我喜欢梵高的配色，同时也喜欢江户时代浮世绘画中的颜色，因此我打算先从江户时代的颜色入手，先做好研究。</p><p>我找了200种当时流行的颜色，颜气江户 APP 目前就内置了这些颜色，并加入了颜色的名字的来源。江户色名主要取自植物、动物、自然现象以及歌舞伎演员等。透过这些色名的来源，我发现还能够了解到江户时期的人们生活文化自然的方方面面。</p><p>举几个由歌舞伎演员名命名的颜色的例子，比如団十郎茶、梅幸茶、路考茶、芝翫茶、璃寛茶。</p><p>団十郎茶是歌舞伎役者市川團十郎爱使用的颜色，成田屋的标志，是一种偏红的棕色。艺荒事（武戏）代表剧“暂”里所用的服装颜色，还有温泉猴子的脸和柿饼也是这种颜色。</p><p>梅幸茶是歌舞伎大师初代尾上菊五郎最喜欢的颜色，颜色名来自菊五郎的俳句名梅幸。</p><p>路考茶是江戸的歌舞伎役者二代目瀬川菊之丞襲名王子路考喜欢的颜色，江户各地女性争相模仿，浮世絵美人衣服很多用的也是这个颜色。</p><p>芝翫茶是大阪花形役者三代目中村歌右衛門喜欢的颜色，呈偏淡的红棕色，芝翫是他的俳名。</p><p>璃寛茶是歌舞伎演员二世嵐吉三郎最喜欢的舞台衣裳的颜色，他的俳句叫瑠寛。虎河豚是一种高级鱼，就是璃寛茶色。</p><p>歌舞伎的演员成了明星和时尚的领导者，庶民喜欢把歌舞伎演员喜欢的颜色叫做役者色，将这些颜色衣裳穿在自己身上，会觉得自己很时尚。</p><p>另外，江户时代颜色有个最显著的特色，那就是茶色和鼠色很多，统称四十八茶百鼠。</p><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/edocolorapp/01.png" class="lozad post-image"src="/uploads/edocolorapp/01.png"></p><p>江户中期富裕的商人越来越多，生活变得奢侈起来，更多钱用在了华丽颜色的服饰上，幕府为了避免攀比和浪费，因此提倡节俭，并颁布了奢侈禁止令，让更多的钱用在江户的城市发展上。这样一些以前代表低身份的茶色和鼠色被玩出了花，出现了很多新的颜色，这些颜色变成了流行时尚色。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;看过我前面博客的同学会发现我很喜欢自己画些配图，每次给画配色都会有些新的体会，却不知道是什么，于是每次都要经过一轮新的摸爬滚打才能调到自己满
+      
+    
+    </summary>
+    
+      <category term="App" scheme="https://starming.com/categories/App/"/>
+    
+    
+      <category term="App" scheme="https://starming.com/tags/App/"/>
+    
+  </entry>
   
   <entry>
     <title>小册子之 SwiftUI 动画</title>
@@ -244,31 +269,6 @@
       <category term="Apple" scheme="https://starming.com/tags/Apple/"/>
     
       <category term="SwiftUI" scheme="https://starming.com/tags/SwiftUI/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动</title>
-    <link href="https://starming.com/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/"/>
-    <id>https://starming.com/2022/10/24/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/</id>
-    <published>2022-10-24T07:47:34.000Z</published>
-    <updated>2022-10-26T00:20:12.934Z</updated>
-    
-    <content type="html"><![CDATA[<p>上周，我参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动，这里是<a href="https://weibo.com/1914010467/MbvfZp6Fj">视频回放</a>。其中聊了些参加 Ask Apple 活动的一些感受和收获，还聊了些 Apple XR 相关内容。</p><h2 id="Ask-Apple"><a href="#Ask-Apple" class="headerlink" title="Ask Apple"></a>Ask Apple</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/01.png" class="lozad post-image"src="/uploads/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/01.png"></p><p>这次 Apple 的 <a href="https://www.apple.com.cn/newsroom/2022/10/apple-introduces-ask-apple-for-developers/">Ask Apple</a> 活动有中文集锦版块，我感觉很贴心，先前 Apple 在 WWDC 期间的 Digital Lounge 中都是英文，阅读起来时间成本很高，需要过滤很多信息。我觉得参加活动的开发者分为两种，一种是在工作中有问题想要解决的，他们也会用各种渠道去找解法，比如请教身边有经验的人，问其他公司的朋友，或者直接在官方 feedback 里提。另一种开发者是当前没有疑难杂症，只是想关注下其他人关注的问题，还有看看有没有自己平时没太注意到的技术是否能够用到自己的工作中。</p><p>在 WeatherKit 主题环节中，有开发者问是否有有完整的天气相关的 Symbol 可以用，苹果工程师会列出自己整理的天气 Symbol 名称集，真是非常贴心了。</p><p>我还从天气主题的问答中，了解到天气预报还有分钟级的，不过目前可以用的国家只有美国、英国和爱尔兰。大部分国家会有恶劣天气事件可以用。天气主题中，大家很关注的是天气请求配额的问题，毕竟用多了是要自己掏腰包的嘛。了解到的情况是天气请求配额并不是简单的按请求次数来的，服务端会缓存的数据请求，相同的请求在缓存时间内请求多次也只算一次，数据更新了才会算新增加一次。</p><p>在 SF Symbols 环节有个有趣的情况，当时 Apple 工程师问大家平时自制 Symbol 一般用啥工具，举例是  Illustrator、Sketch、Affinity Designer，却没提最近最火的 Figma，Apple 提供的素材也没有 Figma 格式的，于是大家都回答 Figma，气氛略显尴尬，当然不排除砸场子的可能。我想大家只是希望 Apple 能够了解到 Figma 阵营已经很壮大了。</p><p>在 Widget 主题环节，开发者都提到了widget刷新频率问题，其实是有官方文档<a href="https://developer.apple.com/documentation/widgetkit/keeping-a-widget-up-to-date">《Keeping a Widget Up To Date》</a>专门阐述这个问题的， Apple 工程师也找出来发到了 Slack 中。</p><p>还有个是 SwiftUI 这次新推出的共享面板支持 ShareLink，我看还有开发者不知道，可能是他没来得及看 WWDC Session。其实这样没来得及看或者没时间看 Session 的人应该还有很多，正在解决手头问题或者开发新功能，碰到了具体问题就来问的。Ask Apple 这样的活动就可以解决他们的燃眉之急。</p><p>对于很多人关注用户体验的人，很关注后台任务怎样更新资源策略，Apple 工程师回答的很详细，还贴出了 一个官方 <a href="https://developer.apple.com/documentation/backgroundtasks/refreshing_and_maintaining_your_app_using_background_tasks">demo</a>，我正好也全面了解了下。另外今年 Apple 推出的 Background Asset 可以让系统统筹进行资源更新，这个更新过程可以发生在 App 未启动状态。</p><p><a href="https://twitter.com/fatbobman/">fatbobman</a> 整理了 Ask Apple 活动中关于 CoreData 的内容，<a href="https://www.fatbobman.com/posts/Core-Data-of-Ask-Apple-2022/">上 </a> 和 <a href="https://www.fatbobman.com/posts/Core-Data-of-Ask-Apple-2022-2/">下</a>。先前关注他博客里提到他开发的 App 用的是 Core Data 和 CloudKit，fatbobman 自己也在 Ask Apple 中问了相关问题，看得出他的收获很大。</p><h2 id="XR"><a href="#XR" class="headerlink" title="XR"></a>XR</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/02.png" class="lozad post-image"src="/uploads/join-sspai-swiftgg-ask-apple-and-ar-vr-live-event/02.png"></p><p>直播活动后半场环节是围绕 Apple 可能推出 XR 设备的讨论。</p><p>记得19年有篇报道称苹果内部有人透露出他们会在22年先推出结合AR和VR的头盔。23年再出轻便的 XR 眼镜，代号是 N421，官方回应的是硬件可能会不同，也可能不会推出。透露消息的人称自己是在 Apple 的千人大会上了解到的，参会人都是参与 XR 的项目组成员。</p><p>目前来看22年都快要结束了，还没有新 XR 消息。根据这几年苹果为XR做的技术铺垫，我觉得很有可能是一个轻便的很时尚的 AR 眼镜，不会像赛亚人那种很科幻的样子。</p><p>关于什么是 AR 什么是 VR，我觉得像环球影城里的哈利波特城堡还有迪斯尼加勒比海盗那种，在移动中结合了真实场景和虚幻场景的就是 AR。坐着不动体验比拟真实场景的虚幻场景，比如迪士尼的飞跃地平线就是VR。最终带来的愉悦感其实是差不多的。</p><p>眼镜最担心的是常带的电量问题。</p><p>我觉得 Apple 的这款常态是待机模式。待机模式会常显，类似 apple watch 和 iphone14 的那种常显，这样可以做到非常省电，内容类似 lock screen，可以自定义时间组件和下面三方 app 提供的 widget 和 live active。这样就在最省电的情况下依然可以看到自己关注的信息。</p><p>第二种是激活状态，这个状态下会开启摄像头，完成类似 iPhone 和 iPad 上的 AR 功能。AR Quick look、扫描物品、WorldMap、人物跟踪、4K、Location Anchor 这些 ARKit 的功能和应用都可以使用。</p><p>最后还可能会有投屏模式，可以将手机、电脑甚至是 Watch 上的内容投到眼镜上。使用通用控制功能，可以让 Apple Watch、iPhone、iPad 触摸屏、鼠标和键盘都可以进行眼镜的输入控制。</p><p>通过苹果申请的专利来看，他们使用的是无线充电模式，到时候可能会类似 airpod 那样的充电盒子的方式，比如可充电的眼镜盒。另外有个专利显示苹果设备是可以看穿到外部的，很有可能会是外带的轻便眼镜，而不会是头盔。因为 VR 头盔可以活动范围太小，不健康，不符合苹果提倡那种 Apple watch 运动模式的健康生活方式。</p><p>那什么 Apple 的技术会用到眼镜上呢？</p><p>ARKit 以及基于 ARKit 的 RoomPlan 和 Live Text 很明显就是给眼镜用的，RoomPlan 解决的是眼镜应用中虚拟物品摆放的问题，Live Text 可以解决现实世界中信息的识别问题。</p><p>ARKit 目前用的最多的应该就是 AR Quick Look 这个技术，它可以很方便的将虚拟物品摆到现实中。网页结合很简单，在 a 标签加上rel&#x3D;ar 属性，然后href里添加模型USDZ文件连接就行了。</p><p>ARKit4 的地理位置跟踪，可以在坐标点上放置虚拟元素，当别人打开 AR 应用走到放置的区域时，就可以加载出预先放置的虚拟元素。</p><p>新增 Motion Capture 2D 和 3D 骨骼检测，还有耳骨检测，可能是想检测对方有没有在看你。</p><p>交互界面上，SwiftUI 和 Stage Manager 肯定会用于眼镜的 UI 和 UX 设计中。SwiftUI 描述界面和交互设计是再合适不过的了。Stage Manager 可以将空间里大量的复杂交互应用进行分组。</p><p>对于镜片显示的技术来说，苹果收购了多家研发 <a href="https://en.wikipedia.org/wiki/MicroLED">micro LED</a> 的公司，micro LED 像素间距的上限更小，比 LCD 和 mini LED 都要小得多，上限高，就能有更大的分辨率的可能，更小的屏幕能够做到更高的分辨率。micro LED 使用的是非有机材料，相比较于 OLED 寿命要长，有着和 OLED 一样的高色彩对比度，还有更高的亮度尼特上限。micro LED 比过渡型的 mini LED 要省电。micro LED 的缺点是成本高，这个是目前在 micro LED 在攻克的难题。</p><p>Apple 的 Pro Display XDR 和最新的 iPad Pro MacBook Pro，用的是过渡到 micro LED 的 mini LED 屏幕，Pro Display XDR 亮度能够到1600尼特，并且使用寿命和节能都比 OLED 好，这点可以看出 Apple 未来的方向会体验更好的 micro LED。</p><p>从苹果收购 Beates 后，苹果加强了耳机硬件实力，空间音频可以提高虚拟世界元件的真实感，比如头顶有只虚拟的鸟，鸟叫声也是从上面传来，这样的感觉是不是很真实。</p><p>现在市场上已经推出了一些眼镜。微软的 VR + AR 的大头盔 Hololens 面对的不是普通用户而是专业人，比如建筑行业通过头盔可以看到现在建筑的情况，测量和检测，辅助工程，提高效率，保障安全。Hololens 售价是3500美金。Facebook 的 Oculus VR头显着重元宇宙，VR 主要是在室内场景使用，但室内里可以娱乐的东西太多了，竞争必然会很激烈。轻便的 AR 在户外的设备竞争会少些，目前用的最多的也就是听音频和看手表的设备，操作也比较麻烦，室外会有很多等待或者枯燥的时间待开发。</p><p>Snapchat 做的眼镜是为开发AR滤镜的人用的。Google 今年推出一个用于翻译垂直领域的眼镜，感觉应该是上次 Google Glass 没做成，吃一亏长一智，这次打算先精准定位下翻译这个市场。</p><p>开发者最关心的应该是如果 Apple 眼镜时代到来了，需要做哪些准备，储备什么技术。</p><p>我认为学好 ARKit 和 SwiftUI 是最有用的。还有这次 Ask Apple 活动里的那些技术主题，应该也是个信号，可以着重学习。</p><p>偏硬件的主题有<a href="https://developer.apple.com/documentation/arkit/">增强现实</a>、<a href="https://developer.apple.com/documentation/roomplan/">RoomPlan</a>、照片与相机、<a href="https://developer.apple.com/documentation/metrickit/improving_your_app_s_performance">能耗与性能</a>。偏界面交互的主题有设计、<a href="https://developer.apple.com/documentation/SwiftUI">SwiftUI</a>、<a href="https://developer.apple.com/documentation/WeatherKit">WeatherKit</a>、<a href="https://developer.apple.com/documentation/activitykit/displaying-live-data-with-live-activities">Live Activities</a>、<a href="https://developer.apple.com/documentation/visionkit/enabling_live_text_interactions_with_images">Live Text</a>、<a href="https://developer.apple.com/machine-learning/create-ml/">机器学习</a>、隐私、Focus 等。</p><p>Apple 眼镜时代带来了更多机会。下面是我比较感兴趣的会带来的变化。</p><p>首先是数字收藏品，这对于数字艺术创作者来说有了更多机会。数字雕塑、模型、挂画和时钟等会更多的出现在房间、办公室甚至室外。</p><p>对艺术创作者体验来说，可能更接近以前雕塑家和壁画画家，只是减少了现场的清理工作，失误了也不用重头再来，简单的做个撤回就好了。因此创作者可以更好地专注在创作本身。</p><p>绘画素材的收集，以前可能更多的是速写或者拍照，现在用眼镜就能很方便的把整个环境都扫描下来，回到工作室可以慢慢的在各个角度来观察素材。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;上周，我参加了少数派和 SwiftGG 举办的《和我们一起畅想 Apple 的 AR 与 VR》直播活动，这里是&lt;a href=&quot;https://weibo.com/1914010467/MbvfZp6Fj&quot;&gt;视频回放&lt;/a&gt;。其中聊了些参加 Ask Apple 活动的一些
-      
-    
-    </summary>
-    
-      <category term="Programming" scheme="https://starming.com/categories/Programming/"/>
-    
-    
-      <category term="Apple" scheme="https://starming.com/tags/Apple/"/>
     
   </entry>
   
