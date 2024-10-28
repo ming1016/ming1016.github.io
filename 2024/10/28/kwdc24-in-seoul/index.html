@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-Hans" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
+      
+      <span class="navbar-logo-dsc">戴铭的博客</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">Home </a>
+    
+    <a href="/archives" class="navbar-menu-item">Archive </a>
+    
+    <a href="/tags" class="navbar-menu-item">Tags </a>
+    
+    <a href="/categories" class="navbar-menu-item">Categories </a>
+    
+    <a href="/about" class="navbar-menu-item">About </a>
+    
+    <a href="" class="navbar-menu-item">Friends </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/kwdc24-in-seoul/44.png" data-src="/uploads/kwdc24-in-seoul/44.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      我在韩国首尔 KWDC24 做的技术分享
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2024-10-28T02:58:45.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2024-10-28</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Programming/" class="post-meta-link">Programming</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.7k words</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/iOS/" class="post-meta-link">iOS</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Performance-optimization/" class="post-meta-link">Performance optimization</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p>韩国朋友真是太热情了。下面是这次分享的内容，文章后面我还会记录些这次首尔的见闻。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/01.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/01.png"></p>
+<p>The topic I’ll be discussing is the evolution of iOS performance optimization. I hope you can take away some insights from my talk.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/02.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/02.png"></p>
+<p>Let’s first talk about a few situations where an app becomes unusable, which can be simplified into app crashes or freezes. There are three main reasons, the first being OOM, meaning memory exhaustion.</p>
+<p>When an app consumes too much memory, the system can no longer allocate more, leading to OOM. This issue doesn’t produce crash logs, making it tricky to trace.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/03.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/03.png"></p>
+<p>The second reason is a null pointer, where the pointer points to an invalid memory address. The third common issue is accessing a nil element in an array, which is another frequent cause of crashes.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/04.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/04.png"></p>
+<p>These are the three most common causes of crashes, with memory issues being the hardest to resolve. Next, I’ll focus on how to address memory issues.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/05.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/05.png"></p>
+<p>In addition to crashes, performance issues can also affect the user experience, such as lagging or overheating.</p>
+<ul>
+<li>Lag can be identified through Runloop monitoring to locate the part of the stack where execution takes too long;</li>
+<li>Overheating can be addressed by monitoring CPU usage in threads to find the threads or methods causing CPU overload.</li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/06.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/06.png"></p>
+<p>Slow app startup and large package sizes also impact user experience. As projects grow in complexity, solving these problems becomes increasingly challenging.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/07.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/07.png"></p>
+<p>The above four issues lead to a poor user experience.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/08.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/08.png"></p>
+<p>Upon analysis, these three problems are the hardest to solve: memory issues, slow startup, and large package sizes. I will focus on sharing some of the latest solutions to these problems next.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/09.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/09.png"></p>
+<p>Memory issues fundamentally stem from improper memory usage. Memory is a finite resource, and if we misuse it, problems will inevitably arise.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/10.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/10.png"></p>
+<p>The most common memory issues are threefold: the first is memory leaks, where memory is not released after being used, leading to increasing memory consumption.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/11.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/11.png"></p>
+<p>The second issue is high memory peaks. When memory usage suddenly spikes at a certain point, the system may trigger the Jetsam mechanism, killing the app directly.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/12.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/12.png"></p>
+<p>The third issue is memory thrashing, which refers to frequent garbage collection, causing performance corruption.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/13.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/13.png"></p>
+<p>So, memory leaks, high memory peaks, and memory thrashing are the most common memory issues.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/14.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/14.png"></p>
+<p>To solve memory issues, the first step is to understand memory usage. We can retrieve this information using system APIs, such as mach_task_basic_info, the physicalMemory property of NSProcessInfo, and the vm_statistics_data_t structure.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/15.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/15.png"></p>
+<p>In addition to APIs, Xcode’s Memory Graph feature is very intuitive, allowing you to view the app’s memory usage in real-time, making it a very handy tool.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/16.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/16.png"></p>
+<p>There are also some open-source libraries, such as KSCrash, which provide freeMemory and usableMemory functions to retrieve information about the system’s free and available memory.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/17.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/17.png"></p>
+<p>Using these methods, we can clearly monitor the app’s memory usage.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/18.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/18.png"></p>
+<p>What may seem like a small memory leak can accumulate over time, eventually causing system performance worse or even triggering an OOM crash.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/19.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/19.png"></p>
+<p>The most common cause of memory leaks is retain cycles. Here are two open-source tools that can help us detect retain cycles.</p>
+<p>The first is MLeaksFinder. It hooks the dealloc method to check whether an object still exists after being released, thereby determining if there is a memory leak.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/20.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/20.png"></p>
+<p>The second tool is FBRetainCycleDetector. It traverses strong references between objects and builds a reference graph. If it detects a cycle, it indicates a retain cycle issue.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/21.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/21.png"></p>
+<p>Retain cycles are relatively easy to detect. In addition to these open-source tools, Xcode’s tools can also help us detect memory leaks in a visual way.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/22.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/22.png"></p>
+<p>In contrast, memory peaks and memory thrashing are like hide “little monsters” and are harder to detect. So, how do we track down these problems like detectives?</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/23.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/23.png"></p>
+<p>Here’s one method: by repeatedly sampling memory usage, we can calculate the differences and identify the objects with the fastest memory growth.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/24.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/24.png"></p>
+<p>Rank the top 100 objects with the most significant growth. Specifically, this can be done by hooking the alloc and dealloc methods to track the allocation and release of objects.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/25.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/25.png"></p>
+<p>Each time memory is allocated, we can maintain a counter—incrementing the counter on alloc and decrementing it on dealloc—this way, we can keep track of the number of currently active objects.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/26.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/26.png"></p>
+<p>With this method, we can pinpoint the objects with the fastest memory growth, making it easier for further analysis.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/27.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/27.png"></p>
+<p>Next, let’s introduce hook malloc, which allows us to capture every memory management operation. It’s like planting a “secret agent” to monitor each memory allocation action.</p>
+<p>Below are some common methods to hook malloc, including macro definitions, symbol overriding, and function attributes. The most flexible method is using fishhook, which allows dynamic toggling.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/28.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/28.png"></p>
+<p>fishhook is a technique that modifies Mach-O file symbols to achieve function replacement. We can use it to replace the malloc function.</p>
+<p>In the code above, the purpose of rebind_symbol is to replace the malloc function with our custom-defined custom_malloc function. The second parameter, original_malloc, indicates that after replacing the function, the original function will continue to be executed.</p>
+<p>This way, with each memory allocation, through the custom_malloc function, we can capture the size and address of every memory allocation.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/29.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/29.png"></p>
+<p>Additionally, the system’s built-in malloc_logger tool can also comprehensively record the memory allocation process, offering a more straightforward solution.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/30.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/30.png"></p>
+<p>malloc_logger is essentially a callback function. When memory is allocated or released, it will callback and log relevant information.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/31.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/31.png"></p>
+<p>By tracking malloc and free operations, we can discover memory blocks that haven’t been correctly released.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/32.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/32.png"></p>
+<p>After solving memory issues, remember to retest to ensure the problem is completely resolved.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/33.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/33.png"></p>
+<p>Next, let’s look at how to customize this malloc_logger function to capture memory allocation and release information.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/34.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/34.png"></p>
+<p>First, define a callback function with the same signature as malloc_logger, for example, custom_malloc_stack_logger.</p>
+<p>The type indicates the type of memory operation, such as malloc, free, or realloc; arg1 represents the memory size, arg2 is the memory address, and result indicates the reallocated memory address.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/35.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/35.png"></p>
+<p>Based on different type values, we can obtain this parameter information and record memory allocation details, especially for large memory allocations. We can also capture stack information to facilitate issue analysis.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/36.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/36.png"></p>
+<p>Of course, a memory snapshot is also a comprehensive solution that captures complete memory information.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/37.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/37.png"></p>
+<p>First, by traversing the process’s virtual memory space, we can identify all memory regions and log information like the start address and size of each region.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/38.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/38.png"></p>
+<p>Using the malloc_get_all_zones function, we can retrieve all heap memory regions and analyze each region’s memory nodes one by one, ultimately identifying memory reference relationships.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/39.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/39.png"></p>
+<p>With this more comprehensive information, we can resolve memory leaks, optimize memory usage, and prevent OOM crashes in one go.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/40.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/40.png"></p>
+<p>Here is a code example for finding all memory regions. As you can see, the vm_region_recurse_64 function’s info parameter contains information like the memory region’s start address and size.</p>
+<p>Using this information, we can construct a memory layout map to analyze the app’s memory state when issues occur, such as using the protection property to check if the app accessed unreadable or unwritable memory regions.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/41.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/41.png"></p>
+<p>Compared to other methods, the benefit of malloc stack logging is that it automatically records data without needing to write code manually to capture memory information. You just need to enable it when necessary and disable it when not.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/42.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/42.png"></p>
+<p>MallocStackLogging records every memory allocation, release, and reference count change. These logs can be analyzed with the system tool leaks to identify unreleased memory or with the malloc_history tool to translate stack IDs in the logs into readable stack trace information.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/43.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/43.png"></p>
+<p>Here is an example code for using MallocStackLogging. We can use the enableStackLogging function to enable logging, disableStackLogging to disable logging, and getStackLoggingRecords to retrieve current memory operation details.</p>
+<p>In the enableStackLogging function, turn_on_stack_logging is called to enable logging. disableStackLogging calls turn_off_stack_logging to disable logging. getStackLoggingRecords calls mach_stack_logging_enumerate_records and mach_stack_logging_frames_for_uniqued_stack to record the details of current memory operations.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/44.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/44.png"></p>
+<p>The tools we used earlier, leak and malloc_history for analyzing MallocStackLogging logs, both come from the malloc library. The malloc library provides many tools for debugging memory.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/45.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/45.png"></p>
+<p>In addition to MallocStackLogging, the system offers many tools for debugging memory, such as Guard Malloc and some environment variables and command-line tools.</p>
+<p>The MallocScribble environment variable can detect memory corruption errors.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/46.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/46.png"></p>
+<p>We’ve talked a lot about how to solve problems when they occur, but is there a way to optimize memory before problems even arise?</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/47.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/47.png"></p>
+<p>In fact, iOS itself evolves to optimize memory management. Especially in iOS, which is designed for mobile devices without swap partitions like desktop systems, it uses the Jetsam mechanism to help developers manage memory proactively when resources are tight.</p>
+<p>Additionally, the system provides tools like thread-local storage and mmap(), which are methods that can improve memory efficiency.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/48.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/48.png"></p>
+<p>Here are a few tips to help reduce unnecessary memory overhead:</p>
+<ul>
+<li>Take advantage of the copy-on-write principle and avoid frequently modifying large strings.</li>
+<li>Use value types as much as possible to avoid unnecessary object creation.</li>
+<li>Make good use of caching and lazy loading.</li>
+<li>Choose appropriate image formats and control image resolution and file size.</li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/49.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/49.png"></p>
+<p>These are some of the optimizations the system does for you, but there are plenty of areas where we can optimize as well.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/50.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/50.png"></p>
+<p>A slow app launch can be a frustrating experience. We all know that this is a big issue.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/51.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/51.png"></p>
+<p>App launch actually happens in several stages. The first stage is called Pre-main, which refers to things the system does before the main() function executes, like loading app code, the dynamic linker working, Address Space Layout Randomization (ASLR), and some initialization operations.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/52.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/52.png"></p>
+<p>After these preparations are done, the app truly starts running and enters the UI rendering stage, where tasks in didFinishLaunchingWithOptions begin executing. These tasks include both the main thread’s work and operations on other threads.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/53.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/53.png"></p>
+<p>To summarize, app launch is a multi-stage process. From Pre-main to UI rendering, tasks must be properly arranged, and neither the main thread nor background threads should waste resources.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/54.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/54.png"></p>
+<p>Next, let’s talk about factors affecting launch performance. In the Pre-main stage, the number of dynamic libraries, the number of ObjC classes, the number of C constructors, the number of C++ static objects, and ObjC’s +load methods all directly impact launch speed. Simply put, the fewer, the better.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/55.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/55.png"></p>
+<p>After the main() function is executed, even more factors can affect the launch time, such as main() execution time, time spent in applicationWillFinishLaunching, view controller loading speed, business logic execution efficiency, the complexity of view hierarchy, number and speed of network requests, size of resource files, usage of locks, thread management, and time-consuming method calls—all of which can slow down the launch.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/56.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/56.png"></p>
+<p>As you can see, many factors influence launch time, both before and after main(). However, this also means there are many opportunities for optimization.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/57.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/57.png"></p>
+<p>For large apps, which are often developed by multiple teams, tasks executed at startup can change with each iteration. Therefore, we need an effective way to measure the time consumption of each task during startup to identify the “culprits” slowing down the launch, enabling targeted optimizations and checking the effectiveness of those optimizations.</p>
+<p>Common measurement tools include Xcode Instruments’ Time Profiler, MetricKit’s os_signpost, hook initializers, hook objc_msgSend, and LLVM Pass.</p>
+<p>Next, I’ll focus on hook objc_msgSend, which can record the execution time of each Objective-C method. For measuring the execution time of Swift functions, you can use LLVM Pass, which I’ll explain in detail when we discuss package size optimization.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/58.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/58.png"></p>
+<p>By hooking objc_msgSend, we can record method call information, including method names, class names, and parameters. By inserting tracking code before and after method execution, we can calculate the execution time of each method.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/59.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/59.png"></p>
+<p>The specific approach is to first allocate memory space for jumping, with the jump function being used to record the time. Then, save the register state: the x0 register can obtain the class name, the x1 register gets the method name, and the x2 to x7 registers can be used to get method parameters.</p>
+<p>After completing the jump function call, restore the saved registers and use the br instruction to jump back to the original method and continue execution.</p>
+<p>Although hook objc_msgSend uses assembly language, it’s not too complicated to write as long as you understand the roles of several registers and how the instructions work.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/60.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/60.png"></p>
+<p>Next, I will introduce ten very useful startup optimization strategies:</p>
+<ol>
+<li>Reduce the use of +load methods.</li>
+<li>Reduce static initialization.</li>
+<li>Prefer static libraries over dynamic libraries to reduce the number of symbols.</li>
+<li>Control the number of dynamic libraries.</li>
+<li>Use the all_load compiler option.</li>
+<li>Perform binary reordering.</li>
+</ol>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/61.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/61.png"></p>
+<p>After the main function, we can do a lot more optimization, such as:</p>
+<ul>
+<li>Optimizing business logic.</li>
+<li>Using task scheduling frameworks to arrange tasks more efficiently.</li>
+<li>Leveraging background mechanisms to handle non-essential tasks.</li>
+<li>Refreshing regularly to fetch server data in a timely manner.</li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/62.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/62.png"></p>
+<p>The final important topic is optimizing package size.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/63.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/63.png"></p>
+<p>Optimizing package size has many benefits. For users, it improves download speed, saves device storage, and reduces resource consumption. For developers, it lowers development and maintenance costs while improving efficiency.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/64.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/64.png"></p>
+<p>Through static analysis, we can identify some unused resources and code. Today, I will focus on how to discover unused code at runtime, starting with detecting unused classes.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/65.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/65.png"></p>
+<p>In the meta-class, we can find the class_rw_t structure, which contains a flag that records the state of the class, including whether it has been initialized at runtime.</p>
+<p>The code on the right shows how to access this flag and use it to determine whether a class has been initialized.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/66.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/66.png"></p>
+<p>Next, let’s discuss how to determine which functions haven’t been executed at runtime.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/67.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/67.png"></p>
+<p>This code shows how to customize an LLVM Pass to instrument each function and track whether they are called. The instrumentation code is written in the runOnFunction or runOnModule functions, where the former handles individual functions, and the latter handles the entire module.</p>
+<p>Additionally, LLVM Pass can insert tracking code before and after function execution to record the execution time of each function.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/68.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/68.png"></p>
+<p>以上就是分享的内容。下面是一些见闻。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/01.jpeg" class="lozad post-image"src="/uploads/kwdc24-in-seoul/01.jpeg"></p>
+<p>KWDC 这次是在一所大学举办的。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/022.png" class="lozad post-image"src="/uploads/kwdc24-in-seoul/022.png"></p>
+<p>这是我、徐驰和 falanke 的合影，会场有个大头照机器，很多人都在这里合影。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/03.jpeg" class="lozad post-image"src="/uploads/kwdc24-in-seoul/03.jpeg"></p>
+<p><a target="_blank" rel="noopener" href="https://www.iosconf.sg/">iOSConfSG 2025</a> 组织团队负责人 Vina Melody 也来了，我分享结束后跟他们沟通了下明年我去新加坡 iOSConf 分享的内容。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/04.JPG" class="lozad post-image"src="/uploads/kwdc24-in-seoul/04.JPG"></p>
+<p>第二天，KWDC团队组织我们在首尔 City walk，第一站是景福宫，我们玩起来 Cosplay。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/05.JPG" class="lozad post-image"src="/uploads/kwdc24-in-seoul/05.JPG"></p>
+<p><a target="_blank" rel="noopener" href="https://x.com/___freddi___">freddi</a> 是喵神的同事，在福岡。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/06.JPG" class="lozad post-image"src="/uploads/kwdc24-in-seoul/06.JPG"></p>
+<p>River 是韩国的一名独立开发者，开发了很有品味的 APP Cherish。她不喜欢 KPOP，但她父母好像是从事表演的。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/07.JPG" class="lozad post-image"src="/uploads/kwdc24-in-seoul/07.JPG"></p>
+<p>台湾最知名的 iOS Youtuber <a target="_blank" rel="noopener" href="https://x.com/janechao_dev">Jane</a> 这次也来了。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/08.JPG" class="lozad post-image"src="/uploads/kwdc24-in-seoul/08.JPG"></p>
+<p>中午我们吃了鸡肉火锅。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/09.JPG" class="lozad post-image"src="/uploads/kwdc24-in-seoul/09.JPG"></p>
+<p>下午去了汉江野餐。晚上我们登上南山，看到了美丽的首尔夜景。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/10.JPG" class="lozad post-image"src="/uploads/kwdc24-in-seoul/10.JPG"></p>
+<p>晚上，继续找地方喝酒。韩国晚上街上人依然很多。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/kwdc24-in-seoul/11.jpeg" class="lozad post-image"src="/uploads/kwdc24-in-seoul/11.jpeg"></p>
+<p>和 <a target="_blank" rel="noopener" href="https://x.com/giginet">giginet</a> 聊了点技术问题，他也是喵神的同事。</p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://starming.com/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://starming.com/2024/10/28/kwdc24-in-seoul/">https://starming.com/2024/10/28/kwdc24-in-seoul/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/2024/09/12/my-pkm/" class="nav-link">
+      <div>
+        <div class="nav-label">Next</div>
+        
+        <div class="nav-title">我是怎么做个人知识管理（PKM）的，从史前时代备忘录、Sublime，经历了Evernote，Markdown兴起，Bear的优雅，Notion革命，飞书语雀，Obsidian、Flomo，到最后使用卢曼卡片盒笔记法串起了流程 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
+
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>75</span>
+    <span>Posts</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>7</span>
+    <span>Categories</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>42</span>
+    <span>Tags</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>Categories</div>
+  <div class="categories-list">
+    
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">49</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-novel">
+        <div class="categories-list-item">
+          My-novel
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-painting">
+        <div class="categories-list-item">
+          My-painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Podcast">
+        <div class="categories-list-item">
+          Podcast
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/App">
+        <div class="categories-list-item">
+          App
+          <span class="categories-list-item-badge">9</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>hot tags</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\App" title="App"><div class="tags-list-item">App</div></a>
+    
+    <a href="\tags\Manga" title="Manga"><div class="tags-list-item">Manga</div></a>
+    
+    <a href="\tags\Podcast" title="Podcast"><div class="tags-list-item">Podcast</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+    <a href="\tags\Performance optimization" title="Performance optimization"><div class="tags-list-item">Performance optimization</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>Recent Posts</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-10-28</div>
+        <a href="/2024/10/28/kwdc24-in-seoul/"><div class="recent-posts-item-content">我在韩国首尔 KWDC24 做的技术分享</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-09-12</div>
+        <a href="/2024/09/12/my-pkm/"><div class="recent-posts-item-content">我是怎么做个人知识管理（PKM）的，从史前时代备忘录、Sublime，经历了Evernote，Markdown兴起，Bear的优雅，Notion革命，飞书语雀，Obsidian、Flomo，到最后使用卢曼卡片盒笔记法串起了流程</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-09-05</div>
+        <a href="/2024/09/05/iOS-performance-optimization-second-time/"><div class="recent-posts-item-content">二刷 iOS 性能与编译，简单点说</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-08-18</div>
+        <a href="/2024/08/18/one-piece-1/"><div class="recent-posts-item-content">海贼王之感人名场面</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2014 -
+          
+          2024
+        </span>
+        <a href="/" class="footer-link">戴铭的博客 </a>
+      </div>
+    </div>
+
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">京ICP备2024068292号-1 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="https://beian.mps.gov.cn/#/query/webSearch?code=11010802044427 ">京公网安备11010802044427
+      </a>
+      <br />
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>
