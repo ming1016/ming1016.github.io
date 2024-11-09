@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>戴铭的博客 - 星光社</title>
-  
+  <follow_challenge>
+    <feedId>52554423069993998</feedId>
+    <userId>44350361491350528</userId>
+  </follow_challenge>
   
   <link href="/atom.xml" rel="self"/>
   
