@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-Hans" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
+      
+      <span class="navbar-logo-dsc">戴铭的博客</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="/friends" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/ios-conf-sg-25-share/34.png" data-src="/uploads/ios-conf-sg-25-share/34.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      我在 iOS Conf SG 25 的演讲
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2025-01-21T02:14:02.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2025-01-21</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Programming/" class="post-meta-link">Programming</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.7k 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/iOS/" class="post-meta-link">iOS</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Performance-optimization/" class="post-meta-link">Performance optimization</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p>大会前，vina 跟我说 iOS Conf SG 的受众很大，她希望能够讲些可以让大家更加兴奋，可以在日常工作中应用的内容。因此，我也是专门写了些 Demo 和工具，共三个，<a target="_blank" rel="noopener" href="https://github.com/ming1016/AppLaunchDemo">1</a>，<a target="_blank" rel="noopener" href="https://github.com/ming1016/DevTools">2</a>，<a target="_blank" rel="noopener" href="https://github.com/ming1016/RSSReader">3</a>。那些难理解的内容我都去掉了。这次的画也是我花费时间最长的一次，学习了些时尚杂志的设计和布局。有些来不及调配色的图，我就参考媳妇买的巧克力包装配色。</p>
+<p>下面是分享的内容。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/01.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/01.png"></p>
+<p>I’ll be talking about how to reduce app launch times.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/02.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/02.png"></p>
+<p>I’ll first explain what app launch time is.</p>
+<p>Then, I’ll cover how to collect launch time data using tools like Instruments, os_signpost, sysctl, MetricKit, and by hooking <code>objc_msgSend</code> and Swift functions.</p>
+<p>I’ll also go over how to solve common performance issues.</p>
+<p>Finally, we’ll dive into advanced ways to reduce launch times, with optimization strategies and code examples.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/03.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/03.png"></p>
+<p>Let’s first understand launch time.</p>
+<p>Launch time has two main parts: <em>pre-main</em> and <em>post-main</em>.</p>
+<ul>
+<li><p><em>Pre-main</em> happens before the <code>main</code> function. This is when the Mach-O file is loaded and dynamic libraries are read. To optimize here, we can reduce the size of the Mach-O file and cut down the number of dynamic libraries.</p>
+</li>
+<li><p><em>Post-main</em> happens after the <code>main</code> function. This is when the UI is rendered and data is loaded until the app becomes interactive. Here, we can optimize task priority.</p>
+</li>
+</ul>
+<p>So, how can we measure the time spent during these stages?</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/04.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/04.png"></p>
+<p>We can use Xcode’s Instruments to analyze launch time.</p>
+<p>The method is to use the App Launch template in Instruments, collect data for the first 20 seconds of the app launch, filter the data, and then analyze it.</p>
+<p>Since the launch phase calls many system library methods, to get better results, it’s important to filter out system library data and track time usage per thread. Instruments can do this by setting up the Call Tree to filter system libraries and view data by thread.</p>
+<p>Keep in mind that Instruments collects data through periodic sampling, so it may miss some details.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/05.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/05.png"></p>
+<p>So, we need to do manual analysis. The benefit of this approach is that it lets us collect data automatically, gathering it daily.</p>
+<p>It also allows us to customize time tracking, like measuring time at the function level, which gives us more detailed stats.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/06.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/06.png"></p>
+<p>The methods for manual analysis include <code>os_signpost</code> and MetricKit.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/07.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/07.png"></p>
+<p>Let’s first look at how to use <code>os_signpost</code>.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/08.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/08.png"></p>
+<p>First, import <code>os.signpost</code> into your code. Then, where you want to track time, add start and end markers to log the duration.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/09.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/09.png"></p>
+<p>Data collection with <code>os_signpost</code> is done through Xcode’s Profile feature, using the Instrument’s Logging template.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/10.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/10.png"></p>
+<p>The limitation of <code>os_signpost</code> is that it can’t track pre-main timing. Another limitation is that it still relies on Instruments.</p>
+<p>How do we solve these limitations?</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/11.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/11.png"></p>
+<p>To handle this, we can use the <code>sysctl</code> system interface to get pre-main timing.</p>
+<p>And with MetricKit, we can gather launch time data without relying on Instruments.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/12.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/12.png"></p>
+<p>Let’s talk about <code>sysctl</code>. <code>sysctl</code> provides an interface to fetch process information.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/13.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/13.png"></p>
+<p>When a process is created, it initializes kernel data and records the creation time. This is the start time of the process.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/14.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/14.png"></p>
+<p>To measure time with <code>sysctl</code>, we first get process info and then calculate the elapsed time.</p>
+<p>We do this by setting up <code>sysctl</code>, creating an MIB array, and getting the <code>p_starttime</code> value from the <code>kinfo_proc</code> structure.</p>
+<p>The <code>p_starttime</code> gives us the process start time. To get the elapsed time, we need the current time and then calculate the difference.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/15.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/15.png"></p>
+<p>In the <code>getProcessRunningTime</code> function, we find the address offset for the current process’s PID in the process’s memory layout. This gives us detailed information about the current process, stored in <code>kinfo</code>.</p>
+<p>We then get the current time when the function is called. By subtracting the process start time from the current time, we get the runtime since the process was created.</p>
+<p>Now that we’ve solved the issue of not being able to track pre-main time, let’s move on to solving how to get this data without relying on Instruments.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/16.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/16.png"></p>
+<p>To obtain the pre-main time, you need to first gather information about the process, extract the process creation time, and then calculate the app’s running time.</p>
+<p>Now that we’ve solved the issue of not being able to track pre-main time, let’s move on to solving how to get this data without relying on Instruments.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/17.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/17.png"></p>
+<p>To use MetricKit, you first create an <code>MXMetricManager</code> and add a subscriber to collect data.</p>
+<p>Data is collected when the app enters the background or when the device is idle.</p>
+<p>The data processing happens in <code>MXMetricManagerSubscriber</code> and supports batch processing.</p>
+<p>You can view the collected data in Xcode’s Organizer, and it also supports custom analysis.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/18.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/18.png"></p>
+<p>Manual analysis has many benefits, but it’s time-consuming, error-prone, and can lead to messy code. So, we need an automated solution.</p>
+<p>The automated process involves using tools to parse the code, find method definitions, and insert timing logic. This saves development time and makes the code easier to maintain.</p>
+<p>Tools available for this include source code analysis tools and build integration tools.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/19.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/19.png"></p>
+<p>Next, I’ll cover some automated ways to measure time, including how to hook <code>objc_msgSend</code> to track the time of Objective-C function calls.</p>
+<p>For Swift projects, I’ll also explain how to track the time of each Swift function.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/20.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/20.png"></p>
+<p>Let’s first see how to track the time of Objective-C functions. Since all Objective-C functions are called through <code>objc_msgSend</code>, we can hook this method to track the time of all Objective-C functions.</p>
+<p>The approach is to use <code>fishhook</code> to replace the <code>objc_msgSend</code> C function.</p>
+<p>Since <code>objc_msgSend</code> is written in assembly, we also need to use assembly to do the method replacement.</p>
+<p>In the replacement, we save the necessary registers before the method call and restore them afterward.</p>
+<p>We track the time before and after the method call, save the time for each function, and generate a report.</p>
+<p>You can view the full code at the link below.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/21.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/21.png"></p>
+<p>Here is the code. In the <code>smCallTraceStart</code> function, we use <code>fishhook</code>‘s <code>rebind_symbols</code> to replace the method. The original <code>objc_msgSend</code> is saved as <code>orig_objc_msgSend</code>, and the hook logic is in <code>hook_Objc_msgSend</code>.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/22.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/22.png"></p>
+<p>In the <code>hook_Objc_msgSend</code> method, we first save the method call parameters, then record the start time with <code>before_objc_msgSend</code>. After reading the parameters, we call the original <code>objc_msgSend</code>, save its return value, and calculate the function execution time.</p>
+<p>Finally, we return the value from <code>objc_msgSend</code> and wrap everything in an interface for easy use.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/23.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/23.png"></p>
+<p>After running it, you’ll see that the execution time of all functions is recorded.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/24.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/24.png"></p>
+<p>The code summary is shown in the diagram. We first replace <code>objc_msgSend</code> and calculate function execution time in the replacement. Then, we save the data and generate a report.</p>
+<p>This is the method we use in our company to check startup time.</p>
+<p>This method only works for tracking the execution time of Objective-C functions. But what about Swift functions?</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/25.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/25.png"></p>
+<p>To track the runtime of Swift functions, I wrote a tool.</p>
+<p>Simply drag your Swift project folder into the tool, click a button, and the tool will parse the Swift files in the project, find function definitions, and insert the time tracking code.</p>
+<p>When your app runs, the tool starts collecting data, including function names, call counts, and execution times.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/26.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/26.png"></p>
+<p>This is the tool’s interface. Just drag your project in. In the top right corner, there’s a button for time tracking. Click it, and it will insert the tracking code.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/27.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/27.png"></p>
+<p>Once your project runs, the tool will sort the function’s execution time, showing the average time, call count, and total time for each function.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/28.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/28.png"></p>
+<p>From what we’ve covered so far, we know how to identify where startup time is spent.</p>
+<p>There are a few common issues that can impact launch time.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/29.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/29.png"></p>
+<p>There are several common situations that can affect function execution time, as shown in the image.</p>
+<p>The first one is expensive operations, like reading large files, making network requests, or querying the database.</p>
+<p>The solution here is to move these operations to the background or break them into smaller tasks that run as needed.</p>
+<p>The second issue is displaying large images. You can asynchronously load and decode large images using Swift Concurrency, or use more optimized formats to reduce I&#x2F;O and memory usage.</p>
+<p>The third issue is frequent UI updates. The solution is to use lazy loading to only update the UI visible on the screen, and use default placeholders for UI elements off-screen.</p>
+<p>The last issue is <code>DispatchSemaphore</code>, which can block the main thread. The solution is to use Swift Concurrency’s Task Group, move the wait into async tasks, and free up the main thread.</p>
+<p>The relevant examples and solutions are available in the link below.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/30.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/30.png"></p>
+<p>In the demo app, I’ve included all the bad cases. The app’s launch time was huge, over 10 seconds.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/31.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/31.png"></p>
+<p>After optimizing the code, the main thread finish time is down to just 1 second, and the async completion time is also much shorter.</p>
+<p>You definitely want to download this demo and see the difference before and after optimization. The link is below on this page.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/32.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/32.png"></p>
+<p>We’ve used tools to pinpoint startup issues, and now we’ve solved those costly problems.</p>
+<p>But can we further reduce the startup time?</p>
+<p>Next, I’ll introduce two more techniques that can reduce startup time even further: optimizing the launch path and merging libraries.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/33.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/33.png"></p>
+<p>The principle of Launch Path optimization is that when an external launch is triggered, we bypass the home page’s reading and rendering, directly opening the target page.</p>
+<p>The benefit of this approach is that it saves the overhead of reading and rendering the home page.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/34.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/34.png"></p>
+<p>Next is the Mergeable Libraries optimization technique.</p>
+<p>Traditionally, dynamic libraries were loaded one by one, processing symbols and then initializing each library.</p>
+<p>With Mergeable Libraries, dynamic libraries are merged, removing redundant and duplicate symbols, and turning them into static libraries.</p>
+<p>This is a new feature in Xcode that can be enabled through Build Settings.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/35.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/35.png"></p>
+<p>In Build Settings, you can find the “Merged Binary” option and set it to “Automatic.”</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/36.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/36.png"></p>
+<p>At this point, we’ve identified the problems and understand how to address them. We also know how to further reduce startup time.</p>
+<p>However, as the app evolves, the tasks that run during startup can become more complex and numerous.</p>
+<p>We need a way to manage these tasks effectively, so we can control the system resource usage during startup and prevent the launch time from getting worse.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/37.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/37.png"></p>
+<p>CPU and memory are limited resources.</p>
+<p>If we don’t manage multithreading tasks properly, tasks can pile up at times, causing the CPU to switch between threads frequently, which wastes time.</p>
+<p>When threads aren’t busy, the CPU isn’t fully utilized, causing delays and slowing down startup time.</p>
+<p>The larger the codebase, the more obvious these issues become.</p>
+<p>So, how can we better manage multithreading tasks and make full use of the CPU?</p>
+<p>We divide tasks into high-priority and low-priority ones. High-priority tasks should run concurrently and can have dependencies managed.</p>
+<p>Low-priority tasks can be delayed and run only when system resources are available.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/38.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/38.png"></p>
+<p>I created two functions: <code>executeTasksConcurrently</code> and <code>performLowPriorityTasks</code>.</p>
+<p><code>executeTasksConcurrently</code> runs high-priority tasks concurrently using Swift Concurrency’s <code>withTaskGroup</code>, and the order of calling this function controls task dependencies.</p>
+<p><code>performLowPriorityTasks</code> runs low-priority tasks using <code>Task.detached</code> and sets the task’s priority to background.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/39.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/39.png"></p>
+<p>Once we create three high-priority task groups, they will execute sequentially, and tasks within each group will run concurrently. Low-priority tasks will run when system resources are free.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/40.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/40.png"></p>
+<p>So far, we’ve mostly covered Post-main optimizations. For Pre-main, we can optimize startup time by reducing the app size.</p>
+<p>There are many ways to reduce app size, mainly through static analysis. Today, I’ll share how we can analyze at runtime to find unused code, expanding the scope of our optimizations.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/41.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/41.png"></p>
+<p>Let me introduce a solution that can help identify which classes are not being used during runtime.</p>
+<p>The process involves checking all classes when the app goes to the background and determining which ones have been initialized.</p>
+<p>We use the <code>objc_getClassList</code> API to get a list of all classes, and <code>NSClassFromString</code> to find the metaclass of each class. The metaclass’s <code>flag</code> field, when shifted 29 bits, tells us if the class was initialized during runtime.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/42.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/42.png"></p>
+<p>In the code, the <code>metaClass</code> struct’s <code>data</code> method returns a <code>class_rw_t</code> metaclass struct. The <code>flag</code> field is shifted left by 29 bits. A value of 0 means the class hasn’t been initialized, while 1 means it has.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/43.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/43.png"></p>
+<p>In the <code>initializedClassesInArray</code> method, we use <code>NSClassFromString</code> to get class data, then call <code>isInitialized</code> to check if the class was initialized. We add initialized classes to an array, and the remaining classes are the ones not used during this app session.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/44.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/44.png"></p>
+<p>Here, I’ve printed out all the initialized classes.</p>
+<p>It’s also how we check for unused code in our company.</p>
+<p>From the results of the analysis, this solution indeed detects a lot of unused code, especially older code.</p>
+<p>However, there’s one issue. If a class contains many functions, as long as one of them is used, the entire class is considered “in use.”</p>
+<p>So, we need to take it a step further and find even more unused code.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/45.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/45.png"></p>
+<p>Do you remember the tool I created to collect Swift function data?</p>
+<p>That tool can also collect data on all the functions in your app.</p>
+<p>Every function your app calls during execution gets logged.</p>
+<p>By subtracting the functions that are actually called from the total list, we can identify unused functions.</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/46.png" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/46.png"></p>
+<p>Click the button in the top-right corner of the tool, and it will show a list of all functions, with the ones that were executed marked.</p>
+<p>We’ve gone over the built-in tools in Xcode for checking startup issues and how to create custom tools for automating the checks. </p>
+<p>We also looked at some bad cases and discussed optimization techniques. To make every millisecond count, we shared more practical optimization tips.</p>
+<p>I hope you found this helpful. </p>
+<p>上面就是我分享的内容。另外这次主题是个大话题，还有很多相关知识可能需要花费更多时间学习，我也整理了些官方内容和一些工具。</p>
+<ul>
+<li>Guide<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/xcode/reducing-your-app-s-launch-time">Reducing your app’s launch time</a></li>
+</ul>
+</li>
+<li>WWDC Session<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2023/10268">Meet mergeable libraries - WWDC23 - Videos - Apple Developer</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2022/110362/">Link fast: Improve build and launch times - WWDC22 - Videos - Apple Developer</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2021/10181/">Ultimate application performance survival guide - WWDC21 - Videos - Apple Developer</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2019/423/">Optimizing App Launch - WWDC19 - Videos - Apple Developer</a></li>
+</ul>
+</li>
+<li>Mergeable Libraries<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/xcode/configuring-your-project-to-use-mergeable-libraries">Configuring your project to use mergeable libraries | Apple Developer Documentation</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.polpiella.dev/understanding-mergeable-libraries/">Understanding mergeable libraries</a></li>
+</ul>
+</li>
+<li>Tools<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.jacobstechtavern.com/p/high-performance-swift-apps">High Performance Swift Apps - by Jacob Bartlett</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/emergeTools/ettrace">GitHub - EmergeTools&#x2F;ETTrace: Easily and accurately profile iOS apps</a></li>
+</ul>
+</li>
+</ul>
+<p>很多嘉宾的博客我都订阅过，看过他们很多的分享。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/ios-conf-sg-25-share/47.jpg" class="lozad post-image"src="/uploads/ios-conf-sg-25-share/47.jpg"></p>
+<p>这次也是 <a target="_blank" rel="noopener" href="https://www.iosconf.sg/">iOS Conf SG 大会</a>的10周年。很多上次 <a target="_blank" rel="noopener" href="https://kwdc.dev/ko/">KWDC</a> 大会认识的韩国朋友也来了。思琦说这次上海的 <a target="_blank" rel="noopener" href="https://letsvisionos.swiftgg.team/">Let’s Vision 25</a> 也会有很多有意思的国内外嘉宾过来，真是非常期待。</p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://starming.com/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://starming.com/2025/01/21/ios-conf-sg-25-share/">https://starming.com/2025/01/21/ios-conf-sg-25-share/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/2024/11/04/introduction-japanese-colors/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">全网最全的日本传统颜色指南，看完你会更懂日本 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
+
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>77</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>7</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>44</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">50</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-novel">
+        <div class="categories-list-item">
+          My-novel
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-painting">
+        <div class="categories-list-item">
+          My-painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Podcast">
+        <div class="categories-list-item">
+          Podcast
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/App">
+        <div class="categories-list-item">
+          App
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/APP">
+        <div class="categories-list-item">
+          APP
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\App" title="App"><div class="tags-list-item">App</div></a>
+    
+    <a href="\tags\Performance optimization" title="Performance optimization"><div class="tags-list-item">Performance optimization</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\Manga" title="Manga"><div class="tags-list-item">Manga</div></a>
+    
+    <a href="\tags\Podcast" title="Podcast"><div class="tags-list-item">Podcast</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-01-21</div>
+        <a href="/2025/01/21/ios-conf-sg-25-share/"><div class="recent-posts-item-content">我在 iOS Conf SG 25 的演讲</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-11-04</div>
+        <a href="/2024/11/04/introduction-japanese-colors/"><div class="recent-posts-item-content">全网最全的日本传统颜色指南，看完你会更懂日本</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-10-28</div>
+        <a href="/2024/10/28/kwdc24-in-seoul/"><div class="recent-posts-item-content">我在韩国首尔 KWDC24 做的技术分享</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-09-12</div>
+        <a href="/2024/09/12/my-pkm/"><div class="recent-posts-item-content">我是怎么做个人知识管理（PKM）的，从史前时代备忘录、Sublime，经历了Evernote，Markdown兴起，Bear的优雅，Notion革命，飞书语雀，Obsidian、Flomo，到最后使用卢曼卡片盒笔记法串起了流程</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2014 -
+          
+          2025
+        </span>
+        <a href="/" class="footer-link">戴铭的博客 </a>
+      </div>
+    </div>
+
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">京ICP备2024068292号-1 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="https://beian.mps.gov.cn/#/query/webSearch?code=11010802044427 ">京公网安备11010802044427
+      </a>
+      <br />
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>
