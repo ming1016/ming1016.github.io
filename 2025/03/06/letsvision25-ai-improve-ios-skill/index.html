@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-Hans" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
+      
+      <span class="navbar-logo-dsc">戴铭的博客</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">Home </a>
+    
+    <a href="/archives" class="navbar-menu-item">Archive </a>
+    
+    <a href="/tags" class="navbar-menu-item">Tags </a>
+    
+    <a href="/categories" class="navbar-menu-item">Categories </a>
+    
+    <a href="/about" class="navbar-menu-item">About </a>
+    
+    <a href="/friends" class="navbar-menu-item">Friends </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/letsvision25-ai-improve-ios-skill/08.jpg" data-src="/uploads/letsvision25-ai-improve-ios-skill/08.jpg"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      使用 AI 突破 iOS 开发者能力边界
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2025-03-06T06:54:11.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2025-03-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI/" class="post-meta-link">AI</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>5k words</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/iOS/" class="post-meta-link">iOS</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI/" class="post-meta-link">AI</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/01.jpg" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/01.jpg"></p>
+<p>以下是我在上海举行的 Let’s Vision 25 上分享的内容。</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/02.jpg" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/02.jpg"></p>
+<p>从变形金刚的机械美学启蒙，到用 Objective-C 构建第一个 iOS 应用，每个技术突破都带来新的创作可能。AI带来的变革尤为特殊——它首次实现了”所想即所得”的开发体验。过去需要数周研究的 CoreAnimation 动画，现在通过自然语言描述即可生成基础实现；曾经需要阅读大量 RFC 文档的网络协议，如今通过 AI 助手可以快速理解关键点。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/03.jpg" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/03.jpg"></p>
+<p>根据GitHub官方统计，使用 Copilot 的开发者代码完成速度提升55%，而我的实践数据显示，在SwiftUI动画开发场景中，AI工具可减少70%的 API 查阅时间。</p>
+<h2 id="AI-编程工具"><a href="#AI-编程工具" class="headerlink" title="AI 编程工具"></a>AI 编程工具</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/04.jpg" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/04.jpg"></p>
+<table>
+<thead>
+<tr>
+<th>工具类型</th>
+<th>我的选择</th>
+<th>核心优势</th>
+<th>适用场景</th>
+<th>候选方案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>本地推理</td>
+<td>Ollama+Deepseek-r1</td>
+<td>32B参数平衡性能&#x2F;显存</td>
+<td>代码审查</td>
+<td>LM Studio</td>
+</tr>
+<tr>
+<td>知识管理</td>
+<td>AnythingLLM</td>
+<td>支持PDF&#x2F;代码库索引</td>
+<td>技术文档检索</td>
+<td>OpenWebUI</td>
+</tr>
+<tr>
+<td>云端开发</td>
+<td>Cursor+Claude3.5</td>
+<td>实时联网&#x2F;多文件分析</td>
+<td>全栈调试</td>
+<td>VSCode+Copilot</td>
+</tr>
+</tbody></table>
+<p>推荐在 Xcode 中配置 Copilot 双面板布局：左侧编写业务逻辑，右侧自动生成单元测试用例。对于 CoreData 等 ORM 操作，尝试用”逆向Prompt”技巧：先让AI生成代码，再要求它解释可能出现的问题。</p>
+<p>使用本地大模型的好处是可以使用 Swift 项目代码作为训练集，进行模型微调。</p>
+<h2 id="提示词"><a href="#提示词" class="headerlink" title="提示词"></a>提示词</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/05.jpg" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/05.jpg"></p>
+<p>提示词非常重要，现在推理模型出来后，我觉得最重要的是描述清楚想要得到结果是什么样的。然后再设定好范围和边界。</p>
+<p>比如</p>
+<pre class="line-numbers language-none"><code class="language-none">1&#x2F; 角色设定
+你是有10年经验的CoreAnimation专家，擅长用显式动画优化交互体验
+
+2&#x2F; 任务描述
+我需要实现类似Apple Music专辑封面的3D翻转效果，要求：
+- 使用CATransform3D实现透视投影
+- 支持手势控制翻转角度
+- 优化iPad多任务场景下的性能
+
+3&#x2F; 约束条件
+- 目标系统iOS15+
+- 避免使用第三方库
+- 优先考虑Metal加速方案
+
+4&#x2F; 输出格式
+分步骤给出实现方案，标记出需要特别注意的点<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>有了工具，了解了提示词，接下来就可以做一些能够开心的事情了。对于我来说提升技能是最能让我开心的事。</p>
+<h2 id="想提升的技能"><a href="#想提升的技能" class="headerlink" title="想提升的技能"></a>想提升的技能</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/06.jpg" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/06.jpg"></p>
+<p>我感兴趣的事情其实挺多，比如画漫画，做幻灯片，游戏相关的 Blender 、Godot 和 Vision OS。</p>
+<p>开发相关的有密码技术、网络技术、编译器和虚机等。</p>
+<p>另外开发各类的 APP 技能也是我想要掌握的。比如日历、日记、天气、健康、拍照、漫画阅读器和音视频播放器等等。</p>
+<p>当然，我当前眼前最想提升的就是幻灯片的质量，因为我要用它在会上来做分享呀。</p>
+<h2 id="开发幻灯片-APP-需要什么知识"><a href="#开发幻灯片-APP-需要什么知识" class="headerlink" title="开发幻灯片 APP 需要什么知识"></a>开发幻灯片 APP 需要什么知识</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/07.jpg" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/07.jpg"></p>
+<p>以前我为了能够更好的分享内容，我做了个幻灯片软件。</p>
+<p>接下来我想完善这个幻灯片软件，于是我这样问了 AI</p>
+<pre class="line-numbers language-none"><code class="language-none">我想开发一个 PPT 这样的 macOS 应用，这个应用有哪些功能，分别需要什么方面的技术知识<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>AI 的回答分为基础功能、进阶、高级、技术架构、挑战等部分。基础部分主要包括了界面、文档和幻灯片编辑的功能和使用的技术。</p>
+<p>进阶里有模板、动画和多媒体的功能和技术。</p>
+<ul>
+<li>基础功能<ul>
+<li>界面<ul>
+<li>功能：窗口、菜单栏、工具栏、幻灯片缩略图、编辑区</li>
+<li>技术：Swift&#x2F;SwiftUI、AppKit、NSWindowController、NSDocument、NSDraggingDestination</li>
+</ul>
+</li>
+<li>文档<ul>
+<li>功能：新建、打开、保存、自动保存、版本恢复</li>
+<li>技术：FileManager、NSSavePanel、NSOpenPanel</li>
+</ul>
+</li>
+<li>幻灯片编辑<ul>
+<li>功能：添加&#x2F;删除幻灯片、调整顺序、编辑文本&#x2F;形状&#x2F;图片</li>
+<li>技术：NSView 或 CALayer 实现画布、NSTextView 或自定义文本渲染、NSBezierPath 或 Core Graphics 进行图形绘制。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>进阶<ul>
+<li>模版与主题<ul>
+<li>功能：预置模板、自定义主题</li>
+<li>技术：NSUserDefaults、动态渲染实时应用到幻灯片元素</li>
+</ul>
+</li>
+<li>动画与过渡效果<ul>
+<li>功能：元素入场动画、幻灯片切换效果</li>
+<li>技术：Core Animation、CAAnimation 和 CALayer 实现关键帧动画、时间轴控制</li>
+</ul>
+</li>
+<li>协作<ul>
+<li>功能：多人实时编辑、版本历史、云端存储</li>
+<li>技术：WebSocket、冲突解决（OT）算法、CloudKit、NSUbiquitousKeyValueStore</li>
+</ul>
+</li>
+<li>多媒体支持<ul>
+<li>功能：插入图片、音频、视频、形状、图标</li>
+<li>技术：AVFundation、NSImageView、Core Plot</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>高级<ul>
+<li>导出和分享<ul>
+<li>功能：导出 PDF、视频、HTML、图片、Markdown</li>
+<li>技术：NSPrintOperation 或 PDFKit，AVAssetWriter 逐帧渲染幻灯片</li>
+</ul>
+</li>
+<li>智能建议<ul>
+<li>功能：自动排版、配色建议、AI 生成内容</li>
+<li>技术：Core ML、NaturalLanguage、LLM</li>
+</ul>
+</li>
+<li>插件系统<ul>
+<li>功能：第三方插件扩展（图表库、AI 工具）</li>
+<li>技术：NSBundle 加载插件、定义插件接口协议</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>技术架构<ul>
+<li>设计模式：MVVM、响应式编程</li>
+<li>数据存储：SwiftData、NSCache 缓存</li>
+</ul>
+</li>
+<li>适配 macOS 特性<ul>
+<li>Dark Mode：通过 NSAppearance 适配深色主题</li>
+<li>沙盒机制：处理文件访问权限和安全性</li>
+</ul>
+</li>
+<li>关键挑战<ul>
+<li>复杂动画：高性能渲染需要 Metal 或 Core Animation 优化</li>
+</ul>
+</li>
+</ul>
+<p>目前我最希望能够学习到的就是其中的动画部分，因为我希望 PPT 能够通过动画看起来更生动些。</p>
+<p>AI 能够解决传统动画开发的一些痛点：</p>
+<table>
+<thead>
+<tr>
+<th>功能模块</th>
+<th>传统开发痛点</th>
+<th>AI解决方案</th>
+<th>效率提升</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>动画系统</td>
+<td>关键帧参数调试耗时</td>
+<td>自然语言转CAKeyframeAnimation代码</td>
+<td>65%</td>
+</tr>
+<tr>
+<td>布局引擎</td>
+<td>多设备适配复杂</td>
+<td>深度学习预测最佳constraint组合</td>
+<td>80%</td>
+</tr>
+<tr>
+<td>协作同步</td>
+<td>冲突解决算法实现难度高</td>
+<td>生成OT算法Swift实现模板</td>
+<td>70%</td>
+</tr>
+<tr>
+<td>性能优化</td>
+<td>Metal Shader调试困难</td>
+<td>自动生成性能分析报告及优化建议</td>
+<td>90%</td>
+</tr>
+</tbody></table>
+<p>一些操作技巧：</p>
+<ul>
+<li><p>逆向工程法：将Keynote动画导出为视频，用Vision框架分析帧差异生成CAAnimation参数</p>
+<pre class="line-numbers language-none"><code class="language-none">Screen Recording → (Vision分析) → CoreAnimation指令集 → (AI转换) → SwiftUI可编辑代码<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>提示词演进</p>
+<ul>
+<li>初级：”如何实现页面翻转动画”</li>
+<li>进阶：”生成支持手势控制的CATransform3D动画，要求60fps流畅运行”</li>
+<li>专家：”创建可中断的物理动画系统，模拟纸张的弯曲刚度和空气阻力”</li>
+</ul>
+</li>
+<li><p>调试技巧</p>
+<ul>
+<li>在Xcode中配置<code>CA_DEBUG_TRANSACTIONS</code>环境变量</li>
+<li>使用Instruments的Core Animation分析模板</li>
+<li>通过AI解释<code>CAMediaTimingFunction</code>的贝塞尔曲线参数</li>
+</ul>
+</li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/08.jpg" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/08.jpg"></p>
+<h2 id="基础提示词"><a href="#基础提示词" class="headerlink" title="基础提示词"></a>基础提示词</h2><p>接下来就看看我是怎么使用 AI 的来学习动画的吧。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/09.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/09.png"></p>
+<p>我们先看看基础提示词，框定一些基本技术，这里列出是我常用的技术，比如 SwiftUI、Swift Concurrency、SwiftData 和 Observation。</p>
+<h2 id="动画描述提示词"><a href="#动画描述提示词" class="headerlink" title="动画描述提示词"></a>动画描述提示词</h2><p>下面我对我要实现的动画做一个描述，现有幻灯片有个比较大的痛点，就是当我想在幻灯片上指出某个区域时，需要用到银光笔。如果能够直接在幻灯片中实现点击，然后通过一些效果表示点击的地方那不是更好。</p>
+<p>于是我做了这样一个描述的提示词。让其在点击拖动时会产生变色的光晕效果，这个光晕会随着时间渐渐消失，可以多点触控，能够有多条轨迹，发光效果使用模糊滤镜实现的，颜色会随时间自动的变化。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/10.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/10.png"></p>
+<p>代码可以看到颜色随时间变化这个需求主要是通过 truncatingRemainder 这个方法来实现的。使用 Canvas 的上下 addFilter 方法设置模糊效果，然后形状设置成圆形。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/11.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/11.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/18.jpg" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/18.jpg"></p>
+<p>下一个例子。提示词是点击或拖动会产生随机的形状，这些形状包括圆形、矩形、圆角矩形、胶囊形、椭圆形和三角形，每个形状都有随机的颜色和大小，形状出现时有缩放动画，然后渐渐消失。最多同时显示50个形状，形状之间保持最小间距。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/12.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/12.png"></p>
+<p>得到了代码。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token class-name">ForEach</span><span class="token punctuation">(</span>shapes<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> shape <span class="token keyword">in</span>
+    <span class="token comment">// 描边和尺寸设置</span>
+    shape<span class="token punctuation">.</span>view
+        <span class="token punctuation">.</span><span class="token function">stroke</span><span class="token punctuation">(</span>shape<span class="token punctuation">.</span>color<span class="token punctuation">,</span> lineWidth<span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token comment">// 描边样式</span>
+        <span class="token punctuation">.</span><span class="token function">frame</span><span class="token punctuation">(</span>width<span class="token punctuation">:</span> shape<span class="token punctuation">.</span>size <span class="token operator">*</span> shape<span class="token punctuation">.</span>scale<span class="token punctuation">,</span> height<span class="token punctuation">:</span> shape<span class="token punctuation">.</span>size <span class="token operator">*</span> shape<span class="token punctuation">.</span>scale<span class="token punctuation">)</span> <span class="token comment">// 动态尺寸</span>
+        <span class="token punctuation">.</span><span class="token function">position</span><span class="token punctuation">(</span>shape<span class="token punctuation">.</span>position<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">opacity</span><span class="token punctuation">(</span>shape<span class="token punctuation">.</span>opacity<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">animation</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token function">easeOut</span><span class="token punctuation">(</span>duration<span class="token punctuation">:</span> animationDuration<span class="token punctuation">)</span><span class="token punctuation">,</span> value<span class="token punctuation">:</span> shape<span class="token punctuation">.</span>scale<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 随机图形</span>
+<span class="token keyword">static</span> <span class="token keyword">func</span> <span class="token function-definition function">randomShape</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token keyword">some</span> <span class="token class-name">Shape</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> shapes<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token class-name">AnyShape</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span>
+        <span class="token class-name">AnyShape</span><span class="token punctuation">(</span><span class="token class-name">Circle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+        <span class="token class-name">AnyShape</span><span class="token punctuation">(</span><span class="token class-name">Rectangle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token class-name">AnyShape</span><span class="token punctuation">(</span><span class="token class-name">RoundedRectangle</span><span class="token punctuation">(</span>cornerRadius<span class="token punctuation">:</span> <span class="token number">25</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token class-name">AnyShape</span><span class="token punctuation">(</span><span class="token class-name">Capsule</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token class-name">AnyShape</span><span class="token punctuation">(</span><span class="token class-name">Ellipse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token class-name">AnyShape</span><span class="token punctuation">(</span><span class="token class-name">Triangle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// Added Triangle</span>
+    <span class="token punctuation">]</span>
+    <span class="token keyword">return</span> shapes<span class="token punctuation">.</span><span class="token function">randomElement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 三角形状 Shape</span>
+<span class="token keyword">struct</span> <span class="token class-name">Triangle</span><span class="token punctuation">:</span> <span class="token class-name">Shape</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">path</span><span class="token punctuation">(</span><span class="token keyword">in</span> rect<span class="token punctuation">:</span> <span class="token class-name">CGRect</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">Path</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">var</span> path <span class="token operator">=</span> <span class="token class-name">Path</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        path<span class="token punctuation">.</span><span class="token function">move</span><span class="token punctuation">(</span>to<span class="token punctuation">:</span> <span class="token class-name">CGPoint</span><span class="token punctuation">(</span>x<span class="token punctuation">:</span> rect<span class="token punctuation">.</span>midX<span class="token punctuation">,</span> y<span class="token punctuation">:</span> rect<span class="token punctuation">.</span>minY<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        path<span class="token punctuation">.</span><span class="token function">addLine</span><span class="token punctuation">(</span>to<span class="token punctuation">:</span> <span class="token class-name">CGPoint</span><span class="token punctuation">(</span>x<span class="token punctuation">:</span> rect<span class="token punctuation">.</span>minX<span class="token punctuation">,</span> y<span class="token punctuation">:</span> rect<span class="token punctuation">.</span>maxY<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        path<span class="token punctuation">.</span><span class="token function">addLine</span><span class="token punctuation">(</span>to<span class="token punctuation">:</span> <span class="token class-name">CGPoint</span><span class="token punctuation">(</span>x<span class="token punctuation">:</span> rect<span class="token punctuation">.</span>maxX<span class="token punctuation">,</span> y<span class="token punctuation">:</span> rect<span class="token punctuation">.</span>maxY<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        path<span class="token punctuation">.</span><span class="token function">closeSubpath</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> path
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">extension</span> <span class="token class-name">Color</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">static</span> <span class="token keyword">var</span> random<span class="token punctuation">:</span> <span class="token class-name">Color</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Color</span><span class="token punctuation">(</span>red<span class="token punctuation">:</span> <span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token keyword">in</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token operator">...</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+              green<span class="token punctuation">:</span> <span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token keyword">in</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token operator">...</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+              blue<span class="token punctuation">:</span> <span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token keyword">in</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token operator">...</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>从代码中可以看出颜色是通过 rgb 三个值随机组合获得的随机颜色，在 randomShape 这个函数中实现了各个形状，基本都是内置的 Shape 形状。</p>
+<p>点击运行可以看到效果。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/14.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/14.png"></p>
+<h2 id="从其它语言代码获取提示词"><a href="#从其它语言代码获取提示词" class="headerlink" title="从其它语言代码获取提示词"></a>从其它语言代码获取提示词</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/15.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/15.png"></p>
+<p>这是一个 Rect 的动画代码，完整代码地址在<a target="_blank" rel="noopener" href="https://codepen.io/thebabydino/pen/WNVPdJg">这里</a>。代码不少，如果对 CSS 动画不熟还挺难看懂，那么我们可以让 AI 帮我们获取这段代码的动画描述，让他通过描述转化成 SwiftUI 动画的提示词。这就是得到的提示词。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/16.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/16.png"></p>
+<p>可以看到 AI 生成的提示词比我们写的更有条理，他会先说最终的视觉效果是什么样的，然后会对动画的特点做详细的说明，比如是按照什么速度和方向旋转，完成一圈的时间，是否循环。还生成了技术要点，比如环形渐变用 AngularGradient ，边框效果用 mask 和 strokeBorder，blur 效果模拟发光。用 GeometryReader 来确保边框大小。还有布局上一些值的设置。可以说是非常精确和详细了。</p>
+<p>通过这些提示词得到的 SwiftUI 代码我们就容易看懂了。比如 GlowingCardBorder 这个边框视图的颜色设置，尺寸的计算等，还有 TimelineView 如何计算时间。</p>
+<p>运行这段代码的效果如下图：</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/17.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/17.png"></p>
+<p>我们可以学到 CSS → SwiftUI 转换法则</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token keyword">protocol</span> <span class="token class-name">AnimationTranspiler</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">convert</span><span class="token punctuation">(</span>keyframes<span class="token punctuation">:</span> <span class="token class-name">CSSKeyframe</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">CAKeyframeAnimation</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">translate</span><span class="token punctuation">(</span>easing<span class="token punctuation">:</span> <span class="token class-name">BezierCurve</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">CAMediaTimingFunction</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">adapt</span><span class="token punctuation">(</span>layout<span class="token punctuation">:</span> <span class="token class-name">FlexBox</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">SwiftUI</span> <span class="token class-name">Layout</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// AI生成的转换中间件示例</span>
+<span class="token keyword">class</span> <span class="token class-name">CSS2SwiftAITranspiler</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">parseTransform</span><span class="token punctuation">(</span>transform<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">CATransform3D</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 使用NLP识别translateX/rotate等操作</span>
+        <span class="token comment">// 生成优化后的CATransform3D链式调用</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/19.jpg" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/19.jpg"></p>
+<h2 id="代码复用"><a href="#代码复用" class="headerlink" title="代码复用"></a>代码复用</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/20.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/20.png"></p>
+<p>这是一个会发光和改变形状的动效，左边是代码，可以看到很多值的设置都是写在各处表达式中的，如果想复用这段动画代码进行一些调整就很费劲。于是我写出这样的提示词。先让他将动画的部分进行复用，实现更多自定义，然后利用提示词再优化下代码。比如减少重复的部分，编写已用接口等。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/21.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/21.png"></p>
+<p>AI 依据提示会帮着生成一个接口配置结构体，里面可以对动效做详细的设置。比如角的弧度，变换的幅度，颜色和阴影等。还可以对不同参数组合进行配置，方便复用。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/22.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/22.png"></p>
+<p>这里是一个新的设置，主要是将背景设置为黄色，改变了角的弧度还有阴影部分。拖动的时候会发现，对拖动后的弹性做了些参数调整，弹起来更加流畅些了。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/23.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/23.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/24.jpg" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/24.jpg"></p>
+<h2 id="学习技术"><a href="#学习技术" class="headerlink" title="学习技术"></a>学习技术</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/25.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/25.png"></p>
+<p>这个效果，可以看到一群散开的小圆，慢慢聚合点缀成文字。</p>
+<p>如果我想了解这个动画效果后面的技术，可以这样问 AI。先让他系统性的检查代码中的动画实现，然后说下每个动画的技术。最后说下每个技术的最佳实践。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/26.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/26.png"></p>
+<p>AI 的回答如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">主要使用了以下几种动画技术：
+
+## **SpriteKit 粒子动画**：
+- 使用 &#96;SKShapeNode&#96; 创建粒子节点
+- 通过 &#96;SKAction&#96; 实现粒子的移动动画
+
+let move &#x3D; SKAction.move(to: targetPosition, duration: duration)
+let scale &#x3D; SKAction.scale(to: 1.0, duration: duration)
+particle.run(SKAction.group([move, scale]))
+
+
+## **粒子动画效果**：
+- 初始化时粒子随机分布
+- 文字组装动画（1.5-3.0秒）
+- 触摸爆炸效果（0.3秒）
+- 重新组装动画（1.5-2.0秒）
+
+## **SwiftUI 动画**：
+- 使用 &#96;withAnimation&#96; 制作按钮滑入动画
+
+withAnimation(.spring(duration: 0.6)) &#123;
+    buttonOffset &#x3D; 0
+&#125;
+
+
+## **核心动画技术**：
+- 使用 Core Text (&#96;CTLine&#96;, &#96;CTRun&#96;) 创建文字路径
+- 使用 &#96;CGPath&#96; 进行路径采样，确定粒子目标位置
+
+## **动画时序控制**：
+- 使用 &#96;DispatchQueue.main.asyncAfter&#96; 控制动画延时
+- 设置动画缓动效果：&#96;.easeOut&#96;
+- 使用不同的动画持续时间创造自然的视觉效果
+
+这个示例综合运用了 SpriteKit、SwiftUI 和 Core Graphics 的动画能力，创造了一个复杂的交互式文字粒子动画效果。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>通过 AI 的回答可以看到动画中的粒子节点时使用 SpriteKit 创建的。粒子不同时段的动画的参数也给了出来。还有文字形状使用 Core Text 的 CTLine 和 CTRun 创建的文字路径，用 CGPath 进行了路径的采样确定粒子目标位置。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/28.jpg" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/28.jpg"></p>
+<h2 id="从开源库学习"><a href="#从开源库学习" class="headerlink" title="从开源库学习"></a>从开源库学习</h2><p>背景的这个颜色会变的效果来自一个开源库，你可以看到颜色的变化的节奏并不死板，而且颜色融合的效果也很好。我们可以通过 AI 来了解背后是怎么做到的。</p>
+<p>AI 分析后，会告诉我各个动画的效果是在哪个文件实现的。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/29.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/29.png"></p>
+<p>我们能够一目了然用了哪些动画，以及是在哪个文件中写的。比如弹性动画效果是在 BlobLayer.swift 里用 CASpringAnimation 创建的，用到了哪些属性。定时器是在 FluidGradientView.swift 里通过 Combine 创建的，触发时机是随机的。</p>
+<p>渐变动画是基于 CAGradientLayer 创建的子类 BlobLayer 来创建的径向渐变。</p>
+<p>如何使用这个库，也可以让 AI 提供范例，这样应用到自己项目也会很容易。下面就是它提供的使用范例。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/30.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/30.png"></p>
+<p>可以看到这个库的接口非常清晰，除了基础颜色可以定义外，还能够添加叠加高亮色，其中加白是为了让颜色不要太艳丽，加黄是为了让颜色偏暖些。</p>
+<h2 id="接口使用"><a href="#接口使用" class="headerlink" title="接口使用"></a>接口使用</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/31.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/31.png"></p>
+<p>下面我想说说接口的使用，比如 SF Symbol 新增了 symbolEffect 来给 SF Symbol 做动效，第一个是不断的晃动，第二个是给晃动加了延时，第三个是在两个 SF Symbol 切换时加上过渡效果。那么怎么全面掌握 symbolEffect 接口所有动效及用法呢？</p>
+<p>我们可以直接这样问 AI。它会整理好所有的基础动画效果。</p>
+<pre class="line-numbers language-none"><code class="language-none">在 SwiftUI 中，&#96;symbolEffect&#96; 修饰符可以为 SF Symbols 添加动画效果。以下是主要的 symbolEffect 类型：
+
+## 基础动画效果:
+
+.symbolEffect(.bounce) &#x2F;&#x2F; 弹跳
+.symbolEffect(.scale) &#x2F;&#x2F; 缩放
+.symbolEffect(.pulse) &#x2F;&#x2F; 脉冲
+.symbolEffect(.wiggle) &#x2F;&#x2F; 摇摆
+.symbolEffect(.appear) &#x2F;&#x2F; 出现
+.symbolEffect(.disappear) &#x2F;&#x2F; 消失
+.symbolEffect(.replace) &#x2F;&#x2F; 替换
+
+
+## 变体动画效果:
+
+.symbolEffect(.bounce.up) &#x2F;&#x2F; 向上弹跳
+.symbolEffect(.bounce.down) &#x2F;&#x2F; 向下弹跳
+.symbolEffect(.variableColor) &#x2F;&#x2F; 变色
+.symbolEffect(.iterative) &#x2F;&#x2F; 迭代动画
+
+
+## 常用选项设置:
+
+&#x2F;&#x2F; 重复选项
+.symbolEffect(.bounce, options: .repeat(3)) &#x2F;&#x2F; 重复3次
+.symbolEffect(.bounce, options: .repeat(.forever)) &#x2F;&#x2F; 无限重复
+.symbolEffect(.bounce, options: .repeat(.continuous)) &#x2F;&#x2F; 连续重复
+
+&#x2F;&#x2F; 速度选项
+.symbolEffect(.bounce, options: .speed(2)) &#x2F;&#x2F; 2倍速
+
+
+## 组合效果:
+
+&#x2F;&#x2F; 可以组合多个效果
+.symbolEffect(.bounce)
+.symbolEffect(.variableColor)
+
+
+你当前代码中使用的是：
+
+.symbolEffect(.wiggle, options: .repeat(.continuous))
+
+这会让图标持续不断地进行摇摆动画。
+
+注意：某些效果可能需要 iOS 17.0+ 或 macOS 14.0+ 及以上版本才能使用。
+
+结合 transition 来使用
+
+
+import SwiftUI
+
+struct ContentView: View &#123;
+    @State private var isPresented &#x3D; false
+
+    var body: some View &#123;
+        if isPresented &#123;
+            Image(systemName: &quot;swift&quot;)
+                .font(.system(size: 100))
+                .transition(.symbolEffect(.appear))
+        &#125; else &#123;
+            Button(&quot;Show symbol&quot;, action: &#123; isPresented.toggle() &#125;)
+        &#125;
+    &#125;
+&#125;
+
+
+&#x2F;&#x2F; contentTransition
+
+
+import SwiftUI
+
+struct ContentView: View &#123;
+    @State private var isPresented &#x3D; false
+    
+    var body: some View &#123;
+        VStack(spacing: 50)&#123;
+            Image(systemName: isPresented ? &quot;checkmark.circle.fill&quot; : &quot;faceid&quot;)
+                .font(.system(size: 100))
+                .contentTransition(.symbolEffect(.replace))
+            
+            Button(&quot;Show symbol&quot;, action: &#123; isPresented.toggle() &#125;)
+        &#125;
+    &#125;
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>会说变体动画有哪些，组合效果，有哪些选项，比如设置重复次数，速度等。最后还会举例怎么使用。</p>
+<h2 id="修改动画效果"><a href="#修改动画效果" class="headerlink" title="修改动画效果"></a>修改动画效果</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/33.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/33.png"></p>
+<p>下面我们看看如何通过 AI 来修改动画的效果，左边代码会显示一个火焰的动效，现在我们让颜色有变化。提示词指明增加颜色的随机性，然后让粒子大小也能够有变化。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/34.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/34.png"></p>
+<p>可以看到右侧火焰的颜色变成随机的来了。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/35.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/35.png"></p>
+<p>接下来再看看怎么让粒子的轨迹能够有变化，提示 AI 让运动轨迹变成螺旋运动，带些波浪效果，然后让运动的中心点移到画布的中心。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/36.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/36.png"></p>
+<p>会生成对应的运算表达式。</p>
+<pre class="line-numbers language-swift" data-language="swift"><code class="language-swift"><span class="token comment">// 添加螺旋运动</span>
+<span class="token keyword">let</span> spiralRadius <span class="token operator">=</span> canvasSize<span class="token punctuation">.</span>width<span class="token operator">/</span><span class="token number">3</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>time<span class="token punctuation">)</span>
+<span class="token keyword">let</span> spiralAngle <span class="token operator">=</span> rotations <span class="token operator">*</span> time <span class="token operator">*</span> <span class="token punctuation">.</span>pi <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">+</span> startingRotation
+
+<span class="token comment">// 添加波浪效果</span>
+<span class="token keyword">let</span> waveAmplitude <span class="token operator">=</span> canvasSize<span class="token punctuation">.</span>width<span class="token operator">/</span><span class="token number">6</span> <span class="token operator">*</span> <span class="token class-name">Darwin</span><span class="token punctuation">.</span><span class="token function">sin</span><span class="token punctuation">(</span>time <span class="token operator">*</span> <span class="token punctuation">.</span>pi <span class="token operator">*</span> <span class="token number">4</span><span class="token punctuation">)</span>
+
+<span class="token keyword">let</span> x <span class="token operator">=</span> canvasSize<span class="token punctuation">.</span>width<span class="token operator">/</span><span class="token number">2</span> <span class="token operator">+</span> <span class="token class-name">Darwin</span><span class="token punctuation">.</span><span class="token function">cos</span><span class="token punctuation">(</span>spiralAngle<span class="token punctuation">)</span> <span class="token operator">*</span> spiralRadius <span class="token operator">+</span> waveAmplitude
+<span class="token keyword">let</span> y <span class="token operator">=</span> canvasSize<span class="token punctuation">.</span>height<span class="token operator">/</span><span class="token number">2</span> <span class="token operator">+</span> <span class="token class-name">Darwin</span><span class="token punctuation">.</span><span class="token function">sin</span><span class="token punctuation">(</span>spiralAngle<span class="token punctuation">)</span> <span class="token operator">*</span> spiralRadius <span class="token operator">*</span> <span class="token number">0.8</span>
+
+<span class="token comment">// 使用非线性alpha衰减</span>
+<span class="token keyword">let</span> alpha <span class="token operator">=</span> <span class="token class-name">Darwin</span><span class="token punctuation">.</span><span class="token function">pow</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>time<span class="token punctuation">,</span> <span class="token number">1.5</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>运行后看到粒子的轨迹已经变了。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/38.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/38.png"></p>
+<h2 id="编辑器的开发"><a href="#编辑器的开发" class="headerlink" title="编辑器的开发"></a>编辑器的开发</h2><p>接下来我要讲的是这个用来展示代码的编辑器，以前用的三方的，定制起来不方便，还需要考虑升级和兼容问题。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/39.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/39.png"></p>
+<p>左侧代码是我幻灯片中标题文字动画选择的部分，目前这个编辑器不光可以浏览代码，还能够修改代码，比如更改 animationType 的值，就可以更改文字动画效果。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/40.png" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/40.png"></p>
+<p>这个其中一种动画效果，也是我用在提示词上的文字动画。我们用这个编辑器来改改文字内容，文字大小。</p>
+<p>那么这个编辑器的提示词是什么呢？我希望这个编辑器是原生的，但是 SwiftUI 的 TextEditor 现在还无法进行深入的定制，我发现很多好的原生编辑器都是使用 AppKit 的控件来做的。所以我希望它是在 SwiftUI 下用 NSViewRepresentable 来包装现有的 AppKit。</p>
+<p>功能上我需要的是能够显示语法高亮，而且是多语言的，Swift 语法用来显示开发代码，Markdown 语法用来显示提示词问题和答案之类。高亮逻辑会在文本改变时触发。这样能够保证修改代码后依旧能够正确显示高亮。确保 NSTextView 和 SwiftUI 的数据流能够双向绑定。再让其支持 UndoManager 撤销操作和快捷键，因为代码会经常敲错，需要快速回退。</p>
+<p>另外是对语法高亮支持的说明，说明需要支持多语言。支持配色主题等。</p>
+<p>最后就是换行到语法格式对应的地方。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/letsvision25-ai-improve-ios-skill/43.jpg" class="lozad post-image"src="/uploads/letsvision25-ai-improve-ios-skill/43.jpg"></p>
+<h2 id="总的来说"><a href="#总的来说" class="headerlink" title="总的来说"></a>总的来说</h2><p>这几年用 AI 的工具以来，我最大的感触就是用 AI 去学习喜欢却不擅长的，用 AI 去做必要却枯燥繁琐的。这样就有更多的时间去做很少的事情，因为</p>
+<p>只有很少的书值得去读，<br>很少的作者值得关注，<br>很少的朋友值得交往，<br>很少的事情值得投入，<br>很少的道理值得明白，<br>很少的资产值得投资，<br>很少的目标值得追逐。</p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://starming.com/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://starming.com/2025/03/06/letsvision25-ai-improve-ios-skill/">https://starming.com/2025/03/06/letsvision25-ai-improve-ios-skill/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/2025/02/18/macos-app-i-used/" class="nav-link">
+      <div>
+        <div class="nav-label">Next</div>
+        
+        <div class="nav-title">2025 年我正在使用的 macOS 应用 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI-%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">AI 编程工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="toc-number">3.</span> <span class="toc-text">提示词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%83%B3%E6%8F%90%E5%8D%87%E7%9A%84%E6%8A%80%E8%83%BD"><span class="toc-number">4.</span> <span class="toc-text">想提升的技能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%B9%BB%E7%81%AF%E7%89%87-APP-%E9%9C%80%E8%A6%81%E4%BB%80%E4%B9%88%E7%9F%A5%E8%AF%86"><span class="toc-number">5.</span> <span class="toc-text">开发幻灯片 APP 需要什么知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="toc-number">6.</span> <span class="toc-text">基础提示词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E7%94%BB%E6%8F%8F%E8%BF%B0%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="toc-number">7.</span> <span class="toc-text">动画描述提示词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E5%85%B6%E5%AE%83%E8%AF%AD%E8%A8%80%E4%BB%A3%E7%A0%81%E8%8E%B7%E5%8F%96%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="toc-number">8.</span> <span class="toc-text">从其它语言代码获取提示词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8"><span class="toc-number">9.</span> <span class="toc-text">代码复用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%9C%AF"><span class="toc-number">10.</span> <span class="toc-text">学习技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E5%BC%80%E6%BA%90%E5%BA%93%E5%AD%A6%E4%B9%A0"><span class="toc-number">11.</span> <span class="toc-text">从开源库学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E4%BD%BF%E7%94%A8"><span class="toc-number">12.</span> <span class="toc-text">接口使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C"><span class="toc-number">13.</span> <span class="toc-text">修改动画效果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E5%BC%80%E5%8F%91"><span class="toc-number">14.</span> <span class="toc-text">编辑器的开发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%9A%84%E6%9D%A5%E8%AF%B4"><span class="toc-number">15.</span> <span class="toc-text">总的来说</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
+
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>78</span>
+    <span>Posts</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>8</span>
+    <span>Categories</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>44</span>
+    <span>Tags</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI-%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">AI 编程工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="toc-number">3.</span> <span class="toc-text">提示词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%83%B3%E6%8F%90%E5%8D%87%E7%9A%84%E6%8A%80%E8%83%BD"><span class="toc-number">4.</span> <span class="toc-text">想提升的技能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%B9%BB%E7%81%AF%E7%89%87-APP-%E9%9C%80%E8%A6%81%E4%BB%80%E4%B9%88%E7%9F%A5%E8%AF%86"><span class="toc-number">5.</span> <span class="toc-text">开发幻灯片 APP 需要什么知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="toc-number">6.</span> <span class="toc-text">基础提示词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E7%94%BB%E6%8F%8F%E8%BF%B0%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="toc-number">7.</span> <span class="toc-text">动画描述提示词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E5%85%B6%E5%AE%83%E8%AF%AD%E8%A8%80%E4%BB%A3%E7%A0%81%E8%8E%B7%E5%8F%96%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="toc-number">8.</span> <span class="toc-text">从其它语言代码获取提示词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8"><span class="toc-number">9.</span> <span class="toc-text">代码复用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%9C%AF"><span class="toc-number">10.</span> <span class="toc-text">学习技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E5%BC%80%E6%BA%90%E5%BA%93%E5%AD%A6%E4%B9%A0"><span class="toc-number">11.</span> <span class="toc-text">从开源库学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E4%BD%BF%E7%94%A8"><span class="toc-number">12.</span> <span class="toc-text">接口使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C"><span class="toc-number">13.</span> <span class="toc-text">修改动画效果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E5%BC%80%E5%8F%91"><span class="toc-number">14.</span> <span class="toc-text">编辑器的开发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%9A%84%E6%9D%A5%E8%AF%B4"><span class="toc-number">15.</span> <span class="toc-text">总的来说</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>Categories</div>
+  <div class="categories-list">
+    
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">50</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-novel">
+        <div class="categories-list-item">
+          My-novel
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-painting">
+        <div class="categories-list-item">
+          My-painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Podcast">
+        <div class="categories-list-item">
+          Podcast
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/App">
+        <div class="categories-list-item">
+          App
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/macOS">
+        <div class="categories-list-item">
+          macOS
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI">
+        <div class="categories-list-item">
+          AI
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>hot tags</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\App" title="App"><div class="tags-list-item">App</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Performance optimization" title="Performance optimization"><div class="tags-list-item">Performance optimization</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\Manga" title="Manga"><div class="tags-list-item">Manga</div></a>
+    
+    <a href="\tags\Podcast" title="Podcast"><div class="tags-list-item">Podcast</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI-%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">AI 编程工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="toc-number">3.</span> <span class="toc-text">提示词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%83%B3%E6%8F%90%E5%8D%87%E7%9A%84%E6%8A%80%E8%83%BD"><span class="toc-number">4.</span> <span class="toc-text">想提升的技能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%B9%BB%E7%81%AF%E7%89%87-APP-%E9%9C%80%E8%A6%81%E4%BB%80%E4%B9%88%E7%9F%A5%E8%AF%86"><span class="toc-number">5.</span> <span class="toc-text">开发幻灯片 APP 需要什么知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="toc-number">6.</span> <span class="toc-text">基础提示词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E7%94%BB%E6%8F%8F%E8%BF%B0%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="toc-number">7.</span> <span class="toc-text">动画描述提示词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E5%85%B6%E5%AE%83%E8%AF%AD%E8%A8%80%E4%BB%A3%E7%A0%81%E8%8E%B7%E5%8F%96%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="toc-number">8.</span> <span class="toc-text">从其它语言代码获取提示词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8"><span class="toc-number">9.</span> <span class="toc-text">代码复用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%9C%AF"><span class="toc-number">10.</span> <span class="toc-text">学习技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E5%BC%80%E6%BA%90%E5%BA%93%E5%AD%A6%E4%B9%A0"><span class="toc-number">11.</span> <span class="toc-text">从开源库学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E4%BD%BF%E7%94%A8"><span class="toc-number">12.</span> <span class="toc-text">接口使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C"><span class="toc-number">13.</span> <span class="toc-text">修改动画效果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E5%BC%80%E5%8F%91"><span class="toc-number">14.</span> <span class="toc-text">编辑器的开发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%9A%84%E6%9D%A5%E8%AF%B4"><span class="toc-number">15.</span> <span class="toc-text">总的来说</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>Recent Posts</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-03-06</div>
+        <a href="/2025/03/06/letsvision25-ai-improve-ios-skill/"><div class="recent-posts-item-content">使用 AI 突破 iOS 开发者能力边界</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-02-18</div>
+        <a href="/2025/02/18/macos-app-i-used/"><div class="recent-posts-item-content">2025 年我正在使用的 macOS 应用</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-01-21</div>
+        <a href="/2025/01/21/ios-conf-sg-25-share/"><div class="recent-posts-item-content">我在 iOS Conf SG 25 的演讲</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-11-04</div>
+        <a href="/2024/11/04/introduction-japanese-colors/"><div class="recent-posts-item-content">全网最全的日本传统颜色指南，看完你会更懂日本</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2014 -
+          
+          2025
+        </span>
+        <a href="/" class="footer-link">戴铭的博客 </a>
+      </div>
+    </div>
+
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">京ICP备2024068292号-1 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="https://beian.mps.gov.cn/#/query/webSearch?code=11010802044427 ">京公网安备11010802044427
+      </a>
+      <br />
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>
