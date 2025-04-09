@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI编程工具简介 - 未来编程的革命</title>
+    <title>CURSOR AI 编程助手入门指南</title>
     <style>
         
         :root {
-            --neon-purple: #bc13fe;
-            --neon-blue: #0ff0fc;
-            --neon-yellow: #ffff00;
-            --neon-green: #39ff14;
-            --neon-red: #ff073a;
-            --dark-purple: #1a0033;
-            --bg-color: #141221;
+            --olive: #b9c42a;
+            --lemon: #ffde00;
+            --black: #000000;
+            --white: #ffffff;
         }
         
         * {
@@ -23,467 +20,288 @@
         }
         
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--bg-color);
-            color: white;
+            font-family: 'Rubik', sans-serif;
+            background-color: var(--olive);
+            color: var(--black);
             line-height: 1.6;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%23341256' d='M0 0h50v50H0zm50 50h50v50H50z'/%3E%3Cpath fill='%232a0f47' d='M50 0h50v50H50zM0 50h50v50H0z'/%3E%3C/svg%3E");
-            background-size: 100px 100px;
-            overflow-x: hidden;
+            padding: 20px;
+            font-weight: 900;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-            position: relative;
-        }
-        
-        .glitch-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                to bottom,
-                transparent 0px,
-                rgba(0, 0, 0, 0.05) 1px,
-                transparent 2px
-            );
-            pointer-events: none;
-            z-index: 1000;
-        }
-        
-        .glitch-overlay::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(
-                circle,
-                transparent 40%,
-                rgba(20, 18, 33, 0.8) 100%
-            );
-        }
-        
-        .neon-header {
-            padding: 40px 0;
-            text-align: center;
-            position: relative;
-        }
-        
-        .neon-title {
-            font-family: 'Audiowide', cursive;
-            font-size: 4rem;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            position: relative;
-            display: inline-block;
-            color: white;
-            text-shadow: 
-                0 0 7px #fff,
-                0 0 10px #fff,
-                0 0 21px #fff,
-                0 0 42px var(--neon-purple),
-                0 0 82px var(--neon-purple),
-                0 0 92px var(--neon-purple),
-                0 0 102px var(--neon-purple),
-                0 0 151px var(--neon-purple);
-            animation: flicker 1.5s infinite alternate;
-        }
-        
-        .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            color: var(--neon-blue);
-            text-shadow: 
-                0 0 5px var(--neon-blue),
-                0 0 10px var(--neon-blue);
-            letter-spacing: 2px;
-        }
-        
-        .content-section {
-            margin-bottom: 60px;
-            position: relative;
-        }
-        
-        .section-title {
-            font-family: 'Audiowide', cursive;
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-            color: var(--neon-yellow);
-            text-shadow: 
-                0 0 5px var(--neon-yellow),
-                0 0 10px var(--neon-yellow);
-            position: relative;
-            display: inline-block;
-            padding-bottom: 10px;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(
-                90deg, 
-                var(--neon-blue), 
-                var(--neon-purple), 
-                var(--neon-yellow)
-            );
-            box-shadow: 
-                0 0 5px var(--neon-blue),
-                0 0 10px var(--neon-yellow);
-        }
-        
-        .tool-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .tool-card {
-            background: rgba(20, 18, 33, 0.7);
-            border: 1px solid;
-            border-image-slice: 1;
-            border-image-source: linear-gradient(
-                45deg, 
-                var(--neon-blue), 
-                var(--neon-purple), 
-                var(--neon-yellow)
-            );
-            padding: 30px;
-            box-shadow: 
-                0 0 15px var(--neon-purple),
-                inset 0 0 15px var(--neon-purple);
-            position: relative;
-            backdrop-filter: blur(5px);
-            transition: all 0.3s ease;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        
-        .tool-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 
-                0 0 25px var(--neon-purple),
-                inset 0 0 25px var(--neon-purple);
-        }
-        
-        .tool-card.cursor {
-            border-image-source: linear-gradient(
-                45deg, 
-                var(--neon-blue), 
-                var(--neon-purple)
-            );
-            box-shadow: 
-                0 0 15px var(--neon-blue),
-                inset 0 0 15px var(--neon-blue);
-        }
-        
-        .tool-card.cursor:hover {
-            box-shadow: 
-                0 0 25px var(--neon-blue),
-                inset 0 0 25px var(--neon-blue);
-        }
-        
-        .tool-card.copilot {
-            border-image-source: linear-gradient(
-                45deg, 
-                var(--neon-yellow), 
-                var(--neon-green)
-            );
-            box-shadow: 
-                0 0 15px var(--neon-green),
-                inset 0 0 15px var(--neon-green);
-        }
-        
-        .tool-card.copilot:hover {
-            box-shadow: 
-                0 0 25px var(--neon-green),
-                inset 0 0 25px var(--neon-green);
-        }
-        
-        .tool-header {
-            margin-bottom: 20px;
-        }
-        
-        .tool-title {
-            font-family: 'Audiowide', cursive;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-        
-        .cursor-title {
-            color: var(--neon-blue);
-            text-shadow: 0 0 5px var(--neon-blue);
-        }
-        
-        .copilot-title {
-            color: var(--neon-green);
-            text-shadow: 0 0 5px var(--neon-green);
-        }
-        
-        .tool-description {
-            margin-bottom: 20px;
-        }
-        
-        .neon-link {
-            color: var(--neon-yellow);
-            text-decoration: none;
-            position: relative;
-            transition: all 0.3s ease;
-            text-shadow: 0 0 3px var(--neon-yellow);
-        }
-        
-        .neon-link:hover {
-            color: white;
-            text-shadow: 
-                0 0 5px var(--neon-yellow),
-                0 0 10px var(--neon-yellow);
-        }
-        
-        .neon-link::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background-color: var(--neon-yellow);
-            box-shadow: 0 0 5px var(--neon-yellow);
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.3s ease;
-        }
-        
-        .neon-link:hover::after {
-            transform: scaleX(1);
-            transform-origin: left;
-        }
-        
-        .tool-icon {
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-        }
-        
-        .neon-badge {
-            display: inline-block;
-            padding: 5px 15px;
-            margin: 5px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            background: rgba(20, 18, 33, 0.7);
-            border: 1px solid var(--neon-purple);
-            color: var(--neon-purple);
-            box-shadow: 0 0 5px var(--neon-purple);
-            animation: pulse 2s infinite;
-        }
-        
-        .features-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .feature-box {
-            background: rgba(20, 18, 33, 0.7);
-            border: 1px solid;
-            border-image-slice: 1;
-            border-image-source: linear-gradient(
-                45deg, 
-                var(--neon-red), 
-                var(--neon-purple)
-            );
-            padding: 25px;
-            box-shadow: 
-                0 0 10px var(--neon-red),
-                inset 0 0 10px var(--neon-red);
-            transition: all 0.3s ease;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        
-        .feature-box:hover {
-            transform: scale(1.03);
-            box-shadow: 
-                0 0 15px var(--neon-red),
-                inset 0 0 15px var(--neon-red);
-        }
-        
-        .feature-icon {
-            margin-bottom: 20px;
-        }
-        
-        .feature-title {
-            font-family: 'Audiowide', cursive;
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: var(--neon-red);
-            text-shadow: 0 0 5px var(--neon-red);
-        }
-        
-        .code-block {
-            background: rgba(10, 10, 15, 0.8);
-            border-radius: 5px;
-            padding: 20px;
-            margin: 20px 0;
-            font-family: monospace;
-            color: white;
-            border-left: 3px solid var(--neon-green);
-            box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
             position: relative;
             overflow: hidden;
         }
         
-        .code-block::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent 0%,
-                rgba(57, 255, 20, 0.05) 25%,
-                transparent 50%
-            );
-            animation: scanLine 2s linear infinite;
-        }
-        
-        .comment {
-            color: var(--neon-purple);
-            opacity: 0.7;
-        }
-        
-        .keyword {
-            color: var(--neon-blue);
-        }
-        
-        .string {
-            color: var(--neon-green);
-        }
-        
-        .vs-compare {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
+        .hand-drawn-card {
+            background: var(--lemon);
+            border: 3px solid var(--black);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
             position: relative;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.8);
+            overflow: hidden;
         }
         
-        .retro-grid {
+        .hand-drawn-card::before {
+            content: "";
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 300px;
-            background-image: linear-gradient(
-                0deg,
-                var(--neon-purple) 0%,
-                transparent 15%
-            );
-            z-index: -1;
-            transform: perspective(300px) rotateX(60deg);
-            transform-origin: bottom;
-            background-size: 50px 50px;
-            background-position: center;
+            top: 5px;
+            left: 10px;
+            right: 10px;
+            bottom: 5px;
+            border: 2px dashed var(--black);
+            border-radius: 10px;
             opacity: 0.2;
             pointer-events: none;
         }
         
-        .retro-grid::before {
-            content: '';
+        /* 缝线装饰 */
+        .stitch {
+            position: absolute;
+            width: 10px;
+            height: 2px;
+            background-color: var(--black);
+        }
+        
+        .hand-drawn-card::after {
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(to right, var(--neon-purple) 1px, transparent 1px),
-                linear-gradient(to bottom, var(--neon-purple) 1px, transparent 1px);
-            background-size: 50px 50px;
+            right: 0;
+            height: 10px;
+            background: repeating-linear-gradient(90deg, 
+                transparent, transparent 10px, 
+                var(--black) 10px, var(--black) 12px);
+            opacity: 0.2;
         }
         
-        /* Animations */
-        @keyframes flicker {
-            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-                text-shadow: 
-                    0 0 7px #fff,
-                    0 0 10px #fff,
-                    0 0 21px #fff,
-                    0 0 42px var(--neon-purple),
-                    0 0 82px var(--neon-purple),
-                    0 0 92px var(--neon-purple),
-                    0 0 102px var(--neon-purple),
-                    0 0 151px var(--neon-purple);
-            }
-            20%, 24%, 55% {        
-                text-shadow: none;
-            }    
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
         }
         
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 5px var(--neon-purple);
+        .title {
+            font-size: 3rem;
+            color: var(--black);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            line-height: 1.1;
+            padding: 15px;
+            position: relative;
+            background: var(--lemon);
+            border: 4px solid var(--black);
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.5);
+            transform: rotate(-2deg);
+            z-index: 1;
+            text-shadow: 
+                2px 2px 0 var(--white),
+                -2px -2px 0 var(--white),
+                2px -2px 0 var(--white),
+                -2px 2px 0 var(--white);
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            color: var(--white);
+            text-transform: uppercase;
+            margin-top: -10px;
+            background: var(--black);
+            padding: 5px 20px;
+            display: inline-block;
+            border-radius: 5px;
+            transform: rotate(2deg);
+            position: relative;
+            z-index: 0;
+        }
+        
+        .content-section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--black);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            background: var(--lemon);
+            padding: 8px 15px;
+            border: 3px solid var(--black);
+            border-radius: 8px;
+            box-shadow: 5px 5px 0 rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 0 var(--white);
+            transform: rotate(-1deg);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-content {
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 0;
+        }
+        
+        .feature-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .feature-card {
+            flex: 1 1 350px;
+            background: var(--white);
+            border: 3px solid var(--black);
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 6px 6px 0 rgba(0,0,0,0.6);
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            color: var(--black);
+            margin-bottom: 15px;
+            border-bottom: 3px dashed var(--black);
+            padding-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
+        .feature-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .code-block {
+            background: var(--black);
+            color: var(--lemon);
+            border-radius: 5px;
+            padding: 15px;
+            font-family: monospace;
+            font-weight: 500;
+            white-space: pre-wrap;
+            margin: 10px 0;
+            position: relative;
+        }
+        
+        .code-block::before {
+            content: "CODE";
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            background: var(--lemon);
+            color: var(--black);
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-radius: 3px;
+            border: 2px solid var(--black);
+        }
+        
+        .step-list {
+            list-style-type: none;
+            padding: 0;
+            counter-reset: steps;
+        }
+        
+        .step-item {
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 15px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .step-item::before {
+            counter-increment: steps;
+            content: counter(steps);
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: var(--lemon);
+            border: 3px solid var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            box-shadow: 3px 3px 0 rgba(0,0,0,0.5);
+        }
+        
+        .visual-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+        }
+        
+        .key-command {
+            background: var(--black);
+            color: var(--lemon);
+            padding: 3px 8px;
+            border-radius: 5px;
+            margin: 0 3px;
+            display: inline-block;
+            font-family: monospace;
+            font-weight: 700;
+        }
+        
+        .link {
+            color: var(--black);
+            text-decoration: underline;
+            font-weight: bold;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .link:hover {
+            transform: scale(1.05);
+        }
+        
+        .link::after {
+            content: "→";
+            margin-left: 4px;
+        }
+        
+        /* 生成缝线效果 */
+        @media (min-width: 768px) {
+            .hand-drawn-card {
+                padding: 35px;
             }
-            50% {
-                box-shadow: 0 0 15px var(--neon-purple);
+            
+            .title {
+                font-size: 3.5rem;
             }
-            100% {
-                box-shadow: 0 0 5px var(--neon-purple);
+            
+            .subtitle {
+                font-size: 2rem;
             }
         }
         
-        @keyframes scanLine {
-            0% {
-                transform: translateX(-100%);
+        @media (max-width: 767px) {
+            .hand-drawn-card {
+                padding: 20px;
             }
-            100% {
-                transform: translateX(100%);
-            }
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
-        }
-        
-        /* Responsive styles */
-        @media (max-width: 768px) {
-            .neon-title {
-                font-size: 2.5rem;
+            
+            .title {
+                font-size: 2rem;
+                padding: 10px;
             }
             
             .subtitle {
@@ -494,422 +312,292 @@
                 font-size: 1.8rem;
             }
             
-            .tool-title {
-                font-size: 1.5rem;
-            }
-            
-            .tool-cards, .features-container {
-                gap: 20px;
-            }
-            
-            .tool-card, .feature-box {
-                padding: 20px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .neon-title {
-                font-size: 2rem;
-            }
-            
-            .subtitle {
-                font-size: 1rem;
-            }
-            
-            .tool-cards, .features-container {
-                grid-template-columns: 1fr;
+            .feature-card {
+                flex: 1 1 100%;
             }
         }
     </style>
 </head>
-
 <body>
-    <div class="glitch-overlay"></div>
-    
     <div class="container">
-        <header class="neon-header">
-            <h1 class="neon-title">AI编程工具</h1>
-            <p class="subtitle">未来编程的革命性技术</p>
-            <div class="tool-icon">
-                <svg width="200" height="200" viewBox="0 0 200 200">
-                    <defs>
-                        <filter id="glow-purple">
-                            <feGaussianBlur stdDeviation="3" result="blur" />
-                            <feFlood flood-color="#bc13fe" flood-opacity="1" result="glow" />
-                            <feComposite in="glow" in2="blur" operator="in" result="coloredBlur" />
-                            <feMerge>
-                                <feMergeNode in="coloredBlur" />
-                                <feMergeNode in="SourceGraphic" />
-                            </feMerge>
-                        </filter>
-                        <filter id="glow-blue">
-                            <feGaussianBlur stdDeviation="3" result="blur" />
-                            <feFlood flood-color="#0ff0fc" flood-opacity="1" result="glow" />
-                            <feComposite in="glow" in2="blur" operator="in" result="coloredBlur" />
-                            <feMerge>
-                                <feMergeNode in="coloredBlur" />
-                                <feMergeNode in="SourceGraphic" />
-                            </feMerge>
-                        </filter>
-                        <filter id="glow-yellow">
-                            <feGaussianBlur stdDeviation="3" result="blur" />
-                            <feFlood flood-color="#ffff00" flood-opacity="1" result="glow" />
-                            <feComposite in="glow" in2="blur" operator="in" result="coloredBlur" />
-                            <feMerge>
-                                <feMergeNode in="coloredBlur" />
-                                <feMergeNode in="SourceGraphic" />
-                            </feMerge>
-                        </filter>
-                    </defs>
-                    
-                    <!-- Brain outline -->
-                    <path d="M100 30 C140 30, 160 60, 160 100 C160 140, 130 170, 100 170 C70 170, 40 140, 40 100 C40 60, 60 30, 100 30Z" 
-                        fill="none" stroke="#bc13fe" stroke-width="2" filter="url(#glow-purple)" />
-                    
-                    <!-- Circuit paths -->
-                    <path d="M100 30 L100 15 M160 100 L175 100 M100 170 L100 185 M40 100 L25 100" 
-                        stroke="#0ff0fc" stroke-width="2" filter="url(#glow-blue)" />
-                    
-                    <!-- Code symbols -->
-                    <text x="85" y="75" font-family="monospace" font-size="14" fill="#ffff00" filter="url(#glow-yellow)">{}</text>
-                    <text x="105" y="110" font-family="monospace" font-size="14" fill="#ffff00" filter="url(#glow-yellow)">()</text>
-                    <text x="80" y="130" font-family="monospace" font-size="14" fill="#ffff00" filter="url(#glow-yellow)">if</text>
-                    <text x="110" y="90" font-family="monospace" font-size="14" fill="#ffff00" filter="url(#glow-yellow)">;</text>
-                    
-                    <!-- Neural connections -->
-                    <circle cx="85" cy="70" r="3" fill="#0ff0fc" filter="url(#glow-blue)" />
-                    <circle cx="110" cy="105" r="3" fill="#0ff0fc" filter="url(#glow-blue)" />
-                    <circle cx="80" cy="125" r="3" fill="#0ff0fc" filter="url(#glow-blue)" />
-                    <circle cx="115" cy="85" r="3" fill="#0ff0fc" filter="url(#glow-blue)" />
-                    
-                    <line x1="85" y1="70" x2="115" y2="85" stroke="#ff073a" stroke-width="1" filter="url(#glow-purple)" />
-                    <line x1="115" y1="85" x2="110" y2="105" stroke="#ff073a" stroke-width="1" filter="url(#glow-purple)" />
-                    <line x1="110" y1="105" x2="80" y2="125" stroke="#ff073a" stroke-width="1" filter="url(#glow-purple)" />
-                    <line x1="80" y1="125" x2="85" y2="70" stroke="#ff073a" stroke-width="1" filter="url(#glow-purple)" />
-                    
-                    <!-- Binary data flowing -->
-                    <text x="60" y="60" font-family="monospace" font-size="8" fill="#39ff14" filter="url(#glow-blue)" opacity="0.7">10101</text>
-                    <text x="120" y="140" font-family="monospace" font-size="8" fill="#39ff14" filter="url(#glow-blue)" opacity="0.7">01010</text>
-                    <text x="140" y="70" font-family="monospace" font-size="8" fill="#39ff14" filter="url(#glow-blue)" opacity="0.7">11001</text>
-                </svg>
-            </div>
-        </header>
+        <div class="header">
+            <h1 class="title">CURSOR AI</h1>
+            <div class="subtitle">编程助手入门指南</div>
+        </div>
         
         <section class="content-section">
-            <h2 class="section-title">热门工具</h2>
-            <div class="tool-cards">
-                <div class="tool-card cursor">
-                    <div>
-                        <div class="tool-header">
-                            <h3 class="tool-title cursor-title">Cursor</h3>
-                            <span class="neon-badge">AI 增强编辑器</span>
-                        </div>
-                        
-                        <div class="tool-icon">
-                            <svg width="150" height="150" viewBox="0 0 150 150">
-                                <defs>
-                                    <filter id="glow-cursor">
-                                        <feGaussianBlur stdDeviation="2" result="blur" />
-                                        <feFlood flood-color="#0ff0fc" flood-opacity="0.8" result="glow" />
-                                        <feComposite in="glow" in2="blur" operator="in" result="coloredBlur" />
-                                        <feMerge>
-                                            <feMergeNode in="coloredBlur" />
-                                            <feMergeNode in="SourceGraphic" />
-                                        </feMerge>
-                                    </filter>
-                                </defs>
-                                
-                                <!-- Editor background -->
-                                <rect x="25" y="20" width="100" height="110" rx="5" fill="#1a0033" stroke="#0ff0fc" stroke-width="2" filter="url(#glow-cursor)" />
-                                
-                                <!-- Code editor top bar -->
-                                <rect x="25" y="20" width="100" height="15" rx="5" fill="#341256" stroke="#0ff0fc" stroke-width="1" />
-                                <circle cx="35" cy="27" r="3" fill="#ff073a" />
-                                <circle cx="45" cy="27" r="3" fill="#ffff00" />
-                                <circle cx="55" cy="27" r="3" fill="#39ff14" />
-                                
-                                <!-- Code lines -->
-                                <rect x="35" y="45" width="80" height="5" rx="2" fill="#0ff0fc" opacity="0.7" />
-                                <rect x="35" y="55" width="60" height="5" rx="2" fill="#0ff0fc" opacity="0.7" />
-                                <rect x="45" y="65" width="60" height="5" rx="2" fill="#0ff0fc" opacity="0.7" />
-                                <rect x="45" y="75" width="40" height="5" rx="2" fill="#0ff0fc" opacity="0.7" />
-                                <rect x="35" y="85" width="70" height="5" rx="2" fill="#0ff0fc" opacity="0.7" />
-                                
-                                <!-- Cursor with AI suggestion -->
-                                <rect x="45" y="95" width="30" height="5" rx="2" fill="#0ff0fc" opacity="0.7" />
-                                <rect x="75" y="95" width="30" height="5" rx="2" fill="#bc13fe" opacity="0.9" filter="url(#glow-cursor)" />
-                                
-                                <!-- Blinking cursor -->
-                                <rect x="75" y="95" width="2" height="5" fill="#ffffff" opacity="0.9">
-                                    <animate attributeName="opacity" values="0;1;0" dur="1s" repeatCount="indefinite" />
-                                </rect>
-                                
-                                <!-- AI helper icon -->
-                                <circle cx="115" cy="110" r="8" fill="#1a0033" stroke="#0ff0fc" stroke-width="2" filter="url(#glow-cursor)" />
-                                <text x="112" y="114" font-family="Arial" font-size="10" fill="#0ff0fc" filter="url(#glow-cursor)">AI</text>
-                            </svg>
-                        </div>
-                        
-                        <div class="tool-description">
-                            <p>基于 Visual Studio Code 构建的 AI 增强编辑器，专为现代开发者设计，将编码体验提升到全新水平。Cursor 集成了强大的 AI 功能，包括代码生成、智能建议和代码库理解。</p>
-                        </div>
-                        
-                        <div class="code-block">
-                            <span class="comment">// 使用 Cursor 生成函数</span><br>
-                            <span class="keyword">function</span> calculateDiscount(price, code) {<br>
-                            &nbsp;&nbsp;<span class="keyword">let</span> discount = 0;<br>
-                            &nbsp;&nbsp;<span class="keyword">if</span> (code === <span class="string">"NEWYEAR"</span>) {<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;discount = price * 0.2;<br>
-                            &nbsp;&nbsp;}<br>
-                            &nbsp;&nbsp;<span class="keyword">return</span> price - discount;<br>
-                            }
-                        </div>
+            <div class="hand-drawn-card">
+                <h2 class="section-title">安装步骤</h2>
+                <div class="section-content">
+                    <div class="visual-container">
+                        <svg width="320" height="220" viewBox="0 0 320 220">
+                            <!-- 电脑图标 -->
+                            <rect x="60" y="30" width="200" height="120" rx="5" fill="white" stroke="black" stroke-width="4"/>
+                            <rect x="100" y="150" width="120" height="10" fill="white" stroke="black" stroke-width="4"/>
+                            <rect x="140" y="160" width="40" height="30" fill="white" stroke="black" stroke-width="4"/>
+                            <rect x="80" y="50" width="160" height="80" rx="2" fill="#b9c42a" stroke="black" stroke-width="2"/>
+                            
+                            <!-- 下载图标 -->
+                            <circle cx="160" cy="90" r="25" fill="#ffde00" stroke="black" stroke-width="3"/>
+                            <path d="M160 70 L160 100" stroke="black" stroke-width="4" stroke-linecap="round"/>
+                            <path d="M145 90 L160 105 L175 90" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            
+                            <!-- Windows, Mac, Linux图标 -->
+                            <rect x="60" y="190" width="60" height="20" rx="5" fill="#ffde00" stroke="black" stroke-width="2"/>
+                            <text x="66" y="205" font-family="Arial" font-size="12" font-weight="bold">WINDOWS</text>
+                            
+                            <rect x="130" y="190" width="60" height="20" rx="5" fill="#ffde00" stroke="black" stroke-width="2"/>
+                            <text x="144" y="205" font-family="Arial" font-size="12" font-weight="bold">MAC</text>
+                            
+                            <rect x="200" y="190" width="60" height="20" rx="5" fill="#ffde00" stroke="black" stroke-width="2"/>
+                            <text x="212" y="205" font-family="Arial" font-size="12" font-weight="bold">LINUX</text>
+                            
+                            <!-- 连接线 -->
+                            <path d="M160 115 L160 140" stroke="black" stroke-width="2" stroke-dasharray="5,3"/>
+                            <path d="M160 140 L90 190" stroke="black" stroke-width="2" stroke-dasharray="5,3"/>
+                            <path d="M160 140 L160 190" stroke="black" stroke-width="2" stroke-dasharray="5,3"/>
+                            <path d="M160 140 L230 190" stroke="black" stroke-width="2" stroke-dasharray="5,3"/>
+                            
+                            <!-- 缝线装饰 -->
+                            <path d="M80 35 L85 35" stroke="black" stroke-width="2"/>
+                            <path d="M100 35 L105 35" stroke="black" stroke-width="2"/>
+                            <path d="M120 35 L125 35" stroke="black" stroke-width="2"/>
+                            <path d="M140 35 L145 35" stroke="black" stroke-width="2"/>
+                            <path d="M180 35 L185 35" stroke="black" stroke-width="2"/>
+                            <path d="M200 35 L205 35" stroke="black" stroke-width="2"/>
+                            <path d="M220 35 L225 35" stroke="black" stroke-width="2"/>
+                            <path d="M240 35 L245 35" stroke="black" stroke-width="2"/>
+                        </svg>
                     </div>
                     
-                    <p><a href="https://www.cursor.com/en" class="neon-link" target="_blank">访问 Cursor 官网</a></p>
-                </div>
-                
-                <div class="tool-card copilot">
-                    <div>
-                        <div class="tool-header">
-                            <h3 class="tool-title copilot-title">GitHub Copilot</h3>
-                            <span class="neon-badge">AI 编码助手</span>
-                        </div>
-                        
-                        <div class="tool-icon">
-                            <svg width="150" height="150" viewBox="0 0 150 150">
-                                <defs>
-                                    <filter id="glow-copilot">
-                                        <feGaussianBlur stdDeviation="2" result="blur" />
-                                        <feFlood flood-color="#39ff14" flood-opacity="0.8" result="glow" />
-                                        <feComposite in="glow" in2="blur" operator="in" result="coloredBlur" />
-                                        <feMerge>
-                                            <feMergeNode in="coloredBlur" />
-                                            <feMergeNode in="SourceGraphic" />
-                                        </feMerge>
-                                    </filter>
-                                </defs>
-                                
-                                <!-- Earth and satellite orbit -->
-                                <circle cx="75" cy="75" r="35" fill="#1a0033" stroke="#39ff14" stroke-width="2" filter="url(#glow-copilot)" />
-                                <ellipse cx="75" cy="75" rx="55" ry="25" fill="none" stroke="#39ff14" stroke-width="1" stroke-dasharray="5,3" filter="url(#glow-copilot)" opacity="0.6" />
-                                
-                                <!-- Satellite/Copilot -->
-                                <circle cx="130" cy="75" r="10" fill="#1a0033" stroke="#ffff00" stroke-width="2" filter="url(#glow-yellow)">
-                                    <animateTransform
-                                        attributeName="transform"
-                                        attributeType="XML"
-                                        type="rotate"
-                                        from="0 75 75"
-                                        to="360 75 75"
-                                        dur="10s"
-                                        repeatCount="indefinite" />
-                                </circle>
-                                
-                                <!-- Satellite dish -->
-                                <path d="M125 70 L135 75 L125 80 Z" fill="#ffff00" filter="url(#glow-yellow)">
-                                    <animateTransform
-                                        attributeName="transform"
-                                        attributeType="XML"
-                                        type="rotate"
-                                        from="0 75 75"
-                                        to="360 75 75"
-                                        dur="10s"
-                                        repeatCount="indefinite" />
-                                </path>
-                                
-                                <!-- Signal beams -->
-                                <line x1="120" y1="75" x2="90" y2="75" stroke="#ffff00" stroke-width="1" filter="url(#glow-yellow)" stroke-dasharray="5,3" opacity="0.8">
-                                    <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite" />
-                                    <animateTransform
-                                        attributeName="transform"
-                                        attributeType="XML"
-                                        type="rotate"
-                                        from="0 75 75"
-                                        to="360 75 75"
-                                        dur="10s"
-                                        repeatCount="indefinite" />
-                                </line>
-                                
-                                <!-- Continents on earth -->
-                                <path d="M65 55 Q75 45, 85 55 T95 65 Q85 80, 75 75 T65 55" fill="#39ff14" opacity="0.5" filter="url(#glow-copilot)" />
-                                <path d="M55 85 Q65 75, 70 85 T85 95 Q75 105, 65 95 T55 85" fill="#39ff14" opacity="0.5" filter="url(#glow-copilot)" />
-                                
-                                <!-- Binary data floating near satellite -->
-                                <text x="115" y="65" font-family="monospace" font-size="6" fill="#ffff00" filter="url(#glow-yellow)" opacity="0.8">01101</text>
-                                <text x="115" y="90" font-family="monospace" font-size="6" fill="#ffff00" filter="url(#glow-yellow)" opacity="0.8">10011</text>
-                            </svg>
-                        </div>
-                        
-                        <div class="tool-description">
-                            <p>由 GitHub 和 OpenAI 合作开发，基于大量公开代码库训练，可以提供实时代码建议，极大加速编程过程。Copilot 能理解您的编码意图，并提供智能化的代码片段和完整功能实现。</p>
-                        </div>
-                        
-                        <div class="code-block">
-                            <span class="comment">// 描述意图，Copilot 自动生成</span><br>
-                            <span class="comment">// 获取用户位置并计算与目标地点距离</span><br>
-                            <span class="keyword">async function</span> getUserDistance(targetLat, targetLng) {<br>
-                            &nbsp;&nbsp;<span class="keyword">const</span> position = <span class="keyword">await</span> getCurrentPosition();<br>
-                            &nbsp;&nbsp;<span class="keyword">const</span> distance = calculateDistance(<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;position.coords.latitude,<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;position.coords.longitude,<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;targetLat, targetLng<br>
-                            &nbsp;&nbsp;);<br>
-                            &nbsp;&nbsp;<span class="keyword">return</span> distance;<br>
-                            }
-                        </div>
-                    </div>
-                    
-                    <p><a href="https://github.com/features/copilot" class="neon-link" target="_blank">了解 GitHub Copilot</a></p>
+                    <ul class="step-list">
+                        <li class="step-item">访问官方网站 <a href="https://www.cursor.com/en" class="link" target="_blank">Cursor.com</a> 下载安装包</li>
+                        <li class="step-item">运行安装程序，选择适合你的操作系统（支持 Windows、macOS 和 Linux）</li>
+                        <li class="step-item">安装完成后，创建或登录你的 Cursor 账户</li>
+                        <li class="step-item">导入你现有的 VS Code 扩展、主题和快捷键设置</li>
+                        <li class="step-item">浏览界面，熟悉 Cursor 特有的 AI 功能区域</li>
+                    </ul>
                 </div>
             </div>
         </section>
         
         <section class="content-section">
-            <h2 class="section-title">关键特性与优势</h2>
-            <div class="features-container">
-                <div class="feature-box">
-                    <div class="feature-icon">
-                        <svg width="80" height="80" viewBox="0 0 80 80">
-                            <defs>
-                                <filter id="glow-feature1">
-                                    <feGaussianBlur stdDeviation="2" result="blur" />
-                                    <feFlood flood-color="#ff073a" flood-opacity="0.8" result="glow" />
-                                    <feComposite in="glow" in2="blur" operator="in" result="coloredBlur" />
-                                    <feMerge>
-                                        <feMergeNode in="coloredBlur" />
-                                        <feMergeNode in="SourceGraphic" />
-                                    </feMerge>
-                                </filter>
-                            </defs>
+            <div class="hand-drawn-card">
+                <h2 class="section-title">基础使用</h2>
+                <div class="section-content">
+                    <h3 class="feature-title">代码补全和智能建议</h3>
+                    
+                    <div class="visual-container">
+                        <svg width="360" height="240" viewBox="0 0 360 240">
+                            <!-- 代码编辑器界面 -->
+                            <rect x="20" y="20" width="320" height="200" rx="8" fill="white" stroke="black" stroke-width="4"/>
                             
-                            <!-- Fast rocket icon -->
-                            <path d="M40 10 L50 30 L60 70 L40 60 L20 70 L30 30 Z" fill="none" stroke="#ff073a" stroke-width="2" filter="url(#glow-feature1)" />
-                            <circle cx="40" cy="35" r="5" fill="none" stroke="#ff073a" stroke-width="2" />
+                            <!-- 编辑器标题栏 -->
+                            <rect x="20" y="20" width="320" height="30" rx="8" fill="#000000" stroke="black" stroke-width="4"/>
+                            <text x="35" y="40" font-family="Arial" font-size="14" fill="white">app.js</text>
                             
-                            <!-- Rocket flame -->
-                            <path d="M35 70 Q40 80, 45 70" fill="none" stroke="#ffff00" stroke-width="2" filter="url(#glow-yellow)">
-                                <animate attributeName="d" values="M35 70 Q40 80, 45 70; M35 70 Q40 85, 45 70; M35 70 Q40 80, 45 70" dur="0.5s" repeatCount="indefinite" />
-                            </path>
+                            <!-- 代码区域 -->
+                            <rect x="30" y="60" width="300" height="150" fill="#f5f5f5" stroke="black" stroke-width="2"/>
+                            
+                            <!-- 代码文本 -->
+                            <text x="40" y="80" font-family="monospace" font-size="12" fill="black">function calculateTotal(items) {</text>
+                            <text x="40" y="100" font-family="monospace" font-size="12" fill="black">  let total = 0;</text>
+                            <text x="40" y="120" font-family="monospace" font-size="12" fill="black">  for (const item of items) {</text>
+                            <text x="40" y="140" font-family="monospace" font-size="12" fill="black">    total += item.pr</text>
+                            
+                            <!-- 代码建议框 -->
+                            <rect x="120" y="145" width="150" height="55" rx="5" fill="#ffde00" stroke="black" stroke-width="2"/>
+                            <text x="130" y="165" font-family="monospace" font-size="12" font-weight="bold" fill="black">price</text>
+                            <text x="130" y="185" font-family="monospace" font-size="12" fill="#444">priceWithTax</text>
+                            
+                            <!-- Tab 键提示 -->
+                            <rect x="230" y="155" width="30" height="20" rx="3" fill="white" stroke="black" stroke-width="1"/>
+                            <text x="236" y="170" font-family="Arial" font-size="10" font-weight="bold">TAB</text>
+                            
+                            <!-- 智能指示器 -->
+                            <circle cx="300" cy="40" r="10" fill="#ffde00" stroke="black" stroke-width="2"/>
+                            <text x="296" y="45" font-family="Arial" font-size="14" font-weight="bold" fill="black">AI</text>
+                            
+                            <!-- 缝线装饰 -->
+                            <path d="M40 52 L45 52" stroke="black" stroke-width="2"/>
+                            <path d="M60 52 L65 52" stroke="black" stroke-width="2"/>
+                            <path d="M80 52 L85 52" stroke="black" stroke-width="2"/>
+                            <path d="M100 52 L105 52" stroke="black" stroke-width="2"/>
+                            <path d="M120 52 L125 52" stroke="black" stroke-width="2"/>
+                            <path d="M140 52 L145 52" stroke="black" stroke-width="2"/>
+                            <path d="M160 52 L165 52" stroke="black" stroke-width="2"/>
+                            <path d="M180 52 L185 52" stroke="black" stroke-width="2"/>
+                            <path d="M200 52 L205 52" stroke="black" stroke-width="2"/>
+                            <path d="M220 52 L225 52" stroke="black" stroke-width="2"/>
+                            <path d="M240 52 L245 52" stroke="black" stroke-width="2"/>
+                            <path d="M260 52 L265 52" stroke="black" stroke-width="2"/>
+                            <path d="M280 52 L285 52" stroke="black" stroke-width="2"/>
+                            <path d="M300 52 L305 52" stroke="black" stroke-width="2"/>
                         </svg>
                     </div>
-                    <h3 class="feature-title">提高开发速度</h3>
-                    <p>AI 工具能减少重复性编码工作，自动生成代码框架和常用功能，让开发者专注于更具创造性的任务，将开发速度提高 30-50%。</p>
-                </div>
-                
-                <div class="feature-box">
-                    <div class="feature-icon">
-                        <svg width="80" height="80" viewBox="0 0 80 80">
-                            <defs>
-                                <filter id="glow-feature2">
-                                    <feGaussianBlur stdDeviation="2" result="blur" />
-                                    <feFlood flood-color="#ff073a" flood-opacity="0.8" result="glow" />
-                                    <feComposite in="glow" in2="blur" operator="in" result="coloredBlur" />
-                                    <feMerge>
-                                        <feMergeNode in="coloredBlur" />
-                                        <feMergeNode in="SourceGraphic" />
-                                    </feMerge>
-                                </filter>
-                            </defs>
-                            
-                            <!-- Bug with X -->
-                            <circle cx="40" cy="40" r="20" fill="none" stroke="#ff073a" stroke-width="2" filter="url(#glow-feature2)" />
-                            <circle cx="30" cy="30" r="5" fill="#ff073a" filter="url(#glow-feature2)" />
-                            <circle cx="50" cy="30" r="5" fill="#ff073a" filter="url(#glow-feature2)" />
-                            
-                            <path d="M30 50 Q40 45, 50 50" fill="none" stroke="#ff073a" stroke-width="2" />
-                            
-                            <!-- Legs -->
-                            <line x1="25" y1="45" x2="20" y2="55" stroke="#ff073a" stroke-width="2" />
-                            <line x1="35" y1="55" x2="30" y2="65" stroke="#ff073a" stroke-width="2" />
-                            <line x1="45" y1="55" x2="50" y2="65" stroke="#ff073a" stroke-width="2" />
-                            <line x1="55" y1="45" x2="60" y2="55" stroke="#ff073a" stroke-width="2" />
-                            
-                            <!-- X mark -->
-                            <line x1="25" y1="25" x2="55" y2="55" stroke="#ffff00" stroke-width="3" filter="url(#glow-yellow)" />
-                            <line x1="55" y1="25" x2="25" y2="55" stroke="#ffff00" stroke-width="3" filter="url(#glow-yellow)" />
-                        </svg>
+                    
+                    <div class="feature-content">
+                        <p>当你在 Cursor 中编写代码时，AI 会实时提供智能补全：</p>
+                        
+                        <ul class="step-list">
+                            <li class="step-item">开始输入代码，Cursor AI 会根据上下文自动显示补全建议</li>
+                            <li class="step-item">按下 <span class="key-command">Tab</span> 键接受建议并继续编码</li>
+                            <li class="step-item">使用聊天功能 <span class="key-command">Ctrl+Enter</span> 向 AI 提问代码相关问题</li>
+                            <li class="step-item">可以询问如"这个函数的作用是什么？"或"如何优化这段代码？"</li>
+                            <li class="step-item">Cursor 会根据你的代码库上下文提供相关建议</li>
+                        </ul>
                     </div>
-                    <h3 class="feature-title">减少错误率</h3>
-                    <p>AI 辅助工具能够识别可能的代码错误和漏洞，提供最佳实践建议，确保代码质量和安全性，减少 bug 修复时间，提高程序稳定性。</p>
-                </div>
-                
-                <div class="feature-box">
-                    <div class="feature-icon">
-                        <svg width="80" height="80" viewBox="0 0 80 80">
-                            <defs>
-                                <filter id="glow-feature3">
-                                    <feGaussianBlur stdDeviation="2" result="blur" />
-                                    <feFlood flood-color="#ff073a" flood-opacity="0.8" result="glow" />
-                                    <feComposite in="glow" in2="blur" operator="in" result="coloredBlur" />
-                                    <feMerge>
-                                        <feMergeNode in="coloredBlur" />
-                                        <feMergeNode in="SourceGraphic" />
-                                    </feMerge>
-                                </filter>
-                            </defs>
-                            
-                            <!-- Learning curve -->
-                            <path d="M20 60 C30 60, 30 20, 60 20" fill="none" stroke="#ff073a" stroke-width="2" filter="url(#glow-feature3)" />
-                            <path d="M20 60 L20 20 L60 20" fill="none" stroke="#ff073a" stroke-width="1" stroke-dasharray="3,3" />
-                            
-                            <!-- Arrow tip -->
-                            <path d="M60 20 L55 15 M60 20 L55 25" fill="none" stroke="#ff073a" stroke-width="2" />
-                            
-                            <!-- Graduation cap -->
-                            <rect x="35" y="35" width="15" height="10" fill="none" stroke="#ffff00" stroke-width="2" filter="url(#glow-yellow)" />
-                            <path d="M32 35 L53 35" fill="none" stroke="#ffff00" stroke-width="2" filter="url(#glow-yellow)" />
-                            <path d="M42.5 35 L42.5 30" fill="none" stroke="#ffff00" stroke-width="2" filter="url(#glow-yellow)" />
-                            <rect x="37.5" y="25" width="10" height="5" fill="none" stroke="#ffff00" stroke-width="2" filter="url(#glow-yellow)" />
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">降低学习门槛</h3>
-                    <p>通过实时建议和示例代码，帮助初学者更快掌握编程语言和框架，提供上下文相关的文档和解释，让编程更易于学习和掌握。</p>
-                </div>
-                
-                <div class="feature-box">
-                    <div class="feature-icon">
-                        <svg width="80" height="80" viewBox="0 0 80 80">
-                            <defs>
-                                <filter id="glow-feature4">
-                                    <feGaussianBlur stdDeviation="2" result="blur" />
-                                    <feFlood flood-color="#ff073a" flood-opacity="0.8" result="glow" />
-                                    <feComposite in="glow" in2="blur" operator="in" result="coloredBlur" />
-                                    <feMerge>
-                                        <feMergeNode in="coloredBlur" />
-                                        <feMergeNode in="SourceGraphic" />
-                                    </feMerge>
-                                </filter>
-                            </defs>
-                            
-                            <!-- Refresh icon with code -->
-                            <circle cx="40" cy="40" r="20" fill="none" stroke="#ff073a" stroke-width="2" filter="url(#glow-feature4)" />
-                            
-                            <!-- Arrow path -->
-                            <path d="M40 25 A15 15 0 1 1 25 40" fill="none" stroke="#ff073a" stroke-width="2" filter="url(#glow-feature4)" />
-                            <path d="M25 35 L25 45 L35 45" fill="none" stroke="#ff073a" stroke-width="2" />
-                            
-                            <!-- Code symbol -->
-                            <text x="35" y="45" font-family="monospace" font-size="15" fill="#ffff00" filter="url(#glow-yellow)">{}</text>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">代码重构与优化</h3>
-                    <p>AI 能够分析现有代码并提出优化建议，自动重构复杂代码以提高可读性和性能，帮助维护和更新遗留代码库。</p>
                 </div>
             </div>
         </section>
         
-        <div class="retro-grid"></div>
-    </div>
-    
-    <script>
-        // 添加浮动动画效果
-        document.addEventListener('DOMContentLoaded', function() {
-            const toolCards = document.querySelectorAll('.tool-card');
-            toolCards.forEach((card, index) => {
-                card.style.animation = `float 3s ease-in-out ${index * 0.5}s infinite`;
+        <section class="content-section">
+            <div class="hand-drawn-card">
+                <h2 class="section-title">高级功能</h2>
+                <div class="section-content">
+                    <div class="feature-box">
+                        <div class="feature-card">
+                            <h3 class="feature-title">自然语言代码生成</h3>
+                            <div class="visual-container">
+                                <svg width="280" height="180" viewBox="0 0 280 180">
+                                    <!-- 命令输入框 -->
+                                    <rect x="20" y="20" width="240" height="40" rx="20" fill="white" stroke="black" stroke-width="3"/>
+                                    <text x="40" y="45" font-family="monospace" font-size="14" fill="#666">生成一个 SwiftUI 登录表单</text>
+                                    
+                                    <!-- 键盘快捷键 -->
+                                    <rect x="20" y="70" width="110" height="30" rx="5" fill="#ffde00" stroke="black" stroke-width="2"/>
+                                    <text x="30" y="90" font-family="Arial" font-size="12" font-weight="bold" fill="black">CMD+K 或 CTRL+K</text>
+                                    
+                                    <rect x="150" y="70" width="110" height="30" rx="5" fill="#ffde00" stroke="black" stroke-width="2"/>
+                                    <text x="185" y="90" font-family="Arial" font-size="12" font-weight="bold" fill="black">/ 命令</text>
+                                    
+                                    <!-- 箭头指示 -->
+                                    <path d="M140 110 L140 140" stroke="black" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+                                    
+                                    <!-- 生成的代码示意 -->
+                                    <rect x="40" y="140" width="200" height="30" fill="#f5f5f5" stroke="black" stroke-width="2"/>
+                                    <text x="50" y="160" font-family="monospace" font-size="10" fill="#333">struct LoginView: View { ... }</text>
+                                    
+                                    <!-- 装饰元素 -->
+                                    <circle cx="260" cy="30" r="5" fill="#ffde00" stroke="black" stroke-width="1"/>
+                                    <circle cx="260" cy="40" r="5" fill="#ffde00" stroke="black" stroke-width="1"/>
+                                    <circle cx="260" cy="50" r="5" fill="#ffde00" stroke="black" stroke-width="1"/>
+                                    
+                                    <defs>
+                                        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" 
+                                                markerWidth="6" markerHeight="6" orient="auto">
+                                            <path d="M 0 0 L 10 5 L 0 10 z" fill="black"/>
+                                        </marker>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <div class="feature-content">
+                                <p>使用自然语言描述你需要的代码功能：</p>
+                                <ul class="step-list">
+                                    <li class="step-item">通过 <span class="key-command">/</span> 命令或快捷键 <span class="key-command">Cmd/Ctrl+K</span> 激活 AI</li>
+                                    <li class="step-item">用自然语言描述你的需求，例如"创建一个用户注册表单"</li>
+                                    <li class="step-item">Cursor 将生成完整可用的代码，包括必要的导入和功能实现</li>
+                                    <li class="step-item">直接在生成的代码上继续修改和完善</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <h3 class="feature-title">代码库智能聊天</h3>
+                            <div class="visual-container">
+                                <svg width="280" height="200" viewBox="0 0 280 200">
+                                    <!-- 代码库结构 -->
+                                    <rect x="20" y="20" width="100" height="160" rx="5" fill="white" stroke="black" stroke-width="3"/>
+                                    <text x="30" y="40" font-family="Arial" font-size="12" font-weight="bold" fill="black">项目结构</text>
+                                    <text x="30" y="60" font-family="monospace" font-size="10" fill="#333">├── src/</text>
+                                    <text x="30" y="75" font-family="monospace" font-size="10" fill="#333">│   ├── components/</text>
+                                    <text x="30" y="90" font-family="monospace" font-size="10" fill="#333">│   ├── utils/</text>
+                                    <text x="30" y="105" font-family="monospace" font-size="10" fill="#333">│   └── app.js</text>
+                                    <text x="30" y="120" font-family="monospace" font-size="10" fill="#333">├── tests/</text>
+                                    <text x="30" y="135" font-family="monospace" font-size="10" fill="#333">└── README.md</text>
+                                    
+                                    <!-- 聊天界面 -->
+                                    <rect x="130" y="20" width="130" height="160" rx="5" fill="#f5f5f5" stroke="black" stroke-width="3"/>
+                                    <text x="140" y="40" font-family="Arial" font-size="12" font-weight="bold" fill="black">@codebase 查询</text>
+                                    <rect x="140" y="50" width="110" height="40" rx="10" fill="#ffde00" stroke="black" stroke-width="2"/>
+                                    <text x="150" y="70" font-family="Arial" font-size="10" fill="black">导航功能在哪个文件？</text>
+                                    
+                                    <rect x="140" y="100" width="110" height="70" rx="10" fill="white" stroke="black" stroke-width="2"/>
+                                    <text x="150" y="120" font-family="Arial" font-size="10" fill="#333">导航功能在</text>
+                                    <rect x="150" y="125" width="90" height="15" rx="3" fill="#b9c42a" stroke="black" stroke-width="1"/>
+                                    <text x="155" y="136" font-family="monospace" font-size="8" fill="black">src/components/Nav.js</text>
+                                    <text x="150" y="155" font-family="Arial" font-size="10" fill="#333">点击可查看具体实现</text>
+                                    
+                                    <!-- 连接线 -->
+                                    <path d="M95 75 L130 70" stroke="black" stroke-width="2" stroke-dasharray="5,3"/>
+                                    
+                                    <!-- 快捷键提示 -->
+                                    <rect x="140" y="180" width="110" height="20" rx="5" fill="#ffde00" stroke="black" stroke-width="2"/>
+                                    <text x="155" y="194" font-family="Arial" font-size="10" font-weight="bold" fill="black">Cmd/Ctrl+L 解释代码</text>
+                                </svg>
+                            </div>
+                            <div class="feature-content">
+                                <p>与你的整个代码库进行对话：</p>
+                                <ul class="step-list">
+                                    <li class="step-item">使用 <span class="key-command">@codebase</span> 命令查询整个项目</li>
+                                    <li class="step-item">询问"在哪里定义了用户认证函数？"等问题</li>
+                                    <li class="step-item">点击 AI 回答中的代码框可直接跳转到相关文件</li>
+                                    <li class="step-item">选中特定代码后使用 <span class="key-command">Cmd/Ctrl+L</span> 请求解释</li>
+                                    <li class="step-item">AI 会根据整个代码库的上下文提供相关信息</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 添加更多的缝线装饰效果 -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const cards = document.querySelectorAll('.hand-drawn-card');
+                
+                cards.forEach(card => {
+                    // 添加顶部缝线
+                    for (let i = 0; i < 20; i++) {
+                        const stitch = document.createElement('div');
+                        stitch.classList.add('stitch');
+                        stitch.style.top = '5px';
+                        stitch.style.left = (20 + i * 20) + 'px';
+                        card.appendChild(stitch);
+                    }
+                    
+                    // 添加右侧缝线
+                    for (let i = 0; i < 15; i++) {
+                        const stitch = document.createElement('div');
+                        stitch.classList.add('stitch');
+                        stitch.style.right = '5px';
+                        stitch.style.top = (20 + i * 20) + 'px';
+                        stitch.style.transform = 'rotate(90deg)';
+                        card.appendChild(stitch);
+                    }
+                    
+                    // 添加底部缝线
+                    for (let i = 0; i < 20; i++) {
+                        const stitch = document.createElement('div');
+                        stitch.classList.add('stitch');
+                        stitch.style.bottom = '5px';
+                        stitch.style.right = (20 + i * 20) + 'px';
+                        card.appendChild(stitch);
+                    }
+                    
+                    // 添加左侧缝线
+                    for (let i = 0; i < 15; i++) {
+                        const stitch = document.createElement('div');
+                        stitch.classList.add('stitch');
+                        stitch.style.left = '5px';
+                        stitch.style.bottom = (20 + i * 20) + 'px';
+                        stitch.style.transform = 'rotate(90deg)';
+                        card.appendChild(stitch);
+                    }
+                });
             });
-        });
-    </script>
+        </script>
+    </div>
 </body>
 </html>
