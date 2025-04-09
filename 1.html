@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CURSOR AI 编程助手入门指南</title>
+    <title>AI 编程互动模式</title>
     <style>
         
         :root {
-            --olive: #b9c42a;
-            --lemon: #ffde00;
-            --black: #000000;
-            --white: #ffffff;
+            --mint: #64ffda;
+            --pink: #ff55a3;
+            --yellow: #ffdf00;
+            --deep-blue: #0a1128;
+            --light-blue: #094074;
         }
         
         * {
@@ -20,584 +21,488 @@
         }
         
         body {
-            font-family: 'Rubik', sans-serif;
-            background-color: var(--olive);
-            color: var(--black);
-            line-height: 1.6;
-            padding: 20px;
-            font-weight: 900;
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: var(--deep-blue);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise' x='0%25' y='0%25' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeBlend mode='overlay' in='SourceGraphic'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.15'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
             position: relative;
-            overflow: hidden;
+            z-index: 2;
         }
         
-        .hand-drawn-card {
-            background: var(--lemon);
-            border: 3px solid var(--black);
-            border-radius: 15px;
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin: 20px 0;
+            background: linear-gradient(90deg, var(--mint), var(--pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(100, 255, 218, 0.5), 0 0 20px rgba(255, 85, 163, 0.3);
+            position: relative;
+            display: inline-block;
+            font-weight: bold;
+            letter-spacing: 2px;
+            filter: drop-shadow(0 0 5px var(--mint));
+        }
+        
+        .pixel-border {
+            border: 4px solid var(--mint);
+            border-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 L100,0 L100,10 L90,10 L90,20 L100,20 L100,80 L90,80 L90,90 L100,90 L100,100 L0,100 L0,90 L10,90 L10,80 L0,80 L0,20 L10,20 L10,10 L0,10 Z' fill='%2364ffda'/%3E%3C/svg%3E") 20;
+            position: relative;
             padding: 25px;
-            margin: 30px 0;
-            position: relative;
-            box-shadow: 8px 8px 0 rgba(0,0,0,0.8);
-            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.5);
+            background-color: rgba(10, 17, 40, 0.7);
         }
         
-        .hand-drawn-card::before {
+        .pixel-border::before {
             content: "";
             position: absolute;
-            top: 5px;
-            left: 10px;
-            right: 10px;
-            bottom: 5px;
-            border: 2px dashed var(--black);
-            border-radius: 10px;
-            opacity: 0.2;
-            pointer-events: none;
+            top: -10px;
+            left: 20px;
+            width: 60%;
+            height: 5px;
+            background: var(--yellow);
+            box-shadow: 0 0 10px var(--yellow);
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+            animation: glow 4s infinite alternate;
         }
         
-        /* 缝线装饰 */
-        .stitch {
-            position: absolute;
-            width: 10px;
-            height: 2px;
-            background-color: var(--black);
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
         }
         
-        .hand-drawn-card::after {
+        .interaction-card {
+            position: relative;
+            padding: 25px;
+            border-radius: 5px;
+            background: linear-gradient(135deg, rgba(9, 64, 116, 0.8), rgba(10, 17, 40, 0.9));
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.2);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .interaction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(100, 255, 218, 0.4);
+        }
+        
+        .interaction-card::before {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            height: 10px;
-            background: repeating-linear-gradient(90deg, 
-                transparent, transparent 10px, 
-                var(--black) 10px, var(--black) 12px);
-            opacity: 0.2;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--pink), var(--mint));
         }
         
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            position: relative;
-        }
-        
-        .title {
-            font-size: 3rem;
-            color: var(--black);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            line-height: 1.1;
-            padding: 15px;
-            position: relative;
-            background: var(--lemon);
-            border: 4px solid var(--black);
-            border-radius: 10px;
-            display: inline-block;
-            box-shadow: 8px 8px 0 rgba(0,0,0,0.5);
-            transform: rotate(-2deg);
-            z-index: 1;
-            text-shadow: 
-                2px 2px 0 var(--white),
-                -2px -2px 0 var(--white),
-                2px -2px 0 var(--white),
-                -2px 2px 0 var(--white);
-        }
-        
-        .subtitle {
+        .interaction-card h3 {
+            color: var(--mint);
             font-size: 1.8rem;
-            color: var(--white);
-            text-transform: uppercase;
-            margin-top: -10px;
-            background: var(--black);
-            padding: 5px 20px;
-            display: inline-block;
-            border-radius: 5px;
-            transform: rotate(2deg);
-            position: relative;
-            z-index: 0;
-        }
-        
-        .content-section {
-            margin-bottom: 40px;
-        }
-        
-        .section-title {
-            font-size: 2.2rem;
-            color: var(--black);
             margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: inline-block;
-            background: var(--lemon);
-            padding: 8px 15px;
-            border: 3px solid var(--black);
-            border-radius: 8px;
-            box-shadow: 5px 5px 0 rgba(0,0,0,0.5);
-            text-shadow: 1px 1px 0 var(--white);
-            transform: rotate(-1deg);
-            position: relative;
-            z-index: 1;
-        }
-        
-        .section-content {
-            font-size: 1.2rem;
-            position: relative;
-            z-index: 0;
-        }
-        
-        .feature-box {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-top: 30px;
-        }
-        
-        .feature-card {
-            flex: 1 1 350px;
-            background: var(--white);
-            border: 3px solid var(--black);
-            border-radius: 10px;
-            padding: 20px;
-            position: relative;
-            box-shadow: 6px 6px 0 rgba(0,0,0,0.6);
-        }
-        
-        .feature-title {
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            color: var(--black);
-            margin-bottom: 15px;
-            border-bottom: 3px dashed var(--black);
-            padding-bottom: 10px;
-            letter-spacing: 1px;
-        }
-        
-        .feature-content {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .code-block {
-            background: var(--black);
-            color: var(--lemon);
-            border-radius: 5px;
-            padding: 15px;
-            font-family: monospace;
-            font-weight: 500;
-            white-space: pre-wrap;
-            margin: 10px 0;
-            position: relative;
-        }
-        
-        .code-block::before {
-            content: "CODE";
-            position: absolute;
-            top: -10px;
-            right: 10px;
-            background: var(--lemon);
-            color: var(--black);
-            padding: 2px 8px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            border-radius: 3px;
-            border: 2px solid var(--black);
-        }
-        
-        .step-list {
-            list-style-type: none;
-            padding: 0;
-            counter-reset: steps;
-        }
-        
-        .step-item {
-            position: relative;
-            padding-left: 50px;
-            margin-bottom: 15px;
-            min-height: 40px;
+            text-shadow: 0 0 5px rgba(100, 255, 218, 0.7);
             display: flex;
             align-items: center;
         }
         
-        .step-item::before {
-            counter-increment: steps;
-            content: counter(steps);
+        .interaction-card h3 svg {
+            margin-right: 10px;
+        }
+        
+        .example-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .example-item {
+            margin-bottom: 15px;
+            padding: 12px;
+            background-color: rgba(10, 17, 40, 0.7);
+            border-left: 3px solid var(--pink);
+            box-shadow: 0 0 8px rgba(255, 85, 163, 0.3);
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .example-item::before {
+            content: ">";
+            color: var(--pink);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .svg-container {
+            margin: 20px 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .stars {
             position: absolute;
+            top: 0;
             left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            background-color: var(--lemon);
-            border: 3px solid var(--black);
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            font-weight: bold;
-            box-shadow: 3px 3px 0 rgba(0,0,0,0.5);
+            filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.8));
+            animation: twinkle var(--duration) infinite ease-in-out;
+            opacity: var(--opacity);
         }
         
-        .visual-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 30px 0;
+        @keyframes twinkle {
+            0%, 100% { opacity: var(--opacity); }
+            50% { opacity: var(--opacity) * 0.3; }
         }
         
-        .key-command {
-            background: var(--black);
-            color: var(--lemon);
-            padding: 3px 8px;
-            border-radius: 5px;
-            margin: 0 3px;
-            display: inline-block;
-            font-family: monospace;
-            font-weight: 700;
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
         }
         
-        .link {
-            color: var(--black);
-            text-decoration: underline;
-            font-weight: bold;
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px var(--yellow); }
+            100% { box-shadow: 0 0 20px var(--yellow); }
+        }
+        
+        @keyframes typing {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .svg-container {
+                transform: scale(0.8);
+            }
+        }
+        
+        .info-box {
             position: relative;
-            transition: all 0.3s;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(9, 64, 116, 0.4);
+            border-left: 3px solid var(--yellow);
+            font-size: 0.9rem;
         }
         
-        .link:hover {
-            transform: scale(1.05);
+        .info-box::before {
+            content: "💡";
+            margin-right: 10px;
         }
         
-        .link::after {
-            content: "→";
-            margin-left: 4px;
+        .glitch-effect {
+            animation: glitch 5s infinite;
+            position: relative;
         }
         
-        /* 生成缝线效果 */
-        @media (min-width: 768px) {
-            .hand-drawn-card {
-                padding: 35px;
-            }
-            
-            .title {
-                font-size: 3.5rem;
-            }
-            
-            .subtitle {
-                font-size: 2rem;
-            }
+        @keyframes glitch {
+            0%, 90%, 100% { transform: translate(0, 0); filter: hue-rotate(0deg); }
+            92% { transform: translate(-5px, 3px); filter: hue-rotate(90deg); }
+            94% { transform: translate(5px, -3px); filter: hue-rotate(180deg); }
+            96% { transform: translate(-3px, -5px); filter: hue-rotate(270deg); }
+            98% { transform: translate(3px, 5px); filter: hue-rotate(360deg); }
         }
         
-        @media (max-width: 767px) {
-            .hand-drawn-card {
-                padding: 20px;
-            }
-            
-            .title {
-                font-size: 2rem;
-                padding: 10px;
-            }
-            
-            .subtitle {
-                font-size: 1.2rem;
-            }
-            
-            .section-title {
-                font-size: 1.8rem;
-            }
-            
-            .feature-card {
-                flex: 1 1 100%;
-            }
+        .handwritten {
+            font-family: 'Noto Sans SC', cursive;
+            transform: rotate(-2deg);
+            color: var(--yellow);
+            font-size: 1.2rem;
+            margin: 20px 0;
+            text-align: center;
+            text-shadow: 0 0 5px var(--yellow);
         }
     </style>
 </head>
 <body>
+    <div class="stars"></div>
     <div class="container">
-        <div class="header">
-            <h1 class="title">CURSOR AI</h1>
-            <div class="subtitle">编程助手入门指南</div>
-        </div>
+        <header>
+            <h1 class="glitch-effect">AI 编程交互方式</h1>
+            <p class="handwritten">解锁 AI 辅助编程的高效互动模式</p>
+        </header>
         
-        <section class="content-section">
-            <div class="hand-drawn-card">
-                <h2 class="section-title">安装步骤</h2>
-                <div class="section-content">
-                    <div class="visual-container">
-                        <svg width="320" height="220" viewBox="0 0 320 220">
-                            <!-- 电脑图标 -->
-                            <rect x="60" y="30" width="200" height="120" rx="5" fill="white" stroke="black" stroke-width="4"/>
-                            <rect x="100" y="150" width="120" height="10" fill="white" stroke="black" stroke-width="4"/>
-                            <rect x="140" y="160" width="40" height="30" fill="white" stroke="black" stroke-width="4"/>
-                            <rect x="80" y="50" width="160" height="80" rx="2" fill="#b9c42a" stroke="black" stroke-width="2"/>
-                            
-                            <!-- 下载图标 -->
-                            <circle cx="160" cy="90" r="25" fill="#ffde00" stroke="black" stroke-width="3"/>
-                            <path d="M160 70 L160 100" stroke="black" stroke-width="4" stroke-linecap="round"/>
-                            <path d="M145 90 L160 105 L175 90" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                            
-                            <!-- Windows, Mac, Linux图标 -->
-                            <rect x="60" y="190" width="60" height="20" rx="5" fill="#ffde00" stroke="black" stroke-width="2"/>
-                            <text x="66" y="205" font-family="Arial" font-size="12" font-weight="bold">WINDOWS</text>
-                            
-                            <rect x="130" y="190" width="60" height="20" rx="5" fill="#ffde00" stroke="black" stroke-width="2"/>
-                            <text x="144" y="205" font-family="Arial" font-size="12" font-weight="bold">MAC</text>
-                            
-                            <rect x="200" y="190" width="60" height="20" rx="5" fill="#ffde00" stroke="black" stroke-width="2"/>
-                            <text x="212" y="205" font-family="Arial" font-size="12" font-weight="bold">LINUX</text>
-                            
-                            <!-- 连接线 -->
-                            <path d="M160 115 L160 140" stroke="black" stroke-width="2" stroke-dasharray="5,3"/>
-                            <path d="M160 140 L90 190" stroke="black" stroke-width="2" stroke-dasharray="5,3"/>
-                            <path d="M160 140 L160 190" stroke="black" stroke-width="2" stroke-dasharray="5,3"/>
-                            <path d="M160 140 L230 190" stroke="black" stroke-width="2" stroke-dasharray="5,3"/>
-                            
-                            <!-- 缝线装饰 -->
-                            <path d="M80 35 L85 35" stroke="black" stroke-width="2"/>
-                            <path d="M100 35 L105 35" stroke="black" stroke-width="2"/>
-                            <path d="M120 35 L125 35" stroke="black" stroke-width="2"/>
-                            <path d="M140 35 L145 35" stroke="black" stroke-width="2"/>
-                            <path d="M180 35 L185 35" stroke="black" stroke-width="2"/>
-                            <path d="M200 35 L205 35" stroke="black" stroke-width="2"/>
-                            <path d="M220 35 L225 35" stroke="black" stroke-width="2"/>
-                            <path d="M240 35 L245 35" stroke="black" stroke-width="2"/>
+        <div class="pixel-border">
+            <div class="grid-container">
+                <!-- 针对性提问 -->
+                <div class="interaction-card">
+                    <h3>
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#64ffda" stroke-width="2"/>
+                            <path d="M10 9C10 7.89543 10.8954 7 12 7C13.1046 7 14 7.89543 14 9C14 10.1046 13.1046 11 12 11V13" stroke="#64ffda" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M12 16V16.01" stroke="#64ffda" stroke-width="2" stroke-linecap="round"/>
                         </svg>
-                    </div>
+                        针对性提问
+                    </h3>
                     
-                    <ul class="step-list">
-                        <li class="step-item">访问官方网站 <a href="https://www.cursor.com/en" class="link" target="_blank">Cursor.com</a> 下载安装包</li>
-                        <li class="step-item">运行安装程序，选择适合你的操作系统（支持 Windows、macOS 和 Linux）</li>
-                        <li class="step-item">安装完成后，创建或登录你的 Cursor 账户</li>
-                        <li class="step-item">导入你现有的 VS Code 扩展、主题和快捷键设置</li>
-                        <li class="step-item">浏览界面，熟悉 Cursor 特有的 AI 功能区域</li>
+                    <svg class="svg-container" width="100%" height="140" viewBox="0 0 300 140" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <filter id="glow1">
+                                <feGaussianBlur stdDeviation="2" result="blur"/>
+                                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                            </filter>
+                        </defs>
+                        
+                        <!-- 人物 -->
+                        <g transform="translate(40,40)">
+                            <circle cx="0" cy="0" r="20" fill="#ff55a3" filter="url(#glow1)"/>
+                            <text x="0" y="5" font-size="20" fill="white" text-anchor="middle">👩‍💻</text>
+                        </g>
+                        
+                        <!-- AI -->
+                        <g transform="translate(220,40)">
+                            <circle cx="0" cy="0" r="25" fill="#64ffda" filter="url(#glow1)"/>
+                            <text x="0" y="5" font-size="20" fill="white" text-anchor="middle">🤖</text>
+                        </g>
+                        
+                        <!-- 对话框和箭头 -->
+                        <g transform="translate(40,80)">
+                            <rect x="0" y="0" width="100" height="30" rx="5" fill="rgba(255,85,163,0.3)" stroke="#ff55a3" stroke-width="2"/>
+                            <text x="50" y="20" font-size="12" fill="white" text-anchor="middle">如何实现分页？</text>
+                        </g>
+                        
+                        <path d="M150,85 L200,85" stroke="#ffdf00" stroke-width="2" stroke-dasharray="5,3">
+                            <animate attributeName="stroke-dashoffset" from="8" to="0" dur="1s" repeatCount="indefinite"/>
+                        </path>
+                        <polygon points="200,85 190,80 190,90" fill="#ffdf00"/>
+                        
+                        <g transform="translate(220,90)">
+                            <rect x="-70" y="0" width="140" height="50" rx="5" fill="rgba(100,255,218,0.3)" stroke="#64ffda" stroke-width="2"/>
+                            <text x="0" y="20" font-size="10" fill="white" text-anchor="middle">可以使用这段代码来实现分页：</text>
+                            <text x="0" y="40" font-size="10" fill="#ffdf00" text-anchor="middle">function paginate(items, page, perPage)...</text>
+                        </g>
+                    </svg>
+                    
+                    <ul class="example-list">
+                        <li class="example-item">如何在这段代码中实现分页功能？</li>
+                        <li class="example-item">这个函数为什么会抛出空指针异常？</li>
+                        <li class="example-item">如何优化这个 SQL 查询提高性能？</li>
+                        <li class="example-item">这段代码的时间复杂度是多少？</li>
                     </ul>
-                </div>
-            </div>
-        </section>
-        
-        <section class="content-section">
-            <div class="hand-drawn-card">
-                <h2 class="section-title">基础使用</h2>
-                <div class="section-content">
-                    <h3 class="feature-title">代码补全和智能建议</h3>
                     
-                    <div class="visual-container">
-                        <svg width="360" height="240" viewBox="0 0 360 240">
-                            <!-- 代码编辑器界面 -->
-                            <rect x="20" y="20" width="320" height="200" rx="8" fill="white" stroke="black" stroke-width="4"/>
-                            
-                            <!-- 编辑器标题栏 -->
-                            <rect x="20" y="20" width="320" height="30" rx="8" fill="#000000" stroke="black" stroke-width="4"/>
-                            <text x="35" y="40" font-family="Arial" font-size="14" fill="white">app.js</text>
-                            
-                            <!-- 代码区域 -->
-                            <rect x="30" y="60" width="300" height="150" fill="#f5f5f5" stroke="black" stroke-width="2"/>
-                            
-                            <!-- 代码文本 -->
-                            <text x="40" y="80" font-family="monospace" font-size="12" fill="black">function calculateTotal(items) {</text>
-                            <text x="40" y="100" font-family="monospace" font-size="12" fill="black">  let total = 0;</text>
-                            <text x="40" y="120" font-family="monospace" font-size="12" fill="black">  for (const item of items) {</text>
-                            <text x="40" y="140" font-family="monospace" font-size="12" fill="black">    total += item.pr</text>
-                            
-                            <!-- 代码建议框 -->
-                            <rect x="120" y="145" width="150" height="55" rx="5" fill="#ffde00" stroke="black" stroke-width="2"/>
-                            <text x="130" y="165" font-family="monospace" font-size="12" font-weight="bold" fill="black">price</text>
-                            <text x="130" y="185" font-family="monospace" font-size="12" fill="#444">priceWithTax</text>
-                            
-                            <!-- Tab 键提示 -->
-                            <rect x="230" y="155" width="30" height="20" rx="3" fill="white" stroke="black" stroke-width="1"/>
-                            <text x="236" y="170" font-family="Arial" font-size="10" font-weight="bold">TAB</text>
-                            
-                            <!-- 智能指示器 -->
-                            <circle cx="300" cy="40" r="10" fill="#ffde00" stroke="black" stroke-width="2"/>
-                            <text x="296" y="45" font-family="Arial" font-size="14" font-weight="bold" fill="black">AI</text>
-                            
-                            <!-- 缝线装饰 -->
-                            <path d="M40 52 L45 52" stroke="black" stroke-width="2"/>
-                            <path d="M60 52 L65 52" stroke="black" stroke-width="2"/>
-                            <path d="M80 52 L85 52" stroke="black" stroke-width="2"/>
-                            <path d="M100 52 L105 52" stroke="black" stroke-width="2"/>
-                            <path d="M120 52 L125 52" stroke="black" stroke-width="2"/>
-                            <path d="M140 52 L145 52" stroke="black" stroke-width="2"/>
-                            <path d="M160 52 L165 52" stroke="black" stroke-width="2"/>
-                            <path d="M180 52 L185 52" stroke="black" stroke-width="2"/>
-                            <path d="M200 52 L205 52" stroke="black" stroke-width="2"/>
-                            <path d="M220 52 L225 52" stroke="black" stroke-width="2"/>
-                            <path d="M240 52 L245 52" stroke="black" stroke-width="2"/>
-                            <path d="M260 52 L265 52" stroke="black" stroke-width="2"/>
-                            <path d="M280 52 L285 52" stroke="black" stroke-width="2"/>
-                            <path d="M300 52 L305 52" stroke="black" stroke-width="2"/>
-                        </svg>
-                    </div>
-                    
-                    <div class="feature-content">
-                        <p>当你在 Cursor 中编写代码时，AI 会实时提供智能补全：</p>
-                        
-                        <ul class="step-list">
-                            <li class="step-item">开始输入代码，Cursor AI 会根据上下文自动显示补全建议</li>
-                            <li class="step-item">按下 <span class="key-command">Tab</span> 键接受建议并继续编码</li>
-                            <li class="step-item">使用聊天功能 <span class="key-command">Ctrl+Enter</span> 向 AI 提问代码相关问题</li>
-                            <li class="step-item">可以询问如"这个函数的作用是什么？"或"如何优化这段代码？"</li>
-                            <li class="step-item">Cursor 会根据你的代码库上下文提供相关建议</li>
-                        </ul>
+                    <div class="info-box">
+                        提示：提供具体上下文和明确目标的问题，AI 能给出更精确的回答
                     </div>
                 </div>
-            </div>
-        </section>
-        
-        <section class="content-section">
-            <div class="hand-drawn-card">
-                <h2 class="section-title">高级功能</h2>
-                <div class="section-content">
-                    <div class="feature-box">
-                        <div class="feature-card">
-                            <h3 class="feature-title">自然语言代码生成</h3>
-                            <div class="visual-container">
-                                <svg width="280" height="180" viewBox="0 0 280 180">
-                                    <!-- 命令输入框 -->
-                                    <rect x="20" y="20" width="240" height="40" rx="20" fill="white" stroke="black" stroke-width="3"/>
-                                    <text x="40" y="45" font-family="monospace" font-size="14" fill="#666">生成一个 SwiftUI 登录表单</text>
-                                    
-                                    <!-- 键盘快捷键 -->
-                                    <rect x="20" y="70" width="110" height="30" rx="5" fill="#ffde00" stroke="black" stroke-width="2"/>
-                                    <text x="30" y="90" font-family="Arial" font-size="12" font-weight="bold" fill="black">CMD+K 或 CTRL+K</text>
-                                    
-                                    <rect x="150" y="70" width="110" height="30" rx="5" fill="#ffde00" stroke="black" stroke-width="2"/>
-                                    <text x="185" y="90" font-family="Arial" font-size="12" font-weight="bold" fill="black">/ 命令</text>
-                                    
-                                    <!-- 箭头指示 -->
-                                    <path d="M140 110 L140 140" stroke="black" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
-                                    
-                                    <!-- 生成的代码示意 -->
-                                    <rect x="40" y="140" width="200" height="30" fill="#f5f5f5" stroke="black" stroke-width="2"/>
-                                    <text x="50" y="160" font-family="monospace" font-size="10" fill="#333">struct LoginView: View { ... }</text>
-                                    
-                                    <!-- 装饰元素 -->
-                                    <circle cx="260" cy="30" r="5" fill="#ffde00" stroke="black" stroke-width="1"/>
-                                    <circle cx="260" cy="40" r="5" fill="#ffde00" stroke="black" stroke-width="1"/>
-                                    <circle cx="260" cy="50" r="5" fill="#ffde00" stroke="black" stroke-width="1"/>
-                                    
-                                    <defs>
-                                        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" 
-                                                markerWidth="6" markerHeight="6" orient="auto">
-                                            <path d="M 0 0 L 10 5 L 0 10 z" fill="black"/>
-                                        </marker>
-                                    </defs>
-                                </svg>
-                            </div>
-                            <div class="feature-content">
-                                <p>使用自然语言描述你需要的代码功能：</p>
-                                <ul class="step-list">
-                                    <li class="step-item">通过 <span class="key-command">/</span> 命令或快捷键 <span class="key-command">Cmd/Ctrl+K</span> 激活 AI</li>
-                                    <li class="step-item">用自然语言描述你的需求，例如"创建一个用户注册表单"</li>
-                                    <li class="step-item">Cursor 将生成完整可用的代码，包括必要的导入和功能实现</li>
-                                    <li class="step-item">直接在生成的代码上继续修改和完善</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="feature-card">
-                            <h3 class="feature-title">代码库智能聊天</h3>
-                            <div class="visual-container">
-                                <svg width="280" height="200" viewBox="0 0 280 200">
-                                    <!-- 代码库结构 -->
-                                    <rect x="20" y="20" width="100" height="160" rx="5" fill="white" stroke="black" stroke-width="3"/>
-                                    <text x="30" y="40" font-family="Arial" font-size="12" font-weight="bold" fill="black">项目结构</text>
-                                    <text x="30" y="60" font-family="monospace" font-size="10" fill="#333">├── src/</text>
-                                    <text x="30" y="75" font-family="monospace" font-size="10" fill="#333">│   ├── components/</text>
-                                    <text x="30" y="90" font-family="monospace" font-size="10" fill="#333">│   ├── utils/</text>
-                                    <text x="30" y="105" font-family="monospace" font-size="10" fill="#333">│   └── app.js</text>
-                                    <text x="30" y="120" font-family="monospace" font-size="10" fill="#333">├── tests/</text>
-                                    <text x="30" y="135" font-family="monospace" font-size="10" fill="#333">└── README.md</text>
-                                    
-                                    <!-- 聊天界面 -->
-                                    <rect x="130" y="20" width="130" height="160" rx="5" fill="#f5f5f5" stroke="black" stroke-width="3"/>
-                                    <text x="140" y="40" font-family="Arial" font-size="12" font-weight="bold" fill="black">@codebase 查询</text>
-                                    <rect x="140" y="50" width="110" height="40" rx="10" fill="#ffde00" stroke="black" stroke-width="2"/>
-                                    <text x="150" y="70" font-family="Arial" font-size="10" fill="black">导航功能在哪个文件？</text>
-                                    
-                                    <rect x="140" y="100" width="110" height="70" rx="10" fill="white" stroke="black" stroke-width="2"/>
-                                    <text x="150" y="120" font-family="Arial" font-size="10" fill="#333">导航功能在</text>
-                                    <rect x="150" y="125" width="90" height="15" rx="3" fill="#b9c42a" stroke="black" stroke-width="1"/>
-                                    <text x="155" y="136" font-family="monospace" font-size="8" fill="black">src/components/Nav.js</text>
-                                    <text x="150" y="155" font-family="Arial" font-size="10" fill="#333">点击可查看具体实现</text>
-                                    
-                                    <!-- 连接线 -->
-                                    <path d="M95 75 L130 70" stroke="black" stroke-width="2" stroke-dasharray="5,3"/>
-                                    
-                                    <!-- 快捷键提示 -->
-                                    <rect x="140" y="180" width="110" height="20" rx="5" fill="#ffde00" stroke="black" stroke-width="2"/>
-                                    <text x="155" y="194" font-family="Arial" font-size="10" font-weight="bold" fill="black">Cmd/Ctrl+L 解释代码</text>
-                                </svg>
-                            </div>
-                            <div class="feature-content">
-                                <p>与你的整个代码库进行对话：</p>
-                                <ul class="step-list">
-                                    <li class="step-item">使用 <span class="key-command">@codebase</span> 命令查询整个项目</li>
-                                    <li class="step-item">询问"在哪里定义了用户认证函数？"等问题</li>
-                                    <li class="step-item">点击 AI 回答中的代码框可直接跳转到相关文件</li>
-                                    <li class="step-item">选中特定代码后使用 <span class="key-command">Cmd/Ctrl+L</span> 请求解释</li>
-                                    <li class="step-item">AI 会根据整个代码库的上下文提供相关信息</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- 添加更多的缝线装饰效果 -->
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const cards = document.querySelectorAll('.hand-drawn-card');
                 
-                cards.forEach(card => {
-                    // 添加顶部缝线
-                    for (let i = 0; i < 20; i++) {
-                        const stitch = document.createElement('div');
-                        stitch.classList.add('stitch');
-                        stitch.style.top = '5px';
-                        stitch.style.left = (20 + i * 20) + 'px';
-                        card.appendChild(stitch);
-                    }
+                <!-- 代码改进 -->
+                <div class="interaction-card">
+                    <h3>
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 11.5L12 14.5L15 11.5" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 9V14.5" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        代码改进
+                    </h3>
                     
-                    // 添加右侧缝线
-                    for (let i = 0; i < 15; i++) {
-                        const stitch = document.createElement('div');
-                        stitch.classList.add('stitch');
-                        stitch.style.right = '5px';
-                        stitch.style.top = (20 + i * 20) + 'px';
-                        stitch.style.transform = 'rotate(90deg)';
-                        card.appendChild(stitch);
-                    }
+                    <svg class="svg-container" width="100%" height="140" viewBox="0 0 300 140" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <filter id="glow2">
+                                <feGaussianBlur stdDeviation="2" result="blur"/>
+                                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                            </filter>
+                        </defs>
+                        
+                        <!-- 代码块-前 -->
+                        <g transform="translate(50,40)">
+                            <rect x="-30" y="-20" width="60" height="40" rx="5" fill="rgba(255,85,163,0.3)" stroke="#ff55a3" stroke-width="2"/>
+                            <text x="0" y="-5" font-size="8" fill="white" text-anchor="middle">{'{'}</text>
+                            <text x="0" y="5" font-size="8" fill="white" text-anchor="middle">  for(i=0;i&lt;n;i++)</text>
+                            <text x="0" y="15" font-size="8" fill="white" text-anchor="middle">{'}'}</text>
+                        </g>
+                        
+                        <!-- 优化箭头 -->
+                        <g transform="translate(150,40)">
+                            <path d="M-40,0 L40,0" stroke="#ffdf00" stroke-width="2">
+                                <animate attributeName="stroke-dasharray" values="5,5;2,2;5,5" dur="3s" repeatCount="indefinite"/>
+                            </path>
+                            <polygon points="40,0 30,-5 30,5" fill="#ffdf00"/>
+                            <text x="0" y="-10" font-size="10" fill="#ffdf00" text-anchor="middle">优化</text>
+                            
+                            <!-- 旋转的齿轮 -->
+                            <g transform="translate(0,0)" filter="url(#glow2)">
+                                <path d="M0,0 L0,0" stroke="rgba(100,255,218,0.7)" stroke-width="1">
+                                    <animate attributeName="d" 
+                                        values="M-5,-5 L5,5 M-5,5 L5,-5;M-7,-1 L7,-1 M-1,-7 L-1,7;M-5,-5 L5,5 M-5,5 L5,-5" 
+                                        dur="2s" 
+                                        repeatCount="indefinite"/>
+                                </path>
+                            </g>
+                        </g>
+                        
+                        <!-- 代码块-后 -->
+                        <g transform="translate(250,40)">
+                            <rect x="-40" y="-25" width="80" height="50" rx="5" fill="rgba(100,255,218,0.3)" stroke="#64ffda" stroke-width="2"/>
+                            <text x="0" y="-15" font-size="8" fill="white" text-anchor="middle">{'{'}</text>
+                            <text x="0" y="-5" font-size="8" fill="white" text-anchor="middle">  let len = n;</text>
+                            <text x="0" y="5" font-size="8" fill="white" text-anchor="middle">  for(let i=0;i&lt;len;i++)</text>
+                            <text x="0" y="15" font-size="8" fill="#ffdf00" text-anchor="middle">  // 缓存长度提升性能</text>
+                            <text x="0" y="25" font-size="8" fill="white" text-anchor="middle">{'}'}</text>
+                        </g>
+                        
+                        <!-- 改进指标 -->
+                        <g transform="translate(150,100)">
+                            <rect x="-120" y="-15" width="240" height="30" rx="5" fill="rgba(9,64,116,0.7)" stroke="#64ffda" stroke-width="1"/>
+                            <text x="-100" y="5" font-size="12" fill="#64ffda" text-anchor="start">✓ 性能提升</text>
+                            <text x="0" y="5" font-size="12" fill="#ff55a3" text-anchor="middle">✓ 可读性增强</text>
+                            <text x="100" y="5" font-size="12" fill="#ffdf00" text-anchor="end">✓ 潜在bug修复</text>
+                        </g>
+                    </svg>
                     
-                    // 添加底部缝线
-                    for (let i = 0; i < 20; i++) {
-                        const stitch = document.createElement('div');
-                        stitch.classList.add('stitch');
-                        stitch.style.bottom = '5px';
-                        stitch.style.right = (20 + i * 20) + 'px';
-                        card.appendChild(stitch);
-                    }
+                    <ul class="example-list">
+                        <li class="example-item">优化这个函数的性能</li>
+                        <li class="example-item">找出这段代码的潜在 bug</li>
+                        <li class="example-item">重构这个类使其符合 SOLID 原则</li>
+                        <li class="example-item">简化这段逻辑，减少代码复杂度</li>
+                    </ul>
                     
-                    // 添加左侧缝线
-                    for (let i = 0; i < 15; i++) {
-                        const stitch = document.createElement('div');
-                        stitch.classList.add('stitch');
-                        stitch.style.left = '5px';
-                        stitch.style.bottom = (20 + i * 20) + 'px';
-                        stitch.style.transform = 'rotate(90deg)';
-                        card.appendChild(stitch);
-                    }
-                });
-            });
-        </script>
+                    <div class="info-box">
+                        提示：AI 不仅能找出问题，还能建议最佳实践和设计模式
+                    </div>
+                </div>
+                
+                <!-- 功能实现 -->
+                <div class="interaction-card">
+                    <h3>
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.89001 9C7.87001 9.49 8.71001 10.23 9.32001 11.15C9.67001 11.67 9.67001 12.34 9.32001 12.86C8.71001 13.77 7.87001 14.51 6.89001 15" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M13 15H17" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        功能实现
+                    </h3>
+                    
+                    <svg class="svg-container" width="100%" height="150" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 对话框 -->
+                        <g transform="translate(50,30)">
+                            <rect x="-40" y="-15" width="80" height="30" rx="5" fill="rgba(255,223,0,0.3)" stroke="#ffdf00" stroke-width="2"/>
+                            <text x="0" y="5" font-size="10" fill="white" text-anchor="middle">请实现CSV解析器</text>
+                        </g>
+                        
+                        <!-- 箭头动画 -->
+                        <path d="M50,60 C100,90 200,90 250,60" stroke="#ff55a3" stroke-width="2" stroke-dasharray="5,3">
+                            <animate attributeName="stroke-dashoffset" from="8" to="0" dur="2s" repeatCount="indefinite"/>
+                        </path>
+                        <polygon points="250,60 240,55 240,65" fill="#ff55a3"/>
+                        
+                        <!-- 代码生成 -->
+                        <g transform="translate(150,100)">
+                            <rect x="-130" y="-20" width="260" height="70" rx="5" fill="rgba(100,255,218,0.2)" stroke="#64ffda" stroke-width="2"/>
+                            
+                            <!-- 打字机效果 -->
+                            <clipPath id="typing-mask">
+                                <rect x="-125" y="-15" width="250" height="60">
+                                    <animate attributeName="width" values="0;250" dur="3s" repeatCount="1" fill="freeze"/>
+                                </rect>
+                            </clipPath>
+                            
+                            <g clip-path="url(#typing-mask)">
+                                <text x="-125" y="-5" font-size="8" fill="white">function parseCSV(text) {</text>
+                                <text x="-125" y="5" font-size="8" fill="#ff55a3">  const rows = text.split('\n');</text>
+                                <text x="-125" y="15" font-size="8" fill="#ff55a3">  return rows.map(row => {</text>
+                                <text x="-125" y="25" font-size="8" fill="#ff55a3">    return row.split(',');</text>
+                                <text x="-125" y="35" font-size="8" fill="#ff55a3">  });</text>
+                                <text x="-125" y="45" font-size="8" fill="white">}</text>
+                            </g>
+                            
+                            <!-- 光标 -->
+                            <rect x="45" y="45" width="2" height="10" fill="white">
+                                <animate attributeName="opacity" values="0;1;0" dur="0.8s" repeatCount="indefinite"/>
+                            </rect>
+                        </g>
+                    </svg>
+                    
+                    <ul class="example-list">
+                        <li class="example-item">编写一个函数来解析 CSV 文件</li>
+                        <li class="example-item">实现一个简单的 HTTP 服务器</li>
+                        <li class="example-item">创建一个用户认证系统</li>
+                        <li class="example-item">设计一个缓存机制减少 API 调用</li>
+                    </ul>
+                    
+                    <div class="info-box">
+                        提示：提供明确的需求和边界条件，AI 能生成更符合预期的功能实现
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        // 创建星星背景
+        const starsContainer = document.querySelector('.stars');
+        const starCount = 100;
+        
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            
+            // 随机大小和位置
+            const size = Math.random() * 3;
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+            const duration = 2 + Math.random() * 4;
+            const delay = Math.random() * 2;
+            const opacity = 0.3 + Math.random() * 0.7;
+            
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${posX}%`;
+            star.style.top = `${posY}%`;
+            star.style.setProperty('--duration', `${duration}s`);
+            star.style.setProperty('--opacity', opacity);
+            star.style.animationDelay = `${delay}s`;
+            
+            starsContainer.appendChild(star);
+        }
+    </script>
 </body>
 </html>
