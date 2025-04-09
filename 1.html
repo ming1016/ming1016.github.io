@@ -1,339 +1,343 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 编程：实践技巧</title>
-
+    <title>AI编程最佳实践</title>
     <style>
-        /* Basic Reset & Body Style */
-        body, html {
+        body {
             margin: 0;
             padding: 0;
-            width: 100%;
-            min-height: 100%;
+            background-color: #ffde00;
+            font-family: Arial, sans-serif;
+            color: #000;
             overflow-x: hidden;
-            background-color: #050515; /* Dark base background */
-            color: white;
-            /* 使用 Noto Sans SC 作为基础中文字体, Oswald 作为强调/标题备选 */
-            font-family: 'Noto Sans SC', sans-serif;
+            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 20 0 L 0 0 0 20' fill='none' stroke='%23ff990033' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E");
         }
-
-        /* Fixed Background Container */
-        .background-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .background-svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Main Content Area - Scrolls over background */
-        .main-content {
-            position: relative;
-            z-index: 1;
-            max-width: 1000px; /* Wider max-width for magazine feel */
+        
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 5vh 5vw;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-
-        /* Page Header - Magazine Cover Title Area */
-        .page-header {
-            text-align: center;
-            margin-bottom: 2em; /* Space below title */
-            position: relative; /* For potential layering */
-            z-index: 2; /* Ensure title is above visual header if needed */
-        }
-
-        /* MAIN TITLE - HUGE, BOLD, MAGAZINE STYLE */
-        .main-title {
-            font-family: 'Oswald', 'Noto Sans SC', sans-serif; /* Oswald first for impact */
-            font-size: clamp(4rem, 18vw, 15rem); /* MASSIVE font size */
-            font-weight: 700; /* Bold */
-            line-height: 1; /* Tight line height */
-            color: white;
-            letter-spacing: 0.05em; /* Slightly wider spacing */
-            text-transform: uppercase; /* Optional: Uppercase for more impact */
-            text-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6); /* Stronger shadow */
-            margin: 0;
-            /* Optional: Slight rotation for doodle feel */
-            /* transform: rotate(-1deg); */
-        }
-
-        /* Central Visual Element Area */
-        .visual-header {
-            text-align: center;
-            margin: -5vh auto 4em auto; /* Negative margin to potentially pull it under title */
+            padding: 2rem;
             position: relative;
-            z-index: 1; /* Behind title if overlapping */
         }
-
-        .character-svg {
-             width: 70%;
-             max-width: 400px; /* Slightly smaller max to not overpower title */
-             height: auto;
-             display: block;
-             margin: 0 auto;
+        
+        .pixel-border {
+            border: 8px solid #000;
+            box-shadow: 
+                0 0 0 4px #fff, 
+                0 0 0 8px #000,
+                inset 0 0 0 2px #000;
+            position: relative;
+            background-color: #ff5722;
+            margin: 30px 0;
+            padding: 25px;
+            transform: rotate(-1deg);
         }
-
-        /* Content Body */
-        .page-body {
-             margin-top: 2em;
-        }
-
-        /* Content Sections - Enhanced Doodle Feel */
-        .content-section {
-            margin-bottom: 4em;
-            background-color: rgba(20, 20, 50, 0.6); /* Slightly more opaque */
-            padding: 2em clamp(1em, 5vw, 3em); /* Responsive padding */
-            border-radius: 20px 10px 25px 15px; /* Irregular radius */
-            border: 2px dashed rgba(255, 255, 255, 0.4);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-             /* Optional: Slight tilt */
-            /* transform: rotate(1deg); */
-        }
-        /* Alternate tilt for variation */
-        /* .content-section:nth-child(odd) {
-             transform: rotate(-1deg);
-        } */
-
-
-        /* SECTION TITLES - LARGE & BOLD */
-        .section-title {
-            font-family: 'Oswald', 'Noto Sans SC', sans-serif;
-            font-size: clamp(2.2rem, 8vw, 5.5rem); /* Significantly larger */
-            font-weight: 700;
-            color: #f0a0a0;
-            margin-bottom: 0.8em;
-            padding-bottom: 0.2em;
-            border-bottom: 3px solid #f0a0a0; /* Thicker border */
-            display: inline-block;
-            line-height: 1.2;
-             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Body Text */
-        .content-list, .content-paragraph {
-            font-size: clamp(1rem, 2.5vw, 1.3rem); /* Readable body size */
-            line-height: 1.7;
-            color: rgba(255, 255, 255, 0.9); /* Slightly softer white */
-        }
-
-        .content-list {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .content-list li {
-            margin-bottom: 1.2em;
-            display: flex;
-            align-items: flex-start;
-        }
-
-        /* SVG Bullet point - Slightly larger */
-        .content-list li .bullet-svg {
-            width: 1.5em;
-            height: 1.5em;
-            margin-right: 0.7em;
-            fill: #87CEFA;
-            flex-shrink: 0;
-            margin-top: 0.05em;
-            animation: spin 20s linear infinite;
-        }
-         .content-list li .bullet-svg.sub-bullet {
-             fill: #90EE90;
-             width: 1.2em;
-             height: 1.2em;
-             animation: none;
-             margin-top: 0.15em;
-         }
-
-        /* EMPHASIZED TEXT - BOLDER, LARGER */
-        .highlight-text, strong {
-            font-weight: 700; /* Ensure bold */
-            color: #FFD700; /* Gold highlight color */
-            font-size: 1.15em; /* Larger than surrounding text */
-            /* text-shadow: 1px 1px 3px rgba(0,0,0,0.2); */
-        }
-
-        .content-list ul {
-             list-style: none;
-             padding-left: 1.8em; /* More indent */
-             margin-top: 0.6em;
-        }
-
-        /* Code Mention Highlight */
-        code {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: #90EE90; /* Greenish code color */
-            padding: 0.2em 0.5em;
-            border-radius: 5px;
-            font-family: "SF Mono", "Courier New", Courier, monospace;
-            font-size: 0.9em;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        /* Footer Text */
-        .page-footer {
+        
+        .title {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 
+                4px 4px 0 #000,
+                8px 8px 0 #3b00ff;
             text-align: center;
-            margin-top: 5em;
-            padding-bottom: 3em;
-            font-size: clamp(0.75rem, 1.8vw, 0.9rem);
-            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: -1px;
+            transform: rotate(1deg);
+            margin-bottom: 2rem;
         }
-
-        /* --- SVG Styles (mostly unchanged) --- */
-        .star { fill: white; animation: twinkle 4s infinite alternate ease-in-out; }
-        .planet { animation: pulse 2.8s infinite ease-in-out alternate; transform-origin: center; cursor: pointer; transition: transform 0.3s ease; }
-        .planet:hover { transform: scale(1.18); } /* Slightly stronger hover */
-        .connecting-line { stroke: rgba(255, 255, 255, 0.5); stroke-width: 1.5; stroke-dasharray: 4 4; animation: draw-line 6s linear infinite; }
-        .character-outline { stroke: white; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
-        .character-body { fill: #FFD700; stroke: none; }
-
-        /* --- Animations (mostly unchanged) --- */
-        @keyframes twinkle { 0% { opacity: 0.1; transform: scale(0.7); } 100% { opacity: 1; transform: scale(1.2); } }
-        @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.08); } }
-        @keyframes draw-line { to { stroke-dashoffset: -16; } }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
+        
+        .subtitle {
+            font-size: 2.5rem;
+            background: #00b3ff;
+            padding: 10px 20px;
+            display: inline-block;
+            transform: rotate(-2deg);
+            margin-left: -10px;
+            color: #fff;
+            text-shadow: 3px 3px 0 #000;
+            border: 4px solid #000;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .point {
+            background: #fff;
+            border: 5px solid #000;
+            padding: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            flex: 1 1 300px;
+            position: relative;
+            transform: rotate(1deg);
+            box-shadow: 5px 5px 0 #000;
+        }
+        
+        .point:nth-child(even) {
+            background: #a5ff00;
+            transform: rotate(-1deg);
+        }
+        
+        .highlight {
+            background: #ff0066;
+            color: #fff;
+            padding: 3px 8px;
+            border: 2px solid #000;
+            font-weight: bold;
+            display: inline-block;
+            transform: rotate(-1deg);
+        }
+        
+        .characters {
+            position: absolute;
+            width: 100%;
+            bottom: -20px;
+            left: 0;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.8rem;
+            }
+            
+            .content {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
-
-    <div class="background-container">
-        <svg class="background-svg" preserveAspectRatio="xMidYMid slice">
-            <defs>
-                <radialGradient id="tunnelGradientBg" cx="50%" cy="50%" r="70%" fx="50%" fy="50%">
-                     <stop offset="0%" style="stop-color:#3a3a5a; stop-opacity:1" />
-                     <stop offset="40%" style="stop-color:#1a1a3a; stop-opacity:1" />
-                     <stop offset="100%" style="stop-color:#050515; stop-opacity:1" />
-                </radialGradient>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#tunnelGradientBg)" />
-            <circle class="star" cx="10%" cy="15%" r="3" /> <circle class="star" cx="85%" cy="25%" r="2" style="animation-delay: -1.5s;" /> <circle class="star" cx="30%" cy="80%" r="4" style="animation-delay: -0.5s;" /> <circle class="star" cx="70%" cy="90%" r="2" style="animation-delay: -2.5s;" /> <circle class="star" cx="50%" cy="50%" r="3" style="animation-delay: -0.2s;" /> <circle class="star" cx="95%" cy="60%" r="2" style="animation-delay: -1.8s;" /> <circle class="star" cx="5%" cy="40%" r="3" style="animation-delay: -1.2s;" /> <circle class="star" cx="60%" cy="10%" r="2" style="animation-delay: -0.8s;" /> <circle class="star" cx="40%" cy="65%" r="3" style="animation-delay: -3s;" /> <circle class="star" cx="20%" cy="95%" r="2" style="animation-delay: -2.2s;" />
-        </svg>
-    </div>
-
-    <div class="main-content">
-
-        <header class="page-header">
-             <h1 class="main-title">AI编程<br>实战秘笈</h1>
-            </header>
-
-        <div class="visual-header">
-            <svg class="character-svg" viewBox="0 0 400 300">
-                <g id="character" transform="translate(200 180) scale(1.8)">
-                    <path class="character-outline" fill="#a0522d" d="M -20 -10 Q -40 0 -40 20 L -35 50 Q -30 60 0 60 Q 30 60 35 50 L 40 20 Q 40 0 20 -10 Z" /> <circle class="character-outline" cx="0" cy="30" r="15" fill="#1a1a3a"/> <path class="character-outline" d="M 0 0 L 0 -50 Q 0 -60 5 -60 L 15 -60 Q 20 -60 20 -55 L 20 -50 Z" /> <path class="character-outline" stroke-width="1.5" d="M -10 -55 L 10 -55 M -10 -50 L 10 -50" /> <path class="character-outline" stroke-width="1" d="M -5 -50 L -5 50 M 0 -50 L 0 50 M 5 -50 L 5 50 "/>
-                    <path class="character-body" d="M -30 0 C -35 -30, 35 -30, 30 0 L 25 30 C 25 40, -25 40, -25 30 Z" transform="translate(0, -35)" /> <path class="character-outline" d="M -30 0 C -35 -30, 35 -30, 30 0 L 25 30 C 25 40, -25 40, -25 30 Z" transform="translate(0, -35)"/>
-                    <circle class="character-outline" fill="#f5f5f5" cx="0" cy="-65" r="20" /> <circle fill="black" cx="-7" cy="-68" r="1.5"/> <circle fill="black" cx="7" cy="-68" r="1.5"/> <path class="character-outline" stroke-width="1.5" d="M -5 -60 Q 0 -58 5 -60" />
-                    <path class="character-outline" fill="#4682B4" d="M -25 0 Q -40 5 -45 20 L -30 25 Q -15 10 -10 0 Z" /> <path class="character-outline" fill="#4682B4" d="M 25 0 Q 40 5 45 20 L 30 25 Q 15 10 10 0 Z" />
+    <div class="container">
+        <div class="pixel-border">
+            <h1 class="title">最佳实践：与遗留代码合作的技巧</h1>
+            
+            <svg width="100%" height="120" viewBox="0 0 800 120">
+                <defs>
+                    <filter id="pixelate" x="0" y="0" width="100%" height="100%">
+                        <feFlood x="4" y="4" height="2" width="2"/>
+                        <feComposite width="8" height="8"/>
+                        <feTile result="a"/>
+                        <feComposite in="SourceGraphic" in2="a" operator="in"/>
+                        <feMorphology operator="dilate" radius="5"/>
+                    </filter>
+                </defs>
+                <text x="400" y="80" text-anchor="middle" font-family="Arial" font-size="70" font-weight="bold" fill="#00b3ff" stroke="#000" stroke-width="8" filter="url(#pixelate)">AI + 遗留代码</text>
+            </svg>
+            
+            <div class="content">
+                <div class="point">
+                    <svg width="60" height="60" viewBox="0 0 60 60">
+                        <rect width="50" height="50" x="5" y="5" fill="#ff5722" stroke="#000" stroke-width="4"/>
+                        <circle cx="30" cy="30" r="15" fill="#ffde00" stroke="#000" stroke-width="3"/>
+                        <path d="M25 25 L35 25 L35 35 L25 35 Z" fill="#fff" stroke="#000" stroke-width="2"/>
+                        <animateTransform attributeName="transform" type="rotate" from="0 30 30" to="360 30 30" dur="10s" repeatCount="indefinite"/>
+                    </svg>
+                    <p><span class="highlight">Cursor AI</span> 在大型项目中表现优异，能够理解复杂的代码库结构和依赖关系</p>
+                </div>
+                
+                <div class="point">
+                    <svg width="60" height="60" viewBox="0 0 60 60">
+                        <g>
+                            <rect width="40" height="50" x="10" y="5" fill="#00b3ff" stroke="#000" stroke-width="3"/>
+                            <rect width="30" height="5" x="15" y="15" fill="#fff" stroke="#000" stroke-width="1"/>
+                            <rect width="30" height="5" x="15" y="25" fill="#fff" stroke="#000" stroke-width="1"/>
+                            <rect width="30" height="5" x="15" y="35" fill="#fff" stroke="#000" stroke-width="1"/>
+                            <animate attributeName="opacity" values="1;0.7;1" dur="3s" repeatCount="indefinite"/>
+                        </g>
+                    </svg>
+                    <p>通过<span class="highlight">文档文件夹</span>教 AI 学习团队的编码规范和最佳实践</p>
+                </div>
+                
+                <div class="point">
+                    <svg width="60" height="60" viewBox="0 0 60 60">
+                        <g>
+                            <polygon points="10,50 50,50 50,10 30,5 10,10" fill="#a5ff00" stroke="#000" stroke-width="3"/>
+                            <line x1="15" y1="20" x2="45" y2="20" stroke="#000" stroke-width="2"/>
+                            <line x1="15" y1="30" x2="45" y2="30" stroke="#000" stroke-width="2"/>
+                            <line x1="15" y1="40" x2="45" y2="40" stroke="#000" stroke-width="2"/>
+                            <animateTransform attributeName="transform" type="translate" values="0,0;0,-5;0,0" dur="2s" repeatCount="indefinite"/>
+                        </g>
+                    </svg>
+                    <p>确保 AI 生成的代码<span class="highlight">符合团队规范</span>，减少后期修改成本</p>
+                </div>
+            </div>
+            
+            <svg class="characters" width="100%" height="150" viewBox="0 0 800 150">
+                <!-- 像素风格AI角色 -->
+                <g transform="translate(300, 20)">
+                    <!-- 机器人头部 -->
+                    <rect x="50" y="10" width="80" height="80" fill="#00b3ff" stroke="#000" stroke-width="4" rx="10"/>
+                    <!-- 眼睛 -->
+                    <circle cx="80" cy="40" r="10" fill="#fff" stroke="#000" stroke-width="2"/>
+                    <circle cx="100" cy="40" r="10" fill="#fff" stroke="#000" stroke-width="2"/>
+                    <circle cx="80" cy="40" r="5" fill="#000"/>
+                    <circle cx="100" cy="40" r="5" fill="#000"/>
+                    <!-- 嘴巴 -->
+                    <rect x="75" y="60" width="30" height="5" fill="#000"/>
+                    <!-- 天线 -->
+                    <line x1="70" y1="10" x2="60" y2="-5" stroke="#000" stroke-width="4"/>
+                    <circle cx="60" cy="-5" r="5" fill="#ff0066" stroke="#000" stroke-width="2"/>
+                    <line x1="110" y1="10" x2="120" y2="-5" stroke="#000" stroke-width="4"/>
+                    <circle cx="120" cy="-5" r="5" fill="#ff0066" stroke="#000" stroke-width="2"/>
+                    <!-- 身体 -->
+                    <rect x="65" y="90" width="50" height="40" fill="#00b3ff" stroke="#000" stroke-width="4"/>
+                    <!-- 按钮 -->
+                    <circle cx="90" cy="105" r="5" fill="#ff0066" stroke="#000" stroke-width="2"/>
+                    <circle cx="90" cy="120" r="5" fill="#ffde00" stroke="#000" stroke-width="2"/>
+                    <!-- 手臂 -->
+                    <rect x="115" y="100" width="30" height="10" fill="#00b3ff" stroke="#000" stroke-width="3"/>
+                    <rect x="35" y="100" width="30" height="10" fill="#00b3ff" stroke="#000" stroke-width="3"/>
+                    <!-- 动画 -->
+                    <animateTransform attributeName="transform" 
+                                      type="rotate" 
+                                      from="-5 90 90" 
+                                      to="5 90 90" 
+                                      dur="1s" 
+                                      repeatCount="indefinite"
+                                      additive="sum"/>
                 </g>
-                 <g id="elements">
-                     <line class="connecting-line" x1="200" y1="180" x2="70" y2="50" /> <circle class="planet" cx="70" cy="50" r="30" fill="#FF6347"/> <circle cx="70" cy="50" r="30" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
-                     <line class="connecting-line" x1="200" y1="180" x2="330" y2="80" /> <circle class="planet" cx="330" cy="80" r="22" fill="#FFC0CB" style="animation-delay: -0.5s;"/> <circle cx="330" cy="80" r="22" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
-                     <line class="connecting-line" x1="200" y1="180" x2="100" y2="250" /> <circle class="planet" cx="100" cy="250" r="26" fill="#90EE90" style="animation-delay: -0.9s;"/> <circle cx="100" cy="250" r="26" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
-                     <line class="connecting-line" x1="200" y1="180" x2="300" y2="260" /> <circle class="planet" cx="300" cy="260" r="18" fill="#87CEFA" style="animation-delay: -1.3s;"/> <circle cx="300" cy="260" r="18" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
-                 </g>
+                
+                <!-- 代码元素 -->
+                <g transform="translate(450, 20)">
+                    <rect x="0" y="20" width="100" height="80" fill="#fff" stroke="#000" stroke-width="4"/>
+                    <line x1="10" y1="40" x2="50" y2="40" stroke="#ff5722" stroke-width="3"/>
+                    <line x1="10" y1="60" x2="80" y2="60" stroke="#00b3ff" stroke-width="3"/>
+                    <line x1="10" y1="80" x2="70" y2="80" stroke="#a5ff00" stroke-width="3"/>
+                    <animateTransform attributeName="transform" 
+                                      type="translate" 
+                                      values="0,0;0,5;0,0" 
+                                      dur="2s" 
+                                      repeatCount="indefinite"
+                                      additive="sum"/>
+                </g>
+                
+                <!-- 连接线 -->
+                <path d="M400 80 Q 420 60, 450 70" stroke="#000" stroke-width="3" fill="none">
+                    <animate attributeName="d" 
+                             values="M400 80 Q 420 60, 450 70;M400 80 Q 420 70, 450 75;M400 80 Q 420 60, 450 70" 
+                             dur="2s" 
+                             repeatCount="indefinite"/>
+                </path>
             </svg>
         </div>
-
-        <main class="page-body">
-            <section class="content-section">
-                <h2 class="section-title">核心应用 &amp;<br>提问技巧</h2>
-                 <ul class="content-list">
-                     <li>
-                         <svg class="bullet-svg" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
-                         <div>
-                              <strong class="highlight-text">代码重构:</strong> 请求优化结构、可读性、性能。
-                             <br><em>例: "重构此函数，提升性能并遵循 <code class="highlight-text">SOLID</code> 原则。"</em>
-                         </div>
-                     </li>
-                     <li>
-                          <svg class="bullet-svg" viewBox="0 0 24 24"><path d="M20 8h-2.81c-.45-.78-1.07-1.45-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5s-.96.06-1.42.17L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20V8zm-6 8h-4v-2h4v2zm0-4h-4v-2h4v2z"/></svg>
-                         <div>
-                              <strong class="highlight-text">代码调试:</strong> 描述问题或粘贴错误，寻求解决方案。
-                              <br><em>例: "运行报 <code class="highlight-text">TypeError</code> 错，帮我看下？[附代码/错误信息]"</em>
-                         </div>
-                     </li>
-                      <li>
-                          <svg class="bullet-svg" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                         <div>
-                              <strong class="highlight-text">理解代码:</strong> 请求解释复杂逻辑、算法或模式。
-                              <br><em>例: "解释下这段 <code class="highlight-text">JavaScript</code> 代码的作用和设计模式。"</em>
-                         </div>
-                      </li>
-                      <li>
-                           <svg class="bullet-svg" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
-                          <div>
-                              <strong class="highlight-text">提供完整上下文:</strong> 使用 <code>@codebase</code> 或附上相关代码，让 AI <strong class="highlight-text">精准理解</strong>。
-                          </div>
-                      </li>
-                 </ul>
-            </section>
-
-            <section class="content-section">
-                <h2 class="section-title">关键审核 &amp;<br>最佳实践</h2>
-                 <ul class="content-list">
-                     <li>
-                         <svg class="bullet-svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                         <div><strong class="highlight-text">仔细审查生成代码：</strong>
-                            <ul>
-                                <li>
-                                     <svg class="bullet-svg sub-bullet" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                                     <strong class="highlight-text">绝不盲从！</strong> 特别是核心逻辑、安全、性能相关部分。AI 会犯错！
-                               </li>
-                            </ul>
-                        </div>
-                     </li>
-                     <li>
-                         <svg class="bullet-svg" viewBox="0 0 24 24"><path d="M12 2C9.49 2 7.17 3.27 5.87 5.19c-1.08 1.6-1.8 3.8-1.8 5.96 0 2.09.66 3.85 1.7 5.38.78 1.12 1.76 2.04 2.88 2.71.08.05.16.1.25.14.21.1.44.17.68.21.27.04.55.06.83.06s.56-.02.83-.06c.24-.04.47-.11.68-.21.09-.04.17-.09.25-.14 1.12-.67 2.1-1.59 2.88-2.71 1.04-1.53 1.7-3.29 1.7-5.38 0-2.16-.72-4.36-1.8-5.96C16.83 3.27 14.51 2 12 2zm1 17.93c-2.26-.53-4.36-1.89-5.93-3.75-.78-.93-1.23-2.15-1.23-3.42 0-1.31.46-2.6 1.25-3.69.83-1.13 2.04-1.98 3.43-2.41.49-.15 1-.23 1.5-.23s1.01.08 1.5.23c1.39.43 2.6 1.28 3.43 2.41.79 1.09 1.25 2.38 1.25 3.69 0 1.27-.45 2.49-1.23 3.42-1.57 1.86-3.67 3.22-5.93 3.75zM11 10h2v6h-2zm0-4h2v2h-2z"/></svg>
-                         <div><strong class="highlight-text">理解工作原理：</strong>
-                            <ul>
-                                <li>
-                                    <svg class="bullet-svg sub-bullet" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                                    应用前，<strong class="highlight-text">搞懂</strong> AI 为何这样改，评估潜在风险。
-                                </li>
-                            </ul>
-                        </div>
-                     </li>
-                     <li>
-                          <svg class="bullet-svg" viewBox="0 0 24 24"><path d="M21 6.74V4.72c0-.4-.34-.72-.74-.72H3.74C3.34 4 3 4.32 3 4.72v2.02c-1.15.42-2 1.51-2 2.8V19c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2v-9.46c0-1.29-.85-2.38-2-2.8zM13 19H4v-7h9v7zm8 0h-7v-7h7v7zm-7-9h-9V5h9v5zm8 0h-7V5h7v5z"/></svg>
-                         <div><strong class="highlight-text">保持代码一致性：</strong>
-                            <ul>
-                                 <li>
-                                    <svg class="bullet-svg sub-bullet" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                                    确保修改 <strong class="highlight-text">符合</strong> 项目现有风格、规范和实践。
-                                </li>
-                             </ul>
-                         </div>
-                     </li>
-                      <li>
-                         <svg class="bullet-svg" viewBox="0 0 24 24"><path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/></svg>
-                         <div><strong class="highlight-text">迭代与沟通：</strong>
-                            <ul>
-                                 <li>
-                                    <svg class="bullet-svg sub-bullet" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                                     AI 不是神谕。准备好 <strong class="highlight-text">多轮提问</strong>，逐步细化，引导 AI。
-                                </li>
-                             </ul>
-                         </div>
-                     </li>
-                </ul>
-            </section>
-        </main>
-
-
-
+        
+        <div class="pixel-border" style="background-color: #00b3ff;">
+            <h2 class="subtitle">遗留代码工作流</h2>
+            
+            <svg width="100%" height="300" viewBox="0 0 800 300">
+                <!-- 复古街机风格的工作流程图 -->
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#000"/>
+                    </marker>
+                </defs>
+                
+                <!-- 步骤1 -->
+                <g transform="translate(80, 50)">
+                    <rect width="150" height="80" fill="#ffde00" stroke="#000" stroke-width="4" rx="5"/>
+                    <text x="75" y="50" text-anchor="middle" font-size="16" font-weight="bold">导入遗留代码</text>
+                    <animateTransform attributeName="transform" 
+                                     type="translate" 
+                                     values="80,50;85,50;80,50" 
+                                     dur="3s" 
+                                     repeatCount="indefinite"/>
+                </g>
+                
+                <!-- 步骤2 -->
+                <g transform="translate(320, 50)">
+                    <rect width="150" height="80" fill="#ff5722" stroke="#000" stroke-width="4" rx="5"/>
+                    <text x="75" y="40" text-anchor="middle" font-size="16" font-weight="bold">AI 分析</text>
+                    <text x="75" y="60" text-anchor="middle" font-size="16" font-weight="bold">项目结构</text>
+                    <animateTransform attributeName="transform" 
+                                     type="translate" 
+                                     values="320,50;325,50;320,50" 
+                                     dur="3s" 
+                                     repeatCount="indefinite"
+                                     begin="1s"/>
+                </g>
+                
+                <!-- 步骤3 -->
+                <g transform="translate(560, 50)">
+                    <rect width="150" height="80" fill="#a5ff00" stroke="#000" stroke-width="4" rx="5"/>
+                    <text x="75" y="40" text-anchor="middle" font-size="16" font-weight="bold">学习团队</text>
+                    <text x="75" y="60" text-anchor="middle" font-size="16" font-weight="bold">编码规范</text>
+                    <animateTransform attributeName="transform" 
+                                     type="translate" 
+                                     values="560,50;565,50;560,50" 
+                                     dur="3s" 
+                                     repeatCount="indefinite"
+                                     begin="2s"/>
+                </g>
+                
+                <!-- 步骤4 -->
+                <g transform="translate(320, 180)">
+                    <rect width="150" height="80" fill="#00b3ff" stroke="#000" stroke-width="4" rx="5"/>
+                    <text x="75" y="40" text-anchor="middle" font-size="16" font-weight="bold">生成符合规范</text>
+                    <text x="75" y="60" text-anchor="middle" font-size="16" font-weight="bold">的新代码</text>
+                    <animateTransform attributeName="transform" 
+                                     type="scale" 
+                                     values="1;1.05;1" 
+                                     dur="2s" 
+                                     repeatCount="indefinite"
+                                     begin="3s"/>
+                </g>
+                
+                <!-- 连接箭头 -->
+                <path d="M230 90 L 320 90" stroke="#000" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowhead)"/>
+                <path d="M470 90 L 560 90" stroke="#000" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowhead)"/>
+                <path d="M635 130 L 635 220 L 470 220" stroke="#000" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowhead)" fill="none"/>
+                <path d="M155 130 L 155 220 L 320 220" stroke="#000" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowhead)" fill="none"/>
+            </svg>
+        </div>
+        
+        <div class="pixel-border" style="background-color: #a5ff00;">
+            <h2 class="subtitle">关键优势</h2>
+            
+            <div class="content">
+                <div class="point">
+                    <svg width="40" height="40" viewBox="0 0 40 40">
+                        <polygon points="20,5 25,15 35,15 27,25 30,35 20,30 10,35 13,25 5,15 15,15" fill="#ffde00" stroke="#000" stroke-width="2"/>
+                    </svg>
+                    <p>减少<span class="highlight">80%</span>理解遗留代码所需的时间</p>
+                </div>
+                
+                <div class="point">
+                    <svg width="40" height="40" viewBox="0 0 40 40">
+                        <circle cx="20" cy="20" r="15" fill="#ff5722" stroke="#000" stroke-width="2"/>
+                        <path d="M15,15 L25,25 M15,25 L25,15" stroke="#000" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                    <p>消除<span class="highlight">不符合规范</span>的代码提交</p>
+                </div>
+                
+                <div class="point">
+                    <svg width="40" height="40" viewBox="0 0 40 40">
+                        <rect x="5" y="5" width="30" height="30" fill="#00b3ff" stroke="#000" stroke-width="2"/>
+                        <path d="M10,20 L18,28 L30,12" stroke="#000" stroke-width="3" stroke-linecap="round" fill="none"/>
+                    </svg>
+                    <p>团队<span class="highlight">协作效率提升</span>，新成员快速适应</p>
+                </div>
+            </div>
+            
+            <svg width="100%" height="80" viewBox="0 0 800 80">
+                <a href="https://getstream.io/blog/cursor-ai-large-projects/" target="_blank">
+                    <rect x="230" y="10" width="340" height="60" rx="10" fill="#ff0066" stroke="#000" stroke-width="4"/>
+                    <text x="400" y="45" text-anchor="middle" font-size="20" font-weight="bold" fill="#fff">了解更多 Cursor for Large Projects</text>
+                    <animate attributeName="opacity" values="1;0.8;1" dur="2s" repeatCount="indefinite"/>
+                </a>
+            </svg>
+        </div>
     </div>
-
 </body>
 </html>
