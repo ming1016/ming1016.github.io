@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI编程工具简介 - 未来编程的革命</title>
+    <style>
+        
+        :root {
+            --neon-purple: #bc13fe;
+            --neon-blue: #0ff0fc;
+            --neon-yellow: #ffff00;
+            --neon-green: #39ff14;
+            --neon-red: #ff073a;
+            --dark-purple: #1a0033;
+            --bg-color: #141221;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: white;
+            line-height: 1.6;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%23341256' d='M0 0h50v50H0zm50 50h50v50H50z'/%3E%3Cpath fill='%232a0f47' d='M50 0h50v50H50zM0 50h50v50H0z'/%3E%3C/svg%3E");
+            background-size: 100px 100px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .glitch-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                rgba(0, 0, 0, 0.05) 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .glitch-overlay::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(
+                circle,
+                transparent 40%,
+                rgba(20, 18, 33, 0.8) 100%
+            );
+        }
+        
+        .neon-header {
+            padding: 40px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .neon-title {
+            font-family: 'Audiowide', cursive;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+            color: white;
+            text-shadow: 
+                0 0 7px #fff,
+                0 0 10px #fff,
+                0 0 21px #fff,
+                0 0 42px var(--neon-purple),
+                0 0 82px var(--neon-purple),
+                0 0 92px var(--neon-purple),
+                0 0 102px var(--neon-purple),
+                0 0 151px var(--neon-purple);
+            animation: flicker 1.5s infinite alternate;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--neon-blue);
+            text-shadow: 
+                0 0 5px var(--neon-blue),
+                0 0 10px var(--neon-blue);
+            letter-spacing: 2px;
+        }
+        
+        .content-section {
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .section-title {
+            font-family: 'Audiowide', cursive;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: var(--neon-yellow);
+            text-shadow: 
+                0 0 5px var(--neon-yellow),
+                0 0 10px var(--neon-yellow);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(
+                90deg, 
+                var(--neon-blue), 
+                var(--neon-purple), 
+                var(--neon-yellow)
+            );
+            box-shadow: 
+                0 0 5px var(--neon-blue),
+                0 0 10px var(--neon-yellow);
+        }
+        
+        .tool-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .tool-card {
+            background: rgba(20, 18, 33, 0.7);
+            border: 1px solid;
+            border-image-slice: 1;
+            border-image-source: linear-gradient(
+                45deg, 
+                var(--neon-blue), 
+                var(--neon-purple), 
+                var(--neon-yellow)
+            );
+            padding: 30px;
+            box-shadow: 
+                0 0 15px var(--neon-purple),
+                inset 0 0 15px var(--neon-purple);
+            position: relative;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 0 25px var(--neon-purple),
+                inset 0 0 25px var(--neon-purple);
+        }
+        
+        .tool-card.cursor {
+            border-image-source: linear-gradient(
+                45deg, 
+                var(--neon-blue), 
+                var(--neon-purple)
+            );
+            box-shadow: 
+                0 0 15px var(--neon-blue),
+                inset 0 0 15px var(--neon-blue);
+        }
+        
+        .tool-card.cursor:hover {
+            box-shadow: 
+                0 0 25px var(--neon-blue),
+                inset 0 0 25px var(--neon-blue);
+        }
+        
+        .tool-card.copilot {
+            border-image-source: linear-gradient(
+                45deg, 
+                var(--neon-yellow), 
+                var(--neon-green)
+            );
+            box-shadow: 
+                0 0 15px var(--neon-green),
+                inset 0 0 15px var(--neon-green);
+        }
+        
+        .tool-card.copilot:hover {
+            box-shadow: 
+                0 0 25px var(--neon-green),
+                inset 0 0 25px var(--neon-green);
+        }
+        
+        .tool-header {
+            margin-bottom: 20px;
+        }
+        
+        .tool-title {
+            font-family: 'Audiowide', cursive;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .cursor-title {
+            color: var(--neon-blue);
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+        
+        .copilot-title {
+            color: var(--neon-green);
+            text-shadow: 0 0 5px var(--neon-green);
+        }
+        
+        .tool-description {
+            margin-bottom: 20px;
+        }
+        
+        .neon-link {
+            color: var(--neon-yellow);
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 3px var(--neon-yellow);
+        }
+        
+        .neon-link:hover {
+            color: white;
+            text-shadow: 
+                0 0 5px var(--neon-yellow),
+                0 0 10px var(--neon-yellow);
+        }
+        
+        .neon-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: var(--neon-yellow);
+            box-shadow: 0 0 5px var(--neon-yellow);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        
+        .neon-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        .tool-icon {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .neon-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            margin: 5px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: rgba(20, 18, 33, 0.7);
+            border: 1px solid var(--neon-purple);
+            color: var(--neon-purple);
+            box-shadow: 0 0 5px var(--neon-purple);
+            animation: pulse 2s infinite;
+        }
+        
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature-box {
+            background: rgba(20, 18, 33, 0.7);
+            border: 1px solid;
+            border-image-slice: 1;
+            border-image-source: linear-gradient(
+                45deg, 
+                var(--neon-red), 
+                var(--neon-purple)
+            );
+            padding: 25px;
+            box-shadow: 
+                0 0 10px var(--neon-red),
+                inset 0 0 10px var(--neon-red);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .feature-box:hover {
+            transform: scale(1.03);
+            box-shadow: 
+                0 0 15px var(--neon-red),
+                inset 0 0 15px var(--neon-red);
+        }
+        
+        .feature-icon {
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-family: 'Audiowide', cursive;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--neon-red);
+            text-shadow: 0 0 5px var(--neon-red);
+        }
+        
+        .code-block {
+            background: rgba(10, 10, 15, 0.8);
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: monospace;
+            color: white;
+            border-left: 3px solid var(--neon-green);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(57, 255, 20, 0.05) 25%,
+                transparent 50%
+            );
+            animation: scanLine 2s linear infinite;
+        }
+        
+        .comment {
+            color: var(--neon-purple);
+            opacity: 0.7;
+        }
+        
+        .keyword {
+            color: var(--neon-blue);
+        }
+        
+        .string {
+            color: var(--neon-green);
+        }
+        
+        .vs-compare {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            position: relative;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .retro-grid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 300px;
+            background-image: linear-gradient(
+                0deg,
+                var(--neon-purple) 0%,
+                transparent 15%
+            );
+            z-index: -1;
+            transform: perspective(300px) rotateX(60deg);
+            transform-origin: bottom;
+            background-size: 50px 50px;
+            background-position: center;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+        
+        .retro-grid::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, var(--neon-purple) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--neon-purple) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        /* Animations */
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 
+                    0 0 7px #fff,
+                    0 0 10px #fff,
+                    0 0 21px #fff,
+                    0 0 42px var(--neon-purple),
+                    0 0 82px var(--neon-purple),
+                    0 0 92px var(--neon-purple),
+                    0 0 102px var(--neon-purple),
+                    0 0 151px var(--neon-purple);
+            }
+            20%, 24%, 55% {        
+                text-shadow: none;
+            }    
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 5px var(--neon-purple);
+            }
+            50% {
+                box-shadow: 0 0 15px var(--neon-purple);
+            }
+            100% {
+                box-shadow: 0 0 5px var(--neon-purple);
+            }
+        }
+        
+        @keyframes scanLine {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .neon-title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .tool-title {
+                font-size: 1.5rem;
+            }
+            
+            .tool-cards, .features-container {
+                gap: 20px;
+            }
+            
+            .tool-card, .feature-box {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .neon-title {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .tool-cards, .features-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="glitch-overlay"></div>
+    
+    <div class="container">
+        <header class="neon-header">
+            <h1 class="neon-title">AI编程工具</h1>
+            <p class="subtitle">未来编程的革命性技术</p>
+            <div class="tool-icon">
+                <svg width="200" height="200" viewBox="0 0 200 200">
+                    <defs>
+                        <filter id="glow-purple">
+                            <feGaussianBlur stdDeviation="3" result="blur" />
+                            <feFlood flood-color="#bc13fe" flood-opacity="1" result="glow" />
+                            <feComposite in="glow" in2="blur" operator="in" result="coloredBlur" />
+                            <feMerge>
+                                <feMergeNode in="coloredBlur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                        <filter id="glow-blue">
+                            <feGaussianBlur stdDeviation="3" result="blur" />
+                            <feFlood flood-color="#0ff0fc" flood-opacity="1" result="glow" />
+                            <feComposite in="glow" in2="blur" operator="in" result="coloredBlur" />
+                            <feMerge>
+                                <feMergeNode in="coloredBlur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                        <filter id="glow-yellow">
+                            <feGaussianBlur stdDeviation="3" result="blur" />
+                            <feFlood flood-color="#ffff00" flood-opacity="1" result="glow" />
+                            <feComposite in="glow" in2="blur" operator="in" result="coloredBlur" />
+                            <feMerge>
+                                <feMergeNode in="coloredBlur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    
+                    <!-- Brain outline -->
+                    <path d="M100 30 C140 30, 160 60, 160 100 C160 140, 130 170, 100 170 C70 170, 40 140, 40 100 C40 60, 60 30, 100 30Z" 
+                        fill="none" stroke="#bc13fe" stroke-width="2" filter="url(#glow-purple)" />
+                    
+                    <!-- Circuit paths -->
+                    <path d="M100 30 L100 15 M160 100 L175 100 M100 170 L100 185 M40 100 L25 100" 
+                        stroke="#0ff0fc" stroke-width="2" filter="url(#glow-blue)" />
+                    
+                    <!-- Code symbols -->
+                    <text x="85" y="75" font-family="monospace" font-size="14" fill="#ffff00" filter="url(#glow-yellow)">{}</text>
+                    <text x="105" y="110" font-family="monospace" font-size="14" fill="#ffff00" filter="url(#glow-yellow)">()</text>
+                    <text x="80" y="130" font-family="monospace" font-size="14" fill="#ffff00" filter="url(#glow-yellow)">if</text>
+                    <text x="110" y="90" font-family="monospace" font-size="14" fill="#ffff00" filter="url(#glow-yellow)">;</text>
+                    
+                    <!-- Neural connections -->
+                    <circle cx="85" cy="70" r="3" fill="#0ff0fc" filter="url(#glow-blue)" />
+                    <circle cx="110" cy="105" r="3" fill="#0ff0fc" filter="url(#glow-blue)" />
+                    <circle cx="80" cy="125" r="3" fill="#0ff0fc" filter="url(#glow-blue)" />
+                    <circle cx="115" cy="85" r="3" fill="#0ff0fc" filter="url(#glow-blue)" />
+                    
+                    <line x1="85" y1="70" x2="115" y2="85" stroke="#ff073a" stroke-width="1" filter="url(#glow-purple)" />
+                    <line x1="115" y1="85" x2="110" y2="105" stroke="#ff073a" stroke-width="1" filter="url(#glow-purple)" />
+                    <line x1="110" y1="105" x2="80" y2="125" stroke="#ff073a" stroke-width="1" filter="url(#glow-purple)" />
+                    <line x1="80" y1="125" x2="85" y2="70" stroke="#ff073a" stroke-width="1" filter="url(#glow-purple)" />
+                    
+                    <!-- Binary data flowing -->
+                    <text x="60" y="60" font-family="monospace" font-size="8" fill="#39ff14" filter="url(#glow-blue)" opacity="0.7">10101</text>
+                    <text x="120" y="140" font-family="monospace" font-size="8" fill="#39ff14" filter="url(#glow-blue)" opacity="0.7">01010</text>
+                    <text x="140" y="70" font-family="monospace" font-size="8" fill="#39ff14" filter="url(#glow-blue)" opacity="0.7">11001</text>
+                </svg>
+            </div>
+        </header>
+        
+        <section class="content-section">
+            <h2 class="section-title">热门工具</h2>
+            <div class="tool-cards">
+                <div class="tool-card cursor">
+                    <div>
+                        <div class="tool-header">
+                            <h3 class="tool-title cursor-title">Cursor</h3>
+                            <span class="neon-badge">AI 增强编辑器</span>
+                        </div>
+                        
+                        <div class="tool-icon">
+                            <svg width="150" height="150" viewBox="0 0 150 150">
+                                <defs>
+                                    <filter id="glow-cursor">
+                                        <feGaussianBlur stdDeviation="2" result="blur" />
+                                        <feFlood flood-color="#0ff0fc" flood-opacity="0.8" result="glow" />
+                                        <feComposite in="glow" in2="blur" operator="in" result="coloredBlur" />
+                                        <feMerge>
+                                            <feMergeNode in="coloredBlur" />
+                                            <feMergeNode in="SourceGraphic" />
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+                                
+                                <!-- Editor background -->
+                                <rect x="25" y="20" width="100" height="110" rx="5" fill="#1a0033" stroke="#0ff0fc" stroke-width="2" filter="url(#glow-cursor)" />
+                                
+                                <!-- Code editor top bar -->
+                                <rect x="25" y="20" width="100" height="15" rx="5" fill="#341256" stroke="#0ff0fc" stroke-width="1" />
+                                <circle cx="35" cy="27" r="3" fill="#ff073a" />
+                                <circle cx="45" cy="27" r="3" fill="#ffff00" />
+                                <circle cx="55" cy="27" r="3" fill="#39ff14" />
+                                
+                                <!-- Code lines -->
+                                <rect x="35" y="45" width="80" height="5" rx="2" fill="#0ff0fc" opacity="0.7" />
+                                <rect x="35" y="55" width="60" height="5" rx="2" fill="#0ff0fc" opacity="0.7" />
+                                <rect x="45" y="65" width="60" height="5" rx="2" fill="#0ff0fc" opacity="0.7" />
+                                <rect x="45" y="75" width="40" height="5" rx="2" fill="#0ff0fc" opacity="0.7" />
+                                <rect x="35" y="85" width="70" height="5" rx="2" fill="#0ff0fc" opacity="0.7" />
+                                
+                                <!-- Cursor with AI suggestion -->
+                                <rect x="45" y="95" width="30" height="5" rx="2" fill="#0ff0fc" opacity="0.7" />
+                                <rect x="75" y="95" width="30" height="5" rx="2" fill="#bc13fe" opacity="0.9" filter="url(#glow-cursor)" />
+                                
+                                <!-- Blinking cursor -->
+                                <rect x="75" y="95" width="2" height="5" fill="#ffffff" opacity="0.9">
+                                    <animate attributeName="opacity" values="0;1;0" dur="1s" repeatCount="indefinite" />
+                                </rect>
+                                
+                                <!-- AI helper icon -->
+                                <circle cx="115" cy="110" r="8" fill="#1a0033" stroke="#0ff0fc" stroke-width="2" filter="url(#glow-cursor)" />
+                                <text x="112" y="114" font-family="Arial" font-size="10" fill="#0ff0fc" filter="url(#glow-cursor)">AI</text>
+                            </svg>
+                        </div>
+                        
+                        <div class="tool-description">
+                            <p>基于 Visual Studio Code 构建的 AI 增强编辑器，专为现代开发者设计，将编码体验提升到全新水平。Cursor 集成了强大的 AI 功能，包括代码生成、智能建议和代码库理解。</p>
+                        </div>
+                        
+                        <div class="code-block">
+                            <span class="comment">// 使用 Cursor 生成函数</span><br>
+                            <span class="keyword">function</span> calculateDiscount(price, code) {<br>
+                            &nbsp;&nbsp;<span class="keyword">let</span> discount = 0;<br>
+                            &nbsp;&nbsp;<span class="keyword">if</span> (code === <span class="string">"NEWYEAR"</span>) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;discount = price * 0.2;<br>
+                            &nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;<span class="keyword">return</span> price - discount;<br>
+                            }
+                        </div>
+                    </div>
+                    
+                    <p><a href="https://www.cursor.com/en" class="neon-link" target="_blank">访问 Cursor 官网</a></p>
+                </div>
+                
+                <div class="tool-card copilot">
+                    <div>
+                        <div class="tool-header">
+                            <h3 class="tool-title copilot-title">GitHub Copilot</h3>
+                            <span class="neon-badge">AI 编码助手</span>
+                        </div>
+                        
+                        <div class="tool-icon">
+                            <svg width="150" height="150" viewBox="0 0 150 150">
+                                <defs>
+                                    <filter id="glow-copilot">
+                                        <feGaussianBlur stdDeviation="2" result="blur" />
+                                        <feFlood flood-color="#39ff14" flood-opacity="0.8" result="glow" />
+                                        <feComposite in="glow" in2="blur" operator="in" result="coloredBlur" />
+                                        <feMerge>
+                                            <feMergeNode in="coloredBlur" />
+                                            <feMergeNode in="SourceGraphic" />
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+                                
+                                <!-- Earth and satellite orbit -->
+                                <circle cx="75" cy="75" r="35" fill="#1a0033" stroke="#39ff14" stroke-width="2" filter="url(#glow-copilot)" />
+                                <ellipse cx="75" cy="75" rx="55" ry="25" fill="none" stroke="#39ff14" stroke-width="1" stroke-dasharray="5,3" filter="url(#glow-copilot)" opacity="0.6" />
+                                
+                                <!-- Satellite/Copilot -->
+                                <circle cx="130" cy="75" r="10" fill="#1a0033" stroke="#ffff00" stroke-width="2" filter="url(#glow-yellow)">
+                                    <animateTransform
+                                        attributeName="transform"
+                                        attributeType="XML"
+                                        type="rotate"
+                                        from="0 75 75"
+                                        to="360 75 75"
+                                        dur="10s"
+                                        repeatCount="indefinite" />
+                                </circle>
+                                
+                                <!-- Satellite dish -->
+                                <path d="M125 70 L135 75 L125 80 Z" fill="#ffff00" filter="url(#glow-yellow)">
+                                    <animateTransform
+                                        attributeName="transform"
+                                        attributeType="XML"
+                                        type="rotate"
+                                        from="0 75 75"
+                                        to="360 75 75"
+                                        dur="10s"
+                                        repeatCount="indefinite" />
+                                </path>
+                                
+                                <!-- Signal beams -->
+                                <line x1="120" y1="75" x2="90" y2="75" stroke="#ffff00" stroke-width="1" filter="url(#glow-yellow)" stroke-dasharray="5,3" opacity="0.8">
+                                    <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite" />
+                                    <animateTransform
+                                        attributeName="transform"
+                                        attributeType="XML"
+                                        type="rotate"
+                                        from="0 75 75"
+                                        to="360 75 75"
+                                        dur="10s"
+                                        repeatCount="indefinite" />
+                                </line>
+                                
+                                <!-- Continents on earth -->
+                                <path d="M65 55 Q75 45, 85 55 T95 65 Q85 80, 75 75 T65 55" fill="#39ff14" opacity="0.5" filter="url(#glow-copilot)" />
+                                <path d="M55 85 Q65 75, 70 85 T85 95 Q75 105, 65 95 T55 85" fill="#39ff14" opacity="0.5" filter="url(#glow-copilot)" />
+                                
+                                <!-- Binary data floating near satellite -->
+                                <text x="115" y="65" font-family="monospace" font-size="6" fill="#ffff00" filter="url(#glow-yellow)" opacity="0.8">01101</text>
+                                <text x="115" y="90" font-family="monospace" font-size="6" fill="#ffff00" filter="url(#glow-yellow)" opacity="0.8">10011</text>
+                            </svg>
+                        </div>
+                        
+                        <div class="tool-description">
+                            <p>由 GitHub 和 OpenAI 合作开发，基于大量公开代码库训练，可以提供实时代码建议，极大加速编程过程。Copilot 能理解您的编码意图，并提供智能化的代码片段和完整功能实现。</p>
+                        </div>
+                        
+                        <div class="code-block">
+                            <span class="comment">// 描述意图，Copilot 自动生成</span><br>
+                            <span class="comment">// 获取用户位置并计算与目标地点距离</span><br>
+                            <span class="keyword">async function</span> getUserDistance(targetLat, targetLng) {<br>
+                            &nbsp;&nbsp;<span class="keyword">const</span> position = <span class="keyword">await</span> getCurrentPosition();<br>
+                            &nbsp;&nbsp;<span class="keyword">const</span> distance = calculateDistance(<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;position.coords.latitude,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;position.coords.longitude,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;targetLat, targetLng<br>
+                            &nbsp;&nbsp;);<br>
+                            &nbsp;&nbsp;<span class="keyword">return</span> distance;<br>
+                            }
+                        </div>
+                    </div>
+                    
+                    <p><a href="https://github.com/features/copilot" class="neon-link" target="_blank">了解 GitHub Copilot</a></p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2 class="section-title">关键特性与优势</h2>
+            <div class="features-container">
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <svg width="80" height="80" viewBox="0 0 80 80">
+                            <defs>
+                                <filter id="glow-feature1">
+                                    <feGaussianBlur stdDeviation="2" result="blur" />
+                                    <feFlood flood-color="#ff073a" flood-opacity="0.8" result="glow" />
+                                    <feComposite in="glow" in2="blur" operator="in" result="coloredBlur" />
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            
+                            <!-- Fast rocket icon -->
+                            <path d="M40 10 L50 30 L60 70 L40 60 L20 70 L30 30 Z" fill="none" stroke="#ff073a" stroke-width="2" filter="url(#glow-feature1)" />
+                            <circle cx="40" cy="35" r="5" fill="none" stroke="#ff073a" stroke-width="2" />
+                            
+                            <!-- Rocket flame -->
+                            <path d="M35 70 Q40 80, 45 70" fill="none" stroke="#ffff00" stroke-width="2" filter="url(#glow-yellow)">
+                                <animate attributeName="d" values="M35 70 Q40 80, 45 70; M35 70 Q40 85, 45 70; M35 70 Q40 80, 45 70" dur="0.5s" repeatCount="indefinite" />
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">提高开发速度</h3>
+                    <p>AI 工具能减少重复性编码工作，自动生成代码框架和常用功能，让开发者专注于更具创造性的任务，将开发速度提高 30-50%。</p>
+                </div>
+                
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <svg width="80" height="80" viewBox="0 0 80 80">
+                            <defs>
+                                <filter id="glow-feature2">
+                                    <feGaussianBlur stdDeviation="2" result="blur" />
+                                    <feFlood flood-color="#ff073a" flood-opacity="0.8" result="glow" />
+                                    <feComposite in="glow" in2="blur" operator="in" result="coloredBlur" />
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            
+                            <!-- Bug with X -->
+                            <circle cx="40" cy="40" r="20" fill="none" stroke="#ff073a" stroke-width="2" filter="url(#glow-feature2)" />
+                            <circle cx="30" cy="30" r="5" fill="#ff073a" filter="url(#glow-feature2)" />
+                            <circle cx="50" cy="30" r="5" fill="#ff073a" filter="url(#glow-feature2)" />
+                            
+                            <path d="M30 50 Q40 45, 50 50" fill="none" stroke="#ff073a" stroke-width="2" />
+                            
+                            <!-- Legs -->
+                            <line x1="25" y1="45" x2="20" y2="55" stroke="#ff073a" stroke-width="2" />
+                            <line x1="35" y1="55" x2="30" y2="65" stroke="#ff073a" stroke-width="2" />
+                            <line x1="45" y1="55" x2="50" y2="65" stroke="#ff073a" stroke-width="2" />
+                            <line x1="55" y1="45" x2="60" y2="55" stroke="#ff073a" stroke-width="2" />
+                            
+                            <!-- X mark -->
+                            <line x1="25" y1="25" x2="55" y2="55" stroke="#ffff00" stroke-width="3" filter="url(#glow-yellow)" />
+                            <line x1="55" y1="25" x2="25" y2="55" stroke="#ffff00" stroke-width="3" filter="url(#glow-yellow)" />
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">减少错误率</h3>
+                    <p>AI 辅助工具能够识别可能的代码错误和漏洞，提供最佳实践建议，确保代码质量和安全性，减少 bug 修复时间，提高程序稳定性。</p>
+                </div>
+                
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <svg width="80" height="80" viewBox="0 0 80 80">
+                            <defs>
+                                <filter id="glow-feature3">
+                                    <feGaussianBlur stdDeviation="2" result="blur" />
+                                    <feFlood flood-color="#ff073a" flood-opacity="0.8" result="glow" />
+                                    <feComposite in="glow" in2="blur" operator="in" result="coloredBlur" />
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            
+                            <!-- Learning curve -->
+                            <path d="M20 60 C30 60, 30 20, 60 20" fill="none" stroke="#ff073a" stroke-width="2" filter="url(#glow-feature3)" />
+                            <path d="M20 60 L20 20 L60 20" fill="none" stroke="#ff073a" stroke-width="1" stroke-dasharray="3,3" />
+                            
+                            <!-- Arrow tip -->
+                            <path d="M60 20 L55 15 M60 20 L55 25" fill="none" stroke="#ff073a" stroke-width="2" />
+                            
+                            <!-- Graduation cap -->
+                            <rect x="35" y="35" width="15" height="10" fill="none" stroke="#ffff00" stroke-width="2" filter="url(#glow-yellow)" />
+                            <path d="M32 35 L53 35" fill="none" stroke="#ffff00" stroke-width="2" filter="url(#glow-yellow)" />
+                            <path d="M42.5 35 L42.5 30" fill="none" stroke="#ffff00" stroke-width="2" filter="url(#glow-yellow)" />
+                            <rect x="37.5" y="25" width="10" height="5" fill="none" stroke="#ffff00" stroke-width="2" filter="url(#glow-yellow)" />
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">降低学习门槛</h3>
+                    <p>通过实时建议和示例代码，帮助初学者更快掌握编程语言和框架，提供上下文相关的文档和解释，让编程更易于学习和掌握。</p>
+                </div>
+                
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <svg width="80" height="80" viewBox="0 0 80 80">
+                            <defs>
+                                <filter id="glow-feature4">
+                                    <feGaussianBlur stdDeviation="2" result="blur" />
+                                    <feFlood flood-color="#ff073a" flood-opacity="0.8" result="glow" />
+                                    <feComposite in="glow" in2="blur" operator="in" result="coloredBlur" />
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            
+                            <!-- Refresh icon with code -->
+                            <circle cx="40" cy="40" r="20" fill="none" stroke="#ff073a" stroke-width="2" filter="url(#glow-feature4)" />
+                            
+                            <!-- Arrow path -->
+                            <path d="M40 25 A15 15 0 1 1 25 40" fill="none" stroke="#ff073a" stroke-width="2" filter="url(#glow-feature4)" />
+                            <path d="M25 35 L25 45 L35 45" fill="none" stroke="#ff073a" stroke-width="2" />
+                            
+                            <!-- Code symbol -->
+                            <text x="35" y="45" font-family="monospace" font-size="15" fill="#ffff00" filter="url(#glow-yellow)">{}</text>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">代码重构与优化</h3>
+                    <p>AI 能够分析现有代码并提出优化建议，自动重构复杂代码以提高可读性和性能，帮助维护和更新遗留代码库。</p>
+                </div>
+            </div>
+        </section>
+        
+        <div class="retro-grid"></div>
+    </div>
+    
+    <script>
+        // 添加浮动动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const toolCards = document.querySelectorAll('.tool-card');
+            toolCards.forEach((card, index) => {
+                card.style.animation = `float 3s ease-in-out ${index * 0.5}s infinite`;
+            });
+        });
+    </script>
+</body>
+</html>
