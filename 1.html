@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 编程：适用场景与局限</title>
+    <title>AI 辅助编程 - 学习与技能提升</title>
     <style>
         * {
             margin: 0;
@@ -12,327 +12,358 @@
         }
         
         body {
-            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
-            background-color: #2A2A4A;
-            color: #fff;
-            padding: 2rem;
+            font-family: 'Courier New', monospace;
+            background-color: #0a1128;
+            color: #ffffff;
+            padding: 20px;
             line-height: 1.6;
             overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(5, 102, 141, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(236, 64, 122, 0.15) 0%, transparent 40%);
+            position: relative;
+        }
+        
+        /* 噪点纹理效果 */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E");
+            pointer-events: none;
+            opacity: 0.15;
+            z-index: 1;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
+            z-index: 2;
         }
         
-        header {
-            margin-bottom: 3rem;
+        .header {
+            margin-bottom: 30px;
             position: relative;
         }
         
         .title {
-            font-size: 3rem;
-            font-weight: 800;
-            color: #F9D675;
-            text-shadow: 3px 3px 0 #D94E3A;
-            margin-bottom: 1rem;
-            position: relative;
-            z-index: 2;
-            line-height: 1.2;
+            font-size: 5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: #4aedc4;
+            text-shadow: 
+                0 0 10px rgba(74, 237, 196, 0.7),
+                0 0 20px rgba(74, 237, 196, 0.5),
+                3px 3px 0px #ff6ec7;
+            letter-spacing: -2px;
+            transform: skew(-5deg);
         }
         
         .subtitle {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #E87A54;
-            margin-bottom: 2rem;
-        }
-        
-        .content-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            position: relative;
-        }
-        
-        .section {
-            flex: 1;
-            min-width: 300px;
-            background: rgba(160, 140, 170, 0.2);
-            border-radius: 20px;
-            padding: 2rem;
-            position: relative;
-            border: 2px solid #A08CAA;
-            box-shadow: 5px 5px 0 rgba(217, 78, 58, 0.5);
-            overflow: hidden;
-        }
-        
-        .section-title {
             font-size: 2rem;
             font-weight: bold;
-            color: #F9D675;
-            margin-bottom: 1.5rem;
+            color: #ff6ec7;
+            text-shadow: 0 0 10px rgba(255, 110, 199, 0.7);
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .card {
+            background: rgba(26, 32, 66, 0.8);
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #4aedc4, #ff6ec7, #ffe66d) 1;
+            padding: 25px;
+            border-radius: 5px;
             position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
         }
         
-        .section-title::after {
-            content: '';
+        .card::before {
+            content: "";
             position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 80px;
-            height: 4px;
-            background-color: #D94E3A;
-            border-radius: 2px;
-        }
-        
-        ul {
-            list-style: none;
-            padding-left: 0.5rem;
-        }
-        
-        li {
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-left: 2rem;
-        }
-        
-        li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.5rem;
-            width: 12px;
-            height: 12px;
-            background-color: #D94E3A;
-            border-radius: 50%;
-        }
-        
-        .highlight {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #F9D675;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-        
-        .description {
-            color: #E6E6FA;
-        }
-        
-        .deco-circle {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.1;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
             z-index: -1;
+            background: linear-gradient(45deg, #4aedc4, #ff6ec7, #ffe66d);
+            filter: blur(15px);
+            opacity: 0.5;
         }
         
-        .doodle {
-            position: absolute;
-            opacity: 0.8;
-            z-index: 1;
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.6);
         }
         
-        .date {
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffe66d;
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px rgba(255, 230, 109, 0.7);
+        }
+        
+        .card-content {
+            font-size: 1.1rem;
+            color: #e5e5e5;
+        }
+        
+        .key-point {
+            color: #4aedc4;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(74, 237, 196, 0.7);
+        }
+        
+        .stars {
             position: absolute;
-            bottom: 2rem;
-            right: 2rem;
-            font-family: cursive;
-            color: #D94E3A;
-            font-size: 1rem;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
         }
         
         @media (max-width: 768px) {
             .title {
-                font-size: 2.2rem;
+                font-size: 3.5rem;
             }
             
             .subtitle {
-                font-size: 1.2rem;
+                font-size: 1.5rem;
             }
             
-            .section-title {
-                font-size: 1.6rem;
+            .content-grid {
+                grid-template-columns: 1fr;
             }
-            
-            .highlight {
-                font-size: 1.1rem;
-            }
+        }
+        
+        /* 手帐风格元素 */
+        .doodle {
+            position: absolute;
+            z-index: 1;
+            opacity: 0.5;
+        }
+        
+        .doodle-1 {
+            top: 20px;
+            right: 40px;
+            transform: rotate(15deg);
+        }
+        
+        .doodle-2 {
+            bottom: 40px;
+            left: 30px;
+            transform: rotate(-10deg);
+        }
+        
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .glitch-text::before, .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch-text::before {
+            color: #ff6ec7;
+            z-index: -1;
+            transform: translateX(-3px);
+        }
+        
+        .glitch-text::after {
+            color: #4aedc4;
+            z-index: -2;
+            transform: translateX(3px);
         }
     </style>
 </head>
 <body>
+    <!-- 星星背景 -->
+    <svg class="stars" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+        <defs>
+            <radialGradient id="starGlow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+                <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+            </radialGradient>
+        </defs>
+        <g fill="url(#starGlow)">
+            <script type="text/javascript">
+                for (let i = 0; i < 100; i++) {
+                    const x = Math.random() * 100;
+                    const y = Math.random() * 100;
+                    const size = Math.random() * 3 + 1;
+                    const opacity = Math.random() * 0.7 + 0.3;
+                    document.write(`<circle cx="${x}%" cy="${y}%" r="${size}" opacity="${opacity}"><animate attributeName="opacity" values="${opacity};${opacity/2};${opacity}" dur="${Math.random() * 3 + 2}s" repeatCount="indefinite"/></circle>`);
+                }
+            </script>
+        </g>
+    </svg>
+
     <div class="container">
-        <header>
-            <h1 class="title">AI 编程助手：何时召唤，何时谨慎</h1>
-            <p class="subtitle">人工智能如何改变我们的编码方式</p>
-        </header>
-
-        <div class="content-wrapper">
-            <!-- 适合场景部分 -->
-            <section class="section">
-                <h2 class="section-title">✨ 最适合场景</h2>
-                
-                <svg class="doodle" width="100" height="100" viewBox="0 0 100 100" style="position: absolute; top: 20px; right: 20px;">
-                    <g>
-                        <rect x="10" y="10" width="80" height="80" rx="10" fill="none" stroke="#E87A54" stroke-width="2" stroke-dasharray="5 3" />
-                        <text x="50" y="50" font-family="monospace" font-size="10" fill="#F9D675" text-anchor="middle" dominant-baseline="middle">
-                            <tspan x="50" y="30">function() {</tspan>
-                            <tspan x="50" y="50">  return AI;</tspan>
-                            <tspan x="50" y="70">}</tspan>
-                        </text>
-                        
-                        <animateTransform
-                            attributeName="transform"
-                            type="rotate"
-                            from="0 50 50"
-                            to="3 50 50"
-                            dur="3s"
-                            repeatCount="indefinite"
-                            additive="sum"
-                            values="0 50 50; 3 50 50; 0 50 50"
-                            keyTimes="0; 0.5; 1"
-                        />
-                    </g>
-                </svg>
-
-                <ul>
-                    <li>
-                        <span class="highlight">样板代码生成</span>
-                        <p class="description">重复性强的代码结构，如 CRUD 操作、表单验证、数据模型定义等，AI 可快速搭建基础结构，节省大量重复劳动。</p>
-                    </li>
-                    <li>
-                        <span class="highlight">陌生 API 与框架使用</span>
-                        <p class="description">面对不熟悉的库或框架时，AI 能提供符合最佳实践的使用示例，加速学习曲线，减少查阅文档时间。</p>
-                    </li>
-                    <li>
-                        <span class="highlight">代码转换与重构</span>
-                        <p class="description">语言间转换、代码风格优化、架构调整等工作，AI 可提供初步实现方案，减轻手动转换负担。</p>
-                    </li>
-                </ul>
-
-                <svg width="100%" height="80">
-                    <defs>
-                        <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stop-color="#D94E3A" stop-opacity="0.7" />
-                            <stop offset="100%" stop-color="#F9D675" stop-opacity="0.7" />
-                        </linearGradient>
-                    </defs>
-                    <rect x="10" y="10" width="95%" height="60" rx="10" fill="none" stroke="url(#gradient1)" stroke-width="2" />
-                    <text x="50%" y="45" font-size="16" fill="#F9D675" text-anchor="middle">AI 提效，人类创意</text>
-                    
-                    <g transform="translate(30, 40)">
-                        <circle cx="0" cy="0" r="4" fill="#D94E3A">
-                            <animate attributeName="cx" from="0" to="20" dur="3s" repeatCount="indefinite" values="0; 20; 0" keyTimes="0; 0.5; 1" />
-                        </circle>
-                        <circle cx="40" cy="0" r="4" fill="#5B8AC2">
-                            <animate attributeName="cx" from="40" to="60" dur="3s" repeatCount="indefinite" values="40; 60; 40" keyTimes="0; 0.5; 1" />
-                        </circle>
-                    </g>
-                </svg>
-            </section>
-
-            <!-- 不适合场景部分 -->
-            <section class="section">
-                <h2 class="section-title">⚠️ 不适合场景</h2>
-                
-                <svg class="doodle" width="120" height="120" viewBox="0 0 120 120" style="position: absolute; top: 10px; right: 10px;">
-                    <g>
-                        <circle cx="60" cy="60" r="50" fill="none" stroke="#D94E3A" stroke-width="2" />
-                        <line x1="40" y1="40" x2="80" y2="80" stroke="#F9D675" stroke-width="3" />
-                        <line x1="80" y1="40" x2="40" y2="80" stroke="#F9D675" stroke-width="3" />
-                        
-                        <animateTransform
-                            attributeName="transform"
-                            type="scale"
-                            from="1 1"
-                            to="1.05 1.05"
-                            dur="2s"
-                            repeatCount="indefinite"
-                            additive="sum"
-                            values="1 1; 1.05 1.05; 1 1"
-                            keyTimes="0; 0.5; 1"
-                        />
-                    </g>
-                </svg>
-
-                <ul>
-                    <li>
-                        <span class="highlight">高度安全敏感的代码</span>
-                        <p class="description">加密算法、安全验证、支付处理等关键系统，AI 可能无法确保无漏洞实现，存在安全隐患风险。</p>
-                    </li>
-                    <li>
-                        <span class="highlight">需要深度专业知识的复杂算法</span>
-                        <p class="description">特定领域的高级算法（如量子计算、金融建模、高频交易）需要深厚学科背景，AI 难以替代专业知识。</p>
-                    </li>
-                    <li>
-                        <span class="highlight">依赖最新框架特性的代码</span>
-                        <p class="description">AI 模型训练数据有时效性限制，对于最新发布的框架版本、API 或语言特性可能知识不全或已过时。</p>
-                    </li>
-                </ul>
-
-                <svg width="100%" height="100">
-                    <defs>
-                        <pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="8" height="8">
-                            <path d="M-2,2 l4,-4 M0,8 l8,-8 M6,10 l4,-4" stroke="#A08CAA" stroke-width="1" />
-                        </pattern>
-                    </defs>
-                    <rect x="10" y="10" width="95%" height="80" rx="10" fill="none" stroke="#5B8AC2" stroke-width="2" />
-                    <rect x="10" y="10" width="95%" height="80" rx="10" fill="url(#diagonalHatch)" fill-opacity="0.3" />
-                    <text x="50%" y="55" font-size="16" fill="#F9D675" text-anchor="middle">人机协作，各司其职</text>
-                    
-                    <g transform="translate(40, 70)">
-                        <path d="M0,0 Q10,-15 20,0" stroke="#D94E3A" stroke-width="2" fill="none">
-                            <animate attributeName="d" dur="3s" repeatCount="indefinite" 
-                                values="M0,0 Q10,-15 20,0; M0,0 Q10,-5 20,0; M0,0 Q10,-15 20,0" 
-                                keyTimes="0; 0.5; 1"/>
-                        </path>
-                        <path d="M30,0 Q40,-15 50,0" stroke="#D94E3A" stroke-width="2" fill="none">
-                            <animate attributeName="d" dur="3s" repeatCount="indefinite" 
-                                values="M30,0 Q40,-15 50,0; M30,0 Q40,-5 50,0; M30,0 Q40,-15 50,0" 
-                                keyTimes="0; 0.5; 1"/>
-                        </path>
-                    </g>
-                </svg>
-            </section>
-        </div>
+        <section class="header">
+            <h1 class="title">学习与<span class="glitch-text" data-text="技能提升">技能提升</span></h1>
+            <h2 class="subtitle">AI 辅助编程的学习之旅</h2>
+            
+            <!-- 手绘涂鸦元素 -->
+            <svg class="doodle doodle-1" width="150" height="100" viewBox="0 0 150 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10,50 Q30,20 50,50 T90,50 T130,50" stroke="#ffe66d" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5,5">
+                    <animate attributeName="stroke-dashoffset" from="0" to="20" dur="2s" repeatCount="indefinite" />
+                </path>
+                <path d="M20,70 Q40,40 60,70 T100,70 T140,70" stroke="#ff6ec7" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <animate attributeName="stroke-dasharray" values="0,10;5,10;10,10" dur="3s" repeatCount="indefinite" />
+                </path>
+            </svg>
+            
+            <svg class="doodle doodle-2" width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="60" cy="60" r="40" stroke="#4aedc4" stroke-width="3" fill="none" stroke-dasharray="10,5">
+                    <animate attributeName="r" values="40;45;40" dur="3s" repeatCount="indefinite" />
+                    <animate attributeName="stroke-width" values="3;2;3" dur="3s" repeatCount="indefinite" />
+                </circle>
+                <circle cx="60" cy="60" r="30" stroke="#ffe66d" stroke-width="2" fill="none">
+                    <animate attributeName="r" values="30;35;30" dur="2.5s" repeatCount="indefinite" />
+                </circle>
+            </svg>
+        </section>
         
-        <svg width="100%" height="120" viewBox="0 0 800 120" style="margin-top: 2rem;">
-            <defs>
-                <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#5B8AC2" />
-                    <stop offset="50%" stop-color="#A08CAA" />
-                    <stop offset="100%" stop-color="#D94E3A" />
-                </linearGradient>
-            </defs>
+        <div class="content-grid">
+            <div class="card">
+                <h3 class="card-title">概念解释</h3>
+                <div class="card-content">
+                    <p>随时询问AI关于<span class="key-point">编程概念、设计模式、算法</span>等知识点的解释。</p>
+                    <p>AI能够以多种方式呈现知识，包括：</p>
+                    <ul>
+                        <li>简明扼要的解释</li>
+                        <li>丰富的代码示例</li>
+                        <li>类比与图形化说明</li>
+                        <li>适合不同层次开发者的解释深度</li>
+                    </ul>
+                    <svg width="100%" height="120" viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="10" y="10" width="80" height="100" fill="rgba(74, 237, 196, 0.2)" stroke="#4aedc4" stroke-width="2" rx="5">
+                            <animate attributeName="opacity" values="0.2;0.4;0.2" dur="3s" repeatCount="indefinite" />
+                        </rect>
+                        <text x="50" y="40" font-size="12" fill="#4aedc4" text-anchor="middle">编程概念</text>
+                        <line x1="90" y1="60" x2="130" y2="60" stroke="#ff6ec7" stroke-width="2">
+                            <animate attributeName="x2" values="110;130;110" dur="2s" repeatCount="indefinite" />
+                        </line>
+                        <rect x="140" y="30" width="140" height="60" fill="rgba(255, 110, 199, 0.2)" stroke="#ff6ec7" stroke-width="2" rx="5">
+                            <animate attributeName="width" values="140;150;140" dur="3s" repeatCount="indefinite" />
+                        </rect>
+                        <text x="210" y="60" font-size="12" fill="#ff6ec7" text-anchor="middle">清晰易懂的解释与示例</text>
+                    </svg>
+                </div>
+            </div>
             
-            <!-- 动态波浪效果 -->
-            <path d="M0,50 Q200,20 400,50 T800,50" stroke="url(#gradient2)" stroke-width="4" fill="none">
-                <animate attributeName="d" 
-                    values="M0,50 Q200,20 400,50 T800,50;
-                           M0,50 Q200,80 400,50 T800,50;
-                           M0,50 Q200,20 400,50 T800,50" 
-                    dur="10s" 
-                    repeatCount="indefinite" />
-            </path>
+            <div class="card">
+                <h3 class="card-title">示例生成</h3>
+                <div class="card-content">
+                    <p>快速获取<span class="key-point">任何技术的实用示例</span>，从基础到高级应用。</p>
+                    <p>AI可以生成：</p>
+                    <ul>
+                        <li>特定框架的标准实现</li>
+                        <li>设计模式的代码实例</li>
+                        <li>算法优化示例</li>
+                        <li>针对特定问题的定制解决方案</li>
+                    </ul>
+                    <svg width="100%" height="120" viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
+                        <g transform="translate(10,10)">
+                            <rect width="280" height="100" rx="5" fill="rgba(26, 32, 66, 0.5)" stroke="#ffe66d" stroke-width="2" />
+                            <text x="20" y="30" fill="#ffe66d" font-family="monospace" font-size="12">function example() {</text>
+                            <text x="30" y="50" fill="#ff6ec7" font-family="monospace" font-size="12">// 示例代码</text>
+                            <text x="30" y="70" fill="#4aedc4" font-family="monospace" font-size="12">return solution;</text>
+                            <text x="20" y="90" fill="#ffe66d" font-family="monospace" font-size="12">}</text>
+                            
+                            <rect x="140" y="40" width="20" height="20" fill="#4aedc4" opacity="0.3">
+                                <animate attributeName="opacity" values="0.3;0.7;0.3" dur="1s" repeatCount="indefinite" />
+                            </rect>
+                            
+                            <g transform="translate(220, 20)">
+                                <path d="M0,0 L20,0 L20,20 L0,20 Z" fill="none" stroke="#ff6ec7" stroke-width="2">
+                                    <animate attributeName="d" values="M0,0 L20,0 L20,20 L0,20 Z; M5,5 L25,0 L20,20 L0,15 Z; M0,0 L20,0 L20,20 L0,20 Z" dur="4s" repeatCount="indefinite" />
+                                </path>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+            </div>
             
-            <!-- 运动的节点 -->
-            <circle cx="200" cy="50" r="8" fill="#F9D675">
-                <animate attributeName="cx" 
-                    values="0; 800; 0" 
-                    dur="20s" 
-                    repeatCount="indefinite" />
-                <animate attributeName="cy" 
-                    values="50; 30; 70; 50" 
-                    dur="5s" 
-                    repeatCount="indefinite" />
-            </circle>
+            <div class="card">
+                <h3 class="card-title">学习路径</h3>
+                <div class="card-content">
+                    <p>根据个人目标获取<span class="key-point">定制化学习建议</span>和资源推荐。</p>
+                    <p>AI能够提供：</p>
+                    <ul>
+                        <li>从初学到精通的渐进式学习计划</li>
+                        <li>针对特定技术栈的学习建议</li>
+                        <li>高质量学习资源整合</li>
+                        <li>根据个人学习风格定制的方法推荐</li>
+                    </ul>
+                    <svg width="100%" height="140" viewBox="0 0 300 140" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M30,110 C70,110 70,30 120,30 C170,30 170,110 220,110 C270,110 270,60 290,60" stroke="#4aedc4" stroke-width="3" fill="none" stroke-linecap="round">
+                            <animate attributeName="stroke-dasharray" values="0,1000;1000,0" dur="3s" fill="freeze" />
+                        </path>
+                        <circle cx="30" cy="110" r="8" fill="#ff6ec7">
+                            <animate attributeName="cx" values="30;290" dur="3s" fill="freeze" />
+                            <animate attributeName="cy" values="110;60" dur="3s" fill="freeze" keyTimes="0;1" keySplines="0.42 0 0.58 1" calcMode="spline" />
+                        </circle>
+                        <text x="30" y="130" font-size="12" fill="#ffe66d" text-anchor="middle">初学者</text>
+                        <text x="290" y="40" font-size="12" fill="#ffe66d" text-anchor="middle">专家</text>
+                    </svg>
+                </div>
+            </div>
             
-            <text x="50%" y="100" text-anchor="middle" font-size="18" font-weight="bold" fill="#F9D675">
-                AI 是工具，程序员是艺术家
-            </text>
-        </svg>
+            <div class="card">
+                <h3 class="card-title">平衡自动化与理解</h3>
+                <div class="card-content">
+                    <p><span class="key-point">提高效率的同时</span>，保持对代码的<span class="key-point">理解和控制</span>。</p>
+                    <p>实现平衡的策略：</p>
+                    <ul>
+                        <li>让AI解释生成的代码</li>
+                        <li>逐步构建而非一次性生成</li>
+                        <li>主动询问设计决策背后的原理</li>
+                        <li>将AI作为协作伙伴而非替代品</li>
+                    </ul>
+                    <svg width="100%" height="120" viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="balanceGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#ff6ec7" />
+                                <stop offset="50%" stop-color="#ffe66d" />
+                                <stop offset="100%" stop-color="#4aedc4" />
+                                <animate attributeName="x1" values="0%;20%;0%" dur="5s" repeatCount="indefinite" />
+                                <animate attributeName="x2" values="100%;80%;100%" dur="5s" repeatCount="indefinite" />
+                            </linearGradient>
+                        </defs>
+                        <rect x="30" y="55" width="240" height="10" fill="none" stroke="#ffe66d" stroke-width="1" rx="5" />
+                        <circle cx="150" cy="60" r="15" fill="url(#balanceGrad)">
+                            <animate attributeName="cx" values="90;210;90" dur="10s" repeatCount="indefinite" />
+                        </circle>
+                        <text x="60" y="40" font-size="12" fill="#ff6ec7" text-anchor="middle">自动化</text>
+                        <text x="240" y="40" font-size="12" fill="#4aedc4" text-anchor="middle">深度理解</text>
+                        <text x="150" y="100" font-size="14" fill="#ffe66d" text-anchor="middle">平衡点</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
