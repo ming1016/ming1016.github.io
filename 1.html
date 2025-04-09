@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 编程互动模式</title>
+    <title>代码重构</title>
     <style>
-        
         :root {
-            --mint: #64ffda;
-            --pink: #ff55a3;
-            --yellow: #ffdf00;
-            --deep-blue: #0a1128;
-            --light-blue: #094074;
+            --main-blue: #1a3a8f;
+            --light-blue: #3355b0;
+            --gold: #d4af37;
+            --light-gold: #f2e298;
+            --bg-color: #fff8e6;
+            --text-color: #333;
         }
         
         * {
@@ -21,488 +21,401 @@
         }
         
         body {
-            font-family: 'Noto Sans SC', sans-serif;
-            background-color: var(--deep-blue);
-            color: white;
-            min-height: 100vh;
+            font-family: "SimSun", "宋体", serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
             overflow-x: hidden;
-            position: relative;
-        }
-        
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise' x='0%25' y='0%25' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeBlend mode='overlay' in='SourceGraphic'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.15'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 1;
+            padding: 20px;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 50C55 40 65 40 70 50C75 60 65 70 50 50Z' fill='%23d4af3733' /%3E%3C/svg%3E");
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
             position: relative;
-            z-index: 2;
         }
         
-        header {
+        .cloisonne-border {
+            border: 12px solid var(--main-blue);
+            border-radius: 30px;
+            padding: 30px;
+            position: relative;
+            background-color: var(--bg-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .cloisonne-border::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 6px solid var(--gold);
+            border-radius: 18px;
+            pointer-events: none;
+        }
+
+        .decorative-corner {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            z-index: 1;
+        }
+
+        .top-left {
+            top: -10px;
+            left: -10px;
+        }
+
+        .top-right {
+            top: -10px;
+            right: -10px;
+            transform: scaleX(-1);
+        }
+
+        .bottom-left {
+            bottom: -10px;
+            left: -10px;
+            transform: scaleY(-1);
+        }
+
+        .bottom-right {
+            bottom: -10px;
+            right: -10px;
+            transform: scale(-1);
+        }
+        
+        .header {
             text-align: center;
             margin-bottom: 40px;
             position: relative;
         }
         
-        h1 {
-            font-size: 3.5rem;
-            margin: 20px 0;
-            background: linear-gradient(90deg, var(--mint), var(--pink));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 10px rgba(100, 255, 218, 0.5), 0 0 20px rgba(255, 85, 163, 0.3);
+        .title {
+            font-size: 2.8rem;
+            color: var(--main-blue);
+            text-shadow: 1px 1px 2px var(--gold);
+            margin-bottom: 15px;
             position: relative;
             display: inline-block;
-            font-weight: bold;
-            letter-spacing: 2px;
-            filter: drop-shadow(0 0 5px var(--mint));
         }
         
-        .pixel-border {
-            border: 4px solid var(--mint);
-            border-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 L100,0 L100,10 L90,10 L90,20 L100,20 L100,80 L90,80 L90,90 L100,90 L100,100 L0,100 L0,90 L10,90 L10,80 L0,80 L0,20 L10,20 L10,10 L0,10 Z' fill='%2364ffda'/%3E%3C/svg%3E") 20;
-            position: relative;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 0 15px rgba(100, 255, 218, 0.5);
-            background-color: rgba(10, 17, 40, 0.7);
-        }
-        
-        .pixel-border::before {
+        .title::after {
             content: "";
             position: absolute;
-            top: -10px;
-            left: 20px;
-            width: 60%;
-            height: 5px;
-            background: var(--yellow);
-            box-shadow: 0 0 10px var(--yellow);
-            clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
-            animation: glow 4s infinite alternate;
+            bottom: -10px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
         
-        .grid-container {
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--light-blue);
+            margin-bottom: 30px;
+        }
+        
+        .content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            grid-template-columns: 1fr;
+            gap: 40px;
         }
         
-        .interaction-card {
+        .feature-card {
+            background: var(--main-blue);
+            border-radius: 20px;
+            padding: 30px;
+            color: white;
             position: relative;
-            padding: 25px;
-            border-radius: 5px;
-            background: linear-gradient(135deg, rgba(9, 64, 116, 0.8), rgba(10, 17, 40, 0.9));
-            box-shadow: 0 0 15px rgba(100, 255, 218, 0.2);
             overflow: hidden;
-            transition: all 0.3s ease;
+            border: 4px solid var(--gold);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
         }
         
-        .interaction-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 25px rgba(100, 255, 218, 0.4);
-        }
-        
-        .interaction-card::before {
+        .feature-card::before {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--pink), var(--mint));
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20C30 10 70 10 80 20C90 30 90 70 80 80C70 90 30 90 20 80C10 70 10 30 20 20Z' fill='none' stroke='%23d4af3733' stroke-width='1'/%3E%3C/svg%3E");
+            opacity: 0.1;
+            pointer-events: none;
         }
         
-        .interaction-card h3 {
-            color: var(--mint);
+        .feature-title {
             font-size: 1.8rem;
+            color: var(--gold);
             margin-bottom: 20px;
-            text-shadow: 0 0 5px rgba(100, 255, 218, 0.7);
-            display: flex;
-            align-items: center;
-        }
-        
-        .interaction-card h3 svg {
-            margin-right: 10px;
-        }
-        
-        .example-list {
-            list-style: none;
-            margin: 15px 0;
-        }
-        
-        .example-item {
-            margin-bottom: 15px;
-            padding: 12px;
-            background-color: rgba(10, 17, 40, 0.7);
-            border-left: 3px solid var(--pink);
-            box-shadow: 0 0 8px rgba(255, 85, 163, 0.3);
-            display: flex;
-            align-items: flex-start;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-        
-        .example-item::before {
-            content: ">";
-            color: var(--pink);
+            text-align: center;
             font-weight: bold;
-            margin-right: 10px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
         }
         
-        .svg-container {
-            margin: 20px 0;
-            width: 100%;
+        .feature-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .feature-text {
+            flex: 1;
+            min-width: 300px;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        
+        .feature-visual {
+            flex: 1;
+            min-width: 300px;
             display: flex;
             justify-content: center;
         }
         
-        .stars {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
+        .code-block {
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: "Courier New", monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+            position: relative;
+            border-left: 4px solid var(--gold);
         }
-        
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.8));
-            animation: twinkle var(--duration) infinite ease-in-out;
-            opacity: var(--opacity);
+
+        .deletion {
+            background-color: rgba(255, 100, 100, 0.3);
+            text-decoration: line-through;
         }
-        
-        @keyframes twinkle {
-            0%, 100% { opacity: var(--opacity); }
-            50% { opacity: var(--opacity) * 0.3; }
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0); }
-        }
-        
-        @keyframes glow {
-            0% { box-shadow: 0 0 5px var(--yellow); }
-            100% { box-shadow: 0 0 20px var(--yellow); }
-        }
-        
-        @keyframes typing {
-            0% { width: 0; }
-            100% { width: 100%; }
+
+        .addition {
+            background-color: rgba(100, 255, 100, 0.3);
         }
         
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            .grid-container {
+            .content {
                 grid-template-columns: 1fr;
             }
             
-            .svg-container {
-                transform: scale(0.8);
+            .feature-content {
+                flex-direction: column;
             }
-        }
-        
-        .info-box {
-            position: relative;
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(9, 64, 116, 0.4);
-            border-left: 3px solid var(--yellow);
-            font-size: 0.9rem;
-        }
-        
-        .info-box::before {
-            content: "💡";
-            margin-right: 10px;
-        }
-        
-        .glitch-effect {
-            animation: glitch 5s infinite;
-            position: relative;
-        }
-        
-        @keyframes glitch {
-            0%, 90%, 100% { transform: translate(0, 0); filter: hue-rotate(0deg); }
-            92% { transform: translate(-5px, 3px); filter: hue-rotate(90deg); }
-            94% { transform: translate(5px, -3px); filter: hue-rotate(180deg); }
-            96% { transform: translate(-3px, -5px); filter: hue-rotate(270deg); }
-            98% { transform: translate(3px, 5px); filter: hue-rotate(360deg); }
-        }
-        
-        .handwritten {
-            font-family: 'Noto Sans SC', cursive;
-            transform: rotate(-2deg);
-            color: var(--yellow);
-            font-size: 1.2rem;
-            margin: 20px 0;
-            text-align: center;
-            text-shadow: 0 0 5px var(--yellow);
+            
+            .feature-text, .feature-visual {
+                min-width: 100%;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .feature-title {
+                font-size: 1.5rem;
+            }
+            
+            .cloisonne-border {
+                padding: 15px;
+            }
+            
+            .decorative-corner {
+                width: 80px;
+                height: 80px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="stars"></div>
     <div class="container">
-        <header>
-            <h1 class="glitch-effect">AI 编程交互方式</h1>
-            <p class="handwritten">解锁 AI 辅助编程的高效互动模式</p>
-        </header>
-        
-        <div class="pixel-border">
-            <div class="grid-container">
-                <!-- 针对性提问 -->
-                <div class="interaction-card">
-                    <h3>
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#64ffda" stroke-width="2"/>
-                            <path d="M10 9C10 7.89543 10.8954 7 12 7C13.1046 7 14 7.89543 14 9C14 10.1046 13.1046 11 12 11V13" stroke="#64ffda" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M12 16V16.01" stroke="#64ffda" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                        针对性提问
-                    </h3>
-                    
-                    <svg class="svg-container" width="100%" height="140" viewBox="0 0 300 140" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <filter id="glow1">
-                                <feGaussianBlur stdDeviation="2" result="blur"/>
-                                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                            </filter>
-                        </defs>
-                        
-                        <!-- 人物 -->
-                        <g transform="translate(40,40)">
-                            <circle cx="0" cy="0" r="20" fill="#ff55a3" filter="url(#glow1)"/>
-                            <text x="0" y="5" font-size="20" fill="white" text-anchor="middle">👩‍💻</text>
-                        </g>
-                        
-                        <!-- AI -->
-                        <g transform="translate(220,40)">
-                            <circle cx="0" cy="0" r="25" fill="#64ffda" filter="url(#glow1)"/>
-                            <text x="0" y="5" font-size="20" fill="white" text-anchor="middle">🤖</text>
-                        </g>
-                        
-                        <!-- 对话框和箭头 -->
-                        <g transform="translate(40,80)">
-                            <rect x="0" y="0" width="100" height="30" rx="5" fill="rgba(255,85,163,0.3)" stroke="#ff55a3" stroke-width="2"/>
-                            <text x="50" y="20" font-size="12" fill="white" text-anchor="middle">如何实现分页？</text>
-                        </g>
-                        
-                        <path d="M150,85 L200,85" stroke="#ffdf00" stroke-width="2" stroke-dasharray="5,3">
-                            <animate attributeName="stroke-dashoffset" from="8" to="0" dur="1s" repeatCount="indefinite"/>
-                        </path>
-                        <polygon points="200,85 190,80 190,90" fill="#ffdf00"/>
-                        
-                        <g transform="translate(220,90)">
-                            <rect x="-70" y="0" width="140" height="50" rx="5" fill="rgba(100,255,218,0.3)" stroke="#64ffda" stroke-width="2"/>
-                            <text x="0" y="20" font-size="10" fill="white" text-anchor="middle">可以使用这段代码来实现分页：</text>
-                            <text x="0" y="40" font-size="10" fill="#ffdf00" text-anchor="middle">function paginate(items, page, perPage)...</text>
-                        </g>
-                    </svg>
-                    
-                    <ul class="example-list">
-                        <li class="example-item">如何在这段代码中实现分页功能？</li>
-                        <li class="example-item">这个函数为什么会抛出空指针异常？</li>
-                        <li class="example-item">如何优化这个 SQL 查询提高性能？</li>
-                        <li class="example-item">这段代码的时间复杂度是多少？</li>
-                    </ul>
-                    
-                    <div class="info-box">
-                        提示：提供具体上下文和明确目标的问题，AI 能给出更精确的回答
+        <div class="cloisonne-border">
+            <!-- 装饰性角落花纹 -->
+            <svg class="decorative-corner top-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,0 Q50,20 20,50 T0,100" stroke="#d4af37" stroke-width="3" fill="none"/>
+                <path d="M0,0 Q30,30 50,20 T100,0" stroke="#d4af37" stroke-width="3" fill="none"/>
+                <circle cx="30" cy="30" r="5" fill="#1a3a8f" stroke="#d4af37" stroke-width="1"/>
+                <path d="M10,10 Q30,5 25,25 T10,30 T5,20 T10,10" fill="#1a3a8f" stroke="#d4af37" stroke-width="1"/>
+            </svg>
+            <svg class="decorative-corner top-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,0 Q50,20 20,50 T0,100" stroke="#d4af37" stroke-width="3" fill="none"/>
+                <path d="M0,0 Q30,30 50,20 T100,0" stroke="#d4af37" stroke-width="3" fill="none"/>
+                <circle cx="30" cy="30" r="5" fill="#1a3a8f" stroke="#d4af37" stroke-width="1"/>
+                <path d="M10,10 Q30,5 25,25 T10,30 T5,20 T10,10" fill="#1a3a8f" stroke="#d4af37" stroke-width="1"/>
+            </svg>
+            <svg class="decorative-corner bottom-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,0 Q50,20 20,50 T0,100" stroke="#d4af37" stroke-width="3" fill="none"/>
+                <path d="M0,0 Q30,30 50,20 T100,0" stroke="#d4af37" stroke-width="3" fill="none"/>
+                <circle cx="30" cy="30" r="5" fill="#1a3a8f" stroke="#d4af37" stroke-width="1"/>
+                <path d="M10,10 Q30,5 25,25 T10,30 T5,20 T10,10" fill="#1a3a8f" stroke="#d4af37" stroke-width="1"/>
+            </svg>
+            <svg class="decorative-corner bottom-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,0 Q50,20 20,50 T0,100" stroke="#d4af37" stroke-width="3" fill="none"/>
+                <path d="M0,0 Q30,30 50,20 T100,0" stroke="#d4af37" stroke-width="3" fill="none"/>
+                <circle cx="30" cy="30" r="5" fill="#1a3a8f" stroke="#d4af37" stroke-width="1"/>
+                <path d="M10,10 Q30,5 25,25 T10,30 T5,20 T10,10" fill="#1a3a8f" stroke="#d4af37" stroke-width="1"/>
+            </svg>
+
+            <div class="header">
+                <h1 class="title">代码重构</h1>
+                <p class="subtitle">编程伙伴，事半功倍</p>
+            </div>
+
+            <div class="content">
+                <div class="feature-card">
+                    <h2 class="feature-title">代码智能重构</h2>
+                    <div class="feature-content">
+                        <div class="feature-text">
+                            <p>使用快捷键 <strong>Cmd+K</strong> 即可一键请求AI优化您的代码。系统会清晰展示修改差异：</p>
+                            <p>· 红色标记删除的内容</p>
+                            <p>· 绿色标记新增的部分</p>
+                            <p>· 智能识别可优化点</p>
+                            <p>· 代码质量和可读性显著提升</p>
+                        </div>
+                        <div class="feature-visual">
+                            <svg width="300" height="250" viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="10" y="10" width="280" height="40" rx="5" fill="rgba(255,255,255,0.1)" stroke="#d4af37" stroke-width="2"/>
+                                <text x="25" y="35" fill="#f2e298" font-family="monospace" font-size="16">Cmd + K</text>
+                                <path d="M150,50 L150,80" stroke="#d4af37" stroke-width="3" stroke-dasharray="5,5"/>
+                                <rect x="10" y="80" width="280" height="160" rx="5" fill="rgba(255,255,255,0.1)" stroke="#d4af37" stroke-width="2"/>
+                                <text x="25" y="105" fill="#f2e298" font-family="monospace" font-size="12"><tspan fill="#ff6464">- function cb(err, data) {</tspan></text>
+                                <text x="25" y="125" fill="#f2e298" font-family="monospace" font-size="12"><tspan fill="#ff6464">-   if (err) return handleError(err);</tspan></text>
+                                <text x="25" y="145" fill="#f2e298" font-family="monospace" font-size="12"><tspan fill="#ff6464">-   processData(data);</tspan></text>
+                                <text x="25" y="165" fill="#f2e298" font-family="monospace" font-size="12"><tspan fill="#ff6464">- }</tspan></text>
+                                <text x="25" y="185" fill="#f2e298" font-family="monospace" font-size="12"><tspan fill="#64ff64">+ async function processData() {</tspan></text>
+                                <text x="25" y="205" fill="#f2e298" font-family="monospace" font-size="12"><tspan fill="#64ff64">+   try {</tspan></text>
+                                <text x="25" y="225" fill="#f2e298" font-family="monospace" font-size="12"><tspan fill="#64ff64">+     const data = await getData();</tspan></text>
+                                <text x="25" y="245" fill="#f2e298" font-family="monospace" font-size="12"><tspan fill="#64ff64">+     return processData(data);</tspan></text>
+                                <text x="25" y="265" fill="#f2e298" font-family="monospace" font-size="12"><tspan fill="#64ff64">+   } catch (err) {</tspan></text>
+                                <text x="25" y="285" fill="#f2e298" font-family="monospace" font-size="12"><tspan fill="#64ff64">+     handleError(err);</tspan></text>
+                                <text x="25" y="305" fill="#f2e298" font-family="monospace" font-size="12"><tspan fill="#64ff64">+   }</tspan></text>
+                                <text x="25" y="325" fill="#f2e298" font-family="monospace" font-size="12"><tspan fill="#64ff64">+ }</tspan></text>
+                            </svg>
+                        </div>
                     </div>
                 </div>
-                
-                <!-- 代码改进 -->
-                <div class="interaction-card">
-                    <h3>
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9 11.5L12 14.5L15 11.5" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 9V14.5" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        代码改进
-                    </h3>
-                    
-                    <svg class="svg-container" width="100%" height="140" viewBox="0 0 300 140" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <filter id="glow2">
-                                <feGaussianBlur stdDeviation="2" result="blur"/>
-                                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                            </filter>
-                        </defs>
-                        
-                        <!-- 代码块-前 -->
-                        <g transform="translate(50,40)">
-                            <rect x="-30" y="-20" width="60" height="40" rx="5" fill="rgba(255,85,163,0.3)" stroke="#ff55a3" stroke-width="2"/>
-                            <text x="0" y="-5" font-size="8" fill="white" text-anchor="middle">{'{'}</text>
-                            <text x="0" y="5" font-size="8" fill="white" text-anchor="middle">  for(i=0;i&lt;n;i++)</text>
-                            <text x="0" y="15" font-size="8" fill="white" text-anchor="middle">{'}'}</text>
-                        </g>
-                        
-                        <!-- 优化箭头 -->
-                        <g transform="translate(150,40)">
-                            <path d="M-40,0 L40,0" stroke="#ffdf00" stroke-width="2">
-                                <animate attributeName="stroke-dasharray" values="5,5;2,2;5,5" dur="3s" repeatCount="indefinite"/>
-                            </path>
-                            <polygon points="40,0 30,-5 30,5" fill="#ffdf00"/>
-                            <text x="0" y="-10" font-size="10" fill="#ffdf00" text-anchor="middle">优化</text>
-                            
-                            <!-- 旋转的齿轮 -->
-                            <g transform="translate(0,0)" filter="url(#glow2)">
-                                <path d="M0,0 L0,0" stroke="rgba(100,255,218,0.7)" stroke-width="1">
-                                    <animate attributeName="d" 
-                                        values="M-5,-5 L5,5 M-5,5 L5,-5;M-7,-1 L7,-1 M-1,-7 L-1,7;M-5,-5 L5,5 M-5,5 L5,-5" 
-                                        dur="2s" 
-                                        repeatCount="indefinite"/>
-                                </path>
-                            </g>
-                        </g>
-                        
-                        <!-- 代码块-后 -->
-                        <g transform="translate(250,40)">
-                            <rect x="-40" y="-25" width="80" height="50" rx="5" fill="rgba(100,255,218,0.3)" stroke="#64ffda" stroke-width="2"/>
-                            <text x="0" y="-15" font-size="8" fill="white" text-anchor="middle">{'{'}</text>
-                            <text x="0" y="-5" font-size="8" fill="white" text-anchor="middle">  let len = n;</text>
-                            <text x="0" y="5" font-size="8" fill="white" text-anchor="middle">  for(let i=0;i&lt;len;i++)</text>
-                            <text x="0" y="15" font-size="8" fill="#ffdf00" text-anchor="middle">  // 缓存长度提升性能</text>
-                            <text x="0" y="25" font-size="8" fill="white" text-anchor="middle">{'}'}</text>
-                        </g>
-                        
-                        <!-- 改进指标 -->
-                        <g transform="translate(150,100)">
-                            <rect x="-120" y="-15" width="240" height="30" rx="5" fill="rgba(9,64,116,0.7)" stroke="#64ffda" stroke-width="1"/>
-                            <text x="-100" y="5" font-size="12" fill="#64ffda" text-anchor="start">✓ 性能提升</text>
-                            <text x="0" y="5" font-size="12" fill="#ff55a3" text-anchor="middle">✓ 可读性增强</text>
-                            <text x="100" y="5" font-size="12" fill="#ffdf00" text-anchor="end">✓ 潜在bug修复</text>
-                        </g>
-                    </svg>
-                    
-                    <ul class="example-list">
-                        <li class="example-item">优化这个函数的性能</li>
-                        <li class="example-item">找出这段代码的潜在 bug</li>
-                        <li class="example-item">重构这个类使其符合 SOLID 原则</li>
-                        <li class="example-item">简化这段逻辑，减少代码复杂度</li>
-                    </ul>
-                    
-                    <div class="info-box">
-                        提示：AI 不仅能找出问题，还能建议最佳实践和设计模式
+
+                <div class="feature-card">
+                    <h2 class="feature-title">代码现代化转换</h2>
+                    <div class="feature-content">
+                        <div class="feature-visual">
+                            <svg width="300" height="250" viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M50,30 C100,10 200,10 250,30 C270,100 270,150 250,220 C200,240 100,240 50,220 C30,150 30,100 50,30 Z" fill="none" stroke="#d4af37" stroke-width="2"/>
+                                <path d="M80,50 L220,50 L220,200 L80,200 Z" fill="rgba(255,255,255,0.1)" stroke="#d4af37" stroke-width="1"/>
+                                <text x="100" y="85" fill="#f2e298" font-family="monospace" font-size="12">回调地狱</text>
+                                <path d="M110,100 L190,100" stroke="#ff6464" stroke-width="2"/>
+                                <path d="M150,50 L150,200" stroke="#d4af37" stroke-width="2" stroke-dasharray="5,5"/>
+                                <text x="100" y="185" fill="#f2e298" font-family="monospace" font-size="12">现代异步</text>
+                                <path d="M110,170 L190,170" stroke="#64ff64" stroke-width="2"/>
+                                <path d="M70,120 C80,130 90,120 100,130" stroke="#ff6464" stroke-width="1" fill="none"/>
+                                <path d="M100,130 C110,140 120,130 130,140" stroke="#ff6464" stroke-width="1" fill="none"/>
+                                <path d="M130,140 C140,150 150,140 160,150" stroke="#ff6464" stroke-width="1" fill="none"/>
+                                <path d="M200,150 L200,120 L230,120" stroke="#64ff64" stroke-width="1" fill="none"/>
+                                <path d="M200,150 L230,150" stroke="#64ff64" stroke-width="1" fill="none"/>
+                            </svg>
+                        </div>
+                        <div class="feature-text">
+                            <p>将遗留代码轻松转换为现代标准：</p>
+                            <p>· 回调函数 → async/await</p>
+                            <p>· 嵌套回调 → 扁平化结构</p>
+                            <p>· 错误处理优化</p>
+                            <p>· 保留原有功能逻辑</p>
+                            <p>· 提升代码可读性与可维护性</p>
+                        </div>
                     </div>
                 </div>
-                
-                <!-- 功能实现 -->
-                <div class="interaction-card">
-                    <h3>
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6.89001 9C7.87001 9.49 8.71001 10.23 9.32001 11.15C9.67001 11.67 9.67001 12.34 9.32001 12.86C8.71001 13.77 7.87001 14.51 6.89001 15" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M13 15H17" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        功能实现
-                    </h3>
-                    
-                    <svg class="svg-container" width="100%" height="150" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
-                        <!-- 对话框 -->
-                        <g transform="translate(50,30)">
-                            <rect x="-40" y="-15" width="80" height="30" rx="5" fill="rgba(255,223,0,0.3)" stroke="#ffdf00" stroke-width="2"/>
-                            <text x="0" y="5" font-size="10" fill="white" text-anchor="middle">请实现CSV解析器</text>
-                        </g>
-                        
-                        <!-- 箭头动画 -->
-                        <path d="M50,60 C100,90 200,90 250,60" stroke="#ff55a3" stroke-width="2" stroke-dasharray="5,3">
-                            <animate attributeName="stroke-dashoffset" from="8" to="0" dur="2s" repeatCount="indefinite"/>
-                        </path>
-                        <polygon points="250,60 240,55 240,65" fill="#ff55a3"/>
-                        
-                        <!-- 代码生成 -->
-                        <g transform="translate(150,100)">
-                            <rect x="-130" y="-20" width="260" height="70" rx="5" fill="rgba(100,255,218,0.2)" stroke="#64ffda" stroke-width="2"/>
-                            
-                            <!-- 打字机效果 -->
-                            <clipPath id="typing-mask">
-                                <rect x="-125" y="-15" width="250" height="60">
-                                    <animate attributeName="width" values="0;250" dur="3s" repeatCount="1" fill="freeze"/>
-                                </rect>
-                            </clipPath>
-                            
-                            <g clip-path="url(#typing-mask)">
-                                <text x="-125" y="-5" font-size="8" fill="white">function parseCSV(text) {</text>
-                                <text x="-125" y="5" font-size="8" fill="#ff55a3">  const rows = text.split('\n');</text>
-                                <text x="-125" y="15" font-size="8" fill="#ff55a3">  return rows.map(row => {</text>
-                                <text x="-125" y="25" font-size="8" fill="#ff55a3">    return row.split(',');</text>
-                                <text x="-125" y="35" font-size="8" fill="#ff55a3">  });</text>
-                                <text x="-125" y="45" font-size="8" fill="white">}</text>
-                            </g>
-                            
-                            <!-- 光标 -->
-                            <rect x="45" y="45" width="2" height="10" fill="white">
-                                <animate attributeName="opacity" values="0;1;0" dur="0.8s" repeatCount="indefinite"/>
-                            </rect>
-                        </g>
-                    </svg>
-                    
-                    <ul class="example-list">
-                        <li class="example-item">编写一个函数来解析 CSV 文件</li>
-                        <li class="example-item">实现一个简单的 HTTP 服务器</li>
-                        <li class="example-item">创建一个用户认证系统</li>
-                        <li class="example-item">设计一个缓存机制减少 API 调用</li>
-                    </ul>
-                    
-                    <div class="info-box">
-                        提示：提供明确的需求和边界条件，AI 能生成更符合预期的功能实现
+
+                <div class="feature-card">
+                    <h2 class="feature-title">功能智能添加</h2>
+                    <div class="feature-content">
+                        <div class="feature-text">
+                            <p>基于现有代码风格，AI智能扩展功能：</p>
+                            <p>· 分析现有代码架构与模式</p>
+                            <p>· 自动匹配团队编码规范</p>
+                            <p>· 保持一致的命名约定</p>
+                            <p>· 补充文档和注释</p>
+                            <p>· 实例：快速添加密码重置功能</p>
+                        </div>
+                        <div class="feature-visual">
+                            <svg width="300" height="250" viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="40" y="40" width="220" height="170" rx="10" fill="rgba(255,255,255,0.1)" stroke="#d4af37" stroke-width="2"/>
+                                <rect x="50" y="60" width="90" height="30" rx="5" fill="#1a3a8f" stroke="#d4af37" stroke-width="1"/>
+                                <text x="65" y="80" fill="#f2e298" font-family="sans-serif" font-size="12">登录功能</text>
+                                <rect x="50" y="110" width="90" height="30" rx="5" fill="#1a3a8f" stroke="#d4af37" stroke-width="1"/>
+                                <text x="65" y="130" fill="#f2e298" font-family="sans-serif" font-size="12">注册功能</text>
+                                <rect x="160" y="110" width="90" height="30" rx="5" fill="#1a3a8f" stroke="#d4af37" stroke-width="1" stroke-dasharray="5,2"/>
+                                <text x="165" y="130" fill="#64ff64" font-family="sans-serif" font-size="12">密码重置</text>
+                                <path d="M95,90 L150,110 L205,110" stroke="#64ff64" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+                                <path d="M95,140 L150,140 L160,140" stroke="#d4af37" stroke-width="1" stroke-dasharray="3,3" fill="none"/>
+                                <rect x="70" y="160" width="160" height="40" rx="5" fill="rgba(255,255,255,0.1)" stroke="#d4af37" stroke-width="1"/>
+                                <text x="80" y="185" fill="#f2e298" font-family="monospace" font-size="10">匹配既有代码风格与规范</text>
+                                <defs>
+                                    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5"
+                                        markerWidth="5" markerHeight="5" orient="auto">
+                                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#64ff64"/>
+                                    </marker>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <h2 class="feature-title">技术栈迁移助手</h2>
+                    <div class="feature-content">
+                        <div class="feature-visual">
+                            <svg width="300" height="250" viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="30" y="50" width="100" height="150" rx="10" fill="rgba(255,255,255,0.05)" stroke="#d4af37" stroke-width="2"/>
+                                <text x="50" y="35" fill="#d4af37" font-family="sans-serif" font-size="14">UIKit</text>
+                                <rect x="170" y="50" width="100" height="150" rx="10" fill="rgba(255,255,255,0.15)" stroke="#d4af37" stroke-width="2"/>
+                                <text x="185" y="35" fill="#d4af37" font-family="sans-serif" font-size="14">SwiftUI</text>
+                                
+                                <rect x="45" y="70" width="70" height="20" rx="4" fill="#1a3a8f" stroke="#d4af37" stroke-width="1"/>
+                                <rect x="45" y="100" width="70" height="30" rx="4" fill="#1a3a8f" stroke="#d4af37" stroke-width="1"/>
+                                <rect x="45" y="140" width="30" height="30" rx="15" fill="#1a3a8f" stroke="#d4af37" stroke-width="1"/>
+                                <rect x="85" y="140" width="30" height="30" rx="4" fill="#1a3a8f" stroke="#d4af37" stroke-width="1"/>
+                                <rect x="45" y="180" width="70" height="10" rx="2" fill="#1a3a8f" stroke="#d4af37" stroke-width="1"/>
+                                
+                                <rect x="185" y="70" width="70" height="20" rx="4" fill="#3355b0" stroke="#d4af37" stroke-width="1"/>
+                                <rect x="185" y="100" width="70" height="30" rx="4" fill="#3355b0" stroke="#d4af37" stroke-width="1"/>
+                                <rect x="185" y="140" width="30" height="30" rx="15" fill="#3355b0" stroke="#d4af37" stroke-width="1"/>
+                                <rect x="225" y="140" width="30" height="30" rx="4" fill="#3355b0" stroke="#d4af37" stroke-width="1"/>
+                                <rect x="185" y="180" width="70" height="10" rx="2" fill="#3355b0" stroke="#d4af37" stroke-width="1"/>
+                                
+                                <path d="M135,125 L165,125" stroke="#d4af37" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrowGold)"/>
+                                <text x="135" y="215" fill="#f2e298" font-family="sans-serif" font-size="12">代码转换</text>
+                                
+                                <defs>
+                                    <marker id="arrowGold" viewBox="0 0 10 10" refX="5" refY="5"
+                                        markerWidth="6" markerHeight="6" orient="auto">
+                                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#d4af37"/>
+                                    </marker>
+                                </defs>
+                            </svg>
+                        </div>
+                        <div class="feature-text">
+                            <p>无缝迁移不同技术栈的代码：</p>
+                            <p>· UIKit → SwiftUI</p>
+                            <p>· 函数式组件 → 类组件</p>
+                            <p>· 自动调整布局与生命周期</p>
+                            <p>· 适配新框架的最佳实践</p>
+                            <p>· 减少迁移过程中的常见错误</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        // 创建星星背景
-        const starsContainer = document.querySelector('.stars');
-        const starCount = 100;
-        
-        for (let i = 0; i < starCount; i++) {
-            const star = document.createElement('div');
-            star.classList.add('star');
-            
-            // 随机大小和位置
-            const size = Math.random() * 3;
-            const posX = Math.random() * 100;
-            const posY = Math.random() * 100;
-            const duration = 2 + Math.random() * 4;
-            const delay = Math.random() * 2;
-            const opacity = 0.3 + Math.random() * 0.7;
-            
-            star.style.width = `${size}px`;
-            star.style.height = `${size}px`;
-            star.style.left = `${posX}%`;
-            star.style.top = `${posY}%`;
-            star.style.setProperty('--duration', `${duration}s`);
-            star.style.setProperty('--opacity', opacity);
-            star.style.animationDelay = `${delay}s`;
-            
-            starsContainer.appendChild(star);
-        }
-    </script>
 </body>
 </html>
