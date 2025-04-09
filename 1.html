@@ -1,343 +1,607 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI编程最佳实践</title>
+    <title>AI 编程助手</title>
     <style>
+        /* 基础样式 */
         body {
-            margin: 0;
-            padding: 0;
-            background-color: #ffde00;
-            font-family: Arial, sans-serif;
+            font-family: sans-serif;
+            background-color: #f5f0e1;
             color: #000;
-            overflow-x: hidden;
-            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 20 0 L 0 0 0 20' fill='none' stroke='%23ff990033' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E");
+            line-height: 1.6;
+            padding: 20px;
+            margin: 0;
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            position: relative;
+
+        /* 窗口样式 */
+        .window {
+            border: 2px solid #000;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            background-color: #f5f0e1;
+            box-shadow: 5px 5px 0px rgba(0,0,0,0.2);
+            overflow: hidden;
         }
-        
-        .pixel-border {
-            border: 8px solid #000;
-            box-shadow: 
-                0 0 0 4px #fff, 
-                0 0 0 8px #000,
-                inset 0 0 0 2px #000;
-            position: relative;
-            background-color: #ff5722;
-            margin: 30px 0;
-            padding: 25px;
-            transform: rotate(-1deg);
+
+        .titlebar {
+            background-color: #000;
+            color: #f5f0e1;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        
-        .title {
-            font-size: 3.5rem;
-            line-height: 1.1;
-            text-transform: uppercase;
-            color: #fff;
-            text-shadow: 
-                4px 4px 0 #000,
-                8px 8px 0 #3b00ff;
+
+        .titlebar-text {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .window-buttons {
+            display: flex;
+        }
+
+        .window-button {
+            height: 14px;
+            width: 14px;
+            border-radius: 50%;
+            margin-left: 8px;
+            border: 1px solid #f5f0e1;
+        }
+
+        .close-button {
+            background-color: #f0c0c0;
+        }
+
+        .minimize-button {
+            background-color: #e0c0e0;
+        }
+
+        .window-content {
+            padding: 20px;
+        }
+
+        /* 标题样式 */
+        h1 {
+            font-size: 56px;
+            font-weight: 900;
+            margin-bottom: 40px;
             text-align: center;
             letter-spacing: -1px;
-            transform: rotate(1deg);
-            margin-bottom: 2rem;
-        }
-        
-        .subtitle {
-            font-size: 2.5rem;
-            background: #00b3ff;
-            padding: 10px 20px;
-            display: inline-block;
-            transform: rotate(-2deg);
-            margin-left: -10px;
-            color: #fff;
-            text-shadow: 3px 3px 0 #000;
-            border: 4px solid #000;
-        }
-        
-        .content {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        
-        .point {
-            background: #fff;
-            border: 5px solid #000;
-            padding: 1.5rem;
-            font-size: 1.3rem;
-            font-weight: bold;
-            flex: 1 1 300px;
+            text-transform: uppercase;
+            line-height: 1.2;
             position: relative;
-            transform: rotate(1deg);
-            box-shadow: 5px 5px 0 #000;
+            z-index: 1;
         }
-        
-        .point:nth-child(even) {
-            background: #a5ff00;
-            transform: rotate(-1deg);
-        }
-        
-        .highlight {
-            background: #ff0066;
-            color: #fff;
-            padding: 3px 8px;
-            border: 2px solid #000;
-            font-weight: bold;
-            display: inline-block;
-            transform: rotate(-1deg);
-        }
-        
-        .characters {
+
+        h1:after {
+            content: "";
             position: absolute;
             width: 100%;
-            bottom: -20px;
+            height: 15px;
+            background-color: #e0c0e0;
+            bottom: 5px;
             left: 0;
-            text-align: center;
+            z-index: -1;
+            transform: rotate(-1deg);
+        }
+
+        h2 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #000;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            color: #000;
+        }
+
+        /* 内容区样式 */
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            border: 1px solid #000;
+            border-radius: 6px;
+            padding: 20px;
+            background-color: #fff;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            border-left: 5px solid #f0c0c0;
+            padding-left: 10px;
+        }
+
+        .feature-content {
+            font-size: 16px;
+        }
+
+        .feature-content ul {
+            padding-left: 20px;
+        }
+
+        .feature-content li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .feature-content li:before {
+            content: "→";
+            position: absolute;
+            left: -20px;
         }
         
+        /* 强调块 */
+        .highlight-box {
+            background-color: #f0c0c0;
+            border: 1px solid #000;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 20px 0;
+            font-weight: 600;
+        }
+
+        /* 装饰元素 */
+        .doodle {
+            position: absolute;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        /* 响应式样式 */
         @media (max-width: 768px) {
-            .title {
-                font-size: 2.5rem;
+            h1 {
+                font-size: 36px;
             }
             
-            .subtitle {
-                font-size: 1.8rem;
+            h2 {
+                font-size: 28px;
             }
             
-            .content {
-                flex-direction: column;
+            .feature-list {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="pixel-border">
-            <h1 class="title">最佳实践：与遗留代码合作的技巧</h1>
-            
-            <svg width="100%" height="120" viewBox="0 0 800 120">
-                <defs>
-                    <filter id="pixelate" x="0" y="0" width="100%" height="100%">
-                        <feFlood x="4" y="4" height="2" width="2"/>
-                        <feComposite width="8" height="8"/>
-                        <feTile result="a"/>
-                        <feComposite in="SourceGraphic" in2="a" operator="in"/>
-                        <feMorphology operator="dilate" radius="5"/>
-                    </filter>
-                </defs>
-                <text x="400" y="80" text-anchor="middle" font-family="Arial" font-size="70" font-weight="bold" fill="#00b3ff" stroke="#000" stroke-width="8" filter="url(#pixelate)">AI + 遗留代码</text>
-            </svg>
-            
-            <div class="content">
-                <div class="point">
-                    <svg width="60" height="60" viewBox="0 0 60 60">
-                        <rect width="50" height="50" x="5" y="5" fill="#ff5722" stroke="#000" stroke-width="4"/>
-                        <circle cx="30" cy="30" r="15" fill="#ffde00" stroke="#000" stroke-width="3"/>
-                        <path d="M25 25 L35 25 L35 35 L25 35 Z" fill="#fff" stroke="#000" stroke-width="2"/>
-                        <animateTransform attributeName="transform" type="rotate" from="0 30 30" to="360 30 30" dur="10s" repeatCount="indefinite"/>
-                    </svg>
-                    <p><span class="highlight">Cursor AI</span> 在大型项目中表现优异，能够理解复杂的代码库结构和依赖关系</p>
-                </div>
-                
-                <div class="point">
-                    <svg width="60" height="60" viewBox="0 0 60 60">
-                        <g>
-                            <rect width="40" height="50" x="10" y="5" fill="#00b3ff" stroke="#000" stroke-width="3"/>
-                            <rect width="30" height="5" x="15" y="15" fill="#fff" stroke="#000" stroke-width="1"/>
-                            <rect width="30" height="5" x="15" y="25" fill="#fff" stroke="#000" stroke-width="1"/>
-                            <rect width="30" height="5" x="15" y="35" fill="#fff" stroke="#000" stroke-width="1"/>
-                            <animate attributeName="opacity" values="1;0.7;1" dur="3s" repeatCount="indefinite"/>
-                        </g>
-                    </svg>
-                    <p>通过<span class="highlight">文档文件夹</span>教 AI 学习团队的编码规范和最佳实践</p>
-                </div>
-                
-                <div class="point">
-                    <svg width="60" height="60" viewBox="0 0 60 60">
-                        <g>
-                            <polygon points="10,50 50,50 50,10 30,5 10,10" fill="#a5ff00" stroke="#000" stroke-width="3"/>
-                            <line x1="15" y1="20" x2="45" y2="20" stroke="#000" stroke-width="2"/>
-                            <line x1="15" y1="30" x2="45" y2="30" stroke="#000" stroke-width="2"/>
-                            <line x1="15" y1="40" x2="45" y2="40" stroke="#000" stroke-width="2"/>
-                            <animateTransform attributeName="transform" type="translate" values="0,0;0,-5;0,0" dur="2s" repeatCount="indefinite"/>
-                        </g>
-                    </svg>
-                    <p>确保 AI 生成的代码<span class="highlight">符合团队规范</span>，减少后期修改成本</p>
-                </div>
+    <!-- 标题部分 -->
+    <div class="window">
+        <div class="titlebar">
+            <div class="titlebar-text">AI 编程革命</div>
+            <div class="window-buttons">
+                <div class="window-button minimize-button"></div>
+                <div class="window-button close-button"></div>
             </div>
-            
-            <svg class="characters" width="100%" height="150" viewBox="0 0 800 150">
-                <!-- 像素风格AI角色 -->
-                <g transform="translate(300, 20)">
-                    <!-- 机器人头部 -->
-                    <rect x="50" y="10" width="80" height="80" fill="#00b3ff" stroke="#000" stroke-width="4" rx="10"/>
-                    <!-- 眼睛 -->
-                    <circle cx="80" cy="40" r="10" fill="#fff" stroke="#000" stroke-width="2"/>
-                    <circle cx="100" cy="40" r="10" fill="#fff" stroke="#000" stroke-width="2"/>
-                    <circle cx="80" cy="40" r="5" fill="#000"/>
-                    <circle cx="100" cy="40" r="5" fill="#000"/>
-                    <!-- 嘴巴 -->
-                    <rect x="75" y="60" width="30" height="5" fill="#000"/>
-                    <!-- 天线 -->
-                    <line x1="70" y1="10" x2="60" y2="-5" stroke="#000" stroke-width="4"/>
-                    <circle cx="60" cy="-5" r="5" fill="#ff0066" stroke="#000" stroke-width="2"/>
-                    <line x1="110" y1="10" x2="120" y2="-5" stroke="#000" stroke-width="4"/>
-                    <circle cx="120" cy="-5" r="5" fill="#ff0066" stroke="#000" stroke-width="2"/>
-                    <!-- 身体 -->
-                    <rect x="65" y="90" width="50" height="40" fill="#00b3ff" stroke="#000" stroke-width="4"/>
-                    <!-- 按钮 -->
-                    <circle cx="90" cy="105" r="5" fill="#ff0066" stroke="#000" stroke-width="2"/>
-                    <circle cx="90" cy="120" r="5" fill="#ffde00" stroke="#000" stroke-width="2"/>
-                    <!-- 手臂 -->
-                    <rect x="115" y="100" width="30" height="10" fill="#00b3ff" stroke="#000" stroke-width="3"/>
-                    <rect x="35" y="100" width="30" height="10" fill="#00b3ff" stroke="#000" stroke-width="3"/>
-                    <!-- 动画 -->
-                    <animateTransform attributeName="transform" 
-                                      type="rotate" 
-                                      from="-5 90 90" 
-                                      to="5 90 90" 
-                                      dur="1s" 
-                                      repeatCount="indefinite"
-                                      additive="sum"/>
-                </g>
-                
-                <!-- 代码元素 -->
-                <g transform="translate(450, 20)">
-                    <rect x="0" y="20" width="100" height="80" fill="#fff" stroke="#000" stroke-width="4"/>
-                    <line x1="10" y1="40" x2="50" y2="40" stroke="#ff5722" stroke-width="3"/>
-                    <line x1="10" y1="60" x2="80" y2="60" stroke="#00b3ff" stroke-width="3"/>
-                    <line x1="10" y1="80" x2="70" y2="80" stroke="#a5ff00" stroke-width="3"/>
-                    <animateTransform attributeName="transform" 
-                                      type="translate" 
-                                      values="0,0;0,5;0,0" 
-                                      dur="2s" 
-                                      repeatCount="indefinite"
-                                      additive="sum"/>
-                </g>
-                
-                <!-- 连接线 -->
-                <path d="M400 80 Q 420 60, 450 70" stroke="#000" stroke-width="3" fill="none">
+        </div>
+        <div class="window-content" style="text-align:center;">
+            <h1>用 AI 加速编程开发</h1>
+            <svg width="100%" height="150" viewBox="0 0 800 150">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#f0c0c0;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#e0c0e0;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <path d="M0,75 Q200,25 400,75 T800,75" stroke="url(#gradient)" stroke-width="5" fill="none" stroke-linecap="round">
                     <animate attributeName="d" 
-                             values="M400 80 Q 420 60, 450 70;M400 80 Q 420 70, 450 75;M400 80 Q 420 60, 450 70" 
-                             dur="2s" 
-                             repeatCount="indefinite"/>
+                        values="M0,75 Q200,25 400,75 T800,75;
+                                M0,75 Q200,125 400,75 T800,75;
+                                M0,75 Q200,25 400,75 T800,75" 
+                        dur="10s" 
+                        repeatCount="indefinite" />
                 </path>
-            </svg>
-        </div>
-        
-        <div class="pixel-border" style="background-color: #00b3ff;">
-            <h2 class="subtitle">遗留代码工作流</h2>
-            
-            <svg width="100%" height="300" viewBox="0 0 800 300">
-                <!-- 复古街机风格的工作流程图 -->
-                <defs>
-                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-                        <polygon points="0 0, 10 3.5, 0 7" fill="#000"/>
-                    </marker>
-                </defs>
-                
-                <!-- 步骤1 -->
-                <g transform="translate(80, 50)">
-                    <rect width="150" height="80" fill="#ffde00" stroke="#000" stroke-width="4" rx="5"/>
-                    <text x="75" y="50" text-anchor="middle" font-size="16" font-weight="bold">导入遗留代码</text>
-                    <animateTransform attributeName="transform" 
-                                     type="translate" 
-                                     values="80,50;85,50;80,50" 
-                                     dur="3s" 
-                                     repeatCount="indefinite"/>
+                <g>
+                    <circle cx="140" cy="60" r="15" fill="#f0c0c0" stroke="#000" stroke-width="1">
+                        <animate attributeName="cy" values="60;50;60" dur="3s" repeatCount="indefinite" />
+                    </circle>
+                    <text x="140" y="65" font-size="15" text-anchor="middle" font-weight="bold">AI</text>
+                    <circle cx="400" cy="75" r="20" fill="#e0c0e0" stroke="#000" stroke-width="1">
+                        <animate attributeName="r" values="20;22;20" dur="2s" repeatCount="indefinite" />
+                    </circle>
+                    <text x="400" y="80" font-size="15" text-anchor="middle" font-weight="bold">代码</text>
+                    <circle cx="660" cy="60" r="15" fill="#f0c0c0" stroke="#000" stroke-width="1">
+                        <animate attributeName="cy" values="60;70;60" dur="4s" repeatCount="indefinite" />
+                    </circle>
+                    <text x="660" y="65" font-size="15" text-anchor="middle" font-weight="bold">效率</text>
                 </g>
-                
-                <!-- 步骤2 -->
-                <g transform="translate(320, 50)">
-                    <rect width="150" height="80" fill="#ff5722" stroke="#000" stroke-width="4" rx="5"/>
-                    <text x="75" y="40" text-anchor="middle" font-size="16" font-weight="bold">AI 分析</text>
-                    <text x="75" y="60" text-anchor="middle" font-size="16" font-weight="bold">项目结构</text>
-                    <animateTransform attributeName="transform" 
-                                     type="translate" 
-                                     values="320,50;325,50;320,50" 
-                                     dur="3s" 
-                                     repeatCount="indefinite"
-                                     begin="1s"/>
-                </g>
-                
-                <!-- 步骤3 -->
-                <g transform="translate(560, 50)">
-                    <rect width="150" height="80" fill="#a5ff00" stroke="#000" stroke-width="4" rx="5"/>
-                    <text x="75" y="40" text-anchor="middle" font-size="16" font-weight="bold">学习团队</text>
-                    <text x="75" y="60" text-anchor="middle" font-size="16" font-weight="bold">编码规范</text>
-                    <animateTransform attributeName="transform" 
-                                     type="translate" 
-                                     values="560,50;565,50;560,50" 
-                                     dur="3s" 
-                                     repeatCount="indefinite"
-                                     begin="2s"/>
-                </g>
-                
-                <!-- 步骤4 -->
-                <g transform="translate(320, 180)">
-                    <rect width="150" height="80" fill="#00b3ff" stroke="#000" stroke-width="4" rx="5"/>
-                    <text x="75" y="40" text-anchor="middle" font-size="16" font-weight="bold">生成符合规范</text>
-                    <text x="75" y="60" text-anchor="middle" font-size="16" font-weight="bold">的新代码</text>
-                    <animateTransform attributeName="transform" 
-                                     type="scale" 
-                                     values="1;1.05;1" 
-                                     dur="2s" 
-                                     repeatCount="indefinite"
-                                     begin="3s"/>
-                </g>
-                
-                <!-- 连接箭头 -->
-                <path d="M230 90 L 320 90" stroke="#000" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowhead)"/>
-                <path d="M470 90 L 560 90" stroke="#000" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowhead)"/>
-                <path d="M635 130 L 635 220 L 470 220" stroke="#000" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowhead)" fill="none"/>
-                <path d="M155 130 L 155 220 L 320 220" stroke="#000" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowhead)" fill="none"/>
-            </svg>
-        </div>
-        
-        <div class="pixel-border" style="background-color: #a5ff00;">
-            <h2 class="subtitle">关键优势</h2>
-            
-            <div class="content">
-                <div class="point">
-                    <svg width="40" height="40" viewBox="0 0 40 40">
-                        <polygon points="20,5 25,15 35,15 27,25 30,35 20,30 10,35 13,25 5,15 15,15" fill="#ffde00" stroke="#000" stroke-width="2"/>
-                    </svg>
-                    <p>减少<span class="highlight">80%</span>理解遗留代码所需的时间</p>
-                </div>
-                
-                <div class="point">
-                    <svg width="40" height="40" viewBox="0 0 40 40">
-                        <circle cx="20" cy="20" r="15" fill="#ff5722" stroke="#000" stroke-width="2"/>
-                        <path d="M15,15 L25,25 M15,25 L25,15" stroke="#000" stroke-width="4" stroke-linecap="round"/>
-                    </svg>
-                    <p>消除<span class="highlight">不符合规范</span>的代码提交</p>
-                </div>
-                
-                <div class="point">
-                    <svg width="40" height="40" viewBox="0 0 40 40">
-                        <rect x="5" y="5" width="30" height="30" fill="#00b3ff" stroke="#000" stroke-width="2"/>
-                        <path d="M10,20 L18,28 L30,12" stroke="#000" stroke-width="3" stroke-linecap="round" fill="none"/>
-                    </svg>
-                    <p>团队<span class="highlight">协作效率提升</span>，新成员快速适应</p>
-                </div>
-            </div>
-            
-            <svg width="100%" height="80" viewBox="0 0 800 80">
-                <a href="https://getstream.io/blog/cursor-ai-large-projects/" target="_blank">
-                    <rect x="230" y="10" width="340" height="60" rx="10" fill="#ff0066" stroke="#000" stroke-width="4"/>
-                    <text x="400" y="45" text-anchor="middle" font-size="20" font-weight="bold" fill="#fff">了解更多 Cursor for Large Projects</text>
-                    <animate attributeName="opacity" values="1;0.8;1" dur="2s" repeatCount="indefinite"/>
-                </a>
             </svg>
         </div>
     </div>
+
+    <!-- 项目管理和环境设置 -->
+    <div class="section">
+        <div class="window">
+            <div class="titlebar">
+                <div class="titlebar-text">项目管理与环境设置</div>
+                <div class="window-buttons">
+                    <div class="window-button minimize-button"></div>
+                    <div class="window-button close-button"></div>
+                </div>
+            </div>
+            <div class="window-content">
+                <h2>项目管理与环境设置</h2>
+                <div class="feature-list">
+                    <div class="feature-card">
+                        <div class="feature-title">需求分析</div>
+                        <div class="feature-content">
+                            <p>AI 能将复杂的用户故事和产品要求自动转化为技术任务列表，确保开发团队精确理解并有效实施。</p>
+                            <svg width="100%" height="80" viewBox="0 0 300 80">
+                                <rect x="10" y="10" width="80" height="60" fill="#f5f0e1" stroke="#000" stroke-width="1" />
+                                <text x="50" y="40" text-anchor="middle" dominant-baseline="middle">用户需求</text>
+                                <path d="M90,40 L130,40" stroke="#000" stroke-width="1" marker-end="url(#arrow)" />
+                                <rect x="130" y="10" width="60" height="60" fill="#e0c0e0" stroke="#000" stroke-width="1">
+                                    <animate attributeName="fill" values="#e0c0e0;#f0c0c0;#e0c0e0" dur="3s" repeatCount="indefinite" />
+                                </rect>
+                                <text x="160" y="40" text-anchor="middle" dominant-baseline="middle">AI</text>
+                                <path d="M190,40 L230,40" stroke="#000" stroke-width="1" marker-end="url(#arrow)" />
+                                <rect x="230" y="10" width="60" height="60" fill="#f5f0e1" stroke="#000" stroke-width="1" />
+                                <text x="260" y="40" text-anchor="middle" dominant-baseline="middle">任务列表</text>
+                                <defs>
+                                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                                        <path d="M0,0 L0,6 L9,3 z" fill="#000" />
+                                    </marker>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">项目结构设计</div>
+                        <div class="feature-content">
+                            <p>为新项目自动生成符合最佳实践的文件结构，确保代码组织合理，易于维护和扩展。</p>
+                            <ul>
+                                <li>根据项目类型推荐最佳结构</li>
+                                <li>创建必要的配置文件</li>
+                                <li>设置合适的设计模式框架</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">工作估算</div>
+                        <div class="feature-content">
+                            <p>评估功能实现的复杂度和工作量，帮助团队更准确地规划冲刺和项目时间线。</p>
+                            <svg width="100%" height="100" viewBox="0 0 300 100">
+                                <rect x="20" y="20" width="260" height="30" fill="#f5f0e1" stroke="#000" stroke-width="1" rx="5" ry="5" />
+                                <rect x="20" y="20" width="100" height="30" fill="#f0c0c0" stroke="#000" stroke-width="1" rx="5" ry="5">
+                                    <animate attributeName="width" values="50;200;100" dur="5s" repeatCount="indefinite" />
+                                </rect>
+                                <text x="150" y="38" text-anchor="middle" font-size="12">功能复杂度评估</text>
+                                <text x="20" y="70" font-size="10">简单</text>
+                                <text x="150" y="70" font-size="10" text-anchor="middle">中等</text>
+                                <text x="280" y="70" font-size="10" text-anchor="end">复杂</text>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">其他应用</div>
+                        <div class="feature-content">
+                            <ul>
+                                <li>自动优化 CI/CD 流程配置</li>
+                                <li>生成环境设置脚本</li>
+                                <li>创建 Docker 容器化配置</li>
+                                <li>自动配置项目依赖管理</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 代码生成与补全 -->
+    <div class="section">
+        <div class="window">
+            <div class="titlebar">
+                <div class="titlebar-text">代码生成与补全</div>
+                <div class="window-buttons">
+                    <div class="window-button minimize-button"></div>
+                    <div class="window-button close-button"></div>
+                </div>
+            </div>
+            <div class="window-content">
+                <h2>代码生成与补全</h2>
+                
+                <div class="highlight-box">
+                    AI 能自动化编写样板代码、实现算法，让你专注于创意和解决复杂问题
+                </div>
+                
+                <svg width="100%" height="250" viewBox="0 0 600 250">
+                    <rect x="50" y="30" width="500" height="190" fill="#fff" stroke="#000" stroke-width="2" rx="5" ry="5" />
+                    <rect x="50" y="30" width="500" height="30" fill="#000" stroke="none" rx="5" ry="5" />
+                    <circle cx="70" cy="45" r="8" fill="#f0c0c0" />
+                    <circle cx="95" cy="45" r="8" fill="#e0c0e0" />
+                    <text x="300" y="50" text-anchor="middle" fill="#fff" font-weight="bold">代码编辑器</text>
+                    
+                    <!-- 代码内容 -->
+                    <text x="70" y="80" font-family="monospace" font-size="14" fill="#000">function createComponent() {</text>
+                    <text x="70" y="100" font-family="monospace" font-size="14" fill="#000">  return (</text>
+                    <text x="70" y="120" font-family="monospace" font-size="14" fill="#000">    &lt;<tspan fill="#e0c0e0">Button</tspan> <tspan fill="#f0c0c0">onClick</tspan>={handleClick}&gt;</text>
+                    <text x="70" y="140" font-family="monospace" font-size="14" fill="#000">      {buttonText}</text>
+                    <text x="70" y="160" font-family="monospace" font-size="14" fill="#000">    &lt;/<tspan fill="#e0c0e0">Button</tspan>&gt;</text>
+                    <text x="70" y="180" font-family="monospace" font-size="14" fill="#000">  );</text>
+                    <text x="70" y="200" font-family="monospace" font-size="14" fill="#000">}</text>
+                    
+                    <!-- 闪烁的光标 -->
+                    <rect id="cursor" x="140" y="190" width="2" height="18" fill="#000">
+                        <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite" />
+                    </rect>
+                    
+                    <!-- AI 建议气泡 -->
+                    <rect x="120" y="150" width="320" height="80" fill="#e0c0e0" stroke="#000" stroke-width="1" rx="10" ry="10" opacity="0.9">
+                        <animate attributeName="opacity" values="0;0.9" dur="1s" begin="1s" fill="freeze" />
+                    </rect>
+                    <path d="M120,170 L110,180 L120,190" fill="#e0c0e0" stroke="#000" stroke-width="1">
+                        <animate attributeName="opacity" values="0;1" dur="1s" begin="1s" fill="freeze" />
+                    </path>
+                    <text x="130" y="170" font-family="sans-serif" font-size="12" fill="#000">
+                        <animate attributeName="opacity" values="0;1" dur="1s" begin="1s" fill="freeze" />
+                        AI建议: 添加错误处理和加载状态
+                    </text>
+                    <text x="130" y="195" font-family="monospace" font-size="12" fill="#000">
+                        <animate attributeName="opacity" values="0;1" dur="1s" begin="1s" fill="freeze" />
+                        if (isLoading) return &lt;Spinner /&gt;;
+                    </text>
+                    <text x="130" y="215" font-family="monospace" font-size="12" fill="#000">
+                        <animate attributeName="opacity" values="0;1" dur="1s" begin="1s" fill="freeze" />
+                        if (error) return &lt;ErrorMessage error={error} /&gt;;
+                    </text>
+                </svg>
+                
+                <div class="feature-list">
+                    <div class="feature-card">
+                        <div class="feature-title">代码智能补全</div>
+                        <div class="feature-content">
+                            <ul>
+                                <li>上下文感知代码建议</li>
+                                <li>自动完成整个代码块</li>
+                                <li>提供多种实现方案</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-title">UI组件生成</div>
+                        <div class="feature-content">
+                            <ul>
+                                <li>根据描述生成界面组件</li>
+                                <li>自动创建表单验证逻辑</li>
+                                <li>构建响应式布局模板</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-title">算法实现</div>
+                        <div class="feature-content">
+                            <ul>
+                                <li>提供优化的数据结构实现</li>
+                                <li>生成复杂算法代码</li>
+                                <li>优化现有算法性能</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 测试和调试 -->
+    <div class="section">
+        <div class="window">
+            <div class="titlebar">
+                <div class="titlebar-text">测试和调试</div>
+                <div class="window-buttons">
+                    <div class="window-button minimize-button"></div>
+                    <div class="window-button close-button"></div>
+                </div>
+            </div>
+            <div class="window-content">
+                <h2>测试和调试</h2>
+
+                <svg width="100%" height="200" viewBox="0 0 600 200">
+                    <defs>
+                        <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#e0c0e0;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#f0c0c0;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    
+                    <!-- 测试流程图 -->
+                    <rect x="50" y="20" width="120" height="60" fill="#fff" stroke="#000" stroke-width="1" rx="5" ry="5" />
+                    <text x="110" y="50" text-anchor="middle">代码</text>
+                    
+                    <path d="M170,50 L200,50" stroke="#000" stroke-width="1" marker-end="url(#arrow2)" />
+                    
+                    <rect x="200" y="20" width="120" height="60" fill="#e0c0e0" stroke="#000" stroke-width="1" rx="5" ry="5">
+                        <animate attributeName="fill" values="#e0c0e0;#f0c0c0;#e0c0e0" dur="3s" repeatCount="indefinite" />
+                    </rect>
+                    <text x="260" y="50" text-anchor="middle">AI 测试生成</text>
+                    
+                    <path d="M320,50 L350,50" stroke="#000" stroke-width="1" marker-end="url(#arrow2)" />
+                    
+                    <rect x="350" y="20" width="120" height="60" fill="#fff" stroke="#000" stroke-width="1" rx="5" ry="5" />
+                    <text x="410" y="40" text-anchor="middle">测试执行</text>
+                    <text x="410" y="60" text-anchor="middle">bug检测</text>
+                    
+                    <path d="M410,80 L410,110" stroke="#000" stroke-width="1" marker-end="url(#arrow2)" />
+                    
+                    <rect x="350" y="110" width="120" height="60" fill="#fff" stroke="#000" stroke-width="1" rx="5" ry="5" />
+                    <text x="410" y="140" text-anchor="middle">优化代码</text>
+                    
+                    <path d="M350,140 L110,140 L110,80" stroke="#000" stroke-width="1" stroke-dasharray="5,5" marker-end="url(#arrow2)" />
+                    
+                    <defs>
+                        <marker id="arrow2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                            <path d="M0,0 L0,6 L9,3 z" fill="#000" />
+                        </marker>
+                    </defs>
+                </svg>
+
+                <div class="feature-list">
+                    <div class="feature-card">
+                        <div class="feature-title">生成测试用例</div>
+                        <div class="feature-content">
+                            <ul>
+                                <li>自动为函数生成全面的单元测试</li>
+                                <li>覆盖各种边界条件和异常情况</li>
+                                <li>创建集成测试和端到端测试</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-title">优先级测试</div>
+                        <div class="feature-content">
+                            <ul>
+                                <li>智能识别高风险代码区域</li>
+                                <li>优先测试关键业务逻辑</li>
+                                <li>建议最有效的测试策略</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-title">错误检测与修复</div>
+                        <div class="feature-content">
+                            <ul>
+                                <li>分析代码查找潜在错误</li>
+                                <li>提供详细的错误解释</li>
+                                <li>自动生成修复建议</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 文档生成和代码审查 -->
+    <div class="section">
+        <div class="window">
+            <div class="titlebar">
+                <div class="titlebar-text">文档生成和代码审查</div>
+                <div class="window-buttons">
+                    <div class="window-button minimize-button"></div>
+                    <div class="window-button close-button"></div>
+                </div>
+            </div>
+            <div class="window-content">
+                <h2>文档生成和代码审查</h2>
+                
+                <div class="feature-list">
+                    <div class="feature-card">
+                        <div class="feature-title">注释生成</div>
+                        <div class="feature-content">
+                            <svg width="100%" height="120" viewBox="0 0 300 120">
+                                <rect x="10" y="10" width="280" height="100" fill="#fff" stroke="#000" stroke-width="1" rx="3" ry="3" />
+                                <text x="20" y="30" font-family="monospace" font-size="10" fill="#000">
+                                    <tspan fill="#808080">/**</tspan>
+                                </text>
+                                <text x="20" y="45" font-family="monospace" font-size="10" fill="#000">
+                                    <tspan fill="#808080"> * 计算两个数组的交集</tspan>
+                                </text>
+                                <text x="20" y="60" font-family="monospace" font-size="10" fill="#000">
+                                    <tspan fill="#808080"> * @param {Array} arr1 - 第一个输入数组</tspan>
+                                </text>
+                                <text x="20" y="75" font-family="monospace" font-size="10" fill="#000">
+                                    <tspan fill="#808080"> * @param {Array} arr2 - 第二个输入数组</tspan>
+                                </text>
+                                <text x="20" y="90" font-family="monospace" font-size="10" fill="#000">
+                                    <tspan fill="#808080"> * @returns {Array} 包含两个数组共有元素的新数组</tspan>
+                                </text>
+                                <text x="20" y="105" font-family="monospace" font-size="10" fill="#000">
+                                    <tspan fill="#808080"> */</tspan>
+                                </text>
+                            </svg>
+                            <ul>
+                                <li>选中代码后自动生成规范注释</li>
+                                <li>描述函数作用、参数和返回值</li>
+                                <li>支持多种注释规范（JSDoc、DocBlock等）</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-title">README 编写</div>
+                        <div class="feature-content">
+                            <ul>
+                                <li>为项目生成全面的README.md</li>
+                                <li>包含安装步骤和使用示例</li>
+                                <li>自动创建API参考文档</li>
+                                <li>生成项目结构说明</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">API 文档</div>
+                        <div class="feature-content">
+                            <ul>
+                                <li>自动生成API接口文档</li>
+                                <li>创建端点使用示例</li>
+                                <li>生成请求/响应模型</li>
+                                <li>维护文档与代码的同步</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-title">代码质量检查</div>
+                        <div class="feature-content">
+                            <ul>
+                                <li>审查代码是否符合最佳实践</li>
+                                <li>检测安全漏洞</li>
+                                <li>分析性能瓶颈</li>
+                                <li>提供可维护性改进建议</li>
+                            </ul>
+                            <svg width="100%" height="80" viewBox="0 0 300 80">
+                                <rect x="10" y="10" width="280" height="30" fill="#f5f0e1" stroke="#000" stroke-width="1" rx="5" ry="5" />
+                                <text x="30" y="30" font-size="14">代码质量评分</text>
+                                
+                                <!-- 进度条 -->
+                                <rect x="150" y="15" width="130" height="20" fill="#fff" stroke="#000" stroke-width="1" rx="3" ry="3" />
+                                <rect x="150" y="15" width="95" height="20" fill="url(#progressGradient)" stroke="none" rx="3" ry="3">
+                                    <animate attributeName="width" values="0;95" dur="2s" fill="freeze" />
+                                </rect>
+                                <text x="215" y="30" font-size="14" text-anchor="middle" font-weight="bold">73%</text>
+                                
+                                <text x="30" y="60" font-size="12" fill="#000">AI建议: 提取重复代码为独立函数</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
