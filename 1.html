@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 辅助调试</title>
+    <title>用AI理解代码</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-color: #2A2A4A;
-            font-family: "Comic Sans MS", cursive, sans-serif;
-            overflow: hidden;
+            background-color: #f5f0e1;
+            font-family: 'Arial Black', 'Arial Bold', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            overflow: hidden;
         }
         
         .container {
@@ -22,14 +22,6 @@
             max-width: 1200px;
             height: 90vh;
             position: relative;
-        }
-        
-        .notebook-page {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         
         @media (max-width: 768px) {
@@ -42,215 +34,274 @@
 </head>
 <body>
     <div class="container">
-        <div class="notebook-page">
-            <svg width="100%" height="100%" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid meet">
-                <!-- 手帐背景 -->
-                <rect width="1200" height="800" fill="#FCF5E9" rx="15" ry="15" />
-                
-                <!-- 装饰元素: 胶带 -->
-                <rect x="30" y="10" width="120" height="40" fill="#A08CAA" rx="5" ry="5" opacity="0.8" transform="rotate(5)" />
-                <rect x="1050" y="5" width="120" height="40" fill="#E87A54" rx="5" ry="5" opacity="0.8" transform="rotate(-5)" />
-                
-                <!-- 页面标题 -->
-                <text x="600" y="80" text-anchor="middle" font-size="48" fill="#D94E3A" font-family="Comic Sans MS, cursive">AI 辅助调试</text>
-                
-                <!-- 左侧场景: 询问bug -->
-                <g class="debug-scene-1">
-                    <!-- 圆角矩形框 -->
-                    <rect x="100" y="150" width="450" height="500" rx="30" ry="30" fill="#FFF9F0" stroke="#333" stroke-width="3" stroke-dasharray="5,5" />
-                    
-                    <!-- 开发者和AI角色 -->
-                    <g class="developer">
-                        <ellipse cx="200" cy="300" rx="60" ry="70" fill="#E87A54" /> <!-- 开发者头部 -->
-                        <path d="M180 280 Q200 300 220 280" fill="none" stroke="#333" stroke-width="2" /> <!-- 笑脸 -->
-                        <circle cx="180" cy="270" r="5" fill="#333" /> <!-- 左眼 -->
-                        <circle cx="220" cy="270" r="5" fill="#333" /> <!-- 右眼 -->
-                        <path d="M170 330 Q200 360 230 330" fill="none" stroke="#333" stroke-width="3" /> <!-- 震惊表情 -->
-                        
-                        <!-- 电脑 -->
-                        <rect x="250" y="340" width="120" height="80" fill="#5B8AC2" rx="5" ry="5" />
-                        <rect x="260" y="350" width="100" height="60" fill="#333" />
-                        
-                        <!-- 代码符号 -->
-                        <text x="270" y="370" fill="#F9D675" font-family="monospace" font-size="12">
-                            <tspan x="270" dy="0">function bug() {</tspan>
-                            <tspan x="270" dy="15">  if(x &lt; 0) {</tspan>
-                            <tspan x="270" dy="15">    return y.val;</tspan>
-                            <tspan x="270" dy="15">  }</tspan>
-                            <tspan x="270" dy="15">}</tspan>
-                        </text>
-                    </g>
-                    
-                    <!-- 对话泡泡 -->
-                    <path d="M230 220 Q240 200 260 210 L320 210 Q340 210 340 230 L340 250 Q340 270 320 270 L260 270 Q240 270 230 250 Z" fill="#F9D675" stroke="#333" stroke-width="2" />
-                    <text x="290" y="245" text-anchor="middle" font-size="18" fill="#333">这里有 bug 吗？</text>
-                    
-                    <!-- AI助手 -->
-                    <circle cx="450" cy="300" r="60" fill="#A08CAA" />
-                    <path d="M430 300 Q450 320 470 300" fill="none" stroke="#333" stroke-width="2" /> <!-- 微笑 -->
-                    <circle cx="430" cy="280" r="5" fill="#333" /> <!-- 左眼 -->
-                    <circle cx="470" cy="280" r="5" fill="#333" /> <!-- 右眼 -->
-                    
-                    <!-- AI分析泡泡 -->
-                    <path d="M380 220 Q370 200 350 210 L230 210 Q210 210 210 230 L210 250 Q210 270 230 270 L350 270 Q370 270 380 250 Z" fill="#FFF" stroke="#333" stroke-width="2" opacity="0" class="ai-response">
-                        <animate attributeName="opacity" from="0" to="0.9" dur="0.5s" begin="1s" fill="freeze" />
-                    </path>
-                    <text x="440" y="245" text-anchor="middle" font-size="0" fill="#D94E3A" class="ai-text">
-                        <animate attributeName="font-size" from="0" to="18" dur="0.5s" begin="1.2s" fill="freeze" />
-                        是的，y可能为null!
-                    </text>
-                    
-                    <!-- 放大镜动画 -->
-                    <g class="magnifier" opacity="0">
-                        <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.5s" fill="freeze" />
-                        <circle cx="310" cy="390" r="30" fill="none" stroke="#D94E3A" stroke-width="3" />
-                        <line x1="330" y1="410" x2="350" y2="430" stroke="#D94E3A" stroke-width="4" />
-                        <animateTransform attributeName="transform" type="translate" from="0 0" to="-30 -20" dur="2s" begin="2s" repeatCount="1" fill="freeze" />
-                    </g>
-                    
-                    <!-- 错误标记 -->
-                    <path d="M300 390 L320 410 M320 390 L300 410" stroke="#D94E3A" stroke-width="4" opacity="0">
-                        <animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="4s" fill="freeze" />
-                    </path>
-                    
-                    <text x="300" y="480" text-anchor="middle" font-family="Comic Sans MS, cursive" font-size="24" fill="#D94E3A">询问："这里有 bug 吗？"</text>
-                </g>
-                
-                <!-- 右侧场景: Bug排查 -->
-                <g class="debug-scene-2">
-                    <!-- 圆角矩形框 -->
-                    <rect x="650" y="150" width="450" height="500" rx="30" ry="30" fill="#FFF9F0" stroke="#333" stroke-width="3" stroke-dasharray="5,5" />
-                    
-                    <!-- 崩溃的电脑与AI分析 -->
-                    <g class="crash-scene">
-                        <!-- 烟雾 -->
-                        <path d="M800 300 Q830 250 860 280 Q890 240 920 290" fill="none" stroke="#555" stroke-width="5" stroke-linecap="round" opacity="0.7">
-                            <animate attributeName="d" 
-                                     values="M800 300 Q830 250 860 280 Q890 240 920 290;
-                                             M800 290 Q830 240 860 270 Q890 230 920 280;
-                                             M800 300 Q830 250 860 280 Q890 240 920 290" 
-                                     dur="3s" repeatCount="indefinite" />
-                        </path>
-                        
-                        <!-- 电脑显示器 -->
-                        <rect x="800" y="340" width="150" height="100" fill="#5B8AC2" rx="8" ry="8" />
-                        <rect x="810" y="350" width="130" height="80" fill="#333" />
-                        
-                        <!-- 错误符号 -->
-                        <text x="875" y="390" text-anchor="middle" fill="red" font-family="monospace" font-size="12" font-weight="bold">ERROR</text>
-                        <text x="875" y="410" text-anchor="middle" fill="white" font-family="monospace" font-size="8">NullPointerException</text>
-                        
-                        <!-- AI助手分析 -->
-                        <circle cx="700" cy="300" r="60" fill="#A08CAA" />
-                        <path d="M680 300 Q700 320 720 300" fill="none" stroke="#333" stroke-width="2" /> <!-- 微笑 -->
-                        <circle cx="680" cy="280" r="5" fill="#333" /> <!-- 左眼 -->
-                        <circle cx="720" cy="280" r="5" fill="#333" /> <!-- 右眼 -->
-                    </g>
-                    
-                    <!-- AI分析泡泡 -->
-                    <g class="analysis-bubble">
-                        <path d="M750 210 Q760 190 780 200 L900 200 Q920 200 920 220 L920 300 Q920 320 900 320 L780 320 Q760 320 750 300 Z" fill="#FFF" stroke="#333" stroke-width="2" />
-                        
-                        <!-- 代码分析 -->
-                        <text x="835" y="230" text-anchor="middle" font-family="monospace" fill="#333" font-size="14">问题分析:</text>
-                        <text x="835" y="255" text-anchor="middle" font-family="monospace" fill="#D94E3A" font-size="12">
-                            <tspan x="835" dy="0">当数据为null时</tspan>
-                            <tspan x="835" dy="20">未进行检查导致崩溃</tspan>
-                        </text>
-                        <text x="835" y="295" text-anchor="middle" font-family="monospace" fill="#5B8AC2" font-size="12">建议添加空值检查</text>
-                    </g>
-                    
-                    <!-- 解决方案箭头 -->
-                    <path d="M875 330 L875 360" stroke="#D94E3A" stroke-width="3" stroke-dasharray="5,5" marker-end="url(#arrow)" />
-                    <defs>
-                        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-                            <path d="M0,0 L0,6 L9,3 z" fill="#D94E3A" />
-                        </marker>
-                    </defs>
-                    
-                    <!-- 修复后的代码 -->
-                    <rect x="750" y="380" width="180" height="100" rx="5" ry="5" fill="#F2F2F2" stroke="#333" stroke-width="1" />
-                    <text x="760" y="395" fill="#333" font-family="monospace" font-size="10">
-                        <tspan x="760" dy="0">function bug() {</tspan>
-                        <tspan x="760" dy="15">  if(x &lt; 0) {</tspan>
-                        <tspan x="760" dy="15" fill="#D94E3A">    if(y == null) return;</tspan>
-                        <tspan x="760" dy="15">    return y.val;</tspan>
-                        <tspan x="760" dy="15">  }</tspan>
-                        <tspan x="760" dy="15">}</tspan>
-                    </text>
-                    
-                    <!-- 标记修复的部分 -->
-                    <rect x="760" y="410" width="145" height="15" fill="#A08CAA" opacity="0.3" />
-                    
-                    <!-- 标题 -->
-                    <text x="875" y="530" text-anchor="middle" font-family="Comic Sans MS, cursive" font-size="24" fill="#D94E3A">Bug 排查与修复</text>
-                </g>
-                
-                <!-- 装饰灯光 -->
-                <g class="string-lights">
-                    <path d="M50 50 Q300 20 600 50 Q900 80 1150 50" fill="none" stroke="#F9D675" stroke-width="2" />
-                    <circle cx="150" cy="40" r="8" fill="#F9D675">
-                        <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" />
-                    </circle>
-                    <circle cx="300" cy="30" r="8" fill="#E87A54">
-                        <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite" />
-                    </circle>
-                    <circle cx="450" cy="40" r="8" fill="#5B8AC2">
-                        <animate attributeName="opacity" values="0.5;1;0.5" dur="2.3s" repeatCount="indefinite" />
-                    </circle>
-                    <circle cx="600" cy="50" r="8" fill="#D94E3A">
-                        <animate attributeName="opacity" values="0.5;1;0.5" dur="1.8s" repeatCount="indefinite" />
-                    </circle>
-                    <circle cx="750" cy="45" r="8" fill="#A08CAA">
-                        <animate attributeName="opacity" values="0.5;1;0.5" dur="2.1s" repeatCount="indefinite" />
-                    </circle>
-                    <circle cx="900" cy="55" r="8" fill="#F9D675">
-                        <animate attributeName="opacity" values="0.5;1;0.5" dur="1.6s" repeatCount="indefinite" />
-                    </circle>
-                    <circle cx="1050" cy="45" r="8" fill="#E87A54">
-                        <animate attributeName="opacity" values="0.5;1;0.5" dur="2.2s" repeatCount="indefinite" />
-                    </circle>
-                </g>
-                
-                <!-- 窗户和雨景 -->
-                <g class="window">
-                    <rect x="1030" y="200" width="100" height="150" rx="10" ry="10" fill="#5B8AC2" stroke="#333" stroke-width="2" />
-                    <line x1="1080" y1="200" x2="1080" y2="350" stroke="#333" stroke-width="2" />
-                    <line x1="1030" y1="275" x2="1130" y2="275" stroke="#333" stroke-width="2" />
-                    
-                    <!-- 雨滴 -->
-                    <g class="rain">
-                        <line x1="1050" y1="210" x2="1045" y2="240" stroke="#D7E5F5" stroke-width="1.5" opacity="0.7">
-                            <animate attributeName="y1" values="210;230" dur="0.8s" repeatCount="indefinite" />
-                            <animate attributeName="y2" values="240;260" dur="0.8s" repeatCount="indefinite" />
-                            <animate attributeName="opacity" values="0.7;0" dur="0.8s" repeatCount="indefinite" />
-                        </line>
-                        <line x1="1070" y1="220" x2="1065" y2="250" stroke="#D7E5F5" stroke-width="1.5" opacity="0.7">
-                            <animate attributeName="y1" values="220;240" dur="1.1s" repeatCount="indefinite" />
-                            <animate attributeName="y2" values="250;270" dur="1.1s" repeatCount="indefinite" />
-                            <animate attributeName="opacity" values="0.7;0" dur="1.1s" repeatCount="indefinite" />
-                        </line>
-                        <line x1="1100" y1="215" x2="1095" y2="245" stroke="#D7E5F5" stroke-width="1.5" opacity="0.7">
-                            <animate attributeName="y1" values="215;235" dur="0.9s" repeatCount="indefinite" />
-                            <animate attributeName="y2" values="245;265" dur="0.9s" repeatCount="indefinite" />
-                            <animate attributeName="opacity" values="0.7;0" dur="0.9s" repeatCount="indefinite" />
-                        </line>
-                        <line x1="1060" y1="285" x2="1055" y2="315" stroke="#D7E5F5" stroke-width="1.5" opacity="0.7">
-                            <animate attributeName="y1" values="285;305" dur="1.2s" repeatCount="indefinite" />
-                            <animate attributeName="y2" values="315;335" dur="1.2s" repeatCount="indefinite" />
-                            <animate attributeName="opacity" values="0.7;0" dur="1.2s" repeatCount="indefinite" />
-                        </line>
-                        <line x1="1090" y1="290" x2="1085" y2="320" stroke="#D7E5F5" stroke-width="1.5" opacity="0.7">
-                            <animate attributeName="y1" values="290;310" dur="1s" repeatCount="indefinite" />
-                            <animate attributeName="y2" values="320;340" dur="1s" repeatCount="indefinite" />
-                            <animate attributeName="opacity" values="0.7;0" dur="1s" repeatCount="indefinite" />
-                        </line>
-                    </g>
-                </g>
-                
+        <svg width="100%" height="100%" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid meet">
+            <!-- 主背景 -->
+            <rect width="1200" height="800" fill="#f5f0e1" />
+            
+            <!-- 标题窗口 -->
+            <g class="title-window">
+                <!-- 窗口框架 -->
+                <rect x="300" y="50" width="600" height="80" rx="6" ry="6" fill="#f5f0e1" stroke="#000" stroke-width="2"/>
+                <!-- 标题栏 -->
+                <rect x="300" y="50" width="600" height="30" rx="6" ry="6" fill="#e0c0e0" stroke="#000" stroke-width="2"/>
+                <!-- 关闭按钮 -->
+                <circle cx="320" cy="65" r="8" fill="#f0c0c0" stroke="#000" stroke-width="1.5"/>
+                <line x1="317" y1="62" x2="323" y2="68" stroke="#000" stroke-width="1.5"/>
+                <line x1="323" y1="62" x2="317" y2="68" stroke="#000" stroke-width="1.5"/>
+                <!-- 最小化按钮 -->
+                <circle cx="345" cy="65" r="8" fill="#f0c0c0" stroke="#000" stroke-width="1.5"/>
+                <line x1="341" y1="65" x2="349" y2="65" stroke="#000" stroke-width="1.5"/>
+                <!-- 窗口标题 -->
+                <text x="600" y="72" text-anchor="middle" font-size="20" font-weight="bold">用 AI 理解代码</text>
 
-            </svg>
-        </div>
+            </g>
+            
+            <!-- 主要内容区 - 三个功能窗口并排 -->
+            <!-- 1. 项目概览窗口 -->
+            <g class="window project-overview">
+                <!-- 窗口框架 -->
+                <rect x="100" y="150" width="320" height="500" rx="6" ry="6" fill="#f5f0e1" stroke="#000" stroke-width="2"/>
+                <!-- 标题栏 -->
+                <rect x="100" y="150" width="320" height="30" rx="6" ry="6" fill="#e0c0e0" stroke="#000" stroke-width="2"/>
+                <!-- 关闭按钮 -->
+                <circle cx="120" cy="165" r="8" fill="#f0c0c0" stroke="#000" stroke-width="1.5"/>
+                <line x1="117" y1="162" x2="123" y2="168" stroke="#000" stroke-width="1.5"/>
+                <line x1="123" y1="162" x2="117" y2="168" stroke="#000" stroke-width="1.5"/>
+                <!-- 最小化按钮 -->
+                <circle cx="145" cy="165" r="8" fill="#f0c0c0" stroke="#000" stroke-width="1.5"/>
+                <line x1="141" y1="165" x2="149" y2="165" stroke="#000" stroke-width="1.5"/>
+                <!-- 窗口标题 -->
+                <text x="260" y="172" text-anchor="middle" font-size="18" font-weight="bold">项目概览</text>
+                
+                <!-- 内容区 -->
+                <!-- 文件夹图标 -->
+                <rect x="130" y="200" width="60" height="50" rx="4" ry="4" fill="#f0c0c0" stroke="#000" stroke-width="1.5"/>
+                <path d="M130 215 L150 215 L160 200 L190 200" fill="none" stroke="#000" stroke-width="1.5"/>
+                
+                <!-- 项目结构显示 -->
+                <g class="project-structure">
+                    <rect x="130" y="270" width="260" height="180" rx="4" ry="4" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                    
+                    <!-- 项目结构动画 - 逐行显示 -->
+                    <g font-family="monospace" font-size="16">
+                        <text x="140" y="290" opacity="0">
+                            <tspan x="140" dy="0">项目结构</tspan>
+                            <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.5s" fill="freeze" />
+                        </text>
+                        <text x="150" y="320" opacity="0">
+                            <tspan x="150" dy="0">├── src/</tspan>
+                            <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1s" fill="freeze" />
+                        </text>
+                        <text x="170" y="345" opacity="0">
+                            <tspan x="170" dy="0">├── auth/</tspan>
+                            <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.5s" fill="freeze" />
+                        </text>
+                        <text x="170" y="370" opacity="0">
+                            <tspan x="170" dy="0">├── core/</tspan>
+                            <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="2s" fill="freeze" />
+                        </text>
+                        <text x="170" y="395" opacity="0">
+                            <tspan x="170" dy="0">└── utils/</tspan>
+                            <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="2.5s" fill="freeze" />
+                        </text>
+                        <text x="150" y="420" opacity="0">
+                            <tspan x="150" dy="0">└── tests/</tspan>
+                            <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="3s" fill="freeze" />
+                        </text>
+                    </g>
+                </g>
+                
+                <!-- 对话框 - 用户询问 -->
+                <rect x="150" y="470" width="220" height="40" rx="20" ry="20" fill="#f0c0c0" stroke="#000" stroke-width="1.5"/>
+                <text x="260" y="495" text-anchor="middle" font-size="14">请解释项目架构和模块功能</text>
+                
+                <!-- AI回应 - 概述 -->
+                <rect x="110" y="520" width="300" height="120" rx="6" ry="6" fill="#fff" stroke="#000" stroke-width="1.5" opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="3.5s" fill="freeze" />
+                </rect>
+                
+                <!-- 打字机效果的AI回复 -->
+                <text x="120" y="540" font-size="14" opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="3.5s" fill="freeze" />
+                    <tspan x="120" dy="0" font-weight="bold">项目架构:</tspan>
+                    <tspan x="120" dy="20">- auth: 用户认证模块</tspan>
+                    <tspan x="120" dy="20">- core: 核心业务逻辑</tspan>
+                    <tspan x="120" dy="20">- utils: 通用工具函数</tspan>
+                    <tspan x="120" dy="20">- tests: 自动化测试用例</tspan>
+                </text>
+            </g>
+            
+            <!-- 2. 复杂代码解析窗口 -->
+            <g class="window code-analysis">
+                <!-- 窗口框架 -->
+                <rect x="440" y="150" width="320" height="500" rx="6" ry="6" fill="#f5f0e1" stroke="#000" stroke-width="2"/>
+                <!-- 标题栏 -->
+                <rect x="440" y="150" width="320" height="30" rx="6" ry="6" fill="#e0c0e0" stroke="#000" stroke-width="2"/>
+                <!-- 关闭按钮 -->
+                <circle cx="460" cy="165" r="8" fill="#f0c0c0" stroke="#000" stroke-width="1.5"/>
+                <line x1="457" y1="162" x2="463" y2="168" stroke="#000" stroke-width="1.5"/>
+                <line x1="463" y1="162" x2="457" y2="168" stroke="#000" stroke-width="1.5"/>
+                <!-- 最小化按钮 -->
+                <circle cx="485" cy="165" r="8" fill="#f0c0c0" stroke="#000" stroke-width="1.5"/>
+                <line x1="481" y1="165" x2="489" y2="165" stroke="#000" stroke-width="1.5"/>
+                <!-- 窗口标题 -->
+                <text x="600" y="172" text-anchor="middle" font-size="18" font-weight="bold">复杂代码解析</text>
+                
+                <!-- 编辑器界面 -->
+                <rect x="450" y="200" width="300" height="220" rx="4" ry="4" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                
+                <!-- 代码 -->
+                <text x="460" y="220" font-family="monospace" font-size="14">
+                    <tspan x="460" dy="0">function processData(input) {</tspan>
+                    <tspan x="460" dy="20">  const result = input</tspan>
+                    <tspan x="460" dy="20">    .filter(x => x.active)</tspan>
+                    <tspan x="460" dy="20">    .map(x => ({</tspan>
+                    <tspan x="460" dy="20">      id: x.id,</tspan>
+                    <tspan x="460" dy="20">      value: compute(x.raw)</tspan>
+                    <tspan x="460" dy="20">    }))</tspan>
+                    <tspan x="460" dy="20">    .reduce((acc, val) => {</tspan>
+                    <tspan x="460" dy="20">      acc[val.id] = val.value;</tspan>
+                    <tspan x="460" dy="20">      return acc;</tspan>
+                    <tspan x="460" dy="20">    }, {});</tspan>
+                    <tspan x="460" dy="20">  return result;</tspan>
+                    <tspan x="460" dy="20">}</tspan>
+                </text>
+                
+                <!-- 选中效果 -->
+                <rect x="450" y="200" width="300" height="220" fill="#e0c0e0" opacity="0.2" stroke="none">
+                    <animate attributeName="opacity" values="0.2;0.3;0.2" dur="2s" begin="0.5s" repeatCount="2" />
+                </rect>
+                
+                <!-- 对话框 - 用户询问 -->
+                <rect x="490" y="440" width="220" height="40" rx="20" ry="20" fill="#f0c0c0" stroke="#000" stroke-width="1.5"/>
+                <text x="600" y="465" text-anchor="middle" font-size="14">解释这段代码的工作原理</text>
+                
+                <!-- AI回应 - 代码解释 -->
+                <rect x="450" y="490" width="300" height="150" rx="6" ry="6" fill="#fff" stroke="#000" stroke-width="1.5" opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="2.5s" fill="freeze" />
+                </rect>
+                
+                <text x="460" y="510" font-size="14" opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="2.5s" fill="freeze" />
+                    <tspan x="460" dy="0" font-weight="bold">代码功能:</tspan>
+                    <tspan x="460" dy="20">1. 筛选激活的数据项</tspan>
+                    <tspan x="460" dy="20">2. 转换数据格式并处理原始值</tspan>
+                    <tspan x="460" dy="20">3. 将结果聚合为ID-值对象</tspan>
+                    <tspan x="460" dy="20">4. 适用于数据归一化处理</tspan>
+                    <tspan x="460" dy="20">5. 函数式编程链式操作示例</tspan>
+                </text>
+            </g>
+            
+            <!-- 3. 定位关键逻辑窗口 -->
+            <g class="window locate-logic">
+                <!-- 窗口框架 -->
+                <rect x="780" y="150" width="320" height="500" rx="6" ry="6" fill="#f5f0e1" stroke="#000" stroke-width="2"/>
+                <!-- 标题栏 -->
+                <rect x="780" y="150" width="320" height="30" rx="6" ry="6" fill="#e0c0e0" stroke="#000" stroke-width="2"/>
+                <!-- 关闭按钮 -->
+                <circle cx="800" cy="165" r="8" fill="#f0c0c0" stroke="#000" stroke-width="1.5"/>
+                <line x1="797" y1="162" x2="803" y2="168" stroke="#000" stroke-width="1.5"/>
+                <line x1="803" y1="162" x2="797" y2="168" stroke="#000" stroke-width="1.5"/>
+                <!-- 最小化按钮 -->
+                <circle cx="825" cy="165" r="8" fill="#f0c0c0" stroke="#000" stroke-width="1.5"/>
+                <line x1="821" y1="165" x2="829" y2="165" stroke="#000" stroke-width="1.5"/>
+                <!-- 窗口标题 -->
+                <text x="940" y="172" text-anchor="middle" font-size="18" font-weight="bold">定位关键逻辑</text>
+                
+                <!-- 搜索框 -->
+                <rect x="800" y="200" width="280" height="40" rx="4" ry="4" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                <text x="810" y="225" font-size="16">负责用户认证的逻辑在哪里？</text>
+                
+                <!-- 搜索图标 -->
+                <circle cx="1060" cy="220" r="10" fill="none" stroke="#000" stroke-width="1.5"/>
+                <line x1="1067" y1="227" x2="1075" y2="235" stroke="#000" stroke-width="2"/>
+                
+                <!-- 搜索动画 -->
+                <g class="search-animation">
+                    <circle cx="940" cy="320" r="60" fill="none" stroke="#000" stroke-width="1.5" opacity="0">
+                        <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.5s" fill="freeze" />
+                        <animate attributeName="r" values="60;65;60" dur="2s" begin="1s" repeatCount="2" />
+                    </circle>
+                    
+                    <!-- 搜索过程中的闪光点 -->
+                    <circle cx="910" cy="300" r="3" fill="#f0c0c0" opacity="0">
+                        <animate attributeName="opacity" values="0;1;0" dur="0.8s" begin="1.5s" repeatCount="3" />
+                    </circle>
+                    <circle cx="970" cy="290" r="3" fill="#f0c0c0" opacity="0">
+                        <animate attributeName="opacity" values="0;1;0" dur="0.8s" begin="1.8s" repeatCount="3" />
+                    </circle>
+                    <circle cx="950" cy="350" r="3" fill="#f0c0c0" opacity="0">
+                        <animate attributeName="opacity" values="0;1;0" dur="0.8s" begin="2.1s" repeatCount="3" />
+                    </circle>
+                    
+                    <!-- 文件路径动画 -->
+                    <path d="M940 380 L940 420" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" opacity="0">
+                        <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="3.5s" fill="freeze" />
+                    </path>
+                </g>
+                
+                <!-- 结果显示 -->
+                <g class="search-result" opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="4s" fill="freeze" />
+                    
+                    <!-- 文件路径 -->
+                    <rect x="800" y="420" width="280" height="30" rx="4" ry="4" fill="#e0c0e0" stroke="#000" stroke-width="1.5"/>
+                    <text x="810" y="440" font-size="16" font-family="monospace">src/auth/authenticator.js</text>
+                    
+                    <!-- 文件预览 -->
+                    <rect x="800" y="460" width="280" height="180" rx="4" ry="4" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                    <text x="810" y="480" font-family="monospace" font-size="14">
+                        <tspan x="810" dy="0">// 用户认证主要逻辑</tspan>
+                        <tspan x="810" dy="20">class Authenticator {</tspan>
+                        <tspan x="810" dy="20">  async login(user, pass) {</tspan>
+                        <tspan x="810" dy="20">    // 验证逻辑</tspan>
+                        <tspan x="810" dy="20">    ...</tspan>
+                        <tspan x="810" dy="20">  }</tspan>
+                        <tspan x="810" dy="20">  </tspan>
+                        <tspan x="810" dy="20">  validateToken(token) {</tspan>
+                        <tspan x="810" dy="20">    // 令牌验证</tspan>
+                        <tspan x="810" dy="20">    ...</tspan>
+                        <tspan x="810" dy="20">  }</tspan>
+                    </text>
+                </g>
+            </g>
+            
+            <!-- 底部状态栏 -->
+            <rect x="100" y="670" width="1000" height="30" rx="6" ry="6" fill="#e0c0e0" stroke="#000" stroke-width="2"/>
+            <text x="120" y="690" font-size="16">AI 辅助编程 - 让理解代码变得简单</text>
+            <text x="1080" y="690" text-anchor="end" font-size="16">用户: ming1016</text>
+            
+            <!-- 装饰元素 - 简单点阵图案 -->
+            <g class="decoration-dots" opacity="0.3">
+                <circle cx="50" cy="50" r="2" fill="#000"/>
+                <circle cx="70" cy="50" r="2" fill="#000"/>
+                <circle cx="90" cy="50" r="2" fill="#000"/>
+                <circle cx="50" cy="70" r="2" fill="#000"/>
+                <circle cx="70" cy="70" r="2" fill="#000"/>
+                <circle cx="90" cy="70" r="2" fill="#000"/>
+                
+                <circle cx="1150" cy="50" r="2" fill="#000"/>
+                <circle cx="1130" cy="50" r="2" fill="#000"/>
+                <circle cx="1110" cy="50" r="2" fill="#000"/>
+                <circle cx="1150" cy="70" r="2" fill="#000"/>
+                <circle cx="1130" cy="70" r="2" fill="#000"/>
+                <circle cx="1110" cy="70" r="2" fill="#000"/>
+                
+                <circle cx="50" cy="730" r="2" fill="#000"/>
+                <circle cx="70" cy="730" r="2" fill="#000"/>
+                <circle cx="90" cy="730" r="2" fill="#000"/>
+                <circle cx="50" cy="750" r="2" fill="#000"/>
+                <circle cx="70" cy="750" r="2" fill="#000"/>
+                <circle cx="90" cy="750" r="2" fill="#000"/>
+                
+                <circle cx="1150" cy="730" r="2" fill="#000"/>
+                <circle cx="1130" cy="730" r="2" fill="#000"/>
+                <circle cx="1110" cy="730" r="2" fill="#000"/>
+                <circle cx="1150" cy="750" r="2" fill="#000"/>
+                <circle cx="1130" cy="750" r="2" fill="#000"/>
+                <circle cx="1110" cy="750" r="2" fill="#000"/>
+            </g>
+        </svg>
     </div>
 </body>
 </html>
