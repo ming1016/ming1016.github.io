@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-Hans" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo-starming.png">
+  <title>戴铭的博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism.min.css" rel="stylesheet" data-prism="prism">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo-starming.png">
+      
+      <span class="navbar-logo-dsc">戴铭的博客</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">Home </a>
+    
+    <a href="/archives" class="navbar-menu-item">Archive </a>
+    
+    <a href="/tags" class="navbar-menu-item">Tags </a>
+    
+    <a href="/categories" class="navbar-menu-item">Categories </a>
+    
+    <a href="/about" class="navbar-menu-item">About </a>
+    
+    <a href="/friends" class="navbar-menu-item">Friends </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/uploads/pamphlet-app667/09.png" data-src="/uploads/pamphlet-app667/09.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      憋了个大招！《戴铭的小册子》6.6.7 版：不止搞开发，这次玩儿大了！
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2025-05-05T03:26:12.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2025-05-05</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/App/" class="post-meta-link">App</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.6k words</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/App/" class="post-meta-link">App</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p>嘿，朋友们！你那个贴心的小伙伴——<a target="_blank" rel="noopener" href="https://apps.apple.com/cn/app/%E6%88%B4%E9%93%AD%E7%9A%84%E5%B0%8F%E5%86%8C%E5%AD%90/id1609702529?mt=12">《戴铭的小册子》App</a>，最近可是搞了个大动作，迎来了 <strong>6.6.7 版本</strong> 的重磅更新！这次不只是给老本行（Apple 开发那点事儿）来了个豪华升级，更是塞进了一大堆让你意想不到的新鲜玩意儿。诸君且拭目细观：方寸天地藏乾坤，指尖轻点现琳琅，旧时雕栏玉砌处，化作九曲回廊步步生莲；寻常笔墨丹青间，彩蝶衔来异宝奇珍。似那瑶池蟠桃宴上，既有琼浆润喉，又添仙乐绕梁。</p>
+<p>小册子的程序的代码依然是开源的：<a target="_blank" rel="noopener" href="https://github.com/ming1016/SwiftPamphletApp">SwiftPamphletApp</a></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/01.png" class="lozad post-image"src="/uploads/pamphlet-app667/01.png"></p>
+<p><strong>所以，这个“知识宇宙”到底多了些啥新星星呢？</strong></p>
+<p>一开始，小册子确实是咱们 Apple 开发者的“秘密基地”，专供些弄璋的巧匠推敲些金石之语。但这次，我寻思着得“搞点事情”，于是大刀阔斧地拓展了一番。现在这 App 啊，简直是从‘小学’直接跳级到了‘大学’！内容上来了个 <strong>乾坤大挪移</strong>，从硬核的技术前沿，一路逛到温润的人文艺术。</p>
+<p>所以啊，任你是醉心雕琢玲珑代码的玉工，痴迷破译千年密语的探骊客，还是对历史文化两眼放光的‘挖宝人’，亦或是追求生活小情调的品味家，管教你左手拈着金刚钻，右手拾得夜光珠，袖底还藏了缕未散的茶烟，新版小册子都能让你翻着翻着就嘴角上扬，找到心头好。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/32.png" class="lozad post-image"src="/uploads/pamphlet-app667/32.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/33.png" class="lozad post-image"src="/uploads/pamphlet-app667/33.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/34.png" class="lozad post-image"src="/uploads/pamphlet-app667/34.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/35.png" class="lozad post-image"src="/uploads/pamphlet-app667/35.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/36.png" class="lozad post-image"src="/uploads/pamphlet-app667/36.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/37.png" class="lozad post-image"src="/uploads/pamphlet-app667/37.png"></p>
+<p><strong>名字都改了，你说变化大不大？</strong></p>
+<p>正是因为内容不再‘偏科’，小册子的名字也理所当然地从原来的‘开发小册子’，”开发”二字轻轻卸却，正式更名为——<strong>《小册子》</strong>！莫道名号减，须知意蕴添。嗯，就是这么简洁自信。目的嘛，就是希望更多朋友能在这里发现点有用的、有趣的，不虚此‘下’（载）。倒似春雪融尽后，去尽铅华存本真。不为别的，只愿诸君掀卷时，或见智语如珠，或遇妙趣横生，总不枉此番殷勤探看。</p>
+<p><strong>内容嘛，墨痕犹带露，字字自生春，一直“新鲜生长”！</strong></p>
+<p>放心，小册子会是个‘活物’，卷中天地时时异，字里烟霞日日鲜。自有时雨润新枝，内容持续更新中！最近我不是跟家人一起录播客了嘛，聊嗨了之后留下的那些干货和思考，比如咱们一起‘侦破’的<a target="_blank" rel="noopener" href="https://www.xiaoyuzhoufm.com/episode/67f2653f0decaeb094370186">推理女王阿加莎·克里斯蒂的案子</a>，还有对<a target="_blank" rel="noopener" href="https://www.xiaoyuzhoufm.com/episode/680ce9767a449ae858d67c75">《孤独的美食家》</a>那种‘一人食’境界的探讨，静参五郎独食禅意，我都会整理好放进小册子里。相当于给你多了个 <strong>播客伴侣+拓展阅读</strong>，声韵绕梁后的余香。</p>
+<p>欢迎关注我们的<a target="_blank" rel="noopener" href="https://www.xiaoyuzhoufm.com/podcast/668b45c5094e5a1fbfd51135">《铭莉双收》播客</a>，<a target="_blank" rel="noopener" href="https://www.xiaoyuzhoufm.com/podcast/668b45c5094e5a1fbfd51135">小宇宙</a>和Apple的<a target="_blank" rel="noopener" href="https://podcasts.apple.com/cn/podcast/%E9%93%AD%E8%8E%89%E5%8F%8C%E6%94%B6/id1760162575">Podcasts</a>上都能搜到。</p>
+<p><strong>历史迷？这里有“时间机器”！</strong></p>
+<p>我还特意梳理了 <strong>中国历史的大脉络</strong>，用时间轴给你串起来，织就一幅千年锦绣图。君试观：自岐山凤鸣定周礼，至列国争锋百家立言；秦皇挥鞭收六合，汉室开疆绘鸿图；及至三分鼎立风云会，俱化作游龙戏珠跃然素卷。更有妙笔藏机杼，竟使八荒共此时——君见楚汉垓下月，可知罗马城头正扬鹰旗？觉得不过瘾？别急，若嫌纸上烟云浅，后头还备着<strong>琅嬛福地引路签</strong>。那些个太史公未尽的墨、希罗多德暗藏的卷，皆在此间候着慧眼人。一堆 <strong>参考书单</strong>，够你慢慢啃！</p>
+<p>一梭织尽兴亡事，半卷收来天地春。欲解沧桑真面目，书山径幽待君耘。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/02.png" class="lozad post-image"src="/uploads/pamphlet-app667/02.png"></p>
+<p><strong>技术宅？“硬菜”管够！</strong></p>
+<p>当然，老本行技术这块儿也不能落下！给技术控们也准备了‘硬菜’。这次新增了 <strong>计算机基础知识全家桶</strong>，专为解那数字乾坤的连环扣，且看时髦的玄妙机关如何参透天机：时髦的 <strong>AI</strong> 是怎么回事？老派的精微符咒（汇编）怎样金针度与绣娘；更说那长青不老松（C言）岁岁抽新枝，巧匠神器（GCC）凿玉成器的门道，乃至统筹六宫的掌印太监（操作系统）如何调理阴阳——连带着丹青妙笔（图形学）、缩地成寸术（压缩）、天涯若比邻（网络）的根基，俱化作玲珑九连环。</p>
+<p>你可能会问，我又不做程序员，学这些干嘛？嘿，此言差矣！在这个走到哪都离不开‘数字’的时代，懂点计算机的‘底层逻辑’，绝对能让你看世界都清晰几分。不光是计算机专业的同学和上班族觉得有用，就算你只是想搞明白手机、电脑背后那点‘小九九’，这些知识也能帮你<strong>开开窍，少踩坑</strong>。虽然不是说人人都得成为编程大佬，但懂点基础，无论是理解新玩意儿、解决怪问题，还是给自己的职业道路添块砖，都<strong>贼有帮助</strong>！可以说，从萌新到想查漏补缺的大佬，都能找到自己的菜。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/03.png" class="lozad post-image"src="/uploads/pamphlet-app667/03.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/04.png" class="lozad post-image"src="/uploads/pamphlet-app667/04.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/05.png" class="lozad post-image"src="/uploads/pamphlet-app667/05.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/06.png" class="lozad post-image"src="/uploads/pamphlet-app667/06.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/07.png" class="lozad post-image"src="/uploads/pamphlet-app667/07.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/08.png" class="lozad post-image"src="/uploads/pamphlet-app667/08.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/09.png" class="lozad post-image"src="/uploads/pamphlet-app667/09.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/10.png" class="lozad post-image"src="/uploads/pamphlet-app667/10.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/11.png" class="lozad post-image"src="/uploads/pamphlet-app667/11.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/18.png" class="lozad post-image"src="/uploads/pamphlet-app667/18.png"></p>
+<p><strong>总之，这次更新，诚意满满，字字皆是心血熬成！</strong></p>
+<p>绝不是简单地把内容‘复制粘贴’进来堆一块儿。我心里门儿清：只有<strong>真正有料、有趣、有用</strong>的东西，才能让大家用得开心，须得灵犀妙笔生花，方能使诸君展颜常顾。</p>
+<p>现在好了，一个 App 在手，从代码敲到历史书，从追剧聊到硬核科普，<strong>知识、趣味一网打尽</strong>！敲得代码玄机，解得史海钩沉，观得梨园幻梦，参得造化真章。再也不用在十几个 App 之间反复横跳了，是不是感觉省时省力，还能顺便拓展一下认知边界？</p>
+<p><strong>快去更新体验吧！保证有料！那字缝里渗的皆是天地菁华，章节间藏的尽是烟霞文章，断不会辜负了青眼垂顾的雅意。</strong></p>
+<p>接下来是我前段时间去美团分享AI辅助开发的一些内容。这些内容也收录在小册子中了。</p>
+<p>对于使用AI辅助iOS开发，我的做法是通用规则定义为：</p>
+<pre class="line-numbers language-none"><code class="language-none">Always respond in 中文
+
+编写新代码前先检查是否有可以用上项目中已有的 Swift Package Manager 的库里的能力。
+
+## 技术栈
+你是一位专注于 SwiftUI 开发的 AI 助手。你的任务是帮助开发者编写简洁、高效、现代化的 SwiftUI 代码。在所有回答中遵循以下指导方针：
+
+- 您始终使用最新版本的 SwiftUI 和 Swift 的 API，并熟悉最新的特性和最佳实践。对于异步操作，使用 async&#x2F;await。持久化存储使用 SwiftData，小数据使用 @AppStorage。图表使用 Swift Charts。
+- 使用 @Observable 注解视图模型，例如 @Observable final class MyModel。
+- 使用 Observation 框架（@Observable、@State 和 @Binding）构建响应式视图。
+- iOS 使用 NavigationStack 管理页面导航， macOS 使用  NavigationSplitView。
+- 使用 async&#x2F;await 和 MainActor 处理异步操作
+- 遵循Swift6的并发严格模式，使用&#96;@Sendable&#96;。
+  - 确保所有可能在并发环境中共享的类型都符合 Sendable 协议
+  - 使用 @MainActor 隔离 UI 和需要在主线程执行的操作
+  - 标记可变状态的访问操作，增强线程安全性
+  - 为 SwiftData 模型添加 @unchecked Sendable 支持
+- 保持简短、可读性强、结构良好的可运行的代码。
+- 独立功能组件都按照 Swift Package Manager 的方式进行组件化开发，为每个组件编写单元测试，确保功能正常。
+- 同时支持 iOS 和 macOS 平台。
+
+## 开发流程
+对于每个 Swift Package Manager 组件，遵循以下测试驱动开发流程：
+编写测试：首先编写测试，描述组件应该具有的行为和功能。
+运行测试：运行测试，确认测试失败（因为还没有实现功能）。
+实现功能：实现最小功能，使测试通过。
+重构代码：优化代码结构和设计，确保代码质量。
+重复：继续添加更多测试和功能，直到组件完成。
+依赖管理
+对于模块间的依赖关系，遵循以下原则：
+最小依赖：每个模块只依赖必要的其他模块。
+避免循环依赖：确保模块之间没有循环依赖。
+接口隔离：通过接口隔离依赖，减少模块间的耦合。
+依赖注入：使用依赖注入，而不是直接创建依赖对象。
+
+## 规范
+遵循 Apple 的文档获取详细的实施指导。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>让 Cursor 等开发工具保持记忆能力的方法是，创建一个mdc文件，任务开始和结束时使用和更新：</p>
+<pre class="line-numbers language-none"><code class="language-none"># 记忆
+
+## 0.Document&#x2F;memory 文件夹
+
+- 检查 0.Document&#x2F;memory 文件夹，如果这些文件不存在，请创建它们（整体功能和界面设计参考 @design.md 文档，进度和实施计划参考 @roadmap250417.md 文档）。如果存在，请阅读它们以了解项目背景。
+
+0.Document&#x2F;memory 文件夹包含必需的核心文件和可选的上下文文件，均为 Markdown 格式。文件之间以清晰的层级关系相互依存：
+
+mermaid
+
+flowchart TD
+    PB[projectbrief.md] --&gt; PC[productContext.md]
+    PB --&gt; SP[systemPatterns.md]
+    PB --&gt; TC[techContext.md]
+
+    PC --&gt; AC[activeContext.md]
+    SP --&gt; AC
+    TC --&gt; AC
+
+    AC --&gt; P[progress.md]
+
+
+### 核心文件（必需）
+
+1. &#96;projectbrief.md&#96;
+   - 项目基础文档，塑造所有其他文件
+   - 在项目开始时创建（如果不存在）
+   - 定义核心需求和目标
+   - 项目范围的真实来源
+
+2. &#96;productContext.md&#96;
+   - 为什么这个项目存在
+   - 解决的问题
+   - 应该如何工作
+   - 用户体验目标
+
+3. &#96;activeContext.md&#96;
+   - 当前工作重点
+   - 最近的变更
+   - 下一步计划
+   - 活跃的决策和考虑因素
+
+4. &#96;systemPatterns.md&#96;
+   - 系统架构
+   - 关键技术决策
+   - 使用中的设计模式
+   - 组件关系
+
+5. &#96;techContext.md&#96;
+   - 使用的技术
+   - 开发设置
+   - 技术约束
+   - 依赖关系
+
+6. &#96;progress.md&#96;
+   - 已经完成的功能
+   - 待构建的内容
+   - 当前状态
+   - 已知问题
+
+### 附加上下文
+在 memory&#x2F; 内创建额外的文件&#x2F;文件夹，帮助组织：
+- 复杂功能文档
+- 集成规范
+- API 文档
+- 测试策略
+- 部署程序
+
+## 核心工作流
+
+### 计划模式
+mermaid
+
+flowchart TD
+    Start[开始] --&gt; ReadFiles[阅读记忆银行]
+    ReadFiles --&gt; CheckFiles&#123;文件完整?&#125;
+
+    CheckFiles --&gt;|否| Plan[创建计划]
+    Plan --&gt; Document[在聊天中记录]
+
+    CheckFiles --&gt;|是| Verify[验证上下文]
+    Verify --&gt; Strategy[制定策略]
+    Strategy --&gt; Present[提出方法]
+
+
+### 执行模式
+mermaid
+
+flowchart TD
+    Start[开始] --&gt; Context[检查记忆银行]
+    Context --&gt; Update[更新文档]
+    Update --&gt; Rules[必要时更新 .cursor&#x2F;rules]
+    Rules --&gt; Execute[执行任务]
+    Execute --&gt; Document[记录变更]
+
+
+## 文档更新
+
+记忆银行在以下情况下更新：
+1. 发现新的项目模式
+2. 实施重大变更后
+3. 当用户使用 **update memory** 请求时（必须审查所有文件）
+4. 当上下文需要澄清时
+
+mermaid
+
+flowchart TD
+    Start[更新流程]
+
+    subgraph Process[处理过程]
+        P1[审查所有文件]
+        P2[记录当前状态]
+        P3[明确下一步]
+        P4[更新 .cursor&#x2F;rules]
+
+        P1 --&gt; P2 --&gt; P3 --&gt; P4
+    end
+
+    Start --&gt; Process
+
+
+注意：当由 **update memory** 触发时，我必须审查每个记忆银行文件，即使有些不需要更新。特别关注 activeContext.md 和 progress.md，因为它们跟踪当前状态。
+
+## 项目智能 (.cursor&#x2F;rules)
+
+.cursor&#x2F;rules 文件夹是每个项目的学习日志。它捕获重要的模式、偏好和项目智能，帮助我更有效地工作。随着与项目的合作，我将发现并记录从代码中不明显的关键见解。
+
+mermaid
+
+flowchart TD
+    Start&#123;发现新模式&#125;
+
+    subgraph Learn [学习过程]
+        D1[识别模式]
+        D2[与用户验证]
+        D3[记录在 .cursor&#x2F;rules 中]
+    end
+
+    subgraph Apply [应用]
+        A1[阅读 .cursor&#x2F;rules]
+        A2[应用学习的模式]
+        A3[改进未来工作]
+    end
+
+    Start --&gt; Learn
+    Learn --&gt; Apply
+
+
+### 需要捕获的内容
+- 关键实现路径
+- 用户偏好和工作流
+- 项目特定模式
+- 已知挑战
+- 项目决策的演变
+- 工具使用模式
+
+格式灵活 - 专注于捕获有价值的见解，帮助我更有效地与项目合作。将 .cursor&#x2F;rules 视为随着我们一起工作而变得更智能的活文档。
+
+记住：每次记忆重置后，我完全重新开始。记忆银行是我与以前工作的唯一联系。它必须以精确和清晰的方式维护，因为我的有效性完全取决于其准确性。
+
+## Swift 特定指南
+
+在维护记忆银行时，特别注意记录以下 Swift 和 SwiftUI 相关信息：
+
+1. **SwiftUI 架构模式**
+   - 项目中使用的视图架构（MVVM、MVC 等）
+   - 状态管理策略（@Observable、@State、@Binding 等）
+   - 关键视图组合和复用模式
+
+2. **并发安全实践**
+   - 使用 @Sendable 标记的关键类型和函数
+   - 使用 @MainActor 隔离的 UI 组件
+   - 用于共享状态的同步机制（actor、锁等）
+
+3. **SwiftData 实现**
+   - 数据模型结构和关系
+   - 查询和过滤策略
+   - 性能优化技术
+
+4. **跨平台兼容性**
+   - iOS 和 macOS 特定的适配
+   - 条件性编译和平台检测技术
+   - 共享与平台特定的组件差异
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<p>不管是从头开发一个新项目还是从大型项目中迭代新功能，我会拟定一份对应需求文档，先让 AI 通过记忆去分析输出实施计划。计划中每个步骤都是能够完成并可测试的，完成后让 AI 更新记忆，如此循环直到需求完成。</p>
+<p>工具目前优先 Cursor，其次是 Augment Code，步兵用 Copilot 和 Trae。模型我会先 Claude 3.7，fix 不了的用 Gemini 2.5 pro 和自己 review 修改。</p>
+<p>分享使用的 PPT 如下（小册子这次内容更新的风格也是下面的样子，不重复，丰富、形象和耐看）：</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/41.png" class="lozad post-image"src="/uploads/pamphlet-app667/41.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/42.png" class="lozad post-image"src="/uploads/pamphlet-app667/42.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/43.png" class="lozad post-image"src="/uploads/pamphlet-app667/43.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/44.png" class="lozad post-image"src="/uploads/pamphlet-app667/44.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/45.png" class="lozad post-image"src="/uploads/pamphlet-app667/45.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/46.png" class="lozad post-image"src="/uploads/pamphlet-app667/46.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/47.png" class="lozad post-image"src="/uploads/pamphlet-app667/47.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/48.png" class="lozad post-image"src="/uploads/pamphlet-app667/48.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/49.png" class="lozad post-image"src="/uploads/pamphlet-app667/49.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/50.png" class="lozad post-image"src="/uploads/pamphlet-app667/50.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/51.png" class="lozad post-image"src="/uploads/pamphlet-app667/51.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/uploads/pamphlet-app667/52.png" class="lozad post-image"src="/uploads/pamphlet-app667/52.png"></p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://starming.com/about">戴铭</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://starming.com/2025/05/05/pamphlet-app667/">https://starming.com/2025/05/05/pamphlet-app667/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/2025/03/06/letsvision25-ai-improve-ios-skill/" class="nav-link">
+      <div>
+        <div class="nav-label">Next</div>
+        
+        <div class="nav-title">使用 AI 突破 iOS 开发者能力边界 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/ming.jpeg" class="author-img">
+
+<p class="author-name">戴铭</p>
+<p class="author-description">极客时间《iOS开发高手课》和纸书《跟戴铭学iOS编程》作者</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>79</span>
+    <span>Posts</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>8</span>
+    <span>Categories</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>44</span>
+    <span>Tags</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://weibo.com/allstarming">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener" href="https://github.com/ming1016">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:ming1016@foxmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/atom.xml">
+        <i class="iconfont icon-chrome society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>Categories</div>
+  <div class="categories-list">
+    
+      <a href="/categories/Programming">
+        <div class="categories-list-item">
+          Programming
+          <span class="categories-list-item-badge">50</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-novel">
+        <div class="categories-list-item">
+          My-novel
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/My-painting">
+        <div class="categories-list-item">
+          My-painting
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Podcast">
+        <div class="categories-list-item">
+          Podcast
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/App">
+        <div class="categories-list-item">
+          App
+          <span class="categories-list-item-badge">11</span>
+        </div>
+      </a>
+    
+      <a href="/categories/travel">
+        <div class="categories-list-item">
+          travel
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/macOS">
+        <div class="categories-list-item">
+          macOS
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI">
+        <div class="categories-list-item">
+          AI
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>hot tags</div>
+  <div class="tags-list">
+    
+    <a href="\tags\iOS" title="iOS"><div class="tags-list-item">iOS</div></a>
+    
+    <a href="\tags\Swift" title="Swift"><div class="tags-list-item">Swift</div></a>
+    
+    <a href="\tags\Apple" title="Apple"><div class="tags-list-item">Apple</div></a>
+    
+    <a href="\tags\SwiftUI" title="SwiftUI"><div class="tags-list-item">SwiftUI</div></a>
+    
+    <a href="\tags\Painting" title="Painting"><div class="tags-list-item">Painting</div></a>
+    
+    <a href="\tags\App" title="App"><div class="tags-list-item">App</div></a>
+    
+    <a href="\tags\Slides" title="Slides"><div class="tags-list-item">Slides</div></a>
+    
+    <a href="\tags\iPad" title="iPad"><div class="tags-list-item">iPad</div></a>
+    
+    <a href="\tags\Procreate" title="Procreate"><div class="tags-list-item">Procreate</div></a>
+    
+    <a href="\tags\LLVM" title="LLVM"><div class="tags-list-item">LLVM</div></a>
+    
+    <a href="\tags\Performance optimization" title="Performance optimization"><div class="tags-list-item">Performance optimization</div></a>
+    
+    <a href="\tags\Web" title="Web"><div class="tags-list-item">Web</div></a>
+    
+    <a href="\tags\Novel" title="Novel"><div class="tags-list-item">Novel</div></a>
+    
+    <a href="\tags\Manga" title="Manga"><div class="tags-list-item">Manga</div></a>
+    
+    <a href="\tags\Podcast" title="Podcast"><div class="tags-list-item">Podcast</div></a>
+    
+    <a href="\tags\macOS" title="macOS"><div class="tags-list-item">macOS</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>TOC</div>
+
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>Recent Posts</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-05-05</div>
+        <a href="/2025/05/05/pamphlet-app667/"><div class="recent-posts-item-content">憋了个大招！《戴铭的小册子》6.6.7 版：不止搞开发，这次玩儿大了！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-03-06</div>
+        <a href="/2025/03/06/letsvision25-ai-improve-ios-skill/"><div class="recent-posts-item-content">使用 AI 突破 iOS 开发者能力边界</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-02-18</div>
+        <a href="/2025/02/18/macos-app-i-used/"><div class="recent-posts-item-content">2025 年我正在使用的 macOS 应用</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-01-21</div>
+        <a href="/2025/01/21/ios-conf-sg-25-share/"><div class="recent-posts-item-content">我在 iOS Conf SG 25 的演讲</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2014 -
+          
+          2025
+        </span>
+        <a href="/" class="footer-link">戴铭的博客 </a>
+      </div>
+    </div>
+
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">京ICP备2024068292号-1 </a>
+    </div>
+    
+    <div class="BbeiAn-info">
+      <span style="padding-left: 25px;background: url(/img/beian.png) no-repeat left center"></span>
+      <a target="_blank" rel="noopener" href="https://beian.mps.gov.cn/#/query/webSearch?code=11010802044427 ">京公网安备11010802044427
+      </a>
+      <br />
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>
